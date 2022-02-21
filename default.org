@@ -1,0 +1,5 @@
+#+TITLE: {{ replace .Name "-" " " | title }}
+#+DATE: {{ .Date }}
+#+DRAFT: false
+#+TAGS[]:
+#+CATEGORIES[]:
