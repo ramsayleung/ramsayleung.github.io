@@ -1,7 +1,7 @@
 baseURL = "http://localhost:1313/"
 languageCode = "zh-cn"
 defaultContentLanguage = "en"                             # en / zh-cn / ... (This field determines which i18n file to use)
-title = "Even - A super concise theme for Hugo"
+title = "Ramsay's Blog"
 preserveTaxonomyNames = true
 enableRobotsTXT = true
 enableEmoji = true
@@ -21,7 +21,7 @@ googleAnalytics = ""      # UA-XXXXXXXX-X
 copyright = ""            # default: author.name ↓        # 默认为下面配置的author.name ↓
 
 [author]                  # essential                     # 必需
-  name = "ramsayleung"
+name = "Ramsay Leung"
 
 [sitemap]                 # essential                     # 必需
   changefreq = "weekly"
@@ -133,34 +133,11 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
     hint = 30               # Display hint if the last modified time is more than these days ago.    # 如果文章最后更新于这天数之前，显示提醒
     warn = 180              # Display warning if the last modified time is more than these days ago.    # 如果文章最后更新于这天数之前，显示警告
 
-  [params.gitment]          # Gitment is a comment system based on GitHub issues. see https://github.com/imsun/gitment
-    owner = ""              # Your GitHub ID
-    repo = ""               # The repo to store comments
-    clientId = ""           # Your client ID
-    clientSecret = ""       # Your client secret
-
-  [params.utterances]       # https://utteranc.es/
-    owner = ""              # Your GitHub ID
-    repo = ""               # The repo to store comments
-
   [params.gitalk]           # Gitalk is a comment system based on GitHub issues. see https://github.com/gitalk/gitalk
-    owner = ""              # Your GitHub ID
-    repo = ""               # The repo to store comments
-    clientId = ""           # Your client ID
-    clientSecret = ""       # Your client secret
-
-  # Valine.
-  # You can get your appid and appkey from https://leancloud.cn
-  # more info please open https://valine.js.org
-  [params.valine]
-    enable = false
-    appId = '你的appId'
-    appKey = '你的appKey'
-    notify = false  # mail notifier , https://github.com/xCss/Valine/wiki
-    verify = false # Verification code
-    avatar = 'mm'
-    placeholder = '说点什么吧...'
-    visitor = false
+    owner = "ramsayleung"              # Your GitHub ID
+    repo = "comment"               # The repo to store comments
+    clientId = "3c034c97f0926fafd2d6"           # Your client ID
+    clientSecret = "db0fa3364de15365c9c5e29b97c21735c76f97b2"       # Your client secret
 
   [params.flowchartDiagrams]# see https://blog.olowolo.com/example-site/post/js-flowchart-diagrams/
     enable = false
@@ -182,21 +159,10 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
     alipay = "/path/to/your/alipay-qr-code.png"           # 支付宝二维码
 
   [params.social]                                         # 社交链接
-    a-email = "mailto:your@email.com"
-    b-stack-overflow = "http://localhost:1313"
+    a-email = "mailto:ramsayleung@email.com"
+    b-stack-overflow = "https://stackoverflow.com/users/5738112/ramsay"
     c-twitter = "http://localhost:1313"
-    d-facebook = "http://localhost:1313"
-    e-linkedin = "http://localhost:1313"
-    f-google = "http://localhost:1313"
-    g-github = "http://localhost:1313"
-    h-weibo = "http://localhost:1313"
-    i-zhihu = "http://localhost:1313"
-    j-douban = "http://localhost:1313"
-    k-pocket = "http://localhost:1313"
-    l-tumblr = "http://localhost:1313"
-    m-instagram = "http://localhost:1313"
-    n-gitlab = "http://localhost:1313"
-    o-bilibili = "http://localhost:1313"
+    g-github = "https://github.com/ramsayleung"
 
 # See https://gohugo.io/about/hugo-and-gdpr/
 [privacy]
