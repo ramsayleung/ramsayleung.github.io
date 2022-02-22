@@ -48,6 +48,11 @@ name = "Ramsay Leung"
   weight = 40
   identifier = "categories"
   url = "/categories/"
+[[menu.main]]
+  name = "About"
+  weight = 50
+  identifier = "about"
+  url = "/about_me"
 
 [params]
   version = "4.x"           # Used to give a friendly message when you have an incompatible update
@@ -76,12 +81,12 @@ name = "Ramsay Leung"
   moreMeta = false
 
   # Syntax highlighting by highlight.js
-  highlightInClient = false
+  highlightInClient = true
 
   # 一些全局开关，你也可以在每一篇内容的 front matter 中针对单篇内容关闭或开启某些功能，在 archetypes/default.md 查看更多信息。
   # Some global options, you can also close or open something in front matter for a single post, see more information from `archetypes/default.md`.
   toc = true                                                                            # 是否开启目录
-  autoCollapseToc = false   # Auto expand and collapse toc                              # 目录自动展开/折叠
+  autoCollapseToc = true   # Auto expand and collapse toc                              # 目录自动展开/折叠
   fancybox = true           # see https://github.com/fancyapps/fancybox                 # 是否启用fancybox（图片可点击）
 
   # mathjax
@@ -94,14 +99,6 @@ name = "Ramsay Leung"
   linkToMarkDown = false    # Only effective when hugo will output .md files.           # 链接到markdown原始文件（仅当允许hugo生成markdown文件时有效）
   contentCopyright = ''     # e.g. '<a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a>'
 
-  changyanAppid = ""        # Changyan app id             # 畅言
-  changyanAppkey = ""       # Changyan app key
-
-  livereUID = ""            # LiveRe UID                  # 来必力
-
-  baiduPush = false        # baidu push                  # 百度
-  baiduAnalytics = ""      # Baidu Analytics
-  baiduVerification = ""   # Baidu Verification
   googleVerification = ""  # Google Verification         # 谷歌
 
   # Link custom CSS and JS assets
