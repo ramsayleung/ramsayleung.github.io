@@ -134,7 +134,7 @@ name = "Ramsay Leung"
     owner = "ramsayleung"              # Your GitHub ID
     repo = "comment"               # The repo to store comments
     clientId = "3c034c97f0926fafd2d6"           # Your client ID
-    clientSecret = "db0fa3364de15365c9c5e29b97c21735c76f97b2"       # Your client secret
+    clientSecret = ""       # Your client secret
 
   [params.flowchartDiagrams]# see https://blog.olowolo.com/example-site/post/js-flowchart-diagrams/
     enable = false
