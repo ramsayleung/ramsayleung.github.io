@@ -1,13 +1,13 @@
 +++
 title = "About Me"
 date = 2022-02-21
-lastmod = 2022-02-21T23:20:15+08:00
+lastmod = 2022-02-22T21:30:40+08:00
 draft = false
 +++
 
 ## About me {#about-me}
 
-I'm Ramsay, I chase a lot of different things. My slogan is ****to be a lazy programmer****, since:
+I'm Ramsay, I chase a lot of different things. The slogan of this site is ****In pursuit of Hubris****, since:
 
 > There are three great virtues of a programmer; Laziness, Impatience and Hubris -- [Larry Wall](<https://en.wikipedia.org/wiki/Larry_Wall>)
 
