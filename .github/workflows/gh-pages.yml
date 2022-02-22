@@ -1,42 +1,40 @@
-
 name: github pages
 
 on:
   push:
     branches:
-    - master
+      - master  # Set a branch to deploy
   pull_request:
 
 jobs:
-  build-deploy:
-    runs-on: ubuntu-18.04
+  deploy:
+    runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v1
-      with:
-        submodules: true
+      - uses: actions/checkout@v2
+        with:
+          submodules: true  # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
-    - name: Clone Org-mode exporter
-      run: git clone https://github.com/kaushalmodi/ox-hugo.git ox-hugo
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          # extended: true
 
-    - name: Setup emacs
-      uses: purcell/setup-emacs@master
-      with:
-        version: 26.3
+      - name: Generate Configuration
+        env:
+          GITALK_CLIENT_ID_PLACEHOLDER: ${{ secrets.GITALK_CLIENT_ID_PLACEHOLDER }}
+          GITALK_CLIENT_SECRET_PLACEHOLDER: ${{ secrets.GITALK_CLIENT_SECRET_PLACEHOLDER }}
+        shell: bash
+        run: |
+          "${GITHUB_WORKSPACE}/config.sh"
 
-    - name: Export Org file to Markdown
-      run: emacs ./posts.org --batch -L ./ox-hugo -l ox-hugo.el --eval='(org-hugo-export-wim-to-md t)' --kill
+      - name: Build
+        run: hugo --minify
 
-    - name: Setup Hugo
-      uses: peaceiris/actions-hugo@v2
-      with:
-        hugo-version: 'latest'
-
-    - name: Build
-      run: hugo --minify --theme=hermit
-
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@v2
-      env:
-        ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-        PUBLISH_BRANCH: master
-        PUBLISH_DIR: ./public
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/master'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
