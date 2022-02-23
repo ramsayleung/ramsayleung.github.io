@@ -151,7 +151,10 @@ name = "Ramsay Leung"
 # see https://gohugo.io/getting-started/configuration-markup
 [markup]
   [markup.tableOfContents]
-    startLevel = 1
+    startLevel = 2
+    endLevel = 3
+    ordered = false
+
   [markup.goldmark.renderer]
     unsafe = true
 
