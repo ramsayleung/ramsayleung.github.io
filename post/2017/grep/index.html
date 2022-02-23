@@ -1,0 +1,881 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>Linux/Unix Shell 二三事之过滤器grep - In Pursuit of Hubris</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="Ramsay Leung"><meta name=description content="an introduction about grep"><meta name=keywords content="shell,linux,grep">
+<meta name=generator content="Hugo 0.92.2 with theme even">
+<link rel=canonical href=https://ramsayleung.github.io/post/2017/grep/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="Linux/Unix Shell 二三事之过滤器grep">
+<meta property="og:description" content="an introduction about grep">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ramsayleung.github.io/post/2017/grep/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2017-03-13T00:00:00+08:00">
+<meta property="article:modified_time" content="2022-02-23T19:48:37+08:00">
+<meta itemprop=name content="Linux/Unix Shell 二三事之过滤器grep">
+<meta itemprop=description content="an introduction about grep"><meta itemprop=datePublished content="2017-03-13T00:00:00+08:00">
+<meta itemprop=dateModified content="2022-02-23T19:48:37+08:00">
+<meta itemprop=wordCount content="2694">
+<meta itemprop=keywords content="shell,linux,command_line,"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="Linux/Unix Shell 二三事之过滤器grep">
+<meta name=twitter:description content="an introduction about grep"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/about_me>
+<li class=mobile-menu-item>About</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/about_me>About</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>Linux/Unix Shell 二三事之过滤器grep</h1>
+<div class=post-meta>
+<span class=post-time> 2017-03-13 </span>
+<div class=post-category>
+<a href=/categories/linux/> linux </a>
+</div>
+<span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#基本用法><span class=section-num>1</span> 基本用法</a>
+<ul>
+<li><a href=#基础用法><span class=section-num>1.1</span> 基础用法</a></li>
+<li><a href=#结合正则表达式><span class=section-num>1.2</span> 结合正则表达式</a></li>
+<li><a href=#统计出现的次数><span class=section-num>1.3</span> 统计出现的次数</a></li>
+<li><a href=#忽略大小写><span class=section-num>1.4</span> 忽略大小写</a></li>
+</ul>
+</li>
+<li><a href=#搜索多个文件><span class=section-num>2</span> 搜索多个文件</a>
+<ul>
+<li><a href=#递归搜索><span class=section-num>2.1</span> 递归搜索</a></li>
+</ul>
+</li>
+<li><a href=#在标准输入搜索><span class=section-num>3</span> 在标准输入搜索</a></li>
+<li><a href=#反向搜索><span class=section-num>4</span> 反向搜索</a></li>
+<li><a href=#小结><span class=section-num>5</span> 小结</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<p>文本三剑客之 Grep</p>
+<blockquote>
+<p>grep - print lines matching a pattern</p>
+</blockquote>
+<p>今天我想聊聊 <strong>grep</strong> 这个命令；据说，有Unix/Linux 的地方就会有 <strong>grep</strong>, 这个可能是安装得最广泛的命令之一；那么 <strong>grep</strong> 是用来干什么的呢？</p>
+<p>grep 其实是用来在文件中搜索特定内容或者模式的工具(配合正则表达式“食用”，味道更佳 :))现在就来一起看看<strong>grep</strong> 的用法</p>
+<h2 id=基本用法><span class=section-num>1</span> 基本用法</h2>
+<h3 id=基础用法><span class=section-num>1.1</span> 基础用法</h3>
+<p>现在假设有一个简单的文本文件(双城记开头)tinytale.txt,内容如下</p>
+<blockquote>
+<p>it was the best of times it was the worst of times
+it was the age of wisdom it was age of foolishness
+it was the epoch of belief it was the epoch of incredulity
+it was the season of light it was the season of darkness
+IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE</p>
+</blockquote>
+<p>现在开始介绍 <strong>grep</strong> 的基本用法： <strong>grep</strong> 的基本用法很简单的，假设我想要搜索单词 <strong>darkness</strong></p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>grep darkness /tmp/tinytale.txt
+</code></pre></td></tr></table>
+</div>
+</div><p>输出如下：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-text data-lang=text>it was the season of light it was the season of darkness
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=结合正则表达式><span class=section-num>1.2</span> 结合正则表达式</h3>
+<p>默认情况下， <strong>grep</strong> 是开启正则表达式的模式的，所以你可以直接在文件搜索中使用
+正则表达式。现在在文件中搜索以字母 <strong>e</strong> 开头后接三个字符，然后以 <strong>h</strong> 结尾的单词：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>grep <span class=s2>&#34;e...h&#34;</span> /tmp/tinytale.txt
+</code></pre></td></tr></table>
+</div>
+</div><p>输出如下：</p>
+<blockquote>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-text data-lang=text>it was the epoch of belief it was the epoch of incredulity
+</code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<p>可以看到，正则表达式匹配了 <strong>epoch</strong> 这个单词。正则表达式的威力无与伦比的，把 <strong>grep</strong>和正则表达式结合起来可以更好地发挥 <strong>grep</strong> 这个工具的潜力；而本文主要是介绍 <strong>grep</strong>, 更多有关正则表达式的用法不细讲了</p>
+<h3 id=统计出现的次数><span class=section-num>1.3</span> 统计出现的次数</h3>
+<p>有时，如果你需要统计某种模式或者某个单词出现的个数，你会发现 <strong>grep</strong> 非常有用；</p>
+<p>要实现该功能，只需给 <strong>grep</strong> 添加 <strong>-c</strong> 参数；例如统计单词 <strong>the</strong> 出现的个数：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>grep -c the /tmp/tinytale.txt
+</code></pre></td></tr></table>
+</div>
+</div><p>结果输出如下：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-text data-lang=text>4
+</code></pre></td></tr></table>
+</div>
+</div><p>文本中包含4个 <strong>the</strong></p>
+<h3 id=忽略大小写><span class=section-num>1.4</span> 忽略大小写</h3>
+<p>前面提到， <strong>grep</strong> 默认是使用正则表达式来搜索文件的，所以 <strong>grep</strong> 是区分大小写的；</p>
+<p>如果你想修改 <strong>grep</strong> 的默认行为来忽略大小写，你可以添加 <strong>-i</strong> 参数</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>grep -i the /tmp/tinytale.txt
+</code></pre></td></tr></table>
+</div>
+</div><p>输出结果如下：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-text data-lang=text>it was the best of times it was the worst of times
+it was the age of wisdom it was age of foolishness
+it was the epoch of belief it was the epoch of incredulity
+it was the season of light it was the season of darkness
+IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE
+</code></pre></td></tr></table>
+</div>
+</div><p>可以发现 <strong>THE</strong> 也是可以被 grep 搜索到的；但是如果没有添加 <strong>-i</strong> ,你只会看到4行输出。</p>
+<p>当然你可以在正则表达式里面添加忽略大小写的模式，只是直接添加 <strong>-i</strong> 会简单很多。</p>
+<h2 id=搜索多个文件><span class=section-num>2</span> 搜索多个文件</h2>
+<p>上面搜索的都只是单个文件，而 grep 可以让你同时搜索多个文件；现在就来看看怎么搜索多个文件吧。</p>
+<p>下面两种写法结果都是一样的，但是我个人推崇第一种，因为可以输入更少一些内容 :)</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>grep belief /tmp/<span class=o>{</span>tinytale.txt,tale.txt<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>grep belief /tmp/tinytale.txt /tmp/tale.txt
+</code></pre></td></tr></table>
+</div>
+</div><p>输出结果如下：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-text data-lang=text>tinytale.txt:it was the epoch of belief it was the epoch of incredulity
+tale.txt:it was the epoch of belief it was the epoch of incredulity
+tale.txt:pains of by rearing her in the belief that her father was dead
+tale.txt:this was no passive belief but an active weapon which they flashed
+tale.txt:belief in solomon deducting a mere trifle for this slight mistake
+tale.txt:you will bear testimony to what i have said and to your belief in it
+tale.txt:herself into the show of a belief that they would soon be reunited
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到， <strong>grep</strong> 把匹配到单词的那一行内容和对应的文件都显示出来了，你就可以很方便地看到搜索结果，并知道匹配单词的来源。</p>
+<p>如果你也像我这样，不想输入那么多的内容，你可以使用正则表达式匹配所有的文本文件，如下：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>grep belief /tmp/*.txt
+</code></pre></td></tr></table>
+</div>
+</div><p>输出结果也会跟上面一致 (假设你 <strong><em>tmp</em></strong> 目录下只有两个文本文件); 我告诉<strong>grep</strong> 搜索**/tmp** 下所有的 <strong>.txt</strong> 文件。</p>
+<h3 id=递归搜索><span class=section-num>2.1</span> 递归搜索</h3>
+<p>你也可以使用 <strong>grep</strong> 递归搜索目录；你只需在指定目录后，添加 <strong>-R</strong> , <strong>grep</strong> 就会
+递归搜索指定目录的所有子目录。我已经把当前目录切换到 <strong>/tmp</strong>:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>grep -R <span class=s2>&#34;belief&#34;</span> .
+</code></pre></td></tr></table>
+</div>
+</div><p>输出结果如下：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>./tale.txt:it was the epoch of belief it was the epoch of incredulity
+./tale.txt:pains of by rearing her in the belief that her father was dead
+./tale.txt:this was no passive belief but an active weapon which they flashed
+./tale.txt:belief in solomon deducting a mere trifle for this slight mistake
+./tale.txt:you will bear testimony to what i have said and to your belief in it
+./tale.txt:herself into the show of a belief that they would soon be reunited
+./tinytale.txt:it was the epoch of belief it was the epoch of incredulity
+</code></pre></td></tr></table>
+</div>
+</div><p>结果展示了一系列在当前目录和子目录匹配 <strong>belief</strong> 的文件。此外你也可以排除掉某些你
+不需要搜索的文件，例如有一个 <strong>foo.xml</strong> 的文件，里面也可能会有 <strong>belief</strong> 这个单词，
+但是你就是不想搜索这个文件，或者全部的 <strong>.xml</strong> 文件，你可以这么玩：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>grep -R --exclude<span class=o>=</span><span class=s2>&#34;*.xml&#34;</span> <span class=s2>&#34;belief&#34;</span> .
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=在标准输入搜索><span class=section-num>3</span> 在标准输入搜索</h2>
+<p><strong>grep</strong> 也是过滤器，所以 <strong>grep</strong> 自然而然具有处理标准输入输出的能力了；处理其他命令的输出结果也是 <strong>grep</strong> 非常常用的场景之一。假设你现在的 <strong>vim</strong> 突然卡顿，挂了:),你想要 <strong>kill</strong> 掉 <strong>vim</strong> 的进程，你可以：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>ps -e<span class=p>|</span>grep vim
+</code></pre></td></tr></table>
+</div>
+</div><p>结果输出如下：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>samray   21939     1  0 19:42 ?        00:00:00 gvim
+</code></pre></td></tr></table>
+</div>
+</div><p>其中第一条记录就是你想要搜索的进程了，你运行 <strong>kill 21939</strong> 就可以杀掉 vim 的进程了；因为我系统的是图型化界面的 vim, 所以是 gvim.</p>
+<hr>
+<p>正如我之前的文章提到的那样，单纯的过滤器的用处似乎不大，但是如果结合起来就会威力无穷至于，如何结合，就需要慢慢探索了。</p>
+<h2 id=反向搜索><span class=section-num>4</span> 反向搜索</h2>
+<p>现在执行的搜索都是匹配搜索，即将匹配的内容显示出来，而 <strong>grep</strong> 还有反向搜索的功能 (invert Searches)就是将不包含有指定模式的内容显示出来。</p>
+<p>该功能在用来修改有很多注释的配置文件时特别有用；例如常用的服务器软件 <strong>nginx</strong> 的配置文件是默认是含有很多注释的，如下</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-cfg data-lang=cfg><span class=c1>#user www-data;</span>
+<span class=na>worker_processes auto;</span>
+<span class=na>pid /run/nginx.pid;</span>
+<span class=na>include /etc/nginx/modules-enabled/*.conf;</span>
+
+<span class=na>events {</span>
+<span class=na>worker_connections 1024;</span>
+<span class=c1># multi_accept on;</span>
+<span class=na>}</span>
+
+<span class=na>http {</span>
+
+<span class=c1>##</span>
+<span class=c1># Basic Settings</span>
+<span class=c1>##</span>
+
+<span class=na>sendfile on;</span>
+<span class=na>tcp_nopush on;</span>
+<span class=na>tcp_nodelay on;</span>
+<span class=na>keepalive_timeout 65;</span>
+<span class=na>types_hash_max_size 2048;</span>
+<span class=c1># server_tokens off;</span>
+
+<span class=c1># server_names_hash_bucket_size 64;</span>
+<span class=c1># server_name_in_redirect off;</span>
+
+<span class=na>include /etc/nginx/mime.types;</span>
+<span class=na>default_type application/octet-stream;</span>
+
+<span class=c1>##</span>
+<span class=c1># SSL Settings</span>
+<span class=c1>##</span>
+
+<span class=na>ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # Dropping SSLv3, ref: POODLE</span>
+<span class=na>ssl_prefer_server_ciphers on;</span>
+
+<span class=c1>##</span>
+<span class=c1># Logging Settings</span>
+<span class=c1>##</span>
+<span class=na>log_format main &#39;$remote_addr - $remote_user [$time_local] &#34;$request&#34; $status $bytes_sent &#34;$http_referer&#34; &#34;$http_user_agent&#34; &#34;$gzip_ratio&#34;&#39;;</span>
+<span class=na>access_log /var/log/nginx/access.log;</span>
+<span class=na>error_log /var/log/nginx/error.log;</span>
+
+<span class=c1>##</span>
+<span class=c1># Gzip Settings</span>
+<span class=c1>##</span>
+
+<span class=na>gzip on;</span>
+<span class=na>gzip_disable &#34;msie6&#34;;</span>
+
+<span class=c1># gzip_vary on;</span>
+<span class=c1># gzip_proxied any;</span>
+<span class=c1># gzip_comp_level 6;</span>
+<span class=c1># gzip_buffers 16 8k;</span>
+<span class=c1># gzip_http_version 1.1;</span>
+<span class=c1># gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;</span>
+
+<span class=c1>##</span>
+<span class=c1># Virtual Host Configs</span>
+<span class=c1>##</span>
+
+<span class=na>include /etc/nginx/conf.d/*.conf;</span>
+<span class=na>include /etc/nginx/sites-enabled/*;</span>
+
+<span class=na>ignore_invalid_headers on;</span>
+<span class=na>client_header_timeout 240;</span>
+<span class=na>client_body_timeout 240;</span>
+<span class=na>send_timeout 240;</span>
+<span class=na>client_max_body_size 100m;</span>
+<span class=na>proxy_buffer_size 128k;</span>
+<span class=na>proxy_buffers 8 128k;</span>
+
+<span class=na>upstream tomcat_server{</span>
+<span class=na>server 127.0.0.1:8080 fail_timeout</span><span class=o>=</span><span class=s>0;</span>
+<span class=na>}</span>
+
+<span class=na>upstream gunicorn_server{</span>
+<span class=na>server 127.0.0.1:5000 fail_timeout</span><span class=o>=</span><span class=s>0;</span>
+<span class=na>}</span>
+<span class=na>server{</span>
+<span class=na>server_name 127.0.0.1;</span>
+<span class=na>listen 443;</span>
+<span class=c1># ssl on;</span>
+<span class=c1># ssl_certificate /etc/letsencrypt/live/samray.ren/fullchain.pem;</span>
+<span class=c1># ssl_certificate_key /etc/letsencrypt/live/samray.ren/privkey.pem;</span>
+<span class=na>location / {</span>
+
+<span class=c1># Forward SSL so that Tomcat knows what to do</span>
+<span class=na>proxy_set_header X-Forwarded-Host $host;</span>
+<span class=na>proxy_set_header X-Forwarded-Server $host;</span>
+<span class=na>proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span>
+<span class=na>proxy_pass http://tomcat_server;</span>
+<span class=na>proxy_set_header X-Forwarded-Proto https;</span>
+
+<span class=na>proxy_redirect off;</span>
+<span class=na>proxy_connect_timeout      240;</span>
+<span class=na>proxy_send_timeout         240;</span>
+<span class=na>proxy_read_timeout         240;</span>
+
+<span class=na>}</span>
+
+<span class=na>location /test{</span>
+<span class=na>return 402;</span>
+<span class=na>}</span>
+
+<span class=na>location /weixin {</span>
+<span class=c1># try_files $uri @proxy_to_app;</span>
+<span class=na>return 402;</span>
+<span class=na>}</span>
+<span class=na>location @proxy_to_app {</span>
+<span class=na>proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span>
+<span class=na>proxy_set_header Host $http_host;</span>
+<span class=na>proxy_redirect off;</span>
+<span class=na>proxy_pass http://gunicorn_server;</span>
+
+<span class=na>}</span>
+<span class=na>}</span>
+
+<span class=na>}</span>
+
+
+<span class=c1>#mail {</span>
+<span class=c1>#	# See sample authentication script at:</span>
+<span class=c1>#	# http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript</span>
+<span class=c1>#</span>
+<span class=c1>#	# auth_http localhost/auth.php;</span>
+<span class=c1>#	# pop3_capabilities &#34;TOP&#34; &#34;USER&#34;;</span>
+<span class=c1>#	# imap_capabilities &#34;IMAP4rev1&#34; &#34;UIDPLUS&#34;;</span>
+<span class=c1>#</span>
+<span class=c1>#	server {</span>
+<span class=c1>#		listen     localhost:110;</span>
+<span class=c1>#		protocol   pop3;</span>
+<span class=c1>#		proxy      on;</span>
+<span class=c1>#	}</span>
+<span class=c1>#</span>
+<span class=c1>#	server {</span>
+<span class=c1>#		listen     localhost:143;</span>
+<span class=c1>#		protocol   imap;</span>
+<span class=c1>#		proxy      on;</span>
+<span class=c1>#	}</span>
+<span class=c1>#}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>里面实在有太多的注释了，虽说是很好的参考，但是看多了会感觉很碍眼，所以你希望可以有一份没有注释的配置文件，你就可以使用 <strong>grep</strong> 和参数 <strong>-v</strong>:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>egrep -v <span class=s2>&#34;#|^</span>$<span class=s2>&#34;</span> /etc/nginx/nginx.conf &gt;/tmp/nging.conf
+</code></pre></td></tr></table>
+</div>
+</div><p>结果如下：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-cfg data-lang=cfg><span class=na>worker_processes auto;</span>
+<span class=na>pid /run/nginx.pid;</span>
+<span class=na>include /etc/nginx/modules-enabled/*.conf;</span>
+<span class=na>events {</span>
+<span class=na>worker_connections 1024;</span>
+<span class=na>}</span>
+<span class=na>http {</span>
+<span class=na>sendfile on;</span>
+<span class=na>tcp_nopush on;</span>
+<span class=na>tcp_nodelay on;</span>
+<span class=na>keepalive_timeout 65;</span>
+<span class=na>types_hash_max_size 2048;</span>
+<span class=na>include /etc/nginx/mime.types;</span>
+<span class=na>default_type application/octet-stream;</span>
+<span class=na>ssl_prefer_server_ciphers on;</span>
+<span class=na>log_format main &#39;$remote_addr - $remote_user [$time_local] &#34;$request&#34; $status $bytes_sent &#34;$http_referer&#34; &#34;$http_user_agent&#34; &#34;$gzip_ratio&#34;&#39;;</span>
+<span class=na>access_log /var/log/nginx/access.log;</span>
+<span class=na>error_log /var/log/nginx/error.log;</span>
+<span class=na>gzip on;</span>
+<span class=na>gzip_disable &#34;msie6&#34;;</span>
+<span class=na>include /etc/nginx/conf.d/*.conf;</span>
+<span class=na>include /etc/nginx/sites-enabled/*;</span>
+<span class=na>ignore_invalid_headers on;</span>
+<span class=na>client_header_timeout 240;</span>
+<span class=na>client_body_timeout 240;</span>
+<span class=na>send_timeout 240;</span>
+<span class=na>client_max_body_size 100m;</span>
+<span class=na>proxy_buffer_size 128k;</span>
+<span class=na>proxy_buffers 8 128k;</span>
+
+<span class=na>upstream tomcat_server{</span>
+<span class=na>server 127.0.0.1:8080 fail_timeout</span><span class=o>=</span><span class=s>0;</span>
+<span class=na>}</span>
+
+<span class=na>upstream gunicorn_server{</span>
+<span class=na>server 127.0.0.1:5000 fail_timeout</span><span class=o>=</span><span class=s>0;</span>
+<span class=na>}</span>
+<span class=na>server{</span>
+<span class=na>server_name 127.0.0.1;</span>
+<span class=na>listen 443;</span>
+<span class=na>location / {</span>
+
+<span class=na>proxy_set_header X-Forwarded-Host $host;</span>
+<span class=na>proxy_set_header X-Forwarded-Server $host;</span>
+<span class=na>proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span>
+<span class=na>proxy_pass http://tomcat_server;</span>
+<span class=na>proxy_set_header X-Forwarded-Proto https;</span>
+<span class=na>proxy_redirect off;</span>
+<span class=na>proxy_connect_timeout      240;</span>
+<span class=na>proxy_send_timeout         240;</span>
+<span class=na>proxy_read_timeout         240;</span>
+<span class=na>}</span>
+<span class=na>location /test{</span>
+<span class=na>return 402;</span>
+<span class=na>}</span>
+<span class=na>location /weixin {</span>
+<span class=na>return 402;</span>
+<span class=na>}</span>
+<span class=na>location @proxy_to_app {</span>
+<span class=na>proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span>
+<span class=na>proxy_set_header Host $http_host;</span>
+<span class=na>proxy_redirect off;</span>
+<span class=na>proxy_pass http://gunicorn_server;</span>
+
+<span class=na>}</span>
+<span class=na>}</span>
+<span class=na>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>egrep</strong> 是 <strong>grep</strong> 的扩展，你也可以通过 <strong>-E</strong> 使用扩展功能。就这样，你就可以得到一份很“干净”的配置文件了。</p>
+<h2 id=小结><span class=section-num>5</span> 小结</h2>
+<p>在以前 <strong>grep</strong> 是 <strong>hacker</strong> 工具箱里面审查源代码必不可少的工具之一，但是随着技术的发展，似乎对比其他同类型的工具， <strong>grep</strong> 的性能已经难尽人意，特别是对比 <strong>ag</strong> 这个搜索神器；</p>
+<p>虽说很多人都已经转移到了 <strong>ag</strong> 阵营，但是因为 <strong>grep</strong> 被广泛预装到各类的Linux/Unix 机器，所以 <strong>grep</strong> 还是使用得很广泛滴。</p>
+<p>更多 <strong>grep</strong> 的用法就需要查询手册了：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>man grep
+</code></pre></td></tr></table>
+</div>
+</div><p>Enjoy Shell :)</p>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2022-02-23
+</span>
+</p>
+</div>
+<footer class=post-footer>
+<div class=post-tags>
+<a href=/tags/shell/>shell</a>
+<a href=/tags/linux/>linux</a>
+<a href=/tags/command_line/>command_line</a>
+</div>
+<nav class=post-nav>
+<a class=prev href=/post/2017/about_tool_about_tweak/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">关于工具,关于折腾</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/post/2017/from-helm-to-ivy/>
+<span class="next-text nav-default">(翻译)从Helm到Ivy</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<div id=gitalk-container></div>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
+<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:'2017-03-13 00:00:00 \u002b0800 \u002b0800',title:'Linux/Unix Shell 二三事之过滤器grep',clientID:'3c034c97f0926fafd2d6',clientSecret:'192051927d267ce83eb2ef10955890b7db2720ad',repo:'comment',owner:'ramsayleung',admin:['ramsayleung'],body:decodeURI(location.href)});gitalk.render('gitalk-container')</script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
+<a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<div class=busuanzi-footer>
+<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+</div>
+<span class=copyright-year>
+&copy;
+2017 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>
