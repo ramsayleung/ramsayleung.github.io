@@ -1,0 +1,306 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>在Emacs中使用Ipython - In Pursuit of Hubris</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="Ramsay Leung"><meta name=description content="Use Ipython in Emasc"><meta name=keywords content="emacs,ipython">
+<meta name=generator content="Hugo 0.92.2 with theme even">
+<link rel=canonical href=https://ramsayleung.github.io/post/2017/emacs_ipython/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="在Emacs中使用Ipython">
+<meta property="og:description" content="Use Ipython in Emasc">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ramsayleung.github.io/post/2017/emacs_ipython/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2017-02-22T00:00:00+08:00">
+<meta property="article:modified_time" content="2022-02-23T19:16:07+08:00">
+<meta itemprop=name content="在Emacs中使用Ipython">
+<meta itemprop=description content="Use Ipython in Emasc"><meta itemprop=datePublished content="2017-02-22T00:00:00+08:00">
+<meta itemprop=dateModified content="2022-02-23T19:16:07+08:00">
+<meta itemprop=wordCount content="902">
+<meta itemprop=keywords content="emacs,python,"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="在Emacs中使用Ipython">
+<meta name=twitter:description content="Use Ipython in Emasc"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/about_me>
+<li class=mobile-menu-item>About</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/about_me>About</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>在Emacs中使用Ipython</h1>
+<div class=post-meta>
+<span class=post-time> 2017-02-22 </span>
+<div class=post-category>
+<a href=/categories/emacs/> emacs </a>
+</div>
+<span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#emacs-ipython-输出错误><span class=section-num>1</span> Emacs Ipython 输出错误</a>
+<ul>
+<li><a href=#update-2017-3-15><span class=section-num>1.1</span> Update 2017-3-15</a></li>
+</ul>
+</li>
+<li><a href=#emacs-ipython-的使用优化><span class=section-num>2</span> Emacs Ipython 的使用优化</a>
+<ul>
+<li><a href=#python-pop><span class=section-num>2.1</span> python-pop</a></li>
+<li><a href=#ipython-history><span class=section-num>2.2</span> Ipython History</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<h2 id=emacs-ipython-输出错误><span class=section-num>1</span> Emacs Ipython 输出错误</h2>
+<p>在Emacs 运行 <strong>run-python</strong> 的时候，报错了，如下</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-emacs-lisp data-lang=emacs-lisp><span class=p>[</span><span class=sc>?1</span><span class=nv>2l</span><span class=p>[</span><span class=sc>?2</span><span class=nv>5h2+2</span>
+      <span class=p>[</span><span class=nv>J</span><span class=p>[</span><span class=sc>?7</span><span class=nv>h</span><span class=p>[</span><span class=sc>?1</span><span class=nv>2l</span><span class=p>[</span><span class=sc>?2</span><span class=nv>5h</span><span class=p>[</span><span class=sc>?2</span><span class=nv>004l</span><span class=p>[</span><span class=sc>?7</span><span class=nv>hOut</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span><span class=o>:</span> <span class=mi>4</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>因为我的版本时Ipython5,查阅文档<a href=http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1>http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1</a>
+之后，发现Ipython5 有了新的terminal 接口，和Emacs 继承的shell 不兼容，所以
+会出现上述的错误，只要给Ipython 加上运行参数就能解决了，所以只要在 <strong>.emacs</strong>
+或者对应的初始化文件加上下面语句</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-emacs-lisp data-lang=emacs-lisp><span class=p>(</span><span class=nb>setq</span> <span class=nv>python-shell-interpreter</span> <span class=s>&#34;ipython&#34;</span>
+      <span class=nv>python-shell-interpreter-args</span> <span class=s>&#34;--simple-prompt -i&#34;</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id=update-2017-3-15><span class=section-num>1.1</span> Update 2017-3-15</h3>
+<p>在添加了 <strong>&ndash;simple-promp -i</strong> 参数以后，虽说乱码的问题解决了，但是新的问题又出现了
+在Ipython 里面是没法无法输入多行内容的，即使是一个简单的循环，详情查看这条issue
+<a href=https://github.com/ipython/ipython/issues/9816>https://github.com/ipython/ipython/issues/9816</a>. 现在Ipython 开发社区还没有解决这个
+问题，所以现在的权宜之计就是使用 Ipython4,等到社区解决了这个问题在升级为 Ipython5</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>pip install --force-reinstall <span class=nv>ipython</span><span class=o>==</span>4.2.1
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=emacs-ipython-的使用优化><span class=section-num>2</span> Emacs Ipython 的使用优化</h2>
+<h3 id=python-pop><span class=section-num>2.1</span> python-pop</h3>
+<p>因为我之前使用Emacs的时候，是使用Spacemacs的配置的，但是后来觉得还是自己的
+配置用的更舒服，所以又切换回自己的配置，但是我还是很想念Spacemacs的一些绑定
+例如shell在底下弹出，或者是关闭，然后找到了<a href=https://github.com/kyagi/shell-pop-el>Shell-pop</a> 这package,就可以用回
+Spacemacs的shell使用习惯。然后我觉得，Ipython shell也可以这样配置，只不过
+我没有发现类似的package,又因为Emacs Lisp的强大，所以我自己写了一段小函数实现
+shell-pop 的功能</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-emacs-lisp data-lang=emacs-lisp>
+<span class=p>(</span><span class=nb>defun</span> <span class=nv>samray/python-pop</span> <span class=p>()</span>
+  <span class=s>&#34;Run python and switch to the python buffer.
+</span><span class=s>similar to shell-pop&#34;</span>
+  <span class=p>(</span><span class=nb>interactive</span><span class=p>)</span>
+  <span class=p>(</span><span class=nb>if</span> <span class=p>(</span><span class=nf>get-buffer</span> <span class=s>&#34;*Python*&#34;</span><span class=p>)</span>
+      <span class=p>(</span><span class=nb>if</span> <span class=p>(</span><span class=nv>string=</span> <span class=p>(</span><span class=nf>buffer-name</span><span class=p>)</span> <span class=s>&#34;*Python*&#34;</span><span class=p>)</span>
+	  <span class=p>(</span><span class=nb>if</span> <span class=p>(</span><span class=nv>not</span> <span class=p>(</span><span class=nv>one-window-p</span><span class=p>))</span>
+	      <span class=p>(</span><span class=nb>progn</span> <span class=p>(</span><span class=nv>bury-buffer</span><span class=p>)</span>
+		     <span class=p>(</span><span class=nv>delete-window</span><span class=p>))</span>
+	    <span class=p>)</span>
+	<span class=p>(</span><span class=nb>progn</span> <span class=p>(</span><span class=nv>switch-to-buffer-other-window</span> <span class=s>&#34;*Python*&#34;</span><span class=p>)</span>
+	       <span class=p>(</span><span class=nv>end-of-buffer</span><span class=p>)</span>
+	       <span class=p>(</span><span class=nv>evil-insert-state</span><span class=p>)))</span>
+    <span class=p>(</span><span class=nb>progn</span>
+      <span class=p>(</span><span class=nv>run-python</span><span class=p>)</span>
+      <span class=p>(</span><span class=nv>switch-to-buffer-other-window</span> <span class=s>&#34;*Python*&#34;</span><span class=p>)</span>
+      <span class=p>(</span><span class=nv>end-of-buffer</span><span class=p>)</span>
+      <span class=p>(</span><span class=nv>evil-insert-state</span><span class=p>))))</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果没有使用Evil,可以把 **(evil-insert-state)**去掉</p>
+<h3 id=ipython-history><span class=section-num>2.2</span> Ipython History</h3>
+<p>我在普通的Shell使用Ipython的时候，很自然地使用上下方向键翻到上一条/下一条
+执行的命令，因为shell的使用习惯就是这样滴，但是在Emacs里面使用Ipython,上下
+方向键是去到上一行/下一行，就好像 vim 的 <strong>j</strong> <strong>k</strong>,如果要翻到上一条命令，快捷键
+是 <strong>M-p</strong>,实在很不习惯，所以在查了一下Emacs manual 后，我改了一下按键绑定就实现了
+我想要的效果</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-emacs-lisp data-lang=emacs-lisp><span class=p>(</span><span class=nf>define-key</span> <span class=nv>comint-mode-map</span> <span class=p>(</span><span class=nv>kbd</span> <span class=s>&#34;&lt;up&gt;&#34;</span><span class=p>)</span> <span class=ss>&#39;comint-previous-input</span><span class=p>)</span>
+<span class=p>(</span><span class=nf>define-key</span> <span class=nv>comint-mode-map</span> <span class=p>(</span><span class=nv>kbd</span> <span class=s>&#34;&lt;down&gt;&#34;</span><span class=p>)</span> <span class=ss>&#39;comint-next-input</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Enjoy Emacs :)</p>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2022-02-23
+</span>
+</p>
+</div>
+<footer class=post-footer>
+<div class=post-tags>
+<a href=/tags/emacs/>emacs</a>
+<a href=/tags/python/>python</a>
+</div>
+<nav class=post-nav>
+<a class=prev href=/post/2017/cat/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">Linux/Unix Shell 二三事之过滤器cat</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/post/2017/emacs_startup/>
+<span class="next-text nav-default">提高Emacs启动速度</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<div id=gitalk-container></div>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
+<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:'2017-02-22 00:00:00 \u002b0800 \u002b0800',title:'在Emacs中使用Ipython',clientID:'3c034c97f0926fafd2d6',clientSecret:'192051927d267ce83eb2ef10955890b7db2720ad',repo:'comment',owner:'ramsayleung',admin:['ramsayleung'],body:decodeURI(location.href)});gitalk.render('gitalk-container')</script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
+<a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<div class=busuanzi-footer>
+<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+</div>
+<span class=copyright-year>
+&copy;
+2017 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>
