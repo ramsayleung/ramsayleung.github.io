@@ -2,7 +2,7 @@
 title = "脚本分享"
 description = "share of my shell script snippet"
 date = 2017-04-22T00:00:00+08:00
-lastmod = 2022-02-23T22:45:06+08:00
+lastmod = 2022-02-23T22:49:01+08:00
 tags = ["shell", "linux", "command_line", "tool"]
 categories = ["tool"]
 draft = false
@@ -14,10 +14,9 @@ toc = true
 
 ## <span class="section-num">1</span> 准备工作 {#准备工作}
 
-因为我比较多的脚本都是基于 `percol` 这个神器，所以需要先安装 `percol`, 如果 不了解 `percol` 的话，可以翻看一下我之前的文章 [Linux/Unix Shell 二三事之神器percol](http://samrayleung.github.io/blog/2017/02/22/linux-unix-shell-%25E4%25BA%258C%25E4%25B8%2589%25E4%25BA%258B%25E4%25B9%258B%25E7%25A5%259E%25E5%2599%25A8percol/) .
+因为我比较多的脚本都是基于 `percol` 这个神器，所以需要先安装 `percol`, 如果 不了解 `percol` 的话，可以翻看一下我之前的文章 [Linux/Unix Shell 二三事之神器percol](https://ramsayleung.github.io/post/2017/percol/) .
 
-我一般将写好的函数 source 命令添加到 Shell. 例如脚本函数都在一个叫
-`tool_function.sh` 的文件里面，而我使用 Zsh, 则只需要在 `.zshrc` 添加一句语句：
+我一般将写好的函数 source 命令添加到 Shell. 例如脚本函数都在一个叫`tool_function.sh` 的文件里面，而我使用 Zsh, 则只需要在 `.zshrc` 添加一句语句：
 
 ```shell
 source /path/to/tool_function.sh
