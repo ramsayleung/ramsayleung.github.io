@@ -1,0 +1,284 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>大话Linux文件系统 - In Pursuit of Hubris</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="Ramsay Leung"><meta name=description content="an discussion about linux file system"><meta name=keywords content="Blog,Software,Enginering">
+<meta name=generator content="Hugo 0.92.2 with theme even">
+<link rel=canonical href=https://ramsayleung.github.io/post/2017/linux_file_system/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="大话Linux文件系统">
+<meta property="og:description" content="an discussion about linux file system">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ramsayleung.github.io/post/2017/linux_file_system/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2017-03-30T00:00:00+08:00">
+<meta property="article:modified_time" content="2022-02-23T21:41:33+08:00">
+<meta itemprop=name content="大话Linux文件系统">
+<meta itemprop=description content="an discussion about linux file system"><meta itemprop=datePublished content="2017-03-30T00:00:00+08:00">
+<meta itemprop=dateModified content="2022-02-23T21:41:33+08:00">
+<meta itemprop=wordCount content="3138">
+<meta itemprop=keywords content="linux,"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="大话Linux文件系统">
+<meta name=twitter:description content="an discussion about linux file system"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/about_me>
+<li class=mobile-menu-item>About</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/about_me>About</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>大话Linux文件系统</h1>
+<div class=post-meta>
+<span class=post-time> 2017-03-30 </span>
+<div class=post-category>
+<a href=/categories/linux/> linux </a>
+</div>
+<span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#file-system><span class=section-num>1</span> File System</a></li>
+<li><a href=#journaling><span class=section-num>2</span> Journaling</a></li>
+<li><a href=#comparison><span class=section-num>3</span> Comparison</a>
+<ul>
+<li><a href=#ext><span class=section-num>3.1</span> Ext</a></li>
+<li><a href=#ext2><span class=section-num>3.2</span> Ext2</a></li>
+<li><a href=#ext3><span class=section-num>3.3</span> Ext3</a></li>
+<li><a href=#ext4><span class=section-num>3.4</span> Ext4</a></li>
+<li><a href=#zfs><span class=section-num>3.5</span> ZFS</a></li>
+<li><a href=#brtfs><span class=section-num>3.6</span> BrtFS</a></li>
+<li><a href=#jfs><span class=section-num>3.7</span> JFS</a></li>
+<li><a href=#reiserfs><span class=section-num>3.8</span> ReiserFS</a></li>
+<li><a href=#xfs><span class=section-num>3.9</span> XFS</a></li>
+</ul>
+</li>
+<li><a href=#小结><span class=section-num>4</span> 小结</a></li>
+<li><a href=#参考><span class=section-num>5</span> 参考</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<p>不久前，Apple 的文件系统 (Apple File System) 新推出，然后各方便一起挤身向前对APFS &ldquo;评头品足&rdquo;,我是不了解 APFS ,所以也没有什么发言权嘛，不过话分两头；</p>
+<p>对Linux的文件系统，我还是有了解过的，所以可以聊聊Linux 的文件系统；与Windows 和Apple 两家商业公司不同，Linux 是开源的，因此，只要你有足够的时间和能力，你就可以自己写一个文件系统，这个也是Linux 文件系统众多的主要原因。</p>
+<p>那么有众多的Linux 文件系统，它们的差异,优缺点又是什么呢？</p>
+<h2 id=file-system><span class=section-num>1</span> File System</h2>
+<p>在开始 &ldquo;大话&rdquo; 各种文件系统的时候，我先想谈谈什么是文件系统。</p>
+<p>一般用户平时都会有上百G 的数据，那么多的数据，应该怎么保存呢？</p>
+<p>不知道怎么回答，可以先类比一下，想象一下你有很多书，你会怎么放置你的书籍呢？直接丢在客厅中间？或者是按书内容分类 放到书架上？如果分类的话，是按怎么划分呢？你买回来的书架一次可以放置多少书籍呢？怎么才能更快地找到你要找的书呢？</p>
+<p>其实文件系统处理，检索文件和你放置，查找书籍是类似的！此外,在Windows 下常见到的格式化，其实就是在不同的文件系统之间切换，那么为什么数据会丢失呢？</p>
+<p>你可以类比成你家里装修，想换新的书架，但是如果不把原来书架上的书籍搬出准备装修的屋子，装修时肯定会损坏书籍嘛！</p>
+<h2 id=journaling><span class=section-num>2</span> Journaling</h2>
+<p>在比较文件系统之前，先聊聊文件系统中的日志 (Journaling), 而有些文件系统是有日志功能的，而有些是没有日志功能的；</p>
+<p>为了了解它们之间的差异，就需要先了解一下什么是日志。日志的出现本质而言都是为了更好地保存数据。</p>
+<p>假设你正在向磁盘里写入文件，突然间断电了，但是你的文件是没有完成写入磁盘的，而你的电脑是不知道是否已经完成写入，所以下次重新来电启动电脑的时候，是没有“人”告知电脑是否要重新写数据的？这样数据就丢失了。</p>
+<p>能不能在文件还没有完成写回磁盘又中途出现错误的时候，告诉系统你的 目标文件还有数据没有写回磁盘，你要记得完成这项工作阿？</p>
+<p>当然可以，这就是文件系统中日志的功能，在日志的协助下，你的电脑会在日志中记着，“我要把某某文件写入到磁盘”，如果顺利完成写入磁盘工作，日志的这项记录就会被删除，如果中途出现异常，例 如断电了，重新启动的时候，你的系统就会发现，我要写入某某文件的工作还没完成，它就会继续未了的事业，这样就可以保障数据不会丢失。</p>
+<p>(而你日常工作生活中，数据的丢失是因为你没有保存数据，即没有把数据写入到磁盘). 如图：</p>
+<figure><img src=https://www.howtogeek.com/wp-content/uploads/2017/02/img_58af43716360e.png%20>
+</figure>
+<p>因为写入日志需要额外的工作，所以需要额外的资源，但是这样的消耗是相当值得地。</p>
+<h2 id=comparison><span class=section-num>3</span> Comparison</h2>
+<p>下面对比一下 各种文件系统的特性</p>
+<figure><img src=/ox-hugo/comparison_file_system.png alt="Figure 1: 图来自archwiki"><figcaption>
+<p><span class=figure-number>Figure 1: </span>图来自archwiki</p>
+</figcaption>
+</figure>
+<p>如果你想了解你的Linux 内核所支持的文件系统，你可以</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>cat /proc/filesystems
+</code></pre></td></tr></table>
+</div>
+</div><p>现在就来比较一下各种常见的Linux文件系统</p>
+<h3 id=ext><span class=section-num>3.1</span> Ext</h3>
+<p>Ext 是指"Extended file system(扩展文件系统)",应该算是Linux 文件系统里面的老大爷了，它是从经典的 Minix 的文件系统衍生过来的，为Linux 专门设计的，但是它缺乏很多重要的特性，比如上面提到的日志功能，所以大部份的Linux 发行版本都是不支持 Ext 了</p>
+<h3 id=ext2><span class=section-num>3.2</span> Ext2</h3>
+<p>Ext2 也是不支持日志的，但是它是第一个支持扩展文件属性和2T 容量的Linux 文件系统，但是正由于Ext2 不支持日志功能，它可以更少地写磁盘，所以它适合像USB 这种闪存，但是Ext2 无法被Windows 识别的，所以它的闪存功能更多地被FAT32和exFAT所代替，换言之，Ext2 用的也不多</p>
+<h3 id=ext3><span class=section-num>3.3</span> Ext3</h3>
+<p>Ext3 就是Ext2 带有日志功能的扩展，并且Ext3 也向后兼容Ext2,所以你在Ext2 和Ext3 之间切换也是不需要重新格式化滴，但是最常用的还不是Ext3,而是Ext4 :)</p>
+<h3 id=ext4><span class=section-num>3.4</span> Ext4</h3>
+<p>Ext4 也是向后兼容 Ext3 和Ext2 的，所以你是可以在Ext4,Ext3,Ext2 之间切换而无需格式化文件系统。</p>
+<p>Ext4 包含很多新的特性，例如支持存储更大的文件，支持延迟分配以 改进对闪存的支持，还能有效地减少文件的碎片化，提高利用效率。</p>
+<p>显而易见，Ext4 是最先进的 Ext 系列的文件系统，也是大部分Linux 发行版本的默认文件系统</p>
+<h3 id=zfs><span class=section-num>3.5</span> ZFS</h3>
+<p>ZFS 最初是给Sun 的Solaris 设计的，Sun 被收购后，现在是属于Oracle 的，ZFS 支持 大量非常先进的特性，比如说 快照 (snapshot),动态存储 (dynamic disk striping), 驱动池等 (drive pool);</p>
+<p>此外ZFS 文件的每个文件都是有校验和的，所以通过检查校验和，就能确定文件的完整性。但是，虽说ZFS 非常强大，却因为ZFS license 的缘故， ZFS 无法添加到 Linux 内核的。如果你非常想要尝试ZFS 的话，你可以自行添加对Linux 发行版本上面添加ZFS 的支持</p>
+<h3 id=brtfs><span class=section-num>3.6</span> BrtFS</h3>
+<p>Brtfs 是由Oracle 设计的一个支持写时复制 (copy on write) 的现代文件系统;</p>
+<p>而Btrfs 的意思是 B 树文件系统 (B-Tree File System),它支持大量非常先进的特性，例如 动态inode 分配，数据校验和，有效的增量备份，驱动池，最大支持 2^64 byte 容量即16 Eib 大的文件。</p>
+<p>BtrFS 是被设计成取代Ext 系列的文件系统的，只不过因为现在的BtrFS 还没有足够成熟，所以还没有大公司在生产环境使用 BtrFS,但是BtrFS 的未来可期</p>
+<h3 id=jfs><span class=section-num>3.7</span> JFS</h3>
+<p>JFS 是IBM 为IBM 自家的AIX 操作系统设计的日志文件系统 (Journaled File System), 后来迁移到了Linux 系统上 (HP-UX 也有一个叫做JFS 的文件系统).</p>
+<p>在AIX 系统上是存在过两代的JFS文件系统的，分别是 JFS1和JFS2,而Linux 上就只有JFS2了(Linux 上的JFS都是指JFS2)。</p>
+<p>JFS 无论在处理大文件还是小文件都有非常不错的表现，并且CPU 占用也是比较低的；JFS 也是支持非常多的特性的，例如 B+ 树，动态Inode 分配，并发IO等。</p>
+<p>JFS 也是一个设计优秀的文件系统并且支持大部分的Linux 发行版本，但是因为它最初是为AIX 设计，所以在处于生产环境上的Linux服务器的测试就不如Ext :(.</p>
+<h3 id=reiserfs><span class=section-num>3.8</span> ReiserFS</h3>
+<p>ReiserFs 是第一个被引进Linux 标准内核的日志文件系统(在内核版本为2.4.1的时候引进),也是Linux 文件系统的一次飞跃，那时的ReiserFS 包含了很多Ext 没有的新特性。</p>
+<p>虽说 ReiserFS 在Linux 有一个非常华丽的开头，但是后来ReiserFS 的开发就陷入了停滞，因为ReiserFS 的核心开发者Hans Reiser(ReiserFS 名字的来由)因为谋杀妻子而被收监 :(。</p>
+<p>而后来的ReiserFS 也没有出现在主要的Linux 内核版本里面，虽说ReiserFS是非常好的文件系统，但是它前景如何，我们也只能拭目以待了</p>
+<h3 id=xfs><span class=section-num>3.9</span> XFS</h3>
+<p>XFS 最初是Silicon Graphics 为SGI IRX 操作系统设计的64位高性能文件系统，在2001 年迁移到了Linux.</p>
+<p>得益于XFS 基于 allocation groups 的设计，XFS 拥有非常优秀的并行IO 能力，并支持延迟分配 (delayed allocation) 以改进文件碎片化，在某种程度上，XFS 和Ext 有一定的相似；</p>
+<p>此外，虽说XFS 是高性能的文件系统，但是那只是针对大文件而言的，对于小文件XFS 就有点力所不能及 (当然，这是相对而言).</p>
+<p>所以如果是需要 经常处理大文件的服务器，XFS 会是一个很好的选择</p>
+<h2 id=小结><span class=section-num>4</span> 小结</h2>
+<p>如果将Linux 的文件系统进行分类的话，还可以分成 FUSE (Filesystem in Userspace,
+让用户在没有权限的情况下，创建自己的文件系统), Stackable file System (先进的多层次统一文件系统), Read-only file systems (只读文件系统), Clustered file systems
+(集群文件系统)等等。</p>
+<p>Linux 的文件系统还有很多，每一种都有自己的特点；但是如果你想问：&ldquo;Linux 最好的文件系统是什么？";这个问题就跟 &ldquo;最好的Linux 发行版本是什么？&rdquo;, &ldquo;最好的文本编辑器是什么？&rdquo; 一样，是没有标准答案，一千个人都有一千个哈姆雷特了，你的哈姆雷特是什么样子，只有你自己清楚。</p>
+<p>不同的文件系统对应不同的场景，只有针对特定场景的最优解决方案！如果还不知道怎么选择，那就选择Ext4 吧，无法做出选 择时，默认的就是最好 :)</p>
+<h2 id=参考><span class=section-num>5</span> 参考</h2>
+<ul>
+<li><a href=https://en.wikipedia.org/wiki/File_system>https://en.wikipedia.org/wiki/File_system</a></li>
+<li><a href=https://btrfs.wiki.kernel.org/index.php/Main_Page>https://btrfs.wiki.kernel.org/index.php/Main_Page</a></li>
+<li><a href=https://en.wikipedia.org/wiki/JFS_(file_system)>https://en.wikipedia.org/wiki/JFS_(file_system)</a></li>
+<li><a href=https://en.wikipedia.org/wiki/ReiserFS>https://en.wikipedia.org/wiki/ReiserFS</a></li>
+<li><a href=https://www.howtogeek.com/howto/33552/htg-explains-which-linux-file-system-should-you-choose/>https://www.howtogeek.com/howto/33552/htg-explains-which-linux-file-system-should-you-choose/</a></li>
+<li><a href=https://en.wikipedia.org/wiki/ZFS>https://en.wikipedia.org/wiki/ZFS</a></li>
+<li><a href=https://en.wikipedia.org/wiki/XFS>https://en.wikipedia.org/wiki/XFS</a></li>
+<li><a href=https://wiki.archlinux.org/index.php/file_systems>https://wiki.archlinux.org/index.php/file_systems</a></li>
+</ul>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2022-02-23
+</span>
+</p>
+</div>
+<footer class=post-footer>
+<div class=post-tags>
+<a href=/tags/linux/>linux</a>
+</div>
+<nav class=post-nav>
+<a class=prev href=/post/2017/bloom_filter/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">爬虫高效去重之布隆过滤器</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/post/2017/about_tool_about_tweak/>
+<span class="next-text nav-default">关于工具,关于折腾</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<div id=gitalk-container></div>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
+<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:'2017-03-30 00:00:00 \u002b0800 \u002b0800',title:'大话Linux文件系统',clientID:'3c034c97f0926fafd2d6',clientSecret:'192051927d267ce83eb2ef10955890b7db2720ad',repo:'comment',owner:'ramsayleung',admin:['ramsayleung'],body:decodeURI(location.href)});gitalk.render('gitalk-container')</script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
+<a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<div class=busuanzi-footer>
+<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+</div>
+<span class=copyright-year>
+&copy;
+2017 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>

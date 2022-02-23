@@ -1,0 +1,640 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>Java UUID 源码剖析 - In Pursuit of Hubris</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="Ramsay Leung"><meta name=description content="a introduction about uuid"><meta name=keywords content="Blog,Software,Enginering">
+<meta name=generator content="Hugo 0.92.2 with theme even">
+<link rel=canonical href=https://ramsayleung.github.io/post/2017/uuid/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="Java UUID 源码剖析">
+<meta property="og:description" content="a introduction about uuid">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ramsayleung.github.io/post/2017/uuid/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2017-05-18T00:00:00+08:00">
+<meta property="article:modified_time" content="2022-02-23T22:34:25+08:00">
+<meta itemprop=name content="Java UUID 源码剖析">
+<meta itemprop=description content="a introduction about uuid"><meta itemprop=datePublished content="2017-05-18T00:00:00+08:00">
+<meta itemprop=dateModified content="2022-02-23T22:34:25+08:00">
+<meta itemprop=wordCount content="2612">
+<meta itemprop=keywords content="java,"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="Java UUID 源码剖析">
+<meta name=twitter:description content="a introduction about uuid"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/about_me>
+<li class=mobile-menu-item>About</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/about_me>About</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>Java UUID 源码剖析</h1>
+<div class=post-meta>
+<span class=post-time> 2017-05-18 </span>
+<div class=post-category>
+<a href=/categories/java/> java </a>
+</div>
+<span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#uuid-variant><span class=section-num>1</span> UUID variant</a></li>
+<li><a href=#layout-of-variant2--leach-salz--uuid><span class=section-num>2</span> Layout of variant2(Leach-Salz) UUID</a></li>
+<li><a href=#uuid-constructor><span class=section-num>3</span> UUID constructor</a>
+<ul>
+<li><a href=#private-uuid><span class=section-num>3.1</span> private UUID</a></li>
+<li><a href=#public-uuid><span class=section-num>3.2</span> public UUID</a></li>
+</ul>
+</li>
+<li><a href=#uuid-type><span class=section-num>4</span> UUID type</a>
+<ul>
+<li><a href=#type-4-randomly-generated-uuid><span class=section-num>4.1</span> type 4 &ndash; randomly generated UUID</a></li>
+<li><a href=#type-3-name-based-uuid><span class=section-num>4.2</span> type 3 &ndash; name-based UUID</a></li>
+<li><a href=#type-2-dec-security><span class=section-num>4.3</span> type 2 &ndash; DEC security</a></li>
+<li><a href=#type-1-time-based-uuid><span class=section-num>4.4</span> type 1 &ndash; time-based UUID</a></li>
+</ul>
+</li>
+<li><a href=#fromstring-tostring><span class=section-num>5</span> FromString()/ToString()</a>
+<ul>
+<li><a href=#tostring><span class=section-num>5.1</span> toString()</a></li>
+<li><a href=#fromstring><span class=section-num>5.2</span> fromString()</a></li>
+</ul>
+</li>
+<li><a href=#使用场景><span class=section-num>6</span> 使用场景</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<p>笔者近来闲来无事，又因为有需要构造全局唯一 ID 的需求，所以就去看了 UUID 这个提供稳定的系统唯一标识符的类的源码</p>
+<h2 id=uuid-variant><span class=section-num>1</span> UUID variant</h2>
+<p>事实上是存在很多中 UID 的不同实现的的，但是 UUID 里面默认是使用 &ldquo;加盐&rdquo;(Leach-Salz)实现，但是也可以使用其他的实现。</p>
+<h2 id=layout-of-variant2--leach-salz--uuid><span class=section-num>2</span> Layout of variant2(Leach-Salz) UUID</h2>
+<p>加盐的 UUID 的结构布局如下：最高位 (most significant) 的64 位长整型值由下面的的无符号位组成：</p>
+<ul>
+<li>0xFFFFFFFF00000000 time_low //时间的低位值</li>
+<li>0x00000000FFFF0000 time_mid //时间的中位值</li>
+<li>0x000000000000F000 version // 说明 UUID 的类型，1,2,3,4 分别代表 基于时间，基于 DEC，基于命名，和随机产生的 UUID</li>
+<li>0x0000000000000FFF time_hi //时间的高位值</li>
+</ul>
+<p>最低位 (least significant) 的 64 位长整型由以下的无符号位组成：</p>
+<ul>
+<li>0xC000000000000000 variant //说明UUID 的结构布局，并且只有在类型 2 (加盐类型), 结构布局才有效</li>
+<li>0x3FFF000000000000 clock_seq</li>
+<li>0x0000FFFFFFFFFFFF node</li>
+</ul>
+<h2 id=uuid-constructor><span class=section-num>3</span> UUID constructor</h2>
+<p>UUID 类有两个构造函数，分别是 public 和 private 修饰的构造函数</p>
+<h3 id=private-uuid><span class=section-num>3.1</span> private UUID</h3>
+<p>private 类型的构造函数以一个 byte 数组为构造参数：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java>
+<span class=cm>/*
+</span><span class=cm> * Private constructor which uses a byte array to construct the new UUID.
+</span><span class=cm> */</span>
+<span class=kd>private</span> <span class=nf>UUID</span><span class=o>(</span><span class=kt>byte</span><span class=o>[]</span> <span class=n>data</span><span class=o>)</span> <span class=o>{</span>
+    <span class=kt>long</span> <span class=n>msb</span> <span class=o>=</span> <span class=n>0</span><span class=o>;</span>
+    <span class=kt>long</span> <span class=n>lsb</span> <span class=o>=</span> <span class=n>0</span><span class=o>;</span>
+    <span class=k>assert</span> <span class=n>data</span><span class=o>.</span><span class=na>length</span> <span class=o>==</span> <span class=n>16</span> <span class=o>:</span> <span class=s>&#34;data must be 16 bytes in length&#34;</span><span class=o>;</span>
+    <span class=k>for</span> <span class=o>(</span><span class=kt>int</span> <span class=n>i</span><span class=o>=</span><span class=n>0</span><span class=o>;</span> <span class=n>i</span><span class=o>&lt;</span><span class=n>8</span><span class=o>;</span> <span class=n>i</span><span class=o>++)</span>
+	<span class=n>msb</span> <span class=o>=</span> <span class=o>(</span><span class=n>msb</span> <span class=o>&lt;&lt;</span> <span class=n>8</span><span class=o>)</span> <span class=o>|</span> <span class=o>(</span><span class=n>data</span><span class=o>[</span><span class=n>i</span><span class=o>]</span> <span class=o>&amp;</span> <span class=n>0xff</span><span class=o>);</span>
+    <span class=k>for</span> <span class=o>(</span><span class=kt>int</span> <span class=n>i</span><span class=o>=</span><span class=n>8</span><span class=o>;</span> <span class=n>i</span><span class=o>&lt;</span><span class=n>16</span><span class=o>;</span> <span class=n>i</span><span class=o>++)</span>
+	<span class=n>lsb</span> <span class=o>=</span> <span class=o>(</span><span class=n>lsb</span> <span class=o>&lt;&lt;</span> <span class=n>8</span><span class=o>)</span> <span class=o>|</span> <span class=o>(</span><span class=n>data</span><span class=o>[</span><span class=n>i</span><span class=o>]</span> <span class=o>&amp;</span> <span class=n>0xff</span><span class=o>);</span>
+    <span class=k>this</span><span class=o>.</span><span class=na>mostSigBits</span> <span class=o>=</span> <span class=n>msb</span><span class=o>;</span>
+    <span class=k>this</span><span class=o>.</span><span class=na>leastSigBits</span> <span class=o>=</span> <span class=n>lsb</span><span class=o>;</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>private 构造器完成的工作主要是通过左移位，与运算和或运算对 mostSigBit 和 leastSigBit 赋值。 private的构造函数只能在类本身被调用, 该构造器的用法会在接下来阐述。</p>
+<h3 id=public-uuid><span class=section-num>3.2</span> public UUID</h3>
+<p>public 类型的构造器接受两个 <code>long</code> 类型的参数，即上面提到的最高位和最低位：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=cm>/**
+</span><span class=cm> * Constructs a new {@code UUID} using the specified data.  {@code
+</span><span class=cm> * mostSigBits} is used for the most significant 64 bits of the {@code
+</span><span class=cm> * UUID} and {@code leastSigBits} becomes the least significant 64 bits of
+</span><span class=cm> * the {@code UUID}.
+</span><span class=cm> *
+</span><span class=cm> * @param  mostSigBits
+</span><span class=cm> *         The most significant bits of the {@code UUID}
+</span><span class=cm> *
+</span><span class=cm> * @param  leastSigBits
+</span><span class=cm> *         The least significant bits of the {@code UUID}
+</span><span class=cm> */</span>
+<span class=kd>public</span> <span class=nf>UUID</span><span class=o>(</span><span class=kt>long</span> <span class=n>mostSigBits</span><span class=o>,</span> <span class=kt>long</span> <span class=n>leastSigBits</span><span class=o>)</span> <span class=o>{</span>
+    <span class=k>this</span><span class=o>.</span><span class=na>mostSigBits</span> <span class=o>=</span> <span class=n>mostSigBits</span><span class=o>;</span>
+    <span class=k>this</span><span class=o>.</span><span class=na>leastSigBits</span> <span class=o>=</span> <span class=n>leastSigBits</span><span class=o>;</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>使用最高位和最低位的值来构造 UUID, 而最高位和最低位的赋值是在 private 的构造器里面完成的。</p>
+<h2 id=uuid-type><span class=section-num>4</span> UUID type</h2>
+<h3 id=type-4-randomly-generated-uuid><span class=section-num>4.1</span> type 4 &ndash; randomly generated UUID</h3>
+<p>现在就看看使用频率最高的 UUID 类型 &ndash; 随机的 UUID 以及随机生成 UUID 的函数：
+<code>randomUUID()</code></p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=cm>/**
+</span><span class=cm> * Static factory to retrieve a type 4 (pseudo randomly generated) UUID.
+</span><span class=cm> *
+</span><span class=cm> * The {@code UUID} is generated using a cryptographically strong pseudo
+</span><span class=cm> * random number generator.
+</span><span class=cm> *
+</span><span class=cm> * @return  A randomly generated {@code UUID}
+</span><span class=cm> */</span>
+<span class=kd>public</span> <span class=kd>static</span> <span class=n>UUID</span> <span class=nf>randomUUID</span><span class=o>()</span> <span class=o>{</span>
+    <span class=n>SecureRandom</span> <span class=n>ng</span> <span class=o>=</span> <span class=n>Holder</span><span class=o>.</span><span class=na>numberGenerator</span><span class=o>;</span>
+
+    <span class=kt>byte</span><span class=o>[]</span> <span class=n>randomBytes</span> <span class=o>=</span> <span class=k>new</span> <span class=kt>byte</span><span class=o>[</span><span class=n>16</span><span class=o>];</span>
+    <span class=n>ng</span><span class=o>.</span><span class=na>nextBytes</span><span class=o>(</span><span class=n>randomBytes</span><span class=o>);</span>
+    <span class=n>randomBytes</span><span class=o>[</span><span class=n>6</span><span class=o>]</span>  <span class=o>&amp;=</span> <span class=n>0x0f</span><span class=o>;</span>  <span class=cm>/* clear version        */</span>
+    <span class=n>randomBytes</span><span class=o>[</span><span class=n>6</span><span class=o>]</span>  <span class=o>|=</span> <span class=n>0x40</span><span class=o>;</span>  <span class=cm>/* set to version 4     */</span>
+    <span class=n>randomBytes</span><span class=o>[</span><span class=n>8</span><span class=o>]</span>  <span class=o>&amp;=</span> <span class=n>0x3f</span><span class=o>;</span>  <span class=cm>/* clear variant        */</span>
+    <span class=n>randomBytes</span><span class=o>[</span><span class=n>8</span><span class=o>]</span>  <span class=o>|=</span> <span class=n>0x80</span><span class=o>;</span>  <span class=cm>/* set to IETF variant  */</span>
+    <span class=k>return</span> <span class=k>new</span> <span class=n>UUID</span><span class=o>(</span><span class=n>randomBytes</span><span class=o>);</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>关于调用到的 <code>Holder</code> 变量的定义：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=cm>/*
+</span><span class=cm> * The random number generator used by this class to create random
+</span><span class=cm> * based UUIDs. In a holder class to defer initialization until needed.
+</span><span class=cm> */</span>
+<span class=kd>private</span> <span class=kd>static</span> <span class=kd>class</span> <span class=nc>Holder</span> <span class=o>{</span>
+    <span class=kd>static</span> <span class=kd>final</span> <span class=n>SecureRandom</span> <span class=n>numberGenerator</span> <span class=o>=</span> <span class=k>new</span> <span class=n>SecureRandom</span><span class=o>();</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上面用到 <code>java.security.SecureRandom</code> 类来生成字节数组， <code>SecureRandom</code> 是被认为是达到了加密强度 (cryptographically strong) 并且因为不同的 JVM 而有不同的实现的。所以可以保证产生足够 &ldquo;随机"的随机数以保证 UUID 的唯一性。</p>
+<p>然后在即将用来构造的 UUID 的字节数组重置和添加关于 UUID 的相关信息，例如版本，类型信息等，然后把处理好的字节数组传到 private 的构造器以构造 UUID。这里的<code>randomUUID</code> 静态方法就是通过静态工厂的方式构造 UUID.</p>
+<h3 id=type-3-name-based-uuid><span class=section-num>4.2</span> type 3 &ndash; name-based UUID</h3>
+<p>在上面关于 UUID 结构布局的时候提到，UUID 有四种类型的实现，而类型3 就是基于命名的实现：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=cm>/**
+</span><span class=cm> * Static factory to retrieve a type 3 (name based) {@code UUID} based on
+</span><span class=cm> * the specified byte array.
+</span><span class=cm> *
+</span><span class=cm> * @param  name
+</span><span class=cm> *         A byte array to be used to construct a {@code UUID}
+</span><span class=cm> *
+</span><span class=cm> * @return  A {@code UUID} generated from the specified array
+</span><span class=cm> */</span>
+<span class=kd>public</span> <span class=kd>static</span> <span class=n>UUID</span> <span class=nf>nameUUIDFromBytes</span><span class=o>(</span><span class=kt>byte</span><span class=o>[]</span> <span class=n>name</span><span class=o>)</span> <span class=o>{</span>
+    <span class=n>MessageDigest</span> <span class=n>md</span><span class=o>;</span>
+    <span class=k>try</span> <span class=o>{</span>
+	<span class=n>md</span> <span class=o>=</span> <span class=n>MessageDigest</span><span class=o>.</span><span class=na>getInstance</span><span class=o>(</span><span class=s>&#34;MD5&#34;</span><span class=o>);</span>
+    <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>NoSuchAlgorithmException</span> <span class=n>nsae</span><span class=o>)</span> <span class=o>{</span>
+	<span class=k>throw</span> <span class=k>new</span> <span class=n>InternalError</span><span class=o>(</span><span class=s>&#34;MD5 not supported&#34;</span><span class=o>,</span> <span class=n>nsae</span><span class=o>);</span>
+    <span class=o>}</span>
+    <span class=kt>byte</span><span class=o>[]</span> <span class=n>md5Bytes</span> <span class=o>=</span> <span class=n>md</span><span class=o>.</span><span class=na>digest</span><span class=o>(</span><span class=n>name</span><span class=o>);</span>
+    <span class=n>md5Bytes</span><span class=o>[</span><span class=n>6</span><span class=o>]</span>  <span class=o>&amp;=</span> <span class=n>0x0f</span><span class=o>;</span>  <span class=cm>/* clear version        */</span>
+    <span class=n>md5Bytes</span><span class=o>[</span><span class=n>6</span><span class=o>]</span>  <span class=o>|=</span> <span class=n>0x30</span><span class=o>;</span>  <span class=cm>/* set to version 3     */</span>
+    <span class=n>md5Bytes</span><span class=o>[</span><span class=n>8</span><span class=o>]</span>  <span class=o>&amp;=</span> <span class=n>0x3f</span><span class=o>;</span>  <span class=cm>/* clear variant        */</span>
+    <span class=n>md5Bytes</span><span class=o>[</span><span class=n>8</span><span class=o>]</span>  <span class=o>|=</span> <span class=n>0x80</span><span class=o>;</span>  <span class=cm>/* set to IETF variant  */</span>
+    <span class=k>return</span> <span class=k>new</span> <span class=n>UUID</span><span class=o>(</span><span class=n>md5Bytes</span><span class=o>);</span>
+<span class=o>}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p><code>MessageDigest</code> 是 JDK 提供用来计算散列值的类，使用的散列算法包括Sha-1,Sha-256 或者是 MD5 等等。</p>
+<p><code>nameUUIDFromBytes</code> 使用 MD5 算法计算传进来的参数 name 的散列值，然后在散列值重置，添加 UUID 信息，然后再使用生成的散列值 (字节数组)传递给 private 构造器以构造 UUID.</p>
+<p>这里的 <code>nameUUIDFromBytes</code> 静态方法也是通过静态工厂的方式构造 UUID.</p>
+<h3 id=type-2-dec-security><span class=section-num>4.3</span> type 2 &ndash; DEC security</h3>
+<p>在 JDK 的 UUID 类中并未提供 基于 DEC 类型的 UUID 的实现。</p>
+<h3 id=type-1-time-based-uuid><span class=section-num>4.4</span> type 1 &ndash; time-based UUID</h3>
+<p>与基于命名和随机生成的 UUID 都有一个静态工厂方法不一样， 基于时间的 UUID 并不存在静态工厂方法，time-based UUID 是基于一系列相关的方法的：</p>
+<h4 id=timestamp><span class=section-num>4.4.1</span> timestamp</h4>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=kt>long</span> <span class=nf>timestamp</span><span class=o>()</span> <span class=o>{</span>
+    <span class=k>if</span> <span class=o>(</span><span class=n>version</span><span class=o>()</span> <span class=o>!=</span> <span class=n>1</span><span class=o>)</span> <span class=o>{</span>
+	<span class=k>throw</span> <span class=k>new</span> <span class=n>UnsupportedOperationException</span><span class=o>(</span><span class=s>&#34;Not a time-based UUID&#34;</span><span class=o>);</span>
+    <span class=o>}</span>
+
+    <span class=k>return</span> <span class=o>(</span><span class=n>mostSigBits</span> <span class=o>&amp;</span> <span class=n>0x0FFFL</span><span class=o>)</span> <span class=o>&lt;&lt;</span> <span class=n>48</span>
+	<span class=o>|</span> <span class=o>((</span><span class=n>mostSigBits</span> <span class=o>&gt;&gt;</span> <span class=n>16</span><span class=o>)</span> <span class=o>&amp;</span> <span class=n>0x0FFFFL</span><span class=o>)</span> <span class=o>&lt;&lt;</span> <span class=n>32</span>
+	<span class=o>|</span> <span class=n>mostSigBits</span> <span class=o>&gt;&gt;&gt;</span> <span class=n>32</span><span class=o>;</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>60 个bit长的时间戳是由上面提到的 <code>time_low</code> <code>time_mid</code> <code>time_hi</code> 构造而成的。</p>
+<p>而时间的计算是从 UTC 时间的 1582 年 10月 15 的凌晨开始算起，结果的值域在 100-nanosecond 之间。</p>
+<p>但是这个时间戳的值只是对基于时间的 UUID 有效的，对于其他类型的 UUID, <code>timestamp()</code> 方法会抛出<code>UnsuportedOperationException</code>异常。</p>
+<h4 id=clocksequence><span class=section-num>4.4.2</span> clockSequence()</h4>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=kt>int</span> <span class=nf>clockSequence</span><span class=o>()</span> <span class=o>{</span>
+    <span class=k>if</span> <span class=o>(</span><span class=n>version</span><span class=o>()</span> <span class=o>!=</span> <span class=n>1</span><span class=o>)</span> <span class=o>{</span>
+	<span class=k>throw</span> <span class=k>new</span> <span class=n>UnsupportedOperationException</span><span class=o>(</span><span class=s>&#34;Not a time-based UUID&#34;</span><span class=o>);</span>
+    <span class=o>}</span>
+
+    <span class=k>return</span> <span class=o>(</span><span class=kt>int</span><span class=o>)((</span><span class=n>leastSigBits</span> <span class=o>&amp;</span> <span class=n>0x3FFF000000000000L</span><span class=o>)</span> <span class=o>&gt;&gt;&gt;</span> <span class=n>48</span><span class=o>);</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>14 个 bit 长的时钟序列值是从 该UUID 的时钟序列域构造出来的(clock sequence filed).</p>
+<p>而时钟序列域通常是用来保证基于时间的 UUID 的唯一性。跟 <code>timestamp()</code> 函数一样， <code>clockSequence()</code> 函数也只对基于时间的 UUID 有效。 对于其他类型的 UUID, 它会抛出<code>UnsuportedOperationException</code>异常。</p>
+<h4 id=node><span class=section-num>4.4.3</span> node()</h4>
+<p>48 个 bit 长的节点值是从该 UUID 的节点域 (node filed) 构造出来的。节点域通过保存运行 JVM 机器的局域网地址 (IEEE 802) 来保证该机器生成 UUID 的空间唯一性。</p>
+<p>和上述方法一样， <code>node()</code> 方法只对基于时间的 UUID 有效，对于其他类型的 UUID 该方法会抛出<code>UnsuportedOperationException</code>异常。</p>
+<hr>
+<p>对应 field 的图示</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>0                   1                   2                   3
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                          time_low                             |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|       time_mid                |         time_hi_and_version   |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|clk_seq_hi_res |  clk_seq_low  |         node (0-1)            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                         node (2-5)                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=fromstring-tostring><span class=section-num>5</span> FromString()/ToString()</h2>
+<h3 id=tostring><span class=section-num>5.1</span> toString()</h3>
+<p>以字符串的形式表示 UUID, 格式说明：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>hexDigit               =
+	&#34;0&#34; | &#34;1&#34; | &#34;2&#34; | &#34;3&#34; | &#34;4&#34; | &#34;5&#34; | &#34;6&#34; | &#34;7&#34; | &#34;8&#34; | &#34;9&#34;
+	| &#34;a&#34; | &#34;b&#34; | &#34;c&#34; | &#34;d&#34; | &#34;e&#34; | &#34;f&#34;
+	| &#34;A&#34; | &#34;B&#34; | &#34;C&#34; | &#34;D&#34; | &#34;E&#34; | &#34;F&#34;
+hexOctet               = &lt;hexDigit&gt;&lt;hexDigit&gt;
+time_low               = 4*&lt;hexOctet&gt;
+time_mid               = 2*&lt;hexOctet&gt;
+time_high_and_version  = 2*&lt;hexOctet&gt;
+variant_and_sequence   = 2*&lt;hexOctet&gt;
+node                   = 6*&lt;hexOctet&gt;
+
+UUID = &lt;time_low&gt; &#34;-&#34; &lt;time_mid&gt; &#34;-&#34; &lt;time_high_and_version&gt; &#34;-&#34; &#34;variant_and_sequence&#34; &#34;-&#34; &lt;node&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p>而关于这些不同 field 的大小，之前的内容已经有图示，需要的可以去回顾。</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=cm>/** Returns val represented by the specified number of hex digits. */</span>
+<span class=kd>private</span> <span class=kd>static</span> <span class=n>String</span> <span class=nf>digits</span><span class=o>(</span><span class=kt>long</span> <span class=n>val</span><span class=o>,</span> <span class=kt>int</span> <span class=n>digits</span><span class=o>)</span> <span class=o>{</span>
+    <span class=kt>long</span> <span class=n>hi</span> <span class=o>=</span> <span class=n>1L</span> <span class=o>&lt;&lt;</span> <span class=o>(</span><span class=n>digits</span> <span class=o>*</span> <span class=n>4</span><span class=o>);</span>
+    <span class=k>return</span> <span class=n>Long</span><span class=o>.</span><span class=na>toHexString</span><span class=o>(</span><span class=n>hi</span> <span class=o>|</span> <span class=o>(</span><span class=n>val</span> <span class=o>&amp;</span> <span class=o>(</span><span class=n>hi</span> <span class=o>-</span> <span class=n>1</span><span class=o>))).</span><span class=na>substring</span><span class=o>(</span><span class=n>1</span><span class=o>);</span>
+<span class=o>}</span>
+
+<span class=kd>public</span> <span class=n>String</span> <span class=nf>toString</span><span class=o>()</span> <span class=o>{</span>
+    <span class=k>return</span> <span class=o>(</span><span class=n>digits</span><span class=o>(</span><span class=n>mostSigBits</span> <span class=o>&gt;&gt;</span> <span class=n>32</span><span class=o>,</span> <span class=n>8</span><span class=o>)</span> <span class=o>+</span> <span class=s>&#34;-&#34;</span> <span class=o>+</span>
+	    <span class=n>digits</span><span class=o>(</span><span class=n>mostSigBits</span> <span class=o>&gt;&gt;</span> <span class=n>16</span><span class=o>,</span> <span class=n>4</span><span class=o>)</span> <span class=o>+</span> <span class=s>&#34;-&#34;</span> <span class=o>+</span>
+	    <span class=n>digits</span><span class=o>(</span><span class=n>mostSigBits</span><span class=o>,</span> <span class=n>4</span><span class=o>)</span> <span class=o>+</span> <span class=s>&#34;-&#34;</span> <span class=o>+</span>
+	    <span class=n>digits</span><span class=o>(</span><span class=n>leastSigBits</span> <span class=o>&gt;&gt;</span> <span class=n>48</span><span class=o>,</span> <span class=n>4</span><span class=o>)</span> <span class=o>+</span> <span class=s>&#34;-&#34;</span> <span class=o>+</span>
+	    <span class=n>digits</span><span class=o>(</span><span class=n>leastSigBits</span><span class=o>,</span> <span class=n>12</span><span class=o>));</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=fromstring><span class=section-num>5.2</span> fromString()</h3>
+<p>与 <code>toString()</code> 函数功能相反， <code>fromString()</code> 函数的作用就是将字符串形式的对象解码成 UUID 对象：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=kd>static</span> <span class=n>UUID</span> <span class=nf>fromString</span><span class=o>(</span><span class=n>String</span> <span class=n>name</span><span class=o>)</span> <span class=o>{</span>
+    <span class=n>String</span><span class=o>[]</span> <span class=n>components</span> <span class=o>=</span> <span class=n>name</span><span class=o>.</span><span class=na>split</span><span class=o>(</span><span class=s>&#34;-&#34;</span><span class=o>);</span>
+    <span class=k>if</span> <span class=o>(</span><span class=n>components</span><span class=o>.</span><span class=na>length</span> <span class=o>!=</span> <span class=n>5</span><span class=o>)</span>
+	<span class=k>throw</span> <span class=k>new</span> <span class=n>IllegalArgumentException</span><span class=o>(</span><span class=s>&#34;Invalid UUID string: &#34;</span><span class=o>+</span><span class=n>name</span><span class=o>);</span>
+    <span class=k>for</span> <span class=o>(</span><span class=kt>int</span> <span class=n>i</span><span class=o>=</span><span class=n>0</span><span class=o>;</span> <span class=n>i</span><span class=o>&lt;</span><span class=n>5</span><span class=o>;</span> <span class=n>i</span><span class=o>++)</span>
+	<span class=n>components</span><span class=o>[</span><span class=n>i</span><span class=o>]</span> <span class=o>=</span> <span class=s>&#34;0x&#34;</span><span class=o>+</span><span class=n>components</span><span class=o>[</span><span class=n>i</span><span class=o>];</span>
+
+    <span class=kt>long</span> <span class=n>mostSigBits</span> <span class=o>=</span> <span class=n>Long</span><span class=o>.</span><span class=na>decode</span><span class=o>(</span><span class=n>components</span><span class=o>[</span><span class=n>0</span><span class=o>]).</span><span class=na>longValue</span><span class=o>();</span>
+    <span class=n>mostSigBits</span> <span class=o>&lt;&lt;=</span> <span class=n>16</span><span class=o>;</span>
+    <span class=n>mostSigBits</span> <span class=o>|=</span> <span class=n>Long</span><span class=o>.</span><span class=na>decode</span><span class=o>(</span><span class=n>components</span><span class=o>[</span><span class=n>1</span><span class=o>]).</span><span class=na>longValue</span><span class=o>();</span>
+    <span class=n>mostSigBits</span> <span class=o>&lt;&lt;=</span> <span class=n>16</span><span class=o>;</span>
+    <span class=n>mostSigBits</span> <span class=o>|=</span> <span class=n>Long</span><span class=o>.</span><span class=na>decode</span><span class=o>(</span><span class=n>components</span><span class=o>[</span><span class=n>2</span><span class=o>]).</span><span class=na>longValue</span><span class=o>();</span>
+
+    <span class=kt>long</span> <span class=n>leastSigBits</span> <span class=o>=</span> <span class=n>Long</span><span class=o>.</span><span class=na>decode</span><span class=o>(</span><span class=n>components</span><span class=o>[</span><span class=n>3</span><span class=o>]).</span><span class=na>longValue</span><span class=o>();</span>
+    <span class=n>leastSigBits</span> <span class=o>&lt;&lt;=</span> <span class=n>48</span><span class=o>;</span>
+    <span class=n>leastSigBits</span> <span class=o>|=</span> <span class=n>Long</span><span class=o>.</span><span class=na>decode</span><span class=o>(</span><span class=n>components</span><span class=o>[</span><span class=n>4</span><span class=o>]).</span><span class=na>longValue</span><span class=o>();</span>
+
+    <span class=k>return</span> <span class=k>new</span> <span class=n>UUID</span><span class=o>(</span><span class=n>mostSigBits</span><span class=o>,</span> <span class=n>leastSigBits</span><span class=o>);</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=使用场景><span class=section-num>6</span> 使用场景</h2>
+<p>UUID 一般用来生成全局唯一标识符，那么 UUID 是否能保证唯一呢？以<code>UUID.randomUUID()</code> 生成的 UUID 为例，从上面的源码，除了 version 和 variant是固定值之外，另外的 14 byte 都是足够随机的.</p>
+<p>如果你生成的是 128 bit 长的 UUID 的话，理论上是 2的14x8=114次方才会有一次重复。这是个什么概念的呢？ 即你每秒能 生成 10 亿个 UUID, 在100年以后，你就有 50%的可能性产生一个重复的 UUID了，是不是很开心呢？</p>
+<p>即使你使用 <code>UUID.randomUUID.getLeastSignificant()</code> 生成长整型的ID, 你理论上需要生成 2的56次方个 ID 后才会产生一个重复的 ID, 所以你可以放心地使用 UUID 了 :)</p>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2022-02-23
+</span>
+</p>
+</div>
+<footer class=post-footer>
+<div class=post-tags>
+<a href=/tags/java/>java</a>
+</div>
+<nav class=post-nav>
+<a class=prev href=/post/2017/distributed_system_unique_id/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">关于分布式系统唯一ID的探究</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/post/2017/share_shell_script/>
+<span class="next-text nav-default">脚本分享</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<div id=gitalk-container></div>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
+<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:'2017-05-18 00:00:00 \u002b0800 \u002b0800',title:'Java UUID 源码剖析',clientID:'3c034c97f0926fafd2d6',clientSecret:'192051927d267ce83eb2ef10955890b7db2720ad',repo:'comment',owner:'ramsayleung',admin:['ramsayleung'],body:decodeURI(location.href)});gitalk.render('gitalk-container')</script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
+<a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<div class=busuanzi-footer>
+<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+</div>
+<span class=copyright-year>
+&copy;
+2017 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>

@@ -1,0 +1,895 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>脚本分享 - In Pursuit of Hubris</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="Ramsay Leung"><meta name=description content="share of my shell script snippet"><meta name=keywords content="Blog,Software,Enginering">
+<meta name=generator content="Hugo 0.92.2 with theme even">
+<link rel=canonical href=https://ramsayleung.github.io/post/2017/share_shell_script/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="脚本分享">
+<meta property="og:description" content="share of my shell script snippet">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ramsayleung.github.io/post/2017/share_shell_script/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2017-04-22T00:00:00+08:00">
+<meta property="article:modified_time" content="2022-02-23T22:45:06+08:00">
+<meta itemprop=name content="脚本分享">
+<meta itemprop=description content="share of my shell script snippet"><meta itemprop=datePublished content="2017-04-22T00:00:00+08:00">
+<meta itemprop=dateModified content="2022-02-23T22:45:06+08:00">
+<meta itemprop=wordCount content="2603">
+<meta itemprop=keywords content="shell,linux,command_line,tool,"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="脚本分享">
+<meta name=twitter:description content="share of my shell script snippet"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/about_me>
+<li class=mobile-menu-item>About</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/about_me>About</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>脚本分享</h1>
+<div class=post-meta>
+<span class=post-time> 2017-04-22 </span>
+<div class=post-category>
+<a href=/categories/tool/> tool </a>
+</div>
+<span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#准备工作><span class=section-num>1</span> 准备工作</a></li>
+<li><a href=#有趣的脚本><span class=section-num>2</span> 有趣的脚本</a>
+<ul>
+<li><a href=#ssh-免密码登录><span class=section-num>2.1</span> SSH 免密码登录</a></li>
+<li><a href=#生成若干位密钥><span class=section-num>2.2</span> 生成若干位密钥</a></li>
+<li><a href=#复制命令行输出><span class=section-num>2.3</span> 复制命令行输出</a></li>
+<li><a href=#复制当前目录><span class=section-num>2.4</span> 复制当前目录</a></li>
+<li><a href=#判断-unix-系统的版本><span class=section-num>2.5</span> 判断 Unix 系统的版本</a></li>
+<li><a href=#根据不同的发行版本安装软件><span class=section-num>2.6</span> 根据不同的发行版本安装软件</a></li>
+<li><a href=#加密目录><span class=section-num>2.7</span> 加密目录</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<p>分享一下平时工作生活中编写的一些脚本片段(一直更新). 适用于 OS X 和 Linux</p>
+<h2 id=准备工作><span class=section-num>1</span> 准备工作</h2>
+<p>因为我比较多的脚本都是基于 <code>percol</code> 这个神器，所以需要先安装 <code>percol</code>, 如果 不了解 <code>percol</code> 的话，可以翻看一下我之前的文章 <a href=http://samrayleung.github.io/blog/2017/02/22/linux-unix-shell-%25E4%25BA%258C%25E4%25B8%2589%25E4%25BA%258B%25E4%25B9%258B%25E7%25A5%259E%25E5%2599%25A8percol/>Linux/Unix Shell 二三事之神器percol</a> .</p>
+<p>我一般将写好的函数 source 命令添加到 Shell. 例如脚本函数都在一个叫
+<code>tool_function.sh</code> 的文件里面，而我使用 Zsh, 则只需要在 <code>.zshrc</code> 添加一句语句：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=nb>source</span> /path/to/tool_function.sh
+</code></pre></td></tr></table>
+</div>
+</div><p>如果使用 Bash, 添加到 <code>.bashrc</code> 即可。</p>
+<h2 id=有趣的脚本><span class=section-num>2</span> 有趣的脚本</h2>
+<h3 id=ssh-免密码登录><span class=section-num>2.1</span> SSH 免密码登录</h3>
+<p>SSH 基本就是登录远程服务器的标配了，只是每次登录服务器都要输入密码，未免太麻烦了(好吧，我拥有懒惰这个美德)，所以我决定配置 SSH 的免密码登录。代码如下：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=k>function</span> config_ssh_login_key<span class=o>(){</span>
+    <span class=k>if</span> <span class=o>[</span> <span class=nv>$#</span> -lt <span class=m>3</span> <span class=o>]</span><span class=p>;</span><span class=k>then</span>
+       <span class=nb>echo</span> <span class=s2>&#34;Usage: </span><span class=k>$(</span>basename <span class=nv>$0</span><span class=k>)</span><span class=s2> -u user -h hostname -p port&#34;</span>
+       <span class=nb>kill</span> -INT <span class=nv>$$</span>
+    <span class=k>fi</span>
+       <span class=c1>#if public/private key doesn&#39;t exist ,generate public/private key</span>
+       <span class=k>if</span> <span class=o>[</span> -f ~/.ssh/id_rsa <span class=o>]</span><span class=p>;</span><span class=k>then</span>
+	  <span class=nb>echo</span> <span class=s2>&#34;public/private key exists&#34;</span>
+	  <span class=k>else</span>
+	      ssh-keygen -t rsa
+       <span class=k>fi</span>
+	  <span class=k>while</span> <span class=nb>getopts</span> :u:h:p: option
+	  <span class=k>do</span>
+	      <span class=k>case</span> <span class=s2>&#34;</span><span class=nv>$option</span><span class=s2>&#34;</span> in
+		  u<span class=o>)</span> <span class=nv>user</span><span class=o>=</span><span class=nv>$OPTARG</span><span class=p>;;</span>
+		  h<span class=o>)</span> <span class=nv>hostname</span><span class=o>=</span><span class=nv>$OPTARG</span><span class=p>;;</span>
+		  p<span class=o>)</span> <span class=nv>port</span><span class=o>=</span><span class=nv>$OPTARG</span><span class=p>;;</span>
+		  *<span class=o>)</span> <span class=nb>echo</span> <span class=s2>&#34;Unknown option:</span><span class=nv>$option</span><span class=s2>&#34;</span><span class=p>;;</span>
+	      <span class=k>esac</span>
+	  <span class=k>done</span>
+
+	  <span class=k>if</span> <span class=o>[</span> -z <span class=s2>&#34;</span><span class=nv>$port</span><span class=s2>&#34;</span> <span class=o>]</span><span class=p>;</span><span class=k>then</span>
+	     <span class=nv>port</span><span class=o>=</span><span class=m>22</span>
+	  <span class=k>fi</span>
+	     <span class=c1>#check whether it is the first time to run this script and whether authorized_keys exists</span>
+	     <span class=c1># ssh_host_and_user=&#34;$1@$2&#34;</span>
+	     <span class=nv>authorized_keys</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$HOME</span><span class=s2>/.ssh/authorized_keys&#34;</span>
+	     <span class=nb>read</span> -r -s -p <span class=s2>&#34;</span><span class=nv>$user</span><span class=s2>@</span><span class=nv>$hostname</span><span class=s2>&#39;s password:&#34;</span> password
+	     <span class=k>if</span> sshpass -pv <span class=nv>$password</span> ssh -p <span class=s2>&#34;</span><span class=nv>$port</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=nv>$user</span><span class=s2>@</span><span class=nv>$hostname</span><span class=s2>&#34;</span> <span class=nb>test</span> -e <span class=s2>&#34;</span><span class=nv>$authorized_keys</span><span class=s2>&#34;</span><span class=p>;</span><span class=k>then</span>
+		<span class=nb>echo</span> <span class=s2>&#34;authorized key exists&#34;</span>
+		<span class=nb>kill</span> -INT <span class=nv>$$</span>
+		<span class=k>else</span>
+		    sshpass -p <span class=nv>$password</span> ssh  <span class=nv>$user</span>@<span class=nv>$hostname</span> -p <span class=nv>$port</span> <span class=s2>&#34;mkdir -p ~/.ssh;chmod 0700 .ssh&#34;</span>
+		    sshpass -p <span class=nv>$password</span> scp -P <span class=nv>$port</span>  ~/.ssh/id_rsa.pub <span class=nv>$user</span>@<span class=nv>$hostname</span>:~/.ssh/authorized_keys
+		    <span class=c1># ssh-copy-id &#34;$user@$hostname -p $port&#34;</span>
+	     <span class=k>fi</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>基本做法就是生成一对公私密钥，然后把公钥发送到服务器。而脚本其他的部分就是判断密钥是否存在，修改密钥权限等工作。用法也很简单，假如你把以上脚本保存到了一个叫 <code>config_ssh_login_key.sh</code> 的文件：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>bash config_ssh_login_key.sh -h your-server-ip -u user -p <span class=m>2222</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>当然，如果你按照我的前面提到的做法，用 source 命令引入脚本，你可以直接在命令行输入：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>config_ssh_login_key -u root -h your-server-ip
+</code></pre></td></tr></table>
+</div>
+</div><p>如果端口未指定，默认端口为 22</p>
+<h3 id=生成若干位密钥><span class=section-num>2.2</span> 生成若干位密钥</h3>
+<p>生成若干位的密钥是常见的需求，得益于 Linux/Unix 命令行强大的过滤器，所以只需把命令整理成脚本即可：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=c1># generate key</span>
+<span class=k>function</span> gkey<span class=o>(){</span>
+    <span class=k>if</span> <span class=o>[</span> -n <span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span> <span class=o>]</span><span class=p>;</span><span class=k>then</span>
+       <span class=nb>local</span> <span class=nv>length</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span>
+       <span class=k>else</span>
+	   <span class=nb>local</span> <span class=nv>length</span><span class=o>=</span><span class=m>32</span>
+    <span class=k>fi</span>
+       <span class=nv>OS_NAME</span><span class=o>=</span><span class=k>$(</span>uname<span class=k>)</span>
+       <span class=k>if</span> <span class=o>[</span> <span class=nv>$OS_NAME</span> <span class=o>=</span> <span class=s2>&#34;Darwin&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+	   <span class=nv>LC_CTYPE</span><span class=o>=</span>C cat /dev/urandom <span class=p>|</span>tr -cd <span class=s2>&#34;[:alnum:]&#34;</span><span class=p>|</span>head -c <span class=s2>&#34;</span><span class=nv>$length</span><span class=s2>&#34;</span><span class=p>;</span><span class=nb>echo</span>
+       <span class=k>else</span>
+	   cat /dev/urandom <span class=p>|</span>tr -cd <span class=s2>&#34;[:alnum:]&#34;</span><span class=p>|</span>head -c <span class=s2>&#34;</span><span class=nv>$length</span><span class=s2>&#34;</span><span class=p>;</span><span class=nb>echo</span>
+       <span class=k>fi</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>用法：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>gkey <span class=m>45</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>即生成一个45位字符的随机密钥，如果没有指定长度的话，默认是 32 位。因为 OS X和 Linux 的 <code>tr</code> 使用有差异，所以要处理一下</p>
+<h3 id=复制命令行输出><span class=section-num>2.3</span> 复制命令行输出</h3>
+<p>有时可能需要复制某个命令的输出，一般的做法都是运行某个命令，用鼠标选中，然后复制。例如在生成密钥之后，需要复制到项目的配置文件。但是每次都要用鼠标，效率实在不高。这个功能其实可以脚本实现：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=nv>OS_NAME</span><span class=o>=</span><span class=k>$(</span>uname<span class=k>)</span>
+<span class=k>function</span> pclip<span class=o>()</span> <span class=o>{</span>
+    <span class=k>if</span> <span class=o>[</span> <span class=nv>$OS_NAME</span> <span class=o>=</span> <span class=s2>&#34;CYGWIN&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+	putclip <span class=s2>&#34;</span><span class=nv>$@</span><span class=s2>&#34;</span><span class=p>;</span>
+    <span class=k>elif</span> <span class=o>[</span> <span class=nv>$OS_NAME</span> <span class=o>=</span> <span class=s2>&#34;Darwin&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+	pbcopy <span class=s2>&#34;</span><span class=nv>$@</span><span class=s2>&#34;</span><span class=p>;</span>
+    <span class=k>else</span>
+	<span class=k>if</span> <span class=o>[</span> -x /usr/bin/xsel <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+	    xsel -ib <span class=s2>&#34;</span><span class=nv>$@</span><span class=s2>&#34;</span><span class=p>;</span>
+	<span class=k>else</span>
+	    <span class=k>if</span> <span class=o>[</span> -x /usr/bin/xclip <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+		xclip -selection c <span class=s2>&#34;</span><span class=nv>$@</span><span class=s2>&#34;</span><span class=p>;</span>
+	    <span class=k>else</span>
+		<span class=nb>echo</span> <span class=s2>&#34;Neither xsel or xclip is installed!&#34;</span>
+	    <span class=k>fi</span>
+	<span class=k>fi</span>
+    <span class=k>fi</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>备注：这个脚本不是我原创，取自 <a href=http://blog.binchen.org/archive.html>陈斌</a> 博客。</p>
+<p>在 Linux 运行这脚本需要先安装 xsel 或者是 xclip 命令。结合生成密钥的命令使用：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>gkey -28<span class=p>|</span>pclip
+</code></pre></td></tr></table>
+</div>
+</div><p>这样，生成的密钥就被复制到系统上了。</p>
+<h3 id=复制当前目录><span class=section-num>2.4</span> 复制当前目录</h3>
+<p>有时候，我需要复制当前目录下某个文件的路径，但是无论是文件管理器，还是在Shell 中都要用鼠标选中然后复制指定文件的路径，效率不高且很不方便。所以我通过结合 percol 和上面提高的 pclip 函数改进了做法：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=k>function</span> pwdf<span class=o>()</span>
+<span class=o>{</span>
+    <span class=nb>local</span> <span class=nv>current_dir</span><span class=o>=</span><span class=sb>`</span><span class=nb>pwd</span><span class=sb>`</span>
+    <span class=nb>local</span> <span class=nv>copied_file</span><span class=o>=</span><span class=sb>`</span>find <span class=nv>$current_dir</span> -type f -print <span class=p>|</span>percol<span class=sb>`</span>
+    <span class=nb>echo</span> -n <span class=nv>$copied_file</span> <span class=p>|</span>pclip<span class=p>;</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>只需在 Shell 中输入 <code>pwdf</code>, 然后选择需要复制的路径即可。运行截图：
+<a href=/ox-hugo/pwdf.png><img src=/ox-hugo/pwdf.png alt></a></p>
+<hr>
+<p><span class=timestamp-wrapper><span class=timestamp>&lt;2017-05-22 一> </span></span> Update</p>
+<h3 id=判断-unix-系统的版本><span class=section-num>2.5</span> 判断 Unix 系统的版本</h3>
+<p>因为我经常需要在不同的 Unix 机器之间切换，例如工作用的 Mac OS X, 另外一台笔记本上的 Fedora, 还有一台工作站上的 Arch Linux, 以及各种发行版本的 VPS 等，在不同的发行版本或者系统之间切换，我希望我常用的工具也可以很轻易地移植到不同的发行版本上。</p>
+<p>但是不同的发行版本使用不同的包安装管理器，例如 OS X 上的 <code>brew</code>, Fedora 的 <code>dnf</code>, Centos 的 <code>yum</code>, Ubuntu 上的 <code>apt-get</code> 等等。如果可以通过使用脚本来实现根据不同的发行版本使用不同的包安装管理器安装软件，这样就省心很多。</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=c1># GetOSVersion</span>
+<span class=k>function</span> GetOSVersion <span class=o>{</span>
+
+    <span class=c1># Figure out which vendor we are</span>
+    <span class=k>if</span> <span class=o>[[</span> -x <span class=s2>&#34;`which sw_vers 2&gt;/dev/null`&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+	<span class=c1># OS/X</span>
+	<span class=nv>os_VENDOR</span><span class=o>=</span><span class=sb>`</span>sw_vers -productName<span class=sb>`</span>
+    <span class=k>elif</span> <span class=o>[[</span> -x <span class=k>$(</span>which lsb_release 2&gt;/dev/null<span class=k>)</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+	<span class=nv>os_VENDOR</span><span class=o>=</span><span class=k>$(</span>lsb_release -i -s<span class=k>)</span>
+	<span class=k>if</span> <span class=o>[[</span> <span class=s2>&#34;Debian,Ubuntu,LinuxMint&#34;</span> <span class=o>=</span>~ <span class=nv>$os_VENDOR</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+	    <span class=nv>os_PACKAGE</span><span class=o>=</span><span class=s2>&#34;deb&#34;</span>
+	<span class=k>elif</span> <span class=o>[[</span> <span class=s2>&#34;SUSE LINUX&#34;</span> <span class=o>=</span>~ <span class=nv>$os_VENDOR</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+	    lsb_release -d -s <span class=p>|</span> grep -q openSUSE
+	    <span class=k>if</span> <span class=o>[[</span> <span class=nv>$?</span> -eq <span class=m>0</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+		<span class=nv>os_VENDOR</span><span class=o>=</span><span class=s2>&#34;openSUSE&#34;</span>
+	    <span class=k>fi</span>
+	<span class=k>elif</span> <span class=o>[[</span> <span class=nv>$os_VENDOR</span> <span class=o>==</span> <span class=s2>&#34;openSUSE project&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+	    <span class=nv>os_VENDOR</span><span class=o>=</span><span class=s2>&#34;openSUSE&#34;</span>
+	<span class=k>elif</span> <span class=o>[[</span> <span class=nv>$os_VENDOR</span> <span class=o>=</span>~ Red.*Hat <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+	    <span class=nv>os_VENDOR</span><span class=o>=</span><span class=s2>&#34;Red Hat&#34;</span>
+	<span class=k>fi</span>
+	<span class=nv>os_CODENAME</span><span class=o>=</span><span class=k>$(</span>lsb_release -c -s<span class=k>)</span>
+    <span class=k>elif</span> <span class=o>[[</span> -r /etc/redhat-release <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+	<span class=c1># Red Hat Enterprise Linux Server release 5.5 (Tikanga)</span>
+	<span class=c1># Red Hat Enterprise Linux Server release 7.0 Beta (Maipo)</span>
+	<span class=c1># CentOS release 5.5 (Final)</span>
+	<span class=c1># CentOS Linux release 6.0 (Final)</span>
+	<span class=c1># Fedora release 16 (Verne)</span>
+	<span class=c1># XenServer release 6.2.0-70446c (xenenterprise)</span>
+	<span class=c1># Oracle Linux release 7</span>
+	<span class=nv>os_CODENAME</span><span class=o>=</span><span class=s2>&#34;&#34;</span>
+	<span class=k>for</span> r in <span class=s2>&#34;Red Hat&#34;</span> CentOS Fedora XenServer<span class=p>;</span> <span class=k>do</span>
+	    <span class=nv>os_VENDOR</span><span class=o>=</span><span class=nv>$r</span>
+	<span class=k>done</span>
+	<span class=k>if</span> <span class=o>[</span> <span class=s2>&#34;</span><span class=nv>$os_VENDOR</span><span class=s2>&#34;</span> <span class=o>=</span> <span class=s2>&#34;Red Hat&#34;</span> <span class=o>]</span> <span class=o>&amp;&amp;</span> <span class=o>[[</span> -r /etc/oracle-release <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+	    <span class=nv>os_VENDOR</span><span class=o>=</span>OracleLinux
+	<span class=k>fi</span>
+    <span class=k>elif</span> <span class=o>[[</span> -r /etc/SuSE-release <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+	<span class=k>for</span> r in openSUSE <span class=s2>&#34;SUSE Linux&#34;</span><span class=p>;</span> <span class=k>do</span>
+	    <span class=k>if</span> <span class=o>[[</span> <span class=s2>&#34;</span><span class=nv>$r</span><span class=s2>&#34;</span> <span class=o>=</span> <span class=s2>&#34;SUSE Linux&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+		<span class=nv>os_VENDOR</span><span class=o>=</span><span class=s2>&#34;SUSE LINUX&#34;</span>
+	    <span class=k>else</span>
+		<span class=nv>os_VENDOR</span><span class=o>=</span><span class=nv>$r</span>
+	    <span class=k>fi</span>
+	    <span class=nv>os_VENDOR</span><span class=o>=</span><span class=s2>&#34;&#34;</span>
+	<span class=k>done</span>
+	<span class=c1># If lsb_release is not installed, we should be able to detect Debian OS</span>
+    <span class=k>elif</span> <span class=o>[[</span> -f /etc/debian_version <span class=o>]]</span> <span class=o>&amp;&amp;</span> <span class=o>[[</span> <span class=k>$(</span>cat /proc/version<span class=k>)</span> <span class=o>=</span>~ <span class=s2>&#34;Debian&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+	<span class=nv>os_VENDOR</span><span class=o>=</span><span class=s2>&#34;Debian&#34;</span>
+    <span class=k>fi</span>
+    <span class=nb>export</span> os_VENDOR
+<span class=o>}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=根据不同的发行版本安装软件><span class=section-num>2.6</span> 根据不同的发行版本安装软件</h3>
+<p>刚刚上面的脚本是为了准确判断出所有的 *nix 系统的，但是方便起见，也可以直接使用<code>uname</code> 命令</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=k>if</span> <span class=o>[</span> <span class=s2>&#34;</span><span class=k>$(</span>uname<span class=k>)</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=s2>&#34;Darwin&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+    <span class=c1># Do something under Mac OS X platform</span>
+    <span class=nb>echo</span> <span class=s2>&#34;This is mac os&#34;</span>
+    <span class=c1># check if brew exists</span>
+    <span class=nb>type</span> brew&gt;/dev/null 2&gt;<span class=p>&amp;</span><span class=m>1</span> <span class=o>||</span> <span class=o>{</span>
+	<span class=nb>echo</span> &gt;<span class=p>&amp;</span><span class=m>2</span> <span class=s2>&#34; require brew but it&#39;s not installed.  Aborting.&#34;</span><span class=p>;</span>
+	<span class=nb>exit</span> 1<span class=p>;</span> <span class=o>}</span>
+    <span class=nb>echo</span> <span class=s2>&#34;install htop&#34;</span>
+    brew install htop
+
+    <span class=nb>echo</span> <span class=s2>&#34;install ag&#34;</span>
+    brew install ag
+
+    <span class=nb>echo</span> <span class=s2>&#34;install httpie&#34;</span>
+    brew install httpie
+
+    <span class=nb>echo</span> <span class=s2>&#34;install fasd&#34;</span>
+    brew install fasd
+
+    <span class=nb>echo</span> <span class=s2>&#34;install tree&#34;</span>
+    brew install tree
+
+    <span class=nb>echo</span> <span class=s2>&#34;install shellcheck&#34;</span>
+    brew install shellcheck
+
+    <span class=nb>echo</span> <span class=s2>&#34;install guile&#34;</span>
+    brew install guile
+
+    <span class=nb>echo</span> <span class=s2>&#34;install proxychains-ng&#34;</span>
+    brew install proxychains-ng
+
+    <span class=nb>echo</span> <span class=s2>&#34;install pandoc&#34;</span>
+    brew install pandoc
+
+    <span class=nb>echo</span> <span class=s2>&#34;install markdown&#34;</span>
+    brew install markdown
+
+    <span class=nb>echo</span> <span class=s2>&#34;install cloc&#34;</span>
+    brew install cloc
+<span class=k>elif</span> <span class=o>[</span> <span class=s2>&#34;</span><span class=k>$(</span>expr substr <span class=k>$(</span>uname -s<span class=k>)</span> <span class=m>1</span> 5<span class=k>)</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=s2>&#34;Linux&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+    <span class=c1># Do something under GNU/Linux platform</span>
+    GetOSVersion
+    <span class=k>if</span> <span class=o>[</span> <span class=s2>&#34;</span><span class=nv>$os_VENDOR</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=s2>&#34;Ubuntu&#34;</span> <span class=o>]</span> <span class=o>||</span> <span class=o>[[</span> <span class=s2>&#34;</span><span class=nv>$os_VENDOR</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=s2>&#34;Debian&#34;</span> <span class=o>]]</span> <span class=o>||</span> <span class=o>[[</span> <span class=s2>&#34;</span><span class=nv>$os_VENDOR</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=s2>&#34;LinuxMint&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+	<span class=c1># install htop</span>
+	sudo apt-get install htop -y
+	<span class=c1># install httpie</span>
+	sudo apt-get install httpie -y
+	<span class=c1># install ag</span>
+	sudo apt-get install  silversearcher-ag -y
+	<span class=c1># install zeal</span>
+	sudo apt-get install zeal -y
+	<span class=c1># install ncdu</span>
+	sudo apt-get install ncdu -y
+	<span class=c1># install i3</span>
+	sudo apt-get install i3 -y
+	<span class=c1># install emacs (i could die without it)</span>
+	sudo apt-get install emacs -y
+	<span class=c1># install vim</span>
+	sudo apt-get install vim -y
+	<span class=c1># install tree</span>
+	sudo apt-get install tree -y
+	<span class=c1># install shellcheck</span>
+	sudo apt-get install shellcheck -y
+	<span class=c1># install guile (scheme compiler)</span>
+	sudo apt-get install guile -y
+	<span class=c1># install source code pro font</span>
+	<span class=o>[</span> -d /usr/share/fonts/opentype <span class=o>]</span> <span class=o>||</span> sudo mkdir /usr/share/fonts/opentype
+	sudo git clone https://github.com/adobe-fonts/source-code-pro.git /usr/share/fonts/opentype/scp
+	sudo fc-cache -f -v
+	<span class=c1># install proxychains-ng</span>
+	sudo apt-get install proxychains-ng -y
+	<span class=c1># install pandoc</span>
+	sudo apt-get install pandoc -y
+
+	sudo apt-get install markdown -y
+
+	sudo apt-get install cloc -y
+    <span class=k>elif</span> <span class=o>[</span>  <span class=s2>&#34;</span><span class=nv>$os_VENDOR</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=s2>&#34;Fedora&#34;</span> <span class=o>]</span> <span class=o>||</span> <span class=o>[[</span> <span class=s2>&#34;</span><span class=nv>$os_VENDOR</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=s2>&#34;CentOS&#34;</span> <span class=o>]]</span> <span class=o>||</span> <span class=o>[[</span> <span class=s2>&#34;</span><span class=nv>$os_VENDOR</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=s2>&#34;Korora&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+	<span class=c1># install ag</span>
+	sudo yum install -y the_silver_searcher
+	<span class=c1># install zeal</span>
+	sudo yum install -y zeal
+	<span class=c1># install httpie</span>
+	sudo yum install -y httpie
+	<span class=c1># install htop</span>
+	sudo yum install -y htop
+	<span class=c1># install ncdu</span>
+	sudo yum install -y ncdu
+	<span class=c1># install vim</span>
+	sudo yum install -y vim
+	<span class=c1># install emacs</span>
+	sudo yum install -y emacs
+	<span class=c1># install i3</span>
+	sudo yum install -y i3
+	<span class=c1># install tree</span>
+	sudo yum install -y tree
+	<span class=c1># install shellcheck</span>
+	sudo yum install ShellCheck -y
+	<span class=c1># install guile</span>
+	sudo yum install guile -y
+	<span class=c1># install source  code pro font</span>
+	sudo yum install adobe-source-code-pro-fonts -y
+	<span class=c1># install proxychains-ng</span>
+	sudo yum install proxychains-ng -y
+
+	sudo yum install pandoc -y
+
+	sudo yum install markdown -y
+
+	<span class=c1># count line and space in code</span>
+	sudo yum install cloc  -y
+    <span class=k>elif</span> <span class=o>[</span>  <span class=s2>&#34;</span><span class=nv>$os_VENDOR</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=s2>&#34;Arch&#34;</span> <span class=o>]</span> <span class=p>;</span> <span class=k>then</span>
+	<span class=c1># install ag</span>
+	sudo pacman -S -y the_silver_searcher
+	<span class=c1># install zeal</span>
+	sudo pacman -S -y zeal
+	<span class=c1># install httpie</span>
+	sudo pacman -S -y httpie
+	<span class=c1># install htop</span>
+	sudo pacman -S -y htop
+	<span class=c1># install ncdu</span>
+	sudo pacman -S -y ncdu
+	<span class=c1># install vim</span>
+	sudo pacman -S -y vim
+	<span class=c1># install emacs</span>
+	sudo pacman -S -y emacs
+	<span class=c1># install i3</span>
+	sudo pacman -S -y i3
+	<span class=c1># install tree</span>
+	sudo pacman -S -y tree
+	<span class=c1># install shellcheck</span>
+	sudo pacman -S ShellCheck -y
+	<span class=c1># install guile</span>
+	sudo pacman -S guile -y
+	<span class=c1># install source-code-pro font</span>
+	sudo pacman -S adobe-source-code-pro-fonts -y
+	<span class=c1># install proxychains-ng</span>
+	sudo pacman -S proxychains-ng -y
+
+	sudo pacman -S pandoc -y
+
+	sudo pacman -S markdown -y
+
+	sudo pacman -S ripgrep -y
+
+	sudo pacman -S cloc  -y
+    <span class=k>fi</span>
+<span class=k>elif</span> <span class=o>[</span> <span class=s2>&#34;</span><span class=k>$(</span>expr substr <span class=k>$(</span>uname -s<span class=k>)</span> <span class=m>1</span> 10<span class=k>)</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=s2>&#34;MINGW32_NT&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+    <span class=c1># Do something under 32 bits Windows NT platform</span>
+    <span class=nb>echo</span> <span class=s2>&#34;This is 32-bit windows&#34;</span>
+<span class=k>elif</span> <span class=o>[</span> <span class=s2>&#34;</span><span class=k>$(</span>expr substr <span class=k>$(</span>uname -s<span class=k>)</span> <span class=m>1</span> 10<span class=k>)</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=s2>&#34;MINGW64_NT&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+    <span class=c1># Do something under 64 bits Windows NT platform</span>
+    <span class=nb>echo</span> <span class=s2>&#34;this is 64-bit windows&#34;</span>
+<span class=k>fi</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=加密目录><span class=section-num>2.7</span> 加密目录</h3>
+<p>每个人都会有需要只属于自己的东西，保护这些东西最好的办法就是对其进行加密：</p>
+<h4 id=加密><span class=section-num>2.7.1</span> 加密</h4>
+<p>使用 <code>tar</code> 和 <code>openssl</code> 对目录进行加密，先使用 <code>tar</code> 归档当前文件，然后使用
+<code>aes256</code> 算法进行加密：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>tar -czf - * <span class=p>|</span> openssl enc -e -aes256 -out encrypted.tar.gz
+</code></pre></td></tr></table>
+</div>
+</div><h4 id=解密><span class=section-num>2.7.2</span> 解密</h4>
+<p>把加密后的归档文件解密到当前命令：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>openssl enc -d -aes256 -in encrypted.tar.gz<span class=p>|</span> tar xz -C <span class=k>$(</span><span class=nb>pwd</span><span class=k>)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2022-02-23
+</span>
+</p>
+</div>
+<footer class=post-footer>
+<div class=post-tags>
+<a href=/tags/shell/>shell</a>
+<a href=/tags/linux/>linux</a>
+<a href=/tags/command_line/>command_line</a>
+<a href=/tags/tool/>tool</a>
+</div>
+<nav class=post-nav>
+<a class=prev href=/post/2017/uuid/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">Java UUID 源码剖析</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/post/2017/spock/>
+<span class="next-text nav-default">Spock 一个优雅的Groovy/Java测试框架</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<div id=gitalk-container></div>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
+<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:'2017-04-22 00:00:00 \u002b0800 \u002b0800',title:'脚本分享',clientID:'3c034c97f0926fafd2d6',clientSecret:'192051927d267ce83eb2ef10955890b7db2720ad',repo:'comment',owner:'ramsayleung',admin:['ramsayleung'],body:decodeURI(location.href)});gitalk.render('gitalk-container')</script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
+<a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<div class=busuanzi-footer>
+<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+</div>
+<span class=copyright-year>
+&copy;
+2017 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>

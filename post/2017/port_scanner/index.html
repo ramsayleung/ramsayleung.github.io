@@ -1,0 +1,350 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>Python多线程端口扫描器 - In Pursuit of Hubris</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="Ramsay Leung"><meta name=description content="An introduction about port scan"><meta name=keywords content="Blog,Software,Enginering">
+<meta name=generator content="Hugo 0.92.2 with theme even">
+<link rel=canonical href=https://ramsayleung.github.io/post/2017/port_scanner/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="Python多线程端口扫描器">
+<meta property="og:description" content="An introduction about port scan">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ramsayleung.github.io/post/2017/port_scanner/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2017-03-19T00:00:00+08:00">
+<meta property="article:modified_time" content="2022-02-23T22:26:46+08:00">
+<meta itemprop=name content="Python多线程端口扫描器">
+<meta itemprop=description content="An introduction about port scan"><meta itemprop=datePublished content="2017-03-19T00:00:00+08:00">
+<meta itemprop=dateModified content="2022-02-23T22:26:46+08:00">
+<meta itemprop=wordCount content="2015">
+<meta itemprop=keywords content="python,network,tool,"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="Python多线程端口扫描器">
+<meta name=twitter:description content="An introduction about port scan"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/about_me>
+<li class=mobile-menu-item>About</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/about_me>About</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>Python多线程端口扫描器</h1>
+<div class=post-meta>
+<span class=post-time> 2017-03-19 </span>
+<div class=post-category>
+<a href=/categories/network/> network </a>
+</div>
+<span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#端口扫描器><span class=section-num>1</span> 端口扫描器</a></li>
+<li><a href=#端口扫描原理><span class=section-num>2</span> 端口扫描原理</a>
+<ul>
+<li><a href=#tcp连接扫描><span class=section-num>2.1</span> TCP连接扫描</a></li>
+<li><a href=#syn扫描><span class=section-num>2.2</span> SYN扫描</a></li>
+</ul>
+</li>
+<li><a href=#后话><span class=section-num>3</span> 后话</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<p>近两日，闲来无事，就写了些端口扫描器，重温TCP/IP协议栈的部分原理。</p>
+<h2 id=端口扫描器><span class=section-num>1</span> 端口扫描器</h2>
+<p>所谓的端口扫描器，其实是用来检测目标服务器有哪些端口开放所使用的工具，一般是管理员用来进行安全加固，检测是否有无意开放的端口；或者是恶意攻击的人员在进行攻击前的准备工作。</p>
+<p>所以综述上下，端口扫描器是用来确定目标机器 (本地机器或者远程机器)的特定服务的可用性</p>
+<h2 id=端口扫描原理><span class=section-num>2</span> 端口扫描原理</h2>
+<p>上面提到过，端口扫描器是用来确定目标机器的服务的可用性的；那么具体是怎么确定的呢？如果还没有答案的话，可以换个角度来思考这个问题。</p>
+<p>假如你想确定邻居家的妹子是否在家，你会怎么办？这不简单么，问一下不就清楚了么？对阿，对于服务器的端口也可以适用这样的方法嘛。端口扫描的原理都是“问一下”，只是问的方法不一样而已，就好像你是决定直接过去敲邻居门，还是打电话过去一样，殊途同归，方法是没有对错的之分，差异只是方法的优劣。</p>
+<h3 id=tcp连接扫描><span class=section-num>2.1</span> TCP连接扫描</h3>
+<p>这是最简单的一种方法，一般被称为连接扫描，即利用 <code>socket</code> 对目标机器进行连接尝试，如果能够成功建立三次握手连接，那就说明你用 <code>socket</code> 连接的端口是开放的；然后你就可以断开连接，扫描下一个目标端口了 (如果不断开连接，这就是一种 DDOS攻击了).</p>
+<p>只不过TCP连接扫描不是很常用，不仅是因为容易被发现，而且你的IP地址也可能会被目标地址记录下来的(对于攻击者来说，隐藏身份是很重要的)</p>
+<h4 id=代码解析><span class=section-num>2.1.1</span> 代码解析：</h4>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=k>def</span> <span class=nf>scan</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>args</span><span class=p>):</span>
+    <span class=n>host</span><span class=p>,</span> <span class=n>port</span> <span class=o>=</span> <span class=n>args</span>
+    <span class=k>try</span><span class=p>:</span>
+	<span class=c1># Create a TCP socket and try to connect</span>
+	<span class=c1># AF_INET for ipv4,AF_INET6 for ipv6</span>
+	<span class=n>sock</span> <span class=o>=</span> <span class=n>socket</span><span class=o>.</span><span class=n>socket</span><span class=p>(</span><span class=n>socket</span><span class=o>.</span><span class=n>AF_INET</span><span class=p>,</span> <span class=n>socket</span><span class=o>.</span><span class=n>SOCK_STREAM</span><span class=p>)</span>
+	<span class=n>sock</span><span class=o>.</span><span class=n>connect</span><span class=p>((</span><span class=n>host</span><span class=p>,</span> <span class=n>port</span><span class=p>))</span>
+	<span class=n>sock</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+	<span class=k>return</span> <span class=n>host</span><span class=p>,</span> <span class=n>port</span><span class=p>,</span> <span class=kc>True</span>
+    <span class=k>except</span> <span class=p>(</span><span class=n>socket</span><span class=o>.</span><span class=n>timeout</span><span class=p>,</span> <span class=n>socket</span><span class=o>.</span><span class=n>error</span><span class=p>):</span>
+	<span class=k>return</span> <span class=n>host</span><span class=p>,</span> <span class=n>port</span><span class=p>,</span> <span class=kc>False</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>因为原理很简单，所以核心代码也是很简洁的，只是建立 <code>socket</code> 然后进行连接，如果连接不上，就很大几率说明端口是关闭的 (并不是绝对的，例如socket超时的异常可能就是因为网络异常，不一定是目标机器的缘故)</p>
+<h3 id=syn扫描><span class=section-num>2.2</span> SYN扫描</h3>
+<p>再回顾一下TCP的三次握手：</p>
+<h4 id=tcp三次握手><span class=section-num>2.2.1</span> TCP三次握手</h4>
+<ol>
+<li>TCP建立连接时，首先客户端和服务器处于close状态。</li>
+<li>然后客户端发送SYN同步位，此时客户端处于SYN-SEND状态，服务器处于lISTEN状态，当服务器收到SYN以后，向客户端发送同步位SYN和确认码ACK，然后服务器变为SYN-RCVD，客户端收到服务器发来的SYN和ACK 后，客户端的状态变成ESTABLISHED(已建立连接)，</li>
+<li>客户端再向服务器发送ACK确认码，服务器接收到以后也变成ESTABLISHED。然后服务器客户端开始数据传输</li>
+</ol>
+<p>如图：</p>
+<figure><img src=https://sites.google.com/a/javainterview.net/question/_/rsrc/1425457816649/misc/tcp-ip/3-way-handshake-Intro-to-transport-layer-The-internetworking-Part2.gif alt="Figure 1: 图来源于Google"><figcaption>
+<p><span class=figure-number>Figure 1: </span>图来源于Google</p>
+</figcaption>
+</figure>
+<h4 id=syn扫描原理><span class=section-num>2.2.2</span> SYN扫描原理</h4>
+<ol>
+<li>
+<p>SYN+ACK</p>
+<p>那么现在再回到SYN扫描上来.如果在发送第一次握手的 <code>SYN</code> flag 时，目标机器回复了<code>SYN+ACK</code>,这不就说明笔者发送的TCP包中的目标端口是开放的么！如果不开放，服务器就不会期待第三次握手了，也不会给笔者发送 <code>SYN+ACK</code> 了；如图：</p>
+<figure><img src=http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/uploads/101613_1123_PortScannin3.jpg>
+</figure>
+<p>图来自 <a href=http://resources.infosecinstitute.com/port-scanning-using-scapy/>http://resources.infosecinstitute.com/port-scanning-using-scapy/</a></p>
+</li>
+</ol>
+<ol start=2>
+<li>
+<p>RST</p>
+<p>如果第二次握手的时候，目标机器回复的不是 <code>SYN+ACK</code>, 而是 <code>RST</code>, 就说明TCP包中的目标端口在目标机器上是关闭的；如图</p>
+<figure><img src=http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/uploads/101613_1123_PortScannin4.jpg>
+</figure>
+<p>图来自 <a href=http://resources.infosecinstitute.com/port-scanning-using-scapy/>http://resources.infosecinstitute.com/port-scanning-using-scapy/</a></p>
+</li>
+</ol>
+<ol start=3>
+<li>
+<p>Filtered</p>
+<p>上面提及了目标端口的开放和关闭两种状态，那么，还有没有其他状态呢？什么，还有其他状态？</p>
+<p>如果就SYN扫描而言，就还有 filtered被过滤之一说，如果还有加上其他扫描技术， 就还有其他状态了。</p>
+<p>回到SYN扫描，当返回的不是服务器想建立第二次握手的包，而是ICMP的包就有可能被过滤，例如响应信息是ICMP错误信息类型3代码3(无法到达目标：端口不可达)这里出现的端口不可达，可能就是被防火墙过滤了，如果是类型3代码13(无法到达目标：通信被管理员禁止),那也是被过滤了。</p>
+<p>更多信息就要查询<a href=https://www.iana.org/assignments/icmp-parameters/icmp-parameters.xhtml>ICMP的官方文档</a> 了</p>
+</li>
+</ol>
+<h4 id=代码解释><span class=section-num>2.2.3</span> 代码解释</h4>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=k>def</span> <span class=nf>scan</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>args</span><span class=p>):</span>
+    <span class=n>dst_ip</span><span class=p>,</span> <span class=n>dst_port</span> <span class=o>=</span> <span class=n>args</span>
+    <span class=n>src_port</span> <span class=o>=</span> <span class=n>RandShort</span><span class=p>()</span>
+    <span class=n>answered</span><span class=p>,</span> <span class=n>unanswered</span> <span class=o>=</span> <span class=n>sr</span><span class=p>(</span><span class=n>IP</span><span class=p>(</span><span class=n>dst</span><span class=o>=</span><span class=n>dst_ip</span><span class=p>)</span> <span class=o>/</span> <span class=n>TCP</span><span class=p>(</span><span class=n>sport</span><span class=o>=</span><span class=n>src_port</span><span class=p>,</span>
+						   <span class=n>dport</span><span class=o>=</span><span class=n>dst_port</span><span class=p>,</span> <span class=n>flags</span><span class=o>=</span><span class=s2>&#34;S&#34;</span><span class=p>),</span>
+			  <span class=n>timeout</span><span class=o>=</span><span class=bp>self</span><span class=o>.</span><span class=n>timeout</span><span class=p>,</span> <span class=n>verbose</span><span class=o>=</span><span class=kc>False</span><span class=p>)</span>
+    <span class=k>for</span> <span class=n>packet</span> <span class=ow>in</span> <span class=n>unanswered</span><span class=p>:</span>
+	<span class=k>return</span> <span class=n>packet</span><span class=o>.</span><span class=n>dst</span><span class=p>,</span> <span class=n>packet</span><span class=o>.</span><span class=n>dport</span><span class=p>,</span> <span class=s2>&#34;Filtered&#34;</span>
+
+    <span class=k>for</span> <span class=p>(</span><span class=n>send</span><span class=p>,</span> <span class=n>recv</span><span class=p>)</span> <span class=ow>in</span> <span class=n>answered</span><span class=p>:</span>
+	<span class=k>if</span><span class=p>(</span><span class=n>recv</span><span class=o>.</span><span class=n>haslayer</span><span class=p>(</span><span class=n>TCP</span><span class=p>)):</span>
+	    <span class=n>flags</span> <span class=o>=</span> <span class=n>recv</span><span class=o>.</span><span class=n>getlayer</span><span class=p>(</span><span class=n>TCP</span><span class=p>)</span><span class=o>.</span><span class=n>sprintf</span><span class=p>(</span><span class=s2>&#34;%&#34;</span><span class=p>)</span>
+	    <span class=k>if</span><span class=p>(</span><span class=n>flags</span> <span class=o>==</span> <span class=s2>&#34;SA&#34;</span><span class=p>):</span>
+		<span class=c1># set RST to server in case of ddos attack</span>
+		<span class=n>send_rst</span> <span class=o>=</span> <span class=n>sr</span><span class=p>(</span><span class=n>IP</span><span class=p>(</span><span class=n>dst</span><span class=o>=</span><span class=n>dst_ip</span><span class=p>)</span> <span class=o>/</span> <span class=n>TCP</span><span class=p>(</span><span class=n>sport</span><span class=o>=</span><span class=n>src_port</span><span class=p>,</span>
+						   <span class=n>dport</span><span class=o>=</span><span class=n>dst_port</span><span class=p>,</span> <span class=n>flags</span><span class=o>=</span><span class=s2>&#34;R&#34;</span><span class=p>),</span>
+			  <span class=n>timeout</span><span class=o>=</span><span class=bp>self</span><span class=o>.</span><span class=n>timeout</span><span class=p>,</span> <span class=n>verbose</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+		<span class=k>return</span> <span class=n>dst_ip</span><span class=p>,</span> <span class=n>dst_port</span><span class=p>,</span> <span class=s2>&#34;Open&#34;</span>
+	    <span class=k>elif</span> <span class=p>(</span><span class=n>flags</span> <span class=o>==</span> <span class=s2>&#34;RA&#34;</span> <span class=ow>or</span> <span class=n>flags</span> <span class=o>==</span> <span class=s2>&#34;R&#34;</span><span class=p>):</span>
+		<span class=k>return</span> <span class=n>dst_ip</span><span class=p>,</span> <span class=n>dst_port</span><span class=p>,</span> <span class=s2>&#34;Closed&#34;</span>
+	<span class=k>elif</span><span class=p>(</span><span class=n>recv</span><span class=o>.</span><span class=n>haslayer</span><span class=p>(</span><span class=n>ICMP</span><span class=p>)):</span>
+	    <span class=n>icmp_type</span> <span class=o>=</span> <span class=n>recv</span><span class=o>.</span><span class=n>getlayer</span><span class=p>(</span><span class=n>ICMP</span><span class=p>)</span><span class=o>.</span><span class=n>type</span>
+	    <span class=n>icmp_code</span> <span class=o>=</span> <span class=n>recv</span><span class=o>.</span><span class=n>getlayer</span><span class=p>(</span><span class=n>ICMP</span><span class=p>)</span><span class=o>.</span><span class=n>code</span>
+	    <span class=k>if</span><span class=p>(</span><span class=n>icmp_type</span> <span class=o>==</span> <span class=n>ICMP_TYPE_DESTINATION_UNREACHABLE</span> <span class=ow>and</span> <span class=n>icmp_code</span> <span class=ow>in</span> <span class=n>ICMP_CODE</span><span class=p>):</span>
+		<span class=k>return</span> <span class=n>dst_ip</span><span class=p>,</span> <span class=n>dst_port</span><span class=p>,</span> <span class=s2>&#34;Filtered&#34;</span>
+	<span class=k>else</span><span class=p>:</span>
+	    <span class=k>return</span> <span class=n>dst_ip</span><span class=p>,</span> <span class=n>dst_port</span><span class=p>,</span> <span class=s2>&#34;CHECK&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>核心代码很简单，就是发送建立连接的握手请求，然后根据不同的返回结果判断不同的状态。</p>
+<p>如果端口确定是开放，那就发送 <code>R</code> flag给目标机器结束握手 (如果不结束握手的话，那就是DDOS,这也是DDOS最常用的手段); 因为这次不是使用操作系统原生的 <code>socket</code>, 而是自行构造发送 IP数据包，所以需要使用一个很强大的构造 操作各种数据包的工具 &ndash; <a href=https://github.com/phaethon/scapy>scapy</a></p>
+<p>(顺便说一下，如果在Windows下安装 scapy,需要非常多的步骤，如果是Unix/Linux,只需几行命令:) )</p>
+<h2 id=后话><span class=section-num>3</span> 后话</h2>
+<p>简单的扫描器就已经完成了，加上多线程的功能提高性能。</p>
+<p>很想吐嘈一下，真的对Python 的多线程恨铁不成钢，只好换成多进程；也给 Python2 Python3 API的改变折腾得够呛，不禁让笔者怀念起Java:(</p>
+<p>其实正如笔者开头所言的，你确定隔壁家妹子是否在家的方法有很多，你扫描端口的方法也有很多：例如 XMAS scan(TCP圣诞树扫描), FIN scan,Null scan, ACK scan, Window scan, UDP scan等。</p>
+<p>当然你如果不想针对各种扫描都写一个扫描器，你可以使用 <a href=https://nmap.org/>nmap</a> 这个地球最强大的扫描器 (没有之一). 在Python也已经有与nmap整合的强大的包 <a href=http://xael.org/pages/python-nmap-en.html>python-nmap</a></p>
+<p>扫描器完整代码地址 <a href=https://github.com/samrayleung/PortScanner>https://github.com/samrayleung/PortScanner</a></p>
+<hr>
+<p>参考</p>
+<ul>
+<li><a href=http://resources.infosecinstitute.com/port-scanning-using-scapy/>http://resources.infosecinstitute.com/port-scanning-using-scapy/</a></li>
+</ul>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2022-02-23
+</span>
+</p>
+</div>
+<footer class=post-footer>
+<div class=post-tags>
+<a href=/tags/python/>python</a>
+<a href=/tags/network/>network</a>
+<a href=/tags/tool/>tool</a>
+</div>
+<nav class=post-nav>
+<a class=prev href=/post/2017/about_tool_about_tweak/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">关于工具,关于折腾</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/post/2017/grep/>
+<span class="next-text nav-default">Linux/Unix Shell 二三事之过滤器grep</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<div id=gitalk-container></div>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
+<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:'2017-03-19 00:00:00 \u002b0800 \u002b0800',title:'Python多线程端口扫描器',clientID:'3c034c97f0926fafd2d6',clientSecret:'192051927d267ce83eb2ef10955890b7db2720ad',repo:'comment',owner:'ramsayleung',admin:['ramsayleung'],body:decodeURI(location.href)});gitalk.render('gitalk-container')</script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
+<a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<div class=busuanzi-footer>
+<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+</div>
+<span class=copyright-year>
+&copy;
+2017 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>

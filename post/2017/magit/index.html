@@ -1,0 +1,287 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>(翻译)An Introduction to Magit - In Pursuit of Hubris</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="Ramsay Leung"><meta name=description content="An introduction to Magit"><meta name=keywords content="Blog,Software,Enginering">
+<meta name=generator content="Hugo 0.92.2 with theme even">
+<link rel=canonical href=https://ramsayleung.github.io/post/2017/magit/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="(翻译)An Introduction to Magit">
+<meta property="og:description" content="An introduction to Magit">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ramsayleung.github.io/post/2017/magit/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2017-03-03T00:00:00+08:00">
+<meta property="article:modified_time" content="2022-02-23T22:06:21+08:00">
+<meta itemprop=name content="(翻译)An Introduction to Magit">
+<meta itemprop=description content="An introduction to Magit"><meta itemprop=datePublished content="2017-03-03T00:00:00+08:00">
+<meta itemprop=dateModified content="2022-02-23T22:06:21+08:00">
+<meta itemprop=wordCount content="3544">
+<meta itemprop=keywords content="emacs,"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="(翻译)An Introduction to Magit">
+<meta name=twitter:description content="An introduction to Magit"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/about_me>
+<li class=mobile-menu-item>About</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/about_me>About</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>(翻译)An Introduction to Magit</h1>
+<div class=post-meta>
+<span class=post-time> 2017-03-03 </span>
+<div class=post-category>
+<a href=/categories/emacs/> emacs </a>
+</div>
+<span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#getting-started><span class=section-num>1</span> Getting Started</a></li>
+<li><a href=#the-magit-status><span class=section-num>2</span> The Magit Status</a></li>
+<li><a href=#staging-and-unstaging-items><span class=section-num>3</span> Staging and Unstaging Items</a></li>
+<li><a href=#committing-changes><span class=section-num>4</span> Committing Changes</a></li>
+<li><a href=#logging><span class=section-num>5</span> Logging</a></li>
+<li><a href=#conclusion><span class=section-num>6</span> Conclusion</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<p>如果你足够幸运(或者不幸运，取决于你怎么看待了)可以使用 <em>git</em> 作为你工作流的一部分。</p>
+<p>你可能已经 <strong>邂逅</strong> 过 <em>magit</em> 这个Emacs 的git接口了。 <em>magit</em> 是Emacs 上的非常优秀的git 接口，它假定你是了解你正在对 <em>magit</em> 或者 <em>git</em> 做的种种操作的 <strong>注意</strong> ：该文章是针对 magit 1.x 的，对 magit 2.x 并不适用 Magit 有非常完整的文档，包含了Magit 的各种操作，但是和大多数的文档一样，Magit 的文档并没有介绍如何将Magit 和你的工作流结合；</p>
+<p>Magit 假定你是熟悉Magit 并且了解如何合理地使用Magit(但大多数情况并不是这样).</p>
+<p>Magit 现在还是处于活跃的开发中。在2013年12月，增加了很多很多新的很有用特性的一次 release, 让Magit 变得比以前更强大了，所以本教程是基于比较新的Magit 版本的，并且 假定你也已经安装了新的版本</p>
+<p>如果想安装处于 <code>master</code> 分支的Magit,我建议你使用 <code>Melpa</code> 来安装；此外你也可以选择直接拉取<a href=https://github.com/magit/magit>magit github</a> 仓库的最新版本，然后按照README 上面的指导来构建 <code>magit</code></p>
+<p>这是我Magit 教程的第一部分。这部分会介绍状态窗口(status window); 已暂存和未暂存的项目 (staging and unstagin item);已经提交的更改 (committing changes) 和查看历史提交 (history view)</p>
+<h2 id=getting-started><span class=section-num>1</span> Getting Started</h2>
+<p>首先：Magit 并没有隐藏git 的复杂性，所以，如果你想高效地使用Magit ,你最好清楚了解git 究竟做了哪些工作。</p>
+<p>事实上，我更原意把Magit 当作一个取代了git 枯燥的纯命令行操作的工具，它也表现得出乎意料地好。</p>
+<p>你可以通过 <code>M-x magit-status</code> 来使用Magit,该命令会打开一个窗口(如果你的缓冲区 所在的目录不是一个git 项目，Magit 会提示你进入一个git项目的目录),然后展示Magit 当前的状态。</p>
+<p>你是通过 <code>magit-status</code> 这个接口来使用Magit 的。此外，如果你是使用 Emacs VC的，你需要知道的是，Magit是没有集成到Emacs VC(Version Control)的 抽象层。</p>
+<p>虽然你没法在VC 使用Magit,不过你还是可以在大多数版本控制工具使用Magit 的，Magit 为这些版本控制工具都提供了统一的接口；你如果想调用Magit,你只需要 <code>M-x magit-status</code></p>
+<h2 id=the-magit-status><span class=section-num>2</span> The Magit Status</h2>
+<figure><img src=https://www.masteringemacs.org/static/uploads/Screenshot-from-2013-12-06-114511.png>
+</figure>
+<p>你首先会注意到关于Magit的事情应该就是当你打开Magit 的状态窗口时，Magit 的状态窗口是可以与你的Emacs 窗口配置配合工作的，你也可以像在其他Emacs 窗口那样，通过按下 <code>q</code>
+来关闭窗口。</p>
+<p>几乎你在Magit 执行的所有操作都是通过在底部打开一个 <code>command console</code> 窗口，然后按下对应的单字符指令执行；你也可以重新定义你自己的指令。</p>
+<p>这种交互的方式真的非常好用，可能正是这么强大的特性让Magit变得如此优秀吧。</p>
+<p>我个人真的非常喜欢这种交互的方式，我甚至把这部分特性的代码复制到了我自己的Emacs项目上，因为这真的真的非常好用。</p>
+<p>Magit 之前的稳定版本在帮助用户更好使用Magit这方面做得略有不足，所以在最新的版本有了相应的改进，你可以通过按下 ~?&lt;/kbd> 来显示一系列带注解说明的操作。我觉得在最开始的时候，Magit 真的很难用，因为我总是在「茫茫」的菜单选项中迷失，好不容易才能找到我想要的操作。</p>
+<p>即使是现在，也并不是所有的操作都有注解说明了；有一些命令
+(对于我的工作流来说很重要的命令)依然是没有说明的，特别是用来重新定位的 <code>E</code>.</p>
+<h2 id=staging-and-unstaging-items><span class=section-num>3</span> Staging and Unstaging Items</h2>
+<p>把你的文件放到git下面是你经常需要完成工作之一，Magit 有一系列的按键绑定和工具可以帮助你更好地完成工作。</p>
+<p>Magit 操作不仅可以暂存文件，还可以暂存在 <strong>diff</strong> 中选定 的代码块。</p>
+<p>Magit"杀手级"特性之一就是它使用不同的等级来显示相关的信息。Magit 可以让你通过 <code>tab</code> 展开或者折叠已经暂存或者未暂存文件。</p>
+<p>如果你想更加细颗粒度地暂存或者未暂存文件，你可以使用 <strong>M-1</strong> 到 <strong>M-4</strong> 来操作所有的文件；此外，也可以使用 <strong>1</strong> 到 <strong>4</strong>
+操作选定的文件</p>
+<figure><img src=https://www.masteringemacs.org/static/uploads/diff-hunk-refined-level-4.png>
+</figure>
+<ol>
+<li>
+<p>等级1会把所有的东西隐藏到一个分类里面(即已暂存的文件);</p>
+</li>
+<li>
+<p>等级 2在一个分类里面只是显示文件名 (这是默认的等级);</p>
+</li>
+<li>
+<p>等级3会显示git代码块的头部；等级4 会显示所有做出了修改的代码块。</p>
+<p>我使用最多的是等级2和等级4, 如果你使用按键 <code>TAB</code>,Magit会完成你想要的等级操作的。你拥有一系列可以让你的</p>
+</li>
+</ol>
+<p>生活变得更加美好的按键绑定，例如： <code>n</code> 和 <code>p</code> 可以在你前一个单元和后一个单元(通常以代码块为单元)
+之间移动；<code>M-n</code> 和 <code>M-p</code> 可以在相邻单元之间移动，例如在等级4中的每个文件间移动。</p>
+<p>你也可以使用 <code>+</code> 或者 <code>-</code> 放大或者缩小每段代码，使用 <code>0</code> 可以恢复默认设置。此外你也可以按下 <code>H</code> 给代码块 添加额外的代码高亮。</p>
+<p>最后，你按下回车 <code>RET</code> 可以打开你修改的文件，代码块或者文件都适用该操作。</p>
+<hr>
+<p>你可以通过按下 <code>s</code> 或者 <code>u</code> 来暂存或者撤销暂存文件(或者代码块),此外，奉送一个很有用的小提示：如果你选定某部分的代码，然后按下暂存(撤销暂存)按键，Magit 会自动暂存(撤销)你选定的那部分代码。</p>
+<p>当你发现 <em>diff</em> 选定的代码块不符合你的要求的时候，你会发现这种细颗粒度的操作真的非常有用</p>
+<hr>
+<p>有时候你对某些修改并不在意，你也不关心这部分修改是否已经提交；你可以像上面的暂存(撤销暂存)操作一样，通过按下按键 <code>K</code> 来忽略选定的代码块和文件，并且从你的电脑删除未提交到暂存区(untracked)的文件；</p>
+<p>这个命令可以比暂存(撤销暂存)命令完成更多的操作，例如，删除已保存的文件或目录(stash)</p>
+<h2 id=committing-changes><span class=section-num>4</span> Committing Changes</h2>
+<p>如果你想打开提交菜单，只需按下 <code>c</code>,然后你就会看到琳罗满目的选项，不过大部份选项 你都是用不上的了。你真正有用的操作，不仅可以让你提交已暂存的修改，还可以完成更多的任务：</p>
+<ul>
+<li>你可以扩展(extend <code>e</code>) <em>HEAD</em> 所指向的提交</li>
+<li>你可以修改(amend <code>a</code>) 有关的提交信息</li>
+<li>如果你不喜欢现在的提交信息，你可以重写(reword <code>r</code>)提交信息</li>
+<li>你同时也可以修整(fixup <code>f</code>)和压缩(squash <code>s</code>)当前这次的提交。如果你之前用 <code>.</code> 标记了一次提交，那么今次使用的就是被标记的那次提交。</li>
+</ul>
+<p>扩展一次提交其实就是在当前提交上附加修改，所以，如果你忘记了提交本属于此次提交的东西你可以使用 <em>扩展</em> 选项。</p>
+<p>如果你想修改当前的提交信息，那就使用 <em>修改</em> 选项吧</p>
+<p>重写可以重写你的提交信息但是无需提交你已暂存的修改；如果你不小心按错了选项，想重写你的提交信息，<em>重写</em> 选项就是你最好的选择</p>
+<p>如果你想在最新一次提交下创建一个 <code>fixup</code> 或者 <code>squash</code> 提交的话，使用修整或压缩命令 可以重整或者 <code>--(自动压缩)autosquash</code> 最新一次提交。</p>
+<p>如果你不会去重写你的git历史或者你未使用过重整，你可能觉得这两个命令不是很有用</p>
+<h2 id=logging><span class=section-num>5</span> Logging</h2>
+<figure><img src=https://www.masteringemacs.org/static/uploads/Screenshot-from-2013-12-06-142317.png>
+</figure>
+<p>我觉得Magit非常强大的特性之一就是它有不计其数的选项可以用来对你的git 历史进行 过滤，排序，查找。</p>
+<p>Magit 不仅可以展示你的git信息，还可以让你执行交互操作。如果你想打开日志的菜单，你只需按下 <code>l</code>.</p>
+<p>你应该知道的第一个有用的按键就是 <code>l l</code>, 这个 按键会为你展示缩略的日志信息：你会看到单行的提交信息, 作者的名字, 修改提交距今的时间, 树状结构的git 日志, 各种的标签信息，例如 <code>HEAD</code> 指针的位置或者分支标记的位置</p>
+<p>如果你不小心玩坏了git 的提交信息，命令 <code>git reflog</code> 会是你的救星；此外，对于magit 的引用日志(reflog)机制(<code>l h</code>)，它也有很友好稳定的UI界面支持。</p>
+<hr>
+<p>引用日志和普通的日志都有非常丰富的按键绑定。在日志里，你对单个的提交可以进行非常多的操作：</p>
+<ul>
+<li><code>.</code>: 为此次提交作标记以便进行后续的操作例如提交修整 (<code>c f</code>)或者提交压缩 (<code>c s</code>)</li>
+<li><code>x</code>: 重置你的 <code>HEAD</code> 指针到选定的提交</li>
+<li><code>v</code>: 撤销提交</li>
+<li><code>d</code>: 将你的工作区与选定的提交进行比较</li>
+<li><code>a</code>: 将选定的提交作用在你的工作区</li>
+<li><code>A</code>: 选择位于你工作区顶部的提交</li>
+<li><code>E</code>: 以交互的方式重置你的 <code>HEAD</code> 指针到选定的工作区。如果你想重写历史，该命令会非常有用</li>
+<li><code>C-w</code>: 复制你此次提交的hash值</li>
+<li><code>SPC</code>: 展示完整的提交历史</li>
+</ul>
+<p>需要注意的是：即使你关闭了日志的窗口，标记的命令还是会继续作用的；标记是非常有用的工具，但是你很容易忘记你是否曾经作过标记。如果你在magit 使用 <code>M-n</code> 或者 <code>N-p</code> 向上或者向下浏览日志，
+maigt 会自动为你在另外一个窗口显示提交信息</p>
+<h2 id=conclusion><span class=section-num>6</span> Conclusion</h2>
+<p>对于有经验的Git 用户来说，Magit 是一个非常好的工具；此外，如果你是Git 的新手， Magit可以帮助你了解Git 是怎么工作的，但是它永远不会教你使用Git.</p>
+<p>在我看来，阻碍 你使用Magit 最大的障碍就是Magit缺乏对选项的描述说明；即使Magit 包含了成千上万 Git的选项，参数和操作，但是它并没有教你如何找到并使用这些命令。</p>
+<p>我发现Git 的命令行真的无可替代(不是因为我喜欢git 的命令行我才这么说，事实是它真的很棒)因为我 想要完成的操作真的隐藏得很深，没有那么容易在Magit找到。</p>
+<p>不过最新版本的改进真的很好，你可以通过按下 <code>?</code> 查看一系列带有注解说明的命令(但不是全部命令，不过这也已经是一个很大的改进了).</p>
+<p>如果你曾被Magit 的学习曲线所吓倒，抑或者你已经尝试Magit, 却无奈放弃；我建议你再试一次。我打算写更多关于Magit 的博文</p>
+<hr>
+<p>原文地址 <a href=https://www.masteringemacs.org/article/introduction-magit-emacs-mode-git>https://www.masteringemacs.org/article/introduction-magit-emacs-mode-git</a>
+在下翻译水平有限，如有错误，还请指出</p>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2022-02-23
+</span>
+</p>
+</div>
+<footer class=post-footer>
+<div class=post-tags>
+<a href=/tags/emacs/>emacs</a>
+</div>
+<nav class=post-nav>
+<a class=prev href=/post/2017/java_collection_lambda/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">Lambda与Java Collection有感</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/post/2017/fasd-meet-eshell/>
+<span class="next-text nav-default">Shell神器fasd与Eshell的不期而遇</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<div id=gitalk-container></div>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
+<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:'2017-03-03 00:00:00 \u002b0800 \u002b0800',title:'(翻译)An Introduction to Magit',clientID:'3c034c97f0926fafd2d6',clientSecret:'192051927d267ce83eb2ef10955890b7db2720ad',repo:'comment',owner:'ramsayleung',admin:['ramsayleung'],body:decodeURI(location.href)});gitalk.render('gitalk-container')</script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
+<a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<div class=busuanzi-footer>
+<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+</div>
+<span class=copyright-year>
+&copy;
+2017 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>
