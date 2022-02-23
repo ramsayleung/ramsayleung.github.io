@@ -27,11 +27,11 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://ramsayleung.github.io/post/2017/share_shell_script/"><meta property="article:section" content="post">
 <meta property="article:published_time" content="2017-04-22T00:00:00+08:00">
-<meta property="article:modified_time" content="2022-02-23T22:45:06+08:00">
+<meta property="article:modified_time" content="2022-02-23T22:49:01+08:00">
 <meta itemprop=name content="脚本分享">
 <meta itemprop=description content="share of my shell script snippet"><meta itemprop=datePublished content="2017-04-22T00:00:00+08:00">
-<meta itemprop=dateModified content="2022-02-23T22:45:06+08:00">
-<meta itemprop=wordCount content="2603">
+<meta itemprop=dateModified content="2022-02-23T22:49:01+08:00">
+<meta itemprop=wordCount content="2618">
 <meta itemprop=keywords content="shell,linux,command_line,tool,"><meta name=twitter:card content="summary">
 <meta name=twitter:title content="脚本分享">
 <meta name=twitter:description content="share of my shell script snippet"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
@@ -118,9 +118,8 @@
 <div class=post-content>
 <p>分享一下平时工作生活中编写的一些脚本片段(一直更新). 适用于 OS X 和 Linux</p>
 <h2 id=准备工作><span class=section-num>1</span> 准备工作</h2>
-<p>因为我比较多的脚本都是基于 <code>percol</code> 这个神器，所以需要先安装 <code>percol</code>, 如果 不了解 <code>percol</code> 的话，可以翻看一下我之前的文章 <a href=http://samrayleung.github.io/blog/2017/02/22/linux-unix-shell-%25E4%25BA%258C%25E4%25B8%2589%25E4%25BA%258B%25E4%25B9%258B%25E7%25A5%259E%25E5%2599%25A8percol/>Linux/Unix Shell 二三事之神器percol</a> .</p>
-<p>我一般将写好的函数 source 命令添加到 Shell. 例如脚本函数都在一个叫
-<code>tool_function.sh</code> 的文件里面，而我使用 Zsh, 则只需要在 <code>.zshrc</code> 添加一句语句：</p>
+<p>因为我比较多的脚本都是基于 <code>percol</code> 这个神器，所以需要先安装 <code>percol</code>, 如果 不了解 <code>percol</code> 的话，可以翻看一下我之前的文章 <a href=https://ramsayleung.github.io/post/2017/percol/>Linux/Unix Shell 二三事之神器percol</a> .</p>
+<p>我一般将写好的函数 source 命令添加到 Shell. 例如脚本函数都在一个叫<code>tool_function.sh</code> 的文件里面，而我使用 Zsh, 则只需要在 <code>.zshrc</code> 添加一句语句：</p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
