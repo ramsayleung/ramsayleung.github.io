@@ -163,20 +163,23 @@ In order to know what this PR brought to us, we have to go back to the orignal s
 </article>
 <article class=post>
 <header class=post-header>
-<h1 class=post-title><a class=post-link href=/post/2017/distributed_system_unique_id/>关于分布式系统唯一ID的探究</a></h1>
+<h1 class=post-title><a class=post-link href=/post/2020/serde_lesson/>Serde Tricks</a></h1>
 <div class=post-meta>
-<span class=post-time> 2017-05-23 </span>
+<span class=post-time> 2020-12-13 </span>
 <div class=post-category>
-<a href=/categories/algorithm/> algorithm </a>
+<a href=/categories/rust/> rust </a>
 </div>
 </div>
 </header>
 <div class=post-content>
 <div class=post-summary>
-最近我需要为运行的分布式系统某部分模块构造系统唯一的ID, 而 ID 需要是数字的形式，并应该尽量的短。不得不说，这是一个有趣的问题 1 若干实现策略 查
+The lesson learned from refactoring rspotify
+1 Preface Recently, I and Mario are working on refactoring rspotify, trying to improve performance, documentation, error-handling, data model and reduce compile time, to make it easier to use. (For those who has never heard about rspotify, it is a Spotify HTTP SDK implemented in Rust).
+I am partly focusing on polishing the data model, based on the issue created by Koxiaet.
+Since rspotify is API client for Spotify, it has to handle the request and response from Spotify HTTP API.
 </div>
 <div class=read-more>
-<a href=/post/2017/distributed_system_unique_id/ class=read-more-link>Read more...</a>
+<a href=/post/2020/serde_lesson/ class=read-more-link>Read more...</a>
 </div>
 </div>
 </article>
