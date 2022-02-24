@@ -1,0 +1,510 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>Rust的错误处理(一) - In Pursuit of Hubris</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="Ramsay Leung"><meta name=description content="拉上Java 来谈谈 Rust的错误处理 1 前言 每个语言都会有异常处理机制（没有异常处理机制的语言估计也没有人会用了），Rust 自然也不例外，所以"><meta name=keywords content="Blog,Software,Enginering">
+<meta name=generator content="Hugo 0.92.2 with theme even">
+<link rel=canonical href=https://ramsayleung.github.io/post/2018/error_handle_in_rust_1/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="Rust的错误处理(一)">
+<meta property="og:description" content="拉上Java 来谈谈 Rust的错误处理 1 前言 每个语言都会有异常处理机制（没有异常处理机制的语言估计也没有人会用了），Rust 自然也不例外，所以">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ramsayleung.github.io/post/2018/error_handle_in_rust_1/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2018-02-05T20:35:00+08:00">
+<meta property="article:modified_time" content="2022-02-24T16:38:50+08:00">
+<meta itemprop=name content="Rust的错误处理(一)">
+<meta itemprop=description content="拉上Java 来谈谈 Rust的错误处理 1 前言 每个语言都会有异常处理机制（没有异常处理机制的语言估计也没有人会用了），Rust 自然也不例外，所以"><meta itemprop=datePublished content="2018-02-05T20:35:00+08:00">
+<meta itemprop=dateModified content="2022-02-24T16:38:50+08:00">
+<meta itemprop=wordCount content="2673">
+<meta itemprop=keywords content="rust,java,"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="Rust的错误处理(一)">
+<meta name=twitter:description content="拉上Java 来谈谈 Rust的错误处理 1 前言 每个语言都会有异常处理机制（没有异常处理机制的语言估计也没有人会用了），Rust 自然也不例外，所以"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/about_me>
+<li class=mobile-menu-item>About</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/about_me>About</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>Rust的错误处理(一)</h1>
+<div class=post-meta>
+<span class=post-time> 2018-02-05 </span>
+<div class=post-category>
+<a href=/categories/rust/> rust </a>
+</div>
+<span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#前言><span class=section-num>1</span> 前言</a></li>
+<li><a href=#java-的异常处理><span class=section-num>2</span> Java 的异常处理</a></li>
+<li><a href=#checked-exception><span class=section-num>3</span> Checked Exception</a></li>
+<li><a href=#rust-的异常处理><span class=section-num>4</span> Rust 的异常处理</a></li>
+<li><a href=#java-的异常传递><span class=section-num>5</span> Java 的异常传递</a></li>
+<li><a href=#rust-的异常传递><span class=section-num>6</span> Rust 的异常传递</a>
+<ul>
+<li><a href=#关键字><span class=section-num>6.1</span> ? 关键字</a></li>
+<li><a href=#unwrap-和-expect><span class=section-num>6.2</span> unwrap 和 expect</a></li>
+</ul>
+</li>
+<li><a href=#结语><span class=section-num>7</span> 结语</a></li>
+<li><a href=#参考><span class=section-num>8</span> 参考</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<p>拉上Java 来谈谈 Rust的错误处理</p>
+<h2 id=前言><span class=section-num>1</span> 前言</h2>
+<p>每个语言都会有异常处理机制（没有异常处理机制的语言估计也没有人会用了），Rust 自然也不例外，所以今天我就来谈Rust 的异常处理，因为 Rust 的异常处理跟常见的语言 （Java/Python 等）的处理机制差异略大，所以打算拉个上个语言，对比着解释. 没错，这 个光荣的任务就落到了 Java 身上</p>
+<h2 id=java-的异常处理><span class=section-num>2</span> Java 的异常处理</h2>
+<p>在谈 Rust 的异常处理之前，为了把它们之前的差异讲清楚，先来聊一下 Java 的异常处理。</p>
+<figure><img src=https://raw.githubusercontent.com/ramsayleung/images/master/java_exception_hierarchy.png alt="Figure 1: Java exception hierarchy"><figcaption>
+<p><span class=figure-number>Figure 1: </span>Java exception hierarchy</p>
+</figcaption>
+</figure>
+<p>如上面的简易图所示， Java 的异常都是继承于 <code>Throwable</code> 这个分类的，而异常又是分 成不同的类型： <code>Error</code>, <code>Exception</code>;
+<code>Exception</code> 又分成 <code>Checked Exception</code> 和 <code>RuntimeException</code>.</p>
+<p><code>Error</code> 一般都是了出现严重的问题，按照JDK 注释的说法，都是不应该 <code>try-catch</code>的：</p>
+<blockquote>
+<p>An {() Error} is a subclass of {() Throwable}
+that indicates serious problems that a reasonable application should
+not try to catch. Most such errors are abnormal conditions.</p>
+</blockquote>
+<p>比如虚拟机挂了，或者JRE 出了问题就可能是 <code>Error</code>，前几天我就遇到一个JRE 的 Bug, 整个项目都挂 了：</p>
+<figure><img src=https://raw.githubusercontent.com/ramsayleung/images/master/20191104104407.png alt="Figure 2: JRE fatal error"><figcaption>
+<p><span class=figure-number>Figure 2: </span>JRE fatal error</p>
+</figcaption>
+</figure>
+<p>我还顺便给 Oracle 报了个<a href="https://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8196769">Bug</a> :)</p>
+<p>至于<code>RuntimeException</code> 就是类似数组越界，空指针这些异常，即无法在程序编译时发现，只有在运行的时候才会出 现的问题，所以叫做运行时异常(<code>RuntimeException</code>).</p>
+<h2 id=checked-exception><span class=section-num>3</span> Checked Exception</h2>
+<p>Java的<code>Checked Exception</code>, 也就是Java 要求你必须在函数的类型里面声明或处理它可能抛出的异常。比如，你的函数如果是这样：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kt>void</span> <span class=nf>foo</span><span class=o>(</span><span class=n>string</span> <span class=n>filename</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>IOException</span>
+<span class=o>{</span>
+    <span class=n>File</span> <span class=n>file</span> <span class=o>=</span> <span class=k>new</span> <span class=n>File</span><span class=o>(</span><span class=n>filename</span><span class=o>);</span>
+
+    <span class=n>BufferedReader</span> <span class=n>br</span> <span class=o>=</span> <span class=k>new</span> <span class=n>BufferedReader</span><span class=o>(</span><span class=k>new</span> <span class=n>FileReader</span><span class=o>(</span><span class=n>file</span><span class=o>));</span>
+
+    <span class=n>String</span> <span class=n>st</span><span class=o>;</span>
+    <span class=k>while</span> <span class=o>((</span><span class=n>st</span> <span class=o>=</span> <span class=n>br</span><span class=o>.</span><span class=na>readLine</span><span class=o>())</span> <span class=o>!=</span> <span class=kc>null</span><span class=o>)</span>
+	<span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>st</span><span class=o>);</span>
+<span class=o>}</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Java 要求你必须在函数头部写上 <code>throws IOException</code> 或者是必须用 <code>try-catch</code>处理这个异常，因为<code>readline()</code> 的方法签名是：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=n>String</span> <span class=nf>readLine</span><span class=o>(</span><span class=kt>boolean</span> <span class=n>ignoreLF</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>IOException</span> <span class=o>{</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>所以编译器要求必须要处理这个异常，否则它就不能编译。</p>
+<p>同理，在使用 <code>foo()</code>这个函数 的时候，可能会抛出 <code>IOException</code> 这个异常，由于编译器看到了这个声明，它会严格检 查你对 <code>foo</code>
+函数的用法。</p>
+<p>在我看来，<code>CheckedException</code>是Java 优良的设计之一，正因 为<code>Checked Exception</code>的存在，会更容易编写出正确处理错误的程序，更健壮的程序</p>
+<h2 id=rust-的异常处理><span class=section-num>4</span> Rust 的异常处理</h2>
+<p>Rust 是一个注重安全（Safety）的语言，而错误处理也是 Rust关注的要点之一。</p>
+<p>Rust 主要是将错误划分成两种类型，分别是可恢复的错误(recoverable error) 和不可恢复错误 (unrecoverable error).</p>
+<p>出现可恢复的错误的原因多种多样，例如打开文件的时候，文件找不到或者没有读权限等，开发者就应该对这种可能出现的错误进行处理；</p>
+<p>而不可恢复的错误就可能是Bug 引起的，比如数组越界等。而其他常见的语言一般是没有没有区分 <code>recoverable error</code>和 <code>unrecoverable error</code>的. 比如 Python, 用的就是 <code>Exception</code>.</p>
+<p>而Rust 是没有 <code>Exception</code>, Rust 用 <code>Result&lt;T, E></code> 表示可恢复错误， 用 <code>panic!()</code> 来表示出现错误，并且中断程序的执行并退出(不可恢复错误)。</p>
+<p><code>Result</code> 是Rust 标准库的枚举：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=k>pub</span><span class=w> </span><span class=k>enum</span> <span class=nb>Result</span><span class=o>&lt;</span><span class=n>T</span><span class=p>,</span><span class=w> </span><span class=n>E</span><span class=o>&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=nb>Ok</span><span class=p>(</span><span class=n>T</span><span class=p>),</span><span class=w>
+</span><span class=w>    </span><span class=nb>Err</span><span class=p>(</span><span class=n>E</span><span class=p>),</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span></code></pre></td></tr></table>
+</div>
+</div><p><code>T</code>和<code>E</code>都是泛型，<code>T</code>表示程序执行正常的时候的返回值，那<code>E</code>自然是程序出错时的返回 值。以标准库的打开文件的函数为例， <code>std::io::File</code> 的 <code>open()</code> 函数的签名如下：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=k>pub</span><span class=w> </span><span class=k>fn</span> <span class=nf>open</span><span class=o>&lt;</span><span class=n>P</span>: <span class=nb>AsRef</span><span class=o>&lt;</span><span class=n>Path</span><span class=o>&gt;&gt;</span><span class=p>(</span><span class=n>path</span>: <span class=nc>P</span><span class=p>)</span><span class=w> </span>-&gt; <span class=nc>io</span>::<span class=nb>Result</span><span class=o>&lt;</span><span class=n>File</span><span class=o>&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=n>OpenOptions</span>::<span class=n>new</span><span class=p>().</span><span class=n>read</span><span class=p>(</span><span class=kc>true</span><span class=p>).</span><span class=n>open</span><span class=p>(</span><span class=n>path</span><span class=p>.</span><span class=n>as_ref</span><span class=p>())</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span></code></pre></td></tr></table>
+</div>
+</div><p>忽略这个方法的参数，只看返回值类型：<code>io::Result&lt;File></code>, 又因为有 <code>type Result&lt;T></code> Result&lt;T, Error>;=</p>
+<p>这个 <code>typedef</code> 语句，所以返回值的完整版本时<code>io::Result&lt;File,io::Error></code>, 即调用 <code>open</code> 这个函数的时候，可能出现错误，出现错误时候返回一个 <code>io::Error</code>, 如果调用<code>open</code>没有问题的话，就会返回一个 <code>File</code> 的结构体，所以这个就类似 Java 的<code>CheckedException</code>,</p>
+<p>只要声明了函数可能出现问题，在调用函数的时候就必须处理可能出现的错误，不然编译器就不会让你通过(Rust 的编译器就像位父亲那样对开发者耳提面命), 例如：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=k>match</span><span class=w> </span><span class=n>File</span>::<span class=n>open</span><span class=p>(</span><span class=o>&amp;</span><span class=bp>self</span><span class=p>.</span><span class=n>cache_path</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=nb>Ok</span><span class=p>(</span><span class=n>file</span><span class=p>)</span><span class=w> </span><span class=o>=&gt;</span><span class=w> </span><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;{:?}&#34;</span><span class=p>,</span><span class=n>file</span><span class=p>),</span><span class=w>
+</span><span class=w>    </span><span class=nb>Err</span><span class=p>(</span><span class=n>why</span><span class=p>)</span><span class=w> </span><span class=o>=&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>	</span><span class=fm>panic!</span><span class=p>(</span><span class=s>&#34;couldn&#39;t open {:?}&#34;</span><span class=p>,</span><span class=w> </span><span class=n>why</span><span class=p>.</span><span class=n>description</span><span class=p>())</span><span class=w>
+</span><span class=w>    </span><span class=p>}</span><span class=w>
+</span><span class=w></span><span class=p>};</span><span class=w>
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id=java-的异常传递><span class=section-num>5</span> Java 的异常传递</h2>
+<p>在程序中，总会有一些错误需要处理，但是却不应该在错误出现的函数进行处理的情况(或者是，你很懒惰，只想应付一下编译器，不想处理出现的异常 :)</p>
+<p>比如你正在编写一个类 库，里面有很多的IO 操作，有IO 操作的地方就有可能出现<code>IOException</code>. 如果出现异常，
+你不应该自己在类库把异常给 <code>try-catch</code>了，如果这样，使用你类库的开发者就没办法知 道程序出现了异常，异常的堆栈也丢了。</p>
+<p>比较合理的做法是，把<code>IOException</code>捕捉了，然后对 <code>IOException</code> 做一层包装，然后再抛给类库的调用者，例如：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=kt>void</span> <span class=nf>doSomething</span><span class=o>()</span> <span class=kd>throws</span> <span class=n>WrappingException</span><span class=o>{</span>
+    <span class=k>try</span><span class=o>{</span>
+	<span class=n>doSomethingThatCanThrowException</span><span class=o>();</span>
+    <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>SomeException</span> <span class=n>e</span><span class=o>){</span>
+	<span class=n>e</span><span class=o>.</span><span class=na>addContextInformation</span><span class=o>(</span><span class=s>&#34;there is something happen in doSomething() function, `Some Exception` is raised, balabala&#34;</span><span class=o>);</span>
+	<span class=c1>//throw e;  //throw e, or wrap it  see next line.
+</span><span class=c1></span>	<span class=k>throw</span> <span class=k>new</span> <span class=n>WrappingException</span><span class=o>(</span><span class=n>e</span><span class=o>,</span> <span class=n>more</span> <span class=n>information</span> <span class=n>about</span> <span class=n>Some</span> <span class=n>Exception</span><span class=o>,</span> <span class=n>balabala</span><span class=o>);</span>
+    <span class=o>}</span> <span class=k>finally</span> <span class=o>{</span>
+	<span class=c1>//clean up close open resources etc.
+</span><span class=c1></span>    <span class=o>}</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>当然，你也可以在添加了额外的信息之后，直接把原来的异常抛出来</p>
+<h2 id=rust-的异常传递><span class=section-num>6</span> Rust 的异常传递</h2>
+<p>刚刚谈了 Java 的异常传递，现在轮到 Rust 的异常传递了，既然Rust 没有 <code>Exception</code>一说，那 Rust 传递的自然也是 <code>Result&lt;T,E></code>
+这个枚举类型(这里针对的是 可恢复错误，不可恢复错误出现错误的时候，会返回错误并弹出程序，自然不存在异常传递).</p>
+<p>先来看看 Rust 的异常传递的例子：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>use std::io;
+use std::io::Read;
+use std::fs::File;
+
+fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
+    let f = File::open(&#34;hello.txt&#34;);
+
+    let mut f = match f {
+	Ok(file) =&gt; file,
+	Err(e) =&gt; return Err(e),
+    };
+
+    let mut s = String::new();
+
+    match f.read_to_string(&amp;mut s) {
+	Ok(_) =&gt; Ok(s),
+	Err(e) =&gt; Err(e),
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>例子来自 Rust Book</p>
+<p>先来看看函数的返回值 <code>Result&lt;String,io::Error></code>, 也就是说， <code>read_username_from_file</code> 正确执行的时候返回是 <code>String</code>,
+错误的时候，返回的是 <code>io::Error</code>. 这里的异常传递是在出现 <code>io::Error</code>的时候，将错误原样返回，不然就是返
+回函数执行成功的结果。</p>
+<p>就异常传递的方式而言，Rust 和 Java 是大同小异：声明可能抛出的异常和成功时返回的结果，然后在遇到错误的时候，直接（或者包装一下）返回错误。</p>
+<h3 id=关键字><span class=section-num>6.1</span> ? 关键字</h3>
+<p>虽说 Rust 的异常处理很清晰，但是每次都要 <code>match</code> 然后返回未免太繁琐了，所以 Rust 提供了一个语法糖来显示繁琐的异常传递：用
+&ldquo;?&rdquo; 关键字进行异常传递：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=k>use</span><span class=w> </span><span class=n>std</span>::<span class=n>io</span><span class=p>;</span><span class=w>
+</span><span class=w></span><span class=k>use</span><span class=w> </span><span class=n>std</span>::<span class=n>io</span>::<span class=n>Read</span><span class=p>;</span><span class=w>
+</span><span class=w></span><span class=k>use</span><span class=w> </span><span class=n>std</span>::<span class=n>fs</span>::<span class=n>File</span><span class=p>;</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>fn</span> <span class=nf>read_username_from_file</span><span class=p>()</span><span class=w> </span>-&gt; <span class=nb>Result</span><span class=o>&lt;</span><span class=nb>String</span><span class=p>,</span><span class=w> </span><span class=n>io</span>::<span class=n>Error</span><span class=o>&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=k>mut</span><span class=w> </span><span class=n>f</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>File</span>::<span class=n>open</span><span class=p>(</span><span class=s>&#34;hello.txt&#34;</span><span class=p>)</span><span class=o>?</span><span class=p>;</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=k>mut</span><span class=w> </span><span class=n>s</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>String</span>::<span class=n>new</span><span class=p>();</span><span class=w>
+</span><span class=w>    </span><span class=n>f</span><span class=p>.</span><span class=n>read_to_string</span><span class=p>(</span><span class=o>&amp;</span><span class=k>mut</span><span class=w> </span><span class=n>s</span><span class=p>)</span><span class=o>?</span><span class=p>;</span><span class=w>
+</span><span class=w>    </span><span class=nb>Ok</span><span class=p>(</span><span class=n>s</span><span class=p>)</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span></code></pre></td></tr></table>
+</div>
+</div><p>同样的功能，但是模板代码却减少了很多 :)</p>
+<h3 id=unwrap-和-expect><span class=section-num>6.2</span> unwrap 和 expect</h3>
+<p>虽说 Rust 的可恢复错误设计得很优雅，但是每次遇到可能出现错误得地方都要显示地进行 处理，不免让人觉得繁琐.</p>
+<p>Rust 也考虑到这种情况了，提供了 <code>unwrap()</code> 和 <code>expect()</code>让你舒心<del>简单粗暴</del>地处理错误：在函数调用成功的时候返回正确的结果，在 出现错误地时候直接 <code>panic!()</code>,并退出程序</p>
+<h4 id=unwrap><span class=section-num>6.2.1</span> unwrap</h4>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=k>fn</span> <span class=nf>main</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>f</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>File</span>::<span class=n>open</span><span class=p>(</span><span class=s>&#34;hello.txt&#34;</span><span class=p>).</span><span class=n>unwrap</span><span class=p>();</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span></code></pre></td></tr></table>
+</div>
+</div><p>打开 <code>hello.txt</code>这个文件，能打开就返回文件 <code>f</code>,不能打开就 <code>panic!()</code> 然后退出程序。</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-mysql data-lang=mysql><span class=n>thread</span><span class=w> </span><span class=s1>&#39;main&#39;</span><span class=w> </span><span class=n>panicked</span><span class=w> </span><span class=n>at</span><span class=w> </span><span class=s1>&#39;called `Result::unwrap()` on an `Err` value: Error {
+</span><span class=s1>repr: Os { code: 2, message: &#34;No such file or directory&#34; } }&#39;</span><span class=p>,</span><span class=w>
+</span><span class=w></span><span class=o>/</span><span class=n>stable</span><span class=o>-</span><span class=n>dist</span><span class=o>-</span><span class=n>rustc</span><span class=o>/</span><span class=n>build</span><span class=o>/</span><span class=n>src</span><span class=o>/</span><span class=n>libcore</span><span class=o>/</span><span class=n>result</span><span class=p>.</span><span class=n>rs</span><span class=p>:</span><span class=mi>868</span><span class=w>
+</span></code></pre></td></tr></table>
+</div>
+</div><h4 id=expect><span class=section-num>6.2.2</span> expect</h4>
+<p><code>expect()</code>和 <code>unwrap()</code>类似，只不过 <code>expect()</code>可以加上额外的信息：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=k>use</span><span class=w> </span><span class=n>std</span>::<span class=n>fs</span>::<span class=n>File</span><span class=p>;</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>fn</span> <span class=nf>main</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>f</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>File</span>::<span class=n>open</span><span class=p>(</span><span class=s>&#34;hello.txt&#34;</span><span class=p>).</span><span class=n>expect</span><span class=p>(</span><span class=s>&#34;Failed to open hello.txt&#34;</span><span class=p>);</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span></code></pre></td></tr></table>
+</div>
+</div><p>出现错误的时候，除了显示应有的错误信息之外，还会显示你自定义的错误信息：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>thread &#39;main&#39; panicked at &#39;Failed to open hello.txt: Error { repr: Os { code:
+2, message: &#34;No such file or directory&#34; } }&#39;,
+/stable-dist-rustc/build/src/libcore/result.rs:868
+</code></pre></td></tr></table>
+</div>
+</div><p>以上代码来自 <a href=https://doc.rust-lang.org/book/second-edition/ch09-02-recoverable-errors-with-result.html>Rust book</a></p>
+<h2 id=结语><span class=section-num>7</span> 结语</h2>
+<p>以上只是浅谈了 Rust 的错误处理，以及和 Java 的异常处理机制的简单比较，接下来我会 谈谈如何自定义<code>Error</code>以及使用
+<code>erro_chain</code> 这个库来优雅地进行错误处理 :)</p>
+<p>如果想了解更多关于 Rust 异常处理的内容，可以查阅 Rust book <a href=https://doc.rust-lang.org/book/second-edition/ch09-00-error-handling.html>Error handle</a></p>
+<h2 id=参考><span class=section-num>8</span> 参考</h2>
+<ul>
+<li><a href=http://tutorials.jenkov.com/exception-handling-strategies/propagating-exceptions.html>propagating exceptions</a></li>
+<li><a href=https://doc.rust-lang.org/book/second-edition/>Rust book</a></li>
+<li><a href=https://doc.rust-lang.org/stable/std/io/type.Result.html>IO Result</a></li>
+</ul>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2022-02-24
+</span>
+</p>
+</div>
+<footer class=post-footer>
+<div class=post-tags>
+<a href=/tags/rust/>rust</a>
+<a href=/tags/java/>java</a>
+</div>
+<nav class=post-nav>
+<a class=prev href=/post/2018/error_handle_in_rust_2/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">Rust的错误处理(二)</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/post/2017/search_eshell_history_like_fzf/>
+<span class="next-text nav-default">Eshell实现fzf的历史命令搜索功能</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<div id=gitalk-container></div>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
+<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:'2018-02-05 20:35:00 \u002b0800 \u002b0800',title:'Rust的错误处理(一)',clientID:'3c034c97f0926fafd2d6',clientSecret:'192051927d267ce83eb2ef10955890b7db2720ad',repo:'comment',owner:'ramsayleung',admin:['ramsayleung'],body:decodeURI(location.href)});gitalk.render('gitalk-container')</script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
+<a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<div class=busuanzi-footer>
+<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+</div>
+<span class=copyright-year>
+&copy;
+2017 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>

@@ -1,0 +1,730 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>Rust的错误处理(二) - In Pursuit of Hubris</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="Ramsay Leung"><meta name=description content="自定义错误和error_chain 库 1 前言 上一篇文章聊到 Rust 的错误处理机制，以及和 Java 的简单比较，现在就来聊一下如何在 Rust 自定义错误，以及引入 er"><meta name=keywords content="Blog,Software,Enginering">
+<meta name=generator content="Hugo 0.92.2 with theme even">
+<link rel=canonical href=https://ramsayleung.github.io/post/2018/error_handle_in_rust_2/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="Rust的错误处理(二)">
+<meta property="og:description" content="自定义错误和error_chain 库 1 前言 上一篇文章聊到 Rust 的错误处理机制，以及和 Java 的简单比较，现在就来聊一下如何在 Rust 自定义错误，以及引入 er">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ramsayleung.github.io/post/2018/error_handle_in_rust_2/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2018-02-08T22:01:00+08:00">
+<meta property="article:modified_time" content="2022-02-24T16:52:24+08:00">
+<meta itemprop=name content="Rust的错误处理(二)">
+<meta itemprop=description content="自定义错误和error_chain 库 1 前言 上一篇文章聊到 Rust 的错误处理机制，以及和 Java 的简单比较，现在就来聊一下如何在 Rust 自定义错误，以及引入 er"><meta itemprop=datePublished content="2018-02-08T22:01:00+08:00">
+<meta itemprop=dateModified content="2022-02-24T16:52:24+08:00">
+<meta itemprop=wordCount content="1899">
+<meta itemprop=keywords content="rust,java,"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="Rust的错误处理(二)">
+<meta name=twitter:description content="自定义错误和error_chain 库 1 前言 上一篇文章聊到 Rust 的错误处理机制，以及和 Java 的简单比较，现在就来聊一下如何在 Rust 自定义错误，以及引入 er"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/about_me>
+<li class=mobile-menu-item>About</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/about_me>About</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>Rust的错误处理(二)</h1>
+<div class=post-meta>
+<span class=post-time> 2018-02-08 </span>
+<div class=post-category>
+<a href=/categories/rust/> rust </a>
+</div>
+<span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#前言><span class=section-num>1</span> 前言</a>
+<ul>
+<li><a href=#java-自定义异常><span class=section-num>1.1</span> Java 自定义异常</a></li>
+<li><a href=#rust-自定义错误><span class=section-num>1.2</span> Rust 自定义错误</a></li>
+<li><a href=#error-chain><span class=section-num>1.3</span> error_chain</a></li>
+</ul>
+</li>
+<li><a href=#小结><span class=section-num>2</span> 小结</a></li>
+<li><a href=#参考><span class=section-num>3</span> 参考</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<p>自定义错误和<code>error_chain</code> 库</p>
+<h2 id=前言><span class=section-num>1</span> 前言</h2>
+<p>上一篇文章聊到 Rust 的错误处理机制，以及和 Java 的简单比较，现在就来聊一下如何在 Rust 自定义错误，以及引入 <code>error_chain</code>这个库来优雅地进行错误处理。</p>
+<p>还有，少不了用 Java 来做对比咯:)</p>
+<h3 id=java-自定义异常><span class=section-num>1.1</span> Java 自定义异常</h3>
+<p>前文简单提到 Java 的错误和异常但是继承自一个 <code>Throwable</code>的父类，既然异常是继承自异常父类的，我们自定义异常的时候，
+也可以模仿JDK, 继承一个异常类：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=kd>class</span> <span class=nc>MyException</span> <span class=kd>extends</span> <span class=n>Exception</span> <span class=o>{</span>
+    <span class=kd>public</span> <span class=nf>MyException</span><span class=o>(</span><span class=n>String</span> <span class=n>message</span><span class=o>)</span> <span class=o>{</span>
+	<span class=kd>super</span><span class=o>(</span><span class=n>message</span><span class=o>);</span>
+    <span class=o>}</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这样就定义了属于自己的异常. 只需要继承 <code>Exception</code>,然后调用父类的构造方法。</p>
+<p>不过 对于那些复杂的项目，这样的例子未免过于简单。现在就来看一个我项目的中的一个异常类：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=n>public</span><span class=w> </span><span class=kr>final</span><span class=w> </span><span class=n>class</span><span class=w> </span><span class=n>MyError</span><span class=w> </span><span class=n>extends</span><span class=w> </span><span class=n>RuntimeException</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=sd>/**
+</span><span class=sd>     *
+</span><span class=sd>     */</span><span class=w>
+</span><span class=w>    </span><span class=n>private</span><span class=w> </span><span class=k>static</span><span class=w> </span><span class=kr>final</span><span class=w> </span><span class=n>long</span><span class=w> </span><span class=n>serialVersionUID</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mi>1</span><span class=n>L</span><span class=p>;</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=n>private</span><span class=w> </span><span class=k>static</span><span class=w> </span><span class=n>boolean</span><span class=w> </span><span class=n>isFillStack</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kc>true</span><span class=p>;</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=n>private</span><span class=w> </span><span class=n>Integer</span><span class=w> </span><span class=n>httpStatusCode</span><span class=p>;</span><span class=w>
+</span><span class=w>    </span><span class=n>private</span><span class=w> </span><span class=n>Integer</span><span class=w> </span><span class=n>code</span><span class=p>;</span><span class=w>
+</span><span class=w>    </span><span class=n>private</span><span class=w> </span><span class=nb>String</span><span class=w> </span><span class=n>message</span><span class=p>;</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=n>private</span><span class=w> </span><span class=n>MyError</span><span class=p>(</span><span class=n>int</span><span class=w> </span><span class=n>httpStatusCode</span><span class=p>,</span><span class=w> </span><span class=n>int</span><span class=w> </span><span class=n>code</span><span class=p>,</span><span class=w> </span><span class=nb>String</span><span class=w> </span><span class=n>message</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>	</span><span class=k>super</span><span class=p>(</span><span class=n>message</span><span class=p>,</span><span class=w> </span><span class=n>null</span><span class=p>,</span><span class=w> </span><span class=n>isFillStack</span><span class=p>,</span><span class=w> </span><span class=n>isFillStack</span><span class=p>);</span><span class=w>
+</span><span class=w>	</span><span class=n>this</span><span class=p>.</span><span class=n>httpStatusCode</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>httpStatusCode</span><span class=p>;</span><span class=w>
+</span><span class=w>	</span><span class=n>this</span><span class=p>.</span><span class=n>code</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>code</span><span class=p>;</span><span class=w>
+</span><span class=w>	</span><span class=n>this</span><span class=p>.</span><span class=n>message</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>message</span><span class=p>;</span><span class=w>
+</span><span class=w>    </span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=n>public</span><span class=w> </span><span class=n>MyError</span><span class=p>(</span><span class=n>MyErrorCode</span><span class=w> </span><span class=n>myErrorCode</span><span class=p>,</span><span class=w> </span><span class=n>Object</span><span class=o>..</span><span class=p>.</span><span class=w> </span><span class=n>messageArgs</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>	</span><span class=n>this</span><span class=p>(</span><span class=n>myErrorCode</span><span class=p>.</span><span class=n>getHttpStatusCode</span><span class=p>(),</span><span class=w> </span><span class=n>myErrorCode</span><span class=p>.</span><span class=n>getErrorCode</span><span class=p>(),</span><span class=w>
+</span><span class=w>	     </span><span class=n>MessageFormat</span><span class=p>.</span><span class=n>format</span><span class=p>(</span><span class=n>myErrorCode</span><span class=p>.</span><span class=n>getMessagePattern</span><span class=p>(),</span><span class=w> </span><span class=n>messageArgs</span><span class=p>));</span><span class=w>
+</span><span class=w>    </span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=n>public</span><span class=w> </span><span class=k>static</span><span class=w> </span><span class=n>MyError</span><span class=w> </span><span class=n>throwError</span><span class=p>(</span><span class=n>MyErrorCode</span><span class=w> </span><span class=n>myErrorCode</span><span class=p>,</span><span class=w> </span><span class=n>Object</span><span class=o>..</span><span class=p>.</span><span class=w> </span><span class=n>messageArgs</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>	</span><span class=n>throw</span><span class=w> </span><span class=n>new</span><span class=w> </span><span class=n>MyError</span><span class=p>(</span><span class=n>myErrorCode</span><span class=p>,</span><span class=w> </span><span class=n>messageArgs</span><span class=p>);</span><span class=w>
+</span><span class=w>    </span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=n>public</span><span class=w> </span><span class=k>static</span><span class=w> </span><span class=n>MyError</span><span class=w> </span><span class=n>internalServerError</span><span class=p>(</span><span class=nb>String</span><span class=w> </span><span class=n>logId</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>	</span><span class=n>throw</span><span class=w> </span><span class=n>new</span><span class=w> </span><span class=n>MyError</span><span class=p>(</span><span class=n>MyErrorCode</span><span class=p>.</span><span class=n>INTERNAL_SERVER_ERROR</span><span class=p>,</span><span class=w> </span><span class=n>logId</span><span class=p>);</span><span class=w>
+</span><span class=w>    </span><span class=p>}</span><span class=w>
+</span><span class=w>    </span><span class=n>public</span><span class=w> </span><span class=k>static</span><span class=w> </span><span class=n>MyError</span><span class=w> </span><span class=n>DataError</span><span class=p>(</span><span class=nb>String</span><span class=w> </span><span class=n>logId</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>	</span><span class=n>throw</span><span class=w> </span><span class=n>new</span><span class=w> </span><span class=n>MyError</span><span class=p>(</span><span class=n>MyErrorCode</span><span class=p>.</span><span class=n>DATA_ERROR</span><span class=p>,</span><span class=w> </span><span class=n>logId</span><span class=p>);</span><span class=w>
+</span><span class=w>    </span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=n>public</span><span class=w> </span><span class=k>static</span><span class=w> </span><span class=n>MyError</span><span class=w> </span><span class=n>BadParameterError</span><span class=p>(</span><span class=nb>String</span><span class=w> </span><span class=n>logId</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>	</span><span class=n>throw</span><span class=w> </span><span class=n>new</span><span class=w> </span><span class=n>MyError</span><span class=p>(</span><span class=n>MyErrorCode</span><span class=p>.</span><span class=n>BAD_PARAMETER_ERROR</span><span class=p>,</span><span class=w> </span><span class=n>logId</span><span class=p>);</span><span class=w>
+</span><span class=w>    </span><span class=p>}</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span></code></pre></td></tr></table>
+</div>
+</div><p>这是我去掉了多余方法和变量的简化版，但是也足以一叶知秋了。</p>
+<p><code>MyError</code>这个异常类是 继承于 <code>RuntimeException</code>的，并调用了 <code>RuntimeException</code>的构造方法。</p>
+<p>因为我的项目是 WEB 服务的业务层，要处理大量的逻辑，难免会出现异常.</p>
+<p>比如说可能调用方调用接口 的时候，入参不符合规范，我就抛出一个经过包装的 <code>BadParameterError</code> 异常，对于接 口调用方，这样会比一个单纯的 400 错误要友好，其他的异常也是同理。</p>
+<h3 id=rust-自定义错误><span class=section-num>1.2</span> Rust 自定义错误</h3>
+<p>对于习惯了 OOP 编程的同学来说，Java 的异常是很容易理解，但是回到 Rust 身上，Rust是没有父类一说的，显然，Rust 是没可能套用 Java 的自定义异常的方式的。</p>
+<p>Rust 用的是 <code>trait</code>, <code>trait</code>就有点类似 Java 的 =interface=(只是类似，不是等同!).</p>
+<p>按照 Rust 的规范，Rust 允许开发者定义自己的错误，设计良好的错误应该包含以下的特性：</p>
+<ol>
+<li>使用相同的类型(type)来表示不同的错误</li>
+<li>错误中包含对用户友好的提示(我也在上面提到的)</li>
+<li>能便捷地与其他类型比较，例如：
+<ul>
+<li>Good: <code>Err(EmptyVec)</code></li>
+<li>Bad: <code>Err("Please use a vector with at least one element".to_owned())</code></li>
+</ul>
+</li>
+<li>包含与错误相关的信息，例如：
+<ul>
+<li>Good: <code>Err(BadChar(c, position))</code></li>
+<li>Bad: <code>Err("+ cannot be used here".to_owned())</code></li>
+</ul>
+</li>
+<li>可以很方便地与其他错误结合</li>
+</ol>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=k>use</span><span class=w> </span><span class=n>std</span>::<span class=n>error</span><span class=p>;</span><span class=w>
+</span><span class=w></span><span class=k>use</span><span class=w> </span><span class=n>std</span>::<span class=n>fmt</span><span class=p>;</span><span class=w>
+</span><span class=w></span><span class=k>use</span><span class=w> </span><span class=n>std</span>::<span class=n>num</span>::<span class=n>ParseIntError</span><span class=p>;</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>type</span> <span class=nb>Result</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>std</span>::<span class=n>result</span>::<span class=nb>Result</span><span class=o>&lt;</span><span class=n>T</span><span class=p>,</span><span class=w> </span><span class=n>DoubleError</span><span class=o>&gt;</span><span class=p>;</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=cp>#[derive(Debug, Clone)]</span><span class=w>
+</span><span class=w></span><span class=c1>// 自定义错误类型。
+</span><span class=c1></span><span class=k>struct</span> <span class=nc>DoubleError</span><span class=p>;</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=c1>// 不同的错误需要展示的信息也不一样，这个就要视情况而定，因为 DoubleError 没有定义额外的字段来保存错误信息
+</span><span class=c1>// 所以就现在就简单打印错误信息
+</span><span class=c1></span><span class=k>impl</span><span class=w> </span><span class=n>fmt</span>::<span class=n>Display</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=n>DoubleError</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=k>fn</span> <span class=nf>fmt</span><span class=p>(</span><span class=o>&amp;</span><span class=bp>self</span><span class=p>,</span><span class=w> </span><span class=n>f</span>: <span class=kp>&amp;</span><span class=nc>mut</span><span class=w> </span><span class=n>fmt</span>::<span class=n>Formatter</span><span class=p>)</span><span class=w> </span>-&gt; <span class=nc>fmt</span>::<span class=nb>Result</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>	</span><span class=fm>write!</span><span class=p>(</span><span class=n>f</span><span class=p>,</span><span class=w> </span><span class=s>&#34;invalid first item to double&#34;</span><span class=p>)</span><span class=w>
+</span><span class=w>    </span><span class=p>}</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=c1>// 实现 error::Error 这个 trait, 对DoubleError 进行包装
+</span><span class=c1></span><span class=k>impl</span><span class=w> </span><span class=n>error</span>::<span class=n>Error</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=n>DoubleError</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=k>fn</span> <span class=nf>description</span><span class=p>(</span><span class=o>&amp;</span><span class=bp>self</span><span class=p>)</span><span class=w> </span>-&gt; <span class=kp>&amp;</span><span class=kt>str</span> <span class=p>{</span><span class=w>
+</span><span class=w>	</span><span class=s>&#34;invalid first item to double&#34;</span><span class=w>
+</span><span class=w>    </span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=k>fn</span> <span class=nf>cause</span><span class=p>(</span><span class=o>&amp;</span><span class=bp>self</span><span class=p>)</span><span class=w> </span>-&gt; <span class=nb>Option</span><span class=o>&lt;&amp;</span><span class=n>error</span>::<span class=n>Error</span><span class=o>&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>	</span><span class=c1>// Generic error, underlying cause isn&#39;t tracked.
+</span><span class=c1></span><span class=w>	</span><span class=nb>None</span><span class=w>
+</span><span class=w>    </span><span class=p>}</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>fn</span> <span class=nf>double_first</span><span class=p>(</span><span class=n>vec</span>: <span class=nb>Vec</span><span class=o>&lt;&amp;</span><span class=kt>str</span><span class=o>&gt;</span><span class=p>)</span><span class=w> </span>-&gt; <span class=nb>Result</span><span class=o>&lt;</span><span class=kt>i32</span><span class=o>&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=n>vec</span><span class=p>.</span><span class=n>first</span><span class=p>()</span><span class=w>
+</span><span class=w>    </span><span class=c1>// Change the error to our new type.
+</span><span class=c1></span><span class=w>	</span><span class=p>.</span><span class=n>ok_or</span><span class=p>(</span><span class=n>DoubleError</span><span class=p>)</span><span class=w>
+</span><span class=w>	</span><span class=p>.</span><span class=n>and_then</span><span class=p>(</span><span class=o>|</span><span class=n>s</span><span class=o>|</span><span class=w> </span><span class=n>s</span><span class=p>.</span><span class=n>parse</span>::<span class=o>&lt;</span><span class=kt>i32</span><span class=o>&gt;</span><span class=p>()</span><span class=w>
+</span><span class=w>		  </span><span class=c1>// Update to the new error type here also.
+</span><span class=c1></span><span class=w>		  </span><span class=p>.</span><span class=n>map_err</span><span class=p>(</span><span class=o>|</span><span class=n>_</span><span class=o>|</span><span class=w> </span><span class=n>DoubleError</span><span class=p>)</span><span class=w>
+</span><span class=w>		  </span><span class=p>.</span><span class=n>map</span><span class=p>(</span><span class=o>|</span><span class=n>i</span><span class=o>|</span><span class=w> </span><span class=mi>2</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>i</span><span class=p>))</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>fn</span> <span class=nf>print</span><span class=p>(</span><span class=n>result</span>: <span class=nb>Result</span><span class=o>&lt;</span><span class=kt>i32</span><span class=o>&gt;</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=k>match</span><span class=w> </span><span class=n>result</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>	</span><span class=nb>Ok</span><span class=p>(</span><span class=n>n</span><span class=p>)</span><span class=w>  </span><span class=o>=&gt;</span><span class=w> </span><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;The first doubled is {}&#34;</span><span class=p>,</span><span class=w> </span><span class=n>n</span><span class=p>),</span><span class=w>
+</span><span class=w>	</span><span class=nb>Err</span><span class=p>(</span><span class=n>e</span><span class=p>)</span><span class=w> </span><span class=o>=&gt;</span><span class=w> </span><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;Error: {}&#34;</span><span class=p>,</span><span class=w> </span><span class=n>e</span><span class=p>),</span><span class=w>
+</span><span class=w>    </span><span class=p>}</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>fn</span> <span class=nf>main</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>numbers</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=fm>vec!</span><span class=p>[</span><span class=s>&#34;42&#34;</span><span class=p>,</span><span class=w> </span><span class=s>&#34;93&#34;</span><span class=p>,</span><span class=w> </span><span class=s>&#34;18&#34;</span><span class=p>];</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>empty</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=fm>vec!</span><span class=p>[];</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>strings</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=fm>vec!</span><span class=p>[</span><span class=s>&#34;tofu&#34;</span><span class=p>,</span><span class=w> </span><span class=s>&#34;93&#34;</span><span class=p>,</span><span class=w> </span><span class=s>&#34;18&#34;</span><span class=p>];</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=n>print</span><span class=p>(</span><span class=n>double_first</span><span class=p>(</span><span class=n>numbers</span><span class=p>));</span><span class=w>
+</span><span class=w>    </span><span class=n>print</span><span class=p>(</span><span class=n>double_first</span><span class=p>(</span><span class=n>empty</span><span class=p>));</span><span class=w>
+</span><span class=w>    </span><span class=n>print</span><span class=p>(</span><span class=n>double_first</span><span class=p>(</span><span class=n>strings</span><span class=p>));</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span></code></pre></td></tr></table>
+</div>
+</div><p>这段代码的运行结果如下：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-text data-lang=text>The first doubled is 84
+Error: invalid first item to double
+Error: invalid first item to double
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=error-chain><span class=section-num>1.3</span> error_chain</h3>
+<p>虽说 Rust 自定义错误很灵活和方便，但是如果每次定义异常都需要实现 <code>Display</code> 和 <code>Error</code>, 未免过于繁琐，现在来介绍
+<a href=https://github.com/rust-lang-nursery/error-chain>error_chain</a> 这个类库。</p>
+<p><code>error_chain</code> 是由 Rust 项目组的 leader&ndash;<a href=https://brson.github.io/>Brian Anderson</a> 编写的异常处理库，可以让你更舒心<del>简单不粗 暴</del>地定义错误。</p>
+<hr>
+<h4 id=error-chain示例><span class=section-num>1.3.1</span> error_chain示例</h4>
+<p>以上面的 <code>DoubleError</code>为例，并改写 error_chain 的官方<a href=https://github.com/rust-lang-nursery/error-chain/blob/master/examples/quickstart.rs>例子</a> 以实现相同的效果，代码如下：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=c1>// `error_chain!` 的递归深度
+</span><span class=c1></span><span class=cp>#![recursion_limit = </span><span class=s>&#34;1024&#34;</span><span class=cp>]</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=c1>//引出 error_chain 和相应的宏
+</span><span class=c1></span><span class=cp>#[macro_use]</span><span class=w>
+</span><span class=w></span><span class=k>extern</span><span class=w> </span><span class=k>crate</span><span class=w> </span><span class=n>error_chain</span><span class=p>;</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=c1>//将跟错误有关的内容放入 errors module, 其他需要用到这个错误module 的模块就通过
+</span><span class=c1>// use errors::* 来引入所有内容
+</span><span class=c1></span><span class=k>mod</span> <span class=nn>errors</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=c1>// Create the Error, ErrorKind, ResultExt, and Result types
+</span><span class=c1></span><span class=w>    </span><span class=n>error_chain</span><span class=o>!</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>	</span><span class=n>errors</span><span class=p>{</span><span class=n>Double</span><span class=p>{</span><span class=w>
+</span><span class=w>	    </span><span class=n>description</span><span class=p>(</span><span class=s>&#34;invalid first item to double&#34;</span><span class=p>)</span><span class=w>
+</span><span class=w>		</span><span class=n>display</span><span class=p>(</span><span class=s>&#34;invalid first item to double&#34;</span><span class=p>)</span><span class=w>
+</span><span class=w>	</span><span class=p>}}</span><span class=w>
+</span><span class=w>    </span><span class=p>}</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>use</span><span class=w> </span><span class=n>errors</span>::<span class=o>*</span><span class=p>;</span><span class=w>
+</span><span class=w></span><span class=k>pub</span><span class=w> </span><span class=k>type</span> <span class=nb>Result</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span><span class=w> </span><span class=o>=</span><span class=w> </span>::<span class=n>std</span>::<span class=n>result</span>::<span class=nb>Result</span><span class=o>&lt;</span><span class=n>T</span><span class=p>,</span><span class=w> </span><span class=n>ErrorKind</span><span class=o>&gt;</span><span class=p>;</span><span class=w>
+</span><span class=w></span><span class=k>fn</span> <span class=nf>main</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>numbers</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=fm>vec!</span><span class=p>[</span><span class=s>&#34;42&#34;</span><span class=p>,</span><span class=w> </span><span class=s>&#34;93&#34;</span><span class=p>,</span><span class=w> </span><span class=s>&#34;18&#34;</span><span class=p>];</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>empty</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=fm>vec!</span><span class=p>[];</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>strings</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=fm>vec!</span><span class=p>[</span><span class=s>&#34;tofu&#34;</span><span class=p>,</span><span class=w> </span><span class=s>&#34;93&#34;</span><span class=p>,</span><span class=w> </span><span class=s>&#34;18&#34;</span><span class=p>];</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=n>print</span><span class=p>(</span><span class=n>double_first</span><span class=p>(</span><span class=n>numbers</span><span class=p>));</span><span class=w>
+</span><span class=w>    </span><span class=n>print</span><span class=p>(</span><span class=n>double_first</span><span class=p>(</span><span class=n>empty</span><span class=p>));</span><span class=w>
+</span><span class=w>    </span><span class=n>print</span><span class=p>(</span><span class=n>double_first</span><span class=p>(</span><span class=n>strings</span><span class=p>));</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span><span class=w></span><span class=k>fn</span> <span class=nf>double_first</span><span class=p>(</span><span class=n>vec</span>: <span class=nb>Vec</span><span class=o>&lt;&amp;</span><span class=kt>str</span><span class=o>&gt;</span><span class=p>)</span><span class=w> </span>-&gt; <span class=nb>Result</span><span class=o>&lt;</span><span class=kt>i32</span><span class=o>&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=n>vec</span><span class=p>.</span><span class=n>first</span><span class=p>()</span><span class=w>
+</span><span class=w>    </span><span class=c1>// Change the error to our new type.
+</span><span class=c1></span><span class=w>	</span><span class=p>.</span><span class=n>ok_or</span><span class=p>(</span><span class=n>ErrorKind</span>::<span class=n>Double</span><span class=p>)</span><span class=w>
+</span><span class=w>	</span><span class=p>.</span><span class=n>and_then</span><span class=p>(</span><span class=o>|</span><span class=n>s</span><span class=o>|</span><span class=w> </span><span class=n>s</span><span class=p>.</span><span class=n>parse</span>::<span class=o>&lt;</span><span class=kt>i32</span><span class=o>&gt;</span><span class=p>()</span><span class=w>
+</span><span class=w>		  </span><span class=c1>// Update to the new error type here also.
+</span><span class=c1></span><span class=w>		  </span><span class=p>.</span><span class=n>map_err</span><span class=p>(</span><span class=o>|</span><span class=n>_</span><span class=o>|</span><span class=w> </span><span class=n>ErrorKind</span>::<span class=n>Double</span><span class=p>)</span><span class=w>
+</span><span class=w>		  </span><span class=p>.</span><span class=n>map</span><span class=p>(</span><span class=o>|</span><span class=n>i</span><span class=o>|</span><span class=w> </span><span class=mi>2</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>i</span><span class=p>))</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>fn</span> <span class=nf>print</span><span class=p>(</span><span class=n>result</span>: <span class=nb>Result</span><span class=o>&lt;</span><span class=kt>i32</span><span class=o>&gt;</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=k>match</span><span class=w> </span><span class=n>result</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>	</span><span class=nb>Ok</span><span class=p>(</span><span class=n>n</span><span class=p>)</span><span class=w> </span><span class=o>=&gt;</span><span class=w> </span><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;The first doubled is {}&#34;</span><span class=p>,</span><span class=w> </span><span class=n>n</span><span class=p>),</span><span class=w>
+</span><span class=w>	</span><span class=nb>Err</span><span class=p>(</span><span class=n>e</span><span class=p>)</span><span class=w> </span><span class=o>=&gt;</span><span class=w> </span><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;Error: {}&#34;</span><span class=p>,</span><span class=w> </span><span class=n>e</span><span class=p>),</span><span class=w>
+</span><span class=w>    </span><span class=p>}</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span></code></pre></td></tr></table>
+</div>
+</div><p>运行这代码可以得到和上面小节同样的输出。</p>
+<h4 id=error-chain-详解><span class=section-num>1.3.2</span> error_chain 详解</h4>
+<p>刚刚就先目睹了一下 <code>error_chain</code> 的芳容了，现在是时候来解剖一下 <code>error_chain</code>, 这次就以 <code>error_chain</code>的 <a href=https://github.com/rust-lang-nursery/error-chain/blob/master/examples/quickstart.rs>example</a>来解释</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=c1>// Simple and robust error handling with error-chain!
+</span><span class=c1>// Use this as a template for new projects.
+</span><span class=c1></span><span class=w>
+</span><span class=w></span><span class=c1>// `error_chain!` can recurse deeply
+</span><span class=c1></span><span class=cp>#![recursion_limit = </span><span class=s>&#34;1024&#34;</span><span class=cp>]</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=c1>// Import the macro. Don&#39;t forget to add `error-chain` in your
+</span><span class=c1>// `Cargo.toml`!
+</span><span class=c1></span><span class=cp>#[macro_use]</span><span class=w>
+</span><span class=w></span><span class=k>extern</span><span class=w> </span><span class=k>crate</span><span class=w> </span><span class=n>error_chain</span><span class=p>;</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=c1>// We&#39;ll put our errors in an `errors` module, and other modules in
+</span><span class=c1>// this crate will `use errors::*;` to get access to everything
+</span><span class=c1>// `error_chain!` creates.
+</span><span class=c1></span><span class=k>mod</span> <span class=nn>errors</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=c1>// Create the Error, ErrorKind, ResultExt, and Result types
+</span><span class=c1></span><span class=w>    </span><span class=n>error_chain</span><span class=o>!</span><span class=w> </span><span class=p>{</span><span class=w> </span><span class=p>}</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>use</span><span class=w> </span><span class=n>errors</span>::<span class=o>*</span><span class=p>;</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>fn</span> <span class=nf>main</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=kd>let</span><span class=w> </span><span class=nb>Err</span><span class=p>(</span><span class=k>ref</span><span class=w> </span><span class=n>e</span><span class=p>)</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>run</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>	</span><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;error: {}&#34;</span><span class=p>,</span><span class=w> </span><span class=n>e</span><span class=p>);</span><span class=w>
+</span><span class=w>
+</span><span class=w>	</span><span class=k>for</span><span class=w> </span><span class=n>e</span><span class=w> </span><span class=k>in</span><span class=w> </span><span class=n>e</span><span class=p>.</span><span class=n>iter</span><span class=p>().</span><span class=n>skip</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>	    </span><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;caused by: {}&#34;</span><span class=p>,</span><span class=w> </span><span class=n>e</span><span class=p>);</span><span class=w>
+</span><span class=w>	</span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w>	</span><span class=c1>// The backtrace is not always generated. Try to run this example
+</span><span class=c1></span><span class=w>	</span><span class=c1>// with `RUST_BACKTRACE=1`.
+</span><span class=c1></span><span class=w>	</span><span class=k>if</span><span class=w> </span><span class=kd>let</span><span class=w> </span><span class=nb>Some</span><span class=p>(</span><span class=n>backtrace</span><span class=p>)</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>e</span><span class=p>.</span><span class=n>backtrace</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>	    </span><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;backtrace: {:?}&#34;</span><span class=p>,</span><span class=w> </span><span class=n>backtrace</span><span class=p>);</span><span class=w>
+</span><span class=w>	</span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w>	</span>::<span class=n>std</span>::<span class=n>process</span>::<span class=n>exit</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span><span class=w>
+</span><span class=w>    </span><span class=p>}</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=c1>// Most functions will return the `Result` type, imported from the
+</span><span class=c1>// `errors` module. It is a typedef of the standard `Result` type
+</span><span class=c1>// for which the error type is always our own `Error`.
+</span><span class=c1></span><span class=k>fn</span> <span class=nf>run</span><span class=p>()</span><span class=w> </span>-&gt; <span class=nb>Result</span><span class=o>&lt;</span><span class=p>()</span><span class=o>&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=k>use</span><span class=w> </span><span class=n>std</span>::<span class=n>fs</span>::<span class=n>File</span><span class=p>;</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=c1>// This operation will fail
+</span><span class=c1></span><span class=w>    </span><span class=n>File</span>::<span class=n>open</span><span class=p>(</span><span class=s>&#34;contacts&#34;</span><span class=p>)</span><span class=w>
+</span><span class=w>	</span><span class=p>.</span><span class=n>chain_err</span><span class=p>(</span><span class=o>||</span><span class=w> </span><span class=s>&#34;unable to open contacts file&#34;</span><span class=p>)</span><span class=o>?</span><span class=p>;</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=nb>Ok</span><span class=p>(())</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span></code></pre></td></tr></table>
+</div>
+</div><p>重要的信息例子已经作了注释，现在就来看看用法。首先来看看 main 函数</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=k>fn</span> <span class=nf>main</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=kd>let</span><span class=w> </span><span class=nb>Err</span><span class=p>(</span><span class=k>ref</span><span class=w> </span><span class=n>e</span><span class=p>)</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>run</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>	</span><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;error: {}&#34;</span><span class=p>,</span><span class=w> </span><span class=n>e</span><span class=p>);</span><span class=w>
+</span><span class=w>
+</span><span class=w>	</span><span class=k>for</span><span class=w> </span><span class=n>e</span><span class=w> </span><span class=k>in</span><span class=w> </span><span class=n>e</span><span class=p>.</span><span class=n>iter</span><span class=p>().</span><span class=n>skip</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>	    </span><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;caused by: {}&#34;</span><span class=p>,</span><span class=w> </span><span class=n>e</span><span class=p>);</span><span class=w>
+</span><span class=w>	</span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w>	</span><span class=c1>// The backtrace is not always generated. Try to run this example
+</span><span class=c1></span><span class=w>	</span><span class=c1>// with `RUST_BACKTRACE=1`.
+</span><span class=c1></span><span class=w>	</span><span class=k>if</span><span class=w> </span><span class=kd>let</span><span class=w> </span><span class=nb>Some</span><span class=p>(</span><span class=n>backtrace</span><span class=p>)</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>e</span><span class=p>.</span><span class=n>backtrace</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>	    </span><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;backtrace: {:?}&#34;</span><span class=p>,</span><span class=w> </span><span class=n>backtrace</span><span class=p>);</span><span class=w>
+</span><span class=w>	</span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w>	</span>::<span class=n>std</span>::<span class=n>process</span>::<span class=n>exit</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span><span class=w>
+</span><span class=w>    </span><span class=p>}</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span></code></pre></td></tr></table>
+</div>
+</div><p>可以看出，这个函数的大部份逻辑是进行错误处理，例如返回自定义的 <code>Result</code>和 <code>Error</code>, 然后处理这些错误。上面的处理流程显示了 <code>error_chain</code> 从某个错误继承而来的三样信息：最近出现的错误(即<code>e</code>)，导致错误的调用链，原来错误的堆栈信息 (<code>e.backtrace()</code>)</p>
+<h2 id=小结><span class=section-num>2</span> 小结</h2>
+<p>刚刚的例子只是 <code>error_chain</code> 小试了一波牛刀，如果想要了解更多关于 Rust 异常处理 的细节，就需要看看 Rust 的文档咯</p>
+<h2 id=参考><span class=section-num>3</span> 参考</h2>
+<ul>
+<li><a href=https://rustbyexample.com/error.html>rust by example</a></li>
+<li><a href=https://brson.github.io/2016/11/30/starting-with-error-chain>starting with error chain</a></li>
+<li><a href=http://siciarz.net/24-days-rust-error_chain/>24-days-rust-error_chain/</a></li>
+<li><a href=https://vincent.is/handling-errors-in-rust/>handling errors in rust</a></li>
+<li><a href=https://docs.rs/error-chain>error chain</a></li>
+<li><a href=https://doc.rust-lang.org/book/second-edition/ch09-00-error-handling.html>error handle</a></li>
+</ul>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2022-02-24
+</span>
+</p>
+</div>
+<footer class=post-footer>
+<div class=post-tags>
+<a href=/tags/rust/>rust</a>
+<a href=/tags/java/>java</a>
+</div>
+<nav class=post-nav>
+<a class=prev href=/post/2020/996%E6%88%90%E5%9B%A0/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">为什么我们要996</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/post/2018/error_handle_in_rust_1/>
+<span class="next-text nav-default">Rust的错误处理(一)</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<div id=gitalk-container></div>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
+<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:'2018-02-08 22:01:00 \u002b0800 \u002b0800',title:'Rust的错误处理(二)',clientID:'3c034c97f0926fafd2d6',clientSecret:'192051927d267ce83eb2ef10955890b7db2720ad',repo:'comment',owner:'ramsayleung',admin:['ramsayleung'],body:decodeURI(location.href)});gitalk.render('gitalk-container')</script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
+<a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<div class=busuanzi-footer>
+<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+</div>
+<span class=copyright-year>
+&copy;
+2017 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>
