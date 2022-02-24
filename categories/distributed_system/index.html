@@ -2,7 +2,7 @@
 <head>
 <meta charset=utf-8>
 <meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
-<title>In Pursuit of Hubris</title>
+<title>distributed_system · In Pursuit of Hubris</title>
 <meta name=renderer content="webkit">
 <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
 <meta http-equiv=cache-control content="no-transform">
@@ -13,9 +13,9 @@
 <meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
 <meta name=author content="Ramsay Leung"><meta name=description content="In Pursuit of Hubris"><meta name=keywords content="Blog,Software,Enginering">
 <meta name=generator content="Hugo 0.92.2 with theme even">
-<link rel=canonical href=https://ramsayleung.github.io/>
-<link href=https://ramsayleung.github.io/index.xml rel=alternate type=application/rss+xml title="In Pursuit of Hubris">
-<link href=https://ramsayleung.github.io/index.xml rel=feed type=application/rss+xml title="In Pursuit of Hubris">
+<link rel=canonical href=https://ramsayleung.github.io/categories/distributed_system/>
+<link href=https://ramsayleung.github.io/categories/distributed_system/index.xml rel=alternate type=application/rss+xml title="In Pursuit of Hubris">
+<link href=https://ramsayleung.github.io/categories/distributed_system/index.xml rel=feed type=application/rss+xml title="In Pursuit of Hubris">
 <link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
 <link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
@@ -24,13 +24,13 @@
 <script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
 <link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
 <link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
-<meta property="og:title" content="In Pursuit of Hubris">
+<meta property="og:title" content="distributed_system">
 <meta property="og:description" content="In Pursuit of Hubris">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://ramsayleung.github.io/">
-<meta itemprop=name content="In Pursuit of Hubris">
+<meta property="og:url" content="https://ramsayleung.github.io/categories/distributed_system/">
+<meta itemprop=name content="distributed_system">
 <meta itemprop=description content="In Pursuit of Hubris"><meta name=twitter:card content="summary">
-<meta name=twitter:title content="In Pursuit of Hubris">
+<meta name=twitter:title content="distributed_system">
 <meta name=twitter:description content="In Pursuit of Hubris"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
 <script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
 </head>
@@ -80,112 +80,31 @@
 <main id=main class=main>
 <div class=content-wrapper>
 <div id=content class=content>
-<section id=posts class=posts>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title><a class=post-link href=/post/2022/%E5%A4%A9%E6%9C%9D%E7%9A%84%E5%B4%A9%E6%BA%83/>天朝的崩溃</a></h1>
-<div class=post-meta>
-<span class=post-time> 2022-02-16 </span>
-<div class=post-category>
-<a href=/categories/book/> book </a>
+<section id=archive class=archive>
+<div class="archive-title category">
+<h2 class=archive-name>distributed_system</h2>
 </div>
+<div class=archive-post>
+<span class=archive-post-time>
+2021-08-05
+</span>
+<span class=archive-post-title>
+<a href=/post/2021/how_to_design_a_reliable_distributed_timer/ class=archive-post-link>
+How To Design A Reliable Distributed Timer
+</a>
+</span>
+</div><div class=archive-post>
+<span class=archive-post-time>
+2021-06-12
+</span>
+<span class=archive-post-title>
+<a href=/post/2021/distributed_system_for_fun_and_profit/ class=archive-post-link>
+(笔记)Distributed Systems for fun and profit
+</a>
+</span>
 </div>
-</header>
-<div class=post-content>
-<div class=post-summary>
-1 天朝的崩溃 1.1 前言 历史教科书说，与英国的第一次鸦片战争，敲开了清朝的大门，清朝也因此和外国签定了一系列不平等条约；而因为清朝的落伍，导致清朝
-</div>
-<div class=read-more>
-<a href=/post/2022/%E5%A4%A9%E6%9C%9D%E7%9A%84%E5%B4%A9%E6%BA%83/ class=read-more-link>Read more...</a>
-</div>
-</div>
-</article>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title><a class=post-link href=/post/2021/how_to_design_a_reliable_distributed_timer/>How To Design A Reliable Distributed Timer</a></h1>
-<div class=post-meta>
-<span class=post-time> 2021-08-05 </span>
-<div class=post-category>
-<a href=/categories/distributed_system/> distributed_system </a>
-</div>
-</div>
-</header>
-<div class=post-content>
-<div class=post-summary>
-1 Preface I have been maintained a legacy distributed timer for months for my employer, then some important pay business are leveraging on it, with 1 billion tasks handled every day and 20k tasks added per second at most.
-Even though it&rsquo;s old and full of black magic code, but it also also have insighted and well-designed code. Based on this old, running timer, I summarize and extract as this article, and it wont include any running code(perhaps pseudocode, and a lot of figures, as an adage says: A picture is worth a thousand words).
-</div>
-<div class=read-more>
-<a href=/post/2021/how_to_design_a_reliable_distributed_timer/ class=read-more-link>Read more...</a>
-</div>
-</div>
-</article>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title><a class=post-link href=/post/2021/distributed_system_for_fun_and_profit/>(笔记)Distributed Systems for fun and profit</a></h1>
-<div class=post-meta>
-<span class=post-time> 2021-06-12 </span>
-<div class=post-category>
-<a href=/categories/distributed_system/> distributed_system </a>
-</div>
-</div>
-</header>
-<div class=post-content>
-<div class=post-summary>
-1 Distributed Systems for fun and profit source: http://book.mixu.net/distsys/ 2 1. Basic 2.1 Basic concept 本章介绍了分布式系统的基本概念, 例如 scalablity, perfomance, latency, availability 关于 latent, 这里给出了一个很cool的描述: For example, imagine that you are infected with an airbone virus that turns people
-</div>
-<div class=read-more>
-<a href=/post/2021/distributed_system_for_fun_and_profit/ class=read-more-link>Read more...</a>
-</div>
-</div>
-</article>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title><a class=post-link href=/post/2021/iterate_through_pagination_api/>Let's make everything iterable</a></h1>
-<div class=post-meta>
-<span class=post-time> 2021-04-29 </span>
-<div class=post-category>
-<a href=/categories/rust/> rust </a>
-</div>
-</div>
-</header>
-<div class=post-content>
-<div class=post-summary>
-Iterate through pagination in the Rest API
-1 Preface About 4 months ago, icewind1991 created an exciting PR that adding Stream/Iterator based versions of methods with paginated results, which makes enpoints in Rspotify more much ergonomic to use, and Mario completed this PR.
-In order to know what this PR brought to us, we have to go back to the orignal story, the paginated results in Spotify&rsquo;s Rest API.
-2 Orignal Story Taking the artist_albums as example, it gets Spotify catalog information about an artist&rsquo;s albums.
-</div>
-<div class=read-more>
-<a href=/post/2021/iterate_through_pagination_api/ class=read-more-link>Read more...</a>
-</div>
-</div>
-</article>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title><a class=post-link href=/post/2017/distributed_system_unique_id/>关于分布式系统唯一ID的探究</a></h1>
-<div class=post-meta>
-<span class=post-time> 2017-05-23 </span>
-<div class=post-category>
-<a href=/categories/algorithm/> algorithm </a>
-</div>
-</div>
-</header>
-<div class=post-content>
-<div class=post-summary>
-最近我需要为运行的分布式系统某部分模块构造系统唯一的ID, 而 ID 需要是数字的形式，并应该尽量的短。不得不说，这是一个有趣的问题 1 若干实现策略 查
-</div>
-<div class=read-more>
-<a href=/post/2017/distributed_system_unique_id/ class=read-more-link>Read more...</a>
-</div>
-</div>
-</article>
 </section>
 <nav class=pagination>
-<a class=next href=/page/2/>
-<span class=next-text>Next</span>
-<i class="iconfont icon-right"></i>
-</a>
 </nav>
 </div>
 </div>
