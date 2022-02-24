@@ -1,0 +1,660 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>为Java瘦身 – Lombok - In Pursuit of Hubris</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="Ramsay Leung"><meta name=description content="An introduction about lombok"><meta name=keywords content="Blog,Software,Enginering">
+<meta name=generator content="Hugo 0.92.2 with theme even">
+<link rel=canonical href=https://ramsayleung.github.io/post/2017/lombok/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="为Java瘦身 – Lombok">
+<meta property="og:description" content="An introduction about lombok">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ramsayleung.github.io/post/2017/lombok/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2017-05-24T00:00:00+08:00">
+<meta property="article:modified_time" content="2022-02-24T15:34:18+08:00">
+<meta itemprop=name content="为Java瘦身 – Lombok">
+<meta itemprop=description content="An introduction about lombok"><meta itemprop=datePublished content="2017-05-24T00:00:00+08:00">
+<meta itemprop=dateModified content="2022-02-24T15:34:18+08:00">
+<meta itemprop=wordCount content="2576">
+<meta itemprop=keywords content="java,"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="为Java瘦身 – Lombok">
+<meta name=twitter:description content="An introduction about lombok"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/about_me>
+<li class=mobile-menu-item>About</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/about_me>About</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>为Java瘦身 – Lombok</h1>
+<div class=post-meta>
+<span class=post-time> 2017-05-24 </span>
+<div class=post-category>
+<a href=/categories/java/> java </a>
+</div>
+<span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#前言><span class=section-num>1</span> 前言</a></li>
+<li><a href=#lombok><span class=section-num>2</span> Lombok</a>
+<ul>
+<li><a href=#简介><span class=section-num>2.1</span> 简介</a></li>
+<li><a href=#getter-and-setter><span class=section-num>2.2</span> @Getter and @Setter</a></li>
+<li><a href=#nonnull><span class=section-num>2.3</span> @NonNull</a></li>
+<li><a href=#equalsandhashcode><span class=section-num>2.4</span> @EqualsAndHashCode</a></li>
+<li><a href=#data><span class=section-num>2.5</span> @Data</a></li>
+</ul>
+</li>
+<li><a href=#小结><span class=section-num>3</span> 小结</a></li>
+<li><a href=#参考><span class=section-num>4</span> 参考</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<h2 id=前言><span class=section-num>1</span> 前言</h2>
+<p>几天前 Goolge 在 I/O 大会上宣布了 Android 将官方支持 Kotlin, 这意味着 Android开发者可以更好地使用 Kotlin 开发 Android.</p>
+<p>我虽不是 Android 开发者，但是也为 Android 开发者多了一个选择而感到高兴，略显意外的是，接下来到处可以看到 &ldquo;Java已死，Kotlin 当立&rdquo; 之类的言论。</p>
+<p>一群人围在一起诉说被 Java &ldquo;折磨&rdquo; 的血泪史，然后为Kotlin 的到来欢欣鼓舞。我学过挺多的语言，也并不是一个 &ldquo;Java 卫道士&rdquo;.</p>
+<p>但是看到很多人都说 &ldquo;Java 的语法啰嗦，每次都要编写一大段 &ldquo;Setter/Getter&rdquo; 这类的模板代码，还有各种的 Bean; 真的好累&rdquo; 我就觉得其实很多人都是人云亦云，他们也并没有对 Java 有多少关注。</p>
+<p>其实 Java8 发布以后，使用 Java8 的函数式进行编码已经可以减少很多代码了；其次，一个新颖的类库也可以帮 Java 的代码进行瘦身 &ndash; Lombok</p>
+<h2 id=lombok><span class=section-num>2</span> Lombok</h2>
+<h3 id=简介><span class=section-num>2.1</span> 简介</h3>
+<p>很多开发者都对模板代码嗤之以鼻，但是 Java 中就有很多非常类似且改动很少的样板 代码。</p>
+<p>这问题一方面是由于类库的设计决定，另外一方面也是 Java 的自身语言的特性。 而 Lombok 这个项目就是希望通过注解来减少模板代码。</p>
+<p>就注解而言，大多是各类框架用于生成代码 (典型的就是 Spring 和 Hibernate 了)，而很少直接使用注解生成的代
+码。</p>
+<p>因为如果想要直接在程序中使用注解生成的代码，就意味着在代码进行编译之前，注解就要进行相应的处理。这似乎是没可能发生的事情: 在编译代码之前使用编译后生成的代码。</p>
+<p>但是 Lombok 在 IDE 的配合下就真的做到在开发的时候就插入相应的代码。</p>
+<h3 id=getter-and-setter><span class=section-num>2.2</span> @Getter and @Setter</h3>
+<p>百闻不如一见，还是直接看例子吧。</p>
+<p>对于使用过 Java 的开发者而言，我相信他们最熟悉的肯定是 Java 无处不在的封装以及对应的 Getter/Setter. 现在就来看一下如何 为最常见的模板代码瘦身。</p>
+<p>未使用 Lombok 的代码：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>private</span> <span class=kt>boolean</span> <span class=n>employed</span> <span class=o>=</span> <span class=kc>true</span><span class=o>;</span>
+<span class=kd>private</span> <span class=n>String</span> <span class=n>name</span><span class=o>;</span>
+
+<span class=kd>public</span> <span class=kt>boolean</span> <span class=nf>isEmployed</span><span class=o>()</span> <span class=o>{</span>
+    <span class=k>return</span> <span class=n>employed</span><span class=o>;</span>
+<span class=o>}</span>
+
+<span class=kd>public</span> <span class=kt>void</span> <span class=nf>setEmployed</span><span class=o>(</span><span class=kd>final</span> <span class=kt>boolean</span> <span class=n>employed</span><span class=o>)</span> <span class=o>{</span>
+    <span class=k>this</span><span class=o>.</span><span class=na>employed</span> <span class=o>=</span> <span class=n>employed</span><span class=o>;</span>
+<span class=o>}</span>
+
+<span class=kd>protected</span> <span class=kt>void</span> <span class=nf>setName</span><span class=o>(</span><span class=kd>final</span> <span class=n>String</span> <span class=n>name</span><span class=o>)</span> <span class=o>{</span>
+    <span class=k>this</span><span class=o>.</span><span class=na>name</span> <span class=o>=</span> <span class=n>name</span><span class=o>;</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>并没有上面特点，还是 &ldquo;旧把式&rdquo;. 那么现在来看一下使用了 Lombok 的同等作用的代
+码：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=nd>@Getter</span> <span class=nd>@Setter</span> <span class=kd>private</span> <span class=kt>boolean</span> <span class=n>employed</span> <span class=o>=</span> <span class=kc>true</span><span class=o>;</span>
+<span class=nd>@Setter</span><span class=o>(</span><span class=n>AccessLevel</span><span class=o>.</span><span class=na>PROTECTED</span><span class=o>)</span> <span class=kd>private</span> <span class=n>String</span> <span class=n>name</span><span class=o>;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>除了必要的变量定义以及 <code>@Getter</code>, <code>@Setter</code> 注解以外，没有了其他的东西的。</p>
+<p>但是使用 Lombok 的代码比原生的 Java 代码少了很多行，定义的类的属性越多，减少的代码数就越可观。</p>
+<p>而 @Getter 和 @Setter 注解的作用就是为一个类的属性生成 getter 和 setter 方法，而这些生成的方法跟我们自己编写的代码是一样的。</p>
+<h3 id=nonnull><span class=section-num>2.3</span> @NonNull</h3>
+<p>相信每一个使用过 Java 的开发者都不会对空指针这个异常陌生吧，因为 NullPointException 导致了各种 Bug, 以至于它的发明者 Tony Hoare 都自嘲到他创 造了价值十亿的错误 (&ldquo;Null Reference: The Billion Dollar Mistake&rdquo;).</p>
+<p>因此在Java 的代码中，出于安全性的考虑，对于可能出现空指针的地方，都需要进行空指针 检查，自然无可避免地产生了很多的模板代码。</p>
+<p>而 Lombok 引入的 @NonNull 注解可以让需要进行空指针检查的代码 fast-fail; 这样就无需显示添加空指针检查了。</p>
+<p>当为类 的属性添加了 @NonNull 注解以后，在对应的 setter 函数，Lombok 也会生成对应的 空指针检查。例子：使用 Lombok 对 <code>Family</code> 类添加注解：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=nd>@Getter</span> <span class=nd>@Setter</span> <span class=nd>@NonNull</span>
+<span class=kd>private</span> <span class=n>List</span><span class=o>&lt;</span><span class=n>Person</span><span class=o>&gt;</span> <span class=n>members</span><span class=o>;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>对应的相同作用的原生代码：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=nd>@NonNull</span>
+<span class=kd>private</span> <span class=n>List</span><span class=o>&lt;</span><span class=n>Person</span><span class=o>&gt;</span> <span class=n>members</span><span class=o>;</span>
+
+<span class=kd>public</span> <span class=nf>Family</span><span class=o>(</span><span class=nd>@NonNull</span> <span class=kd>final</span> <span class=n>List</span><span class=o>&lt;</span><span class=n>Person</span><span class=o>&gt;</span> <span class=n>members</span><span class=o>)</span> <span class=o>{</span>
+    <span class=k>if</span> <span class=o>(</span><span class=n>members</span> <span class=o>==</span> <span class=kc>null</span><span class=o>)</span> <span class=k>throw</span> <span class=k>new</span> <span class=n>java</span><span class=o>.</span><span class=na>lang</span><span class=o>.</span><span class=na>NullPointerException</span><span class=o>(</span><span class=s>&#34;members&#34;</span><span class=o>);</span>
+    <span class=k>this</span><span class=o>.</span><span class=na>members</span> <span class=o>=</span> <span class=n>members</span><span class=o>;</span>
+<span class=o>}</span>
+
+<span class=nd>@NonNull</span>
+<span class=kd>public</span> <span class=n>List</span><span class=o>&lt;</span><span class=n>Person</span><span class=o>&gt;</span> <span class=nf>getMembers</span><span class=o>()</span> <span class=o>{</span>
+    <span class=k>return</span> <span class=n>members</span><span class=o>;</span>
+<span class=o>}</span>
+
+<span class=kd>public</span> <span class=kt>void</span> <span class=nf>setMembers</span><span class=o>(</span><span class=nd>@NonNull</span> <span class=kd>final</span> <span class=n>List</span><span class=o>&lt;</span><span class=n>Person</span><span class=o>&gt;</span> <span class=n>members</span><span class=o>)</span> <span class=o>{</span>
+    <span class=k>if</span> <span class=o>(</span><span class=n>members</span> <span class=o>==</span> <span class=kc>null</span><span class=o>)</span> <span class=k>throw</span> <span class=k>new</span> <span class=n>java</span><span class=o>.</span><span class=na>lang</span><span class=o>.</span><span class=na>NullPointerException</span><span class=o>(</span><span class=s>&#34;members&#34;</span><span class=o>);</span>
+    <span class=k>this</span><span class=o>.</span><span class=na>members</span> <span class=o>=</span> <span class=n>members</span><span class=o>;</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>不得不感慨，使用 Lombok, 敲击键盘的次数都成指数级下降.</p>
+<h3 id=equalsandhashcode><span class=section-num>2.4</span> @EqualsAndHashCode</h3>
+<p>因为 Java 的 Object 类存在用于比较的 <code>equals()</code> 以及对应的 <code>hashCode()</code> 方法，而很多类都经常需要重写这两个方法来实现比较操作。</p>
+<p>比较的操作大多是逐一比较子类的属性，而计算 hash 值的函数也基本是逐一取各个属性的 hash 值，然后与固定值相乘在相加. 这样的操作并不需要复杂算法，完成的都是重复性的 &ldquo;体力活&rdquo;.</p>
+<p>幸运的是， Lombok 也提供了相应的注解来减少这些模板代码。类级别的 <code>@EqualsAndHashCode</code> 注解可以为指定的属性生成 <code>equals()</code> 方法和 <code>hashCode()</code> 方法。</p>
+<p>默认情况下，所有非静态或者没被标注成 <code>transient</code> 的属性都会被 <code>equals()</code> 和 <code>hashCode()</code> 方 法包含在内。当然，你也可以使用 <code>exclude</code> 声明不需要被包含的属性。</p>
+<p>例子：使用了 <code>@EqualAndHashCode</code> 注解的代码</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=nd>@EqualsAndHashCode</span><span class=o>(</span><span class=n>callSuper</span><span class=o>=</span><span class=kc>true</span><span class=o>,</span><span class=n>exclude</span><span class=o>={</span><span class=s>&#34;address&#34;</span><span class=o>,</span><span class=s>&#34;city&#34;</span><span class=o>,</span><span class=s>&#34;state&#34;</span><span class=o>,</span><span class=s>&#34;zip&#34;</span><span class=o>})</span>
+<span class=kd>public</span> <span class=kd>class</span> <span class=nc>Person</span> <span class=kd>extends</span> <span class=n>SentientBeing</span> <span class=o>{</span>
+    <span class=kd>enum</span> <span class=n>Gender</span> <span class=o>{</span> <span class=n>Male</span><span class=o>,</span> <span class=n>Female</span> <span class=o>}</span>
+
+    <span class=nd>@NonNull</span> <span class=kd>private</span> <span class=n>String</span> <span class=n>name</span><span class=o>;</span>
+    <span class=nd>@NonNull</span> <span class=kd>private</span> <span class=n>Gender</span> <span class=n>gender</span><span class=o>;</span>
+
+    <span class=kd>private</span> <span class=n>String</span> <span class=n>ssn</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=n>String</span> <span class=n>address</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=n>String</span> <span class=n>city</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=n>String</span> <span class=n>state</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=n>String</span> <span class=n>zip</span><span class=o>;</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>对应的相同作用的原生代码：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=kd>class</span> <span class=nc>Person</span> <span class=kd>extends</span> <span class=n>SentientBeing</span> <span class=o>{</span>
+
+    <span class=kd>enum</span> <span class=n>Gender</span> <span class=o>{</span>
+	<span class=cm>/*public static final*/</span> <span class=n>Male</span> <span class=cm>/* = new Gender() */</span><span class=o>,</span>
+	<span class=cm>/*public static final*/</span> <span class=n>Female</span> <span class=cm>/* = new Gender() */</span><span class=o>;</span>
+    <span class=o>}</span>
+    <span class=nd>@NonNull</span>
+    <span class=kd>private</span> <span class=n>String</span> <span class=n>name</span><span class=o>;</span>
+    <span class=nd>@NonNull</span>
+    <span class=kd>private</span> <span class=n>Gender</span> <span class=n>gender</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=n>String</span> <span class=n>ssn</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=n>String</span> <span class=n>address</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=n>String</span> <span class=n>city</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=n>String</span> <span class=n>state</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=n>String</span> <span class=n>zip</span><span class=o>;</span>
+
+    <span class=nd>@java.lang.Override</span>
+	<span class=kd>public</span> <span class=kt>boolean</span> <span class=nf>equals</span><span class=o>(</span><span class=kd>final</span> <span class=n>java</span><span class=o>.</span><span class=na>lang</span><span class=o>.</span><span class=na>Object</span> <span class=n>o</span><span class=o>)</span> <span class=o>{</span>
+	<span class=k>if</span> <span class=o>(</span><span class=n>o</span> <span class=o>==</span> <span class=k>this</span><span class=o>)</span> <span class=k>return</span> <span class=kc>true</span><span class=o>;</span>
+	<span class=k>if</span> <span class=o>(</span><span class=n>o</span> <span class=o>==</span> <span class=kc>null</span><span class=o>)</span> <span class=k>return</span> <span class=kc>false</span><span class=o>;</span>
+	<span class=k>if</span> <span class=o>(</span><span class=n>o</span><span class=o>.</span><span class=na>getClass</span><span class=o>()</span> <span class=o>!=</span> <span class=k>this</span><span class=o>.</span><span class=na>getClass</span><span class=o>())</span> <span class=k>return</span> <span class=kc>false</span><span class=o>;</span>
+	<span class=k>if</span> <span class=o>(!</span><span class=kd>super</span><span class=o>.</span><span class=na>equals</span><span class=o>(</span><span class=n>o</span><span class=o>))</span> <span class=k>return</span> <span class=kc>false</span><span class=o>;</span>
+	<span class=kd>final</span> <span class=n>Person</span> <span class=n>other</span> <span class=o>=</span> <span class=o>(</span><span class=n>Person</span><span class=o>)</span><span class=n>o</span><span class=o>;</span>
+	<span class=k>if</span> <span class=o>(</span><span class=k>this</span><span class=o>.</span><span class=na>name</span> <span class=o>==</span> <span class=kc>null</span> <span class=o>?</span>
+	    <span class=n>other</span><span class=o>.</span><span class=na>name</span> <span class=o>!=</span> <span class=kc>null</span> <span class=o>:</span> <span class=o>!</span><span class=k>this</span><span class=o>.</span><span class=na>name</span><span class=o>.</span><span class=na>equals</span><span class=o>(</span><span class=n>other</span><span class=o>.</span><span class=na>name</span><span class=o>))</span> <span class=k>return</span> <span class=kc>false</span><span class=o>;</span>
+	<span class=k>if</span> <span class=o>(</span><span class=k>this</span><span class=o>.</span><span class=na>gender</span> <span class=o>==</span> <span class=kc>null</span> <span class=o>?</span>
+	    <span class=n>other</span><span class=o>.</span><span class=na>gender</span> <span class=o>!=</span> <span class=kc>null</span> <span class=o>:</span> <span class=o>!</span><span class=k>this</span><span class=o>.</span><span class=na>gender</span><span class=o>.</span><span class=na>equals</span><span class=o>(</span><span class=n>other</span><span class=o>.</span><span class=na>gender</span><span class=o>))</span> <span class=k>return</span> <span class=kc>false</span><span class=o>;</span>
+	<span class=k>if</span> <span class=o>(</span><span class=k>this</span><span class=o>.</span><span class=na>ssn</span> <span class=o>==</span> <span class=kc>null</span> <span class=o>?</span>
+	    <span class=n>other</span><span class=o>.</span><span class=na>ssn</span> <span class=o>!=</span> <span class=kc>null</span> <span class=o>:</span> <span class=o>!</span><span class=k>this</span><span class=o>.</span><span class=na>ssn</span><span class=o>.</span><span class=na>equals</span><span class=o>(</span><span class=n>other</span><span class=o>.</span><span class=na>ssn</span><span class=o>))</span> <span class=k>return</span> <span class=kc>false</span><span class=o>;</span>
+	<span class=k>return</span> <span class=kc>true</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=nd>@java.lang.Override</span>
+	<span class=kd>public</span> <span class=kt>int</span> <span class=nf>hashCode</span><span class=o>()</span> <span class=o>{</span>
+	<span class=kd>final</span> <span class=kt>int</span> <span class=n>PRIME</span> <span class=o>=</span> <span class=n>31</span><span class=o>;</span>
+	<span class=kt>int</span> <span class=n>result</span> <span class=o>=</span> <span class=n>1</span><span class=o>;</span>
+	<span class=n>result</span> <span class=o>=</span> <span class=n>result</span> <span class=o>*</span> <span class=n>PRIME</span> <span class=o>+</span> <span class=kd>super</span><span class=o>.</span><span class=na>hashCode</span><span class=o>();</span>
+	<span class=n>result</span> <span class=o>=</span> <span class=n>result</span> <span class=o>*</span> <span class=n>PRIME</span> <span class=o>+</span> <span class=o>(</span><span class=k>this</span><span class=o>.</span><span class=na>name</span> <span class=o>==</span> <span class=kc>null</span> <span class=o>?</span>
+				   <span class=n>0</span> <span class=o>:</span> <span class=k>this</span><span class=o>.</span><span class=na>name</span><span class=o>.</span><span class=na>hashCode</span><span class=o>());</span>
+	<span class=n>result</span> <span class=o>=</span> <span class=n>result</span> <span class=o>*</span> <span class=n>PRIME</span> <span class=o>+</span> <span class=o>(</span><span class=k>this</span><span class=o>.</span><span class=na>gender</span> <span class=o>==</span> <span class=kc>null</span> <span class=o>?</span>
+				   <span class=n>0</span> <span class=o>:</span> <span class=k>this</span><span class=o>.</span><span class=na>gender</span><span class=o>.</span><span class=na>hashCode</span><span class=o>());</span>
+	<span class=n>result</span> <span class=o>=</span> <span class=n>result</span> <span class=o>*</span> <span class=n>PRIME</span> <span class=o>+</span> <span class=o>(</span><span class=k>this</span><span class=o>.</span><span class=na>ssn</span> <span class=o>==</span> <span class=kc>null</span> <span class=o>?</span>
+				   <span class=n>0</span> <span class=o>:</span> <span class=k>this</span><span class=o>.</span><span class=na>ssn</span><span class=o>.</span><span class=na>hashCode</span><span class=o>());</span>
+	<span class=k>return</span> <span class=n>result</span><span class=o>;</span>
+    <span class=o>}</span>
+<span class=o>}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>模板代码和使用了 Lombok 的代码简洁程度而言，差距越来越大了</p>
+<h3 id=data><span class=section-num>2.5</span> @Data</h3>
+<p>下面我就来介绍一下在我项目中使用最频繁的注解 <code>@Data</code>.</p>
+<p>使用 <code>@Data</code> 相当于同时在类级别使用 <code>@EqualAndHashCode</code> 注解以及我未曾提及的 <code>@ToString</code> 注解 (这个应该可以从注解名字猜出注解的作用), 以及为每一个类的属性添加上 <code>@Setter</code> 和 <code>@Getter</code> 注解。</p>
+<p>在一个类使用 <code>@Data</code>, Lombok 还会为该类生成构造函数。</p>
+<p>例子：使用 了 <code>@Data</code> 注解的函数：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=nd>@Data</span><span class=o>(</span><span class=n>staticConstructor</span><span class=o>=</span><span class=s>&#34;of&#34;</span><span class=o>)</span>
+<span class=kd>public</span> <span class=kd>class</span> <span class=nc>Company</span> <span class=o>{</span>
+    <span class=kd>private</span> <span class=kd>final</span> <span class=n>Person</span> <span class=n>founder</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=n>String</span> <span class=n>name</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=n>List</span><span class=o>&lt;</span><span class=n>Person</span><span class=o>&gt;</span> <span class=n>employees</span><span class=o>;</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>同等作用的原生 Java 代码：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=kd>class</span> <span class=nc>Company</span> <span class=o>{</span>
+    <span class=kd>private</span> <span class=kd>final</span> <span class=n>Person</span> <span class=n>founder</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=n>String</span> <span class=n>name</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=n>List</span><span class=o>&lt;</span><span class=n>Person</span><span class=o>&gt;</span> <span class=n>employees</span><span class=o>;</span>
+
+    <span class=kd>private</span> <span class=nf>Company</span><span class=o>(</span><span class=kd>final</span> <span class=n>Person</span> <span class=n>founder</span><span class=o>)</span> <span class=o>{</span>
+	<span class=k>this</span><span class=o>.</span><span class=na>founder</span> <span class=o>=</span> <span class=n>founder</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=kd>public</span> <span class=kd>static</span> <span class=n>Company</span> <span class=nf>of</span><span class=o>(</span><span class=kd>final</span> <span class=n>Person</span> <span class=n>founder</span><span class=o>)</span> <span class=o>{</span>
+	<span class=k>return</span> <span class=k>new</span> <span class=n>Company</span><span class=o>(</span><span class=n>founder</span><span class=o>);</span>
+    <span class=o>}</span>
+
+    <span class=kd>public</span> <span class=n>Person</span> <span class=nf>getFounder</span><span class=o>()</span> <span class=o>{</span>
+	<span class=k>return</span> <span class=n>founder</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=kd>public</span> <span class=n>String</span> <span class=nf>getName</span><span class=o>()</span> <span class=o>{</span>
+	<span class=k>return</span> <span class=n>name</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>setName</span><span class=o>(</span><span class=kd>final</span> <span class=n>String</span> <span class=n>name</span><span class=o>)</span> <span class=o>{</span>
+	<span class=k>this</span><span class=o>.</span><span class=na>name</span> <span class=o>=</span> <span class=n>name</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=kd>public</span> <span class=n>List</span><span class=o>&lt;</span><span class=n>Person</span><span class=o>&gt;</span> <span class=nf>getEmployees</span><span class=o>()</span> <span class=o>{</span>
+	<span class=k>return</span> <span class=n>employees</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>setEmployees</span><span class=o>(</span><span class=kd>final</span> <span class=n>List</span><span class=o>&lt;</span><span class=n>Person</span><span class=o>&gt;</span> <span class=n>employees</span><span class=o>)</span> <span class=o>{</span>
+	<span class=k>this</span><span class=o>.</span><span class=na>employees</span> <span class=o>=</span> <span class=n>employees</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=nd>@java.lang.Override</span>
+	<span class=kd>public</span> <span class=kt>boolean</span> <span class=nf>equals</span><span class=o>(</span><span class=kd>final</span> <span class=n>java</span><span class=o>.</span><span class=na>lang</span><span class=o>.</span><span class=na>Object</span> <span class=n>o</span><span class=o>)</span> <span class=o>{</span>
+	<span class=k>if</span> <span class=o>(</span><span class=n>o</span> <span class=o>==</span> <span class=k>this</span><span class=o>)</span> <span class=o>{</span>
+	    <span class=k>return</span> <span class=kc>true</span><span class=o>;</span>
+	<span class=o>}</span>
+	<span class=k>if</span> <span class=o>(</span><span class=n>o</span> <span class=o>==</span> <span class=kc>null</span><span class=o>)</span> <span class=o>{</span>
+	    <span class=k>return</span> <span class=kc>false</span><span class=o>;</span>
+	<span class=o>}</span>
+	<span class=k>if</span> <span class=o>(</span><span class=n>o</span><span class=o>.</span><span class=na>getClass</span><span class=o>()</span> <span class=o>!=</span> <span class=k>this</span><span class=o>.</span><span class=na>getClass</span><span class=o>())</span> <span class=o>{</span>
+	    <span class=k>return</span> <span class=kc>false</span><span class=o>;</span>
+	<span class=o>}</span>
+	<span class=kd>final</span> <span class=n>Company</span> <span class=n>other</span> <span class=o>=</span> <span class=o>(</span><span class=n>Company</span><span class=o>)</span> <span class=n>o</span><span class=o>;</span>
+	<span class=k>if</span> <span class=o>(</span><span class=k>this</span><span class=o>.</span><span class=na>founder</span> <span class=o>==</span> <span class=kc>null</span> <span class=o>?</span>
+	    <span class=n>other</span><span class=o>.</span><span class=na>founder</span> <span class=o>!=</span> <span class=kc>null</span> <span class=o>:</span> <span class=o>!</span><span class=k>this</span><span class=o>.</span><span class=na>founder</span><span class=o>.</span><span class=na>equals</span><span class=o>(</span><span class=n>other</span><span class=o>.</span><span class=na>founder</span><span class=o>))</span> <span class=o>{</span>
+	    <span class=k>return</span> <span class=kc>false</span><span class=o>;</span>
+	<span class=o>}</span>
+	<span class=k>if</span> <span class=o>(</span><span class=k>this</span><span class=o>.</span><span class=na>name</span> <span class=o>==</span> <span class=kc>null</span> <span class=o>?</span>
+	    <span class=n>other</span><span class=o>.</span><span class=na>name</span> <span class=o>!=</span> <span class=kc>null</span> <span class=o>:</span> <span class=o>!</span><span class=k>this</span><span class=o>.</span><span class=na>name</span><span class=o>.</span><span class=na>equals</span><span class=o>(</span><span class=n>other</span><span class=o>.</span><span class=na>name</span><span class=o>))</span> <span class=o>{</span>
+	    <span class=k>return</span> <span class=kc>false</span><span class=o>;</span>
+	<span class=o>}</span>
+	<span class=k>if</span> <span class=o>(</span><span class=k>this</span><span class=o>.</span><span class=na>employees</span> <span class=o>==</span> <span class=kc>null</span> <span class=o>?</span>
+	    <span class=n>other</span><span class=o>.</span><span class=na>employees</span> <span class=o>!=</span> <span class=kc>null</span> <span class=o>:</span> <span class=o>!</span><span class=k>this</span><span class=o>.</span><span class=na>employees</span><span class=o>.</span><span class=na>equals</span><span class=o>(</span><span class=n>other</span><span class=o>.</span><span class=na>employees</span><span class=o>))</span> <span class=o>{</span>
+	    <span class=k>return</span> <span class=kc>false</span><span class=o>;</span>
+	<span class=o>}</span>
+	<span class=k>return</span> <span class=kc>true</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=nd>@java.lang.Override</span>
+	<span class=kd>public</span> <span class=kt>int</span> <span class=nf>hashCode</span><span class=o>()</span> <span class=o>{</span>
+	<span class=kd>final</span> <span class=kt>int</span> <span class=n>PRIME</span> <span class=o>=</span> <span class=n>31</span><span class=o>;</span>
+	<span class=kt>int</span> <span class=n>result</span> <span class=o>=</span> <span class=n>1</span><span class=o>;</span>
+	<span class=n>result</span> <span class=o>=</span> <span class=n>result</span> <span class=o>*</span> <span class=n>PRIME</span> <span class=o>+</span> <span class=o>(</span><span class=k>this</span><span class=o>.</span><span class=na>founder</span> <span class=o>==</span> <span class=kc>null</span> <span class=o>?</span>
+				   <span class=n>0</span> <span class=o>:</span> <span class=k>this</span><span class=o>.</span><span class=na>founder</span><span class=o>.</span><span class=na>hashCode</span><span class=o>());</span>
+	<span class=n>result</span> <span class=o>=</span> <span class=n>result</span> <span class=o>*</span> <span class=n>PRIME</span> <span class=o>+</span> <span class=o>(</span><span class=k>this</span><span class=o>.</span><span class=na>name</span> <span class=o>==</span> <span class=kc>null</span> <span class=o>?</span>
+				   <span class=n>0</span> <span class=o>:</span> <span class=k>this</span><span class=o>.</span><span class=na>name</span><span class=o>.</span><span class=na>hashCode</span><span class=o>());</span>
+	<span class=n>result</span> <span class=o>=</span> <span class=n>result</span> <span class=o>*</span> <span class=n>PRIME</span> <span class=o>+</span> <span class=o>(</span><span class=k>this</span><span class=o>.</span><span class=na>employees</span> <span class=o>==</span> <span class=kc>null</span> <span class=o>?</span>
+				   <span class=n>0</span> <span class=o>:</span> <span class=k>this</span><span class=o>.</span><span class=na>employees</span><span class=o>.</span><span class=na>hashCode</span><span class=o>());</span>
+	<span class=k>return</span> <span class=n>result</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=nd>@java.lang.Override</span>
+	<span class=kd>public</span> <span class=n>java</span><span class=o>.</span><span class=na>lang</span><span class=o>.</span><span class=na>String</span> <span class=nf>toString</span><span class=o>()</span> <span class=o>{</span>
+	<span class=k>return</span> <span class=s>&#34;Company(founder=&#34;</span> <span class=o>+</span> <span class=n>founder</span> <span class=o>+</span> <span class=s>&#34;, name=&#34;</span> <span class=o>+</span> <span class=n>name</span> <span class=o>+</span> <span class=s>&#34;,&#34;</span> <span class=o>+</span>
+	    <span class=s>&#34; employees=&#34;</span> <span class=o>+</span> <span class=n>employees</span> <span class=o>+</span> <span class=s>&#34;)&#34;</span><span class=o>;</span>
+    <span class=o>}</span>
+<span class=o>}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>差别更加显而易见了</p>
+<h2 id=小结><span class=section-num>3</span> 小结</h2>
+<p>我在日常的开发中，使用的开发语言主要是 Java, 我也学习过其他的语言，所以 Java 和其他语言相比的优缺点也了然于心。</p>
+<p>Java 绝佳的工程性，优秀的 OOP 范式，以及大量的类库，框架 (例如 Spring &ldquo;全家桶&rdquo;), 以及 JIT 带来的接近 C++ 的性能，但是 Java 语法实在啰嗦，需要编写很多的模板代码，以至于经常出现将小项目写成中项目，中项目写成大项目的烦恼，更被戏称为 &ldquo;搬砖&rdquo;.</p>
+<p>现在看来，Lombok 为 Java 减少的模板代码实在算是造福 Java 开发者，让开发者在获得 Java 优势的时候，还可以尽量少地打字，可谓是来的及时。</p>
+<hr>
+<h2 id=参考><span class=section-num>4</span> 参考</h2>
+<ul>
+<li><a href=https://projectlombok.org/index.html>https://projectlombok.org/index.html</a></li>
+</ul>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2022-02-24
+</span>
+</p>
+</div>
+<footer class=post-footer>
+<div class=post-tags>
+<a href=/tags/java/>java</a>
+</div>
+<nav class=post-nav>
+<a class=prev href=/post/2017/tweak_eshell_prompt/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">Eshell提示符优化</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/post/2017/distributed_system_unique_id/>
+<span class="next-text nav-default">关于分布式系统唯一ID的探究</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<div id=gitalk-container></div>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
+<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:'2017-05-24 00:00:00 \u002b0800 \u002b0800',title:'为Java瘦身 – Lombok',clientID:'3c034c97f0926fafd2d6',clientSecret:'192051927d267ce83eb2ef10955890b7db2720ad',repo:'comment',owner:'ramsayleung',admin:['ramsayleung'],body:decodeURI(location.href)});gitalk.render('gitalk-container')</script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
+<a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<div class=busuanzi-footer>
+<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+</div>
+<span class=copyright-year>
+&copy;
+2017 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>
