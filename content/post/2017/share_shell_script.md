@@ -2,7 +2,7 @@
 title = "脚本分享"
 description = "share of my shell script snippet"
 date = 2017-04-22T00:00:00+08:00
-lastmod = 2022-02-23T22:49:01+08:00
+lastmod = 2022-02-24T15:15:45+08:00
 tags = ["shell", "linux", "command_line", "tool"]
 categories = ["tool"]
 draft = false
@@ -166,12 +166,14 @@ function pwdf()
 }
 ```
 
-只需在 Shell 中输入 `pwdf`, 然后选择需要复制的路径即可。运行截图：
-[![](/ox-hugo/pwdf.png)](/ox-hugo/pwdf.png)
+只需在 Shell 中输入 `pwdf`, 然后选择需要复制的路径即可。
+运行截图：
+
+{{< figure src="https://i.imgur.com/Ppkm2xV.gif" >}}
 
 ---
 
-<span class="timestamp-wrapper"><span class="timestamp">&lt;2017-05-22 一&gt; </span></span> Update
+<span class="timestamp-wrapper"><span class="timestamp">&lt;2017-05-22 Mon&gt; </span></span> Update
 
 
 ### <span class="section-num">2.5</span> 判断 Unix 系统的版本 {#判断-unix-系统的版本}
