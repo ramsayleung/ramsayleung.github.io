@@ -1,0 +1,1140 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>记存储集群的一次迁移过程（上） - In Pursuit of Hubris</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="Ramsay Leung"><meta name=description content="搭建和配置 Hadoop, Zookeeper, Hbase 1 前言 最近负责公司测试环境的迁移，主要包括 Hbase+Mysql 存储集群的迁移，消息队列，缓存组件的迁移, 而我打算说说存储集群的迁移。因为公司的"><meta name=keywords content="Blog,Software,Enginering">
+<meta name=generator content="Hugo 0.92.2 with theme even">
+<link rel=canonical href=https://ramsayleung.github.io/post/2018/store_cluster_migrate1/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="记存储集群的一次迁移过程（上）">
+<meta property="og:description" content="搭建和配置 Hadoop, Zookeeper, Hbase 1 前言 最近负责公司测试环境的迁移，主要包括 Hbase+Mysql 存储集群的迁移，消息队列，缓存组件的迁移, 而我打算说说存储集群的迁移。因为公司的">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ramsayleung.github.io/post/2018/store_cluster_migrate1/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2018-03-05T17:39:00+08:00">
+<meta property="article:modified_time" content="2022-02-24T22:25:27+08:00">
+<meta itemprop=name content="记存储集群的一次迁移过程（上）">
+<meta itemprop=description content="搭建和配置 Hadoop, Zookeeper, Hbase 1 前言 最近负责公司测试环境的迁移，主要包括 Hbase+Mysql 存储集群的迁移，消息队列，缓存组件的迁移, 而我打算说说存储集群的迁移。因为公司的"><meta itemprop=datePublished content="2018-03-05T17:39:00+08:00">
+<meta itemprop=dateModified content="2022-02-24T22:25:27+08:00">
+<meta itemprop=wordCount content="3383">
+<meta itemprop=keywords content="mysql,hbase,"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="记存储集群的一次迁移过程（上）">
+<meta name=twitter:description content="搭建和配置 Hadoop, Zookeeper, Hbase 1 前言 最近负责公司测试环境的迁移，主要包括 Hbase+Mysql 存储集群的迁移，消息队列，缓存组件的迁移, 而我打算说说存储集群的迁移。因为公司的"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/about_me>
+<li class=mobile-menu-item>About</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/about_me>About</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>记存储集群的一次迁移过程（上）</h1>
+<div class=post-meta>
+<span class=post-time> 2018-03-05 </span>
+<div class=post-category>
+<a href=/categories/hbase/> hbase </a>
+</div>
+<span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#前言><span class=section-num>1</span> 前言</a></li>
+<li><a href=#搭建新环境><span class=section-num>2</span> 搭建新环境</a>
+<ul>
+<li><a href=#hadoop-搭建流程><span class=section-num>2.1</span> Hadoop 搭建流程</a></li>
+<li><a href=#小结><span class=section-num>2.2</span> 小结</a></li>
+<li><a href=#zookeeper-搭建流程><span class=section-num>2.3</span> ZooKeeper 搭建流程</a></li>
+<li><a href=#hbase-搭建流程><span class=section-num>2.4</span> HBase 搭建流程</a></li>
+</ul>
+</li>
+<li><a href=#结语><span class=section-num>3</span> 结语</a></li>
+<li><a href=#参考><span class=section-num>4</span> 参考</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<p>搭建和配置 Hadoop, Zookeeper, Hbase</p>
+<h2 id=前言><span class=section-num>1</span> 前言</h2>
+<p>最近负责公司测试环境的迁移，主要包括 Hbase+Mysql 存储集群的迁移，消息队列，缓存组件的迁移, 而我打算说说存储集群的迁移。因为公司的机器的Ip 和Host 不便在博文展示，所以我会用：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-cfg data-lang=cfg><span class=na>192.168.2.1: node-master</span>
+<span class=na>192.168.2.2: node1</span>
+<span class=na>192.168.2.3: node2</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>来代替公司的机器和域名。</p>
+<h2 id=搭建新环境><span class=section-num>2</span> 搭建新环境</h2>
+<h3 id=hadoop-搭建流程><span class=section-num>2.1</span> Hadoop 搭建流程</h3>
+<h4 id=hadoop-集群的架构><span class=section-num>2.1.1</span> Hadoop 集群的架构</h4>
+<p>在配置 Hadoop 的主从节点(master/slave)之前，先来了解一下 Hadoop 集群的组件作用；</p>
+<ul>
+<li><code>master</code> 节点负责担任管理分布式文件系统以及进行相应的资源调度的角色:
+<ul>
+<li>NameNode: 管理分布式文件系统并且感知数据块在集群的存储位置</li>
+<li>ResourceManager: 管理 <code>YARN</code> 任务，并且负责在 <code>slave</code> 节点调度和处理</li>
+</ul>
+</li>
+<li><code>slave</code> 节点负责担任存储真实的数据并且提供运算 <code>YARN</code> 任务的能力的角色：
+<ul>
+<li>DataNode: 负责物理存储真实的数据</li>
+<li>NodeManager: 管理在该节点 <code>YARN</code> 任务的具体执行。</li>
+</ul>
+</li>
+</ul>
+<p><code>master</code> 和 <code>slave</code> 的角色不一定像上面划分得泾渭分明，比如 <code>master</code> 节点也可以是 <code>dataNode</code>,这个就看具体配置了。</p>
+<h4 id=配置jdk><span class=section-num>2.1.2</span> 配置JDK</h4>
+<p>Hadoop 集群需要JAVA 环境，而Linux 的发行版本一般都是默认带有JDK 的，只是OpenJDK 而不是 Oracle JDK, 如果需要修改JDK 的版本，可以自行修改，网上已经有很多安装JDK 的教程，我就不一一讲解了。</p>
+<h4 id=修改host><span class=section-num>2.1.3</span> 修改host</h4>
+<p>因为需要不同的机器之间通信，所以需要先配置好Ip 和域名的映射。修改每台机器的 <code>/etc/hosts</code> 文件，加上以下内容：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>192.168.2.1: nodw-master
+192.168.2.2: node1
+192.168.2.3: node2
+</code></pre></td></tr></table>
+</div>
+</div><h4 id=新建-hadoop-用户><span class=section-num>2.1.4</span> 新建 hadoop 用户</h4>
+<p>虽说我可以用我自己的登录名来配置和运行 hadoop, 但是出于安全的考虑，还是在每个节点创建一个专门用来运行 hadoop 集群的用户比较好。</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>useradd hadoop
+passwd hadoop
+</code></pre></td></tr></table>
+</div>
+</div><h4 id=ssh-免密码登录><span class=section-num>2.1.5</span> SSH 免密码登录</h4>
+<p>因为在 Hadoop 集群中， <code>node-master</code> 节点会通过SSH连接和其他节点进行通信，所以需要为
+Hadoop 集群配置免密码校验的通信。首先以 <code>hadoop</code> 用户身份登录到 <code>node-master</code> 节点，然后生成 SSH的公私钥：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>ssh-keygen -b <span class=m>4096</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>然后把公钥复制到其他的节点，如果你想要把 <code>node-master</code>也当作<code>dataNote</code>的话，就需要把公钥也复制到
+<code>master</code>节点：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>ssh-copy-id -i $HOME/.ssh/id_rsa.pub hadoop@node-master
+ssh-copy-id -i $HOME/.ssh/id_rsa.pub hadoop@node1
+ssh-copy-id -i $HOME/.ssh/id_rsa.pub hadoop@node2
+</code></pre></td></tr></table>
+</div>
+</div><p>谨记：复制的是”公钥”,不是”私钥”.</p>
+<h4 id=安装hadoop-1-dot-下载hadoop-安装包-以-hadoop-登录-node-master-采用-wget命令下载><span class=section-num>2.1.6</span> 安装hadoop 1. 下载hadoop 安装包，以 <code>hadoop</code>登录<code>node-master</code>，采用 wget命令下载：</h4>
+<p>wget <a href=http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.7.1.tar.gz>http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.7.1.tar.gz</a></p>
+<ol>
+<li>创建一个hadoop目录，将各个组件都安装在这个目录。</li>
+</ol>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>mdkir ~/hadoop
+tar -zxvf hadoop-2.6.0-cdh5.7.1.tar.gz -C ~/hadoop
+</code></pre></td></tr></table>
+</div>
+</div><h4 id=修改配置文件><span class=section-num>2.1.7</span> 修改配置文件</h4>
+<p>所有修改的 hadoop配置文件都位于 ~/hadoop/etc/hadoop/ 目录</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>cd ~/hadoop/etc/hadoop
+</code></pre></td></tr></table>
+</div>
+</div>
+<ol>
+<li>
+<p>设置 NameNode 位置</p>
+<p><code>vim core-site.xml</code>: 修改成以下内容：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=nt>&lt;configuration&gt;</span>
+  <span class=nt>&lt;property&gt;</span>
+    <span class=nt>&lt;name&gt;</span>fs.defaultFS<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;value&gt;</span>hdfs://node-master:19000<span class=nt>&lt;/value&gt;</span>
+  <span class=nt>&lt;/property&gt;</span>
+  <span class=nt>&lt;property&gt;</span>
+    <span class=nt>&lt;name&gt;</span>fs.trash.interval<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;value&gt;</span>10080<span class=nt>&lt;/value&gt;</span>
+  <span class=nt>&lt;/property&gt;</span>
+  <span class=nt>&lt;property&gt;</span>
+    <span class=nt>&lt;name&gt;</span>fs.trash.checkpoint.interval<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;value&gt;</span>10080<span class=nt>&lt;/value&gt;</span>
+  <span class=nt>&lt;/property&gt;</span>
+<span class=nt>&lt;/configuration&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<ol start=2>
+<li>
+<p>设置 HDFS 路径</p>
+<p><code>vim hdfs-site.xml</code>,修改内容为：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=nt>&lt;configuration&gt;</span>
+  <span class=nt>&lt;property&gt;</span>
+    <span class=nt>&lt;name&gt;</span>dfs.replication<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;value&gt;</span>1<span class=nt>&lt;/value&gt;</span>
+  <span class=nt>&lt;/property&gt;</span>
+  <span class=nt>&lt;property&gt;</span>
+    <span class=nt>&lt;name&gt;</span>hadoop.tmp.dir<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;value&gt;</span>/home/hadoop/hadoop/data/temp<span class=nt>&lt;/value&gt;</span>
+  <span class=nt>&lt;/property&gt;</span>
+  <span class=nt>&lt;property&gt;</span>
+    <span class=nt>&lt;name&gt;</span>dfs.namenode.http-address<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;value&gt;</span>node-master:50070<span class=nt>&lt;/value&gt;</span>
+  <span class=nt>&lt;/property&gt;</span>
+  <span class=nt>&lt;property&gt;</span>
+    <span class=nt>&lt;name&gt;</span>dfs.namenode.secondary.http-address<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;value&gt;</span>node1:50090<span class=nt>&lt;/value&gt;</span>
+  <span class=nt>&lt;/property&gt;</span>
+  <span class=nt>&lt;property&gt;</span>
+    <span class=nt>&lt;name&gt;</span>dfs.webhdfs.enabled<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;value&gt;</span>true<span class=nt>&lt;/value&gt;</span>
+  <span class=nt>&lt;/property&gt;</span>
+  <span class=nt>&lt;property&gt;</span>
+    <span class=nt>&lt;name&gt;</span>dfs.data.dir<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;value&gt;</span>/home/hadoop/hadoop/data/hdfs<span class=nt>&lt;/value&gt;</span>
+  <span class=nt>&lt;/property&gt;</span>
+<span class=nt>&lt;/configuration&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<ol start=3>
+<li>
+<p>将 YARN 设置成任务调度器(Job Scheduler)</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>cp mapred-site.xml.template mapred-site.xml
+</code></pre></td></tr></table>
+</div>
+</div><p>然后修改配置，将 <code>yarn</code> 设置成 <code>MapReduce</code> 操作的默认框架：
+<code>vim mapred-site.xml</code>:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=nt>&lt;configuration&gt;</span>
+  <span class=nt>&lt;property&gt;</span>
+    <span class=nt>&lt;name&gt;</span>mapreduce.framework.name<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;value&gt;</span>yarn<span class=nt>&lt;/value&gt;</span>
+  <span class=nt>&lt;/property&gt;</span>
+  <span class=nt>&lt;property&gt;</span>
+    <span class=nt>&lt;name&gt;</span>mapreduce.jobhistory.address<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;value&gt;</span>node-master:10020<span class=nt>&lt;/value&gt;</span>
+  <span class=nt>&lt;/property&gt;</span>
+  <span class=nt>&lt;property&gt;</span>
+    <span class=nt>&lt;name&gt;</span>mapreduce.jobhistory.webapp.address<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;value&gt;</span>node-master:19888<span class=nt>&lt;/value&gt;</span>
+  <span class=nt>&lt;/property&gt;</span>
+<span class=nt>&lt;/configuration&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<ol start=4>
+<li>
+<p>配置 YARN</p>
+<p><code>vim yarn-site.xml</code>:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=nt>&lt;configuration&gt;</span>
+  <span class=nt>&lt;property&gt;</span>
+    <span class=nt>&lt;name&gt;</span>yarn.acl.enable<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;value&gt;</span>0<span class=nt>&lt;/value&gt;</span>
+  <span class=nt>&lt;/property&gt;</span>
+
+  <span class=nt>&lt;property&gt;</span>
+    <span class=nt>&lt;name&gt;</span>yarn.resourcemanager.hostname<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;value&gt;</span>node-master<span class=nt>&lt;/value&gt;</span>
+  <span class=nt>&lt;/property&gt;</span>
+
+  <span class=nt>&lt;property&gt;</span>
+    <span class=nt>&lt;name&gt;</span>yarn.nodemanager.aux-services<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;value&gt;</span>mapreduce_shuffle<span class=nt>&lt;/value&gt;</span>
+  <span class=nt>&lt;/property&gt;</span>
+<span class=nt>&lt;/configuration&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<ol start=5>
+<li>
+<p>配置 master 节点</p>
+<p>因为公司的机器内存较大，兼之机器数不多，所以我就把两台机器都都当作 <code>master</code>:
+<code>vim masters</code>修改文件为：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-cfg data-lang=cfg><span class=na>node-master</span>
+<span class=na>node1</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<ol start=6>
+<li>
+<p>配置 slave 节点</p>
+<p>把全部节点都当作数据几点(dataNode):
+<code>vim slaves</code>:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-cfg data-lang=cfg><span class=na>node-master</span>
+<span class=na>node1</span>
+<span class=na>node2</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<ol start=7>
+<li>
+<p>修改 Hadoop 环境变量配置</p>
+<p>这个配置是否修改就视情况而定了。
+<code>vim hadoop-env.sh</code>:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=c1>#因为ssh的端口不是默认的22,需要重新指定</span>
+<span class=nb>export</span> <span class=nv>HADOOP_SSH_OPTS</span><span class=o>=</span><span class=s2>&#34;-p 9922&#34;</span>
+<span class=c1>#如果报错java_home找不到，可在这里重新指定</span>
+<span class=c1>#export JAVA_HOME=/usr/java/jdk1.8.0_161/</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<ol start=8>
+<li>在其它的节点安装并且解压，不要修改配置文件</li>
+</ol>
+<ol start=9>
+<li>
+<p>将配置文件同步到slave主机</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>scp -r -P <span class=m>9922</span> /home/hadoop/hadoop/hadoop-2.6.0-cdh5.7.1/etc/hadoop/  node1:/home/hadoop/hadoop/hadoop-2.6.0-cdh5.7.1/etc
+scp -r -P <span class=m>9922</span> /home/hadoop/hadoop/hadoop-2.6.0-cdh5.7.1/etc/hadoop/  node2:/home/hadoop/hadoop/hadoop-2.6.0-cdh5.7.1/etc
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<ol start=10>
+<li>修改环境变量（所有节点都要配置）</li>
+</ol>
+<pre><code>编辑 `.bash_profile`：
+`vim ~/.bash_profile`
+加入：
+
+```shell
+export JAVA_HOME=/usr/java/jdk1.8.0_161/
+export JRE_HOME=/usr/java/jdk1.8.0_161/jre
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib:$CLASSPATH
+export HADOOP_HOME=/home/hadoop/hadoop/hadoop-2.6.0-cdh5.7.1
+export HBASE_HOME=/home/hadoop/hadoop/hbase-1.2.0-cdh5.7.1
+export HADOOP_MAPRED_HOME=${HADOOP_HOME}
+export HADOOP_COMMON_HOME=${HADOOP_HOME}
+export HADOOP_HDFS_HOME=${HADOOP_HOME}
+export YARN_HOME=${HADOOP_HOME}
+export HADOOP_YARN_HOME=${HADOOP_HOME}
+export HADOOP_CONF_DIR=${HADOOP_HOME}/etc/hadoop
+export HDFS_CONF_DIR=${HADOOP_HOME}/etc/hadoop
+export YARN_CONF_DIR=${HADOOP_HOME}/etc/hadoop
+PATH=$PATH:$HOME/bin:$JAVA_HOME/bin:$HADOOP_HOME/sbin:$HBASE_HOME/bin:$HADOOP_HOME/bin
+export PATH
+```
+
+然后加载 `~/.bash_profile`:
+`source ~/.bash_profile`
+</code></pre>
+<ol start=11>
+<li>格式化 HDFS</li>
+</ol>
+<pre><code>就像其它的文件系统那样，在使用之前需要格式化，HDFS 这个分布式文件系统也不例外。在 `node-master`,运行：
+
+```nil
+hdfs namenode -format
+```
+
+那么，到目前为止， Hadoop 就已经安装和配置好了。
+</code></pre>
+<h4 id=运行和监控-hdfs><span class=section-num>2.1.8</span> 运行和监控 HDFS</h4>
+<ol>
+<li>
+<p>启动HDFS</p>
+<p>在 <code>node-master</code> 的 <code>/home/hadoop/hadoop/sbin/</code> 目录运行下面的命令以启动 HDFS:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>./start-dfs.sh
+</code></pre></td></tr></table>
+</div>
+</div><p>然后就会启动 <code>NameNode</code> 和 <code>SecondaryNameNode</code>, 然后继续启动 <code>DataNode</code>.</p>
+</li>
+</ol>
+<ol start=2>
+<li>
+<p>验证HDFS</p>
+<p>可以在各个节点通过 <code>jps</code> 检查HDFS 的运行状态。比如在 <code>node-master</code> 运行 <code>jps</code>:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-cfg data-lang=cfg><span class=na>12243 NameNode</span>
+<span class=na>2677 ResourceManager</span>
+<span class=na>19593 Jps</span>
+<span class=na>15036 DataNode</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>node1</code>:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-cfg data-lang=cfg><span class=na>30464 DataNode</span>
+<span class=na>13094 Jps</span>
+<span class=na>28589 SecondaryNameNode</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<ol start=3>
+<li>
+<p>停止HDFS</p>
+<p>在 <code>node-master</code> 的 <code>/home/hadoop/hadoop/sbin/</code> 目录运行下面的命令以停止HDFS:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>./stop-dfs.sh
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<ol start=4>
+<li>
+<p>监控HDFS</p>
+<p>如果你在启动 HDFS 之后，想要获取关于 HDFS 的详细信息，你可以使用 <code>hdfs dfsadmin -report</code> 命令， 例如在 <code>node-master</code> 运行 <code>hdfs dfsadmin -resport</code>, 输出如下：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-cfg data-lang=cfg><span class=na>Configured Capacity: 1201169780736 (1.09 TB)</span>
+<span class=na>Present Capacity: 1129442681745 (1.03 TB)</span>
+<span class=na>DFS Remaining: 1129442358161 (1.03 TB)</span>
+<span class=na>DFS Used: 323584 (316 KB)</span>
+<span class=na>DFS Used%: 0.00%</span>
+<span class=na>Under replicated blocks: 0</span>
+<span class=na>Blocks with corrupt replicas: 0</span>
+<span class=na>Missing blocks: 0</span>
+<span class=na>Missing blocks (with replication factor 1): 0</span>
+
+<span class=na>-------------------------------------------------</span>
+<span class=na>Live datanodes (3):</span>
+
+<span class=na>Name: 192.168.2.3:50010 (node2)</span>
+<span class=na>Hostname: node2</span>
+<span class=na>Decommission Status : Normal</span>
+<span class=na>Configured Capacity: 400389926912 (372.89 GB)</span>
+<span class=na>DFS Used: 102400 (100 KB)</span>
+<span class=na>Non DFS Used: 24759164513 (23.06 GB)</span>
+<span class=na>DFS Remaining: 375630659999 (349.83 GB)</span>
+<span class=na>DFS Used%: 0.00%</span>
+<span class=na>DFS Remaining%: 93.82%</span>
+<span class=na>Configured Cache Capacity: 0 (0 B)</span>
+<span class=na>Cache Used: 0 (0 B)</span>
+<span class=na>Cache Remaining: 0 (0 B)</span>
+<span class=na>Cache Used%: 100.00%</span>
+<span class=na>Cache Remaining%: 0.00%</span>
+<span class=na>Xceivers: 11</span>
+<span class=na>Last contact: Mon Mar 05 14:05:38 CST 2018</span>
+
+
+<span class=na>Name: 192.168.2.2:50010 (node1)</span>
+<span class=na>Hostname: node1</span>
+<span class=na>Decommission Status : Normal</span>
+<span class=na>Configured Capacity: 400389926912 (372.89 GB)</span>
+<span class=na>DFS Used: 77824 (76 KB)</span>
+<span class=na>Non DFS Used: 23483977479 (21.87 GB)</span>
+<span class=na>DFS Remaining: 376905871609 (351.02 GB)</span>
+<span class=na>DFS Used%: 0.00%</span>
+<span class=na>DFS Remaining%: 94.13%</span>
+<span class=na>Configured Cache Capacity: 0 (0 B)</span>
+<span class=na>Cache Used: 0 (0 B)</span>
+<span class=na>Cache Remaining: 0 (0 B)</span>
+<span class=na>Cache Used%: 100.00%</span>
+<span class=na>Cache Remaining%: 0.00%</span>
+<span class=na>Xceivers: 7</span>
+<span class=na>Last contact: Mon Mar 05 14:05:38 CST 2018</span>
+
+
+<span class=na>Name: 192.168.2.1:50010 (node-master)</span>
+<span class=na>Hostname: node-master</span>
+<span class=na>Decommission Status : Normal</span>
+<span class=na>Configured Capacity: 400389926912 (372.89 GB)</span>
+<span class=na>DFS Used: 143360 (140 KB)</span>
+<span class=na>Non DFS Used: 23483956999 (21.87 GB)</span>
+<span class=na>DFS Remaining: 376905826553 (351.02 GB)</span>
+<span class=na>DFS Used%: 0.00%</span>
+<span class=na>DFS Remaining%: 94.13%</span>
+<span class=na>Configured Cache Capacity: 0 (0 B)</span>
+<span class=na>Cache Used: 0 (0 B)</span>
+<span class=na>Cache Remaining: 0 (0 B)</span>
+<span class=na>Cache Used%: 100.00%</span>
+<span class=na>Cache Remaining%: 0.00%</span>
+<span class=na>Xceivers: 7</span>
+<span class=na>Last contact: Mon Mar 05 14:05:39 CST 2018</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>或者可以使用更加友好的 Web 管理界面，在浏览器输入： <a href=http://node-master-ip:50070>http://node-master-ip:50070</a>, 然后你就可以看到如下的监控界面：
+<img src=https://imgur.com/jmIXxRy.jpg alt></p>
+</li>
+</ol>
+<ol start=5>
+<li>
+<p>使用 HDFS</p>
+<p>既然 HDFS 可以跑起来了，现在就需要添加一点数据以测试 HDFS 了。 在HDFS 的根目录下新建一个 <code>test</code> 目录：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>hdfs dfs -mkdir /test
+</code></pre></td></tr></table>
+</div>
+</div><p>然后在本地创建一个 <code>helloworld</code> 文件，内容如下：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>Bye world!
+</code></pre></td></tr></table>
+</div>
+</div><p>接着把 <code>helloworld</code> 文件放置到HDFS的 <code>/test</code> 目录下：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>hdfs dfs -put helloworld /test
+</code></pre></td></tr></table>
+</div>
+</div><p>最后查看文件是否存在：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>hdfs dfs -ls /test
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h3 id=小结><span class=section-num>2.2</span> 小结</h3>
+<p>至此，如果一切顺利的话， 那么Hadoop 集群就运行起来了。因为我是需要用Hbase 作存储集群，暂不需用<code>Yarn</code> 作计算，所以我就没有介绍启动 <code>Yarn</code> 的 流程了。</p>
+<h3 id=zookeeper-搭建流程><span class=section-num>2.3</span> ZooKeeper 搭建流程</h3>
+<p>因为需要用 ZooKeeper 来管理集群，所以也需要安装 ZooKeeper. 而 ZooKeeper 的安装和 配置也是用 <code>hadoop</code> 用户进行操作的。</p>
+<h4 id=安装zookeeper--每个节点同样的操作--1-dot-下载zookeeper安装包-登录主机-采用wget命令下载><span class=section-num>2.3.1</span> 安装zookeeper (每个节点同样的操作) 1. 下载zookeeper安装包，登录主机，采用wget命令下载：</h4>
+<p>wget <a href=http://archive.cloudera.com/cdh5/cdh/5/zookeeper-3.4.5-cdh5.7.1.tar.gz>http://archive.cloudera.com/cdh5/cdh/5/zookeeper-3.4.5-cdh5.7.1.tar.gz</a></p>
+<ol>
+<li>解压安装到hadoop目录，将各个组件都安装在这个目录。</li>
+</ol>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>tar -zxvf zookeeper-3.4.5-cdh5.7.1.tar.gz -C ~/hadoop
+</code></pre></td></tr></table>
+</div>
+</div><h4 id=配置-zookeeper><span class=section-num>2.3.2</span> 配置 ZooKeeper</h4>
+<p>修改zoo.cfg (所有机器一样的配置): <code>vim /home/hadoop/hadoop/zookeeper-3.4.5-cdh5.7.1/conf/zoo.cfg</code>, 配置文件内容如下：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-cfg data-lang=cfg><span class=c1># The number of milliseconds of each tick</span>
+<span class=na>tickTime</span><span class=o>=</span><span class=s>2000</span>
+<span class=na>maxSessionTimeout</span><span class=o>=</span><span class=s>300000</span>
+<span class=c1># The number of ticks that the initial</span>
+<span class=c1># synchronization phase can take</span>
+<span class=na>initLimit</span><span class=o>=</span><span class=s>10</span>
+<span class=c1># The number of ticks that can pass between</span>
+<span class=c1># sending a request and getting an acknowledgement</span>
+<span class=na>syncLimit</span><span class=o>=</span><span class=s>5</span>
+<span class=c1># the directory where the snapshot is stored.</span>
+<span class=c1># do not use /tmp for storage, /tmp here is just</span>
+<span class=c1># example sakes.</span>
+<span class=na>dataDir</span><span class=o>=</span><span class=s>/home/hadoop/hadoop/zookeeper-3.4.5-cdh5.7.1/data</span>
+<span class=c1># the port at which the clients will connect</span>
+<span class=na>clientPort</span><span class=o>=</span><span class=s>2181</span>
+<span class=c1>#</span>
+<span class=c1># Be sure to read the maintenance section of the</span>
+<span class=c1># administrator guide before turning on autopurge.</span>
+<span class=c1>#</span>
+<span class=c1># http://zookeeper.apache.org/doc/current/zookeeperAdmin.html#sc_maintenance</span>
+<span class=c1>#</span>
+<span class=c1># The number of snapshots to retain in dataDir</span>
+<span class=c1>#autopurge.snapRetainCount=3</span>
+<span class=c1># Purge task interval in hours</span>
+<span class=c1># Set to &#34;0&#34; to disable auto purge feature</span>
+<span class=c1>#autopurge.purgeInterval=1</span>
+<span class=na>server.1</span><span class=o>=</span><span class=s>node-master:2888:3888</span>
+<span class=na>server.2</span><span class=o>=</span><span class=s>node1:2888:3888</span>
+<span class=na>server.3</span><span class=o>=</span><span class=s>node2:2888:3888</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<ol>
+<li>
+<p>创建myid文件 （不同主机不同数字）</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=nb>cd</span> <span class=o>{</span>data_dir<span class=o>}</span> <span class=c1># 按照上面的配置，就应该是/home/hadoop/hadoop/zookeeper-3.4.5-cdh5.7.1/data</span>
+vim myid
+</code></pre></td></tr></table>
+</div>
+</div><p>myid的数字要与zoo.cfg配置的一一对应。即要对应：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-cfg data-lang=cfg><span class=na>server.1</span><span class=o>=</span><span class=s>node-master:2888:3888</span>
+<span class=na>server.2</span><span class=o>=</span><span class=s>node1:2888:3888</span>
+<span class=na>server.3</span><span class=o>=</span><span class=s>node2:2888:3888</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>也就是 <code>node-master</code> 的 <code>myid</code>是<code>1</code>, <code>node1</code>的 <code>myid</code>是 <code>2</code>,依次类推。需要注意的 是，数字前后都不能有空格！</p>
+</li>
+</ol>
+<ol start=2>
+<li>
+<p>启动 ZooKeeper</p>
+<p>在 <code>node-master</code> 的 <code>/home/hadoop/hadoop/zookeeper-3.4.5-cdh5.7.1</code> 目录，运行以 下命令：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>sh bin/zkServer.sh start
+</code></pre></td></tr></table>
+</div>
+</div><p>其它相应的命令如下：</p>
+<ul>
+<li>启动ZK服务: <code>sh bin/zkServer.sh start</code></li>
+<li>查看ZK服务状态: <code>sh bin/zkServer.sh status</code></li>
+<li>停止ZK服务: <code>sh bin/zkServer.sh stop</code></li>
+<li>重启ZK服务: <code>sh bin/zkServer.sh restart</code></li>
+</ul>
+</li>
+</ol>
+<ol start=3>
+<li>
+<p>验证 ZooKeeper</p>
+<p>可以通过调用 <code>jps</code> 或者 <code>bin/zkCli.sh</code> 来验证 Zookeeper 的运行情况：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>./zkCli.sh -server 192.168.2.1:2181
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h3 id=hbase-搭建流程><span class=section-num>2.4</span> HBase 搭建流程</h3>
+<h4 id=安装hbase><span class=section-num>2.4.1</span> 安装Hbase</h4>
+<ol>
+<li>下载hbase 安装包，登录主机，采用wget命令下载：
+wget <a href=http://archive.cloudera.com/cdh5/cdh/5/hbase-1.2.0-cdh5.7.1.tar.gz>http://archive.cloudera.com/cdh5/cdh/5/hbase-1.2.0-cdh5.7.1.tar.gz</a>
+2、解压安装到hadoop目录（3台主机同样操作）</li>
+</ol>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>tar -zxvf hbase-1.2.0-cdh5.7.1.tar.gz -C ~/hadoop
+</code></pre></td></tr></table>
+</div>
+</div><h4 id=修改hbase的配置文件--所有主机一样的配置><span class=section-num>2.4.2</span> 修改hbase的配置文件(所有主机一样的配置)</h4>
+<p>修改 <code>hbase-1.2.0-cdh5.7.1/conf</code> 目录下的文件： 1. 修改 <code>hbase-site.xml</code> 内容如下：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=nt>&lt;configuration&gt;</span>
+  <span class=nt>&lt;property&gt;</span>
+    <span class=nt>&lt;name&gt;</span>hbase.rootdir<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;value&gt;</span>hdfs://node-master:19000/hbase-${user.name}<span class=nt>&lt;/value&gt;</span>
+  <span class=nt>&lt;/property&gt;</span>
+  <span class=nt>&lt;property&gt;</span>
+    <span class=nt>&lt;name&gt;</span>hbase.master<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;value&gt;</span>node-master<span class=nt>&lt;/value&gt;</span>
+  <span class=nt>&lt;/property&gt;</span>
+  <span class=nt>&lt;property&gt;</span>
+    <span class=nt>&lt;name&gt;</span>hbase.cluster.distributed<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;value&gt;</span>true<span class=nt>&lt;/value&gt;</span>
+  <span class=nt>&lt;/property&gt;</span>
+  <span class=nt>&lt;property&gt;</span>
+    <span class=nt>&lt;name&gt;</span>hbase.tmp.dir<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;value&gt;</span>/home/hadoop/hadoop/data/hbase-${user.name}<span class=nt>&lt;/value&gt;</span>
+  <span class=nt>&lt;/property&gt;</span>
+  <span class=nt>&lt;property&gt;</span>
+    <span class=nt>&lt;name&gt;</span>hbase.zookeeper.quorum<span class=nt>&lt;/name&gt;</span>
+    <span class=nt>&lt;value&gt;</span>node-master, node1, node2<span class=nt>&lt;/value&gt;</span>
+  <span class=nt>&lt;/property&gt;</span>
+<span class=nt>&lt;/configuration&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>修改 <code>hbase-env.sh</code>:</li>
+</ol>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=nb>export</span> <span class=nv>JAVA_HOME</span><span class=o>=</span>/usr/java/jdk1.8.0_161/ <span class=o>(</span>无法识别系统的环境变量，在这里直接指定<span class=o>)</span>
+<span class=nb>export</span> <span class=nv>HBASE_MANAGES_ZK</span><span class=o>=</span><span class=nb>false</span>  （关闭自带的zookeeper）
+<span class=nb>export</span> <span class=nv>HBASE_SSH_OPTS</span><span class=o>=</span><span class=s2>&#34;-p 9922&#34;</span> <span class=o>(</span>端口号不是默认的22，要改为9922<span class=o>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>修改 =regionservers=(指定regionservers的主机地址):</li>
+</ol>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>node-master
+node1
+node2
+</code></pre></td></tr></table>
+</div>
+</div><h4 id=启动-hbase><span class=section-num>2.4.3</span> 启动 Hbase</h4>
+<p>在 <code>node-master</code> 的 <code>/home/hadoop/hadoop/hbase-1.2.0-cdh5.7.1/bin</code> 目录下运行：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>start-hbase.sh
+</code></pre></td></tr></table>
+</div>
+</div><h4 id=监控-hbase><span class=section-num>2.4.4</span> 监控 Hbase</h4>
+<p>可以在浏览器查看 HBase 集群的信息：</p>
+<ul>
+<li>HMaster web 管理信息：<a href=http://192.168.2.1:60010/master-status>http://192.168.2.1:60010/master-status</a></li>
+<li>HregionServer 管理信息：<a href=http://192.168.2.1:60030/>http://192.168.2.1:60030/</a> <a href=http://192.168.2.2:60030/>http://192.168.2.2:60030/</a></li>
+</ul>
+<p><a href=http://192.168.2.3:60030/>http://192.168.2.3:60030/</a></p>
+<h2 id=结语><span class=section-num>3</span> 结语</h2>
+<p>整个 Hbase 集群应该搭建完了，关于Mysql 搭建的文章就太多了，我也不赘言了。至此，所有存储的组件就已经安装完毕并已启用，但是都是没有数据的，接下来我们需要做的是如何将旧的测试环境的数据迁移到新的测试环境。考虑到这篇内容已经很长了，剩下的内容我就另外写一篇博文了。</p>
+<h2 id=参考><span class=section-num>4</span> 参考</h2>
+<ul>
+<li><a href=http://blog.csdn.net/u010824591/article/details/51174099>http://blog.csdn.net/u010824591/article/details/51174099</a></li>
+<li><a href=https://yq.aliyun.com/articles/26415>https://yq.aliyun.com/articles/26415</a></li>
+<li><a href=https://linode.com/docs/databases/hadoop/how-to-install-and-set-up-hadoop-cluster/>https://linode.com/docs/databases/hadoop/how-to-install-and-set-up-hadoop-cluster/</a></li>
+</ul>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2022-02-24
+</span>
+</p>
+</div>
+<footer class=post-footer>
+<div class=post-tags>
+<a href=/tags/mysql/>mysql</a>
+<a href=/tags/hbase/>hbase</a>
+</div>
+<nav class=post-nav>
+<a class=prev href=/post/2018/store_cluster_migrate2/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">记存储集群的一次迁移过程（下）</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/post/2018/rspotify/>
+<span class="next-text nav-default">rspotify– 我的第一个Rust crate</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<div id=gitalk-container></div>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
+<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:'2018-03-05 17:39:00 \u002b0800 \u002b0800',title:'记存储集群的一次迁移过程（上）',clientID:'3c034c97f0926fafd2d6',clientSecret:'192051927d267ce83eb2ef10955890b7db2720ad',repo:'comment',owner:'ramsayleung',admin:['ramsayleung'],body:decodeURI(location.href)});gitalk.render('gitalk-container')</script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
+<a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<div class=busuanzi-footer>
+<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+</div>
+<span class=copyright-year>
+&copy;
+2017 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>

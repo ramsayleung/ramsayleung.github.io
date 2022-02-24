@@ -1,0 +1,995 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>lsof can't identify protocol - In Pursuit of Hubris</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="Ramsay Leung"><meta name=description content="Socket 泄漏引起的Tomcat 宕机问题分析 在2018年4月9号下午，收到反馈：测试集群部分接口访问有问题，请求时而正常，时而超时。 最近的测试环境真"><meta name=keywords content="Blog,Software,Enginering">
+<meta name=generator content="Hugo 0.92.2 with theme even">
+<link rel=canonical href=https://ramsayleung.github.io/post/2018/lsof_cant_identify_protocol/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="lsof can't identify protocol">
+<meta property="og:description" content="Socket 泄漏引起的Tomcat 宕机问题分析 在2018年4月9号下午，收到反馈：测试集群部分接口访问有问题，请求时而正常，时而超时。 最近的测试环境真">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ramsayleung.github.io/post/2018/lsof_cant_identify_protocol/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2018-04-11T15:24:00+08:00">
+<meta property="article:modified_time" content="2022-02-24T23:04:29+08:00">
+<meta itemprop=name content="lsof can't identify protocol">
+<meta itemprop=description content="Socket 泄漏引起的Tomcat 宕机问题分析 在2018年4月9号下午，收到反馈：测试集群部分接口访问有问题，请求时而正常，时而超时。 最近的测试环境真"><meta itemprop=datePublished content="2018-04-11T15:24:00+08:00">
+<meta itemprop=dateModified content="2022-02-24T23:04:29+08:00">
+<meta itemprop=wordCount content="3281">
+<meta itemprop=keywords content="linux,"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="lsof can't identify protocol">
+<meta name=twitter:description content="Socket 泄漏引起的Tomcat 宕机问题分析 在2018年4月9号下午，收到反馈：测试集群部分接口访问有问题，请求时而正常，时而超时。 最近的测试环境真"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/about_me>
+<li class=mobile-menu-item>About</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/about_me>About</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>lsof can't identify protocol</h1>
+<div class=post-meta>
+<span class=post-time> 2018-04-11 </span>
+<div class=post-category>
+<a href=/categories/linux/> linux </a>
+</div>
+<span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#linux-文件句柄限制><span class=section-num>1</span> Linux 文件句柄限制</a>
+<ul>
+<li><a href=#系统层面><span class=section-num>1.1</span> 系统层面</a></li>
+<li><a href=#用户层面><span class=section-num>1.2</span> 用户层面</a></li>
+</ul>
+</li>
+<li><a href=#lsof-显示大量open-file><span class=section-num>2</span> lsof 显示大量open file</a></li>
+<li><a href=#can-t-identify-protocol><span class=section-num>3</span> can&rsquo;t identify protocol</a></li>
+<li><a href=#问题定位><span class=section-num>4</span> 问题定位</a></li>
+<li><a href=#大胆假设><span class=section-num>5</span> 大胆假设</a></li>
+<li><a href=#小心求证><span class=section-num>6</span> 小心求证</a>
+<ul>
+<li><a href=#更新><span class=section-num>6.1</span> 更新</a></li>
+</ul>
+</li>
+<li><a href=#解决方法><span class=section-num>7</span> 解决方法</a></li>
+<li><a href=#参考><span class=section-num>8</span> 参考</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<p>Socket 泄漏引起的Tomcat 宕机问题分析</p>
+<p>在2018年4月9号下午，收到反馈：测试集群部分接口访问有问题，请求时而正常，时而超时。</p>
+<p>最近的测试环境真的是问题多多，可是测试环境就是我搭建的，冏。查看日志发现87 这台 服务器的Tomcat 无法访问：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>2018-04-09 17:41:31,568 - [ERROR] - from org.apache.tomcat.util.net.NioEndpoint in http-nio-47001-Acceptor-0
+Socket accept failed
+java.io.IOException: Too many open files
+at sun.nio.ch.ServerSocketChannelImpl.accept0(Native Method)
+at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:422)
+at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:250)
+at org.apache.tomcat.util.net.NioEndpoint$Acceptor.run(NioEndpoint.java:825)
+at java.lang.Thread.run(Thread.java:745)
+
+2018-04-09 17:41:33,168 - [ERROR] - from org.apache.tomcat.util.net.NioEndpoint in http-nio-47001-Acceptor-0
+Socket accept failed
+java.io.IOException: Too many open files
+at sun.nio.ch.ServerSocketChannelImpl.accept0(Native Method)
+at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:422)
+at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:250)
+at org.apache.tomcat.util.net.NioEndpoint$Acceptor.run(NioEndpoint.java:825)
+at java.lang.Thread.run(Thread.java:745)
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=linux-文件句柄限制><span class=section-num>1</span> Linux 文件句柄限制</h2>
+<p>报错看起来像是进程打开文件句柄的个数达到了linux的限制。而这种限制是分为系统层面的和用户层面的</p>
+<h3 id=系统层面><span class=section-num>1.1</span> 系统层面</h3>
+<p>系统层面的在：/proc/sys/fs/file-max里设置</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>cat /proc/sys/fs/file-max
+<span class=m>2442976</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=用户层面><span class=section-num>1.2</span> 用户层面</h3>
+<p>用户层面的限制在：/etc/security/limits.conf里设定。通过<code>ulimit -a</code> 查看系统允许单个进程打开的最大文件数：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=nb>ulimit</span> -a
+core file size          <span class=o>(</span>blocks, -c<span class=o>)</span> <span class=m>0</span>
+data seg size           <span class=o>(</span>kbytes, -d<span class=o>)</span> unlimited
+scheduling priority             <span class=o>(</span>-e<span class=o>)</span> <span class=m>0</span>
+file size               <span class=o>(</span>blocks, -f<span class=o>)</span> unlimited
+pending signals                 <span class=o>(</span>-i<span class=o>)</span> <span class=m>192059</span>
+max locked memory       <span class=o>(</span>kbytes, -l<span class=o>)</span> <span class=m>64</span>
+max memory size         <span class=o>(</span>kbytes, -m<span class=o>)</span> unlimited
+open files                      <span class=o>(</span>-n<span class=o>)</span> <span class=m>65536</span>
+pipe size            <span class=o>(</span><span class=m>512</span> bytes, -p<span class=o>)</span> <span class=m>8</span>
+POSIX message queues     <span class=o>(</span>bytes, -q<span class=o>)</span> <span class=m>819200</span>
+real-time priority              <span class=o>(</span>-r<span class=o>)</span> <span class=m>0</span>
+stack size              <span class=o>(</span>kbytes, -s<span class=o>)</span> <span class=m>10240</span>
+cpu <span class=nb>time</span>               <span class=o>(</span>seconds, -t<span class=o>)</span> unlimited
+max user processes              <span class=o>(</span>-u<span class=o>)</span> <span class=m>65535</span>
+virtual memory          <span class=o>(</span>kbytes, -v<span class=o>)</span> unlimited
+file locks                      <span class=o>(</span>-x<span class=o>)</span> unlimited
+</code></pre></td></tr></table>
+</div>
+</div><p>单个进程可以打开的最大文件数是 65536</p>
+<h2 id=lsof-显示大量open-file><span class=section-num>2</span> lsof 显示大量open file</h2>
+<p>按照Tomcat 给出的报错信息，登录87 这台服务器检查打开的文件数，发现打开的文件超过70000:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>lsof <span class=p>|</span>wc -l
+<span class=m>75924</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>然后找出打开文件数最多的进程，按文件数降序排列，左边是 open file 的数量，右边是进程ID：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>lsof -n<span class=p>|</span>awk <span class=s1>&#39;{print $2}&#39;</span><span class=p>|</span> sort <span class=p>|</span> uniq -c <span class=p>|</span> sort -nr <span class=p>|</span> head
+<span class=m>65966</span> <span class=m>25204</span>
+<span class=m>5374</span> <span class=m>20179</span>
+<span class=m>184</span> <span class=m>27275</span>
+<span class=m>65</span> <span class=m>5361</span>
+<span class=m>61</span> <span class=m>29421</span>
+<span class=m>16</span> <span class=m>22177</span>
+<span class=m>14</span> <span class=m>19751</span>
+<span class=m>12</span> <span class=m>22181</span>
+<span class=m>12</span> <span class=m>22179</span>
+<span class=m>12</span> <span class=m>22178</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>发现 <code>25204</code> 这个进程打开了大量的文件，已经超过了单个进程的最大文件数限制。而这个进程就是部署的java 应用对应的进程。打开的文件句柄数量已经超过Linux 限制，
+Tomcat 无法创建新的socket 连接。</p>
+<h2 id=can-t-identify-protocol><span class=section-num>3</span> can&rsquo;t identify protocol</h2>
+<p>用 lsof 查看 java 应用打开的文件的时候，发现有非常多奇怪的输出：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>java    <span class=m>25204</span> nemo *516u  sock                0,6       0t0 <span class=m>215137625</span> can<span class=s1>&#39;t identify protocol
+</span><span class=s1>java    25204 nemo *517u  sock                0,6       0t0 215137626 can&#39;</span>t identify protocol
+java    <span class=m>25204</span> nemo *518u  sock                0,6       0t0 <span class=m>215137627</span> can<span class=s1>&#39;t identify protocol
+</span><span class=s1>java    25204 nemo *519u  sock                0,6       0t0 215137628 can&#39;</span>t identify protocol
+java    <span class=m>25204</span> nemo *520u  sock                0,6       0t0 <span class=m>215137629</span> can<span class=s1>&#39;t identify protocol
+</span><span class=s1>java    25204 nemo *521u  sock                0,6       0t0 215137630 can&#39;</span>t identify protocol
+java    <span class=m>25204</span> nemo *522u  sock                0,6       0t0 <span class=m>215137631</span> can<span class=s1>&#39;t identify protocol
+</span><span class=s1>java    25204 nemo *523u  sock                0,6       0t0 215137634 can&#39;</span>t identify protocol
+java    <span class=m>25204</span> nemo *524u  sock                0,6       0t0 <span class=m>215137635</span> can<span class=s1>&#39;t identify protocol
+</span><span class=s1>java    25204 nemo *525u  sock                0,6       0t0 215137636 can&#39;</span>t identify protocol
+java    <span class=m>25204</span> nemo *526u  sock                0,6       0t0 <span class=m>215137637</span> can<span class=s1>&#39;t identify protocol
+</span><span class=s1>java    25204 nemo *527u  sock                0,6       0t0 215137638 can&#39;</span>t identify protocol
+java    <span class=m>25204</span> nemo *528u  sock                0,6       0t0 <span class=m>215137639</span> can<span class=s1>&#39;t identify protocol
+</span><span class=s1>java    25204 nemo *529u  sock                0,6       0t0 215137640 can&#39;</span>t identify protocol
+java    <span class=m>25204</span> nemo *530u  sock                0,6       0t0 <span class=m>215137641</span> can<span class=s1>&#39;t identify protocol
+</span><span class=s1>java    25204 nemo *531u  sock                0,6       0t0 215137642 can&#39;</span>t identify protocol
+java    <span class=m>25204</span> nemo *532u  sock                0,6       0t0 <span class=m>215137644</span> can<span class=s1>&#39;t identify protocol
+</span><span class=s1>java    25204 nemo *533u  sock                0,6       0t0 215137646 can&#39;</span>t identify protocol
+</code></pre></td></tr></table>
+</div>
+</div><p>统计之后发现， <code>can't identify protocol</code> 这样的文件数量非常多：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>lsof -p 25204<span class=p>|</span>grep <span class=s2>&#34;can&#39;t identify protocol&#34;</span><span class=p>|</span>wc -l
+<span class=m>64214</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>也就是大部份打开的文件都是属于 <code>cant' identify protocol</code> 的文件。</p>
+<h2 id=问题定位><span class=section-num>4</span> 问题定位</h2>
+<p>Google 搜索之后发现，这个 <code>cant' identify protocol</code> 的东东出现的原因是因为 这些
+sockets 处于 <code>CLOSED</code> 的状态，但是却没有真正close 掉，正处于 <code>half-close</code> 状态。因此，如果使用 <code>netstat</code> 来查看socket 状态，是不会显示这些 <code>half-close</code>的 socket 的：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>netstat  -nat <span class=p>|</span>wc -l
+<span class=m>881</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>使用 <code>netstat</code> 的改进版本 <code>ss</code> 就能发现大量处于 <code>Closed</code> 状态的 socket:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>ss -s
+Total: <span class=m>76052</span> <span class=o>(</span>kernel 76254<span class=o>)</span>
+TCP:   <span class=m>75924</span> <span class=o>(</span>estab 123, closed 75524, orphaned 0, synrecv 0, timewait 173/0<span class=o>)</span>, ports <span class=m>104</span>
+
+Transport Total     IP        IPv6
+*         <span class=m>76254</span>    -         -
+RAW       <span class=m>0</span>         <span class=m>0</span>         <span class=m>0</span>
+UDP       <span class=m>9</span>         <span class=m>6</span>         <span class=m>3</span>
+TCP       <span class=m>116</span>       <span class=m>80</span>        <span class=m>36</span>
+INET      <span class=m>125</span>       <span class=m>86</span>        <span class=m>39</span>
+FRAG      <span class=m>0</span>         <span class=m>0</span>         <span class=m>0</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>接着查看内核的 socket 情况：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>cat /proc/net/sockstat
+sockets: used <span class=m>75724</span>
+TCP: inuse <span class=m>886</span> orphan <span class=m>0</span> tw <span class=m>0</span> alloc <span class=m>72134</span> mem <span class=m>222</span>
+UDP: inuse <span class=m>5</span> mem <span class=m>0</span>
+UDPLITE: inuse <span class=m>0</span>
+RAW: inuse <span class=m>0</span>
+FRAG: inuse <span class=m>0</span> memory <span class=m>0</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>很多的 socket 处于 <code>alloc</code>, 只有少量的 socket 处于 <code>inuse</code>. 可以确认是 java 应用出现了 socket fd 的泄漏。 但是为什么会有那么多的socket 泄漏呢？</p>
+<h2 id=大胆假设><span class=section-num>5</span> 大胆假设</h2>
+<p>现在可以确定的是 java应用出现了问题，导致了socket 泄漏，让 Tomcat 无法建立新连接，最终宕机。既然导致问题出现的是 java 应用，那么就应该去检查应用日志。</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>2018-04-09 17:41:31,491 - [ERROR] - from com.alibaba.druid.pool.DruidDataSource in Druid-ConnectionPool-CreateScheduler--4-thread-214
+create connection error, url: jdbc:mysql://test-server-host:3306/db_name?readOnlyPropagatesToServer=false&amp;rewriteBatchedStatements=true&amp;failOverReadOnly=false&amp;socketTimeout=6000&amp;connectTimeout=20000&amp;zeroDateTimeBehavior=convertToNull&amp;allowMultiQueries=true&amp;characterEncoding=utf-8&amp;autoReconnect=true
+com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+at sun.reflect.GeneratedConstructorAccessor169.newInstance(Unknown Source)
+at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+at com.mysql.jdbc.Util.getInstance(Util.java:408)
+at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:918)
+at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:897)
+at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:886)
+at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:860)
+at com.mysql.jdbc.ConnectionImpl.connectWithRetries(ConnectionImpl.java:2163)
+at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2088)
+at com.mysql.jdbc.ConnectionImpl.&lt;init&gt;(ConnectionImpl.java:806)
+at com.mysql.jdbc.JDBC4Connection.&lt;init&gt;(JDBC4Connection.java:47)
+at sun.reflect.GeneratedConstructorAccessor152.newInstance(Unknown Source)
+at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:410)
+at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:328)
+at com.alibaba.druid.filter.FilterChainImpl.connection_connect(FilterChainImpl.java:148)
+at com.alibaba.druid.filter.stat.StatFilter.connection_connect(StatFilter.java:211)
+at com.alibaba.druid.filter.FilterChainImpl.connection_connect(FilterChainImpl.java:142)
+at com.alibaba.druid.pool.DruidAbstractDataSource.createPhysicalConnection(DruidAbstractDataSource.java:1423)
+at com.alibaba.druid.pool.DruidAbstractDataSource.createPhysicalConnection(DruidAbstractDataSource.java:1477)
+at com.alibaba.druid.pool.DruidDataSource$CreateConnectionTask.runInternal(DruidDataSource.java:1884)
+at com.alibaba.druid.pool.DruidDataSource$CreateConnectionTask.run(DruidDataSource.java:1849)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+at java.lang.Thread.run(Thread.java:745)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+at sun.reflect.GeneratedConstructorAccessor157.newInstance(Unknown Source)
+at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:989)
+at com.mysql.jdbc.MysqlIO.&lt;init&gt;(MysqlIO.java:341)
+at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2251)
+at com.mysql.jdbc.ConnectionImpl.connectWithRetries(ConnectionImpl.java:2104)
+... 21 common frames omitted
+Caused by: java.net.SocketException: Too many open files
+at java.net.Socket.createImpl(Socket.java:460)
+at java.net.Socket.getImpl(Socket.java:520)
+at java.net.Socket.setTcpNoDelay(Socket.java:980)
+at com.mysql.jdbc.StandardSocketFactory.configureSocket(StandardSocketFactory.java:132)
+at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:203)
+at com.mysql.jdbc.MysqlIO.&lt;init&gt;(MysqlIO.java:300)
+... 23 common frames omitted
+
+2018-04-09 17:41:31,568 - [ERROR] - from org.apache.tomcat.util.net.NioEndpoint in http-nio-47001-Acceptor-0
+Socket accept failed
+java.io.IOException: Too many open files
+at sun.nio.ch.ServerSocketChannelImpl.accept0(Native Method)
+at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:422)
+at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:250)
+at org.apache.tomcat.util.net.NioEndpoint$Acceptor.run(NioEndpoint.java:825)
+at java.lang.Thread.run(Thread.java:745)
+
+2018-04-09 17:41:33,168 - [ERROR] - from org.apache.tomcat.util.net.NioEndpoint in http-nio-47001-Acceptor-0
+Socket accept failed
+java.io.IOException: Too many open files
+at sun.nio.ch.ServerSocketChannelImpl.accept0(Native Method)
+at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:422)
+at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:250)
+at org.apache.tomcat.util.net.NioEndpoint$Acceptor.run(NioEndpoint.java:825)
+at java.lang.Thread.run(Thread.java:745)
+
+2018-04-09 17:41:34,470 - [ERROR] - from com.alibaba.druid.pool.DruidDataSource in Druid-ConnectionPool-CreateScheduler--4-thread-216
+create connection error, url: jdbc:mysql://test-server-url:3306/db_name?readOnlyPropagatesToServer=false&amp;rewriteBatchedStatements=true&amp;failOverReadOnly=false&amp;socketTimeout=6000&amp;connectTimeout=20000&amp;zeroDateTimeBehavior=convertToNull&amp;allowMultiQueries=true&amp;characterEncoding=utf-8&amp;autoReconnect=true
+com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+at sun.reflect.GeneratedConstructorAccessor169.newInstance(Unknown Source)
+at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+at com.mysql.jdbc.Util.getInstance(Util.java:408)
+at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:918)
+at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:897)
+at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:886)
+at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:860)
+at com.mysql.jdbc.ConnectionImpl.connectWithRetries(ConnectionImpl.java:2163)
+at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2088)
+at com.mysql.jdbc.ConnectionImpl.&lt;init&gt;(ConnectionImpl.java:806)
+at com.mysql.jdbc.JDBC4Connection.&lt;init&gt;(JDBC4Connection.java:47)
+at sun.reflect.GeneratedConstructorAccessor152.newInstance(Unknown Source)
+at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:410)
+at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:328)
+at com.alibaba.druid.filter.FilterChainImpl.connection_connect(FilterChainImpl.java:148)
+at com.alibaba.druid.filter.stat.StatFilter.connection_connect(StatFilter.java:211)
+at com.alibaba.druid.filter.FilterChainImpl.connection_connect(FilterChainImpl.java:142)
+at com.alibaba.druid.pool.DruidAbstractDataSource.createPhysicalConnection(DruidAbstractDataSource.java:1423)
+at com.alibaba.druid.pool.DruidAbstractDataSource.createPhysicalConnection(DruidAbstractDataSource.java:1477)
+at com.alibaba.druid.pool.DruidDataSource$CreateConnectionTask.runInternal(DruidDataSource.java:1884)
+at com.alibaba.druid.pool.DruidDataSource$CreateConnectionTask.run(DruidDataSource.java:1849)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
+at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+at java.lang.Thread.run(Thread.java:745)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+at sun.reflect.GeneratedConstructorAccessor157.newInstance(Unknown Source)
+at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:989)
+at com.mysql.jdbc.MysqlIO.&lt;init&gt;(MysqlIO.java:341)
+at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2251)
+at com.mysql.jdbc.ConnectionImpl.connectWithRetries(ConnectionImpl.java:2104)
+... 23 common frames omitted
+Caused by: java.net.SocketException: Too many open files
+at java.net.Socket.createImpl(Socket.java:460)
+at java.net.Socket.getImpl(Socket.java:520)
+at java.net.Socket.setTcpNoDelay(Socket.java:980)
+at com.mysql.jdbc.StandardSocketFactory.configureSocket(StandardSocketFactory.java:132)
+at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:203)
+at com.mysql.jdbc.MysqlIO.&lt;init&gt;(MysqlIO.java:300)
+... 25 common frames omitted
+
+2018-04-09 17:41:34,769 - [ERROR] - from org.apache.tomcat.util.net.NioEndpoint in http-nio-47001-Acceptor-0
+Socket accept failed
+java.io.IOException: Too many open files
+at sun.nio.ch.ServerSocketChannelImpl.accept0(Native Method)
+at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:422)
+at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:250)
+at org.apache.tomcat.util.net.NioEndpoint$Acceptor.run(NioEndpoint.java:825)
+at java.lang.Thread.run(Thread.java:745)
+</code></pre></td></tr></table>
+</div>
+</div><p>检查日志发现，在 Tomcat 彻底挂机之前，曾经有比较大量的数据源连接池出错，无法访问 Mysql, 但是非常奇怪的是，在87 这台机器上面，是可以使用 mysql 命令行连接到测试数据库的，说明 Mysql 的连接是没有问题。</p>
+<p>但是数据源连接就会出错！！ 真的是很奇怪，为什么连接池会报错，有没有可能是这些异常导致 socket 泄漏呢？后来，在本地运行应用，有时候会发现IDE 的控制台报错：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span><span class=lnt>82
+</span><span class=lnt>83
+</span><span class=lnt>84
+</span><span class=lnt>85
+</span><span class=lnt>86
+</span><span class=lnt>87
+</span><span class=lnt>88
+</span><span class=lnt>89
+</span><span class=lnt>90
+</span><span class=lnt>91
+</span><span class=lnt>92
+</span><span class=lnt>93
+</span><span class=lnt>94
+</span><span class=lnt>95
+</span><span class=lnt>96
+</span><span class=lnt>97
+</span><span class=lnt>98
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>2018-04-11 09:43:48,363 - [ERROR] - from com.alibaba.druid.pool.DruidDataSource in poolTaskScheduler-11
+discard connection
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 100,610 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+at sun.reflect.GeneratedConstructorAccessor108.newInstance(Unknown Source)
+at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:989)
+at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3556)
+at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3456)
+at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3897)
+at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2524)
+at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2677)
+at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2503)
+at com.mysql.jdbc.StatementImpl.executeQuery(StatementImpl.java:1369)
+at com.alibaba.druid.filter.FilterChainImpl.statement_executeQuery(FilterChainImpl.java:2363)
+at com.alibaba.druid.filter.FilterAdapter.statement_executeQuery(FilterAdapter.java:2481)
+at com.alibaba.druid.filter.FilterEventAdapter.statement_executeQuery(FilterEventAdapter.java:302)
+at com.alibaba.druid.filter.FilterChainImpl.statement_executeQuery(FilterChainImpl.java:2360)
+at com.alibaba.druid.proxy.jdbc.StatementProxyImpl.executeQuery(StatementProxyImpl.java:211)
+at com.alibaba.druid.pool.DruidPooledStatement.executeQuery(DruidPooledStatement.java:138)
+at com.taobao.tddl.atom.jdbc.TStatementWrapper.executeQuery(TStatementWrapper.java:315)
+at com.taobao.tddl.group.jdbc.TGroupStatement.executeQueryOnConnection(TGroupStatement.java:549)
+at com.taobao.tddl.group.jdbc.TGroupStatement$4.tryOnDataSource(TGroupStatement.java:633)
+at com.taobao.tddl.group.jdbc.TGroupStatement$4.tryOnDataSource(TGroupStatement.java:615)
+at com.taobao.tddl.group.dbselector.AbstractDBSelector.tryOnDataSourceHolder(AbstractDBSelector.java:155)
+at com.taobao.tddl.group.dbselector.OneDBSelector.tryExecuteInternal(OneDBSelector.java:52)
+at com.taobao.tddl.group.dbselector.AbstractDBSelector.tryExecute(AbstractDBSelector.java:405)
+at com.taobao.tddl.group.dbselector.AbstractDBSelector.tryExecute(AbstractDBSelector.java:412)
+at com.taobao.tddl.group.jdbc.TGroupStatement.executeQuery(TGroupStatement.java:488)
+at com.taobao.tddl.group.jdbc.TGroupStatement.executeInternal(TGroupStatement.java:131)
+at com.taobao.tddl.group.jdbc.TGroupStatement.execute(TGroupStatement.java:101)
+at com.taobao.tddl.repo.mysql.spi.My_JdbcHandler.executeQuery(My_JdbcHandler.java:521)
+at com.taobao.tddl.repo.mysql.spi.My_Cursor.init(My_Cursor.java:106)
+at com.taobao.tddl.repo.mysql.handler.QueryMyHandler.handle(QueryMyHandler.java:89)
+at com.taobao.tddl.executor.AbstractGroupExecutor.executeInner(AbstractGroupExecutor.java:47)
+at com.taobao.tddl.executor.AbstractGroupExecutor.execByExecPlanNode(AbstractGroupExecutor.java:36)
+at com.taobao.tddl.executor.TopologyExecutor.execByExecPlanNode(TopologyExecutor.java:66)
+at com.taobao.tddl.executor.MatrixExecutor.execByExecPlanNodeByOne(MatrixExecutor.java:670)
+at com.taobao.tddl.executor.MatrixExecutor.execByExecPlanNode(MatrixExecutor.java:659)
+at com.taobao.tddl.executor.MatrixExecutor.execute(MatrixExecutor.java:137)
+at com.taobao.tddl.matrix.jdbc.TConnection.executeSQL(TConnection.java:241)
+at com.taobao.tddl.matrix.jdbc.TPreparedStatement.executeSQL(TPreparedStatement.java:64)
+at com.taobao.tddl.matrix.jdbc.TStatement.executeInternal(TStatement.java:133)
+at com.taobao.tddl.matrix.jdbc.TPreparedStatement.execute(TPreparedStatement.java:49)
+at sun.reflect.GeneratedMethodAccessor148.invoke(Unknown Source)
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.lang.reflect.Method.invoke(Method.java:498)
+at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:59)
+at com.sun.proxy.$Proxy102.execute(Unknown Source)
+at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:63)
+at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:79)
+at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:63)
+at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:325)
+at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:156)
+at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:109)
+at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:83)
+at sun.reflect.GeneratedMethodAccessor146.invoke(Unknown Source)
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.lang.reflect.Method.invoke(Method.java:498)
+at org.apache.ibatis.plugin.Invocation.proceed(Invocation.java:49)
+at fastfish.interceptor.DbLogInterceptor.intercept(DbLogInterceptor.java:49)
+at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:61)
+at com.sun.proxy.$Proxy100.query(Unknown Source)
+at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:148)
+at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:141)
+at sun.reflect.GeneratedMethodAccessor145.invoke(Unknown Source)
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.lang.reflect.Method.invoke(Method.java:498)
+at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:434)
+at com.sun.proxy.$Proxy87.selectList(Unknown Source)
+at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:231)
+at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:128)
+at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:68)
+at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:53)
+at com.sun.proxy.$Proxy124.selectAll(Unknown Source)
+at fastfish.services.BusinessService.getAll(BusinessService.java:73)
+at fastfish.services.BusinessService.loadDB(BusinessService.java:38)
+at sun.reflect.GeneratedMethodAccessor190.invoke(Unknown Source)
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.lang.reflect.Method.invoke(Method.java:498)
+at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:65)
+at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+at java.util.concurrent.FutureTask.runAndReset$$$capture(FutureTask.java:308)
+at java.util.concurrent.FutureTask.runAndReset(FutureTask.java)
+at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3008)
+at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3466)
+... 83 common frames omitted
+</code></pre></td></tr></table>
+</div>
+</div><p>是数据池连接出错。但是我本地的应用确实是可以访问测试数据库的， 比较有趣的异常就是</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+</code></pre></td></tr></table>
+</div>
+</div><p>数据还没有读完， Connection 就丢了。为什么会 lost connection 呢，可能数据库出问题，也可能是网络出了问题。</p>
+<p>我还能从数据库读到数据，说明数据库没问题的，兼之这个异常只是偶尔出现，所以可能就是网络出问题了。</p>
+<p>如此说来，是否可能是因为测试环境网络不稳定，连接池无法和 Mysql 保持连接，在丢掉 Connection 之后，连接池重新发起连接，但是因为网络不稳定又丢掉了Connection, 不断循环这个过程，导致建立的 socket 连接越 来越多，但是建立的 socket 很快就被Close 掉了，内核又没有把这些 Close 掉的 socket 资源回收掉，因此打开的 socket 文件越来越多，最后导致 Tomcat 因为打开的文件过多无法建立新的 socket 连接。</p>
+<h2 id=小心求证><span class=section-num>6</span> 小心求证</h2>
+<p>如果连接池真的不断尝试连接Mysql 的话，必定会建立很多的连接，而Mysql 是会将这些记录保存下来的，检查Mysql 的变量：</p>
+<figure><img src=https://imgur.com/gAxepYH.png>
+</figure>
+<p>查看Mysql 的文档关于 <code>Connection</code> 和 <code>Thread_connected</code> 的说明：</p>
+<ul>
+<li>
+<p>Connections</p>
+<blockquote>
+<p>The number of connection attempts (successful or not) to the MySQL server.</p>
+</blockquote>
+</li>
+<li>
+<p>Threads_connected</p>
+<blockquote>
+<p>The number of currently open connections.</p>
+</blockquote>
+</li>
+</ul>
+<p>也就是说，当时共有20000 多的连接请求，但是真正被 Mysql accpet 并且服务的只有 28 个连接。看来的确是因为连接池的连接导致 socket 泄漏</p>
+<h3 id=更新><span class=section-num>6.1</span> 更新</h3>
+<p>和运维同学沟通之后，发现丢连接的原因不是网络不稳定，而是测试集群都是虚拟机，内存 用光，导致无法建立新的连接，内核释放一部分资源之后又可以建立连接了。内存用完，我能怎么办，我也很无奈。</p>
+<h2 id=解决方法><span class=section-num>7</span> 解决方法</h2>
+<p>虽说基本确定了 socket 泄漏的源头，但是对于内核为什么无法回收已经关闭 socket 的原因依然不明确。</p>
+<p>最令人百思不得其解的是，部署了应用的测试服务器有两台，另外一 台服务器也有同样的连接池问题，但是却没有出现 socket 泄漏问题， 出现泄漏的只有 87 这台机器。真的令人费解. 所以最后解决方法就是撤下 87 服务器的应用，换一台服务器来部署。</p>
+<p>新的服务器部署应用之后虽说也有同样的数据库连接池异常，但是却没有出现 socket 泄漏，初步定位是 87这台机器的内核环境存在问题。</p>
+<h2 id=参考><span class=section-num>8</span> 参考</h2>
+<ul>
+<li><a href=http://mdba.cn/2015/03/10/tcp-socket%E6%96%87%E4%BB%B6%E5%8F%A5%E6%9F%84%E6%B3%84%E6%BC%8F/>tcp-socket文件句柄泄漏/</a></li>
+<li><a href=https://idea.popcount.org/2012-12-09-lsof-cant-identify-protocol/>lsof-cant-identify-protocol/</a></li>
+</ul>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2022-02-24
+</span>
+</p>
+</div>
+<footer class=post-footer>
+<div class=post-tags>
+<a href=/tags/linux/>linux</a>
+</div>
+<nav class=post-nav>
+<a class=prev href=/post/2020/996%E6%88%90%E5%9B%A0/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">为什么我们要996</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/post/2018/hbase_crash/>
+<span class="next-text nav-default">记一次Hbase 宕机原因分析</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<div id=gitalk-container></div>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
+<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:'2018-04-11 15:24:00 \u002b0800 \u002b0800',title:'lsof can\u0027t identify protocol',clientID:'3c034c97f0926fafd2d6',clientSecret:'192051927d267ce83eb2ef10955890b7db2720ad',repo:'comment',owner:'ramsayleung',admin:['ramsayleung'],body:decodeURI(location.href)});gitalk.render('gitalk-container')</script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
+<a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<div class=busuanzi-footer>
+<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+</div>
+<span class=copyright-year>
+&copy;
+2017 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>
