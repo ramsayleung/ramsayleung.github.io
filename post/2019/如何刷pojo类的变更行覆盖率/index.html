@@ -1,0 +1,526 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>How to fool the Jacoco ◜◡‾ - In Pursuit of Hubris</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="Ramsay Leung"><meta name=description content="刷POJO类的变更行覆盖率 1 反射大法好 1.1 背景 众所周知，蚂蚁对代码质量要求很高，质量红线其中一项指标就是变更行覆盖率。如果你的变更行覆盖率没有"><meta name=keywords content="Blog,Software,Enginering">
+<meta name=generator content="Hugo 0.92.2 with theme even">
+<link rel=canonical href=https://ramsayleung.github.io/post/2019/%E5%A6%82%E4%BD%95%E5%88%B7pojo%E7%B1%BB%E7%9A%84%E5%8F%98%E6%9B%B4%E8%A1%8C%E8%A6%86%E7%9B%96%E7%8E%87/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="How to fool the Jacoco ◜◡‾">
+<meta property="og:description" content="刷POJO类的变更行覆盖率 1 反射大法好 1.1 背景 众所周知，蚂蚁对代码质量要求很高，质量红线其中一项指标就是变更行覆盖率。如果你的变更行覆盖率没有">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ramsayleung.github.io/post/2019/%E5%A6%82%E4%BD%95%E5%88%B7pojo%E7%B1%BB%E7%9A%84%E5%8F%98%E6%9B%B4%E8%A1%8C%E8%A6%86%E7%9B%96%E7%8E%87/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2019-03-14T11:14:00+08:00">
+<meta property="article:modified_time" content="2022-02-25T09:49:13+08:00">
+<meta itemprop=name content="How to fool the Jacoco ◜◡‾">
+<meta itemprop=description content="刷POJO类的变更行覆盖率 1 反射大法好 1.1 背景 众所周知，蚂蚁对代码质量要求很高，质量红线其中一项指标就是变更行覆盖率。如果你的变更行覆盖率没有"><meta itemprop=datePublished content="2019-03-14T11:14:00+08:00">
+<meta itemprop=dateModified content="2022-02-25T09:49:13+08:00">
+<meta itemprop=wordCount content="2211">
+<meta itemprop=keywords content="java,test,"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="How to fool the Jacoco ◜◡‾">
+<meta name=twitter:description content="刷POJO类的变更行覆盖率 1 反射大法好 1.1 背景 众所周知，蚂蚁对代码质量要求很高，质量红线其中一项指标就是变更行覆盖率。如果你的变更行覆盖率没有"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/about_me>
+<li class=mobile-menu-item>About</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/about_me>About</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>How to fool the Jacoco ◜◡‾</h1>
+<div class=post-meta>
+<span class=post-time> 2019-03-14 </span>
+<div class=post-category>
+<a href=/categories/java/> java </a>
+</div>
+<span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#反射大法好><span class=section-num>1</span> 反射大法好</a>
+<ul>
+<li><a href=#背景><span class=section-num>1.1</span> 背景</a></li>
+<li><a href=#反射><span class=section-num>1.2</span> 反射</a></li>
+<li><a href=#org-dot-reflections-dot-reflections><span class=section-num>1.3</span> org.reflections.Reflections</a></li>
+<li><a href=#总结><span class=section-num>1.4</span> 总结</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<p>刷POJO类的变更行覆盖率</p>
+<h2 id=反射大法好><span class=section-num>1</span> 反射大法好</h2>
+<h3 id=背景><span class=section-num>1.1</span> 背景</h3>
+<p>众所周知，蚂蚁对代码质量要求很高，质量红线其中一项指标就是变更行覆盖率。如果你的变更行覆盖率没有达到80%，测试同学是不会允许你上测试环境的（如果对此有所不满，测试同学就会过来捶你)。
+为了提高代码质量，这项要求倒是无可厚非，变更的代码逻辑需要充分的测试；但是如果我新增了一堆的POJO类，只是为了逻辑模型，变更行也会变得非常可观。为了覆盖这些POJO类的变更，你免不了会测试一堆的Getter/Setter
+方法：</p>
+<figure><img src=https://raw.githubusercontent.com/ramsayleung/images/master/20191104102036.png alt="Figure 1: getter/setter"><figcaption>
+<p><span class=figure-number>Figure 1: </span>getter/setter</p>
+</figcaption>
+</figure>
+<p>(红色是指没有覆盖到的变更行)</p>
+<h3 id=反射><span class=section-num>1.2</span> 反射</h3>
+<p>如果为了变更行覆盖了，我要写上一堆的Getter/Setter 方法测试用例，测试用例也只是单纯调用一下方法，未免过于痛苦，能否偷个懒，解决覆盖率问题，也不需手写这些没啥用的测试用例.</p>
+<p>但是一时间没有想到解决方法，我就一边写这些没啥用的用例，一边思考，突然发现了规律：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=n>SomeType</span> <span class=nf>getXxxx</span><span class=o>(){}</span>
+<span class=kd>public</span> <span class=kt>void</span> <span class=nf>setXxxx</span><span class=o>(</span><span class=n>SomeType</span> <span class=n>Xxx</span><span class=o>){}</span>
+<span class=kd>public</span> <span class=n>SomeType</span> <span class=nf>getYyy</span><span class=o>(){}</span>
+<span class=kd>public</span> <span class=kt>void</span> <span class=nf>setYyyy</span><span class=o>(</span><span class=n>SomeType</span> <span class=n>Yyyy</span><span class=o>){}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>所有这些方法都是的前缀都是 <code>set/get</code> (真.废话)，如果我能获取一个Pojo类所有的方法，然后循环执行所有以<code>get/set</code>开头的方法，不就不用手动写方法了么?</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=kd>class</span> <span class=nc>MerchantBusiModelTest</span> <span class=o>{</span>
+    <span class=kd>protected</span> <span class=kd>static</span> <span class=kd>final</span> <span class=n>Logger</span> <span class=n>LOGGER</span> <span class=o>=</span> <span class=n>LoggerFactory</span><span class=o>.</span><span class=na>getLogger</span><span class=o>(</span><span class=n>ModelUtils</span><span class=o>.</span><span class=na>class</span><span class=o>);</span>
+
+    <span class=cm>/**
+</span><span class=cm>     * get类型方法的前缀
+</span><span class=cm>     */</span>
+    <span class=kd>private</span> <span class=kd>static</span> <span class=kd>final</span> <span class=n>String</span> <span class=n>GET_METHOD_PREFIX</span> <span class=o>=</span> <span class=s>&#34;get&#34;</span><span class=o>;</span>
+
+    <span class=cm>/**
+</span><span class=cm>     * set类型方法的前缀
+</span><span class=cm>     */</span>
+    <span class=kd>private</span> <span class=kd>static</span> <span class=kd>final</span> <span class=n>String</span> <span class=n>SET_METHOD_PREFIX</span> <span class=o>=</span> <span class=s>&#34;set&#34;</span><span class=o>;</span>
+    <span class=n>MerchantBusiModel</span> <span class=n>merchantBusiModel</span> <span class=o>=</span> <span class=k>new</span> <span class=n>MerchantBusiModel</span><span class=o>();</span>
+
+    <span class=nd>@Test</span>
+    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>testModel</span><span class=o>()</span> <span class=o>{</span>
+	<span class=n>Method</span><span class=o>[]</span> <span class=n>methods</span> <span class=o>=</span> <span class=n>merchantBusiModel</span><span class=o>.</span><span class=na>getClass</span><span class=o>().</span><span class=na>getDeclaredMethods</span><span class=o>();</span>
+	<span class=k>for</span> <span class=o>(</span><span class=n>Method</span> <span class=n>method</span> <span class=o>:</span> <span class=n>methods</span><span class=o>)</span> <span class=o>{</span>
+	    <span class=k>if</span> <span class=o>(</span><span class=n>Modifier</span><span class=o>.</span><span class=na>isPublic</span><span class=o>(</span><span class=n>method</span><span class=o>.</span><span class=na>getModifiers</span><span class=o>())</span>
+		<span class=o>&amp;&amp;</span> <span class=n>method</span><span class=o>.</span><span class=na>getName</span><span class=o>().</span><span class=na>startsWith</span><span class=o>(</span><span class=n>GET_METHOD_PREFIX</span><span class=o>))</span> <span class=o>{</span>
+		<span class=n>Object</span><span class=o>[]</span> <span class=n>parameters</span> <span class=o>=</span> <span class=k>new</span> <span class=n>Object</span><span class=o>[</span><span class=n>method</span><span class=o>.</span><span class=na>getParameterCount</span><span class=o>()];</span>
+		<span class=k>try</span> <span class=o>{</span>
+		    <span class=n>method</span><span class=o>.</span><span class=na>invoke</span><span class=o>(</span><span class=n>merchantBusiModel</span><span class=o>,</span> <span class=n>parameters</span><span class=o>);</span>
+		    <span class=n>LoggerUtil</span><span class=o>.</span><span class=na>warn</span><span class=o>(</span><span class=n>LOGGER</span><span class=o>,</span> <span class=s>&#34;调用方法, method: {}.{}&#34;</span><span class=o>,</span>
+				    <span class=n>merchantBusiModel</span><span class=o>.</span><span class=na>getClass</span><span class=o>().</span><span class=na>getSimpleName</span><span class=o>(),</span>
+				    <span class=n>method</span><span class=o>.</span><span class=na>getName</span><span class=o>());</span>
+		<span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>IllegalAccessException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+		    <span class=n>LoggerUtil</span><span class=o>.</span><span class=na>warn</span><span class=o>(</span><span class=n>LOGGER</span><span class=o>,</span> <span class=s>&#34;调用方法异常, method: {}.{}&#34;</span><span class=o>,</span> <span class=n>e</span><span class=o>,</span>
+				    <span class=n>merchantBusiModel</span><span class=o>.</span><span class=na>getClass</span><span class=o>().</span><span class=na>getName</span><span class=o>(),</span>
+				    <span class=n>method</span><span class=o>.</span><span class=na>getName</span><span class=o>());</span>
+		<span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>InvocationTargetException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+		    <span class=n>LoggerUtil</span><span class=o>.</span><span class=na>warn</span><span class=o>(</span><span class=n>LOGGER</span><span class=o>,</span> <span class=s>&#34;调用方法异常, method: {}.{}&#34;</span><span class=o>,</span> <span class=n>e</span><span class=o>,</span>
+				    <span class=n>merchantBusiModel</span><span class=o>.</span><span class=na>getClass</span><span class=o>().</span><span class=na>getName</span><span class=o>(),</span>
+				    <span class=n>method</span><span class=o>.</span><span class=na>getName</span><span class=o>());</span>
+		<span class=o>}</span>
+	    <span class=o>}</span>
+	<span class=o>}</span>
+    <span class=o>}</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这样很快就把<code>MerchantBusiModel</code>所有的get方法执行了(set
+方法也同理啦)，调用结果如下:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>19/03/14 10:46:32 WARN util.ModelUtils: (,N,20190314104632162,-,,,-,-,-,)[调用方法, method: MerchantBusiModel.getMcc]
+19/03/14 10:46:32 WARN util.ModelUtils: (,N,20190314104632256,-,,,-,-,-,)[调用方法, method: MerchantBusiModel.getOutMerchantId]
+19/03/14 10:46:32 WARN util.ModelUtils: (,N,20190314104632256,-,,,-,-,-,)[调用方法, method: MerchantBusiModel.getMerchantName]
+19/03/14 10:46:32 WARN util.ModelUtils: (,N,20190314104632256,-,,,-,-,-,)[调用方法, method: MerchantBusiModel.getMerhantType]
+19/03/14 10:46:32 WARN util.ModelUtils: (,N,20190314104632256,-,,,-,-,-,)[调用方法, method: MerchantBusiModel.getDealType]
+19/03/14 10:46:32 WARN util.ModelUtils: (,N,20190314104632257,-,,,-,-,-,)[调用方法, method: MerchantBusiModel.getAlias]
+19/03/14 10:46:32 WARN util.ModelUtils: (,N,20190314104632257,-,,,-,-,-,)[调用方法, method: MerchantBusiModel.getLegalPerson]
+19/03/14 10:46:32 WARN util.ModelUtils: (,N,20190314104632257,-,,,-,-,-,)[调用方法, method: MerchantBusiModel.getPrincipalCertType]
+省略一大片类似的输出，省点篇幅
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=org-dot-reflections-dot-reflections><span class=section-num>1.3</span> org.reflections.Reflections</h3>
+<p>通过反射，就很完美地解决了POJO类的变更行覆盖率问题了，反正POJO类都是Getter/Setter 方法，我的反射方法能把它们全覆盖上啦 (๑>◡&lt;๑) .</p>
+<p>很快，我就遇到了另外的一个问题:
+像<code>MerchantBusiModel</code>这样的Model类有十几二十个，难道每个Model我都需要写一个<code>XxxModelTest</code>的测试类么？也实在是太痛苦了，也太不优雅了(其实是我懒)，能不能自动把所有的Model类扫出来，然后循环执行每个Model的Getter/Setter方法呢？</p>
+<p>因为这些Model都是继承一个统一的基类<code>BaseBusiModel</code>, 能否把这个基类的所有子类搞出来，这样就可以开心地用反射解决问题了.</p>
+<p>调研一番之后发现，Jdk 的反射方式不支持遍历父类所有子类的方法，这做法行不通阿!!!</p>
+<p>在我都几乎要放弃，要手写所有ModelTest的时候，我在StackOverFlow上面找到了 <a href=https://github.com/ronmamo/reflections>reflections</a> 这第三方包，发现这个包非常强大(niubility), 可以获取基类的子类或者接口的实现类:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=n>Reflections</span> <span class=n>reflections</span> <span class=o>=</span> <span class=k>new</span> <span class=n>Reflections</span><span class=o>(</span><span class=s>&#34;my.project&#34;</span><span class=o>);</span>
+<span class=n>Set</span><span class=o>&lt;</span><span class=n>Class</span><span class=o>&lt;?</span> <span class=kd>extends</span> <span class=n>SomeType</span><span class=o>&gt;&gt;</span> <span class=n>subTypes</span> <span class=o>=</span> <span class=n>reflections</span><span class=o>.</span><span class=na>getSubTypesOf</span><span class=o>(</span><span class=n>SomeType</span><span class=o>.</span><span class=na>class</span><span class=o>);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>简直了。在这”牛包”的帮助下，成功实现了扫描某个package下面所有基类的实现类的方法, 我的用例有救了:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=kd>class</span> <span class=nc>ModelTest</span> <span class=o>{</span>
+    <span class=kd>protected</span> <span class=kd>static</span> <span class=kd>final</span> <span class=n>Logger</span> <span class=n>LOGGER</span> <span class=o>=</span> <span class=n>LoggerFactory</span><span class=o>.</span><span class=na>getLogger</span><span class=o>(</span><span class=n>ConvertorTest</span><span class=o>.</span><span class=na>class</span><span class=o>);</span>
+
+    <span class=kd>private</span> <span class=kd>static</span> <span class=kd>final</span> <span class=n>String</span> <span class=n>PACKAGE_NAME</span> <span class=o>=</span> <span class=s>&#34;xxx.xxx.core.service.v1.busimodel&#34;</span><span class=o>;</span> <span class=c1>// model所有的包
+</span><span class=c1></span>
+    <span class=nd>@Test</span>
+    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>testModel</span><span class=o>()</span> <span class=o>{</span>
+	<span class=n>Reflections</span> <span class=n>reflections</span> <span class=o>=</span> <span class=k>new</span> <span class=n>Reflections</span><span class=o>(</span><span class=n>PACKAGE_NAME</span><span class=o>);</span>
+	<span class=n>Set</span><span class=o>&lt;</span><span class=n>Class</span><span class=o>&lt;?</span> <span class=kd>extends</span> <span class=n>BaseBusiModel</span><span class=o>&gt;&gt;</span> <span class=n>classes</span> <span class=o>=</span>
+	    <span class=n>reflections</span><span class=o>.</span><span class=na>getSubTypesOf</span><span class=o>(</span><span class=n>BaseBusiModel</span><span class=o>.</span><span class=na>class</span><span class=o>);</span>
+	<span class=k>for</span> <span class=o>(</span><span class=n>Class</span><span class=o>&lt;?</span> <span class=kd>extends</span> <span class=n>BaseBusiModel</span><span class=o>&gt;</span> <span class=n>clazz</span> <span class=o>:</span> <span class=n>classes</span><span class=o>)</span> <span class=o>{</span>
+	    <span class=k>if</span> <span class=o>(</span><span class=n>Modifier</span><span class=o>.</span><span class=na>isAbstract</span><span class=o>(</span><span class=n>clazz</span><span class=o>.</span><span class=na>getModifiers</span><span class=o>()))</span> <span class=o>{</span>
+		<span class=k>continue</span><span class=o>;</span>
+	    <span class=o>}</span>
+	    <span class=n>BaseBusiModel</span> <span class=n>modelInstance</span> <span class=o>=</span> <span class=kc>null</span><span class=o>;</span>
+	    <span class=k>try</span> <span class=o>{</span>
+		<span class=n>modelInstance</span> <span class=o>=</span> <span class=n>clazz</span><span class=o>.</span><span class=na>newInstance</span><span class=o>();</span>
+	    <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>IllegalAccessException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+		<span class=n>LoggerUtil</span><span class=o>.</span><span class=na>warn</span><span class=o>(</span><span class=n>LOGGER</span><span class=o>,</span> <span class=s>&#34;调用方法IllegalAccessException异常, clazz: {}&#34;</span><span class=o>,</span> <span class=n>e</span><span class=o>,</span>
+				<span class=n>clazz</span><span class=o>.</span><span class=na>getName</span><span class=o>());</span>
+	    <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>InstantiationException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+		<span class=n>LoggerUtil</span><span class=o>.</span><span class=na>warn</span><span class=o>(</span><span class=n>LOGGER</span><span class=o>,</span> <span class=s>&#34;调用方法InstantiationExceptionn异常, clazz: {}&#34;</span><span class=o>,</span> <span class=n>e</span><span class=o>,</span>
+				<span class=n>clazz</span><span class=o>.</span><span class=na>getName</span><span class=o>());</span>
+	    <span class=o>}</span>
+	    <span class=n>ModelUtils</span><span class=o>.</span><span class=na>invokeGetAndSetMethod</span><span class=o>(</span><span class=n>modelInstance</span><span class=o>);</span>
+	<span class=o>}</span>
+    <span class=o>}</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>ModelUtils.invokeGetAndSetMethod(modelInstance);</code> 这个静态方法就是上一节反射方法的完整可用版:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=kd>class</span> <span class=nc>ModelUtils</span> <span class=o>{</span>
+    <span class=kd>protected</span> <span class=kd>static</span> <span class=kd>final</span> <span class=n>Logger</span> <span class=n>LOGGER</span> <span class=o>=</span> <span class=n>LoggerFactory</span><span class=o>.</span><span class=na>getLogger</span><span class=o>(</span><span class=n>ModelUtils</span><span class=o>.</span><span class=na>class</span><span class=o>);</span>
+
+
+    <span class=cm>/**
+</span><span class=cm>     * get类型方法的前缀
+</span><span class=cm>     */</span>
+    <span class=kd>private</span> <span class=kd>static</span> <span class=kd>final</span> <span class=n>String</span> <span class=n>GET_METHOD_PREFIX</span> <span class=o>=</span> <span class=s>&#34;get&#34;</span><span class=o>;</span>
+
+    <span class=cm>/**
+</span><span class=cm>     * get类型方法的前缀
+</span><span class=cm>     */</span>
+    <span class=kd>private</span> <span class=kd>static</span> <span class=kd>final</span> <span class=n>String</span> <span class=n>SET_METHOD_PREFIX</span> <span class=o>=</span> <span class=s>&#34;set&#34;</span><span class=o>;</span>
+
+    <span class=cm>/**
+</span><span class=cm>     * 调用clazz 对象的所有get, set方法
+</span><span class=cm>     *
+</span><span class=cm>     * @param clazz
+</span><span class=cm>     */</span>
+    <span class=kd>public</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>invokeGetAndSetMethod</span><span class=o>(</span><span class=n>Object</span> <span class=n>clazz</span><span class=o>)</span> <span class=o>{</span>
+	<span class=n>invokeMethodWithPrefix</span><span class=o>(</span><span class=n>GET_METHOD_PREFIX</span><span class=o>,</span> <span class=n>clazz</span><span class=o>);</span>
+	<span class=n>invokeMethodWithPrefix</span><span class=o>(</span><span class=n>SET_METHOD_PREFIX</span><span class=o>,</span> <span class=n>clazz</span><span class=o>);</span>
+    <span class=o>}</span>
+
+    <span class=cm>/**
+</span><span class=cm>     * 通过方法前缀调用方法
+</span><span class=cm>     *
+</span><span class=cm>     * @param prefix
+</span><span class=cm>     * @param instance
+</span><span class=cm>     */</span>
+    <span class=kd>public</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>invokeMethodWithPrefix</span><span class=o>(</span><span class=n>String</span> <span class=n>prefix</span><span class=o>,</span> <span class=n>Object</span> <span class=n>instance</span><span class=o>)</span> <span class=o>{</span>
+	<span class=n>Method</span><span class=o>[]</span> <span class=n>methods</span> <span class=o>=</span> <span class=n>instance</span><span class=o>.</span><span class=na>getClass</span><span class=o>().</span><span class=na>getDeclaredMethods</span><span class=o>();</span>
+	<span class=k>for</span> <span class=o>(</span><span class=n>Method</span> <span class=n>method</span> <span class=o>:</span> <span class=n>methods</span><span class=o>)</span> <span class=o>{</span>
+	    <span class=k>if</span> <span class=o>(</span><span class=n>Modifier</span><span class=o>.</span><span class=na>isPublic</span><span class=o>(</span><span class=n>method</span><span class=o>.</span><span class=na>getModifiers</span><span class=o>())</span>
+		<span class=o>&amp;&amp;</span> <span class=n>method</span><span class=o>.</span><span class=na>getName</span><span class=o>().</span><span class=na>startsWith</span><span class=o>(</span><span class=n>prefix</span><span class=o>))</span> <span class=o>{</span>
+		<span class=n>Object</span><span class=o>[]</span> <span class=n>parameters</span> <span class=o>=</span> <span class=k>new</span> <span class=n>Object</span><span class=o>[</span><span class=n>method</span><span class=o>.</span><span class=na>getParameterCount</span><span class=o>()];</span>
+		<span class=k>try</span> <span class=o>{</span>
+		    <span class=n>method</span><span class=o>.</span><span class=na>invoke</span><span class=o>(</span><span class=n>instance</span><span class=o>,</span> <span class=n>parameters</span><span class=o>);</span>
+		<span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>IllegalAccessException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+		    <span class=n>LoggerUtil</span><span class=o>.</span><span class=na>warn</span><span class=o>(</span><span class=n>LOGGER</span><span class=o>,</span> <span class=s>&#34;调用方法异常, method: {}.{}&#34;</span><span class=o>,</span> <span class=n>e</span><span class=o>,</span>
+				    <span class=n>instance</span><span class=o>.</span><span class=na>getClass</span><span class=o>().</span><span class=na>getName</span><span class=o>(),</span> <span class=n>method</span><span class=o>.</span><span class=na>getName</span><span class=o>());</span>
+		<span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>InvocationTargetException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+		    <span class=n>LoggerUtil</span><span class=o>.</span><span class=na>warn</span><span class=o>(</span><span class=n>LOGGER</span><span class=o>,</span> <span class=s>&#34;调用方法异常, method: {}.{}&#34;</span><span class=o>,</span> <span class=n>e</span><span class=o>,</span>
+				    <span class=n>instance</span><span class=o>.</span><span class=na>getClass</span><span class=o>().</span><span class=na>getName</span><span class=o>(),</span> <span class=n>method</span><span class=o>.</span><span class=na>getName</span><span class=o>());</span>
+		<span class=o>}</span>
+	    <span class=o>}</span>
+	<span class=o>}</span>
+    <span class=o>}</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=总结><span class=section-num>1.4</span> 总结</h3>
+<ol>
+<li>Reflections 包是真的强，有空要去看一下源码</li>
+<li>懒惰是程序员的第一生产力, 这话真不是我编的，是Perl 语言之父 Larry
+Wall 说的</li>
+<li>加了其他两个类似功能的反射测试类，我的变更行覆盖率暴增30%
+(可以看出我这次的变更主要是新增模型和工具类，这样反射才能调用规律性代码)</li>
+<li>Java大法好，Java世界那么大，还需要我好好探索.</li>
+</ol>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2022-02-25
+</span>
+</p>
+</div>
+<footer class=post-footer>
+<div class=post-tags>
+<a href=/tags/java/>java</a>
+<a href=/tags/test/>test</a>
+</div>
+<nav class=post-nav>
+<a class=prev href=/post/2019/%E4%B8%80%E6%9D%A1%E7%BB%8F%E5%85%B8%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BC%95%E5%8F%91%E7%9A%84%E6%80%9D%E8%80%83/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">一条经典面试题的错误答案引发的思考</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/post/2019/%E8%BF%BD%E9%A3%8E%E7%AD%9D%E7%9A%84%E4%BA%BA/>
+<span class="next-text nav-default">追风筝的人</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<div id=gitalk-container></div>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
+<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:'2019-03-14 11:14:00 \u002b0800 \u002b0800',title:'How to fool the Jacoco ◜◡‾',clientID:'3c034c97f0926fafd2d6',clientSecret:'192051927d267ce83eb2ef10955890b7db2720ad',repo:'comment',owner:'ramsayleung',admin:['ramsayleung'],body:decodeURI(location.href)});gitalk.render('gitalk-container')</script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
+<a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<div class=busuanzi-footer>
+<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+</div>
+<span class=copyright-year>
+&copy;
+2017 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>

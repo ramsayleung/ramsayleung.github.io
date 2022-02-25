@@ -83,66 +83,9 @@
 <section id=posts class=posts>
 <article class=post>
 <header class=post-header>
-<h1 class=post-title><a class=post-link href=/post/2017/merge-sort-improvment/>归并排序算法改进</a></h1>
+<h1 class=post-title><a class=post-link href=/post/2017/logging/>你所不可或缺的 – logging</a></h1>
 <div class=post-meta>
-<span class=post-time> 2017-03-01 </span>
-<div class=post-category>
-<a href=/categories/algorithm/> algorithm </a>
-</div>
-</div>
-</header>
-<div class=post-content>
-<div class=post-summary>
-最近笔者在阅读《算法》,重温经典数据结构和算法，毕竟一直以来的说法是程序就是数据结构＋算法归并算法所需的时间和N*logN成正比，所以可以用
-</div>
-<div class=read-more>
-<a href=/post/2017/merge-sort-improvment/ class=read-more-link>Read more...</a>
-</div>
-</div>
-</article>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title><a class=post-link href=/post/2017/diff/>Linux/Unix Shell 二三事之过滤器diff</a></h1>
-<div class=post-meta>
-<span class=post-time> 2017-02-28 </span>
-<div class=post-category>
-<a href=/categories/linux/> linux </a>
-</div>
-</div>
-</header>
-<div class=post-content>
-<div class=post-summary>
-diff - compare files line by line 如果你有使用过git,那么你一定不会对diff 陌生，因为对你源文件和修改后的文件进行比较的就是 diff 这个大名鼎鼎的家伙了。 多年以来
-</div>
-<div class=read-more>
-<a href=/post/2017/diff/ class=read-more-link>Read more...</a>
-</div>
-</div>
-</article>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title><a class=post-link href=/post/2017/install_archlinux/>枯树逢春之ArchLinux领风骚</a></h1>
-<div class=post-meta>
-<span class=post-time> 2017-02-27 </span>
-<div class=post-category>
-<a href=/categories/linux/> linux </a>
-</div>
-</div>
-</header>
-<div class=post-content>
-<div class=post-summary>
-1 枯树 周末回了一趟家，没带自己的笔记本，在家闲来无事，无意中看到墙角的电脑，已经尘封已久反正无事，何不玩玩这台老古董呢？于是把电脑拿去修理店
-</div>
-<div class=read-more>
-<a href=/post/2017/install_archlinux/ class=read-more-link>Read more...</a>
-</div>
-</div>
-</article>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title><a class=post-link href=/post/2017/weixin_flask/>flask牛刀小试之微信公众号开发</a></h1>
-<div class=post-meta>
-<span class=post-time> 2017-02-23 </span>
+<span class=post-time> 2017-04-09 </span>
 <div class=post-category>
 <a href=/categories/python/> python </a>
 </div>
@@ -150,18 +93,37 @@ diff - compare files line by line 如果你有使用过git,那么你一定不会
 </header>
 <div class=post-content>
 <div class=post-summary>
-flask 是一个轻量级的python 框架(官网称为微型框架),很容易上手，之前因为笔者跟朋友开发小程序的时候使用过 flask,过后就遗忘了。 为了重拾
+1 重要性 笔者最近都在负责项目中关于日志的部分，因为跟日志打交道比较多，所以有一些关于日 志感受和技巧想要分享一下。 笔者认为对于各种程序和应用，
 </div>
 <div class=read-more>
-<a href=/post/2017/weixin_flask/ class=read-more-link>Read more...</a>
+<a href=/post/2017/logging/ class=read-more-link>Read more...</a>
 </div>
 </div>
 </article>
 <article class=post>
 <header class=post-header>
-<h1 class=post-title><a class=post-link href=/post/2017/percol/>Linux/Unix Shell 二三事之神器percol</a></h1>
+<h1 class=post-title><a class=post-link href=/post/2017/bloom_filter/>爬虫高效去重之布隆过滤器</a></h1>
 <div class=post-meta>
-<span class=post-time> 2017-02-22 </span>
+<span class=post-time> 2017-04-09 </span>
+<div class=post-category>
+<a href=/categories/algorithm/> algorithm </a>
+</div>
+</div>
+</header>
+<div class=post-content>
+<div class=post-summary>
+笔者最近思考如何编写高效的爬虫; 而在编写高效爬虫的时候，有一个必需解决的问题就是： url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，那就不要
+</div>
+<div class=read-more>
+<a href=/post/2017/bloom_filter/ class=read-more-link>Read more...</a>
+</div>
+</div>
+</article>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title><a class=post-link href=/post/2017/linux_file_system/>大话Linux文件系统</a></h1>
+<div class=post-meta>
+<span class=post-time> 2017-03-30 </span>
 <div class=post-category>
 <a href=/categories/linux/> linux </a>
 </div>
@@ -169,10 +131,49 @@ flask 是一个轻量级的python 框架(官网称为微型框架),很容易上�
 </header>
 <div class=post-content>
 <div class=post-summary>
-Percol 是Emacs 的一个非常优秀package:js2-mode作者mooz 的又一力作得益于Unix Shell的管道和重定向设计理念，perco
+不久前，Apple 的文件系统 (Apple File System) 新推出，然后各方便一起挤身向前对APFS &ldquo;评头品足&rdquo;,我是不了解 APFS ,所以也没有什么
 </div>
 <div class=read-more>
-<a href=/post/2017/percol/ class=read-more-link>Read more...</a>
+<a href=/post/2017/linux_file_system/ class=read-more-link>Read more...</a>
+</div>
+</div>
+</article>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title><a class=post-link href=/post/2017/about_tool_about_tweak/>关于工具,关于折腾</a></h1>
+<div class=post-meta>
+<span class=post-time> 2017-03-24 </span>
+<div class=post-category>
+<a href=/categories/linux/> linux </a>
+<a href=/categories/tool/> tool </a>
+</div>
+</div>
+</header>
+<div class=post-content>
+<div class=post-summary>
+笔者最近一直在思考，关于工具，关于折腾，关于其中的付出与收获 1 乐趣 1.1 Linux 回顾笔者大学，从大一开始就是一个不停折腾的过程，在其他的同学还在用Wi
+</div>
+<div class=read-more>
+<a href=/post/2017/about_tool_about_tweak/ class=read-more-link>Read more...</a>
+</div>
+</div>
+</article>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title><a class=post-link href=/post/2017/port_scanner/>Python多线程端口扫描器</a></h1>
+<div class=post-meta>
+<span class=post-time> 2017-03-19 </span>
+<div class=post-category>
+<a href=/categories/network/> network </a>
+</div>
+</div>
+</header>
+<div class=post-content>
+<div class=post-summary>
+近两日，闲来无事，就写了些端口扫描器，重温TCP/IP协议栈的部分原理。 1 端口扫描器 所谓的端口扫描器，其实是用来检测目标服务器有哪些端口开放
+</div>
+<div class=read-more>
+<a href=/post/2017/port_scanner/ class=read-more-link>Read more...</a>
 </div>
 </div>
 </article>

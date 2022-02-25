@@ -1,0 +1,432 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>一条经典面试题的错误答案引发的思考 - In Pursuit of Hubris</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="Ramsay Leung"><meta name=description content="浅谈Java公平锁与内存模型 1 前言 春天来了，春招还会远么? 又到了春招的季节，随之而来的是各种的面试题。今天就看到组内大佬面试实习生的一道Ja"><meta name=keywords content="Blog,Software,Enginering">
+<meta name=generator content="Hugo 0.92.2 with theme even">
+<link rel=canonical href=https://ramsayleung.github.io/post/2019/%E4%B8%80%E6%9D%A1%E7%BB%8F%E5%85%B8%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BC%95%E5%8F%91%E7%9A%84%E6%80%9D%E8%80%83/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="一条经典面试题的错误答案引发的思考">
+<meta property="og:description" content="浅谈Java公平锁与内存模型 1 前言 春天来了，春招还会远么? 又到了春招的季节，随之而来的是各种的面试题。今天就看到组内大佬面试实习生的一道Ja">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ramsayleung.github.io/post/2019/%E4%B8%80%E6%9D%A1%E7%BB%8F%E5%85%B8%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BC%95%E5%8F%91%E7%9A%84%E6%80%9D%E8%80%83/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2019-03-21T11:04:00+08:00">
+<meta property="article:modified_time" content="2022-02-25T09:54:27+08:00">
+<meta itemprop=name content="一条经典面试题的错误答案引发的思考">
+<meta itemprop=description content="浅谈Java公平锁与内存模型 1 前言 春天来了，春招还会远么? 又到了春招的季节，随之而来的是各种的面试题。今天就看到组内大佬面试实习生的一道Ja"><meta itemprop=datePublished content="2019-03-21T11:04:00+08:00">
+<meta itemprop=dateModified content="2022-02-25T09:54:27+08:00">
+<meta itemprop=wordCount content="1781">
+<meta itemprop=keywords content="java,"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="一条经典面试题的错误答案引发的思考">
+<meta name=twitter:description content="浅谈Java公平锁与内存模型 1 前言 春天来了，春招还会远么? 又到了春招的季节，随之而来的是各种的面试题。今天就看到组内大佬面试实习生的一道Ja"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/about_me>
+<li class=mobile-menu-item>About</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/about_me>About</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>一条经典面试题的错误答案引发的思考</h1>
+<div class=post-meta>
+<span class=post-time> 2019-03-21 </span>
+<div class=post-category>
+<a href=/categories/java/> java </a>
+</div>
+<span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#前言><span class=section-num>1</span> 前言</a></li>
+<li><a href=#经过><span class=section-num>2</span> 经过</a></li>
+<li><a href=#解惑><span class=section-num>3</span> 解惑</a></li>
+<li><a href=#公平锁问题><span class=section-num>4</span> 公平锁问题</a></li>
+<li><a href=#小结><span class=section-num>5</span> 小结</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<p>浅谈Java公平锁与内存模型</p>
+<h2 id=前言><span class=section-num>1</span> 前言</h2>
+<p>春天来了，春招还会远么? 又到了春招的季节，随之而来的是各种的面试题。今天就看到组内大佬面试实习生的一道Java题目:</p>
+<blockquote>
+<p>编写一个程序，开启 3 个线程A,B,C，这三个线程的输出分别为
+A、B、C，每个线程将自己的 输出在屏幕上打印 10
+遍，要求输出的结果必须按顺序显示。如：ABCABCABC&mldr;.</p>
+</blockquote>
+<h2 id=经过><span class=section-num>2</span> 经过</h2>
+<p>出于好奇的心态，我花了点时间来尝试解决这个问题, 主要的难点是让线程顺序地如何顺序地输出，线程之间如何交换。</p>
+<p>很快就按着思路写出了一个版本，用Lock 来控制线程的顺序，A,B,C线程依次启动，因为A线程先启动，所以A线程会最先拿到锁，B,C阻塞；但是A输出完字符串，释放锁，B 线程获得锁，C,A线程阻塞; 依此循环:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=kt>void</span> <span class=nf>Test</span><span class=o>(){</span>
+    <span class=kd>private</span> <span class=kd>static</span> <span class=n>Integer</span> <span class=n>index</span> <span class=o>=</span> <span class=n>0</span><span class=o>;</span>
+
+    <span class=n>Lock</span> <span class=n>lock</span> <span class=o>=</span> <span class=k>new</span> <span class=n>ReentrantLock</span><span class=o>();</span>
+
+    <span class=nd>@Test</span>
+	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>testLock</span><span class=o>(){</span>
+	<span class=n>Thread</span> <span class=n>threadA</span> <span class=o>=</span> <span class=n>work</span><span class=o>(</span><span class=n>i</span> <span class=o>-&gt;</span> <span class=n>i</span> <span class=o>%</span> <span class=n>3</span> <span class=o>==</span> <span class=n>0</span><span class=o>,</span> <span class=o>()</span> <span class=o>-&gt;</span> <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=s>&#34;A&#34;</span><span class=o>));</span>
+	<span class=n>Thread</span> <span class=n>threadB</span> <span class=o>=</span> <span class=n>work</span><span class=o>(</span><span class=n>i</span> <span class=o>-&gt;</span> <span class=n>i</span> <span class=o>%</span> <span class=n>3</span> <span class=o>==</span> <span class=n>1</span><span class=o>,</span> <span class=o>()</span> <span class=o>-&gt;</span> <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=s>&#34;B&#34;</span><span class=o>));</span>
+	<span class=n>Thread</span> <span class=n>threadC</span> <span class=o>=</span> <span class=n>work</span><span class=o>(</span><span class=n>i</span> <span class=o>-&gt;</span> <span class=n>i</span> <span class=o>%</span> <span class=n>3</span> <span class=o>==</span> <span class=n>2</span><span class=o>,</span> <span class=o>()</span> <span class=o>-&gt;</span> <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=s>&#34;C&#34;</span><span class=o>));</span>
+	<span class=n>threadA</span><span class=o>.</span><span class=na>start</span><span class=o>();</span>
+	<span class=n>threadB</span><span class=o>.</span><span class=na>start</span><span class=o>();</span>
+	<span class=n>threadC</span><span class=o>.</span><span class=na>start</span><span class=o>();</span>
+    <span class=o>}</span>
+
+    <span class=kd>private</span> <span class=n>Thread</span> <span class=nf>work</span><span class=o>(</span><span class=n>Predicate</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span> <span class=n>condition</span><span class=o>,</span> <span class=n>Runnable</span> <span class=n>function</span><span class=o>)</span> <span class=o>{</span>
+	<span class=k>return</span> <span class=k>new</span> <span class=n>Thread</span><span class=o>(()</span> <span class=o>-&gt;</span> <span class=o>{</span>
+		<span class=k>while</span> <span class=o>(</span><span class=n>index</span> <span class=o>&lt;</span> <span class=n>30</span><span class=o>)</span> <span class=o>{</span>
+		    <span class=n>lock</span><span class=o>.</span><span class=na>lock</span><span class=o>();</span>
+		    <span class=k>if</span> <span class=o>(</span><span class=n>condition</span><span class=o>.</span><span class=na>test</span><span class=o>(</span><span class=n>index</span><span class=o>))</span> <span class=o>{</span>
+			<span class=n>function</span><span class=o>.</span><span class=na>run</span><span class=o>();</span>
+			<span class=n>index</span><span class=o>++;</span>
+		    <span class=o>}</span>
+		    <span class=n>lock</span><span class=o>.</span><span class=na>unlock</span><span class=o>();</span>
+		<span class=o>}</span>
+	<span class=o>});</span>
+    <span class=o>}</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>输入结果如我预期那般，ABCABC交替输出，也成功输出了10次，奇怪的是A,B却多输出了一次？
+<img src=https://imgur.com/3lolbwK.png alt></p>
+<p>为什么会多输出一次，不是应该恰好是输出30次么, 为什么会多输出一次A,B
+真的百思不得其解. 所以我把<code>index</code> 也打印出来查看, 结果相当奇怪:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=o>...</span>
+    <span class=n>function</span><span class=o>.</span><span class=na>run</span><span class=o>();</span>
+<span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>index</span><span class=o>);</span>
+<span class=o>....</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>为什么A 会是30, B会是31, 不是有(index.intvalue&lt;30) 的条件判断么,
+为什么还会出现这样的数据？灵异事件? <img src=https://imgur.com/fhurKt5.png alt></p>
+<h2 id=解惑><span class=section-num>3</span> 解惑</h2>
+<p>灵异事件自然是不存在的，仔细分析了一番代码之后，发现了问题：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=k>while</span> <span class=o>(</span><span class=n>index</span><span class=o>.</span><span class=na>intValue</span><span class=o>()</span> <span class=o>&lt;</span> <span class=n>30</span><span class=o>)</span> <span class=o>{</span>  <span class=c1>// 1
+</span><span class=c1></span>    <span class=n>lock</span><span class=o>.</span><span class=na>lock</span><span class=o>();</span> <span class=c1>// 2
+</span><span class=c1></span>    <span class=k>if</span> <span class=o>(</span><span class=n>condition</span><span class=o>.</span><span class=na>test</span><span class=o>(</span><span class=n>index</span><span class=o>.</span><span class=na>intValue</span><span class=o>()))</span> <span class=o>{</span>
+	<span class=n>function</span><span class=o>.</span><span class=na>run</span><span class=o>();</span>
+	<span class=n>index</span><span class=o>++;</span>
+    <span class=o>}</span>
+    <span class=n>lock</span><span class=o>.</span><span class=na>unlock</span><span class=o>();</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>将1，2行的操作做了这三件事，如下:</p>
+<ol>
+<li><strong>线程读取index的值</strong></li>
+<li>比较index的值是否大于30 3. 如果小于30, 尝试获取锁</li>
+</ol>
+<p>换言之，当index=29时，线程C持有锁，但是锁只能阻止线程A,线程B修改index的值，并不能阻止线程A,线程B在获取锁之前读取index的值，所以线程A读取index=29,并把值保持到线程的内部，如下图:</p>
+<figure><img src=https://imgur.com/tI8NTgO.png>
+</figure>
+<p><strong>当线程C执行完，还没释放锁的时候，线程A的index值为29；当线程C释放锁，线程A获取锁，进入同步块的时候，因为 <a href=https://en.wikipedia.org/wiki/Memory_barrier#Multithreaded_programming_and_memory_visibility>Java内存模型有内存可见性的要求</a>, 兼之Lock的实现类实现了<a href=https://stackoverflow.com/questions/12429818/does-explicit-lock-automatically-provide-memory-visibility>内存可见</a>，所以线程A的index值会变成30</strong>,</p>
+<p>这就解析了为什么线程A index=30的时候能跳过<code>(index.intValue&lt;30)</code>的判断条件，因为执行这个判断条件的时候线程A index=29, 进入同步块之后变成了30:</p>
+<figure><img src=https://imgur.com/xaA4Q0y.png>
+</figure>
+<p>把问题剖析清楚之后，解决方案就呼之欲出了:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=k>while</span> <span class=o>(</span><span class=n>index</span><span class=o>.</span><span class=na>intValue</span><span class=o>()</span> <span class=o>&lt;</span> <span class=n>30</span><span class=o>)</span> <span class=o>{</span>  <span class=c1>// 1
+</span><span class=c1></span>    <span class=n>lock</span><span class=o>.</span><span class=na>lock</span><span class=o>();</span> <span class=c1>// 2
+</span><span class=c1></span>    <span class=k>if</span><span class=o>(</span><span class=n>index</span><span class=o>&gt;=</span><span class=n>30</span><span class=o>){</span>
+	<span class=k>continue</span><span class=o>;</span>
+    <span class=o>}</span>
+    <span class=k>if</span> <span class=o>(</span><span class=n>condition</span><span class=o>.</span><span class=na>test</span><span class=o>(</span><span class=n>index</span><span class=o>.</span><span class=na>intValue</span><span class=o>()))</span> <span class=o>{</span>
+	<span class=n>function</span><span class=o>.</span><span class=na>run</span><span class=o>();</span>
+	<span class=n>index</span><span class=o>++;</span>
+    <span class=o>}</span>
+    <span class=n>lock</span><span class=o>.</span><span class=na>unlock</span><span class=o>();</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这种解决方法不禁让我想起单例模式里面的双重校验:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=kd>static</span> <span class=n>Singleton</span> <span class=nf>getSingleton</span><span class=o>()</span> <span class=o>{</span>
+    <span class=k>if</span> <span class=o>(</span><span class=n>instance</span> <span class=o>==</span> <span class=kc>null</span><span class=o>)</span> <span class=o>{</span>                         <span class=c1>//Single Checked
+</span><span class=c1></span>	<span class=kd>synchronized</span> <span class=o>(</span><span class=n>Singleton</span><span class=o>.</span><span class=na>class</span><span class=o>)</span> <span class=o>{</span>
+	    <span class=k>if</span> <span class=o>(</span><span class=n>instance</span> <span class=o>==</span> <span class=kc>null</span><span class=o>)</span> <span class=o>{</span>                 <span class=c1>//Double Checked
+</span><span class=c1></span>		<span class=n>instance</span> <span class=o>=</span> <span class=k>new</span> <span class=n>Singleton</span><span class=o>();</span>
+	    <span class=o>}</span>
+	<span class=o>}</span>
+    <span class=o>}</span>
+    <span class=k>return</span> <span class=n>instance</span> <span class=o>;</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>只是当时并不清楚Double Checked的作用，究竟解决了什么问题？</p>
+<p>只是知道不加这条语句就会造成初始化多个示例，的确是需要<strong>知其然知其所以然</strong>.</p>
+<h2 id=公平锁问题><span class=section-num>4</span> 公平锁问题</h2>
+<p>前文说到，</p>
+<blockquote>
+<p>这个程序是用Lock 来控制线程的顺序，A,B,C线程依次启动，因为A线程先启动，所以A线程会最先拿到锁，B,C阻塞；</p>
+<p>但是A输出完字符串，释放锁，B 线程获得锁，C,A线程阻塞; 依此循环。</p>
+</blockquote>
+<p>粗看似乎没什么问题, 但是这里是存在着一个问题: 当线程A释放锁的时候，获取锁的是否一定是线程B, 而不是线程C,
+线程C是否能够”插队”抢占锁?</p>
+<p>这个就涉及到了公平锁和非公平锁的定义了:</p>
+<ul>
+<li>
+<p>公平锁: 线程C不能抢占，只能排队等待线程B 获取并释放锁</p>
+</li>
+<li>
+<p>非公平锁：线程C能抢占，抢到锁之后线程B只能继续等(有点惨!)</p>
+<p>而ReentrantLock默认恰好是非公平锁, 查看源码可知:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=cm>/**
+</span><span class=cm>​ * Creates an instance of {@code ReentrantLock}.
+</span><span class=cm>​ * This is equivalent to using {@code ReentrantLock(false)}.
+</span><span class=cm> */</span>
+<span class=kd>public</span> <span class=nf>ReentrantLock</span><span class=o>()</span> <span class=o>{</span>
+    <span class=n>sync</span> <span class=o>=</span> <span class=k>new</span> <span class=n>NonfairSync</span><span class=o>();</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>因此为了规避非公平锁抢占的问题, 上述的代码在同步块增加了判断条件:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=k>if</span> <span class=o>(</span><span class=n>condition</span><span class=o>.</span><span class=na>test</span><span class=o>(</span><span class=n>index</span><span class=o>.</span><span class=na>intValue</span><span class=o>()))</span> <span class=o>{</span>
+    <span class=o>....</span>
+	<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>只有符合条件的线程才能进行操作，否则就是线程自旋.(但是加锁+自旋实现起来，效率不会太高效!)</p>
+</li>
+</ul>
+<h2 id=小结><span class=section-num>5</span> 小结</h2>
+<p>写一条面试题的答案都写得是问题多多的，不禁令人沮丧，说明自己对Java的并发模型理解还有很大的提高。
+不过在排查问题的过程中，通过实践有体感地理解了Java的内存模型，发现Java内存模型并不是那么地曲高和寡，在日常的开发中也是很常见的.</p>
+<p>费了一番工夫排查之后，终究是有新的收获的</p>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2022-02-25
+</span>
+</p>
+</div>
+<footer class=post-footer>
+<div class=post-tags>
+<a href=/tags/java/>java</a>
+</div>
+<nav class=post-nav>
+<a class=prev href=/post/2019/%E5%8F%8C%E5%9F%8E%E8%AE%B0%E8%AF%BB%E5%90%8E%E6%9C%89%E6%84%9F/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">双城记读后有感</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/post/2019/%E5%A6%82%E4%BD%95%E5%88%B7pojo%E7%B1%BB%E7%9A%84%E5%8F%98%E6%9B%B4%E8%A1%8C%E8%A6%86%E7%9B%96%E7%8E%87/>
+<span class="next-text nav-default">How to fool the Jacoco ◜◡‾</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<div id=gitalk-container></div>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
+<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:'2019-03-21 11:04:00 \u002b0800 \u002b0800',title:'一条经典面试题的错误答案引发的思考',clientID:'3c034c97f0926fafd2d6',clientSecret:'192051927d267ce83eb2ef10955890b7db2720ad',repo:'comment',owner:'ramsayleung',admin:['ramsayleung'],body:decodeURI(location.href)});gitalk.render('gitalk-container')</script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
+<a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<div class=busuanzi-footer>
+<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+</div>
+<span class=copyright-year>
+&copy;
+2017 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>

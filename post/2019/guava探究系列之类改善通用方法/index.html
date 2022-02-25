@@ -1,0 +1,476 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>Guava探究系列之三：改善通用方法 - In Pursuit of Hubris</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="Ramsay Leung"><meta name=description content="1 前言 Java 是一门集大成的面向对象语言, 在Java的世界里, 一切皆对象, 而Object类就是所有对象的默认父类. Guava 提供了若干个工具方法来扩展Ob"><meta name=keywords content="Blog,Software,Enginering">
+<meta name=generator content="Hugo 0.92.2 with theme even">
+<link rel=canonical href=https://ramsayleung.github.io/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E7%B1%BB%E6%94%B9%E5%96%84%E9%80%9A%E7%94%A8%E6%96%B9%E6%B3%95/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="Guava探究系列之三：改善通用方法">
+<meta property="og:description" content="1 前言 Java 是一门集大成的面向对象语言, 在Java的世界里, 一切皆对象, 而Object类就是所有对象的默认父类. Guava 提供了若干个工具方法来扩展Ob">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ramsayleung.github.io/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E7%B1%BB%E6%94%B9%E5%96%84%E9%80%9A%E7%94%A8%E6%96%B9%E6%B3%95/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2019-07-25T22:33:00+08:00">
+<meta property="article:modified_time" content="2022-02-25T14:19:02+08:00">
+<meta itemprop=name content="Guava探究系列之三：改善通用方法">
+<meta itemprop=description content="1 前言 Java 是一门集大成的面向对象语言, 在Java的世界里, 一切皆对象, 而Object类就是所有对象的默认父类. Guava 提供了若干个工具方法来扩展Ob"><meta itemprop=datePublished content="2019-07-25T22:33:00+08:00">
+<meta itemprop=dateModified content="2022-02-25T14:19:02+08:00">
+<meta itemprop=wordCount content="2227">
+<meta itemprop=keywords content><meta name=twitter:card content="summary">
+<meta name=twitter:title content="Guava探究系列之三：改善通用方法">
+<meta name=twitter:description content="1 前言 Java 是一门集大成的面向对象语言, 在Java的世界里, 一切皆对象, 而Object类就是所有对象的默认父类. Guava 提供了若干个工具方法来扩展Ob"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/about_me>
+<li class=mobile-menu-item>About</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/about_me>About</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>Guava探究系列之三：改善通用方法</h1>
+<div class=post-meta>
+<span class=post-time> 2019-07-25 </span>
+<span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#前言><span class=section-num>1</span> 前言</a></li>
+<li><a href=#equals><span class=section-num>2</span> equals</a>
+<ul>
+<li><a href=#hashcode><span class=section-num>2.1</span> hashCode</a></li>
+</ul>
+</li>
+<li><a href=#tostring><span class=section-num>3</span> toString</a></li>
+<li><a href=#compare-compareto><span class=section-num>4</span> compare/compareTo</a></li>
+<li><a href=#总结><span class=section-num>5</span> 总结</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<h2 id=前言><span class=section-num>1</span> 前言</h2>
+<p>Java 是一门集大成的面向对象语言, 在Java的世界里, 一切皆对象, 而<code>Object</code>类就是所有对象的默认父类. Guava
+提供了若干个工具方法来扩展<code>Object</code>类的通用能力.</p>
+<h2 id=equals><span class=section-num>2</span> equals</h2>
+<p>在Java的编程世界, 比较两个对象是个很常见的操作, <code>Object</code>类也提供了一个<code>equals</code>方法来判断对象是否相等.
+但是<code>Object</code>使用的<code>equals</code>方法有诸多不便, 最痛苦的是无处不在的<code>NullPointerException</code>, 例如:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=nf>testEqueal</span><span class=o>(</span><span class=n>Object</span> <span class=n>input</span><span class=o>){</span>
+    <span class=k>this</span><span class=o>.</span><span class=na>equals</span><span class=o>(</span><span class=n>input</span><span class=o>);</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>但当 <code>this</code>指针指向一个空对象的时候,
+就会出现<code>null.testEqueal(input)</code>的情形, 就会抛出NPE.
+为了让<code>equals</code>方法更易用,
+Guava提供了一个<code>Objects.equal(Object a, Object b)</code>方法来判断两个对象是否相等.
+用法如下:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=n>Objects</span><span class=o>.</span><span class=na>equal</span><span class=o>(</span><span class=s>&#34;a&#34;</span><span class=o>,</span> <span class=s>&#34;a&#34;</span><span class=o>);</span> <span class=c1>// returns true
+</span><span class=c1></span><span class=n>Objects</span><span class=o>.</span><span class=na>equal</span><span class=o>(</span><span class=kc>null</span><span class=o>,</span> <span class=s>&#34;a&#34;</span><span class=o>);</span> <span class=c1>// returns false
+</span><span class=c1></span><span class=n>Objects</span><span class=o>.</span><span class=na>equal</span><span class=o>(</span><span class=s>&#34;a&#34;</span><span class=o>,</span> <span class=kc>null</span><span class=o>);</span> <span class=c1>// returns false
+</span><span class=c1></span><span class=n>Objects</span><span class=o>.</span><span class=na>equal</span><span class=o>(</span><span class=kc>null</span><span class=o>,</span> <span class=kc>null</span><span class=o>);</span> <span class=c1>// returns true
+</span></code></pre></td></tr></table>
+</div>
+</div><p>可能是Java语言的开发者也意识到<code>Object.equals</code>方法的不便,
+所以在JDK7的时候,
+官方也提供了<code>Objects.equals(Object a, Object b)</code>的方法,
+Guava的竞品自然也没了用武之处。</p>
+<p>不过, 说实话, 无论是JDK的<code>Objects.equals</code>, <code>Object.equal</code>还是Guava的<code>Object.equal()</code>,
+在日常的开发中也用的不多, 用的最多的是Apache Common库的各种Utils工具,
+比较String类型用的是<code>StringUtils.equals()</code>,
+比较容器(Collection)用的<code>CollectionUtils.isEqualCollection()</code>,
+毕竟这些工具要更高级和完善(有趣的是, JDK的方法名是<code>equals</code>,
+Guava的方法名是<code>equal</code>, 下文提到的JDK的hash方法名叫<code>hash</code>,
+Guava叫<code>hashCode</code>).</p>
+<h3 id=hashcode><span class=section-num>2.1</span> hashCode</h3>
+<p>在《Effective Java》的条款9中说到:</p>
+<blockquote>
+<p>Always override <code>hashCode</code> when you override <code>equals</code></p>
+</blockquote>
+<p>就是说在你重写<code>equals</code>方法的时候, 记得重写<code>hashCode</code>方法,
+因为按照Java的约定, 如果两个对象通过调用<code>equals</code>方法判断是相等的话,
+它们调用<code>hashCode()</code>方法的返回结果也是一样的.</p>
+<p>《Effective Java》 给出的重写建议是把一个对象的所有字段进行计算取得一个hash值,
+示例代码如下:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>private</span> <span class=kd>volatile</span> <span class=kt>int</span> <span class=n>hashCode</span><span class=o>;</span>
+<span class=kd>public</span> <span class=kd>class</span> <span class=nc>User</span> <span class=o>{</span>
+    <span class=kd>private</span> <span class=n>String</span> <span class=n>name</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=kt>int</span> <span class=n>age</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=n>String</span> <span class=n>passport</span><span class=o>;</span>
+    <span class=nd>@Override</span>
+    <span class=kd>public</span> <span class=kt>int</span> <span class=nf>hashCode</span><span class=o>()</span> <span class=o>{</span>
+	<span class=kt>int</span> <span class=n>result</span> <span class=o>=</span> <span class=n>hashCode</span><span class=o>;</span>
+	<span class=k>if</span><span class=o>(</span><span class=n>result</span> <span class=o>==</span> <span class=n>0</span><span class=o>){</span>
+	    <span class=n>result</span> <span class=o>=</span> <span class=n>17</span><span class=o>;</span> <span class=c1>// Aribtrary number.
+</span><span class=c1></span>	    <span class=n>result</span> <span class=o>=</span> <span class=n>31</span> <span class=o>*</span> <span class=n>result</span> <span class=o>+</span> <span class=n>name</span><span class=o>.</span><span class=na>hashCode</span><span class=o>();</span>
+	    <span class=n>result</span> <span class=o>=</span> <span class=n>31</span> <span class=o>*</span> <span class=n>result</span> <span class=o>+</span> <span class=n>age</span><span class=o>;</span> <span class=c1>// 31 is an odd prime
+</span><span class=c1></span>	    <span class=n>result</span> <span class=o>=</span> <span class=n>31</span> <span class=o>*</span> <span class=n>result</span> <span class=o>+</span> <span class=n>passport</span><span class=o>.</span><span class=na>hashCode</span><span class=o>();</span>
+	    <span class=n>hashCode</span> <span class=o>=</span> <span class=n>result</span><span class=o>;</span>
+	<span class=o>}</span>
+	<span class=k>return</span> <span class=n>hashCode</span><span class=o>;</span>
+    <span class=o>}</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这样的计算方式虽然有效, 但是未免过于烦琐, 还要手动计算每个字段. 为此,
+Guava 提供了一个 <code>Objects.hashCode(field1, field2, ..., fieldn</code>的方法,
+用于对所有的字段计算hash值, 用法如下:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=kd>class</span> <span class=nc>User</span> <span class=o>{</span>
+    <span class=kd>public</span> <span class=kt>int</span> <span class=nf>hashCode</span><span class=o>()</span> <span class=o>{</span>
+	<span class=k>return</span> <span class=n>Objects</span><span class=o>.</span><span class=na>hashCode</span><span class=o>(</span><span class=n>name</span><span class=o>,</span> <span class=n>age</span><span class=o>,</span> <span class=n>passport</span><span class=o>);</span>
+    <span class=o>}</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>看起来简洁多了。然后在Java7的时候,
+JDK也推出了一个<code>Objects.hash(field1, field2,...,fieldn)</code>的方法,
+而Guava的竞品很快就被废弃了. 我都在想JDK是不是在吸收Guava的精华,
+毕竟实现都一样！(￣▽￣)</p>
+<h2 id=tostring><span class=section-num>3</span> toString</h2>
+<p>《Effective Java》的条款10说到:</p>
+<blockquote>
+<p>Always override toString</p>
+</blockquote>
+<p>也就是说, 《Effective Java》建议所有的类都重写<code>toString()</code>方法.
+其实<code>toString()</code>方法不是给程序看的, 而是给开发者自己看的.</p>
+<p>据说, 好看的<code>toString()</code>方法的输出结果可以让程序员更愉悦, 可见颜值处处都有用.
+比较常见的重写<code>toString()</code>的方式是把所有的字段拼接输出,
+只不过手动拼接有点累.</p>
+<p>省心的是, Intellij Idea 为开发者提供了生成<code>toString()</code>的快捷方式, 如下图:</p>
+<figure><a href=/ox-hugo/Idea_generate_to_string.gif><img src=/ox-hugo/Idea_generate_to_string.gif alt="Figure 1: Idea生成toString"></a><figcaption>
+<p><span class=figure-number>Figure 1: </span>Idea生成toString</p>
+</figcaption>
+</figure>
+<p>如果觉得Idea生成的<code>toString()</code>有太多的拼接字符串,
+还可以试试Guava提供的<code>toString()</code>工具方法: <code>MoreObjects.toStringHelper</code>,
+具体用法如下:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=nd>@Test</span>
+<span class=kd>public</span> <span class=kt>void</span> <span class=nf>test</span><span class=o>()</span> <span class=o>{</span>
+    <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>MoreObjects</span><span class=o>.</span><span class=na>toStringHelper</span><span class=o>(</span><span class=k>this</span><span class=o>)</span>
+		       <span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=s>&#34;name&#34;</span><span class=o>,</span> <span class=s>&#34;Linus&#34;</span><span class=o>)</span>
+		       <span class=o>.</span><span class=na>toString</span><span class=o>());</span>
+
+    <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>MoreObjects</span><span class=o>.</span><span class=na>toStringHelper</span><span class=o>(</span><span class=s>&#34;TestToStringHelper&#34;</span><span class=o>)</span>
+		       <span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=s>&#34;method&#34;</span><span class=o>,</span> <span class=s>&#34;toStringHelper&#34;</span><span class=o>)</span>
+		       <span class=o>.</span><span class=na>toString</span><span class=o>());</span>
+<span class=o>}</span>
+<span class=c1>// 结果如下:
+</span><span class=c1>// ToStringTest{name=Linus}
+</span><span class=c1>// TestToStringHelper{method=toStringHelper}
+</span></code></pre></td></tr></table>
+</div>
+</div><p>使用方法也是很明了, 就不过多赘述.</p>
+<h2 id=compare-compareto><span class=section-num>4</span> compare/compareTo</h2>
+<p>既然前面提到了《Effective Java》, 那么基于前后呼应的原则,
+最后也免不了要再引用一下《Effective Java》:</p>
+<blockquote>
+<p>条款12: Consider implementing Comparable</p>
+</blockquote>
+<p>不像前文介绍过的方法, <code>compareTo</code>方法并不是<code>Object</code>类的方法,
+而是<code>Comparable</code>接口的方法. 这个方法和前文提到的<code>equals</code>方法类似,
+只不过用法不一样. <code>compareTo</code>通常用于排序,
+如下面的代码就是对实现了Comparable接口的Person对象的列表进行排序:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>class</span> <span class=nc>Person</span> <span class=kd>implements</span> <span class=n>Comparable</span><span class=o>&lt;</span><span class=n>Person</span><span class=o>&gt;</span> <span class=o>{</span>
+    <span class=kd>private</span> <span class=n>String</span> <span class=n>lastName</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=n>String</span> <span class=n>firstName</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=kt>int</span> <span class=n>zipCode</span><span class=o>;</span>
+
+    <span class=kd>public</span> <span class=kt>int</span> <span class=nf>compareTo</span><span class=o>(</span><span class=n>Person</span> <span class=n>other</span><span class=o>)</span> <span class=o>{</span>
+	<span class=kt>int</span> <span class=n>cmp</span> <span class=o>=</span> <span class=n>lastName</span><span class=o>.</span><span class=na>compareTo</span><span class=o>(</span><span class=n>other</span><span class=o>.</span><span class=na>lastName</span><span class=o>);</span>
+	<span class=k>if</span> <span class=o>(</span><span class=n>cmp</span> <span class=o>!=</span> <span class=n>0</span><span class=o>)</span> <span class=o>{</span>
+	    <span class=k>return</span> <span class=n>cmp</span><span class=o>;</span>
+	<span class=o>}</span>
+	<span class=n>cmp</span> <span class=o>=</span> <span class=n>firstName</span><span class=o>.</span><span class=na>compareTo</span><span class=o>(</span><span class=n>other</span><span class=o>.</span><span class=na>firstName</span><span class=o>);</span>
+	<span class=k>if</span> <span class=o>(</span><span class=n>cmp</span> <span class=o>!=</span> <span class=n>0</span><span class=o>)</span> <span class=o>{</span>
+	    <span class=k>return</span> <span class=n>cmp</span><span class=o>;</span>
+	<span class=o>}</span>
+	<span class=k>return</span> <span class=n>Integer</span><span class=o>.</span><span class=na>compare</span><span class=o>(</span><span class=n>zipCode</span><span class=o>,</span> <span class=n>other</span><span class=o>.</span><span class=na>zipCode</span><span class=o>);</span>
+    <span class=o>}</span>
+<span class=o>}</span>
+
+<span class=kd>public</span> <span class=kd>class</span> <span class=nc>CompareTest</span> <span class=o>{</span>
+    <span class=nd>@Test</span>
+    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>testSort</span><span class=o>(){</span>
+	<span class=n>Person</span><span class=o>[]</span> <span class=n>persons</span> <span class=o>=</span> <span class=k>new</span> <span class=n>Person</span><span class=o>[</span><span class=n>2</span><span class=o>];</span>
+	<span class=n>persons</span><span class=o>[</span><span class=n>0</span><span class=o>]</span> <span class=o>=</span> <span class=k>new</span> <span class=n>Person</span><span class=o>(</span><span class=s>&#34;Ma&#34;</span><span class=o>,</span> <span class=s>&#34;Jack&#34;</span><span class=o>,</span> <span class=n>12345</span><span class=o>);</span>
+	<span class=n>persons</span><span class=o>[</span><span class=n>1</span><span class=o>]</span> <span class=o>=</span> <span class=k>new</span> <span class=n>Person</span><span class=o>(</span><span class=s>&#34;Ma&#34;</span><span class=o>,</span> <span class=s>&#34;Pony&#34;</span><span class=o>,</span> <span class=n>65432</span><span class=o>);</span>
+	<span class=n>Arrays</span><span class=o>.</span><span class=na>sort</span><span class=o>(</span><span class=n>persons</span><span class=o>);</span>
+	<span class=n>Arrays</span><span class=o>.</span><span class=na>stream</span><span class=o>(</span><span class=n>persons</span><span class=o>).</span><span class=na>forEach</span><span class=o>(</span><span class=n>person</span> <span class=o>-&gt;</span> <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>person</span><span class=o>.</span><span class=na>getFirstName</span><span class=o>()));</span>
+    <span class=o>}</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上面的代码的逻辑就是先比较<code>Person.lastName</code>,
+如果相等再比较<code>Person.firstName</code>, 如果前面的条件还是相等,
+就再比较<code>Person.zipCode</code>.</p>
+<p>代码的含义相当清晰, 只是有不少的模板代码, 如果能减少这些模板代码, 那就更好了. 幸运的是, Guava 提供了一个
+<code>ComparisonChain</code>来处理这些模板逻辑, 应用<code>ComparisonChain</code>之后的代码如下:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=kd>class</span> <span class=nc>ComparisonChainPerson</span> <span class=kd>implements</span> <span class=n>Comparable</span><span class=o>&lt;</span><span class=n>ComparisonChainPerson</span><span class=o>&gt;</span> <span class=o>{</span>
+    <span class=kd>private</span> <span class=n>String</span> <span class=n>lastName</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=n>String</span> <span class=n>firstName</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=kt>int</span> <span class=n>zipCode</span><span class=o>;</span>
+
+    <span class=nd>@Override</span>
+    <span class=kd>public</span> <span class=kt>int</span> <span class=nf>compareTo</span><span class=o>(</span><span class=n>ComparisonChainPerson</span> <span class=n>that</span><span class=o>)</span> <span class=o>{</span>
+	<span class=k>return</span> <span class=n>ComparisonChain</span><span class=o>.</span><span class=na>start</span><span class=o>()</span>
+	    <span class=o>.</span><span class=na>compare</span><span class=o>(</span><span class=k>this</span><span class=o>.</span><span class=na>lastName</span><span class=o>,</span> <span class=n>that</span><span class=o>.</span><span class=na>lastName</span><span class=o>)</span>
+	    <span class=o>.</span><span class=na>compare</span><span class=o>(</span><span class=k>this</span><span class=o>.</span><span class=na>firstName</span><span class=o>,</span> <span class=n>that</span><span class=o>.</span><span class=na>firstName</span><span class=o>)</span>
+	    <span class=o>.</span><span class=na>compare</span><span class=o>(</span><span class=k>this</span><span class=o>.</span><span class=na>zipCode</span><span class=o>,</span> <span class=n>that</span><span class=o>.</span><span class=na>zipCode</span><span class=o>)</span>
+	    <span class=o>.</span><span class=na>result</span><span class=o>();</span>
+    <span class=o>}</span>
+<span class=o>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>确实简洁了许多~~</p>
+<h2 id=总结><span class=section-num>5</span> 总结</h2>
+<p>到本文为止, Guava提供的基本工具类就已经介绍完了，暂时告一段落了,
+接下来就要介绍Guava最常用的工具之一: 各种容器(Collections)</p>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2022-02-25
+</span>
+</p>
+</div>
+<footer class=post-footer>
+<nav class=post-nav>
+<a class=prev href=/post/2020/996%E6%88%90%E5%9B%A0/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">为什么我们要996</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/post/2019/%E5%9B%B4%E5%9F%8E/>
+<span class="next-text nav-default">人生何处不围城</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<div id=gitalk-container></div>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
+<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:'2019-07-25 22:33:00 \u002b0800 \u002b0800',title:'Guava探究系列之三：改善通用方法',clientID:'3c034c97f0926fafd2d6',clientSecret:'192051927d267ce83eb2ef10955890b7db2720ad',repo:'comment',owner:'ramsayleung',admin:['ramsayleung'],body:decodeURI(location.href)});gitalk.render('gitalk-container')</script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
+<a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<div class=busuanzi-footer>
+<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+</div>
+<span class=copyright-year>
+&copy;
+2017 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>
