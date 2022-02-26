@@ -1,0 +1,254 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>寻路中国 - In Pursuit of Hubris</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="Ramsay Leung"><meta name=description content="1 前言 这是我读的第二本Peter Hessler(何伟)的书, 第一本是在大学期间, 经朋友推荐读起的, 再次拾起他的书, 便是这本. 一如前作, 他的文"><meta name=keywords content="Blog,Software,Enginering">
+<meta name=generator content="Hugo 0.92.2 with theme even">
+<link rel=canonical href=https://ramsayleung.github.io/post/2021/%E5%AF%BB%E8%B7%AF%E4%B8%AD%E5%9B%BD/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="寻路中国">
+<meta property="og:description" content="1 前言 这是我读的第二本Peter Hessler(何伟)的书, 第一本是在大学期间, 经朋友推荐读起的, 再次拾起他的书, 便是这本. 一如前作, 他的文">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ramsayleung.github.io/post/2021/%E5%AF%BB%E8%B7%AF%E4%B8%AD%E5%9B%BD/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2021-04-11T14:48:00+08:00">
+<meta property="article:modified_time" content="2022-02-26T11:28:02+08:00">
+<meta itemprop=name content="寻路中国">
+<meta itemprop=description content="1 前言 这是我读的第二本Peter Hessler(何伟)的书, 第一本是在大学期间, 经朋友推荐读起的, 再次拾起他的书, 便是这本. 一如前作, 他的文"><meta itemprop=datePublished content="2021-04-11T14:48:00+08:00">
+<meta itemprop=dateModified content="2022-02-26T11:28:02+08:00">
+<meta itemprop=wordCount content="1985">
+<meta itemprop=keywords content="book,"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="寻路中国">
+<meta name=twitter:description content="1 前言 这是我读的第二本Peter Hessler(何伟)的书, 第一本是在大学期间, 经朋友推荐读起的, 再次拾起他的书, 便是这本. 一如前作, 他的文"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/about_me>
+<li class=mobile-menu-item>About</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>In Pursuit of Hubris</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/about_me>About</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>寻路中国</h1>
+<div class=post-meta>
+<span class=post-time> 2021-04-11 </span>
+<div class=post-category>
+<a href=/categories/book/> book </a>
+</div>
+<span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#前言><span class=section-num>1</span> 前言</a></li>
+<li><a href=#长城-乡村-工厂><span class=section-num>2</span> 长城, 乡村, 工厂</a></li>
+<li><a href=#熟悉与陌生><span class=section-num>3</span> 熟悉与陌生</a>
+<ul>
+<li><a href=#房地产><span class=section-num>3.1</span> 房地产</a></li>
+<li><a href=#政治与官僚><span class=section-num>3.2</span> 政治与官僚</a></li>
+</ul>
+</li>
+<li><a href=#写在最后><span class=section-num>4</span> 写在最后</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<h2 id=前言><span class=section-num>1</span> 前言</h2>
+<p>这是我读的第二本Peter Hessler(何伟)的书, 第一本是在大学期间, 经朋友推荐读起的, 再次拾起他的书, 便是这本.</p>
+<p>一如前作, 他的文笔还是那般地平静隽永, 充满各种不期而至的幽默, 引人入胜, 手不释卷.</p>
+<h2 id=长城-乡村-工厂><span class=section-num>2</span> 长城, 乡村, 工厂</h2>
+<p>本书的主题是用汽车来感受中国的变迁, 记录下他眼中的中国工业革命之路.</p>
+<p>第一部分, 追寻长城的殘亘断砖, 游历中国大半个北方, 见识在现代化的进程下, 各种历史与村庄的消亡.</p>
+<p>第二部分, 在北京附近的农村定居, 并融入当地村民的生活, 见证农村的日益变化.</p>
+<p>第三部分, 是现代化进程的主力, 工厂的变迁之旅, 着眼于浙江的工厂, 以此来感受中国那如同19世纪工业革命的洪流.</p>
+<p>把目光放在每一个个体上, 记录着这个国家的一个个小人物, 如何成为时代中的历史人物.</p>
+<hr>
+<p><span class=timestamp-wrapper><span class=timestamp>&lt;2022-02-26 六></span></span></p>
+<p>看到徐州丰县为了避免记者进入八孩妈所在的村子，把整个村子用铁皮围了起来，由此想起了长城，想起了Beyond《长城》里面的歌词：</p>
+<blockquote>
+<p>围着老去的国度，围着事实的真相。</p>
+</blockquote>
+<h2 id=熟悉与陌生><span class=section-num>3</span> 熟悉与陌生</h2>
+<p>在涪陵的生活经历, 让他抹去了中国与外国的差别, 用中国通这样的词语来形容他, 甚至会显得苍白, 他对中国社会的观察和理解,
+甚至超越了许多身处其中的中国人.</p>
+<p>读此书的时候, 有种非常奇妙的感觉, 时常在熟悉与陌生之间, 在现实与魔幻之间不停地交替, 他写出了那种说不清, 道不明的微妙之处.
+当局者迷, 旁观者清, 在一团迷雾之中理不清的头绪, 原来在旁人看来却异常清晰.</p>
+<p>尤其令我感触良多的是, 写出了中国人心照不宣的潜规则, 写出了对生活的反思, 对世界的思考. 尤其是关于房价与地产的观察和思考, 可以说具有相当的洞察力.</p>
+<h3 id=房地产><span class=section-num>3.1</span> 房地产</h3>
+<p>各地都在基建, 大兴土木, 招商引资, 但是资金从何而来呢?</p>
+<p>沿海地区的各大城市的一半的财政收入来源于地产, 每个城市的市长相当于企业的CEO, 想的是在5年任期内多搞钱,
+玩法就是从农村买来土地, 然后修建对应的开发区, 拉高地价, 再转手以城市的土地价格卖出, 一进一出, 获利丰厚.</p>
+<p>对于农民来说, 只有土地的使用权, 没有所有权, 村集体也是这般, 所以当政府以城市化进程征收土地时, 农民并没有反对的余地,
+而征地补偿款是以农村土地的价格补偿的.</p>
+<p>所以说当卖地是政府的财政收大头, 还指望政府帮忙控制房价, 客观事实上就如同缘木求鱼.</p>
+<p>更何况有金融的系统性风险, 房产一旦降下来, 当房子的价值甚至少于要还的房贷, 只会导致贷款坏账, 进而引发银行业的蝴蝶效应.</p>
+<h3 id=政治与官僚><span class=section-num>3.2</span> 政治与官僚</h3>
+<p>作为一个在中国长期居住的外国人, 少不了和各种政府官员打交道, 因此对人民公仆们有相当深的认识:</p>
+<blockquote>
+<p>税务局尤其重要-如果没把这些干部们弄高兴，他们会让你的企业完全垮掉。「知道在中国是怎么回事吧：偷税漏税，」高老板说道。他这么说的意思，是指如果工厂要跟着大家做那种低报营业收入的勾当，先得跟那些干部们把关系搞好</p>
+</blockquote>
+<blockquote>
+<p>&ldquo;我们还没有做到这一步，但稍后，我们肯定要请税务局的官员们出去吃吃饭，&ldquo;他说。我问他，这些宴席上要不要送礼，他摇了摇头。&ldquo;饭桌上是不送礼的，&ldquo;他跟我讲，&ldquo;那些事情都是单独的。要送礼，得到他们家里去。&rdquo;</p>
+</blockquote>
+<blockquote>
+<p>位干部都不太注重着装，不过，他们还是高昂着头，其中一个拿出丽水市国税局的身份卡晃了一下。他姓刘，穿着蓝色牛仔裤和橘黄色T恤衫。他蓄着平头，这样的发型在中国一般意味着麻烦来了。在中国，那是恃强凌弱者的经典发型，我只要看见这样的平头，心就会不由自主地往下沉</p>
+</blockquote>
+<blockquote>
+<p>在工业城镇，人们对于当地政府的态度大多漠不关心。很多人抱怨当地政府官员贪污腐化，可说起这些事情的时候用的尽是些非常抽象的话语，因为他们跟领导干部很少有正面接触</p>
+</blockquote>
+<blockquote>
+<p>等到人们真正向政府求助时，那通常是走投无路的标志</p>
+</blockquote>
+<blockquote>
+<p>实际上，石帆的所有人都在抱怨搬迁这件事，其中有几个人怒气很大，他们已经准备正式上访。他们的目标，是要找到政府里面某个级别更高的官员。</p>
+</blockquote>
+<blockquote>
+<p>跟许许多多中国人一样，他们对当局有一种根深蒂固的信任，觉得贪腐只是地方一级官员的毛病。他们去了省城杭州，在各个专门设置的办公室里排队等候，以期引起某个官员的关注</p>
+</blockquote>
+<p>中国人即对公共事务, 政治缺少关注, 但日常又始终被政治空气所萦绕。你不来关心政治, 政治也会来关心你.</p>
+<p>中国人应该主动关心政治，政治不只是头上的一片飘渺的云，政治与你的工作，税收，教育，养老，医疗，防疫和各种民生问题息息相关。</p>
+<p>如果每个公民是计算机里面的独立进程，政治就是运行每个进程的底层操作系统，与每个进程「生死悠关」。</p>
+<h2 id=写在最后><span class=section-num>4</span> 写在最后</h2>
+<p>读何伟的书, 你不会有外国人写中国人的感觉, 不会有那种被故意夸大或者美化的故事, 你读到的, 只是一个温柔的旁观者, 用他的笔触, 记录他所看到的事, 每一个同时代的中国人都可能经历过的事而言.</p>
+<hr>
+<p><span class=timestamp-wrapper><span class=timestamp>&lt;2021-07-03 六></span></span>
+在Twitter上看到了消息，据说因为被学生举报，兼之中美关系恶化，美国作家何伟未获四川大学续聘，学期结束后他不得不与家人离开中国返美，希望今后能再回到中国。</p>
+<p>唉，一声叹息。</p>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2022-02-26
+</span>
+</p>
+</div>
+<footer class=post-footer>
+<div class=post-tags>
+<a href=/tags/book/>book</a>
+</div>
+<nav class=post-nav>
+<a class=prev href=/post/2021/iterate_through_pagination_api/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">Let's make everything iterable</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/post/2021/%E5%AF%B9%E4%BC%AA%E5%BF%83%E7%90%86%E5%AD%A6%E8%AF%B4%E4%B8%8D/>
+<span class="next-text nav-default">对伪心理学（科学）说不</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<div id=gitalk-container></div>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
+<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:'2021-04-11 14:48:00 \u002b0800 \u002b0800',title:'寻路中国',clientID:'3c034c97f0926fafd2d6',clientSecret:'192051927d267ce83eb2ef10955890b7db2720ad',repo:'comment',owner:'ramsayleung',admin:['ramsayleung'],body:decodeURI(location.href)});gitalk.render('gitalk-container')</script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
+<a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<div class=busuanzi-footer>
+<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+</div>
+<span class=copyright-year>
+&copy;
+2017 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>
