@@ -1,7 +1,7 @@
 +++
 title = "java8基于堆实现尾递归优化"
 date = 2020-07-05T16:51:00+08:00
-lastmod = 2022-02-25T21:05:54+08:00
+lastmod = 2022-02-26T10:11:32+08:00
 tags = ["java"]
 categories = ["java"]
 draft = false
@@ -10,13 +10,14 @@ toc = true
 
 ## <span class="section-num">1</span> 前言 {#前言}
 
-尾调用消除(tail call elimination, TCE)是函数式编程的重要概念,
-有时也被称为尾调用优化(tail call optimization, TCO),
+尾调用消除(tail call elimination, TCE)是函数式编程的重要概念, 有时也被称为尾调用优化(tail call optimization, TCO),
 作用是将尾递归函数转化成循环, 避免创建许多栈帧, 减少开销.
 
-遗憾的是,
-Java不支持TCE, 所以本文主要是介绍, 如何使用java8特性,
-基于堆来实现尾递归优化.
+遗憾的是, Java不支持TCE, 所以本文主要是介绍, 如何使用java8特性, 基于堆来实现尾递归优化.
+
+---
+
+一个有趣的事，这篇文章是我在阿里ATA上发的最后一篇文章。发在内网的第二天，也就是我的last day，有位P8的同事在钉钉上夸我文章写得好，只回复了一句，还未来得及多交流几句，我的离职流程就走完，钉钉被强制下线了，甚至没看到这位同事的回复。
 
 
 ## <span class="section-num">2</span> 尾调用与尾递归 {#尾调用与尾递归}
