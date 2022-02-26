@@ -13,7 +13,7 @@
 <meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
 <meta name=author content="Ramsay Leung"><meta name=description content="1 前言 尾调用消除(tail call elimination, TCE)是函数式编程的重要概念, 有时也被称为尾调用优化(tail call optimization, TCO), 作用是将尾递归函数转化成循环, 避免创建许"><meta name=keywords content="Blog,Software,Enginering">
 <meta name=generator content="Hugo 0.92.2 with theme even">
-<link rel=canonical href=https://ramsayleung.github.io/post/2019/java%E5%AE%9E%E7%8E%B0%E5%B0%BE%E9%80%92%E5%BD%92%E4%BC%98%E5%8C%96/>
+<link rel=canonical href=https://ramsayleung.github.io/post/2020/java%E5%AE%9E%E7%8E%B0%E5%B0%BE%E9%80%92%E5%BD%92%E4%BC%98%E5%8C%96/>
 <link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
 <link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
@@ -25,13 +25,13 @@
 <meta property="og:title" content="java8基于堆实现尾递归优化">
 <meta property="og:description" content="1 前言 尾调用消除(tail call elimination, TCE)是函数式编程的重要概念, 有时也被称为尾调用优化(tail call optimization, TCO), 作用是将尾递归函数转化成循环, 避免创建许">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://ramsayleung.github.io/post/2019/java%E5%AE%9E%E7%8E%B0%E5%B0%BE%E9%80%92%E5%BD%92%E4%BC%98%E5%8C%96/"><meta property="article:section" content="post">
+<meta property="og:url" content="https://ramsayleung.github.io/post/2020/java%E5%AE%9E%E7%8E%B0%E5%B0%BE%E9%80%92%E5%BD%92%E4%BC%98%E5%8C%96/"><meta property="article:section" content="post">
 <meta property="article:published_time" content="2020-07-05T16:51:00+08:00">
-<meta property="article:modified_time" content="2022-02-25T21:05:54+08:00">
+<meta property="article:modified_time" content="2022-02-26T10:11:32+08:00">
 <meta itemprop=name content="java8基于堆实现尾递归优化">
 <meta itemprop=description content="1 前言 尾调用消除(tail call elimination, TCE)是函数式编程的重要概念, 有时也被称为尾调用优化(tail call optimization, TCO), 作用是将尾递归函数转化成循环, 避免创建许"><meta itemprop=datePublished content="2020-07-05T16:51:00+08:00">
-<meta itemprop=dateModified content="2022-02-25T21:05:54+08:00">
-<meta itemprop=wordCount content="2827">
+<meta itemprop=dateModified content="2022-02-26T10:11:32+08:00">
+<meta itemprop=wordCount content="2947">
 <meta itemprop=keywords content="java,"><meta name=twitter:card content="summary">
 <meta name=twitter:title content="java8基于堆实现尾递归优化">
 <meta name=twitter:description content="1 前言 尾调用消除(tail call elimination, TCE)是函数式编程的重要概念, 有时也被称为尾调用优化(tail call optimization, TCO), 作用是将尾递归函数转化成循环, 避免创建许"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
@@ -110,12 +110,11 @@
 </div>
 <div class=post-content>
 <h2 id=前言><span class=section-num>1</span> 前言</h2>
-<p>尾调用消除(tail call elimination, TCE)是函数式编程的重要概念,
-有时也被称为尾调用优化(tail call optimization, TCO),
+<p>尾调用消除(tail call elimination, TCE)是函数式编程的重要概念, 有时也被称为尾调用优化(tail call optimization, TCO),
 作用是将尾递归函数转化成循环, 避免创建许多栈帧, 减少开销.</p>
-<p>遗憾的是,
-Java不支持TCE, 所以本文主要是介绍, 如何使用java8特性,
-基于堆来实现尾递归优化.</p>
+<p>遗憾的是, Java不支持TCE, 所以本文主要是介绍, 如何使用java8特性, 基于堆来实现尾递归优化.</p>
+<hr>
+<p>一个有趣的事，这篇文章是我在阿里ATA上发的最后一篇文章。发在内网的第二天，也就是我的last day，有位P8的同事在钉钉上夸我文章写得好，只回复了一句，还未来得及多交流几句，我的离职流程就走完，钉钉被强制下线了，甚至没看到这位同事的回复。</p>
 <h2 id=尾调用与尾递归><span class=section-num>2</span> 尾调用与尾递归</h2>
 <p>想要了解尾递归优化, 首先要了解下什么是尾调用.</p>
 <p>尾调用的概念非常简单,
@@ -620,7 +619,7 @@ code to figure out who&rsquo;s calling them.</p>
 <p class=copyright-item>
 <span class=item-title>LastMod</span>
 <span class=item-content>
-2022-02-25
+2022-02-26
 </span>
 </p>
 </div>
