@@ -2,8 +2,7 @@
 <head>
 <meta charset=utf-8>
 <meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
-<title>Shell神器fasd与Eshell的不期而遇 - In Pursuit of Hubris</title>
-<meta name=renderer content="webkit">
+<title>Shell神器fasd与Eshell的不期而遇 - In Pursuit of Hubris</title><meta name=renderer content="webkit">
 <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
 <meta http-equiv=cache-control content="no-transform">
 <meta http-equiv=cache-control content="no-siteapp">
@@ -12,7 +11,7 @@
 <meta name=apple-mobile-web-app-capable content="yes">
 <meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
 <meta name=author content="Ramsay Leung"><meta name=description content="An introduction about tweaking eshell with fasd"><meta name=keywords content="eshell,fasd">
-<meta name=generator content="Hugo 0.92.2 with theme even">
+<meta name=generator content="Hugo 0.93.2 with theme even">
 <link rel=canonical href=https://ramsayleung.github.io/post/2017/fasd-meet-eshell/>
 <link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
@@ -36,37 +35,31 @@
 <meta name=twitter:title content="Shell神器fasd与Eshell的不期而遇">
 <meta name=twitter:description content="An introduction about tweaking eshell with fasd"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
 <script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
-</head>
-<body>
+</head><body>
 <div id=mobile-navbar class=mobile-navbar>
 <div class=mobile-header-logo>
 <a href=/ class=logo>In Pursuit of Hubris</a>
-</div>
-<div class=mobile-navbar-icon>
+</div><div class=mobile-navbar-icon>
 <span></span>
 <span></span>
 <span></span>
-</div>
-</div>
-<nav id=mobile-menu class="mobile-menu slideout-menu">
+</div></div><nav id=mobile-menu class="mobile-menu slideout-menu">
 <ul class=mobile-menu-list>
 <a href=/>
-<li class=mobile-menu-item>Home</li>
-</a><a href=/post/>
-<li class=mobile-menu-item>Archives</li>
-</a><a href=/tags/>
-<li class=mobile-menu-item>Tags</li>
-</a><a href=/about_me>
-<li class=mobile-menu-item>About</li>
-</a>
-</ul>
-</nav>
-<div class=container id=mobile-panel>
+<li class=mobile-menu-item>Home</li></a><a href=/post/>
+<li class=mobile-menu-item>Archives</li></a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li></a><a href=/about_me>
+<li class=mobile-menu-item>About</li></a>
+</ul></nav><div class=container id=mobile-panel>
 <header id=header class=header>
-<div class=logo-wrapper>
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F1N7KS6M5Q"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-F1N7KS6M5Q",{anonymize_ip:!0})}</script>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script>
+<script async src=https://www.google-analytics.com/analytics.js></script>
+</head><div class=logo-wrapper>
 <a href=/ class=logo>In Pursuit of Hubris</a>
-</div>
-<nav class=site-navbar>
+</div><nav class=site-navbar>
 <ul id=menu class=menu>
 <li class=menu-item>
 <a class=menu-item-link href=/>Home</a>
@@ -76,86 +69,41 @@
 <a class=menu-item-link href=/tags/>Tags</a>
 </li><li class=menu-item>
 <a class=menu-item-link href=/about_me>About</a>
-</li>
-</ul>
-</nav>
-</header>
-<main id=main class=main>
+</li></ul></nav></header><main id=main class=main>
 <div class=content-wrapper>
 <div id=content class=content>
 <article class=post>
 <header class=post-header>
-<h1 class=post-title>Shell神器fasd与Eshell的不期而遇</h1>
-<div class=post-meta>
+<h1 class=post-title>Shell神器fasd与Eshell的不期而遇</h1><div class=post-meta>
 <span class=post-time> 2017-03-02 </span>
 <div class=post-category>
 <a href=/categories/emacs/> emacs </a>
-</div>
-<span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
-</div>
-</header>
-<div class=post-toc id=post-toc>
-<h2 class=post-toc-title>Contents</h2>
-<div class="post-toc-content always-active">
+</div><span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
+</div></header><div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active">
 <nav id=TableOfContents>
 <ul>
 <li><a href=#fasd><span class=section-num>1</span> Fasd</a>
 <ul>
-<li><a href=#常用选项><span class=section-num>1.1</span> 常用选项</a></li>
-<li><a href=#例子><span class=section-num>1.2</span> 例子</a></li>
-</ul>
-</li>
-<li><a href=#fasd-plus-eshell><span class=section-num>2</span> Fasd +Eshell</a></li>
-</ul>
-</nav>
-</div>
-</div>
-<div class=post-content>
+<li><a href=#常用选项><span class=section-num>1.1</span> 常用选项</a></li><li><a href=#例子><span class=section-num>1.2</span> 例子</a></li></ul></li><li><a href=#fasd-plus-eshell><span class=section-num>2</span> Fasd +Eshell</a></li></ul></nav></div></div><div class=post-content>
 <blockquote>
-<p>fasd - quick access to files and directory</p>
-</blockquote>
-<p>之前一位 Windows 用户看到我在 Shell 下面的操作，他很奇怪，觉得明明已经有图形化界面，为什么还要用这种命令行呢，直接用鼠标点击不就很好了么。</p>
-<p>我觉得很难直接跟他解释，因为他没有用过Linux/Unix,完全不熟悉命令行，不知道其强大之处，其高效率是图形化界面完全无法比拟的(当然，命令行的学习成本和学习曲线肯定比图型化界面高), So I live in terminal.</p>
-<p>而今天我要介绍的神器 fasd 就是可以让命令行操作变得更加高效</p>
-<h2 id=fasd><span class=section-num>1</span> Fasd</h2>
-<p>在 Shell 下面有非常多的命令操作是与文件和目录相关的，如果你要进入到另外一个目 录你可以使用相对或者绝对路径来访问该目录，但是如果这是一个与当前目录不相关的目 录你就只能通过绝对路径来访问。</p>
-<p>以我自己的目录为例，当前目录是 <strong><em>home/samray</em>.emacs.d/elisp/</strong> ,我希望访问 <strong>Document</strong> 目录下一个的子目录 <strong>Python</strong>, 我可以通过下面的命令来访问：</p>
-<div class=highlight><div class=chroma>
+<p>fasd - quick access to files and directory</p></blockquote><p>之前一位 Windows 用户看到我在 Shell 下面的操作，他很奇怪，觉得明明已经有图形化界面，为什么还要用这种命令行呢，直接用鼠标点击不就很好了么。</p><p>我觉得很难直接跟他解释，因为他没有用过Linux/Unix,完全不熟悉命令行，不知道其强大之处，其高效率是图形化界面完全无法比拟的(当然，命令行的学习成本和学习曲线肯定比图型化界面高), So I live in terminal.</p><p>而今天我要介绍的神器 fasd 就是可以让命令行操作变得更加高效</p><h2 id=fasd><span class=section-num>1</span> Fasd</h2><p>在 Shell 下面有非常多的命令操作是与文件和目录相关的，如果你要进入到另外一个目 录你可以使用相对或者绝对路径来访问该目录，但是如果这是一个与当前目录不相关的目 录你就只能通过绝对路径来访问。</p><p>以我自己的目录为例，当前目录是 <strong><em>home/samray</em>.emacs.d/elisp/</strong> ,我希望访问 <strong>Document</strong> 目录下一个的子目录 <strong>Python</strong>, 我可以通过下面的命令来访问：</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=nb>cd</span> ~/Document/Programming/Python
-<span class=nb>cd</span> /home/samray/Document/Programming/Python
-</code></pre></td></tr></table>
-</div>
-</div><p>这就是我需要的命令，虽然可以通过 <strong>tab</strong> 进行目录名的补全，但是我还是觉得要输入的东西太多了(正如 Larry Wall 所说，懒惰是程序员的美德). 然后，我发现了 <a href=https://github.com/clvv/fasd>Fasd </a>这个神器。它可以让我只输入 <strong>Python</strong> 就进入到我想访问的 <strong>Python</strong> 目录，</p>
-<p>神奇吧！:)</p>
-<hr>
-<p>Fasd以访问的频繁程度和最近是否有访问对文件和目录分配优先级，然后通过判断已访问的文件以及其优先级来切换目录或者打开文件，所以如果你之前已经访问过某个目录.</p>
-<p>那么 你很容易就可以切换到那个目录</p>
-<h3 id=常用选项><span class=section-num>1.1</span> 常用选项</h3>
-<ul>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=nb>cd</span> ~/Document/Programming/Python
+</span></span><span class=line><span class=cl><span class=nb>cd</span> /home/samray/Document/Programming/Python
+</span></span></code></pre></td></tr></table></div></div><p>这就是我需要的命令，虽然可以通过 <strong>tab</strong> 进行目录名的补全，但是我还是觉得要输入的东西太多了(正如 Larry Wall 所说，懒惰是程序员的美德). 然后，我发现了 <a href=https://github.com/clvv/fasd>Fasd </a>这个神器。它可以让我只输入 <strong>Python</strong> 就进入到我想访问的 <strong>Python</strong> 目录，</p><p>神奇吧！:)</p><hr>
+<p>Fasd以访问的频繁程度和最近是否有访问对文件和目录分配优先级，然后通过判断已访问的文件以及其优先级来切换目录或者打开文件，所以如果你之前已经访问过某个目录.</p><p>那么 你很容易就可以切换到那个目录</p><h3 id=常用选项><span class=section-num>1.1</span> 常用选项</h3><ul>
 <li>
-<p><strong>-a(any)</strong>: 匹配文件和目录</p>
-</li>
-<li>
-<p><strong>-i(interactive)</strong>: 以交互的方式选择文件或者目录</p>
-</li>
-<li>
-<p><strong>-s(show/search)</strong>: 按照优先级展示文件或者目录</p>
-</li>
-<li>
-<p><strong>-e &lt;cmd></strong>:对匹配的文件调用命令&lt;cmd></p>
-</li>
-<li>
-<p><strong>-d</strong>:只匹配目录</p>
-</li>
-<li>
+<p><strong>-a(any)</strong>: 匹配文件和目录</p></li><li>
+<p><strong>-i(interactive)</strong>: 以交互的方式选择文件或者目录</p></li><li>
+<p><strong>-s(show/search)</strong>: 按照优先级展示文件或者目录</p></li><li>
+<p><strong>-e &lt;cmd></strong>:对匹配的文件调用命令&lt;cmd></p></li><li>
+<p><strong>-d</strong>:只匹配目录</p></li><li>
 <p><strong>-f</strong>:只匹配文件
-Fasd 文档还建议你为 fasd的命令选项设置别名</p>
-<div class=highlight><div class=chroma>
+Fasd 文档还建议你为 fasd的命令选项设置别名</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
@@ -165,63 +113,37 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 </span><span class=lnt>6
 </span><span class=lnt>7
 </span><span class=lnt>8
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=nb>alias</span> <span class=nv>a</span><span class=o>=</span><span class=s1>&#39;fasd -a&#39;</span>        <span class=c1># any</span>
-<span class=nb>alias</span> <span class=nv>s</span><span class=o>=</span><span class=s1>&#39;fasd -si&#39;</span>       <span class=c1># show / search / select</span>
-<span class=nb>alias</span> <span class=nv>d</span><span class=o>=</span><span class=s1>&#39;fasd -d&#39;</span>        <span class=c1># directory</span>
-<span class=nb>alias</span> <span class=nv>f</span><span class=o>=</span><span class=s1>&#39;fasd -f&#39;</span>        <span class=c1># file</span>
-<span class=nb>alias</span> <span class=nv>sd</span><span class=o>=</span><span class=s1>&#39;fasd -sid&#39;</span>     <span class=c1># interactive directory selection</span>
-<span class=nb>alias</span> <span class=nv>sf</span><span class=o>=</span><span class=s1>&#39;fasd -sif&#39;</span>     <span class=c1># interactive file selection</span>
-<span class=nb>alias</span> <span class=nv>z</span><span class=o>=</span><span class=s1>&#39;fasd_cd -d&#39;</span>     <span class=c1># cd, same functionality as j in autojump</span>
-<span class=nb>alias</span> <span class=nv>zz</span><span class=o>=</span><span class=s1>&#39;fasd_cd -d -i&#39;</span> <span class=c1># cd with interactive selection</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>这样你就可以通过 <strong>z some-dir</strong> 直接进入到某个目录或者 <strong>zz some-dir</strong> 选择进入有多个匹配的特定目录。</p>
-<p>Fasd 还会判断应该显示所有的匹配选项或者是直接选择最佳匹配. 例如你也可以将fasd配合 <em>subshell</em> 使用，例如打开 <strong>foo</strong></p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=nb>alias</span> <span class=nv>a</span><span class=o>=</span><span class=s1>&#39;fasd -a&#39;</span>        <span class=c1># any</span>
+</span></span><span class=line><span class=cl><span class=nb>alias</span> <span class=nv>s</span><span class=o>=</span><span class=s1>&#39;fasd -si&#39;</span>       <span class=c1># show / search / select</span>
+</span></span><span class=line><span class=cl><span class=nb>alias</span> <span class=nv>d</span><span class=o>=</span><span class=s1>&#39;fasd -d&#39;</span>        <span class=c1># directory</span>
+</span></span><span class=line><span class=cl><span class=nb>alias</span> <span class=nv>f</span><span class=o>=</span><span class=s1>&#39;fasd -f&#39;</span>        <span class=c1># file</span>
+</span></span><span class=line><span class=cl><span class=nb>alias</span> <span class=nv>sd</span><span class=o>=</span><span class=s1>&#39;fasd -sid&#39;</span>     <span class=c1># interactive directory selection</span>
+</span></span><span class=line><span class=cl><span class=nb>alias</span> <span class=nv>sf</span><span class=o>=</span><span class=s1>&#39;fasd -sif&#39;</span>     <span class=c1># interactive file selection</span>
+</span></span><span class=line><span class=cl><span class=nb>alias</span> <span class=nv>z</span><span class=o>=</span><span class=s1>&#39;fasd_cd -d&#39;</span>     <span class=c1># cd, same functionality as j in autojump</span>
+</span></span><span class=line><span class=cl><span class=nb>alias</span> <span class=nv>zz</span><span class=o>=</span><span class=s1>&#39;fasd_cd -d -i&#39;</span> <span class=c1># cd with interactive selection</span>
+</span></span></code></pre></td></tr></table></div></div><p>这样你就可以通过 <strong>z some-dir</strong> 直接进入到某个目录或者 <strong>zz some-dir</strong> 选择进入有多个匹配的特定目录。</p><p>Fasd 还会判断应该显示所有的匹配选项或者是直接选择最佳匹配. 例如你也可以将fasd配合 <em>subshell</em> 使用，例如打开 <strong>foo</strong></p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>vim <span class=sb>`</span>f foo<span class=sb>`</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>又或者打开 <strong>/etc/rc.conf</strong></p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>vim <span class=sb>`</span>f foo<span class=sb>`</span>
+</span></span></code></pre></td></tr></table></div></div><p>又或者打开 <strong>/etc/rc.conf</strong></p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>vim <span class=sb>`</span>f rc conf<span class=sb>`</span>
-</code></pre></td></tr></table>
-</div>
-</div></li>
-</ul>
-<h3 id=例子><span class=section-num>1.2</span> 例子</h3>
-<p>你可以将fasd 配合正则表达式使用，例如列举以 <em>py</em> 结尾的最近访问的文件：</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>vim <span class=sb>`</span>f rc conf<span class=sb>`</span>
+</span></span></code></pre></td></tr></table></div></div></li></ul><h3 id=例子><span class=section-num>1.2</span> 例子</h3><p>你可以将fasd 配合正则表达式使用，例如列举以 <em>py</em> 结尾的最近访问的文件：</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>f py$
-</code></pre></td></tr></table>
-</div>
-</div><p>又或者使用Emacs 打开最近频繁访问的文件 <em>bar</em></p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>f py$
+</span></span></code></pre></td></tr></table></div></div><p>又或者使用Emacs 打开最近频繁访问的文件 <em>bar</em></p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>f -e emacs bar
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=fasd-plus-eshell><span class=section-num>2</span> Fasd +Eshell</h2>
-<p>fasd 真的可以大幅度提高效率，但是我有点不太满意的是，我是个 Emacser, 我的操作基本是在 Emacs 里完成的，而我在 Emacs里面使用的 shell 是 Eshell,Eshell 似乎不能与 fasd 无缝结合，似乎可以折腾一下。</p>
-<hr>
-<p><strong>z</strong> 和 <strong>zz</strong> 命令是无法在Eshell 里面运行，因为 <strong>z</strong> 是 <strong>fasd_cd</strong> 的别名，而<strong>fasd_cd</strong> 是一个shell script 函数，Eshell无法运行该函数，代码如下：</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>f -e emacs bar
+</span></span></code></pre></td></tr></table></div></div><h2 id=fasd-plus-eshell><span class=section-num>2</span> Fasd +Eshell</h2><p>fasd 真的可以大幅度提高效率，但是我有点不太满意的是，我是个 Emacser, 我的操作基本是在 Emacs 里完成的，而我在 Emacs里面使用的 shell 是 Eshell,Eshell 似乎不能与 fasd 无缝结合，似乎可以折腾一下。</p><hr>
+<p><strong>z</strong> 和 <strong>zz</strong> 命令是无法在Eshell 里面运行，因为 <strong>z</strong> 是 <strong>fasd_cd</strong> 的别名，而<strong>fasd_cd</strong> 是一个shell script 函数，Eshell无法运行该函数，代码如下：</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
@@ -233,22 +155,18 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 </span><span class=lnt> 8
 </span><span class=lnt> 9
 </span><span class=lnt>10
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>fasd_cd <span class=o>()</span> <span class=o>{</span>
-    <span class=k>if</span> <span class=o>[</span> <span class=nv>$#</span> -le <span class=m>1</span> <span class=o>]</span>
-    <span class=k>then</span>
-	fasd <span class=s2>&#34;</span><span class=nv>$@</span><span class=s2>&#34;</span>
-    <span class=k>else</span>
-	<span class=nb>local</span> <span class=nv>_fasd_ret</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span>fasd -e <span class=s1>&#39;printf %s&#39;</span> <span class=s2>&#34;</span><span class=nv>$@</span><span class=s2>&#34;</span><span class=k>)</span><span class=s2>&#34;</span>
-	<span class=o>[</span> -z <span class=s2>&#34;</span><span class=nv>$_fasd_ret</span><span class=s2>&#34;</span> <span class=o>]</span> <span class=o>&amp;&amp;</span> <span class=k>return</span>
-	<span class=o>[</span> -d <span class=s2>&#34;</span><span class=nv>$_fasd_ret</span><span class=s2>&#34;</span> <span class=o>]</span> <span class=o>&amp;&amp;</span> <span class=nb>cd</span> <span class=s2>&#34;</span><span class=nv>$_fasd_ret</span><span class=s2>&#34;</span> <span class=o>||</span> <span class=nb>printf</span> %s<span class=se>\n</span> <span class=s2>&#34;</span><span class=nv>$_fasd_ret</span><span class=s2>&#34;</span>
-    <span class=k>fi</span>
-<span class=o>}</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>Eshell无法运行该函数，因为Eshell文档的匮乏，我也不知道如何编写跟上面代码等价的 &ldquo;Eshell script&rdquo;,所以就用 elisp 写一段同样功能的函数好了。</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>fasd_cd <span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=o>[</span> <span class=nv>$#</span> -le <span class=m>1</span> <span class=o>]</span>
+</span></span><span class=line><span class=cl>    <span class=k>then</span>
+</span></span><span class=line><span class=cl>	fasd <span class=s2>&#34;</span><span class=nv>$@</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span>
+</span></span><span class=line><span class=cl>	<span class=nb>local</span> <span class=nv>_fasd_ret</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span>fasd -e <span class=s1>&#39;printf %s&#39;</span> <span class=s2>&#34;</span><span class=nv>$@</span><span class=s2>&#34;</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=o>[</span> -z <span class=s2>&#34;</span><span class=nv>$_fasd_ret</span><span class=s2>&#34;</span> <span class=o>]</span> <span class=o>&amp;&amp;</span> <span class=k>return</span>
+</span></span><span class=line><span class=cl>	<span class=o>[</span> -d <span class=s2>&#34;</span><span class=nv>$_fasd_ret</span><span class=s2>&#34;</span> <span class=o>]</span> <span class=o>&amp;&amp;</span> <span class=nb>cd</span> <span class=s2>&#34;</span><span class=nv>$_fasd_ret</span><span class=s2>&#34;</span> <span class=o>||</span> <span class=nb>printf</span> %s<span class=se>\n</span> <span class=s2>&#34;</span><span class=nv>$_fasd_ret</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>fi</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>Eshell无法运行该函数，因为Eshell文档的匮乏，我也不知道如何编写跟上面代码等价的 &ldquo;Eshell script&rdquo;,所以就用 elisp 写一段同样功能的函数好了。</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
@@ -260,64 +178,45 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 </span><span class=lnt> 8
 </span><span class=lnt> 9
 </span><span class=lnt>10
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-emacs-lisp data-lang=emacs-lisp><span class=p>(</span><span class=nb>defun</span> <span class=nv>samray/eshell-fasd-z</span> <span class=p>(</span><span class=kp>&amp;rest</span> <span class=nv>args</span><span class=p>)</span>
-  <span class=s>&#34;Use fasd to change directory more effectively by passing ARGS.&#34;</span>
-  <span class=p>(</span><span class=nb>setq</span> <span class=nv>args</span> <span class=p>(</span><span class=nv>eshell-flatten-list</span> <span class=nv>args</span><span class=p>))</span>
-  <span class=p>(</span><span class=nb>let*</span> <span class=p>((</span><span class=nv>fasd</span> <span class=p>(</span><span class=nf>concat</span> <span class=s>&#34;fasd &#34;</span> <span class=p>(</span><span class=nf>car</span> <span class=nv>args</span><span class=p>)))</span>
-	 <span class=p>(</span><span class=nv>fasd-result</span> <span class=p>(</span><span class=nv>shell-command-to-string</span> <span class=nv>fasd</span><span class=p>))</span>
-	 <span class=p>(</span><span class=nv>path</span> <span class=p>(</span><span class=nv>replace-regexp-in-string</span> <span class=s>&#34;\n$&#34;</span> <span class=s>&#34;&#34;</span> <span class=nv>fasd-result</span><span class=p>))</span>
-	 <span class=p>)</span>
-    <span class=p>(</span><span class=nv>eshell/cd</span> <span class=nv>path</span><span class=p>)</span>
-    <span class=p>(</span><span class=nv>eshell/echo</span> <span class=nv>path</span><span class=p>)</span>
-    <span class=p>))</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>函数功能很快就写好了，实现了 <strong>z</strong> 的功能，但是原来的代码一直不能正常运行，折腾了一个多小时都没解决，输出什么都正常，最后 debug 发现是因为显示的路径后面多了一个换行符即 <strong>/home/samray</strong> 变成了 <strong>/home/samray\n</strong>,而输出换行符又不会显示，真
-的坑。</p>
-<p>最后为命令赋予别名就可以像在 <strong>zsh</strong> 下那样工作了：</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-emacs-lisp data-lang=emacs-lisp><span class=line><span class=cl><span class=p>(</span><span class=nb>defun</span> <span class=nv>samray/eshell-fasd-z</span> <span class=p>(</span><span class=kp>&amp;rest</span> <span class=nv>args</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=s>&#34;Use fasd to change directory more effectively by passing ARGS.&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=nb>setq</span> <span class=nv>args</span> <span class=p>(</span><span class=nv>eshell-flatten-list</span> <span class=nv>args</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=nb>let*</span> <span class=p>((</span><span class=nv>fasd</span> <span class=p>(</span><span class=nf>concat</span> <span class=s>&#34;fasd &#34;</span> <span class=p>(</span><span class=nf>car</span> <span class=nv>args</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>	 <span class=p>(</span><span class=nv>fasd-result</span> <span class=p>(</span><span class=nv>shell-command-to-string</span> <span class=nv>fasd</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>	 <span class=p>(</span><span class=nv>path</span> <span class=p>(</span><span class=nv>replace-regexp-in-string</span> <span class=s>&#34;\n$&#34;</span> <span class=s>&#34;&#34;</span> <span class=nv>fasd-result</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>	 <span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=nv>eshell/cd</span> <span class=nv>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=nv>eshell/echo</span> <span class=nv>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>))</span>
+</span></span></code></pre></td></tr></table></div></div><p>函数功能很快就写好了，实现了 <strong>z</strong> 的功能，但是原来的代码一直不能正常运行，折腾了一个多小时都没解决，输出什么都正常，最后 debug 发现是因为显示的路径后面多了一个换行符即 <strong>/home/samray</strong> 变成了 <strong>/home/samray\n</strong>,而输出换行符又不会显示，真
+的坑。</p><p>最后为命令赋予别名就可以像在 <strong>zsh</strong> 下那样工作了：</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=nb>alias</span> z <span class=s1>&#39;samray/shell-fasd-z $1&#39;</span>
-</code></pre></td></tr></table>
-</div>
-</div><hr>
-<p>更多的用法就要查阅官方文档了</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=nb>alias</span> z <span class=s1>&#39;samray/shell-fasd-z $1&#39;</span>
+</span></span></code></pre></td></tr></table></div></div><hr>
+<p>更多的用法就要查阅官方文档了</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>man fasd
-</code></pre></td></tr></table>
-</div>
-</div><p>Enjoy Emacs and Shell :)</p>
-<p>参考：
-<a href=https://github.com/clvv/fasd>https://github.com/clvv/fasd</a></p>
-</div>
-<div class=post-copyright>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>man fasd
+</span></span></code></pre></td></tr></table></div></div><p>Enjoy Emacs and Shell :)</p><p>参考：
+<a href=https://github.com/clvv/fasd>https://github.com/clvv/fasd</a></p></div><div class=post-copyright>
 <p class=copyright-item>
 <span class=item-title>Author</span>
 <span class=item-content>Ramsay Leung</span>
-</p>
-<p class=copyright-item>
+</p><p class=copyright-item>
 <span class=item-title>LastMod</span>
 <span class=item-content>
 2022-02-23
 </span>
-</p>
-</div>
-<footer class=post-footer>
+</p></div><footer class=post-footer>
 <div class=post-tags>
 <a href=/tags/emacs/>emacs</a>
 <a href=/tags/shell/>shell</a>
 <a href=/tags/eshell/>eshell</a>
-</div>
-<nav class=post-nav>
+</div><nav class=post-nav>
 <a class=prev href=/post/2017/magit/>
 <i class="iconfont icon-left"></i>
 <span class="prev-text nav-default">(翻译)An Introduction to Magit</span>
@@ -328,26 +227,17 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 <span class="next-text nav-mobile">Next</span>
 <i class="iconfont icon-right"></i>
 </a>
-</nav>
-</footer>
-</article>
-</div>
-<div id=gitalk-container></div>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
+</nav></footer></article></div><div id=gitalk-container></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
 <script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
-<script type=text/javascript>var gitalk=new Gitalk({id:'2017-03-02 00:00:00 \u002b0800 \u002b0800',title:'Shell神器fasd与Eshell的不期而遇',clientID:'3c034c97f0926fafd2d6',clientSecret:'192051927d267ce83eb2ef10955890b7db2720ad',repo:'comment',owner:'ramsayleung',admin:['ramsayleung'],body:decodeURI(location.href)});gitalk.render('gitalk-container')</script>
-<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript>
-</div>
-</main>
-<footer id=footer class=footer>
+<script type=text/javascript>var gitalk=new Gitalk({id:"2017-03-02 00:00:00 \u002b0800 \u002b0800",title:"Shell神器fasd与Eshell的不期而遇",clientID:"3c034c97f0926fafd2d6",clientSecret:"192051927d267ce83eb2ef10955890b7db2720ad",repo:"comment",owner:"ramsayleung",admin:["ramsayleung"],body:decodeURI(location.href)});gitalk.render("gitalk-container")</script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript></div></main><footer id=footer class=footer>
 <div class=social-links>
 <a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
 <a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
 <a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
 <a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
 <a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
-</div>
-<div class=copyright>
+</div><div class=copyright>
 <span class=power-by>
 Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
 </span>
@@ -360,23 +250,17 @@ Theme -
 <span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
 <span class=division>|</span>
 <span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
-</div>
-<span class=copyright-year>
+</div><span class=copyright-year>
 &copy;
 2017 -
 2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
 </span>
-</div>
-</footer>
-<div class=back-to-top id=back-to-top>
+</div></footer><div class=back-to-top id=back-to-top>
 <i class="iconfont icon-up"></i>
-</div>
-</div>
-<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+</div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
-<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-F1N7KS6M5Q','auto'),ga('set','anonymizeIp',!0),ga('send','pageview'))</script>
+<script type=text/javascript src=/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js></script>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script>
 <script async src=https://www.google-analytics.com/analytics.js></script>
-</body>
-</html>
+</body></html>

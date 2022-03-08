@@ -2,8 +2,7 @@
 <head>
 <meta charset=utf-8>
 <meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
-<title>枯树逢春之ArchLinux领风骚 - In Pursuit of Hubris</title>
-<meta name=renderer content="webkit">
+<title>枯树逢春之ArchLinux领风骚 - In Pursuit of Hubris</title><meta name=renderer content="webkit">
 <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
 <meta http-equiv=cache-control content="no-transform">
 <meta http-equiv=cache-control content="no-siteapp">
@@ -12,7 +11,7 @@
 <meta name=apple-mobile-web-app-capable content="yes">
 <meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
 <meta name=author content="Ramsay Leung"><meta name=description content="An description about how to install arch linux in an old machine"><meta name=keywords content="Blog,Software,Enginering">
-<meta name=generator content="Hugo 0.92.2 with theme even">
+<meta name=generator content="Hugo 0.93.2 with theme even">
 <link rel=canonical href=https://ramsayleung.github.io/post/2017/install_archlinux/>
 <link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
@@ -36,37 +35,31 @@
 <meta name=twitter:title content="枯树逢春之ArchLinux领风骚">
 <meta name=twitter:description content="An description about how to install arch linux in an old machine"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
 <script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
-</head>
-<body>
+</head><body>
 <div id=mobile-navbar class=mobile-navbar>
 <div class=mobile-header-logo>
 <a href=/ class=logo>In Pursuit of Hubris</a>
-</div>
-<div class=mobile-navbar-icon>
+</div><div class=mobile-navbar-icon>
 <span></span>
 <span></span>
 <span></span>
-</div>
-</div>
-<nav id=mobile-menu class="mobile-menu slideout-menu">
+</div></div><nav id=mobile-menu class="mobile-menu slideout-menu">
 <ul class=mobile-menu-list>
 <a href=/>
-<li class=mobile-menu-item>Home</li>
-</a><a href=/post/>
-<li class=mobile-menu-item>Archives</li>
-</a><a href=/tags/>
-<li class=mobile-menu-item>Tags</li>
-</a><a href=/about_me>
-<li class=mobile-menu-item>About</li>
-</a>
-</ul>
-</nav>
-<div class=container id=mobile-panel>
+<li class=mobile-menu-item>Home</li></a><a href=/post/>
+<li class=mobile-menu-item>Archives</li></a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li></a><a href=/about_me>
+<li class=mobile-menu-item>About</li></a>
+</ul></nav><div class=container id=mobile-panel>
 <header id=header class=header>
-<div class=logo-wrapper>
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F1N7KS6M5Q"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-F1N7KS6M5Q",{anonymize_ip:!0})}</script>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script>
+<script async src=https://www.google-analytics.com/analytics.js></script>
+</head><div class=logo-wrapper>
 <a href=/ class=logo>In Pursuit of Hubris</a>
-</div>
-<nav class=site-navbar>
+</div><nav class=site-navbar>
 <ul id=menu class=menu>
 <li class=menu-item>
 <a class=menu-item-link href=/>Home</a>
@@ -76,412 +69,220 @@
 <a class=menu-item-link href=/tags/>Tags</a>
 </li><li class=menu-item>
 <a class=menu-item-link href=/about_me>About</a>
-</li>
-</ul>
-</nav>
-</header>
-<main id=main class=main>
+</li></ul></nav></header><main id=main class=main>
 <div class=content-wrapper>
 <div id=content class=content>
 <article class=post>
 <header class=post-header>
-<h1 class=post-title>枯树逢春之ArchLinux领风骚</h1>
-<div class=post-meta>
+<h1 class=post-title>枯树逢春之ArchLinux领风骚</h1><div class=post-meta>
 <span class=post-time> 2017-02-27 </span>
 <div class=post-category>
 <a href=/categories/linux/> linux </a>
-</div>
-<span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
-</div>
-</header>
-<div class=post-toc id=post-toc>
-<h2 class=post-toc-title>Contents</h2>
-<div class="post-toc-content always-active">
+</div><span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
+</div></header><div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active">
 <nav id=TableOfContents>
 <ul>
-<li><a href=#枯树><span class=section-num>1</span> 枯树</a></li>
-<li><a href=#春至><span class=section-num>2</span> 春至</a></li>
-<li><a href=#arch-linux><span class=section-num>3</span> Arch Linux</a>
+<li><a href=#枯树><span class=section-num>1</span> 枯树</a></li><li><a href=#春至><span class=section-num>2</span> 春至</a></li><li><a href=#arch-linux><span class=section-num>3</span> Arch Linux</a>
 <ul>
-<li><a href=#安装过程><span class=section-num>3.1</span> 安装过程</a></li>
-<li><a href=#安装桌面环境><span class=section-num>3.2</span> 安装桌面环境</a></li>
-<li><a href=#参考><span class=section-num>3.3</span> 参考</a></li>
-</ul>
-</li>
-</ul>
-</nav>
-</div>
-</div>
-<div class=post-content>
-<h2 id=枯树><span class=section-num>1</span> 枯树</h2>
-<p>周末回了一趟家，没带自己的笔记本，在家闲来无事，无意中看到墙角的电脑，已经尘封已久反正无事，何不玩玩这台老古董呢？于是把电脑拿去修理店把坏了的硬件修好。</p>
-<p>离开店的时候，老板说：“你的系统有问题，我看到你自己也有Ghost,就不帮搞这系统了， 你自己都能解决的，推荐你还是用XP吧，这电脑配置低，还是XP好用”。我忍不住回头对老板一笑 :)</p>
-<h2 id=春至><span class=section-num>2</span> 春至</h2>
-<p>像我这种Linuxer,这么可能再装回XP呢，最初装Win7,也是考虑到老爹的技术 hold 不住 Linux, 现在手机那么发达，他就不需要电脑了，所以，此时不装Linux,更待何时呢？</p>
-<h2 id=arch-linux><span class=section-num>3</span> Arch Linux</h2>
-<p>我没有选择 Xubuntu 这种适合老机器的 Ubuntu 衍生发行版本，因为我不喜欢Ubuntu, 所以我最后选择的是 Arch linux,官网说最低配置只需500MB内存，800MB的 硬盘存储空间，正适合家里的老家伙</p>
-<h3 id=安装过程><span class=section-num>3.1</span> 安装过程</h3>
-<h4 id=下载镜像><span class=section-num>3.1.1</span> 下载镜像</h4>
-<p><a href=https://www.archlinux.org/download/>Download Link</a> ,在网易的镜像下载ISO, 然后用dd刻录到U盘，Windows 可以选择 <a href=http://sourceforge.net/projects/usbwriter>USBwriter</a></p>
-<h4 id=分区><span class=section-num>3.1.2</span> 分区</h4>
-<p>使用fdisk, 我的硬盘是/dev/sda,如果还有一块硬盘，那应该就是/dev/sdb</p>
-<div class=highlight><div class=chroma>
+<li><a href=#安装过程><span class=section-num>3.1</span> 安装过程</a></li><li><a href=#安装桌面环境><span class=section-num>3.2</span> 安装桌面环境</a></li><li><a href=#参考><span class=section-num>3.3</span> 参考</a></li></ul></li></ul></nav></div></div><div class=post-content>
+<h2 id=枯树><span class=section-num>1</span> 枯树</h2><p>周末回了一趟家，没带自己的笔记本，在家闲来无事，无意中看到墙角的电脑，已经尘封已久反正无事，何不玩玩这台老古董呢？于是把电脑拿去修理店把坏了的硬件修好。</p><p>离开店的时候，老板说：“你的系统有问题，我看到你自己也有Ghost,就不帮搞这系统了， 你自己都能解决的，推荐你还是用XP吧，这电脑配置低，还是XP好用”。我忍不住回头对老板一笑 :)</p><h2 id=春至><span class=section-num>2</span> 春至</h2><p>像我这种Linuxer,这么可能再装回XP呢，最初装Win7,也是考虑到老爹的技术 hold 不住 Linux, 现在手机那么发达，他就不需要电脑了，所以，此时不装Linux,更待何时呢？</p><h2 id=arch-linux><span class=section-num>3</span> Arch Linux</h2><p>我没有选择 Xubuntu 这种适合老机器的 Ubuntu 衍生发行版本，因为我不喜欢Ubuntu, 所以我最后选择的是 Arch linux,官网说最低配置只需500MB内存，800MB的 硬盘存储空间，正适合家里的老家伙</p><h3 id=安装过程><span class=section-num>3.1</span> 安装过程</h3><h4 id=下载镜像><span class=section-num>3.1.1</span> 下载镜像</h4><p><a href=https://www.archlinux.org/download/>Download Link</a> ,在网易的镜像下载ISO, 然后用dd刻录到U盘，Windows 可以选择 <a href=http://sourceforge.net/projects/usbwriter>USBwriter</a></p><h4 id=分区><span class=section-num>3.1.2</span> 分区</h4><p>使用fdisk, 我的硬盘是/dev/sda,如果还有一块硬盘，那应该就是/dev/sdb</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>fdisk /dev/sda
-</code></pre></td></tr></table>
-</div>
-</div><ul>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>fdisk /dev/sda
+</span></span></code></pre></td></tr></table></div></div><ul>
 <li>n:新建一个分区，p 指主分区，e 是指扩展分区(逻辑分区是建立在扩展分区上的)
-一块硬盘主分区加上扩展分区最多只能是4个</li>
-<li>d: 删除</li>
-<li>m: 查询其他命令，不知道怎么操作就输入m 吧</li>
-</ul>
-<p>分区结束以后，输入 <code>w</code> 完成分区 (我分了三个分区 /dev/sda1 -> swap
-/dev/sda2 -> / /dev/sda3 -> /home)</p>
-<h4 id=格式化分区><span class=section-num>3.1.3</span> 格式化分区</h4>
-<p>格式化 sda2 sda3为ext4格式：</p>
-<div class=highlight><div class=chroma>
+一块硬盘主分区加上扩展分区最多只能是4个</li><li>d: 删除</li><li>m: 查询其他命令，不知道怎么操作就输入m 吧</li></ul><p>分区结束以后，输入 <code>w</code> 完成分区 (我分了三个分区 /dev/sda1 -> swap
+/dev/sda2 -> / /dev/sda3 -> /home)</p><h4 id=格式化分区><span class=section-num>3.1.3</span> 格式化分区</h4><p>格式化 sda2 sda3为ext4格式：</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>mkfs.ext4 /dev/sda2
-mkfs.ext4 /dev/sda3
-</code></pre></td></tr></table>
-</div>
-</div><p>格式化sda1 为swap(虚拟内存),一般是内存的两倍，当然如果你的内存很大的话就不用划这个分区了</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>mkfs.ext4 /dev/sda2
+</span></span><span class=line><span class=cl>mkfs.ext4 /dev/sda3
+</span></span></code></pre></td></tr></table></div></div><p>格式化sda1 为swap(虚拟内存),一般是内存的两倍，当然如果你的内存很大的话就不用划这个分区了</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>mkswap /dev/sda1
-</code></pre></td></tr></table>
-</div>
-</div><p>激活swap</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>mkswap /dev/sda1
+</span></span></code></pre></td></tr></table></div></div><p>激活swap</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>swapon /dev/sda1
-</code></pre></td></tr></table>
-</div>
-</div><h4 id=挂载><span class=section-num>3.1.4</span> 挂载</h4>
-<p>将sda2挂载到/mnt,其实就是让sda2分区做系统的根分区，/mnt/home同理</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>swapon /dev/sda1
+</span></span></code></pre></td></tr></table></div></div><h4 id=挂载><span class=section-num>3.1.4</span> 挂载</h4><p>将sda2挂载到/mnt,其实就是让sda2分区做系统的根分区，/mnt/home同理</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>mount /dev/sda2 /mnt
-mount /dev/sda3 /mnt/home
-</code></pre></td></tr></table>
-</div>
-</div><h4 id=更新pacman源><span class=section-num>3.1.5</span> 更新pacman源</h4>
-<p>网易的源不错，编辑 <code>/etc/pacman.d/mirrorlist</code> 添加 <code>Server = http://mirrors.163.com/archlinux/$repo/os/$arch</code></p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>mount /dev/sda2 /mnt
+</span></span><span class=line><span class=cl>mount /dev/sda3 /mnt/home
+</span></span></code></pre></td></tr></table></div></div><h4 id=更新pacman源><span class=section-num>3.1.5</span> 更新pacman源</h4><p>网易的源不错，编辑 <code>/etc/pacman.d/mirrorlist</code> 添加 <code>Server = http://mirrors.163.com/archlinux/$repo/os/$arch</code></p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>vim /etc/pacman.d/mirrorlist
-</code></pre></td></tr></table>
-</div>
-</div><p>然后添加；添加完之后，更新一下</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>vim /etc/pacman.d/mirrorlist
+</span></span></code></pre></td></tr></table></div></div><p>然后添加；添加完之后，更新一下</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>pacman -Syy
-</code></pre></td></tr></table>
-</div>
-</div><h4 id=安装基本系统><span class=section-num>3.1.6</span> 安装基本系统</h4>
-<p>安装基本系统到 /mnt,即sda2分区</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>pacman -Syy
+</span></span></code></pre></td></tr></table></div></div><h4 id=安装基本系统><span class=section-num>3.1.6</span> 安装基本系统</h4><p>安装基本系统到 /mnt,即sda2分区</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>pacstrap /mnt base base-devel
-</code></pre></td></tr></table>
-</div>
-</div><p>需要安装的都安装吧，然后走开煮一杯咖啡，慢慢品尝</p>
-<h4 id=生成fstab><span class=section-num>3.1.7</span> 生成fstab</h4>
-<p>fstab 的作用：</p>
-<blockquote>
-<p>The fstab(5) file can be used to define how disk partitions, various other block devices, or remote filesystems should be mounted into the filesystem</p>
-</blockquote>
-<p>生成fstab,并且查看是否正确生成fstab</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>pacstrap /mnt base base-devel
+</span></span></code></pre></td></tr></table></div></div><p>需要安装的都安装吧，然后走开煮一杯咖啡，慢慢品尝</p><h4 id=生成fstab><span class=section-num>3.1.7</span> 生成fstab</h4><p>fstab 的作用：</p><blockquote>
+<p>The fstab(5) file can be used to define how disk partitions, various other block devices, or remote filesystems should be mounted into the filesystem</p></blockquote><p>生成fstab,并且查看是否正确生成fstab</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>genfstab -U -p /mnt &gt;&gt; /mnt/etc/fstab
-cat /mnt/etc/fstab
-</code></pre></td></tr></table>
-</div>
-</div><h4 id=配置系统><span class=section-num>3.1.8</span> 配置系统</h4>
-<p>切换到新的系统，然后你会发现命令行提示符发生了改变</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>genfstab -U -p /mnt &gt;&gt; /mnt/etc/fstab
+</span></span><span class=line><span class=cl>cat /mnt/etc/fstab
+</span></span></code></pre></td></tr></table></div></div><h4 id=配置系统><span class=section-num>3.1.8</span> 配置系统</h4><p>切换到新的系统，然后你会发现命令行提示符发生了改变</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>arch-chroot /mnt
-</code></pre></td></tr></table>
-</div>
-</div>
-<ol>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>arch-chroot /mnt
+</span></span></code></pre></td></tr></table></div></div><ol>
 <li>
-<p>设置地区</p>
-<div class=highlight><div class=chroma>
+<p>设置地区</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-</code></pre></td></tr></table>
-</div>
-</div></li>
-</ol>
-<ol start=2>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+</span></span></code></pre></td></tr></table></div></div></li></ol><ol start=2>
 <li>
-<p>设置语言</p>
-<p>编辑 <code>/etc/locale.gen</code>,因为该文件所有的信息都是被注释滴，所以在最上面添加<code>en_US.UTF-8 UTF-8</code> 即可</p>
-<div class=highlight><div class=chroma>
+<p>设置语言</p><p>编辑 <code>/etc/locale.gen</code>,因为该文件所有的信息都是被注释滴，所以在最上面添加<code>en_US.UTF-8 UTF-8</code> 即可</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>vim /etc/locale.gen
-</code></pre></td></tr></table>
-</div>
-</div><p>然后添加；添加完成后，执行 <code>locale-gen</code></p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>vim /etc/locale.gen
+</span></span></code></pre></td></tr></table></div></div><p>然后添加；添加完成后，执行 <code>locale-gen</code></p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>locale-gen
-</code></pre></td></tr></table>
-</div>
-</div><p>接着配置 <code>locale.conf</code></p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>locale-gen
+</span></span></code></pre></td></tr></table></div></div><p>接着配置 <code>locale.conf</code></p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=nb>echo</span> <span class=nv>LANG</span><span class=o>=</span>en_US.UTF-8 &gt; /etc/locale.conf
-<span class=nb>export</span> <span class=nv>LANG</span><span class=o>=</span>en_US.UTF-8
-</code></pre></td></tr></table>
-</div>
-</div></li>
-</ol>
-<ol start=3>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=nb>echo</span> <span class=nv>LANG</span><span class=o>=</span>en_US.UTF-8 &gt; /etc/locale.conf
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>LANG</span><span class=o>=</span>en_US.UTF-8
+</span></span></code></pre></td></tr></table></div></div></li></ol><ol start=3>
 <li>
-<p>设置主机名</p>
-<div class=highlight><div class=chroma>
+<p>设置主机名</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=nb>echo</span> samray-arch &gt; /etc/hostname
-</code></pre></td></tr></table>
-</div>
-</div></li>
-</ol>
-<ol start=4>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=nb>echo</span> samray-arch &gt; /etc/hostname
+</span></span></code></pre></td></tr></table></div></div></li></ol><ol start=4>
 <li>
-<p>设置密码</p>
-<div class=highlight><div class=chroma>
+<p>设置密码</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>passwd
-</code></pre></td></tr></table>
-</div>
-</div></li>
-</ol>
-<ol start=5>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>passwd
+</span></span></code></pre></td></tr></table></div></div></li></ol><ol start=5>
 <li>
-<p>配置网络</p>
-<div class=highlight><div class=chroma>
+<p>配置网络</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>pacman -S net-tools
-systemctl <span class=nb>enable</span> dhcpcd.service
-</code></pre></td></tr></table>
-</div>
-</div></li>
-</ol>
-<ol start=6>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>pacman -S net-tools
+</span></span><span class=line><span class=cl>systemctl <span class=nb>enable</span> dhcpcd.service
+</span></span></code></pre></td></tr></table></div></div></li></ol><ol start=6>
 <li>
-<p>安装GRUB</p>
-<div class=highlight><div class=chroma>
+<p>安装GRUB</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>pacman -S grub-bios
-</code></pre></td></tr></table>
-</div>
-</div><p>把grub 安装到硬盘sda,如果双系统的话，还要视情况做更改</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>pacman -S grub-bios
+</span></span></code></pre></td></tr></table></div></div><p>把grub 安装到硬盘sda,如果双系统的话，还要视情况做更改</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>grub-install --recheck /dev/sda
-grub-mkconfig -o /boot/grub/grub.cfg
-</code></pre></td></tr></table>
-</div>
-</div></li>
-</ol>
-<h4 id=收尾工作><span class=section-num>3.1.9</span> 收尾工作</h4>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>grub-install --recheck /dev/sda
+</span></span><span class=line><span class=cl>grub-mkconfig -o /boot/grub/grub.cfg
+</span></span></code></pre></td></tr></table></div></div></li></ol><h4 id=收尾工作><span class=section-num>3.1.9</span> 收尾工作</h4><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=nb>exit</span>
-umount /mnt/home
-umount /mnt
-reboot
-</code></pre></td></tr></table>
-</div>
-</div><p>这样Arch linux 就装好了，不过你重启会发现，你的系统是没有图形化界面的</p>
-<h3 id=安装桌面环境><span class=section-num>3.2</span> 安装桌面环境</h3>
-<h4 id=安装x服务><span class=section-num>3.2.1</span> 安装x服务</h4>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=nb>exit</span>
+</span></span><span class=line><span class=cl>umount /mnt/home
+</span></span><span class=line><span class=cl>umount /mnt
+</span></span><span class=line><span class=cl>reboot
+</span></span></code></pre></td></tr></table></div></div><p>这样Arch linux 就装好了，不过你重启会发现，你的系统是没有图形化界面的</p><h3 id=安装桌面环境><span class=section-num>3.2</span> 安装桌面环境</h3><h4 id=安装x服务><span class=section-num>3.2.1</span> 安装x服务</h4><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>pacman -S xorg-server xorg-server-utils xorg-xinit
-</code></pre></td></tr></table>
-</div>
-</div><h4 id=安装显卡驱动><span class=section-num>3.2.2</span> 安装显卡驱动</h4>
-<p>查找自己的显卡类型</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>pacman -S xorg-server xorg-server-utils xorg-xinit
+</span></span></code></pre></td></tr></table></div></div><h4 id=安装显卡驱动><span class=section-num>3.2.2</span> 安装显卡驱动</h4><p>查找自己的显卡类型</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>ispci <span class=p>|</span>grep VGA
-</code></pre></td></tr></table>
-</div>
-</div><p>然后搜索匹配自己显卡的驱动</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>ispci <span class=p>|</span>grep VGA
+</span></span></code></pre></td></tr></table></div></div><p>然后搜索匹配自己显卡的驱动</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>pacman -Ss xf86-video <span class=p>|</span>less
-</code></pre></td></tr></table>
-</div>
-</div><p>Intel 集成显卡：</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>pacman -Ss xf86-video <span class=p>|</span>less
+</span></span></code></pre></td></tr></table></div></div><p>Intel 集成显卡：</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>pacman -S xf86-video-intel
-</code></pre></td></tr></table>
-</div>
-</div><p>虚拟机显卡：</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>pacman -S xf86-video-intel
+</span></span></code></pre></td></tr></table></div></div><p>虚拟机显卡：</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>pacman -S xf86-video-vesa
-</code></pre></td></tr></table>
-</div>
-</div><p>笔记本触摸板驱动 (老家伙是台式，不需要了):</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>pacman -S xf86-video-vesa
+</span></span></code></pre></td></tr></table></div></div><p>笔记本触摸板驱动 (老家伙是台式，不需要了):</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>pacman -S xf86-input-synaptics
-</code></pre></td></tr></table>
-</div>
-</div><p>安装输入法</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>pacman -S xf86-input-synaptics
+</span></span></code></pre></td></tr></table></div></div><p>安装输入法</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>pacman -S scim-pinyin
-</code></pre></td></tr></table>
-</div>
-</div><p>先安装 slim(图像登录管理器)</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>pacman -S scim-pinyin
+</span></span></code></pre></td></tr></table></div></div><p>先安装 slim(图像登录管理器)</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>pacman -S slim
-</code></pre></td></tr></table>
-</div>
-</div><p>安装xfce4</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>pacman -S slim
+</span></span></code></pre></td></tr></table></div></div><p>安装xfce4</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>pacman -S xfce4
-</code></pre></td></tr></table>
-</div>
-</div><p>启动xfce4</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>pacman -S xfce4
+</span></span></code></pre></td></tr></table></div></div><p>启动xfce4</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell>startxfce4
-</code></pre></td></tr></table>
-</div>
-</div><p>基本就大功告成了，因为我的台式电脑是bios, 所以不用折腾uefi, 还有无线网络。</p>
-<p><strong>Action is louder than words</strong>,还是多动手才行，我都装了三次才成功，内核空指针和段错误都遇到了 :）</p>
-<h3 id=参考><span class=section-num>3.3</span> 参考</h3>
-<p><a href=https://wiki.archlinux.org/index.php/installation_guide>https://wiki.archlinux.org/index.php/installation_guide</a></p>
-</div>
-<div class=post-copyright>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>startxfce4
+</span></span></code></pre></td></tr></table></div></div><p>基本就大功告成了，因为我的台式电脑是bios, 所以不用折腾uefi, 还有无线网络。</p><p><strong>Action is louder than words</strong>,还是多动手才行，我都装了三次才成功，内核空指针和段错误都遇到了 :）</p><h3 id=参考><span class=section-num>3.3</span> 参考</h3><p><a href=https://wiki.archlinux.org/index.php/installation_guide>https://wiki.archlinux.org/index.php/installation_guide</a></p></div><div class=post-copyright>
 <p class=copyright-item>
 <span class=item-title>Author</span>
 <span class=item-content>Ramsay Leung</span>
-</p>
-<p class=copyright-item>
+</p><p class=copyright-item>
 <span class=item-title>LastMod</span>
 <span class=item-content>
 2022-02-23
 </span>
-</p>
-</div>
-<footer class=post-footer>
+</p></div><footer class=post-footer>
 <div class=post-tags>
 <a href=/tags/linux/>linux</a>
-</div>
-<nav class=post-nav>
+</div><nav class=post-nav>
 <a class=prev href=/post/2017/diff/>
 <i class="iconfont icon-left"></i>
 <span class="prev-text nav-default">Linux/Unix Shell 二三事之过滤器diff</span>
@@ -492,26 +293,17 @@ reboot
 <span class="next-text nav-mobile">Next</span>
 <i class="iconfont icon-right"></i>
 </a>
-</nav>
-</footer>
-</article>
-</div>
-<div id=gitalk-container></div>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
+</nav></footer></article></div><div id=gitalk-container></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
 <script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
-<script type=text/javascript>var gitalk=new Gitalk({id:'2017-02-27 00:00:00 \u002b0800 \u002b0800',title:'枯树逢春之ArchLinux领风骚',clientID:'3c034c97f0926fafd2d6',clientSecret:'192051927d267ce83eb2ef10955890b7db2720ad',repo:'comment',owner:'ramsayleung',admin:['ramsayleung'],body:decodeURI(location.href)});gitalk.render('gitalk-container')</script>
-<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript>
-</div>
-</main>
-<footer id=footer class=footer>
+<script type=text/javascript>var gitalk=new Gitalk({id:"2017-02-27 00:00:00 \u002b0800 \u002b0800",title:"枯树逢春之ArchLinux领风骚",clientID:"3c034c97f0926fafd2d6",clientSecret:"192051927d267ce83eb2ef10955890b7db2720ad",repo:"comment",owner:"ramsayleung",admin:["ramsayleung"],body:decodeURI(location.href)});gitalk.render("gitalk-container")</script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript></div></main><footer id=footer class=footer>
 <div class=social-links>
 <a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
 <a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
 <a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
 <a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
 <a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
-</div>
-<div class=copyright>
+</div><div class=copyright>
 <span class=power-by>
 Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
 </span>
@@ -524,23 +316,17 @@ Theme -
 <span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
 <span class=division>|</span>
 <span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
-</div>
-<span class=copyright-year>
+</div><span class=copyright-year>
 &copy;
 2017 -
 2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
 </span>
-</div>
-</footer>
-<div class=back-to-top id=back-to-top>
+</div></footer><div class=back-to-top id=back-to-top>
 <i class="iconfont icon-up"></i>
-</div>
-</div>
-<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+</div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
-<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-F1N7KS6M5Q','auto'),ga('set','anonymizeIp',!0),ga('send','pageview'))</script>
+<script type=text/javascript src=/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js></script>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script>
 <script async src=https://www.google-analytics.com/analytics.js></script>
-</body>
-</html>
+</body></html>

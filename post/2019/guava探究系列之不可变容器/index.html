@@ -2,8 +2,7 @@
 <head>
 <meta charset=utf-8>
 <meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
-<title>guava探究系列之四：不可变容器 - In Pursuit of Hubris</title>
-<meta name=renderer content="webkit">
+<title>guava探究系列之四：不可变容器 - In Pursuit of Hubris</title><meta name=renderer content="webkit">
 <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
 <meta http-equiv=cache-control content="no-transform">
 <meta http-equiv=cache-control content="no-siteapp">
@@ -12,7 +11,7 @@
 <meta name=apple-mobile-web-app-capable content="yes">
 <meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
 <meta name=author content="Ramsay Leung"><meta name=description content="1 前言 先此声明, 个人倾向于将Collection翻译成容器, 将Set翻译成集合. 已经许久没有更新Guava研读系列的文章, 今天要介绍的是Gu"><meta name=keywords content="Blog,Software,Enginering">
-<meta name=generator content="Hugo 0.92.2 with theme even">
+<meta name=generator content="Hugo 0.93.2 with theme even">
 <link rel=canonical href=https://ramsayleung.github.io/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AE%B9%E5%99%A8/>
 <link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
@@ -36,37 +35,31 @@
 <meta name=twitter:title content="guava探究系列之四：不可变容器">
 <meta name=twitter:description content="1 前言 先此声明, 个人倾向于将Collection翻译成容器, 将Set翻译成集合. 已经许久没有更新Guava研读系列的文章, 今天要介绍的是Gu"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
 <script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
-</head>
-<body>
+</head><body>
 <div id=mobile-navbar class=mobile-navbar>
 <div class=mobile-header-logo>
 <a href=/ class=logo>In Pursuit of Hubris</a>
-</div>
-<div class=mobile-navbar-icon>
+</div><div class=mobile-navbar-icon>
 <span></span>
 <span></span>
 <span></span>
-</div>
-</div>
-<nav id=mobile-menu class="mobile-menu slideout-menu">
+</div></div><nav id=mobile-menu class="mobile-menu slideout-menu">
 <ul class=mobile-menu-list>
 <a href=/>
-<li class=mobile-menu-item>Home</li>
-</a><a href=/post/>
-<li class=mobile-menu-item>Archives</li>
-</a><a href=/tags/>
-<li class=mobile-menu-item>Tags</li>
-</a><a href=/about_me>
-<li class=mobile-menu-item>About</li>
-</a>
-</ul>
-</nav>
-<div class=container id=mobile-panel>
+<li class=mobile-menu-item>Home</li></a><a href=/post/>
+<li class=mobile-menu-item>Archives</li></a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li></a><a href=/about_me>
+<li class=mobile-menu-item>About</li></a>
+</ul></nav><div class=container id=mobile-panel>
 <header id=header class=header>
-<div class=logo-wrapper>
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F1N7KS6M5Q"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-F1N7KS6M5Q",{anonymize_ip:!0})}</script>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script>
+<script async src=https://www.google-analytics.com/analytics.js></script>
+</head><div class=logo-wrapper>
 <a href=/ class=logo>In Pursuit of Hubris</a>
-</div>
-<nav class=site-navbar>
+</div><nav class=site-navbar>
 <ul id=menu class=menu>
 <li class=menu-item>
 <a class=menu-item-link href=/>Home</a>
@@ -76,84 +69,40 @@
 <a class=menu-item-link href=/tags/>Tags</a>
 </li><li class=menu-item>
 <a class=menu-item-link href=/about_me>About</a>
-</li>
-</ul>
-</nav>
-</header>
-<main id=main class=main>
+</li></ul></nav></header><main id=main class=main>
 <div class=content-wrapper>
 <div id=content class=content>
 <article class=post>
 <header class=post-header>
-<h1 class=post-title>guava探究系列之四：不可变容器</h1>
-<div class=post-meta>
+<h1 class=post-title>guava探究系列之四：不可变容器</h1><div class=post-meta>
 <span class=post-time> 2019-09-05 </span>
 <div class=post-category>
 <a href=/categories/java/> java </a>
-</div>
-<span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
-</div>
-</header>
-<div class=post-toc id=post-toc>
-<h2 class=post-toc-title>Contents</h2>
-<div class="post-toc-content always-active">
+</div><span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
+</div></header><div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active">
 <nav id=TableOfContents>
 <ul>
-<li><a href=#前言><span class=section-num>1</span> 前言</a></li>
-<li><a href=#关于不可变对象><span class=section-num>2</span> 关于不可变对象</a></li>
-<li><a href=#代码实例><span class=section-num>3</span> 代码实例</a></li>
-<li><a href=#具体细节><span class=section-num>4</span> 具体细节</a>
+<li><a href=#前言><span class=section-num>1</span> 前言</a></li><li><a href=#关于不可变对象><span class=section-num>2</span> 关于不可变对象</a></li><li><a href=#代码实例><span class=section-num>3</span> 代码实例</a></li><li><a href=#具体细节><span class=section-num>4</span> 具体细节</a>
 <ul>
-<li><a href=#构造不可变容器><span class=section-num>4.1</span> 构造不可变容器</a></li>
-<li><a href=#aslist-函数><span class=section-num>4.2</span> <code>asList</code>函数</a></li>
-<li><a href=#智能的-copyof-函数><span class=section-num>4.3</span> 智能的<code>copyOf</code>函数</a></li>
-</ul>
-</li>
-<li><a href=#jdk容器与guava不可变容器><span class=section-num>5</span> JDK容器与Guava不可变容器</a></li>
-<li><a href=#总结><span class=section-num>6</span> 总结</a></li>
-<li><a href=#参考><span class=section-num>7</span> 参考</a></li>
-</ul>
-</nav>
-</div>
-</div>
-<div class=post-content>
-<h2 id=前言><span class=section-num>1</span> 前言</h2>
-<p>先此声明, 个人倾向于将<code>Collection</code>翻译成容器, 将<code>Set</code>翻译成集合.</p>
-<p>已经许久没有更新Guava研读系列的文章, 今天要介绍的是Guava的不可变容器.</p>
-<h2 id=关于不可变对象><span class=section-num>2</span> 关于不可变对象</h2>
-<p>不可变的对象有许多的优点, 如下:</p>
-<ol>
-<li>线程安全, 可以在多线程之间使用也不用担心有竞争条件的风险</li>
-<li>可以放心地用于不被信任的第三方类库</li>
-<li>不用考虑支持可变性, 无需额外的空间和时间消耗.</li>
-<li>可用作常量使用</li>
-</ol>
-<p>使用对象的不可变拷贝是一项良好的编程防御策略, 为此,
+<li><a href=#构造不可变容器><span class=section-num>4.1</span> 构造不可变容器</a></li><li><a href=#aslist-函数><span class=section-num>4.2</span> <code>asList</code>函数</a></li><li><a href=#智能的-copyof-函数><span class=section-num>4.3</span> 智能的<code>copyOf</code>函数</a></li></ul></li><li><a href=#jdk容器与guava不可变容器><span class=section-num>5</span> JDK容器与Guava不可变容器</a></li><li><a href=#总结><span class=section-num>6</span> 总结</a></li><li><a href=#参考><span class=section-num>7</span> 参考</a></li></ul></nav></div></div><div class=post-content>
+<h2 id=前言><span class=section-num>1</span> 前言</h2><p>先此声明, 个人倾向于将<code>Collection</code>翻译成容器, 将<code>Set</code>翻译成集合.</p><p>已经许久没有更新Guava研读系列的文章, 今天要介绍的是Guava的不可变容器.</p><h2 id=关于不可变对象><span class=section-num>2</span> 关于不可变对象</h2><p>不可变的对象有许多的优点, 如下:</p><ol>
+<li>线程安全, 可以在多线程之间使用也不用担心有竞争条件的风险</li><li>可以放心地用于不被信任的第三方类库</li><li>不用考虑支持可变性, 无需额外的空间和时间消耗.</li><li>可用作常量使用</li></ol><p>使用对象的不可变拷贝是一项良好的编程防御策略, 为此,
 Guava提供了许多简单易用的, 实现了标准库<code>Collection</code>接口的不可变容器,
-当然也包括实现了他们自家<code>Collection</code>接口的不可变容器.</p>
-<p>虽然通过JDK的静态方法<code>Collection.unmodifiableXXX</code>可以使用内置不可变容器,
+当然也包括实现了他们自家<code>Collection</code>接口的不可变容器.</p><p>虽然通过JDK的静态方法<code>Collection.unmodifiableXXX</code>可以使用内置不可变容器,
 但是在Guava团队的同学看来,
-它们有若干的不足(又到了喜闻乐见的黑JDK的环节):</p>
-<ol>
-<li>笨重; 使用起来很笨重, 不够赏心悦目和优雅.</li>
-<li>不安全;
+它们有若干的不足(又到了喜闻乐见的黑JDK的环节):</p><ol>
+<li>笨重; 使用起来很笨重, 不够赏心悦目和优雅.</li><li>不安全;
 上述静态方法返回的容器只有在没有对象持有原来容器的情况下才是真正不可变的.
 例如,
 当想要通过可变Map=ids=来生成一个不可变Map的时候,=Collections.unmodifiableMap(ids)=,
 如果有多个对象持有<code>ids</code>时, 静态方法返回的对象就不是真正的不可变.
-具体的分析可以参考<a href=https://stackoverflow.com/questions/22636575/unmodifiablemap-java-collections-vs-immutablemap-google/22636674>StackOverFlow关于unmodifiableMap和ImmutableMap的讨论</a></li>
-<li>低效; 静态方法生成的不可变容器和可变容器有着同样的性能开销,
+具体的分析可以参考<a href=https://stackoverflow.com/questions/22636575/unmodifiablemap-java-collections-vs-immutablemap-google/22636674>StackOverFlow关于unmodifiableMap和ImmutableMap的讨论</a></li><li>低效; 静态方法生成的不可变容器和可变容器有着同样的性能开销,
 包括并发修改, 动态扩容等(对于真正的不可变容器而言,
-这些都是不会出现的操作)</li>
-</ol>
-<p>综上所述, 如果你不想修改某个容器, 或者你想把某个容器当作不可变常量,
-把这个容器变成一个不可变容器是一个很好的手段(使用Guava的不可变容器).</p>
-<p>此外, 在之前的文章中, 我阐述过Guava对于空指针的态度是尽量不要使用空指针,
+这些都是不会出现的操作)</li></ol><p>综上所述, 如果你不想修改某个容器, 或者你想把某个容器当作不可变常量,
+把这个容器变成一个不可变容器是一个很好的手段(使用Guava的不可变容器).</p><p>此外, 在之前的文章中, 我阐述过Guava对于空指针的态度是尽量不要使用空指针,
 Guava的类库对于空指针都是快速失败的, Guava的不可变容器也是不例外的,
-是拒绝接受空指针的.</p>
-<h2 id=代码实例><span class=section-num>3</span> 代码实例</h2>
-<p>前面详细介绍了不可变容器, 现在是时候来看一下Guava不可变容器的代码例子:</p>
-<div class=highlight><div class=chroma>
+是拒绝接受空指针的.</p><h2 id=代码实例><span class=section-num>3</span> 代码实例</h2><p>前面详细介绍了不可变容器, 现在是时候来看一下Guava不可变容器的代码例子:</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
@@ -166,31 +115,26 @@ Guava的类库对于空指针都是快速失败的, Guava的不可变容器也�
 </span><span class=lnt> 9
 </span><span class=lnt>10
 </span><span class=lnt>11
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=kd>static</span> <span class=kd>final</span> <span class=n>ImmutableSet</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>COLOR_NAMES</span> <span class=o>=</span> <span class=n>ImmutableSet</span><span class=o>.</span><span class=na>of</span><span class=o>(</span>
-								       <span class=s>&#34;red&#34;</span><span class=o>,</span>
-								       <span class=s>&#34;orange&#34;</span><span class=o>,</span>
-								       <span class=s>&#34;purple&#34;</span><span class=o>);</span>
-
-<span class=kd>class</span> <span class=nc>Foo</span> <span class=o>{</span>
-    <span class=kd>final</span> <span class=n>ImmutableSet</span><span class=o>&lt;</span><span class=n>Bar</span><span class=o>&gt;</span> <span class=n>bars</span><span class=o>;</span>
-    <span class=n>Foo</span><span class=o>(</span><span class=n>Set</span><span class=o>&lt;</span><span class=n>Bar</span><span class=o>&gt;</span> <span class=n>bars</span><span class=o>)</span> <span class=o>{</span>
-	<span class=k>this</span><span class=o>.</span><span class=na>bars</span> <span class=o>=</span> <span class=n>ImmutableSet</span><span class=o>.</span><span class=na>copyOf</span><span class=o>(</span><span class=n>bars</span><span class=o>);</span> <span class=c1>// defensive copy!
-</span><span class=c1></span>    <span class=o>}</span>
-<span class=o>}</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>前文提到的, <code>Collections.unmodifiableXXX(mutableXXX)</code>,
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>static</span> <span class=kd>final</span> <span class=n>ImmutableSet</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>COLOR_NAMES</span> <span class=o>=</span> <span class=n>ImmutableSet</span><span class=o>.</span><span class=na>of</span><span class=o>(</span>
+</span></span><span class=line><span class=cl>								       <span class=s>&#34;red&#34;</span><span class=o>,</span>
+</span></span><span class=line><span class=cl>								       <span class=s>&#34;orange&#34;</span><span class=o>,</span>
+</span></span><span class=line><span class=cl>								       <span class=s>&#34;purple&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>class</span> <span class=nc>Foo</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>final</span> <span class=n>ImmutableSet</span><span class=o>&lt;</span><span class=n>Bar</span><span class=o>&gt;</span> <span class=n>bars</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>Foo</span><span class=o>(</span><span class=n>Set</span><span class=o>&lt;</span><span class=n>Bar</span><span class=o>&gt;</span> <span class=n>bars</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>this</span><span class=o>.</span><span class=na>bars</span> <span class=o>=</span> <span class=n>ImmutableSet</span><span class=o>.</span><span class=na>copyOf</span><span class=o>(</span><span class=n>bars</span><span class=o>);</span> <span class=c1>// defensive copy!
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>前文提到的, <code>Collections.unmodifiableXXX(mutableXXX)</code>,
 Collections方法不能提供真正的不可变容器,
-除非没有对象持有可变对象<code>mutableXXX</code>的引用</p>
-<p>那么Guava的不可变容器又是否是真正的不可变呢? 以<code>ImmutableSet</code>为例,
+除非没有对象持有可变对象<code>mutableXXX</code>的引用</p><p>那么Guava的不可变容器又是否是真正的不可变呢? 以<code>ImmutableSet</code>为例,
 发现所有可以修改<code>ImmutableSet</code>对象的操作函数,
 包括<code>add</code>, <code>remove</code>, <code>addAll</code>, <code>removeAll</code>等函数都被重载,
 然后标注成<code>@Deprecated</code>,
 重载函数的内容就是抛出<code>UnsupportedOperationException</code>异常,
-所以不可能修改<code>ImmutableSet</code>对象的内容:</p>
-<div class=highlight><div class=chroma>
+所以不可能修改<code>ImmutableSet</code>对象的内容:</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
@@ -203,24 +147,20 @@ Collections方法不能提供真正的不可变容器,
 </span><span class=lnt> 9
 </span><span class=lnt>10
 </span><span class=lnt>11
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=cm>/**
-</span><span class=cm> * Guaranteed to throw an exception and leave the collection unmodified.
-</span><span class=cm> *
-</span><span class=cm> * @throws UnsupportedOperationException always
-</span><span class=cm> * @deprecated Unsupported operation.
-</span><span class=cm> */</span>
-<span class=nd>@Deprecated</span>
-<span class=nd>@Override</span>
-<span class=kd>public</span> <span class=kd>final</span> <span class=kt>boolean</span> <span class=nf>add</span><span class=o>(</span><span class=n>E</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
-    <span class=k>throw</span> <span class=k>new</span> <span class=n>UnsupportedOperationException</span><span class=o>();</span>
-<span class=o>}</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>至于持有<code>mutableXXX</code>对象引用,
-修改<code>mutableXXX</code>对象内容导致不可变内容发生改变的情况也不会发生:</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=cm>/**
+</span></span></span><span class=line><span class=cl><span class=cm> * Guaranteed to throw an exception and leave the collection unmodified.
+</span></span></span><span class=line><span class=cl><span class=cm> *
+</span></span></span><span class=line><span class=cl><span class=cm> * @throws UnsupportedOperationException always
+</span></span></span><span class=line><span class=cl><span class=cm> * @deprecated Unsupported operation.
+</span></span></span><span class=line><span class=cl><span class=cm> */</span>
+</span></span><span class=line><span class=cl><span class=nd>@Deprecated</span>
+</span></span><span class=line><span class=cl><span class=nd>@Override</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kd>final</span> <span class=kt>boolean</span> <span class=nf>add</span><span class=o>(</span><span class=n>E</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>throw</span> <span class=k>new</span> <span class=n>UnsupportedOperationException</span><span class=o>();</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>至于持有<code>mutableXXX</code>对象引用,
+修改<code>mutableXXX</code>对象内容导致不可变内容发生改变的情况也不会发生:</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
@@ -238,30 +178,26 @@ Collections方法不能提供真正的不可变容器,
 </span><span class=lnt>14
 </span><span class=lnt>15
 </span><span class=lnt>16
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=nd>@Test</span>
-<span class=kd>public</span> <span class=kt>void</span> <span class=nf>testImmutable</span><span class=o>()</span> <span class=o>{</span>
-    <span class=n>Set</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>colors</span> <span class=o>=</span> <span class=n>Sets</span><span class=o>.</span><span class=na>newHashSet</span><span class=o>();</span>
-    <span class=n>colors</span><span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=s>&#34;blue&#34;</span><span class=o>);</span>
-    <span class=n>Set</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>modifiableSet</span> <span class=o>=</span> <span class=n>Collections</span><span class=o>.</span><span class=na>unmodifiableSet</span><span class=o>(</span><span class=n>colors</span><span class=o>);</span>
-    <span class=n>Set</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>unmodifiableSet</span> <span class=o>=</span> <span class=n>Collections</span><span class=o>.</span><span class=na>unmodifiableSet</span><span class=o>(</span><span class=k>new</span> <span class=n>HashSet</span><span class=o>&lt;&gt;(</span><span class=n>colors</span><span class=o>));</span>
-    <span class=kd>final</span> <span class=n>ImmutableSet</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>COLOR_NAMES</span> <span class=o>=</span> <span class=n>ImmutableSet</span><span class=o>.</span><span class=na>copyOf</span><span class=o>(</span><span class=n>colors</span><span class=o>);</span>
-    <span class=n>colors</span><span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=s>&#34;yellow&#34;</span><span class=o>);</span>
-    <span class=c1>// 不会修改不可变集合的值
-</span><span class=c1></span>    <span class=n>Assert</span><span class=o>.</span><span class=na>assertFalse</span><span class=o>(</span><span class=n>COLOR_NAMES</span><span class=o>.</span><span class=na>contains</span><span class=o>(</span><span class=s>&#34;yellow&#34;</span><span class=o>));</span>
-    <span class=c1>// 修改引用导致集合值发生修改
-</span><span class=c1></span>    <span class=n>Assert</span><span class=o>.</span><span class=na>assertTrue</span><span class=o>(</span><span class=n>modifiableSet</span><span class=o>.</span><span class=na>contains</span><span class=o>(</span><span class=s>&#34;yellow&#34;</span><span class=o>));</span>
-    <span class=c1>// 因为没有对象持有new HashSet&lt;&gt;(colors)的引用, 所以unmodifiableSet是不可变集合, 不能修改
-</span><span class=c1></span>    <span class=n>Assert</span><span class=o>.</span><span class=na>assertFalse</span><span class=o>(</span><span class=n>unmodifiableSet</span><span class=o>.</span><span class=na>contains</span><span class=o>(</span><span class=s>&#34;yellow&#34;</span><span class=o>));</span>
-    <span class=n>Assert</span><span class=o>.</span><span class=na>assertTrue</span><span class=o>(</span><span class=n>colors</span><span class=o>.</span><span class=na>contains</span><span class=o>(</span><span class=s>&#34;yellow&#34;</span><span class=o>));</span>
-<span class=o>}</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>查看<code>ImmutableSet.copyOf(Set&lt;T>)</code>函数的源码,
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@Test</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kt>void</span> <span class=nf>testImmutable</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>Set</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>colors</span> <span class=o>=</span> <span class=n>Sets</span><span class=o>.</span><span class=na>newHashSet</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>    <span class=n>colors</span><span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=s>&#34;blue&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>Set</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>modifiableSet</span> <span class=o>=</span> <span class=n>Collections</span><span class=o>.</span><span class=na>unmodifiableSet</span><span class=o>(</span><span class=n>colors</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>Set</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>unmodifiableSet</span> <span class=o>=</span> <span class=n>Collections</span><span class=o>.</span><span class=na>unmodifiableSet</span><span class=o>(</span><span class=k>new</span> <span class=n>HashSet</span><span class=o>&lt;&gt;(</span><span class=n>colors</span><span class=o>));</span>
+</span></span><span class=line><span class=cl>    <span class=kd>final</span> <span class=n>ImmutableSet</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>COLOR_NAMES</span> <span class=o>=</span> <span class=n>ImmutableSet</span><span class=o>.</span><span class=na>copyOf</span><span class=o>(</span><span class=n>colors</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>colors</span><span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=s>&#34;yellow&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 不会修改不可变集合的值
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>Assert</span><span class=o>.</span><span class=na>assertFalse</span><span class=o>(</span><span class=n>COLOR_NAMES</span><span class=o>.</span><span class=na>contains</span><span class=o>(</span><span class=s>&#34;yellow&#34;</span><span class=o>));</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 修改引用导致集合值发生修改
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>Assert</span><span class=o>.</span><span class=na>assertTrue</span><span class=o>(</span><span class=n>modifiableSet</span><span class=o>.</span><span class=na>contains</span><span class=o>(</span><span class=s>&#34;yellow&#34;</span><span class=o>));</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 因为没有对象持有new HashSet&lt;&gt;(colors)的引用, 所以unmodifiableSet是不可变集合, 不能修改
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>Assert</span><span class=o>.</span><span class=na>assertFalse</span><span class=o>(</span><span class=n>unmodifiableSet</span><span class=o>.</span><span class=na>contains</span><span class=o>(</span><span class=s>&#34;yellow&#34;</span><span class=o>));</span>
+</span></span><span class=line><span class=cl>    <span class=n>Assert</span><span class=o>.</span><span class=na>assertTrue</span><span class=o>(</span><span class=n>colors</span><span class=o>.</span><span class=na>contains</span><span class=o>(</span><span class=s>&#34;yellow&#34;</span><span class=o>));</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>查看<code>ImmutableSet.copyOf(Set&lt;T>)</code>函数的源码,
 发现不可变集合的实现逻辑和在构造函数新建对象实现对象引用拷贝的逻辑一致,
-即和<code>Collections.unmodifiableSet(new HashSet&lt;>(colors))</code>的逻辑一样的:</p>
-<div class=highlight><div class=chroma>
+即和<code>Collections.unmodifiableSet(new HashSet&lt;>(colors))</code>的逻辑一样的:</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
@@ -281,98 +217,72 @@ Collections方法不能提供真正的不可变容器,
 </span><span class=lnt>16
 </span><span class=lnt>17
 </span><span class=lnt>18
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=kd>static</span> <span class=o>&lt;</span><span class=n>E</span><span class=o>&gt;</span> <span class=n>ImmutableSet</span><span class=o>&lt;</span><span class=n>E</span><span class=o>&gt;</span> <span class=nf>copyOf</span><span class=o>(</span><span class=n>Collection</span><span class=o>&lt;?</span> <span class=kd>extends</span> <span class=n>E</span><span class=o>&gt;</span> <span class=n>elements</span><span class=o>)</span> <span class=o>{</span>
-    <span class=cm>/*
-</span><span class=cm>     * TODO(lowasser): consider checking for ImmutableAsList here
-</span><span class=cm>     * TODO(lowasser): consider checking for Multiset here
-</span><span class=cm>     */</span>
-    <span class=k>if</span> <span class=o>(</span><span class=n>elements</span> <span class=k>instanceof</span> <span class=n>ImmutableSet</span> <span class=o>&amp;&amp;</span> <span class=o>!(</span><span class=n>elements</span> <span class=k>instanceof</span> <span class=n>ImmutableSortedSet</span><span class=o>))</span> <span class=o>{</span>
-	<span class=nd>@SuppressWarnings</span><span class=o>(</span><span class=s>&#34;unchecked&#34;</span><span class=o>)</span> <span class=c1>// all supported methods are covariant
-</span><span class=c1></span>	    <span class=c1>// 新建对象, 拷贝对象引用
-</span><span class=c1></span>	    <span class=n>ImmutableSet</span><span class=o>&lt;</span><span class=n>E</span><span class=o>&gt;</span> <span class=n>set</span> <span class=o>=</span> <span class=o>(</span><span class=n>ImmutableSet</span><span class=o>&lt;</span><span class=n>E</span><span class=o>&gt;)</span> <span class=n>elements</span><span class=o>;</span>
-	<span class=k>if</span> <span class=o>(!</span><span class=n>set</span><span class=o>.</span><span class=na>isPartialView</span><span class=o>())</span> <span class=o>{</span>
-	    <span class=k>return</span> <span class=n>set</span><span class=o>;</span>
-	<span class=o>}</span>
-    <span class=o>}</span> <span class=k>else</span> <span class=k>if</span> <span class=o>(</span><span class=n>elements</span> <span class=k>instanceof</span> <span class=n>EnumSet</span><span class=o>)</span> <span class=o>{</span>
-	<span class=k>return</span> <span class=n>copyOfEnumSet</span><span class=o>((</span><span class=n>EnumSet</span><span class=o>)</span> <span class=n>elements</span><span class=o>);</span>
-    <span class=o>}</span>
-    <span class=n>Object</span><span class=o>[]</span> <span class=n>array</span> <span class=o>=</span> <span class=n>elements</span><span class=o>.</span><span class=na>toArray</span><span class=o>();</span>
-    <span class=k>return</span> <span class=n>construct</span><span class=o>(</span><span class=n>array</span><span class=o>.</span><span class=na>length</span><span class=o>,</span> <span class=n>array</span><span class=o>);</span>
-<span class=o>}</span>
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=具体细节><span class=section-num>4</span> 具体细节</h2>
-<p>下面我们来讨论一下各种不可变容器的具体使用细节.</p>
-<h3 id=构造不可变容器><span class=section-num>4.1</span> 构造不可变容器</h3>
-<p>关于如何构造一个不可变容器, Guava提供的手段是多种多样的:</p>
-<ol>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>static</span> <span class=o>&lt;</span><span class=n>E</span><span class=o>&gt;</span> <span class=n>ImmutableSet</span><span class=o>&lt;</span><span class=n>E</span><span class=o>&gt;</span> <span class=nf>copyOf</span><span class=o>(</span><span class=n>Collection</span><span class=o>&lt;?</span> <span class=kd>extends</span> <span class=n>E</span><span class=o>&gt;</span> <span class=n>elements</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=cm>/*
+</span></span></span><span class=line><span class=cl><span class=cm>     * TODO(lowasser): consider checking for ImmutableAsList here
+</span></span></span><span class=line><span class=cl><span class=cm>     * TODO(lowasser): consider checking for Multiset here
+</span></span></span><span class=line><span class=cl><span class=cm>     */</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=o>(</span><span class=n>elements</span> <span class=k>instanceof</span> <span class=n>ImmutableSet</span> <span class=o>&amp;&amp;</span> <span class=o>!(</span><span class=n>elements</span> <span class=k>instanceof</span> <span class=n>ImmutableSortedSet</span><span class=o>))</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=nd>@SuppressWarnings</span><span class=o>(</span><span class=s>&#34;unchecked&#34;</span><span class=o>)</span> <span class=c1>// all supported methods are covariant
+</span></span></span><span class=line><span class=cl><span class=c1></span>	    <span class=c1>// 新建对象, 拷贝对象引用
+</span></span></span><span class=line><span class=cl><span class=c1></span>	    <span class=n>ImmutableSet</span><span class=o>&lt;</span><span class=n>E</span><span class=o>&gt;</span> <span class=n>set</span> <span class=o>=</span> <span class=o>(</span><span class=n>ImmutableSet</span><span class=o>&lt;</span><span class=n>E</span><span class=o>&gt;)</span> <span class=n>elements</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=o>(!</span><span class=n>set</span><span class=o>.</span><span class=na>isPartialView</span><span class=o>())</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	    <span class=k>return</span> <span class=n>set</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span> <span class=k>else</span> <span class=k>if</span> <span class=o>(</span><span class=n>elements</span> <span class=k>instanceof</span> <span class=n>EnumSet</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=n>copyOfEnumSet</span><span class=o>((</span><span class=n>EnumSet</span><span class=o>)</span> <span class=n>elements</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>Object</span><span class=o>[]</span> <span class=n>array</span> <span class=o>=</span> <span class=n>elements</span><span class=o>.</span><span class=na>toArray</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>construct</span><span class=o>(</span><span class=n>array</span><span class=o>.</span><span class=na>length</span><span class=o>,</span> <span class=n>array</span><span class=o>);</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=具体细节><span class=section-num>4</span> 具体细节</h2><p>下面我们来讨论一下各种不可变容器的具体使用细节.</p><h3 id=构造不可变容器><span class=section-num>4.1</span> 构造不可变容器</h3><p>关于如何构造一个不可变容器, Guava提供的手段是多种多样的:</p><ol>
 <li>使用<code>copyOf</code>静态方法, 例如<code>ImmutableSet.copyOf(set)</code>,
-这种构造方法与JDK不可变容器的构造方式类似<code>Collections.unmodifiableXXX(mutableXXX)</code></li>
-<li>使用<code>of</code>静态方法,
+这种构造方法与JDK不可变容器的构造方式类似<code>Collections.unmodifiableXXX(mutableXXX)</code></li><li>使用<code>of</code>静态方法,
 例如<code>ImmutableSet.of("a", "b", "c")</code>或者<code>ImmutableMap.of("a", 1, "b", 2)</code>,
-前文已经介绍过, 在此就不赘言</li>
-<li>使用<code>Builder</code>构造不可变容器, 例如:</li>
-</ol>
-<div class=highlight><div class=chroma>
+前文已经介绍过, 在此就不赘言</li><li>使用<code>Builder</code>构造不可变容器, 例如:</li></ol><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=kd>static</span> <span class=kd>final</span> <span class=n>ImmutableSet</span><span class=o>&lt;</span><span class=n>Color</span><span class=o>&gt;</span> <span class=n>GOOGLE_COLORS</span> <span class=o>=</span>
-    <span class=n>ImmutableSet</span><span class=o>.&lt;</span><span class=n>Color</span><span class=o>&gt;</span><span class=n>builder</span><span class=o>()</span>
-    <span class=o>.</span><span class=na>addAll</span><span class=o>(</span><span class=n>WEBSAFE_COLORS</span><span class=o>)</span>
-    <span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=k>new</span> <span class=n>Color</span><span class=o>(</span><span class=n>0</span><span class=o>,</span> <span class=n>191</span><span class=o>,</span> <span class=n>255</span><span class=o>))</span>
-    <span class=o>.</span><span class=na>build</span><span class=o>();</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>不过某些不可变容器的builder方法废弃了,
-如<code>ImmutableSortedSet</code>的<code>builder</code>方法就被替换成了<code>naturalOrder</code>.</p>
-<p>此外, 对于有序容器(sorted collections)而言,
-容器内的元素的顺序是按照构造时元素的插入顺序排列的, 例如如下代码</p>
-<div class=highlight><div class=chroma>
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>static</span> <span class=kd>final</span> <span class=n>ImmutableSet</span><span class=o>&lt;</span><span class=n>Color</span><span class=o>&gt;</span> <span class=n>GOOGLE_COLORS</span> <span class=o>=</span>
+</span></span><span class=line><span class=cl>    <span class=n>ImmutableSet</span><span class=o>.&lt;</span><span class=n>Color</span><span class=o>&gt;</span><span class=n>builder</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>    <span class=o>.</span><span class=na>addAll</span><span class=o>(</span><span class=n>WEBSAFE_COLORS</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=k>new</span> <span class=n>Color</span><span class=o>(</span><span class=n>0</span><span class=o>,</span> <span class=n>191</span><span class=o>,</span> <span class=n>255</span><span class=o>))</span>
+</span></span><span class=line><span class=cl>    <span class=o>.</span><span class=na>build</span><span class=o>();</span>
+</span></span></code></pre></td></tr></table></div></div><p>不过某些不可变容器的builder方法废弃了,
+如<code>ImmutableSortedSet</code>的<code>builder</code>方法就被替换成了<code>naturalOrder</code>.</p><p>此外, 对于有序容器(sorted collections)而言,
+容器内的元素的顺序是按照构造时元素的插入顺序排列的, 例如如下代码</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>final</span> <span class=n>ImmutableSet</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>alphaTable</span> <span class=o>=</span> <span class=n>ImmutableSet</span><span class=o>.</span><span class=na>of</span><span class=o>(</span><span class=s>&#34;a&#34;</span><span class=o>,</span> <span class=s>&#34;b&#34;</span><span class=o>,</span> <span class=s>&#34;c&#34;</span><span class=o>,</span> <span class=s>&#34;a&#34;</span><span class=o>,</span> <span class=s>&#34;d&#34;</span><span class=o>,</span> <span class=s>&#34;b&#34;</span><span class=o>);</span>
-<span class=n>alphaTable</span><span class=o>.</span><span class=na>forEach</span><span class=o>(</span><span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>::</span><span class=n>println</span><span class=o>);</span>
-<span class=c1>// 结果为 a b c d
-</span></code></pre></td></tr></table>
-</div>
-</div><h3 id=aslist-函数><span class=section-num>4.2</span> <code>asList</code>函数</h3>
-<p>所有的不可变容器都提供了一个<code>asList</code>方法来返回一个不可变列表<code>ImmutableList</code>,
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>final</span> <span class=n>ImmutableSet</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>alphaTable</span> <span class=o>=</span> <span class=n>ImmutableSet</span><span class=o>.</span><span class=na>of</span><span class=o>(</span><span class=s>&#34;a&#34;</span><span class=o>,</span> <span class=s>&#34;b&#34;</span><span class=o>,</span> <span class=s>&#34;c&#34;</span><span class=o>,</span> <span class=s>&#34;a&#34;</span><span class=o>,</span> <span class=s>&#34;d&#34;</span><span class=o>,</span> <span class=s>&#34;b&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl><span class=n>alphaTable</span><span class=o>.</span><span class=na>forEach</span><span class=o>(</span><span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>::</span><span class=n>println</span><span class=o>);</span>
+</span></span><span class=line><span class=cl><span class=c1>// 结果为 a b c d
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=aslist-函数><span class=section-num>4.2</span> <code>asList</code>函数</h3><p>所有的不可变容器都提供了一个<code>asList</code>方法来返回一个不可变列表<code>ImmutableList</code>,
 所以即使你把数据存在一个不可变有序集合<code>ImmutableSortedSet</code>,
-你也可以通过下标索引获取最小的元素或者第n小的元素, 如:</p>
-<div class=highlight><div class=chroma>
+你也可以通过下标索引获取最小的元素或者第n小的元素, 如:</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=kd>final</span> <span class=n>ImmutableSet</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span> <span class=n>numberSet</span> <span class=o>=</span> <span class=n>ImmutableSortedSet</span><span class=o>.&lt;</span><span class=n>Integer</span><span class=o>&gt;</span><span class=n>naturalOrder</span><span class=o>()</span>
-    <span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=n>2</span><span class=o>,</span> <span class=n>3</span><span class=o>,</span> <span class=n>1</span><span class=o>)</span>
-    <span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=n>4</span><span class=o>,</span> <span class=n>5</span><span class=o>,</span> <span class=n>6</span><span class=o>).</span><span class=na>build</span><span class=o>();</span>
-<span class=n>numberSet</span><span class=o>.</span><span class=na>asList</span><span class=o>().</span><span class=na>get</span><span class=o>(</span><span class=n>0</span><span class=o>)</span>
-    <span class=err>#</span> <span class=n>结果为1</span>
-</code></pre></td></tr></table>
-</div>
-</div><h3 id=智能的-copyof-函数><span class=section-num>4.3</span> 智能的<code>copyOf</code>函数</h3>
-<p>前文提到,
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>final</span> <span class=n>ImmutableSet</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span> <span class=n>numberSet</span> <span class=o>=</span> <span class=n>ImmutableSortedSet</span><span class=o>.&lt;</span><span class=n>Integer</span><span class=o>&gt;</span><span class=n>naturalOrder</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>    <span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=n>2</span><span class=o>,</span> <span class=n>3</span><span class=o>,</span> <span class=n>1</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=n>4</span><span class=o>,</span> <span class=n>5</span><span class=o>,</span> <span class=n>6</span><span class=o>).</span><span class=na>build</span><span class=o>();</span>
+</span></span><span class=line><span class=cl><span class=n>numberSet</span><span class=o>.</span><span class=na>asList</span><span class=o>().</span><span class=na>get</span><span class=o>(</span><span class=n>0</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=err>#</span> <span class=n>结果为1</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=智能的-copyof-函数><span class=section-num>4.3</span> 智能的<code>copyOf</code>函数</h3><p>前文提到,
 不可变容器都提供了一个<code>copyOf</code>方法用于从另外一个容器构造出一个不可变容器.
 值得指出的是不可变容器的<code>copyOf</code>方法在不需要拷贝数据的时候就会尽量避免拷贝数据,
-但这是什么意思呢? 假如有如下的代码:</p>
-<div class=highlight><div class=chroma>
+但这是什么意思呢? 假如有如下的代码:</p><div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
@@ -381,138 +291,57 @@ Collections方法不能提供真正的不可变容器,
 </span><span class=lnt>5
 </span><span class=lnt>6
 </span><span class=lnt>7
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=n>ImmutableSet</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>foobar</span> <span class=o>=</span> <span class=n>ImmutableSet</span><span class=o>.</span><span class=na>of</span><span class=o>(</span><span class=s>&#34;foo&#34;</span><span class=o>,</span> <span class=s>&#34;bar&#34;</span><span class=o>,</span> <span class=s>&#34;baz&#34;</span><span class=o>);</span>
-<span class=n>thingamajig</span><span class=o>(</span><span class=n>foobar</span><span class=o>);</span>
-
-<span class=kt>void</span> <span class=nf>thingamajig</span><span class=o>(</span><span class=n>Collection</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>collection</span><span class=o>)</span> <span class=o>{</span>
-    <span class=n>ImmutableList</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>defensiveCopy</span> <span class=o>=</span> <span class=n>ImmutableList</span><span class=o>.</span><span class=na>copyOf</span><span class=o>(</span><span class=n>collection</span><span class=o>);</span>
-    <span class=o>...</span>
-	<span class=o>}</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>在上面的代码调用<code>ImmutableList.copyOf(foobar)</code>函数的时候,
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>ImmutableSet</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>foobar</span> <span class=o>=</span> <span class=n>ImmutableSet</span><span class=o>.</span><span class=na>of</span><span class=o>(</span><span class=s>&#34;foo&#34;</span><span class=o>,</span> <span class=s>&#34;bar&#34;</span><span class=o>,</span> <span class=s>&#34;baz&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl><span class=n>thingamajig</span><span class=o>(</span><span class=n>foobar</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>thingamajig</span><span class=o>(</span><span class=n>Collection</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>collection</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>ImmutableList</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>defensiveCopy</span> <span class=o>=</span> <span class=n>ImmutableList</span><span class=o>.</span><span class=na>copyOf</span><span class=o>(</span><span class=n>collection</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=o>...</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>在上面的代码调用<code>ImmutableList.copyOf(foobar)</code>函数的时候,
 函数的内部实现不会逐个拷贝,
 而会直接通过<code>foobar.asList()</code>函数返回一个不可变值列表,
 这样实现的算法时间复杂度就是<code>O(1)</code>, 而不是<code>O(n)</code>, 实现性能消耗的最小化,
-这也就是小标题智能指的意思.</p>
-<p>但是需要注意的是,
+这也就是小标题智能指的意思.</p><p>但是需要注意的是,
 并不是所有的不可变容器之间的转换都能实现<code>O(1)</code>时间复杂度,
 例如<code>ImmutableSet.copyOf(ImmutableList)</code>就只能逐个元素拷贝,
-时间复杂度退化到<code>O(n)</code>.</p>
-<h2 id=jdk容器与guava不可变容器><span class=section-num>5</span> JDK容器与Guava不可变容器</h2>
-<p>对于JDK提供的标准容器, Guava提供了相应的不可变容器实现,
-对于Guava自家的容器, Guava也提供了对应的不可变容器, 具体实现对比如下:</p>
-<table>
+时间复杂度退化到<code>O(n)</code>.</p><h2 id=jdk容器与guava不可变容器><span class=section-num>5</span> JDK容器与Guava不可变容器</h2><p>对于JDK提供的标准容器, Guava提供了相应的不可变容器实现,
+对于Guava自家的容器, Guava也提供了对应的不可变容器, 具体实现对比如下:</p><table>
 <thead>
 <tr>
-<th>Interface</th>
-<th>JDK or Guava?</th>
-<th>Immutable Version</th>
-</tr>
-</thead>
-<tbody>
+<th>Interface</th><th>JDK or Guava?</th><th>Immutable Version</th></tr></thead><tbody>
 <tr>
-<td><code>Collection</code></td>
-<td>JDK</td>
-<td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableCollection.html><code>ImmutableCollection</code></a></td>
-</tr>
-<tr>
-<td><code>List</code></td>
-<td>JDK</td>
-<td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableList.html><code>ImmutableList</code></a></td>
-</tr>
-<tr>
-<td><code>Set</code></td>
-<td>JDK</td>
-<td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableSet.html><code>ImmutableSet</code></a></td>
-</tr>
-<tr>
-<td><code>SortedSet=/=NavigableSet</code></td>
-<td>JDK</td>
-<td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableSortedSet.html><code>ImmutableSortedSet</code></a></td>
-</tr>
-<tr>
-<td><code>Map</code></td>
-<td>JDK</td>
-<td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableMap.html><code>ImmutableMap</code></a></td>
-</tr>
-<tr>
-<td><code>SortedMap</code></td>
-<td>JDK</td>
-<td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableSortedMap.html><code>ImmutableSortedMap</code></a></td>
-</tr>
-<tr>
-<td><a href=https://github.com/google/guava/wiki/NewCollectionTypesExplained#Multiset><code>Multiset</code></a></td>
-<td>Guava</td>
-<td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableMultiset.html><code>ImmutableMultiset</code></a></td>
-</tr>
-<tr>
-<td><code>SortedMultiset</code></td>
-<td>Guava</td>
-<td><a href=http://google.github.io/guava/releases/12.0/api/docs/com/google/common/collect/ImmutableSortedMultiset.html><code>ImmutableSortedMultiset</code></a></td>
-</tr>
-<tr>
-<td><a href=https://github.com/google/guava/wiki/NewCollectionTypesExplained#Multimap><code>Multimap</code></a></td>
-<td>Guava</td>
-<td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableMultimap.html><code>ImmutableMultimap</code></a></td>
-</tr>
-<tr>
-<td><code>ListMultimap</code></td>
-<td>Guava</td>
-<td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableListMultimap.html><code>ImmutableListMultimap</code></a></td>
-</tr>
-<tr>
-<td><code>SetMultimap</code></td>
-<td>Guava</td>
-<td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableSetMultimap.html><code>ImmutableSetMultimap</code></a></td>
-</tr>
-<tr>
-<td><a href=https://github.com/google/guava/wiki/NewCollectionTypesExplained#BiMap><code>BiMap</code></a></td>
-<td>Guava</td>
-<td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableBiMap.html><code>ImmutableBiMap</code></a></td>
-</tr>
-<tr>
-<td><a href=https://github.com/google/guava/wiki/NewCollectionTypesExplained#ClassToInstanceMap><code>ClassToInstanceMap</code></a></td>
-<td>Guava</td>
-<td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableClassToInstanceMap.html><code>ImmutableClassToInstanceMap</code></a></td>
-</tr>
-<tr>
-<td><a href=https://github.com/google/guava/wiki/NewCollectionTypesExplained#Table><code>Table</code></a></td>
-<td>Guava</td>
-<td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableTable.html><code>ImmutableTable</code></a></td>
-</tr>
-</tbody>
-</table>
-<h2 id=总结><span class=section-num>6</span> 总结</h2>
-<p>因为不可变容器不会在运行时改变他们的内部状态, 所以他们是线程安全和无副作用的.</p>
-<p>因为这些属性, 不可变容器在多线程环境就会变得特别有用, 可以安全地传递数据. 总而言之,
-生活和工作或许可以多拥抱变化, 对于代码, 最好还是多保持不变地好.</p>
-<h2 id=参考><span class=section-num>7</span> 参考</h2>
-<ul>
+<td><code>Collection</code></td><td>JDK</td><td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableCollection.html><code>ImmutableCollection</code></a></td></tr><tr>
+<td><code>List</code></td><td>JDK</td><td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableList.html><code>ImmutableList</code></a></td></tr><tr>
+<td><code>Set</code></td><td>JDK</td><td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableSet.html><code>ImmutableSet</code></a></td></tr><tr>
+<td><code>SortedSet=/=NavigableSet</code></td><td>JDK</td><td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableSortedSet.html><code>ImmutableSortedSet</code></a></td></tr><tr>
+<td><code>Map</code></td><td>JDK</td><td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableMap.html><code>ImmutableMap</code></a></td></tr><tr>
+<td><code>SortedMap</code></td><td>JDK</td><td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableSortedMap.html><code>ImmutableSortedMap</code></a></td></tr><tr>
+<td><a href=https://github.com/google/guava/wiki/NewCollectionTypesExplained#Multiset><code>Multiset</code></a></td><td>Guava</td><td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableMultiset.html><code>ImmutableMultiset</code></a></td></tr><tr>
+<td><code>SortedMultiset</code></td><td>Guava</td><td><a href=http://google.github.io/guava/releases/12.0/api/docs/com/google/common/collect/ImmutableSortedMultiset.html><code>ImmutableSortedMultiset</code></a></td></tr><tr>
+<td><a href=https://github.com/google/guava/wiki/NewCollectionTypesExplained#Multimap><code>Multimap</code></a></td><td>Guava</td><td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableMultimap.html><code>ImmutableMultimap</code></a></td></tr><tr>
+<td><code>ListMultimap</code></td><td>Guava</td><td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableListMultimap.html><code>ImmutableListMultimap</code></a></td></tr><tr>
+<td><code>SetMultimap</code></td><td>Guava</td><td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableSetMultimap.html><code>ImmutableSetMultimap</code></a></td></tr><tr>
+<td><a href=https://github.com/google/guava/wiki/NewCollectionTypesExplained#BiMap><code>BiMap</code></a></td><td>Guava</td><td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableBiMap.html><code>ImmutableBiMap</code></a></td></tr><tr>
+<td><a href=https://github.com/google/guava/wiki/NewCollectionTypesExplained#ClassToInstanceMap><code>ClassToInstanceMap</code></a></td><td>Guava</td><td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableClassToInstanceMap.html><code>ImmutableClassToInstanceMap</code></a></td></tr><tr>
+<td><a href=https://github.com/google/guava/wiki/NewCollectionTypesExplained#Table><code>Table</code></a></td><td>Guava</td><td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableTable.html><code>ImmutableTable</code></a></td></tr></tbody></table><h2 id=总结><span class=section-num>6</span> 总结</h2><p>因为不可变容器不会在运行时改变他们的内部状态, 所以他们是线程安全和无副作用的.</p><p>因为这些属性, 不可变容器在多线程环境就会变得特别有用, 可以安全地传递数据. 总而言之,
+生活和工作或许可以多拥抱变化, 对于代码, 最好还是多保持不变地好.</p><h2 id=参考><span class=section-num>7</span> 参考</h2><ul>
 <li><a href=https://github.com/google/guava/wiki/ImmutableCollectionsExplained>Immutable
-Collections</a></li>
-</ul>
-</div>
-<div class=post-copyright>
+Collections</a></li></ul></div><div class=post-copyright>
 <p class=copyright-item>
 <span class=item-title>Author</span>
 <span class=item-content>Ramsay Leung</span>
-</p>
-<p class=copyright-item>
+</p><p class=copyright-item>
 <span class=item-title>LastMod</span>
 <span class=item-content>
 2022-02-25
 </span>
-</p>
-</div>
-<footer class=post-footer>
+</p></div><footer class=post-footer>
 <div class=post-tags>
 <a href=/tags/java/>java</a>
 <a href=/tags/guava/>guava</a>
-</div>
-<nav class=post-nav>
+</div><nav class=post-nav>
 <a class=prev href=/post/2019/%E6%B2%89%E9%BB%98%E7%9A%84%E5%A4%A7%E5%A4%9A%E6%95%B0/>
 <i class="iconfont icon-left"></i>
 <span class="prev-text nav-default">沉默的大多数</span>
@@ -523,26 +352,17 @@ Collections</a></li>
 <span class="next-text nav-mobile">Next</span>
 <i class="iconfont icon-right"></i>
 </a>
-</nav>
-</footer>
-</article>
-</div>
-<div id=gitalk-container></div>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
+</nav></footer></article></div><div id=gitalk-container></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
 <script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
-<script type=text/javascript>var gitalk=new Gitalk({id:'2019-09-05 15:36:00 \u002b0800 \u002b0800',title:'guava探究系列之四：不可变容器',clientID:'3c034c97f0926fafd2d6',clientSecret:'192051927d267ce83eb2ef10955890b7db2720ad',repo:'comment',owner:'ramsayleung',admin:['ramsayleung'],body:decodeURI(location.href)});gitalk.render('gitalk-container')</script>
-<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript>
-</div>
-</main>
-<footer id=footer class=footer>
+<script type=text/javascript>var gitalk=new Gitalk({id:"2019-09-05 15:36:00 \u002b0800 \u002b0800",title:"guava探究系列之四：不可变容器",clientID:"3c034c97f0926fafd2d6",clientSecret:"192051927d267ce83eb2ef10955890b7db2720ad",repo:"comment",owner:"ramsayleung",admin:["ramsayleung"],body:decodeURI(location.href)});gitalk.render("gitalk-container")</script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript></div></main><footer id=footer class=footer>
 <div class=social-links>
 <a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
 <a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
 <a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
 <a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
 <a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
-</div>
-<div class=copyright>
+</div><div class=copyright>
 <span class=power-by>
 Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
 </span>
@@ -555,23 +375,17 @@ Theme -
 <span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
 <span class=division>|</span>
 <span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
-</div>
-<span class=copyright-year>
+</div><span class=copyright-year>
 &copy;
 2017 -
 2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
 </span>
-</div>
-</footer>
-<div class=back-to-top id=back-to-top>
+</div></footer><div class=back-to-top id=back-to-top>
 <i class="iconfont icon-up"></i>
-</div>
-</div>
-<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+</div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
-<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-F1N7KS6M5Q','auto'),ga('set','anonymizeIp',!0),ga('send','pageview'))</script>
+<script type=text/javascript src=/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js></script>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script>
 <script async src=https://www.google-analytics.com/analytics.js></script>
-</body>
-</html>
+</body></html>
