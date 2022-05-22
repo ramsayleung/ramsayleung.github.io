@@ -1,103 +1,14 @@
-<!doctype html><html lang=en>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
-<title>Guava探究系列之一: 使用和避免使用空指针 - In Pursuit of Hubris</title><meta name=renderer content="webkit">
-<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta http-equiv=cache-control content="no-transform">
-<meta http-equiv=cache-control content="no-siteapp">
-<meta name=theme-color content="#f8f5ec">
-<meta name=msapplication-navbutton-color content="#f8f5ec">
-<meta name=apple-mobile-web-app-capable content="yes">
-<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
-<meta name=author content="Ramsay Leung"><meta name=description content="1 前言 To be, or not to be, that is the question: 先来看看奆佬们关于空指针的看法: Null sucks - Doug Lea(JCP,Java并发编程实战作者, Java巨佬) I call it my billion-dollar mistake. - Sir C."><meta name=keywords content="Blog,Software,Enginering">
-<meta name=generator content="Hugo 0.93.3 with theme even">
-<link rel=canonical href=https://ramsayleung.github.io/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BD%BF%E7%94%A8%E5%92%8C%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E7%A9%BA%E6%8C%87%E9%92%88/>
-<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
-<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
-<link rel=manifest href=/manifest.json>
-<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
-<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
-<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
-<meta property="og:title" content="Guava探究系列之一: 使用和避免使用空指针">
-<meta property="og:description" content="1 前言 To be, or not to be, that is the question: 先来看看奆佬们关于空指针的看法: Null sucks - Doug Lea(JCP,Java并发编程实战作者, Java巨佬) I call it my billion-dollar mistake. - Sir C.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://ramsayleung.github.io/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BD%BF%E7%94%A8%E5%92%8C%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E7%A9%BA%E6%8C%87%E9%92%88/"><meta property="article:section" content="post">
-<meta property="article:published_time" content="2019-07-02T19:25:00+08:00">
-<meta property="article:modified_time" content="2022-02-25T13:59:58+08:00">
-<meta itemprop=name content="Guava探究系列之一: 使用和避免使用空指针">
-<meta itemprop=description content="1 前言 To be, or not to be, that is the question: 先来看看奆佬们关于空指针的看法: Null sucks - Doug Lea(JCP,Java并发编程实战作者, Java巨佬) I call it my billion-dollar mistake. - Sir C."><meta itemprop=datePublished content="2019-07-02T19:25:00+08:00">
-<meta itemprop=dateModified content="2022-02-25T13:59:58+08:00">
-<meta itemprop=wordCount content="4363">
-<meta itemprop=keywords content="java,guava,"><meta name=twitter:card content="summary">
-<meta name=twitter:title content="Guava探究系列之一: 使用和避免使用空指针">
-<meta name=twitter:description content="1 前言 To be, or not to be, that is the question: 先来看看奆佬们关于空指针的看法: Null sucks - Doug Lea(JCP,Java并发编程实战作者, Java巨佬) I call it my billion-dollar mistake. - Sir C."><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
-<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
-</head><body>
-<div id=mobile-navbar class=mobile-navbar>
-<div class=mobile-header-logo>
-<a href=/ class=logo>In Pursuit of Hubris</a>
-</div><div class=mobile-navbar-icon>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>Guava探究系列之一: 使用和避免使用空指针 - In Pursuit of Hubris</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="Ramsay Leung"><meta name=description content="1 前言 To be, or not to be, that is the question: 先来看看奆佬们关于空指针的看法: Null sucks - Doug Lea(JCP,Java并发编程实战作者, Java巨佬) I call it my billion-dollar mistake. - Sir C."><meta name=keywords content="Blog,Software,Enginering"><meta name=generator content="Hugo 0.99.1 with theme even"><link rel=canonical href=https://ramsayleung.github.io/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BD%BF%E7%94%A8%E5%92%8C%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E7%A9%BA%E6%8C%87%E9%92%88/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="Guava探究系列之一: 使用和避免使用空指针"><meta property="og:description" content="1 前言 To be, or not to be, that is the question: 先来看看奆佬们关于空指针的看法: Null sucks - Doug Lea(JCP,Java并发编程实战作者, Java巨佬) I call it my billion-dollar mistake. - Sir C."><meta property="og:type" content="article"><meta property="og:url" content="https://ramsayleung.github.io/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BD%BF%E7%94%A8%E5%92%8C%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E7%A9%BA%E6%8C%87%E9%92%88/"><meta property="article:section" content="post"><meta property="article:published_time" content="2019-07-02T19:25:00+08:00"><meta property="article:modified_time" content="2022-02-25T13:59:58+08:00"><meta itemprop=name content="Guava探究系列之一: 使用和避免使用空指针"><meta itemprop=description content="1 前言 To be, or not to be, that is the question: 先来看看奆佬们关于空指针的看法: Null sucks - Doug Lea(JCP,Java并发编程实战作者, Java巨佬) I call it my billion-dollar mistake. - Sir C."><meta itemprop=datePublished content="2019-07-02T19:25:00+08:00"><meta itemprop=dateModified content="2022-02-25T13:59:58+08:00"><meta itemprop=wordCount content="4363"><meta itemprop=keywords content="java,guava,"><meta name=twitter:card content="summary"><meta name=twitter:title content="Guava探究系列之一: 使用和避免使用空指针"><meta name=twitter:description content="1 前言 To be, or not to be, that is the question: 先来看看奆佬们关于空指针的看法: Null sucks - Doug Lea(JCP,Java并发编程实战作者, Java巨佬) I call it my billion-dollar mistake. - Sir C."><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>In Pursuit of Hubris</a></div><div class=mobile-navbar-icon><span></span>
 <span></span>
-<span></span>
-<span></span>
-</div></div><nav id=mobile-menu class="mobile-menu slideout-menu">
-<ul class=mobile-menu-list>
-<a href=/>
-<li class=mobile-menu-item>Home</li></a><a href=/post/>
-<li class=mobile-menu-item>Archives</li></a><a href=/tags/>
-<li class=mobile-menu-item>Tags</li></a><a href=/about_me>
-<li class=mobile-menu-item>About</li></a>
-</ul></nav><div class=container id=mobile-panel>
-<header id=header class=header>
-<head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-F1N7KS6M5Q"></script>
-<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-F1N7KS6M5Q",{anonymize_ip:!0})}</script>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script>
-<script async src=https://www.google-analytics.com/analytics.js></script>
-</head><div class=logo-wrapper>
-<a href=/ class=logo>In Pursuit of Hubris</a>
-</div><nav class=site-navbar>
-<ul id=menu class=menu>
-<li class=menu-item>
-<a class=menu-item-link href=/>Home</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/post/>Archives</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/tags/>Tags</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/about_me>About</a>
-</li></ul></nav></header><main id=main class=main>
-<div class=content-wrapper>
-<div id=content class=content>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title>Guava探究系列之一: 使用和避免使用空指针</h1><div class=post-meta>
-<span class=post-time> 2019-07-02 </span>
-<div class=post-category>
-<a href=/categories/java/> java </a>
-</div><span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
-</div></header><div class=post-toc id=post-toc>
-<h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active">
-<nav id=TableOfContents>
-<ul>
-<li><a href=#前言><span class=section-num>1</span> 前言</a></li><li><a href=#空指针的问题><span class=section-num>2</span> 空指针的问题</a>
-<ul>
-<li><a href=#空指针语意隐晦不明><span class=section-num>2.1</span> 空指针语意隐晦不明</a></li><li><a href=#空指针-暗藏杀机><span class=section-num>2.2</span> 空指针”暗藏杀机”</a></li></ul></li><li><a href=#guava对于空指针的态度><span class=section-num>3</span> Guava对于空指针的态度</a></li><li><a href=#optional><span class=section-num>4</span> Optional</a>
-<ul>
-<li><a href=#java8的optional><span class=section-num>4.1</span> Java8的Optional</a></li><li><a href=#optional构造方式><span class=section-num>4.2</span> Optional构造方式</a></li><li><a href=#optional的消费方式><span class=section-num>4.3</span> Optional的消费方式</a></li></ul></li><li><a href=#结语><span class=section-num>5</span> 结语</a></li><li><a href=#参考><span class=section-num>6</span> 参考</a></li></ul></nav></div></div><div class=post-content>
-<h2 id=前言><span class=section-num>1</span> 前言</h2><blockquote>
-<p>To be, or not to be, that is the question:</p></blockquote><p>先来看看奆佬们关于空指针的看法:</p><blockquote>
-<p>Null sucks - <a href=https://en.wikipedia.org/wiki/Doug_Lea>Doug Lea</a>(JCP,Java并发编程实战作者, Java巨佬)</p><p>I call it my billion-dollar mistake. - <a href=https://en.wikipedia.org/wiki/C._A._R._Hoare>Sir C. A. R. Hoare</a>, 空指针的发明者</p></blockquote><p>按照Guava wiki的说法,
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/about_me><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><head><script async src="https://www.googletagmanager.com/gtag/js?id=G-F1N7KS6M5Q"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-F1N7KS6M5Q",{anonymize_ip:!0})}</script><script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script><script async src=https://www.google-analytics.com/analytics.js></script></head><div class=logo-wrapper><a href=/ class=logo>In Pursuit of Hubris</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/about_me>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>Guava探究系列之一: 使用和避免使用空指针</h1><div class=post-meta><span class=post-time>2019-07-02</span><div class=post-category><a href=/categories/java/>java</a></div><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><a href=#前言><span class=section-num>1</span> 前言</a></li><li><a href=#空指针的问题><span class=section-num>2</span> 空指针的问题</a><ul><li><a href=#空指针语意隐晦不明><span class=section-num>2.1</span> 空指针语意隐晦不明</a></li><li><a href=#空指针-暗藏杀机><span class=section-num>2.2</span> 空指针”暗藏杀机”</a></li></ul></li><li><a href=#guava对于空指针的态度><span class=section-num>3</span> Guava对于空指针的态度</a></li><li><a href=#optional><span class=section-num>4</span> Optional</a><ul><li><a href=#java8的optional><span class=section-num>4.1</span> Java8的Optional</a></li><li><a href=#optional构造方式><span class=section-num>4.2</span> Optional构造方式</a></li><li><a href=#optional的消费方式><span class=section-num>4.3</span> Optional的消费方式</a></li></ul></li><li><a href=#结语><span class=section-num>5</span> 结语</a></li><li><a href=#参考><span class=section-num>6</span> 参考</a></li></ul></nav></div></div><div class=post-content><h2 id=前言><span class=section-num>1</span> 前言</h2><blockquote><p>To be, or not to be, that is the question:</p></blockquote><p>先来看看奆佬们关于空指针的看法:</p><blockquote><p>Null sucks - <a href=https://en.wikipedia.org/wiki/Doug_Lea>Doug Lea</a>(JCP,Java并发编程实战作者, Java巨佬)</p><p>I call it my billion-dollar mistake. - <a href=https://en.wikipedia.org/wiki/C._A._R._Hoare>Sir C. A. R. Hoare</a>, 空指针的发明者</p></blockquote><p>按照Guava wiki的说法,
 大部分的Google代码都是不支持使用空指针(下文用<code>null</code>表示空指针)的,</p><p>如接近95%的集合类都不支持使用<code>null</code>作为集合元素.
 像Google这样的大公司明确不建议使用<code>null</code>自然是有其原由的, 不会无的放矢.
 那具体原因是什么呢？待下文为你细细道来;</p><h2 id=空指针的问题><span class=section-num>2</span> 空指针的问题</h2><h3 id=空指针语意隐晦不明><span class=section-num>2.1</span> 空指针语意隐晦不明</h3><p><code>null</code>的语意并不了然明确, 即当一个函数返回<code>null</code>, 我们并不知道<code>null</code>的意思是指返回结果理应为空? 还是指函数没有达到预期结果, 返回<code>null</code>表示失败?</p><p>举个常见的例子, 当调用<code>Map.get(key)</code>获取key对应的value的时候, 返回结果为<code>null</code>; <code>null</code>是指找不到这个key对应的value?
 还是说这个key对应的value本身就是<code>null</code>, 原来是通过<code>Map.put(key,value)</code>赋值的呢? <code>null</code>甚至可以是代表其他东西!</p><p>老实说, 当我们获得一个<code>null</code>, 我们并不清楚它究竟指的是啥,
-除非有对应的javadoc 进行了说明.</p><h3 id=空指针-暗藏杀机><span class=section-num>2.2</span> 空指针”暗藏杀机”</h3><p><code>null</code>除了语意不明外, 还非常容易在不经意间挖坑坑人. 例如有下面的代码:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+除非有对应的javadoc 进行了说明.</p><h3 id=空指针-暗藏杀机><span class=section-num>2.2</span> 空指针”暗藏杀机”</h3><p><code>null</code>除了语意不明外, 还非常容易在不经意间挖坑坑人. 例如有下面的代码:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -110,8 +21,7 @@
 </span><span class=lnt>11
 </span><span class=lnt>12
 </span><span class=lnt>13
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>private</span> <span class=n>String</span> <span class=nf>testNull</span><span class=o>(</span><span class=n>String</span> <span class=n>input</span><span class=o>)</span> <span class=o>{</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>private</span> <span class=n>String</span> <span class=nf>testNull</span><span class=o>(</span><span class=n>String</span> <span class=n>input</span><span class=o>)</span> <span class=o>{</span>
 </span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=o>(</span><span class=n>random</span><span class=o>.</span><span class=na>nextInt</span><span class=o>()</span> <span class=o>%</span> <span class=n>2</span> <span class=o>==</span> <span class=n>0</span><span class=o>)</span> <span class=o>{</span>
 </span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=n>input</span><span class=o>;</span>
 </span></span><span class=line><span class=cl>    <span class=o>}</span> <span class=k>else</span> <span class=o>{</span>
@@ -141,14 +51,11 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p><p>如果检�
 那么当这个函数返回<code>null</code>时就代表没有找到这个<code>key</code>对应的<code>value</code>.</p><p>为了应对这种使用<code>null</code>的情况, Guava团队参考其他语言(例如Scala)应对<code>null</code>的实践, 开发了<code>Optional&lt;T></code>类.
 <code>Optional</code>类表示那些可能为空的值, 一个<code>Optional</code>类要不包含一个非空的<code>T</code>类型的对象引用(这种情况下,
 我们称引用对象是存在的-&ldquo;present&rdquo;), 要不什么东西都不包含(这种情况被, 我们说引用对象是不存在的-&ldquo;absent&rdquo;), 除此之外, <code>Optional</code>不存在其他情况, 更没有可能是<code>null</code>.</p><h3 id=java8的optional><span class=section-num>4.1</span> Java8的Optional</h3><p>鉴于我对<code>Optional</code>类的兴趣,
-我用下面这条命令找了一个Guava库<code>Optional</code>开发的最初提交历史:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+我用下面这条命令找了一个Guava库<code>Optional</code>开发的最初提交历史:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>find guava/ -name <span class=s2>&#34;Optional.java&#34;</span> -print <span class=p>|</span> xargs -I <span class=s1>&#39;{}&#39;</span> git log --pretty<span class=o>=</span>tformat:%cd-%aN-%s --date<span class=o>=</span>iso <span class=p>|</span>tail -n2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>find guava/ -name <span class=s2>&#34;Optional.java&#34;</span> -print <span class=p>|</span> xargs -I <span class=s1>&#39;{}&#39;</span> git log --pretty<span class=o>=</span>tformat:%cd-%aN-%s --date<span class=o>=</span>iso <span class=p>|</span>tail -n2
 </span></span><span class=line><span class=cl><span class=c1># 结果如下</span>
 </span></span><span class=line><span class=cl><span class=c1># 2009-09-15 19:50:59 +0000-kevinb@google.com-Initial code dump: version 9.09.15</span>
 </span></span><span class=line><span class=cl><span class=c1># 2009-06-18 18:11:55 +0000-(no author)-Initial directory structure.</span>
@@ -161,21 +68,13 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p><p>如果检�
 既然JDK的<code>Optional</code>已成为正统,
 那么下面我就不再介绍Guava的<code>Optional=(Guava的wiki本来是有较大篇幅介绍自家的=Optional</code>,
 个人感觉已经意义不大), 转而介绍JDK的<code>Optional=(下文通称为=Optional</code>).</p><h3 id=optional构造方式><span class=section-num>4.2</span> Optional构造方式</h3><p>在使用<code>Optional</code>之前, 首先需要了解如果构造<code>Optional</code>对象,
-方式有如下几种:</p><h4 id=声明一个空的-optional-对象><span class=section-num>4.2.1</span> 声明一个空的<code>Optional</code>对象</h4><p>可以通过静态工厂方法<code>Optional.empty</code>, 创建一个空的<code>Optional</code>对象:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>Optional</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span> <span class=n>optional</span> <span class=o>=</span> <span class=n>Optional</span><span class=o>.</span><span class=na>empty</span><span class=o>();</span>
+方式有如下几种:</p><h4 id=声明一个空的-optional-对象><span class=section-num>4.2.1</span> 声明一个空的<code>Optional</code>对象</h4><p>可以通过静态工厂方法<code>Optional.empty</code>, 创建一个空的<code>Optional</code>对象:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>Optional</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span> <span class=n>optional</span> <span class=o>=</span> <span class=n>Optional</span><span class=o>.</span><span class=na>empty</span><span class=o>();</span>
 </span></span></code></pre></td></tr></table></div></div><h4 id=根据一个非空值创建optional><span class=section-num>4.2.2</span> 根据一个非空值创建Optional</h4><p>还可以使用静态工厂方法<code>Optional.of</code>,
-依据一个非空值创建一个<code>Optional</code>对象:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>Optional</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span> <span class=n>optional</span> <span class=o>=</span> <span class=n>Optional</span><span class=o>.</span><span class=na>of</span><span class=o>(</span><span class=n>objectT</span><span class=o>);</span>
+依据一个非空值创建一个<code>Optional</code>对象:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>Optional</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span> <span class=n>optional</span> <span class=o>=</span> <span class=n>Optional</span><span class=o>.</span><span class=na>of</span><span class=o>(</span><span class=n>objectT</span><span class=o>);</span>
 </span></span></code></pre></td></tr></table></div></div><p>需要注意的是, 按照<code>Optional</code>的源码声明, 如果传入的<code>objectT</code>为<code>null</code>,
-那么<code>Optional</code>就会立刻抛出<code>NullPointException=(这就是快速失败-fail fast), 而还是等到访问=optional</code>属性时才返回一个错误.</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+那么<code>Optional</code>就会立刻抛出<code>NullPointException=(这就是快速失败-fail fast), 而还是等到访问=optional</code>属性时才返回一个错误.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -186,8 +85,7 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p><p>如果检�
 </span><span class=lnt> 9
 </span><span class=lnt>10
 </span><span class=lnt>11
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=cm>/**
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=cm>/**
 </span></span></span><span class=line><span class=cl><span class=cm> * Returns an {@code Optional} with the specified present non-null value.
 </span></span></span><span class=line><span class=cl><span class=cm> *
 </span></span></span><span class=line><span class=cl><span class=cm> * @param &lt;T&gt; the class of the value
@@ -199,32 +97,25 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p><p>如果检�
 </span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=k>new</span> <span class=n>Optional</span><span class=o>&lt;&gt;(</span><span class=n>value</span><span class=o>);</span>
 </span></span><span class=line><span class=cl><span class=o>}</span>
 </span></span></code></pre></td></tr></table></div></div><h4 id=可接受null的optional><span class=section-num>4.2.3</span> 可接受null的Optional</h4><p>最后, 使用静态工厂方法<code>Optional.ofNullable</code>,
-我们可以创建一个允许<code>null</code>的<code>Optional</code>的对象:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>Optional</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span> <span class=n>optional</span> <span class=o>=</span> <span class=n>Optional</span><span class=o>.</span><span class=na>ofNullable</span><span class=o>(</span><span class=n>objectT</span><span class=o>);</span>
+我们可以创建一个允许<code>null</code>的<code>Optional</code>的对象:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>Optional</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span> <span class=n>optional</span> <span class=o>=</span> <span class=n>Optional</span><span class=o>.</span><span class=na>ofNullable</span><span class=o>(</span><span class=n>objectT</span><span class=o>);</span>
 </span></span></code></pre></td></tr></table></div></div><p>如果<code>objectT</code>为<code>null</code>, 那么得到的<code>Optional</code>对象就是个空对象.</p><h3 id=optional的消费方式><span class=section-num>4.3</span> Optional的消费方式</h3><h4 id=optional与stream的邂逅><span class=section-num>4.3.1</span> Optional与Stream的邂逅</h4><p>既然<code>Optional</code>在Oracle的文档中被定性为一个容器(container),</p><p>那么对于一个容器,
 我们关注的点无非是这个容器如何<strong>存*(对于<code>Optional</code>来说是构造)和如何</strong>取*这两件事而已(也就是消费).
 在谈<code>Optional</code>的消费接口之前,
 先来回顾一下Java8引进的<code>Stream</code>操作(关于Java8
 <code>Stream</code>操作的说明已经汗牛充栋了, 既然珠玉在前, 我就不赘言了),
-常用的<code>Stream</code>操作函数有如下几个:</p><ul>
-<li>filter</li><li>map</li><li>flatmap</li><li>peek</li><li>reduce</li><li>更多的函数可以参考<a href=https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html>Oracle文档</a></li></ul><p>因为前文已经说过<code>Optional</code>是容器类, 那么按理来说,
+常用的<code>Stream</code>操作函数有如下几个:</p><ul><li>filter</li><li>map</li><li>flatmap</li><li>peek</li><li>reduce</li><li>更多的函数可以参考<a href=https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html>Oracle文档</a></li></ul><p>因为前文已经说过<code>Optional</code>是容器类, 那么按理来说,
 正常容器类支持的<code>Stream</code>操作, <code>Optional</code>也支持.</p><p>只不过在Java8的时候, <code>Optional</code>只支持<code>filter</code>,=map=和<code>flatmap</code>这三个<code>Stream</code>操作.</p><p>可能是因为Java委员会的奆佬们也觉得<code>Optional</code>身为一个容器类只支持三个<code>Stream</code>操作有点丢人,
 所以在Java9,
 <code>Optional</code>增加了一个<code>Optional.stream()</code>这样一个可以返回<code>Stream</code>对象的函数,
 让<code>Optional</code>拥有了容器类操作<code>Stream</code>的所有能力,
-重振了身为一个容器的荣光. <code>Optional</code>与<code>Stream</code>结合使用的示例如下:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+重振了身为一个容器的荣光. <code>Optional</code>与<code>Stream</code>结合使用的示例如下:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
 </span><span class=lnt>6
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=n>String</span> <span class=nf>getCarInsuranceName</span><span class=o>(</span><span class=n>Optional</span><span class=o>&lt;</span><span class=n>Person</span><span class=o>&gt;</span> <span class=n>person</span><span class=o>)</span> <span class=o>{</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=n>String</span> <span class=nf>getCarInsuranceName</span><span class=o>(</span><span class=n>Optional</span><span class=o>&lt;</span><span class=n>Person</span><span class=o>&gt;</span> <span class=n>person</span><span class=o>)</span> <span class=o>{</span>
 </span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>person</span><span class=o>.</span><span class=na>flatMap</span><span class=o>(</span><span class=n>Person</span><span class=o>::</span><span class=n>getCar</span><span class=o>)</span>
 </span></span><span class=line><span class=cl>	<span class=o>.</span><span class=na>filter</span><span class=o>(</span><span class=n>car</span><span class=o>-&gt;</span><span class=n>car</span><span class=o>.</span><span class=na>getName</span><span class=o>().</span><span class=na>equals</span><span class=o>(</span><span class=s>&#34;Spaceship&#34;</span><span class=o>))</span>
 </span></span><span class=line><span class=cl>	<span class=o>.</span><span class=na>flatMap</span><span class=o>(</span><span class=n>Car</span><span class=o>::</span><span class=n>getInsurance</span><span class=o>)</span>
@@ -232,8 +123,7 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p><p>如果检�
 </span></span><span class=line><span class=cl>	<span class=o>.</span><span class=na>orElse</span><span class=o>(</span><span class=s>&#34;Unknown&#34;</span><span class=o>);</span>
 </span></span></code></pre></td></tr></table></div></div><h4 id=默认行为及解引用optional对象><span class=section-num>4.3.2</span> 默认行为及解引用Optional对象</h4><p>除了使用<code>Stream</code>来消费<code>Optional</code>对象,
 还可以使用解引用读取<code>Optional</code>实例中的变量值以及定义默认行为,
-具体函数说明如下:</p><ol>
-<li><code>get()</code>是这些方法中最简单但又最不安全的方法. 如果变量存在,
+具体函数说明如下:</p><ol><li><code>get()</code>是这些方法中最简单但又最不安全的方法. 如果变量存在,
 它直接返回封闭的变量值. 否则就抛出一个<code>NoSuchElementException</code>异常.
 所以, 除非是非常确定<code>Optional</code>变量一定包含值,
 否则使用这个函数就相当容易踩坑. 此外,
@@ -251,19 +141,13 @@ API几乎都是通过返回一个null的方式表示所需的值的缺失,
 所以要尽量少用<code>null</code>. 而现存的海量Java API都已经使用<code>null</code>作为返回结果,
 我们没可能把这些API都重构成返回一个<code>Optional</code>对象的, 但眼看着<code>Optional</code>这样一个设计更完善无法在已有的Java API中使用未免令人心有不甘.</p><p>现实中, 可能我们无法修改这些API的签名, 但是我们却可以很轻易地用<code>Optional</code>对象对这些API的返回值进行封装.
 现在还是用熟悉的<code>Map</code>举例, 假设有一个<code>Map&lt;String, Object></code>的对象, 在查询<code>key</code>对应的<code>value</code>时, 如果<code>value</code>不存在,
-那么调用<code>Map.get(key)</code>就会返回一个<code>null</code>:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>Object</span> <span class=n>value</span> <span class=o>=</span> <span class=n>map</span><span class=o>.</span><span class=na>get</span><span class=o>(</span><span class=n>key</span><span class=o>);</span>
+那么调用<code>Map.get(key)</code>就会返回一个<code>null</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>Object</span> <span class=n>value</span> <span class=o>=</span> <span class=n>map</span><span class=o>.</span><span class=na>get</span><span class=o>(</span><span class=n>key</span><span class=o>);</span>
 </span></span></code></pre></td></tr></table></div></div><p>现在, 每次使用<code>value</code>都需要进行空指针判断, 着实是太繁琐.
-为了解决这个问题, 可以使用<code>Optional.ofNullable</code>函数进行优化:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+为了解决这个问题, 可以使用<code>Optional.ofNullable</code>函数进行优化:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>Map</span><span class=o>&lt;</span><span class=n>String</span><span class=o>,</span> <span class=n>Object</span><span class=o>&gt;</span> <span class=n>map</span> <span class=o>=</span> <span class=k>new</span> <span class=n>HashMap</span><span class=o>&lt;&gt;();</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>Map</span><span class=o>&lt;</span><span class=n>String</span><span class=o>,</span> <span class=n>Object</span><span class=o>&gt;</span> <span class=n>map</span> <span class=o>=</span> <span class=k>new</span> <span class=n>HashMap</span><span class=o>&lt;&gt;();</span>
 </span></span><span class=line><span class=cl><span class=n>map</span><span class=o>.</span><span class=na>put</span><span class=o>(</span><span class=s>&#34;foo&#34;</span><span class=o>,</span> <span class=s>&#34;bar&#34;</span><span class=o>);</span>
 </span></span><span class=line><span class=cl><span class=n>String</span> <span class=n>value</span> <span class=o>=</span> <span class=n>Optional</span><span class=o>.</span><span class=na>ofNullable</span><span class=o>(</span><span class=n>map</span><span class=o>.</span><span class=na>get</span><span class=o>(</span><span class=s>&#34;foo&#34;</span><span class=o>)).</span><span class=na>map</span><span class=o>(</span><span class=n>Object</span><span class=o>::</span><span class=n>toString</span><span class=o>).</span><span class=na>orElse</span><span class=o>(</span><span class=s>&#34;helloworld&#34;</span><span class=o>);</span>
 </span></span></code></pre></td></tr></table></div></div><p>这样, 每次使用<code>value</code>都不会再有<code>NullPointException</code>的忧虑.</p><h2 id=结语><span class=section-num>5</span> 结语</h2><p>本文最开始只是想阐述Guava类库使用空指针和避免使用空指针的设计理念,
@@ -271,65 +155,28 @@ API几乎都是通过返回一个null的方式表示所需的值的缺失,
 因此使用Guava自家的<code>Optional</code>类来代替<code>null</code>的大部分应用场景,
 而Guava自家的<code>Optional</code>无可避免地被JDK的<code>Optional</code>取代,</p><p>所以本文大部份的内容也变成对JDK的<code>Optional</code>的探讨.
 相信下篇文章会有所改观, 总不可能Guava所有的工具类, 都有JDK对应的竞品,
-如果真是这样的话, JDK应该改名为GDK :)</p><h2 id=参考><span class=section-num>6</span> 参考</h2><ul>
-<li><a href=https://github.com/google/guava/wiki/UsingAndAvoidingNullExplained>Using and avoiding</a></li><li><a href=https://book.douban.com/subject/25912747/>Java8 in Action</a></li><li><a href=https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html>Oracle java doc about Optional</a></li></ul></div><div class=post-copyright>
-<p class=copyright-item>
-<span class=item-title>Author</span>
-<span class=item-content>Ramsay Leung</span>
-</p><p class=copyright-item>
-<span class=item-title>LastMod</span>
-<span class=item-content>
-2022-02-25
-</span>
-</p></div><footer class=post-footer>
-<div class=post-tags>
-<a href=/tags/java/>java</a>
-<a href=/tags/guava/>guava</a>
-</div><nav class=post-nav>
-<a class=prev href=/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BC%98%E9%9B%85%E6%A0%A1%E9%AA%8C%E6%95%B0%E6%8D%AE/>
-<i class="iconfont icon-left"></i>
+如果真是这样的话, JDK应该改名为GDK :)</p><h2 id=参考><span class=section-num>6</span> 参考</h2><ul><li><a href=https://github.com/google/guava/wiki/UsingAndAvoidingNullExplained>Using and avoiding</a></li><li><a href=https://book.douban.com/subject/25912747/>Java8 in Action</a></li><li><a href=https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html>Oracle java doc about Optional</a></li></ul></div><div class=post-copyright><p class=copyright-item><span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span></p><p class=copyright-item><span class=item-title>LastMod</span>
+<span class=item-content>2022-02-25</span></p></div><footer class=post-footer><div class=post-tags><a href=/tags/java/>java</a>
+<a href=/tags/guava/>guava</a></div><nav class=post-nav><a class=prev href=/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BC%98%E9%9B%85%E6%A0%A1%E9%AA%8C%E6%95%B0%E6%8D%AE/><i class="iconfont icon-left"></i>
 <span class="prev-text nav-default">Guava探究系列之二: 优雅校验数据</span>
-<span class="prev-text nav-mobile">Prev</span>
-</a>
-<a class=next href=/post/2019/%E5%B7%A5%E4%BD%9C%E4%B8%80%E5%91%A8%E5%B9%B4%E8%AE%B0/>
-<span class="next-text nav-default">工作一年记</span>
+<span class="prev-text nav-mobile">Prev</span></a>
+<a class=next href=/post/2019/%E5%B7%A5%E4%BD%9C%E4%B8%80%E5%91%A8%E5%B9%B4%E8%AE%B0/><span class="next-text nav-default">工作一年记</span>
 <span class="next-text nav-mobile">Next</span>
-<i class="iconfont icon-right"></i>
-</a>
-</nav></footer></article></div><div id=gitalk-container></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
-<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
-<script type=text/javascript>var gitalk=new Gitalk({id:"2019-07-02 19:25:00 \u002b0800 \u002b0800",title:"Guava探究系列之一: 使用和避免使用空指针",clientID:"3c034c97f0926fafd2d6",clientSecret:"192051927d267ce83eb2ef10955890b7db2720ad",repo:"comment",owner:"ramsayleung",admin:["ramsayleung"],body:decodeURI(location.href)});gitalk.render("gitalk-container")</script>
-<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript></div></main><footer id=footer class=footer>
-<div class=social-links>
-<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><div id=gitalk-container></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:"2019-07-02 19:25:00 \u002b0800 \u002b0800",title:"Guava探究系列之一: 使用和避免使用空指针",clientID:"3c034c97f0926fafd2d6",clientSecret:"192051927d267ce83eb2ef10955890b7db2720ad",repo:"comment",owner:"ramsayleung",admin:["ramsayleung"],body:decodeURI(location.href)});gitalk.render("gitalk-container")</script><noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
 <a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
 <a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
 <a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
-<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
-</div><div class=copyright>
-<span class=power-by>
-Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
-</span>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a></span>
 <span class=division>|</span>
-<span class=theme-info>
-Theme -
-<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
-</span>
-<div class=busuanzi-footer>
-<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=theme-info>Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span><div class=busuanzi-footer><span id=busuanzi_container_site_pv>site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span></span>
 <span class=division>|</span>
-<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
-</div><span class=copyright-year>
-&copy;
+<span id=busuanzi_container_site_uv>site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span></span></div><span class=copyright-year>&copy;
 2017 -
-2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
-</span>
-</div></footer><div class=back-to-top id=back-to-top>
-<i class="iconfont icon-up"></i>
-</div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
 <script type=text/javascript src=/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js></script>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script>
-<script async src=https://www.google-analytics.com/analytics.js></script>
-</body></html>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script><script async src=https://www.google-analytics.com/analytics.js></script></body></html>

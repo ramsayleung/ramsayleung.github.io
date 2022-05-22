@@ -1,114 +1,16 @@
-<!doctype html><html lang=en>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
-<title>guava 探究系列之五：新类型容器 - In Pursuit of Hubris</title><meta name=renderer content="webkit">
-<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta http-equiv=cache-control content="no-transform">
-<meta http-equiv=cache-control content="no-siteapp">
-<meta name=theme-color content="#f8f5ec">
-<meta name=msapplication-navbutton-color content="#f8f5ec">
-<meta name=apple-mobile-web-app-capable content="yes">
-<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
-<meta name=author content="Ramsay Leung"><meta name=description content="1 前言 JDK 提供了各种功能强大的工具类, 宛如装备齐全的军火库, 而容器就是其中一项内置的利器, 提供了包括诸多常用的数据结构, 下图对 JDK 已有容器进行了"><meta name=keywords content="Blog,Software,Enginering">
-<meta name=generator content="Hugo 0.93.3 with theme even">
-<link rel=canonical href=https://ramsayleung.github.io/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E6%96%B0%E7%B1%BB%E5%9E%8B%E5%AE%B9%E5%99%A8/>
-<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
-<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
-<link rel=manifest href=/manifest.json>
-<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
-<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
-<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
-<meta property="og:title" content="guava 探究系列之五：新类型容器">
-<meta property="og:description" content="1 前言 JDK 提供了各种功能强大的工具类, 宛如装备齐全的军火库, 而容器就是其中一项内置的利器, 提供了包括诸多常用的数据结构, 下图对 JDK 已有容器进行了">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://ramsayleung.github.io/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E6%96%B0%E7%B1%BB%E5%9E%8B%E5%AE%B9%E5%99%A8/"><meta property="article:section" content="post">
-<meta property="article:published_time" content="2019-12-12T15:45:00+08:00">
-<meta property="article:modified_time" content="2022-02-25T20:16:37+08:00">
-<meta itemprop=name content="guava 探究系列之五：新类型容器">
-<meta itemprop=description content="1 前言 JDK 提供了各种功能强大的工具类, 宛如装备齐全的军火库, 而容器就是其中一项内置的利器, 提供了包括诸多常用的数据结构, 下图对 JDK 已有容器进行了"><meta itemprop=datePublished content="2019-12-12T15:45:00+08:00">
-<meta itemprop=dateModified content="2022-02-25T20:16:37+08:00">
-<meta itemprop=wordCount content="6350">
-<meta itemprop=keywords content="java,guava,"><meta name=twitter:card content="summary">
-<meta name=twitter:title content="guava 探究系列之五：新类型容器">
-<meta name=twitter:description content="1 前言 JDK 提供了各种功能强大的工具类, 宛如装备齐全的军火库, 而容器就是其中一项内置的利器, 提供了包括诸多常用的数据结构, 下图对 JDK 已有容器进行了"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
-<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
-</head><body>
-<div id=mobile-navbar class=mobile-navbar>
-<div class=mobile-header-logo>
-<a href=/ class=logo>In Pursuit of Hubris</a>
-</div><div class=mobile-navbar-icon>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>guava 探究系列之五：新类型容器 - In Pursuit of Hubris</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="Ramsay Leung"><meta name=description content="1 前言 JDK 提供了各种功能强大的工具类, 宛如装备齐全的军火库, 而容器就是其中一项内置的利器, 提供了包括诸多常用的数据结构, 下图对 JDK 已有容器进行了"><meta name=keywords content="Blog,Software,Enginering"><meta name=generator content="Hugo 0.99.1 with theme even"><link rel=canonical href=https://ramsayleung.github.io/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E6%96%B0%E7%B1%BB%E5%9E%8B%E5%AE%B9%E5%99%A8/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="guava 探究系列之五：新类型容器"><meta property="og:description" content="1 前言 JDK 提供了各种功能强大的工具类, 宛如装备齐全的军火库, 而容器就是其中一项内置的利器, 提供了包括诸多常用的数据结构, 下图对 JDK 已有容器进行了"><meta property="og:type" content="article"><meta property="og:url" content="https://ramsayleung.github.io/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E6%96%B0%E7%B1%BB%E5%9E%8B%E5%AE%B9%E5%99%A8/"><meta property="article:section" content="post"><meta property="article:published_time" content="2019-12-12T15:45:00+08:00"><meta property="article:modified_time" content="2022-02-25T20:16:37+08:00"><meta itemprop=name content="guava 探究系列之五：新类型容器"><meta itemprop=description content="1 前言 JDK 提供了各种功能强大的工具类, 宛如装备齐全的军火库, 而容器就是其中一项内置的利器, 提供了包括诸多常用的数据结构, 下图对 JDK 已有容器进行了"><meta itemprop=datePublished content="2019-12-12T15:45:00+08:00"><meta itemprop=dateModified content="2022-02-25T20:16:37+08:00"><meta itemprop=wordCount content="6350"><meta itemprop=keywords content="java,guava,"><meta name=twitter:card content="summary"><meta name=twitter:title content="guava 探究系列之五：新类型容器"><meta name=twitter:description content="1 前言 JDK 提供了各种功能强大的工具类, 宛如装备齐全的军火库, 而容器就是其中一项内置的利器, 提供了包括诸多常用的数据结构, 下图对 JDK 已有容器进行了"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>In Pursuit of Hubris</a></div><div class=mobile-navbar-icon><span></span>
 <span></span>
-<span></span>
-<span></span>
-</div></div><nav id=mobile-menu class="mobile-menu slideout-menu">
-<ul class=mobile-menu-list>
-<a href=/>
-<li class=mobile-menu-item>Home</li></a><a href=/post/>
-<li class=mobile-menu-item>Archives</li></a><a href=/tags/>
-<li class=mobile-menu-item>Tags</li></a><a href=/about_me>
-<li class=mobile-menu-item>About</li></a>
-</ul></nav><div class=container id=mobile-panel>
-<header id=header class=header>
-<head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-F1N7KS6M5Q"></script>
-<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-F1N7KS6M5Q",{anonymize_ip:!0})}</script>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script>
-<script async src=https://www.google-analytics.com/analytics.js></script>
-</head><div class=logo-wrapper>
-<a href=/ class=logo>In Pursuit of Hubris</a>
-</div><nav class=site-navbar>
-<ul id=menu class=menu>
-<li class=menu-item>
-<a class=menu-item-link href=/>Home</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/post/>Archives</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/tags/>Tags</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/about_me>About</a>
-</li></ul></nav></header><main id=main class=main>
-<div class=content-wrapper>
-<div id=content class=content>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title>guava 探究系列之五：新类型容器</h1><div class=post-meta>
-<span class=post-time> 2019-12-12 </span>
-<div class=post-category>
-<a href=/categories/java/> java </a>
-</div><span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
-</div></header><div class=post-toc id=post-toc>
-<h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active">
-<nav id=TableOfContents>
-<ul>
-<li><a href=#前言><span class=section-num>1</span> 前言</a></li><li><a href=#multiset><span class=section-num>2</span> Multiset</a>
-<ul>
-<li><a href=#multiset-的例子><span class=section-num>2.1</span> Multiset 的例子</a></li><li><a href=#multiset-并不是一个-map><span class=section-num>2.2</span> Multiset 并不是一个 Map</a></li><li><a href=#multiset-实现><span class=section-num>2.3</span> Multiset 实现</a></li></ul></li><li><a href=#multimap><span class=section-num>3</span> Multimap</a>
-<ul>
-<li><a href=#multimap-的例子><span class=section-num>3.1</span> Multimap 的例子</a></li><li><a href=#视图><span class=section-num>3.2</span> 视图</a></li><li><a href=#multimap-也不是一个-map><span class=section-num>3.3</span> Multimap 也不是一个 Map</a></li><li><a href=#实现><span class=section-num>3.4</span> 实现</a></li></ul></li><li><a href=#bimap><span class=section-num>4</span> BiMap</a>
-<ul>
-<li><a href=#bimap-例子><span class=section-num>4.1</span> BiMap 例子</a></li><li><a href=#bimap-实现><span class=section-num>4.2</span> BiMap 实现</a></li></ul></li><li><a href=#table><span class=section-num>5</span> Table</a>
-<ul>
-<li><a href=#table-例子><span class=section-num>5.1</span> Table 例子</a></li><li><a href=#table-视图><span class=section-num>5.2</span> Table 视图</a></li><li><a href=#table-实现><span class=section-num>5.3</span> Table 实现</a></li></ul></li><li><a href=#classtoinstancemap><span class=section-num>6</span> ClassToInstanceMap</a>
-<ul>
-<li><a href=#classtoinstancemap-例子><span class=section-num>6.1</span> ClassToInstanceMap 例子</a></li><li><a href=#classtoinstancemap-实现><span class=section-num>6.2</span> ClassToInstanceMap 实现</a></li></ul></li><li><a href=#rangeset><span class=section-num>7</span> RangeSet</a>
-<ul>
-<li><a href=#rangeset-例子><span class=section-num>7.1</span> RangeSet 例子</a></li><li><a href=#rangeset-视图><span class=section-num>7.2</span> RangeSet 视图</a></li><li><a href=#rangeset-实现><span class=section-num>7.3</span> RangeSet 实现</a></li></ul></li><li><a href=#rangemap><span class=section-num>8</span> RangeMap</a></li><li><a href=#rangemap-例子><span class=section-num>9</span> RangeMap 例子</a>
-<ul>
-<li><a href=#rangemap-视图><span class=section-num>9.1</span> RangeMap 视图</a></li><li><a href=#rangemap-实现><span class=section-num>9.2</span> RangeMap 实现</a></li></ul></li><li><a href=#总结><span class=section-num>10</span> 总结</a></li></ul></nav></div></div><div class=post-content>
-<h2 id=前言><span class=section-num>1</span> 前言</h2><p>JDK 提供了各种功能强大的工具类, 宛如装备齐全的军火库,
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/about_me><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><head><script async src="https://www.googletagmanager.com/gtag/js?id=G-F1N7KS6M5Q"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-F1N7KS6M5Q",{anonymize_ip:!0})}</script><script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script><script async src=https://www.google-analytics.com/analytics.js></script></head><div class=logo-wrapper><a href=/ class=logo>In Pursuit of Hubris</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/about_me>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>guava 探究系列之五：新类型容器</h1><div class=post-meta><span class=post-time>2019-12-12</span><div class=post-category><a href=/categories/java/>java</a></div><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><a href=#前言><span class=section-num>1</span> 前言</a></li><li><a href=#multiset><span class=section-num>2</span> Multiset</a><ul><li><a href=#multiset-的例子><span class=section-num>2.1</span> Multiset 的例子</a></li><li><a href=#multiset-并不是一个-map><span class=section-num>2.2</span> Multiset 并不是一个 Map</a></li><li><a href=#multiset-实现><span class=section-num>2.3</span> Multiset 实现</a></li></ul></li><li><a href=#multimap><span class=section-num>3</span> Multimap</a><ul><li><a href=#multimap-的例子><span class=section-num>3.1</span> Multimap 的例子</a></li><li><a href=#视图><span class=section-num>3.2</span> 视图</a></li><li><a href=#multimap-也不是一个-map><span class=section-num>3.3</span> Multimap 也不是一个 Map</a></li><li><a href=#实现><span class=section-num>3.4</span> 实现</a></li></ul></li><li><a href=#bimap><span class=section-num>4</span> BiMap</a><ul><li><a href=#bimap-例子><span class=section-num>4.1</span> BiMap 例子</a></li><li><a href=#bimap-实现><span class=section-num>4.2</span> BiMap 实现</a></li></ul></li><li><a href=#table><span class=section-num>5</span> Table</a><ul><li><a href=#table-例子><span class=section-num>5.1</span> Table 例子</a></li><li><a href=#table-视图><span class=section-num>5.2</span> Table 视图</a></li><li><a href=#table-实现><span class=section-num>5.3</span> Table 实现</a></li></ul></li><li><a href=#classtoinstancemap><span class=section-num>6</span> ClassToInstanceMap</a><ul><li><a href=#classtoinstancemap-例子><span class=section-num>6.1</span> ClassToInstanceMap 例子</a></li><li><a href=#classtoinstancemap-实现><span class=section-num>6.2</span> ClassToInstanceMap 实现</a></li></ul></li><li><a href=#rangeset><span class=section-num>7</span> RangeSet</a><ul><li><a href=#rangeset-例子><span class=section-num>7.1</span> RangeSet 例子</a></li><li><a href=#rangeset-视图><span class=section-num>7.2</span> RangeSet 视图</a></li><li><a href=#rangeset-实现><span class=section-num>7.3</span> RangeSet 实现</a></li></ul></li><li><a href=#rangemap><span class=section-num>8</span> RangeMap</a></li><li><a href=#rangemap-例子><span class=section-num>9</span> RangeMap 例子</a><ul><li><a href=#rangemap-视图><span class=section-num>9.1</span> RangeMap 视图</a></li><li><a href=#rangemap-实现><span class=section-num>9.2</span> RangeMap 实现</a></li></ul></li><li><a href=#总结><span class=section-num>10</span> 总结</a></li></ul></nav></div></div><div class=post-content><h2 id=前言><span class=section-num>1</span> 前言</h2><p>JDK 提供了各种功能强大的工具类, 宛如装备齐全的军火库,
 而容器就是其中一项内置的利器, 提供了包括诸多常用的数据结构, 下图对 JDK
-已有容器进行了概括:</p><figure><img src=https://raw.githubusercontent.com/ramsayleung/images/master/20191122171101.png alt="Figure 1: JDK 容器"><figcaption>
-<p><span class=figure-number>Figure 1: </span>JDK 容器</p></figcaption></figure><p>不过, 虽然 JDK 的容器类已经五花八门, 琳琅满目, 但是某些很有用的容器类
+已有容器进行了概括:</p><figure><img src=https://raw.githubusercontent.com/ramsayleung/images/master/20191122171101.png alt="Figure 1: JDK 容器"><figcaption><p><span class=figure-number>Figure 1: </span>JDK 容器</p></figcaption></figure><p>不过, 虽然 JDK 的容器类已经五花八门, 琳琅满目, 但是某些很有用的容器类
 JDK 依然欠缺, 而 Guava 恰如其分地填补了这些空缺, 开发了 JDK
 所欠缺的容器类, &ldquo;造福大众&rdquo;.</p><p>此外, 虽然引入了新的容器类, 但 Guava 实现了
 JDK 的 <code>Collection</code> 接口, 保证 Guava 的容器类能够与 JDK
 的容器类”和谐共处”, 避免不必要的”纷争”.</p><h2 id=multiset><span class=section-num>2</span> Multiset</h2><p>假设你是个书店的老板, 你想统计下书店里不同书籍的存货量,
-你可能写下这样的实现:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+你可能写下这样的实现:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
@@ -117,8 +19,7 @@ JDK 的 <code>Collection</code> 接口, 保证 Guava 的容器类能够与 JDK
 </span><span class=lnt>7
 </span><span class=lnt>8
 </span><span class=lnt>9
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>Map</span><span class=o>&lt;</span><span class=n>String</span><span class=o>,</span> <span class=n>Integer</span><span class=o>&gt;</span> <span class=n>counts</span> <span class=o>=</span> <span class=k>new</span> <span class=n>HashMap</span><span class=o>&lt;</span><span class=n>String</span><span class=o>,</span> <span class=n>Integer</span><span class=o>&gt;();</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>Map</span><span class=o>&lt;</span><span class=n>String</span><span class=o>,</span> <span class=n>Integer</span><span class=o>&gt;</span> <span class=n>counts</span> <span class=o>=</span> <span class=k>new</span> <span class=n>HashMap</span><span class=o>&lt;</span><span class=n>String</span><span class=o>,</span> <span class=n>Integer</span><span class=o>&gt;();</span>
 </span></span><span class=line><span class=cl><span class=k>for</span> <span class=o>(</span><span class=n>String</span> <span class=n>book</span> <span class=o>:</span> <span class=n>bookNames</span><span class=o>)</span> <span class=o>{</span>
 </span></span><span class=line><span class=cl>    <span class=n>Integer</span> <span class=n>count</span> <span class=o>=</span> <span class=n>counts</span><span class=o>.</span><span class=na>get</span><span class=o>(</span><span class=n>book</span><span class=o>);</span>
 </span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=o>(</span><span class=n>count</span> <span class=o>==</span> <span class=kc>null</span><span class=o>)</span> <span class=o>{</span>
@@ -131,21 +32,13 @@ JDK 的 <code>Collection</code> 接口, 保证 Guava 的容器类能够与 JDK
 value 都加起来?</p><p>对于这样的要求, Guava 提供了一个更好的解决方案: 一个新类型容器
 <code>Multiset</code> , 它支持新增多个相同类型的元素并统计. 维基百科给出的关于
 <code>Multiset</code>
-的<a href=https://en.wikipedia.org/wiki/Set_(abstract_data_type)#Multiset>解释</a>:</p><blockquote>
-<p>这是个成员可以出现多次的集合(Set), 也被称为背包(bag)</p></blockquote><p>大名鼎鼎的《算法/Algorithm》也给出过 <a href=https://algs4.cs.princeton.edu/13stacks/>bag</a> 的解释和实现.</p><p>需要注意的是, <code>multisets</code> 的成员是无序的, <code>{a,a,b}</code> 和 <code>{a,b,a}</code>
-这两个集合在 <code>multisets</code> 看来是相等.</p><p>我们可以从两个角度来分析 <code>multisets</code> :</p><ul>
-<li>
-<p><code>multisets</code> 就好像一个<code>ArrayList&lt;E></code>, 只不过是无序的.
-当把它当作<code>ArrayList&lt;E></code>时:</p><ul>
-<li>调用<code>add(E)</code>函数, 增加给定元素的出现次数</li><li>调用<code>iterator()</code>函数, 获取一个 <code>multisets</code> 的迭代器,
-用来迭代每个元素</li><li>调用<code>size()</code>函数, 获取所有元素出现次数之和</li></ul></li><li>
-<p><code>multisets</code> 就好象一个<code>Map&lt;E, Integer></code>, 包含元素和对应的数量,
-只不过数量只能为正数. 当把它当作<code>Map&lt;E, Integer></code>的时候:</p><ul>
-<li>调用<code>count(Object)</code>函数获取某个特定元素的出现次数.</li><li>调用<code>entrySet()</code>函数返回一个<code>Set&lt;Multiset.Entry&lt;E>></code>, 大概类似一个
+的<a href=https://en.wikipedia.org/wiki/Set_(abstract_data_type)#Multiset>解释</a>:</p><blockquote><p>这是个成员可以出现多次的集合(Set), 也被称为背包(bag)</p></blockquote><p>大名鼎鼎的《算法/Algorithm》也给出过 <a href=https://algs4.cs.princeton.edu/13stacks/>bag</a> 的解释和实现.</p><p>需要注意的是, <code>multisets</code> 的成员是无序的, <code>{a,a,b}</code> 和 <code>{a,b,a}</code>
+这两个集合在 <code>multisets</code> 看来是相等.</p><p>我们可以从两个角度来分析 <code>multisets</code> :</p><ul><li><p><code>multisets</code> 就好像一个<code>ArrayList&lt;E></code>, 只不过是无序的.
+当把它当作<code>ArrayList&lt;E></code>时:</p><ul><li>调用<code>add(E)</code>函数, 增加给定元素的出现次数</li><li>调用<code>iterator()</code>函数, 获取一个 <code>multisets</code> 的迭代器,
+用来迭代每个元素</li><li>调用<code>size()</code>函数, 获取所有元素出现次数之和</li></ul></li><li><p><code>multisets</code> 就好象一个<code>Map&lt;E, Integer></code>, 包含元素和对应的数量,
+只不过数量只能为正数. 当把它当作<code>Map&lt;E, Integer></code>的时候:</p><ul><li>调用<code>count(Object)</code>函数获取某个特定元素的出现次数.</li><li>调用<code>entrySet()</code>函数返回一个<code>Set&lt;Multiset.Entry&lt;E>></code>, 大概类似一个
 <code>Map</code> 返回 <code>entrySet</code> .</li><li>调用 <code>elementSet</code> 函数返回一个<code>Set&lt;E></code>对象,
-返回所有的元素(去掉重复的元素)</li></ul></li></ul><h3 id=multiset-的例子><span class=section-num>2.1</span> Multiset 的例子</h3><p>粗略介绍完 <code>Multiset</code> 之后, 现在就让我们用它重新实现原来的需求:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+返回所有的元素(去掉重复的元素)</li></ul></li></ul><h3 id=multiset-的例子><span class=section-num>2.1</span> Multiset 的例子</h3><p>粗略介绍完 <code>Multiset</code> 之后, 现在就让我们用它重新实现原来的需求:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -161,8 +54,7 @@ value 都加起来?</p><p>对于这样的要求, Guava 提供了一个更好的�
 </span><span class=lnt>14
 </span><span class=lnt>15
 </span><span class=lnt>16
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@Test</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@Test</span>
 </span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kt>void</span> <span class=nf>testMultiset</span><span class=o>()</span> <span class=o>{</span>
 </span></span><span class=line><span class=cl>    <span class=kd>final</span> <span class=n>String</span> <span class=n>POTTER</span> <span class=o>=</span> <span class=s>&#34;Potter&#34;</span><span class=o>;</span>
 </span></span><span class=line><span class=cl>    <span class=n>Multiset</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>bookstore</span> <span class=o>=</span> <span class=n>HashMultiset</span><span class=o>.</span><span class=na>create</span><span class=o>();</span>
@@ -181,8 +73,7 @@ value 都加起来?</p><p>对于这样的要求, Guava 提供了一个更好的�
 </span></span></code></pre></td></tr></table></div></div><p><code>multisets</code> 完美满足了我们的需求.</p><h3 id=multiset-并不是一个-map><span class=section-num>2.2</span> Multiset 并不是一个 Map</h3><p>需要注意的是, <code>Multiset</code> 虽然与<code>Map&lt;E, Integer></code>类似, 但 <code>Multiset</code>
 并不是一个<code>Map&lt;E, Integer></code>, 请不要混淆它们两个.</p><p>最大的差别是, <code>Multiset</code> 实现了 <code>Collection</code> 接口, 完全遵守 <code>Collection</code>
 接口需要满足的协议, 而 <code>Map</code> 和 <code>Collection</code> 是完全不同的接口,
-这点需要牢记于心. 还有其他的差别, 诸如:</p><ol>
-<li><code>Multiset&lt;E></code>出现的次数只能是正数, 没有任何元素的出现次数会是负数的,
+这点需要牢记于心. 还有其他的差别, 诸如:</p><ol><li><code>Multiset&lt;E></code>出现的次数只能是正数, 没有任何元素的出现次数会是负数的,
 出现次数为 0 的元素会被认为不存在,
 这样的元素是不会出现在<code>elementSet()</code>和<code>entrySet()</code>的返回结果中的.
 而<code>Map&lt;E, Integer></code>肯定不会有这样的限制.</li><li><code>multiset.size()</code>返回所有元素出现次数之和,
@@ -193,19 +84,8 @@ value 都加起来?</p><p>对于这样的要求, Guava 提供了一个更好的�
 函数直接设置元素的出现次数, <code>setCount(a, 0)</code>的意思等于将删除所有的
 <code>a</code> 元素.</li><li><code>multiset.count(elem)</code>: 如果元素 <code>elem</code> 不存在, 那么返回值总是 0. 而
 <code>Map</code> 对于不存在的元素, 返回的是 <code>null</code> .</li></ol><h3 id=multiset-实现><span class=section-num>2.3</span> Multiset 实现</h3><p>鉴于 <code>Multiset</code> 只是个接口, Guava 提供许多的接口实现, 大致可以与 Java
-中的容器对应上:</p><table>
-<thead>
-<tr>
-<th>Map</th><th>MultiSet</th><th>支持 <code>null</code> 元素</th></tr></thead><tbody>
-<tr>
-<td>HashMap</td><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/HashMultiset.html>HashMultiset</a></td><td>Yes</td></tr><tr>
-<td>TreeMap</td><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/TreeMultiset.html>TreeMultiset</a></td><td>Yes</td></tr><tr>
-<td>LinkedHashMap</td><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/LinkedHashMultiset.html>LinkedHashMultiset</a></td><td>Yes</td></tr><tr>
-<td>ConcurrentHashMap</td><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ConcurrentHashMultiset.html>ConcurrentHashMultiset</a></td><td>No</td></tr><tr>
-<td>ImmutableMap</td><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableMultiset.html>ImmutableMultiset</a></td><td>No</td></tr></tbody></table><h2 id=multimap><span class=section-num>3</span> Multimap</h2><p>又来假设, 你是个班主任, 刚刚考完试, 你想记录下班里所有同学的成绩,
-你可能写下这样的实现:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+中的容器对应上:</p><table><thead><tr><th>Map</th><th>MultiSet</th><th>支持 <code>null</code> 元素</th></tr></thead><tbody><tr><td>HashMap</td><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/HashMultiset.html>HashMultiset</a></td><td>Yes</td></tr><tr><td>TreeMap</td><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/TreeMultiset.html>TreeMultiset</a></td><td>Yes</td></tr><tr><td>LinkedHashMap</td><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/LinkedHashMultiset.html>LinkedHashMultiset</a></td><td>Yes</td></tr><tr><td>ConcurrentHashMap</td><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ConcurrentHashMultiset.html>ConcurrentHashMultiset</a></td><td>No</td></tr><tr><td>ImmutableMap</td><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableMultiset.html>ImmutableMultiset</a></td><td>No</td></tr></tbody></table><h2 id=multimap><span class=section-num>3</span> Multimap</h2><p>又来假设, 你是个班主任, 刚刚考完试, 你想记录下班里所有同学的成绩,
+你可能写下这样的实现:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -220,8 +100,7 @@ value 都加起来?</p><p>对于这样的要求, Guava 提供了一个更好的�
 </span><span class=lnt>13
 </span><span class=lnt>14
 </span><span class=lnt>15
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=n>Integer</span> <span class=n>studentScore</span> <span class=o>=</span> <span class=n>60</span><span class=o>;</span>
 </span></span><span class=line><span class=cl><span class=n>String</span> <span class=n>studentName</span> <span class=o>=</span> <span class=s>&#34;Alan&#34;</span><span class=o>;</span>
 </span></span><span class=line><span class=cl><span class=c1>// 每个学生的成绩单
@@ -241,28 +120,20 @@ value 都加起来?</p><p>对于这样的要求, Guava 提供了一个更好的�
 使用<code>Map&lt;K, List&lt;V>></code>或者<code>Map&lt;K, Set&lt;V>></code>这样的方式构建 key-values
 自然可以, 只不过显得不甚优雅.</p><p>为此, Guava 提供了新的容器类型来应对一个
 key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
-我们也可以从两个角度来理解 <code>Multimap</code> :</p><ul>
-<li>一个 <code>key</code> 对应一个 <code>value</code> , 同样的 <code>key</code> 可以存在多个:</li></ul><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+我们也可以从两个角度来理解 <code>Multimap</code> :</p><ul><li>一个 <code>key</code> 对应一个 <code>value</code> , 同样的 <code>key</code> 可以存在多个:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>a -&gt; 1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>a -&gt; 1
 </span></span><span class=line><span class=cl>a -&gt; 2
 </span></span><span class=line><span class=cl>a -&gt; 4
 </span></span><span class=line><span class=cl>b -&gt; 3
 </span></span><span class=line><span class=cl>c -&gt; 5
-</span></span></code></pre></td></tr></table></div></div><ul>
-<li>或者一个 <code>key</code> 对应一个列表的 <code>value</code> :</li></ul><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></span></code></pre></td></tr></table></div></div><ul><li>或者一个 <code>key</code> 对应一个列表的 <code>value</code> :</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>a -&gt; [1, 2, 4]
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>a -&gt; [1, 2, 4]
 </span></span><span class=line><span class=cl>b -&gt; [3]
 </span></span><span class=line><span class=cl>c -&gt; [5]
 </span></span></code></pre></td></tr></table></div></div><p>通常来说, 最好以第一种方式来理解 <code>Multimap</code> 接口,
@@ -270,9 +141,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 <code>Map&lt;K, Collection&lt;V>></code> 对象.</p><p>需要注意的是, 不存在 1 个 <code>key</code> 对应 0 个 <code>value</code> 的情况, 不会有空的值列表这样的说法, 要不一个 <code>key</code> 对应至少一个
 <code>value</code> , 要不就是这个 <code>key</code> 不存在于这个 <code>Multimap</code> .</p><p>一般来说, 我们不会直接使用 <code>Multimap</code> 接口, 使用的是它的子接口; <code>Multimap</code>
 接口提供了两个子接口: <code>ListMultimap</code> 和 <code>SetMultimap</code> , 大致类似于
-<code>Map&lt;K, List&lt;V>></code>和 <code>Map&lt;K, Set&lt;V>></code>.</p><h3 id=multimap-的例子><span class=section-num>3.1</span> Multimap 的例子</h3><p>现在让我们用 <code>Multimap</code> 重新实现一次学生不同科目的成绩单:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+<code>Map&lt;K, List&lt;V>></code>和 <code>Map&lt;K, Set&lt;V>></code>.</p><h3 id=multimap-的例子><span class=section-num>3.1</span> Multimap 的例子</h3><p>现在让我们用 <code>Multimap</code> 重新实现一次学生不同科目的成绩单:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -287,8 +156,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </span><span class=lnt>13
 </span><span class=lnt>14
 </span><span class=lnt>15
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>String</span> <span class=n>alan</span> <span class=o>=</span> <span class=s>&#34;Alan&#34;</span><span class=o>;</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>String</span> <span class=n>alan</span> <span class=o>=</span> <span class=s>&#34;Alan&#34;</span><span class=o>;</span>
 </span></span><span class=line><span class=cl><span class=n>String</span> <span class=n>turing</span> <span class=o>=</span> <span class=s>&#34;Turing&#34;</span><span class=o>;</span>
 </span></span><span class=line><span class=cl><span class=c1>// 创建一个 ListMultimap
 </span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>ListMultimap</span><span class=o>&lt;</span><span class=n>String</span><span class=o>,</span> <span class=n>Integer</span><span class=o>&gt;</span> <span class=n>studentScoresMap</span> <span class=o>=</span> <span class=n>MultimapBuilder</span><span class=o>.</span><span class=na>hashKeys</span><span class=o>().</span><span class=na>arrayListValues</span><span class=o>().</span><span class=na>build</span><span class=o>();</span>
@@ -312,16 +180,12 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 返回的就是一个 <code>Set</code> .</p><p>实际返回的是集合的引用, 所以对这个返回集合的操作,
 将直接反馈在 <code>Multimap</code> 实例上. 如上面的例子所示, 把学生 <code>alan</code>
 返回列表的数据清空, 在 <code>ListMultimap</code> 的数据也相应地被清空了.</p><h3 id=视图><span class=section-num>3.2</span> 视图</h3><p>所谓的视图(Views), 我理解就是看待事物的方式和角度,
-称为视图(或者视角&rsquo;perspective&rsquo;).</p><p><code>Multimap</code> 提供了若干个有用的视图:</p><ol>
-<li>
-<p><code>asMap</code> 把 <code>Multimap&lt;K,V></code> 看作一个 <code>Map&lt;K, Collection&lt;V>></code> ,
+称为视图(或者视角&rsquo;perspective&rsquo;).</p><p><code>Multimap</code> 提供了若干个有用的视图:</p><ol><li><p><code>asMap</code> 把 <code>Multimap&lt;K,V></code> 看作一个 <code>Map&lt;K, Collection&lt;V>></code> ,
 返回一个的 map 对象支持 <code>remove</code> 操作, 但不支持 <code>put</code> 和 <code>putAll</code>
 操作.</p><p>值得关注的是: 当对应的 key 不存在的时候, multiMap
 返回的是一个新构造的, 为空的集合, 如果你想在对应的 key
 不存在的时候返回空指针(就好像 HashMap 那样), 你可以通过
-<code>asMap().get(key)</code> 实现这样的效果</p></li></ol><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+<code>asMap().get(key)</code> 实现这样的效果</p></li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
@@ -330,8 +194,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </span><span class=lnt>7
 </span><span class=lnt>8
 </span><span class=lnt>9
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>studentScoresMap</span><span class=o>.</span><span class=na>asMap</span><span class=o>().</span><span class=na>remove</span><span class=o>(</span><span class=n>alan</span><span class=o>);</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>studentScoresMap</span><span class=o>.</span><span class=na>asMap</span><span class=o>().</span><span class=na>remove</span><span class=o>(</span><span class=n>alan</span><span class=o>);</span>
 </span></span><span class=line><span class=cl><span class=c1>// 抛出 UnsupportedOperationException 异常
 </span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>studentScoresMap</span><span class=o>.</span><span class=na>asMap</span><span class=o>().</span><span class=na>put</span><span class=o>(</span><span class=s>&#34;key&#34;</span><span class=o>,</span> <span class=n>Lists</span><span class=o>.</span><span class=na>newArrayList</span><span class=o>());</span>
 </span></span><span class=line><span class=cl><span class=c1>// 抛出 UnsupportedOperationException 异常, 除非 anotherScores 是个空的 Map
@@ -340,8 +203,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>Collection</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span> <span class=n>Elons</span> <span class=o>=</span> <span class=n>studentScoresMap</span><span class=o>.</span><span class=na>get</span><span class=o>(</span><span class=s>&#34;Elon&#34;</span><span class=o>);</span>
 </span></span><span class=line><span class=cl><span class=c1>// 返回空指针
 </span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>studentScoresMap</span><span class=o>.</span><span class=na>asMap</span><span class=o>().</span><span class=na>get</span><span class=o>(</span><span class=s>&#34;Elon&#34;</span><span class=o>);</span>
-</span></span></code></pre></td></tr></table></div></div><ul>
-<li><code>entries</code> 把 <code>Multimap</code> 内所有的记录(entry)看作
+</span></span></code></pre></td></tr></table></div></div><ul><li><code>entries</code> 把 <code>Multimap</code> 内所有的记录(entry)看作
 <code>Collection&lt;Map.Entry&lt;K,V>></code>, 如前文的 <code>studentScoresMap.entries()</code>
 返回的就是: <code>[{"Alan": 95}, {"Alan": 88}, {"Turing": 100}]</code>.</li><li><code>keySets</code> 把 <code>Multimap</code> 内所有的不重复的 <code>key</code> 看作一个 <code>Set</code> .
 如前文的 <code>studentScoresMap.keySets()</code> 返回的就是:
@@ -352,8 +214,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 对应的 value 集合串联起来, 如前文的 <code>studentScoresMap.values()</code>
 返回的就是: <code>[95, 88, 100]</code></li></ul><h3 id=multimap-也不是一个-map><span class=section-num>3.3</span> Multimap 也不是一个 Map</h3><p>严格来说, 即使 <code>Multimap</code> 名字中带有 map, 甚至 <code>map</code> 可能用来实现
 <code>Multimap</code> , 但一个 <code>Multimap&lt;K,V></code> 终究不是一个
-<code>Map&lt;K, Collection&lt;V>></code>. 它们之间的差异包括:</p><ol>
-<li><code>Multimap.get(key)</code> 返回的对象总是不为空指针的, 即使查询的 key
+<code>Map&lt;K, Collection&lt;V>></code>. 它们之间的差异包括:</p><ol><li><code>Multimap.get(key)</code> 返回的对象总是不为空指针的, 即使查询的 key
 不存在, 返回的是个空的集合. 而 <code>Map.get(key)</code> 查询的 key 不存在,
 返回的就是空指针. 前文提到过, 如果想要让 <code>Multimap</code> 在查询 key
 不存在的时候返回空指针, 可以使用 <code>Multimap.asMap().get(key)</code>.</li><li><code>Multimap.containsKey(key)</code> 在 values 集合为空的时候就会返回 false,
@@ -362,32 +223,18 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 但对于 <code>Map&lt;K, Collection&lt;V>></code> 而言, 返回的就会是 true, 因为 value
 不为 null.</li><li><code>Multimap.size()</code> 返回的是所有记录的总数的, 即把所有的 value
 的数量累加起来, 而 <code>Map&lt;K, Colleciton&lt;V>></code> 返回的就是 key 对应的数量.</li></ol><h3 id=实现><span class=section-num>3.4</span> 实现</h3><p><code>Multimap</code> 提供了若干个不同类型的实现, 你可以使用对应的实现来取代原来
-<code>Map&lt;K, Collection&lt;V>></code> 的地方:</p><table>
-<thead>
-<tr>
-<th>实现</th><th>key 表现得类似&mldr;</th><th>value 表现得类似&mldr;</th></tr></thead><tbody>
-<tr>
-<td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ArrayListMultimap.html>ArrayListMultimap</a></td><td>HashMap</td><td>ArrayList</td></tr><tr>
-<td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/HashMultimap.html>HashMultimap</a></td><td>HashMap</td><td>HashSet</td></tr><tr>
-<td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/LinkedListMultimap.html>LinkedListMultimap</a></td><td>LinkedHashMap</td><td>LinkedList</td></tr><tr>
-<td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/LinkedHashMultimap.html>LinkedHashMultimap</a></td><td>LinkedHashMap</td><td>LinkedHashSet</td></tr><tr>
-<td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/TreeMultimap.html>TreeMultimap</a></td><td>TreeMap</td><td>TreeSet</td></tr><tr>
-<td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableListMultimap.html>ImmutableListMultimap</a></td><td>ImmutableMap</td><td>ImmutableList</td></tr><tr>
-<td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableSetMultimap.html>ImmutableSetMultimap</a></td><td>ImmutableMap</td><td>ImmutableSet</td></tr></tbody></table><p>上述的实现, 除了不可变的实现之外, 其他都支持 <code>null key</code> 与 <code>null value</code>.
+<code>Map&lt;K, Collection&lt;V>></code> 的地方:</p><table><thead><tr><th>实现</th><th>key 表现得类似&mldr;</th><th>value 表现得类似&mldr;</th></tr></thead><tbody><tr><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ArrayListMultimap.html>ArrayListMultimap</a></td><td>HashMap</td><td>ArrayList</td></tr><tr><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/HashMultimap.html>HashMultimap</a></td><td>HashMap</td><td>HashSet</td></tr><tr><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/LinkedListMultimap.html>LinkedListMultimap</a></td><td>LinkedHashMap</td><td>LinkedList</td></tr><tr><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/LinkedHashMultimap.html>LinkedHashMultimap</a></td><td>LinkedHashMap</td><td>LinkedHashSet</td></tr><tr><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/TreeMultimap.html>TreeMultimap</a></td><td>TreeMap</td><td>TreeSet</td></tr><tr><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableListMultimap.html>ImmutableListMultimap</a></td><td>ImmutableMap</td><td>ImmutableList</td></tr><tr><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableSetMultimap.html>ImmutableSetMultimap</a></td><td>ImmutableMap</td><td>ImmutableSet</td></tr></tbody></table><p>上述的实现, 除了不可变的实现之外, 其他都支持 <code>null key</code> 与 <code>null value</code>.
 并非所有的实现底层用的都是 <code>Map&lt;K, Collection&lt;V>></code>,
 有好几个实现出于性能的考虑, 实现了自定义的 hash 表.</p><p><code>Multimap</code> 还支持自定义 value 的集合形式, 如 List 形式或者 Set 形式, 详情可见
 <a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/Multimaps.html#newMultimap-java.util.Map-com.google.common.base.Supplier-><code>Multimaps.newMultimap(Map, Supplier&lt;Collection>)</code></a></p><h2 id=bimap><span class=section-num>4</span> BiMap</h2><p>继续假设, 你是个班主任, 你有个学生名字与学号的名单,
 你有时会通过名字查询对应学号, 有时又会根据学号反查询学生名字, 通常来说,
-你会这么实现这个名单:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+你会这么实现这个名单:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
 </span><span class=lnt>6
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>Map</span><span class=o>&lt;</span><span class=n>String</span><span class=o>,</span> <span class=n>String</span><span class=o>&gt;</span> <span class=n>nameToId</span> <span class=o>=</span> <span class=n>Maps</span><span class=o>.</span><span class=na>newHashMap</span><span class=o>();</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>Map</span><span class=o>&lt;</span><span class=n>String</span><span class=o>,</span> <span class=n>String</span><span class=o>&gt;</span> <span class=n>nameToId</span> <span class=o>=</span> <span class=n>Maps</span><span class=o>.</span><span class=na>newHashMap</span><span class=o>();</span>
 </span></span><span class=line><span class=cl><span class=n>Map</span><span class=o>&lt;</span><span class=n>String</span><span class=o>,</span> <span class=n>String</span><span class=o>&gt;</span> <span class=n>idToName</span> <span class=o>=</span> <span class=n>Maps</span><span class=o>.</span><span class=na>newHashMap</span><span class=o>();</span>
 </span></span><span class=line><span class=cl><span class=n>nameToId</span><span class=o>.</span><span class=na>put</span><span class=o>(</span><span class=s>&#34;Linus&#34;</span><span class=o>,</span> <span class=s>&#34;0001&#34;</span><span class=o>);</span>
 </span></span><span class=line><span class=cl><span class=n>idToName</span><span class=o>.</span><span class=na>put</span><span class=o>(</span><span class=s>&#34;0001&#34;</span><span class=o>,</span> <span class=s>&#34;Linus&#34;</span><span class=o>);</span>
@@ -395,42 +242,28 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </span></span></span><span class=line><span class=cl><span class=c1>// 会出现很微妙的 bug, 为了避免出现这种情况, 你需要手动维护这种限制
 </span></span></span></code></pre></td></tr></table></div></div><p>不得不说, 通过两个 Map 和实现 <code>value</code> 反查 <code>key</code> 的传统做法并不优雅,
 即增加了心理负担, 又容易出 bug.</p><p>幸运的是, Guava 有一个名为 <code>BiMap</code> 类库, 提供了通过 <code>value</code> 也反查 <code>key</code> 的特性.
-一个<code>BiMap&lt;K,V></code>是一个<code>Map&lt;K,V></code>, 提供了如下功能:</p><ol>
-<li>允许通过 <code>inverse()</code> 函数调转 key-value, 从 <code>Map&lt;K,V></code> 变成
+一个<code>BiMap&lt;K,V></code>是一个<code>Map&lt;K,V></code>, 提供了如下功能:</p><ol><li>允许通过 <code>inverse()</code> 函数调转 key-value, 从 <code>Map&lt;K,V></code> 变成
 <code>Map&lt;V,K></code></li><li>保证所有的 <code>value</code> 都是唯一的, <code>values()</code> 函数返回一个包含所有
 <code>value</code> 的 Set</li><li>如果 <code>value</code> 已经存在, 那么 <code>BiMap.put(key,value)</code> 会抛出一个
 <code>IllegalArgumentException</code> 异常, 如果想强制删除掉原来的 <code>value</code> ,
 并插入一对新的 key-value, 可以使用
-<a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/BiMap.html#forcePut-java.lang.Object-java.lang.Object-><code>Bimap.forcePut(key,value)</code></a></li></ol><h3 id=bimap-例子><span class=section-num>4.1</span> BiMap 例子</h3><p>让我们用 BiMap 来重新实现学生名字和学号的名单:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+<a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/BiMap.html#forcePut-java.lang.Object-java.lang.Object-><code>Bimap.forcePut(key,value)</code></a></li></ol><h3 id=bimap-例子><span class=section-num>4.1</span> BiMap 例子</h3><p>让我们用 BiMap 来重新实现学生名字和学号的名单:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
 </span><span class=lnt>6
 </span><span class=lnt>7
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>BiMap</span><span class=o>&lt;</span><span class=n>String</span><span class=o>,</span> <span class=n>String</span><span class=o>&gt;</span> <span class=n>userId</span> <span class=o>=</span> <span class=n>HashBiMap</span><span class=o>.</span><span class=na>create</span><span class=o>();</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>BiMap</span><span class=o>&lt;</span><span class=n>String</span><span class=o>,</span> <span class=n>String</span><span class=o>&gt;</span> <span class=n>userId</span> <span class=o>=</span> <span class=n>HashBiMap</span><span class=o>.</span><span class=na>create</span><span class=o>();</span>
 </span></span><span class=line><span class=cl><span class=n>userId</span><span class=o>.</span><span class=na>put</span><span class=o>(</span><span class=s>&#34;Linus&#34;</span><span class=o>,</span> <span class=s>&#34;0001&#34;</span><span class=o>);</span>
 </span></span><span class=line><span class=cl><span class=n>String</span> <span class=n>user</span> <span class=o>=</span> <span class=n>userId</span><span class=o>.</span><span class=na>get</span><span class=o>(</span><span class=s>&#34;Linus&#34;</span><span class=o>);</span>
 </span></span><span class=line><span class=cl><span class=c1>// 反向查询, 通过学号查询名字.
 </span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>String</span> <span class=n>idForUser</span> <span class=o>=</span> <span class=n>userId</span><span class=o>.</span><span class=na>inverse</span><span class=o>().</span><span class=na>get</span><span class=o>(</span><span class=s>&#34;0001&#34;</span><span class=o>);</span>
 </span></span><span class=line><span class=cl><span class=c1>// 抛出异常: java.lang.IllegalArgumentException: value already present: 0001
 </span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>userId</span><span class=o>.</span><span class=na>put</span><span class=o>(</span><span class=s>&#34;RMS&#34;</span><span class=o>,</span> <span class=s>&#34;0001&#34;</span><span class=o>);</span>
-</span></span></code></pre></td></tr></table></div></div><h3 id=bimap-实现><span class=section-num>4.2</span> BiMap 实现</h3><table>
-<thead>
-<tr>
-<th>key-value map 实现</th><th>value-key map 实现</th><th>对应的 BiMap</th></tr></thead><tbody>
-<tr>
-<td>HashMap</td><td>HashMap</td><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/HashBiMap.html><code>HashBiMap</code></a></td></tr><tr>
-<td>ImmutableMap</td><td>ImmutableMap</td><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableBiMap.html><code>ImmutableBiMap</code></a></td></tr><tr>
-<td>EnumMap</td><td>EnumMap</td><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/EnumBiMap.html><code>EnumBiMap</code></a></td></tr><tr>
-<td>EnumMap</td><td>HashMap</td><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/EnumHashBiMap.html><code>EnumHashBiMap</code></a></td></tr></tbody></table><h2 id=table><span class=section-num>5</span> Table</h2><p>假设还是个班主任, 现在你需要制作一个包含学号, 姓名与成绩的名单,
+</span></span></code></pre></td></tr></table></div></div><h3 id=bimap-实现><span class=section-num>4.2</span> BiMap 实现</h3><table><thead><tr><th>key-value map 实现</th><th>value-key map 实现</th><th>对应的 BiMap</th></tr></thead><tbody><tr><td>HashMap</td><td>HashMap</td><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/HashBiMap.html><code>HashBiMap</code></a></td></tr><tr><td>ImmutableMap</td><td>ImmutableMap</td><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableBiMap.html><code>ImmutableBiMap</code></a></td></tr><tr><td>EnumMap</td><td>EnumMap</td><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/EnumBiMap.html><code>EnumBiMap</code></a></td></tr><tr><td>EnumMap</td><td>HashMap</td><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/EnumHashBiMap.html><code>EnumHashBiMap</code></a></td></tr></tbody></table><h2 id=table><span class=section-num>5</span> Table</h2><p>假设还是个班主任, 现在你需要制作一个包含学号, 姓名与成绩的名单,
 然后可以通过姓名或者学号进搜索, 你会怎么实现呢? 什么? 用 excel?
-你好幽默啊!</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+你好幽默啊!</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -451,8 +284,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </span><span class=lnt>19
 </span><span class=lnt>20
 </span><span class=lnt>21
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// key: 学号, value: {姓名: 成绩}
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// key: 学号, value: {姓名: 成绩}
 </span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>Map</span><span class=o>&lt;</span><span class=n>String</span><span class=o>,</span> <span class=n>Map</span><span class=o>&lt;</span><span class=n>String</span><span class=o>,</span> <span class=n>Integer</span><span class=o>&gt;&gt;</span> <span class=n>studentScores</span> <span class=o>=</span> <span class=n>Maps</span><span class=o>.</span><span class=na>newHashMap</span><span class=o>();</span>
 </span></span><span class=line><span class=cl><span class=n>Map</span><span class=o>&lt;</span><span class=n>String</span><span class=o>,</span> <span class=n>Integer</span><span class=o>&gt;</span> <span class=n>linus</span> <span class=o>=</span> <span class=n>Maps</span><span class=o>.</span><span class=na>newHashMap</span><span class=o>();</span>
 </span></span><span class=line><span class=cl><span class=n>linus</span><span class=o>.</span><span class=na>put</span><span class=o>(</span><span class=s>&#34;Linus&#34;</span><span class=o>,</span> <span class=n>99</span><span class=o>);</span>
@@ -476,9 +308,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </span></span></code></pre></td></tr></table></div></div><p>不得不说, 用 <code>Map&lt;R, Map&lt;C, V>></code> 的形式来实现多 key 搜索非常难受,
 算法效率变为 O(n), 线性时间复杂度, 不但不优雅, 还容易出错,
 如果我是班主任, 我就辞职了, 给我个 excel 不行么?</p><p>excel 是没有的了, 但是 Guava 提供了一个类 excel 的多 key 存储/搜索的容器: <code>Table</code>,
-它支持以行和列维度搜索.</p><h3 id=table-例子><span class=section-num>5.1</span> Table 例子</h3><p>让我们用 <code>Table</code> 重新实现一次可根据姓名与学号进行搜索的成绩单:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+它支持以行和列维度搜索.</p><h3 id=table-例子><span class=section-num>5.1</span> Table 例子</h3><p>让我们用 <code>Table</code> 重新实现一次可根据姓名与学号进行搜索的成绩单:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -494,8 +324,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </span><span class=lnt>14
 </span><span class=lnt>15
 </span><span class=lnt>16
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 从左到右各列分别是: 学号, 姓名, 成绩
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 从左到右各列分别是: 学号, 姓名, 成绩
 </span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>Table</span><span class=o>&lt;</span><span class=n>String</span><span class=o>,</span> <span class=n>String</span><span class=o>,</span> <span class=n>Integer</span><span class=o>&gt;</span> <span class=n>idNameScoreTranscript</span> <span class=o>=</span> <span class=n>HashBasedTable</span><span class=o>.</span><span class=na>create</span><span class=o>();</span>
 </span></span><span class=line><span class=cl><span class=n>idNameScoreTranscript</span><span class=o>.</span><span class=na>put</span><span class=o>(</span><span class=s>&#34;0001&#34;</span><span class=o>,</span> <span class=s>&#34;Linus&#34;</span><span class=o>,</span> <span class=n>99</span><span class=o>);</span>
 </span></span><span class=line><span class=cl><span class=n>idNameScoreTranscript</span><span class=o>.</span><span class=na>put</span><span class=o>(</span><span class=s>&#34;0002&#34;</span><span class=o>,</span> <span class=s>&#34;Aaron&#34;</span><span class=o>,</span> <span class=n>100</span><span class=o>);</span>
@@ -513,69 +342,44 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>idNameScoreTranscript</span><span class=o>.</span><span class=na>column</span><span class=o>(</span><span class=s>&#34;RMS&#34;</span><span class=o>);</span>
 </span></span></code></pre></td></tr></table></div></div><p>正常来说, 不会有两个学号一样的学生, 只是为了展示 <code>Table</code>
 用法而这样造数据. <code>row</code>, <code>column</code> 函数可能让人比较迷惑,
-这两个函数是怎么搜索的?</p><p>其实很简单, <code>row</code> 是以第一个 key 来搜索, 而 <code>column</code> 以第二个 key 来搜索, 如图:</p><figure><img src=https://raw.githubusercontent.com/ramsayleung/images/master/guava_table_row.png alt="Figure 2: row: 以第一个 key 来搜索"><figcaption>
-<p><span class=figure-number>Figure 2: </span>row: 以第一个 key 来搜索</p></figcaption></figure><figure><img src=https://raw.githubusercontent.com/ramsayleung/images/master/guava_table_column.png alt="Figure 3: column: 以第二个 key 来搜索"><figcaption>
-<p><span class=figure-number>Figure 3: </span>column: 以第二个 key 来搜索</p></figcaption></figure><h3 id=table-视图><span class=section-num>5.2</span> Table 视图</h3><p>一往常, <code>Table</code> 也提供了若干个视图:</p><ol>
-<li><code>rowMap()</code>, 把 <code>Table&lt;R, C, V></code> 看作一个 <code>Map&lt;R, Map&lt;C, V>></code>, 同样的,
+这两个函数是怎么搜索的?</p><p>其实很简单, <code>row</code> 是以第一个 key 来搜索, 而 <code>column</code> 以第二个 key 来搜索, 如图:</p><figure><img src=https://raw.githubusercontent.com/ramsayleung/images/master/guava_table_row.png alt="Figure 2: row: 以第一个 key 来搜索"><figcaption><p><span class=figure-number>Figure 2: </span>row: 以第一个 key 来搜索</p></figcaption></figure><figure><img src=https://raw.githubusercontent.com/ramsayleung/images/master/guava_table_column.png alt="Figure 3: column: 以第二个 key 来搜索"><figcaption><p><span class=figure-number>Figure 3: </span>column: 以第二个 key 来搜索</p></figcaption></figure><h3 id=table-视图><span class=section-num>5.2</span> Table 视图</h3><p>一往常, <code>Table</code> 也提供了若干个视图:</p><ol><li><code>rowMap()</code>, 把 <code>Table&lt;R, C, V></code> 看作一个 <code>Map&lt;R, Map&lt;C, V>></code>, 同样的,
 <code>rowKeySet()</code>返回一个<code>Set&lt;R></code>.</li><li><code>row(r)</code> 返回一个非空的 <code>Map&lt;C, V></code> 的引用, 对返回的 Map
 的修改也会反馈给持有该引用 <code>Table</code>.</li><li>类似地, <code>column(c)</code> 返回一个非空的 <code>Map&lt;R, V></code> 的引用, 对返回的 Map
 的修改也会反馈给持有该引用 <code>Table</code>.</li><li><code>cellSet()</code> 把<code>Table&lt;R, C, V></code>看作一个 <code>Table.Cell&lt;R, C, V></code>, <code>Cell</code>
 与 <code>Map.Entry</code> 十分类似, 只不过它有两个 key, 形式是 <code>(r,c)=v</code>, 而
-<code>Map.Entry</code> 是 <code>key = value</code>.</li></ol><h3 id=table-实现><span class=section-num>5.3</span> Table 实现</h3><p>Table 依旧提供了若干个实现, 列表如下:</p><table>
-<thead>
-<tr>
-<th>Table&lt;R, C, V></th><th>类似的 Map&lt;R, Map&lt;C, V>></th></tr></thead><tbody>
-<tr>
-<td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/HashBasedTable.html><code>HashBasedTable</code></a></td><td>HashMap&lt;R, HashMap&lt;C, V>></td></tr><tr>
-<td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/TreeBasedTable.html><code>TreeBasedTable</code></a></td><td>TreeMap&lt;R, TreeMap&lt;C, V>></td></tr><tr>
-<td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableTable.html><code>ImmutableTable</code></a></td><td>ImmutableMap&lt;R, ImmutableMap&lt;C, V>></td></tr><tr>
-<td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ArrayTable.html><code>ArrayTable</code></a></td><td>ImmutableMap&lt;R, ImmutableMap&lt;C, V>>, 特别的一个</td></tr></tbody></table><h2 id=classtoinstancemap><span class=section-num>6</span> ClassToInstanceMap</h2><p>目前, 我们介绍过的 Map, 无论是原生 Jdk 的 Map, 抑或是 Guava 的 Map,
+<code>Map.Entry</code> 是 <code>key = value</code>.</li></ol><h3 id=table-实现><span class=section-num>5.3</span> Table 实现</h3><p>Table 依旧提供了若干个实现, 列表如下:</p><table><thead><tr><th>Table&lt;R, C, V></th><th>类似的 Map&lt;R, Map&lt;C, V>></th></tr></thead><tbody><tr><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/HashBasedTable.html><code>HashBasedTable</code></a></td><td>HashMap&lt;R, HashMap&lt;C, V>></td></tr><tr><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/TreeBasedTable.html><code>TreeBasedTable</code></a></td><td>TreeMap&lt;R, TreeMap&lt;C, V>></td></tr><tr><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableTable.html><code>ImmutableTable</code></a></td><td>ImmutableMap&lt;R, ImmutableMap&lt;C, V>></td></tr><tr><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ArrayTable.html><code>ArrayTable</code></a></td><td>ImmutableMap&lt;R, ImmutableMap&lt;C, V>>, 特别的一个</td></tr></tbody></table><h2 id=classtoinstancemap><span class=section-num>6</span> ClassToInstanceMap</h2><p>目前, 我们介绍过的 Map, 无论是原生 Jdk 的 Map, 抑或是 Guava 的 Map,
 <code>key</code> 都是同一个类型的.</p><p>这是因为 Map 的签名是 <code>Map&lt;K,V></code>, 实例的时候, 只能实例成某具体一个类型的参数. 所谓凡事都有例外, 有没有支持 <code>key</code>
 是不同类型的 map 呢? 自然是有的, Guava 的
 <a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ClassToInstanceMap.html><code>ClassToInstanceMap</code></a>
 就可以支持多个类型的 key.</p><p>为什么它可以实现多个类型的 <code>key</code> 呢? 因为 <code>ClassToInstanceMap</code> 的签名声明为 <code>Map&lt;Class&lt;? extends B>, B></code>,
 通过传入不同类型的 <code>Class</code> 对象, 实现类型不同的 =key=(如果你要说,
 即使传入不同类型的 Class 对象, 它只有一个 Class, 没有实现多个不同类型的
-key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</p><h3 id=classtoinstancemap-例子><span class=section-num>6.1</span> ClassToInstanceMap 例子</h3><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</p><h3 id=classtoinstancemap-例子><span class=section-num>6.1</span> ClassToInstanceMap 例子</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
 </span><span class=lnt>6
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>ClassToInstanceMap</span><span class=o>&lt;</span><span class=n>Number</span><span class=o>&gt;</span> <span class=n>numberDefault</span> <span class=o>=</span> <span class=n>MutableClassToInstanceMap</span><span class=o>.</span><span class=na>create</span><span class=o>();</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>ClassToInstanceMap</span><span class=o>&lt;</span><span class=n>Number</span><span class=o>&gt;</span> <span class=n>numberDefault</span> <span class=o>=</span> <span class=n>MutableClassToInstanceMap</span><span class=o>.</span><span class=na>create</span><span class=o>();</span>
 </span></span><span class=line><span class=cl><span class=n>numberDefault</span><span class=o>.</span><span class=na>put</span><span class=o>(</span><span class=n>Integer</span><span class=o>.</span><span class=na>class</span><span class=o>,</span> <span class=n>10</span><span class=o>);</span>
 </span></span><span class=line><span class=cl><span class=n>numberDefault</span><span class=o>.</span><span class=na>put</span><span class=o>(</span><span class=n>Long</span><span class=o>.</span><span class=na>class</span><span class=o>,</span> <span class=n>20L</span><span class=o>);</span>
 </span></span><span class=line><span class=cl><span class=c1>// 编译失败
 </span></span></span><span class=line><span class=cl><span class=c1>//numberDefault.put(String.class, &#34;string&#34;);
 </span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>Assert</span><span class=o>.</span><span class=na>assertEquals</span><span class=o>(</span><span class=n>Long</span><span class=o>.</span><span class=na>valueOf</span><span class=o>(</span><span class=n>20L</span><span class=o>),</span> <span class=n>numberDefault</span><span class=o>.</span><span class=na>getInstance</span><span class=o>(</span><span class=n>Long</span><span class=o>.</span><span class=na>class</span><span class=o>));</span>
-</span></span></code></pre></td></tr></table></div></div><p>如果查看源码, 可以发现, <code>ClassToInstanceMap&lt;B></code> 只有一个类型参数 <code>B</code>:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>interface</span> <span class=nc>ClassToInstanceMap</span><span class=o>&lt;</span><span class=n>B</span><span class=o>&gt;</span> <span class=kd>extends</span> <span class=n>Map</span><span class=o>&lt;</span><span class=n>Class</span><span class=o>&lt;?</span> <span class=kd>extends</span> <span class=n>B</span><span class=o>&gt;,</span> <span class=n>B</span><span class=o>&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><p>如果查看源码, 可以发现, <code>ClassToInstanceMap&lt;B></code> 只有一个类型参数 <code>B</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>interface</span> <span class=nc>ClassToInstanceMap</span><span class=o>&lt;</span><span class=n>B</span><span class=o>&gt;</span> <span class=kd>extends</span> <span class=n>Map</span><span class=o>&lt;</span><span class=n>Class</span><span class=o>&lt;?</span> <span class=kd>extends</span> <span class=n>B</span><span class=o>&gt;,</span> <span class=n>B</span><span class=o>&gt;</span>
 </span></span></code></pre></td></tr></table></div></div><p>很明显的, 类型 <code>B</code> 限制了 <code>key</code> 与 <code>value</code> 的类型。</p><p>对于 <code>value</code> 的限制,
 就和常规的 <code>map</code> 一样; 而对于 <code>key</code> 而言, 泛型实例化时的参数类型只能是
 <code>B</code>, 或者是 <code>B</code> 的子类, 例如: <code>ClassToInstanceMap&lt;Number></code>, 那么这个 map
 的 <code>key</code> 类型必须是 <code>Number</code> 或 <code>Number</code> 的子类, 而传入的 <code>Integer</code> 和
 <code>Long</code> 都是 <code>Number</code> 子类, 因此能编译通过。</p><p>如果传入的是 <code>String,</code> 不符合声明, 编译就报错了.</p><p><strong>需要注意的是, 和 <code>Map&lt;Class, Object></code> 一样, 一个 <code>ClassToInstanceMap</code> 可以包含着是原始类型的 <code>value</code>,
-而原始类型与它对应的包装类型并不是同一种类型, 不要混淆了哦</strong></p><h3 id=classtoinstancemap-实现><span class=section-num>6.2</span> ClassToInstanceMap 实现</h3><p><code>ClassToInstanceMap</code> 提供了两个实现:</p><table>
-<thead>
-<tr>
-<th>ClassToInstanceMap</th><th>类似的 Map</th></tr></thead><tbody>
-<tr>
-<td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/MutableClassToInstanceMap.html><code>MutableClassToInstanceMap</code></a></td><td>Map&lt;Class, Object></td></tr><tr>
-<td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableClassToInstanceMap.html><code>ImmutableClassToInstanceMap</code></a></td><td>ImmutableMap&lt;Class,Object></td></tr></tbody></table><h2 id=rangeset><span class=section-num>7</span> RangeSet</h2><p>目前为止, 我们介绍过的新类型容器都是常见的 Map/Set/Table,
+而原始类型与它对应的包装类型并不是同一种类型, 不要混淆了哦</strong></p><h3 id=classtoinstancemap-实现><span class=section-num>6.2</span> ClassToInstanceMap 实现</h3><p><code>ClassToInstanceMap</code> 提供了两个实现:</p><table><thead><tr><th>ClassToInstanceMap</th><th>类似的 Map</th></tr></thead><tbody><tr><td><a href=http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/MutableClassToInstanceMap.html><code>MutableClassToInstanceMap</code></a></td><td>Map&lt;Class, Object></td></tr><tr><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableClassToInstanceMap.html><code>ImmutableClassToInstanceMap</code></a></td><td>ImmutableMap&lt;Class,Object></td></tr></tbody></table><h2 id=rangeset><span class=section-num>7</span> RangeSet</h2><p>目前为止, 我们介绍过的新类型容器都是常见的 Map/Set/Table,
 现在我们就来介绍一个表示区间的容器: <code>RangeSet</code>. 一个 <code>RangeSet</code>,
 表示一个包含无连接的, 不为空的区间的集合, 例如包含一个整数区间的
 <code>RangeSet</code>: <code>{[1,5], [7,9)}</code>.</p><p>在 <code>RangeSet</code> 中, 区间是由类 <code>Range</code> 来表示的, 当把一个区间加入到一个可变的 <code>RangeSet</code> 时,
 任何有交集的区间都会被合并, 为空的区间就会被忽略, 例如将区间 <code>[3,5]</code>
 加入到已有的 <code>RangeSet</code> <code>{[2,4]}</code>, 就会被合并成 <code>{[2,5]}</code>,
-这个也符合我们日常的生活经验.</p><h3 id=rangeset-例子><span class=section-num>7.1</span> RangeSet 例子</h3><p>让我们现在来看一下 <code>RangeSet</code> 的两个例子, 一个是整数的 <code>RangeSet</code></p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+这个也符合我们日常的生活经验.</p><h3 id=rangeset-例子><span class=section-num>7.1</span> RangeSet 例子</h3><p>让我们现在来看一下 <code>RangeSet</code> 的两个例子, 一个是整数的 <code>RangeSet</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -590,8 +394,7 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 </span><span class=lnt>13
 </span><span class=lnt>14
 </span><span class=lnt>15
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>RangeSet</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span> <span class=n>rangeSet</span> <span class=o>=</span> <span class=n>TreeRangeSet</span><span class=o>.</span><span class=na>create</span><span class=o>();</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>RangeSet</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span> <span class=n>rangeSet</span> <span class=o>=</span> <span class=n>TreeRangeSet</span><span class=o>.</span><span class=na>create</span><span class=o>();</span>
 </span></span><span class=line><span class=cl><span class=c1>// {[2,4]}
 </span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>rangeSet</span><span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=n>Range</span><span class=o>.</span><span class=na>closed</span><span class=o>(</span><span class=n>2</span><span class=o>,</span> <span class=n>4</span><span class=o>));</span>
 </span></span><span class=line><span class=cl><span class=c1>// {[2,5]}
@@ -610,20 +413,15 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 所以它们被自动合并到一起了, 而对于区间 <code>[1,10]</code> 和 <code>[11,15)</code>, 10
 相邻的整数就是 11, 但两个区间也没有合并起来, 因为它们没有相交,
 如果想要他们合并起来, 可以手动调用 <code>Range.canonical(DiscreteDomain)</code>,
-即:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+即:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// {[1,10]}
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// {[1,10]}
 </span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>rangeSet</span><span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=n>Range</span><span class=o>.</span><span class=na>closed</span><span class=o>(</span><span class=n>1</span><span class=o>,</span> <span class=n>10</span><span class=o>).</span><span class=na>canonical</span><span class=o>(</span><span class=n>DiscreteDomain</span><span class=o>.</span><span class=na>integers</span><span class=o>()));</span>
 </span></span><span class=line><span class=cl><span class=c1>// 连接上的区间: {[1,15)}
 </span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>rangeSet</span><span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=n>Range</span><span class=o>.</span><span class=na>closedOpen</span><span class=o>(</span><span class=n>11</span><span class=o>,</span> <span class=n>15</span><span class=o>));</span>
-</span></span></code></pre></td></tr></table></div></div><p>另外一个例子是日期的 <code>RangeSet</code>:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></span></code></pre></td></tr></table></div></div><p>另外一个例子是日期的 <code>RangeSet</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -640,8 +438,7 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 </span><span class=lnt>15
 </span><span class=lnt>16
 </span><span class=lnt>17
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>RangeSet</span><span class=o>&lt;</span><span class=n>LocalDate</span><span class=o>&gt;</span> <span class=n>rangeSet</span> <span class=o>=</span> <span class=n>TreeRangeSet</span><span class=o>.</span><span class=na>create</span><span class=o>();</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>RangeSet</span><span class=o>&lt;</span><span class=n>LocalDate</span><span class=o>&gt;</span> <span class=n>rangeSet</span> <span class=o>=</span> <span class=n>TreeRangeSet</span><span class=o>.</span><span class=na>create</span><span class=o>();</span>
 </span></span><span class=line><span class=cl><span class=c1>// {[2019-10-10, 2019-12-25]}
 </span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>rangeSet</span><span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=n>Range</span><span class=o>.</span><span class=na>closed</span><span class=o>(</span><span class=n>LocalDate</span><span class=o>.</span><span class=na>parse</span><span class=o>(</span><span class=s>&#34;2019-10-10&#34;</span><span class=o>),</span> <span class=n>LocalDate</span><span class=o>.</span><span class=na>parse</span><span class=o>(</span><span class=s>&#34;2019-12-25&#34;</span><span class=o>)));</span>
 </span></span><span class=line><span class=cl><span class=c1>// {[2019-10-10, 2019-12-30)}
@@ -659,16 +456,14 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 </span></span><span class=line><span class=cl><span class=n>Assert</span><span class=o>.</span><span class=na>assertEquals</span><span class=o>(</span><span class=n>LocalDate</span><span class=o>.</span><span class=na>parse</span><span class=o>(</span><span class=s>&#34;2019-10-10&#34;</span><span class=o>),</span> <span class=n>span</span><span class=o>.</span><span class=na>lowerEndpoint</span><span class=o>());</span>
 </span></span><span class=line><span class=cl><span class=n>Assert</span><span class=o>.</span><span class=na>assertEquals</span><span class=o>(</span><span class=n>LocalDate</span><span class=o>.</span><span class=na>parse</span><span class=o>(</span><span class=s>&#34;2019-12-30&#34;</span><span class=o>),</span> <span class=n>span</span><span class=o>.</span><span class=na>upperEndpoint</span><span class=o>());</span>
 </span></span></code></pre></td></tr></table></div></div><p><code>RangeSet</code> 提供了若干个查询函数, 用法在上面的代码已经展示了,
-查询函数列表:</p><ul>
-<li><code>contains(C)</code>: <code>RangeSet</code> 最基础的查询操作, 判断任意的元素是否在
+查询函数列表:</p><ul><li><code>contains(C)</code>: <code>RangeSet</code> 最基础的查询操作, 判断任意的元素是否在
 <code>RangeSet</code> 内.</li><li><code>rangeContaining(C)</code>: 与 <code>contains(C)</code> 类似, 判断任意的元素是否在
 <code>RangeSet</code> 内, 如果在的话返回一个对应的区间, 否则返回空指针. 如上代码,
 有 <code>RangeSet</code>: <code>{[2019-10-10,2019-10-20), (2019-10-30, 2019-12-30)}</code>,
 而元素 <code>2019-10-19</code> 在区间 <code>[2019-10-10, 2019-10-20)</code> 内, 因此
 <code>rangeContaining(C)</code> 函数返回的就是 <code>[2019-10-10, 2019-10-20)</code>.</li><li><code>encloses(Range&lt;C>)</code>: 判断任意的区间是否在 <code>RangeSet</code> 的包围中.</li><li><code>span</code>: 返回一个最小区间, 包含 <code>RangeSet</code> 中的所有区间, 如有:
 <code>RangeSet</code>: <code>{[2019-10-10,2019-10-20), (2019-10-30, 2019-12-30)}</code>,
-<code>span</code> 函数返回的区间就是 <code>{[2019-10-10, 2019-12-30)}</code>.</li></ul><h3 id=rangeset-视图><span class=section-num>7.2</span> RangeSet 视图</h3><p>依照惯例, <code>RangeSet</code> 也提供了若干个视图:</p><ul>
-<li><code>complement()</code>: 返回某个 <code>RangeSet</code> 的补集, 返回结果也是个 <code>RangeSet</code>,
+<code>span</code> 函数返回的区间就是 <code>{[2019-10-10, 2019-12-30)}</code>.</li></ul><h3 id=rangeset-视图><span class=section-num>7.2</span> RangeSet 视图</h3><p>依照惯例, <code>RangeSet</code> 也提供了若干个视图:</p><ul><li><code>complement()</code>: 返回某个 <code>RangeSet</code> 的补集, 返回结果也是个 <code>RangeSet</code>,
 如有 <code>RangeSet</code>:
 <code>{[2019-10-10,2019-10-20), (2019-10-30, 2019-12-30)}</code>, 那它的补集就是:
 <code>RangeSet</code>:
@@ -681,17 +476,9 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 那么返回结果就是
 <code>{[2019-10-10, 2019-10-20), (2019-10-30, 2019-11-20]}</code></li><li><code>asRanges()</code>: 把 <code>RangeSet</code> 当作一个 <code>Set&lt;Range&lt;C>></code>, 如有 <code>RangeSet</code>:
 <code>{[2019-10-10,2019-10-20), (2019-10-30, 2019-12-30)}</code>, 返回结果就是:
-<code>Set({[2019-10-10,2019-10-20), (2019-10-30, 2019-12-30)})</code></li></ul><h3 id=rangeset-实现><span class=section-num>7.3</span> RangeSet 实现</h3><p><code>RangeSet</code> 提供了两个实现:</p><table>
-<thead>
-<tr>
-<th><code>RangeSet</code></th><th>类似的 Set&lt;Range></th></tr></thead><tbody>
-<tr>
-<td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/TreeRangeSet.html><code>TreeRangeSet</code></a></td><td>TreeSet&lt;Range></td></tr><tr>
-<td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableRangeSet.html><code>ImmutableRangeSet</code></a></td><td>ImmutableSet&lt;Range></td></tr></tbody></table><h2 id=rangemap><span class=section-num>8</span> RangeMap</h2><p>既然能以区间集作为容器, 那么能否把区间当作 Map 的 <code>key</code> 呢?
+<code>Set({[2019-10-10,2019-10-20), (2019-10-30, 2019-12-30)})</code></li></ul><h3 id=rangeset-实现><span class=section-num>7.3</span> RangeSet 实现</h3><p><code>RangeSet</code> 提供了两个实现:</p><table><thead><tr><th><code>RangeSet</code></th><th>类似的 Set&lt;Range></th></tr></thead><tbody><tr><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/TreeRangeSet.html><code>TreeRangeSet</code></a></td><td>TreeSet&lt;Range></td></tr><tr><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableRangeSet.html><code>ImmutableRangeSet</code></a></td><td>ImmutableSet&lt;Range></td></tr></tbody></table><h2 id=rangemap><span class=section-num>8</span> RangeMap</h2><p>既然能以区间集作为容器, 那么能否把区间当作 Map 的 <code>key</code> 呢?
 答案是当然可以, Guava 就提供了一个这样的容器: <a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/RangeMap.html><code>RangeMap</code></a>.</p><p>需要注意的是, 不像 <code>RangeSet</code> 那样, 相邻或者相交的区间不能连接起来的,
-即使毗邻的区间映射的是同一个 <code>value</code>.</p><h2 id=rangemap-例子><span class=section-num>9</span> RangeMap 例子</h2><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+即使毗邻的区间映射的是同一个 <code>value</code>.</p><h2 id=rangemap-例子><span class=section-num>9</span> RangeMap 例子</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -709,8 +496,7 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 </span><span class=lnt>16
 </span><span class=lnt>17
 </span><span class=lnt>18
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>RangeMap</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>,</span> <span class=n>String</span><span class=o>&gt;</span> <span class=n>rangeMap</span> <span class=o>=</span> <span class=n>TreeRangeMap</span><span class=o>.</span><span class=na>create</span><span class=o>();</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>RangeMap</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>,</span> <span class=n>String</span><span class=o>&gt;</span> <span class=n>rangeMap</span> <span class=o>=</span> <span class=n>TreeRangeMap</span><span class=o>.</span><span class=na>create</span><span class=o>();</span>
 </span></span><span class=line><span class=cl><span class=c1>// {[1,10] =&gt; &#34;foo&#34;}
 </span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>rangeMap</span><span class=o>.</span><span class=na>put</span><span class=o>(</span><span class=n>Range</span><span class=o>.</span><span class=na>closed</span><span class=o>(</span><span class=n>1</span><span class=o>,</span> <span class=n>10</span><span class=o>),</span> <span class=s>&#34;foo&#34;</span><span class=o>);</span>
 </span></span><span class=line><span class=cl><span class=c1>// {[1, 3] =&gt; &#34;foo&#34;, (3, 6) =&gt; &#34;bar&#34;, [6, 10] =&gt; &#34;foo&#34;}
@@ -729,77 +515,33 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 </span></span><span class=line><span class=cl><span class=n>Assert</span><span class=o>.</span><span class=na>assertEquals</span><span class=o>(</span><span class=n>subRangeMap</span><span class=o>.</span><span class=na>span</span><span class=o>().</span><span class=na>upperEndpoint</span><span class=o>(),</span> <span class=n>Integer</span><span class=o>.</span><span class=na>valueOf</span><span class=o>(</span><span class=n>15</span><span class=o>));</span>
 </span></span><span class=line><span class=cl><span class=n>Assert</span><span class=o>.</span><span class=na>assertEquals</span><span class=o>(</span><span class=s>&#34;foo&#34;</span><span class=o>,</span> <span class=n>subRangeMap</span><span class=o>.</span><span class=na>get</span><span class=o>(</span><span class=n>12</span><span class=o>));</span>
 </span></span></code></pre></td></tr></table></div></div><p><code>RangeMap</code> 提供的查询函数不多, 满打满算也只有 <code>get(K)</code> 和 <code>span</code>
-这两个函数.</p><h3 id=rangemap-视图><span class=section-num>9.1</span> RangeMap 视图</h3><p><code>RangeMap</code> 提供的视图也不多, 只有两个:</p><ul>
-<li><code>asMapOfRanges()</code>, 把 <code>RangeMap</code> 看作一个 <code>Map&lt;Range&lt;K>, V></code>,
+这两个函数.</p><h3 id=rangemap-视图><span class=section-num>9.1</span> RangeMap 视图</h3><p><code>RangeMap</code> 提供的视图也不多, 只有两个:</p><ul><li><code>asMapOfRanges()</code>, 把 <code>RangeMap</code> 看作一个 <code>Map&lt;Range&lt;K>, V></code>,
 可以用来遍历 <code>RangeMap</code></li><li><code>subRangeMap(Range&lt;K>)</code>, 返回某个 <code>RangeMap</code>
 相关区间的子区间以及对应的 <code>value</code>, 如有 <code>RangeMap</code>:
 <code>{[1, 3] => "foo", (3, 5) => "bar", (11, 20) => "foo"</code>, 取子区间
 <code>[12,15]</code>, 返回结果就是 <code>{[12, 15]} => "foo"</code>; 如果取子区间<code>[4,12]</code>,
-返回结果就是: <code>{[4,5) => bar, (11, 12] => foo}</code></li></ul><h3 id=rangemap-实现><span class=section-num>9.2</span> RangeMap 实现</h3><p>RangeMap 提供了两个实现:</p><table>
-<thead>
-<tr>
-<th>RangeMap</th><th>类似的 Map&lt;Range, V></th></tr></thead><tbody>
-<tr>
-<td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/TreeRangeMap.html>TreeRangeMap</a></td><td>TreeMap&lt;Range, V></td></tr><tr>
-<td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableRangeMap.html>ImmutableRangeMap</a></td><td>ImmutableMap&lt;Range&lt;K, V>></td></tr><tr>
-<td></td><td></td></tr></tbody></table><h2 id=总结><span class=section-num>10</span> 总结</h2><p>介绍完新类型的容器之后, 希望大家对这些新类型容器熟悉起来, 应对需求来也能得心应手 :)</p></div><div class=post-copyright>
-<p class=copyright-item>
-<span class=item-title>Author</span>
-<span class=item-content>Ramsay Leung</span>
-</p><p class=copyright-item>
-<span class=item-title>LastMod</span>
-<span class=item-content>
-2022-02-25
-</span>
-</p></div><footer class=post-footer>
-<div class=post-tags>
-<a href=/tags/java/>java</a>
-<a href=/tags/guava/>guava</a>
-</div><nav class=post-nav>
-<a class=prev href=/post/2019/2019%E6%80%BB%E7%BB%93/>
-<i class="iconfont icon-left"></i>
+返回结果就是: <code>{[4,5) => bar, (11, 12] => foo}</code></li></ul><h3 id=rangemap-实现><span class=section-num>9.2</span> RangeMap 实现</h3><p>RangeMap 提供了两个实现:</p><table><thead><tr><th>RangeMap</th><th>类似的 Map&lt;Range, V></th></tr></thead><tbody><tr><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/TreeRangeMap.html>TreeRangeMap</a></td><td>TreeMap&lt;Range, V></td></tr><tr><td><a href=https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableRangeMap.html>ImmutableRangeMap</a></td><td>ImmutableMap&lt;Range&lt;K, V>></td></tr><tr><td></td><td></td></tr></tbody></table><h2 id=总结><span class=section-num>10</span> 总结</h2><p>介绍完新类型的容器之后, 希望大家对这些新类型容器熟悉起来, 应对需求来也能得心应手 :)</p></div><div class=post-copyright><p class=copyright-item><span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span></p><p class=copyright-item><span class=item-title>LastMod</span>
+<span class=item-content>2022-02-25</span></p></div><footer class=post-footer><div class=post-tags><a href=/tags/java/>java</a>
+<a href=/tags/guava/>guava</a></div><nav class=post-nav><a class=prev href=/post/2019/2019%E6%80%BB%E7%BB%93/><i class="iconfont icon-left"></i>
 <span class="prev-text nav-default">2019年总结: 人生如逆旅, 我亦是行人</span>
-<span class="prev-text nav-mobile">Prev</span>
-</a>
-<a class=next href=/post/2019/%E8%8B%8F%E8%8F%B2%E7%9A%84%E4%B8%96%E7%95%8C/>
-<span class="next-text nav-default">小说体西方哲学史: 苏菲的世界</span>
+<span class="prev-text nav-mobile">Prev</span></a>
+<a class=next href=/post/2019/%E8%8B%8F%E8%8F%B2%E7%9A%84%E4%B8%96%E7%95%8C/><span class="next-text nav-default">小说体西方哲学史: 苏菲的世界</span>
 <span class="next-text nav-mobile">Next</span>
-<i class="iconfont icon-right"></i>
-</a>
-</nav></footer></article></div><div id=gitalk-container></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
-<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
-<script type=text/javascript>var gitalk=new Gitalk({id:"2019-12-12 15:45:00 \u002b0800 \u002b0800",title:"guava 探究系列之五：新类型容器",clientID:"3c034c97f0926fafd2d6",clientSecret:"192051927d267ce83eb2ef10955890b7db2720ad",repo:"comment",owner:"ramsayleung",admin:["ramsayleung"],body:decodeURI(location.href)});gitalk.render("gitalk-container")</script>
-<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript></div></main><footer id=footer class=footer>
-<div class=social-links>
-<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><div id=gitalk-container></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:"2019-12-12 15:45:00 \u002b0800 \u002b0800",title:"guava 探究系列之五：新类型容器",clientID:"3c034c97f0926fafd2d6",clientSecret:"192051927d267ce83eb2ef10955890b7db2720ad",repo:"comment",owner:"ramsayleung",admin:["ramsayleung"],body:decodeURI(location.href)});gitalk.render("gitalk-container")</script><noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
 <a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
 <a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
 <a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
-<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
-</div><div class=copyright>
-<span class=power-by>
-Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
-</span>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a></span>
 <span class=division>|</span>
-<span class=theme-info>
-Theme -
-<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
-</span>
-<div class=busuanzi-footer>
-<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=theme-info>Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span><div class=busuanzi-footer><span id=busuanzi_container_site_pv>site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span></span>
 <span class=division>|</span>
-<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
-</div><span class=copyright-year>
-&copy;
+<span id=busuanzi_container_site_uv>site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span></span></div><span class=copyright-year>&copy;
 2017 -
-2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
-</span>
-</div></footer><div class=back-to-top id=back-to-top>
-<i class="iconfont icon-up"></i>
-</div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
 <script type=text/javascript src=/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js></script>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script>
-<script async src=https://www.google-analytics.com/analytics.js></script>
-</body></html>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script><script async src=https://www.google-analytics.com/analytics.js></script></body></html>

@@ -1,98 +1,17 @@
-<!doctype html><html lang=en>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
-<title>rspotify has come to async/await - In Pursuit of Hubris</title><meta name=renderer content="webkit">
-<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta http-equiv=cache-control content="no-transform">
-<meta http-equiv=cache-control content="no-siteapp">
-<meta name=theme-color content="#f8f5ec">
-<meta name=msapplication-navbutton-color content="#f8f5ec">
-<meta name=apple-mobile-web-app-capable content="yes">
-<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
-<meta name=author content="Ramsay Leung"><meta name=description content="1 Preface Today, I am exited to introduce you the v0.9 release I have been continued to work on it for the past few weeks that adds async/await support now!
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>rspotify has come to async/await - In Pursuit of Hubris</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="Ramsay Leung"><meta name=description content="1 Preface Today, I am exited to introduce you the v0.9 release I have been continued to work on it for the past few weeks that adds async/await support now!
 2 The road to async/await What is rspotify: &amp;gt; For those who has never heared about rspotify before, rspotify is a Spotify web Api wrapper implemented in Rust.
-With async/await&amp;rsquo;s forthcoming stabilization and reqwest adds async/await support now, I think it&amp;rsquo;s time to let rspotify leverage power from async/await."><meta name=keywords content="Blog,Software,Enginering">
-<meta name=generator content="Hugo 0.93.3 with theme even">
-<link rel=canonical href=https://ramsayleung.github.io/post/2020/async_await_for_rspotify/>
-<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
-<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
-<link rel=manifest href=/manifest.json>
-<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
-<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
-<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
-<meta property="og:title" content="rspotify has come to async/await">
-<meta property="og:description" content="1 Preface Today, I am exited to introduce you the v0.9 release I have been continued to work on it for the past few weeks that adds async/await support now!
+With async/await&amp;rsquo;s forthcoming stabilization and reqwest adds async/await support now, I think it&amp;rsquo;s time to let rspotify leverage power from async/await."><meta name=keywords content="Blog,Software,Enginering"><meta name=generator content="Hugo 0.99.1 with theme even"><link rel=canonical href=https://ramsayleung.github.io/post/2020/async_await_for_rspotify/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="rspotify has come to async/await"><meta property="og:description" content="1 Preface Today, I am exited to introduce you the v0.9 release I have been continued to work on it for the past few weeks that adds async/await support now!
 2 The road to async/await What is rspotify: > For those who has never heared about rspotify before, rspotify is a Spotify web Api wrapper implemented in Rust.
-With async/await&rsquo;s forthcoming stabilization and reqwest adds async/await support now, I think it&rsquo;s time to let rspotify leverage power from async/await.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://ramsayleung.github.io/post/2020/async_await_for_rspotify/"><meta property="article:section" content="post">
-<meta property="article:published_time" content="2020-02-28T01:27:00+08:00">
-<meta property="article:modified_time" content="2022-02-25T20:54:09+08:00">
-<meta itemprop=name content="rspotify has come to async/await">
-<meta itemprop=description content="1 Preface Today, I am exited to introduce you the v0.9 release I have been continued to work on it for the past few weeks that adds async/await support now!
+With async/await&rsquo;s forthcoming stabilization and reqwest adds async/await support now, I think it&rsquo;s time to let rspotify leverage power from async/await."><meta property="og:type" content="article"><meta property="og:url" content="https://ramsayleung.github.io/post/2020/async_await_for_rspotify/"><meta property="article:section" content="post"><meta property="article:published_time" content="2020-02-28T01:27:00+08:00"><meta property="article:modified_time" content="2022-02-25T20:54:09+08:00"><meta itemprop=name content="rspotify has come to async/await"><meta itemprop=description content="1 Preface Today, I am exited to introduce you the v0.9 release I have been continued to work on it for the past few weeks that adds async/await support now!
 2 The road to async/await What is rspotify: > For those who has never heared about rspotify before, rspotify is a Spotify web Api wrapper implemented in Rust.
-With async/await&rsquo;s forthcoming stabilization and reqwest adds async/await support now, I think it&rsquo;s time to let rspotify leverage power from async/await."><meta itemprop=datePublished content="2020-02-28T01:27:00+08:00">
-<meta itemprop=dateModified content="2022-02-25T20:54:09+08:00">
-<meta itemprop=wordCount content="425">
-<meta itemprop=keywords content="rust,rspotify,"><meta name=twitter:card content="summary">
-<meta name=twitter:title content="rspotify has come to async/await">
-<meta name=twitter:description content="1 Preface Today, I am exited to introduce you the v0.9 release I have been continued to work on it for the past few weeks that adds async/await support now!
+With async/await&rsquo;s forthcoming stabilization and reqwest adds async/await support now, I think it&rsquo;s time to let rspotify leverage power from async/await."><meta itemprop=datePublished content="2020-02-28T01:27:00+08:00"><meta itemprop=dateModified content="2022-02-25T20:54:09+08:00"><meta itemprop=wordCount content="425"><meta itemprop=keywords content="rust,rspotify,"><meta name=twitter:card content="summary"><meta name=twitter:title content="rspotify has come to async/await"><meta name=twitter:description content="1 Preface Today, I am exited to introduce you the v0.9 release I have been continued to work on it for the past few weeks that adds async/await support now!
 2 The road to async/await What is rspotify: > For those who has never heared about rspotify before, rspotify is a Spotify web Api wrapper implemented in Rust.
 With async/await&rsquo;s forthcoming stabilization and reqwest adds async/await support now, I think it&rsquo;s time to let rspotify leverage power from async/await."><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
-<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
-</head><body>
-<div id=mobile-navbar class=mobile-navbar>
-<div class=mobile-header-logo>
-<a href=/ class=logo>In Pursuit of Hubris</a>
-</div><div class=mobile-navbar-icon>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>In Pursuit of Hubris</a></div><div class=mobile-navbar-icon><span></span>
 <span></span>
-<span></span>
-<span></span>
-</div></div><nav id=mobile-menu class="mobile-menu slideout-menu">
-<ul class=mobile-menu-list>
-<a href=/>
-<li class=mobile-menu-item>Home</li></a><a href=/post/>
-<li class=mobile-menu-item>Archives</li></a><a href=/tags/>
-<li class=mobile-menu-item>Tags</li></a><a href=/about_me>
-<li class=mobile-menu-item>About</li></a>
-</ul></nav><div class=container id=mobile-panel>
-<header id=header class=header>
-<head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-F1N7KS6M5Q"></script>
-<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-F1N7KS6M5Q",{anonymize_ip:!0})}</script>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script>
-<script async src=https://www.google-analytics.com/analytics.js></script>
-</head><div class=logo-wrapper>
-<a href=/ class=logo>In Pursuit of Hubris</a>
-</div><nav class=site-navbar>
-<ul id=menu class=menu>
-<li class=menu-item>
-<a class=menu-item-link href=/>Home</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/post/>Archives</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/tags/>Tags</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/about_me>About</a>
-</li></ul></nav></header><main id=main class=main>
-<div class=content-wrapper>
-<div id=content class=content>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title>rspotify has come to async/await</h1><div class=post-meta>
-<span class=post-time> 2020-02-28 </span>
-<div class=post-category>
-<a href=/categories/rust/> rust </a>
-</div><span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
-</div></header><div class=post-toc id=post-toc>
-<h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active">
-<nav id=TableOfContents>
-<ul>
-<li><a href=#preface><span class=section-num>1</span> Preface</a></li><li><a href=#the-road-to-async-await><span class=section-num>2</span> The road to async/await</a></li><li><a href=#overview><span class=section-num>3</span> Overview</a></li><li><a href=#conclusion><span class=section-num>4</span> Conclusion</a></li></ul></nav></div></div><div class=post-content>
-<h2 id=preface><span class=section-num>1</span> Preface</h2><p>Today, I am exited to introduce you the <a href=https://github.com/ramsayleung/rspotify/releases/tag/v0.9>v0.9</a> release I have been continued to work on it for the past few weeks that
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/about_me><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><head><script async src="https://www.googletagmanager.com/gtag/js?id=G-F1N7KS6M5Q"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-F1N7KS6M5Q",{anonymize_ip:!0})}</script><script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script><script async src=https://www.google-analytics.com/analytics.js></script></head><div class=logo-wrapper><a href=/ class=logo>In Pursuit of Hubris</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/about_me>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>rspotify has come to async/await</h1><div class=post-meta><span class=post-time>2020-02-28</span><div class=post-category><a href=/categories/rust/>rust</a></div><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><a href=#preface><span class=section-num>1</span> Preface</a></li><li><a href=#the-road-to-async-await><span class=section-num>2</span> The road to async/await</a></li><li><a href=#overview><span class=section-num>3</span> Overview</a></li><li><a href=#conclusion><span class=section-num>4</span> Conclusion</a></li></ul></nav></div></div><div class=post-content><h2 id=preface><span class=section-num>1</span> Preface</h2><p>Today, I am exited to introduce you the <a href=https://github.com/ramsayleung/rspotify/releases/tag/v0.9>v0.9</a> release I have been continued to work on it for the past few weeks that
 adds <code>async/await</code> support now!</p><h2 id=the-road-to-async-await><span class=section-num>2</span> The road to async/await</h2><p>What is rspotify: > For those who has never heared about rspotify
 before, <a href=https://github.com/ramsayleung/rspotify>rspotify</a> is a
 Spotify web Api wrapper implemented in Rust.</p><p>With async/await&rsquo;s forthcoming stabilization and reqwest adds
@@ -108,9 +27,7 @@ schedule the functions.</p><p>Now, by leveraging the <code>async/await</code> po
 send HTTP request and handle response asynchronously.</p><p>Futhermore, not only do I refactor the old blocking endpoint functions to <code>async/await</code>
 version, but also keep the old blocking endpoint functions with a new
 additional feature <code>blocking</code>, then other developers could choose API to
-their taste.</p><h2 id=overview><span class=section-num>3</span> Overview</h2><p><code>album</code> example:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+their taste.</p><h2 id=overview><span class=section-num>3</span> Overview</h2><p><code>album</code> example:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -133,8 +50,7 @@ their taste.</p><h2 id=overview><span class=section-num>3</span> Overview</h2><p
 </span><span class=lnt>21
 </span><span class=lnt>22
 </span><span class=lnt>23
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=w>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w></span><span class=k>use</span><span class=w> </span><span class=n>rspotify</span>::<span class=n>client</span>::<span class=n>Spotify</span><span class=p>;</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w></span><span class=k>use</span><span class=w> </span><span class=n>rspotify</span>::<span class=n>oauth2</span>::<span class=n>SpotifyClientCredentials</span><span class=p>;</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>
@@ -162,80 +78,38 @@ synchronous API to <code>blocking</code> module.</p><p>Notes that I think the v0
 break change because of the support for <code>async/await</code>, which definitely
 breaks backward compatibility.</p><p>So I decide to make an other break change
 into the next release, just refactoring the project structure to shorten
-the import path:</p><p>before:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+the import path:</p><p>before:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>use</span><span class=w> </span><span class=n>rspotify</span>::<span class=n>spotify</span>::<span class=n>client</span>::<span class=n>Spotify</span><span class=p>;</span><span class=w>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>use</span><span class=w> </span><span class=n>rspotify</span>::<span class=n>spotify</span>::<span class=n>client</span>::<span class=n>Spotify</span><span class=p>;</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w></span><span class=k>use</span><span class=w> </span><span class=n>rspotify</span>::<span class=n>spotify</span>::<span class=n>oauth2</span>::<span class=n>SpotifyClientCredentials</span><span class=p>;</span><span class=w>
-</span></span></span></code></pre></td></tr></table></div></div><p>after:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></span></span></code></pre></td></tr></table></div></div><p>after:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>use</span><span class=w> </span><span class=n>rspotify</span>::<span class=n>client</span>::<span class=n>Spotify</span><span class=p>;</span><span class=w>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>use</span><span class=w> </span><span class=n>rspotify</span>::<span class=n>client</span>::<span class=n>Spotify</span><span class=p>;</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w></span><span class=k>use</span><span class=w> </span><span class=n>rspotify</span>::<span class=n>oauth2</span>::<span class=n>SpotifyClientCredentials</span><span class=p>;</span><span class=w>
 </span></span></span></code></pre></td></tr></table></div></div><p>the <code>spotify</code> module is unnecessary and inelegant, so I just remove it.</p><h2 id=conclusion><span class=section-num>4</span> Conclusion</h2><p><a href=https://github.com/ramsayleung/rspotify/releases/tag/v0.9>rspotify v0.9</a> is now available! There is <a href=https://docs.rs/crate/rspotify/>documentation</a>, <a href=https://github.com/ramsayleung/rspotify/tree/master/examples>examples</a> and an <a href=https://github.com/ramsayleung/rspotify/issues/new>issue</a>
 tracker!</p><p>Please provide any feedback, as I would love to improve this library any way I can! Thanks <a href=https://github.com/Rigellute>@Alexander</a> so much for actively participate in the refactor work for support
-<code>async/await</code>.</p></div><div class=post-copyright>
-<p class=copyright-item>
-<span class=item-title>Author</span>
-<span class=item-content>Ramsay Leung</span>
-</p><p class=copyright-item>
-<span class=item-title>LastMod</span>
-<span class=item-content>
-2022-02-25
-</span>
-</p></div><footer class=post-footer>
-<div class=post-tags>
-<a href=/tags/rust/>rust</a>
-<a href=/tags/rspotify/>rspotify</a>
-</div><nav class=post-nav>
-<a class=prev href=/post/2020/%E5%BA%94%E5%B1%8A%E7%94%9F%E5%A6%82%E4%BD%95%E5%86%99%E5%A5%BD%E6%8A%80%E6%9C%AF%E7%AE%80%E5%8E%86/>
-<i class="iconfont icon-left"></i>
+<code>async/await</code>.</p></div><div class=post-copyright><p class=copyright-item><span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span></p><p class=copyright-item><span class=item-title>LastMod</span>
+<span class=item-content>2022-02-25</span></p></div><footer class=post-footer><div class=post-tags><a href=/tags/rust/>rust</a>
+<a href=/tags/rspotify/>rspotify</a></div><nav class=post-nav><a class=prev href=/post/2020/%E5%BA%94%E5%B1%8A%E7%94%9F%E5%A6%82%E4%BD%95%E5%86%99%E5%A5%BD%E6%8A%80%E6%9C%AF%E7%AE%80%E5%8E%86/><i class="iconfont icon-left"></i>
 <span class="prev-text nav-default">应届生如何写好技术简历</span>
-<span class="prev-text nav-mobile">Prev</span>
-</a>
-<a class=next href=/post/2020/%E6%9E%AA%E7%82%AE_%E7%97%85%E8%8F%8C%E4%B8%8E%E9%92%A2%E9%93%81/>
-<span class="next-text nav-default">枪炮, 病菌与钢铁</span>
+<span class="prev-text nav-mobile">Prev</span></a>
+<a class=next href=/post/2020/%E6%9E%AA%E7%82%AE_%E7%97%85%E8%8F%8C%E4%B8%8E%E9%92%A2%E9%93%81/><span class="next-text nav-default">枪炮, 病菌与钢铁</span>
 <span class="next-text nav-mobile">Next</span>
-<i class="iconfont icon-right"></i>
-</a>
-</nav></footer></article></div><div id=gitalk-container></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
-<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
-<script type=text/javascript>var gitalk=new Gitalk({id:"2020-02-28 01:27:00 \u002b0800 \u002b0800",title:"rspotify has come to async/await",clientID:"3c034c97f0926fafd2d6",clientSecret:"192051927d267ce83eb2ef10955890b7db2720ad",repo:"comment",owner:"ramsayleung",admin:["ramsayleung"],body:decodeURI(location.href)});gitalk.render("gitalk-container")</script>
-<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript></div></main><footer id=footer class=footer>
-<div class=social-links>
-<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><div id=gitalk-container></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:"2020-02-28 01:27:00 \u002b0800 \u002b0800",title:"rspotify has come to async/await",clientID:"3c034c97f0926fafd2d6",clientSecret:"192051927d267ce83eb2ef10955890b7db2720ad",repo:"comment",owner:"ramsayleung",admin:["ramsayleung"],body:decodeURI(location.href)});gitalk.render("gitalk-container")</script><noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
 <a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
 <a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
 <a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
-<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
-</div><div class=copyright>
-<span class=power-by>
-Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
-</span>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a></span>
 <span class=division>|</span>
-<span class=theme-info>
-Theme -
-<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
-</span>
-<div class=busuanzi-footer>
-<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=theme-info>Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span><div class=busuanzi-footer><span id=busuanzi_container_site_pv>site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span></span>
 <span class=division>|</span>
-<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
-</div><span class=copyright-year>
-&copy;
+<span id=busuanzi_container_site_uv>site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span></span></div><span class=copyright-year>&copy;
 2017 -
-2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
-</span>
-</div></footer><div class=back-to-top id=back-to-top>
-<i class="iconfont icon-up"></i>
-</div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
 <script type=text/javascript src=/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js></script>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script>
-<script async src=https://www.google-analytics.com/analytics.js></script>
-</body></html>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script><script async src=https://www.google-analytics.com/analytics.js></script></body></html>

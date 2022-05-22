@@ -1,119 +1,31 @@
-<!doctype html><html lang=en>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
-<title>java8基于堆实现尾递归优化 - In Pursuit of Hubris</title><meta name=renderer content="webkit">
-<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta http-equiv=cache-control content="no-transform">
-<meta http-equiv=cache-control content="no-siteapp">
-<meta name=theme-color content="#f8f5ec">
-<meta name=msapplication-navbutton-color content="#f8f5ec">
-<meta name=apple-mobile-web-app-capable content="yes">
-<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
-<meta name=author content="Ramsay Leung"><meta name=description content="1 前言 尾调用消除(tail call elimination, TCE)是函数式编程的重要概念, 有时也被称为尾调用优化(tail call optimization, TCO), 作用是将尾递归函数转化成循环, 避免创建许"><meta name=keywords content="Blog,Software,Enginering">
-<meta name=generator content="Hugo 0.93.3 with theme even">
-<link rel=canonical href=https://ramsayleung.github.io/post/2020/java%E5%AE%9E%E7%8E%B0%E5%B0%BE%E9%80%92%E5%BD%92%E4%BC%98%E5%8C%96/>
-<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
-<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
-<link rel=manifest href=/manifest.json>
-<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
-<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
-<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
-<meta property="og:title" content="java8基于堆实现尾递归优化">
-<meta property="og:description" content="1 前言 尾调用消除(tail call elimination, TCE)是函数式编程的重要概念, 有时也被称为尾调用优化(tail call optimization, TCO), 作用是将尾递归函数转化成循环, 避免创建许">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://ramsayleung.github.io/post/2020/java%E5%AE%9E%E7%8E%B0%E5%B0%BE%E9%80%92%E5%BD%92%E4%BC%98%E5%8C%96/"><meta property="article:section" content="post">
-<meta property="article:published_time" content="2020-07-05T16:51:00+08:00">
-<meta property="article:modified_time" content="2022-02-26T10:11:32+08:00">
-<meta itemprop=name content="java8基于堆实现尾递归优化">
-<meta itemprop=description content="1 前言 尾调用消除(tail call elimination, TCE)是函数式编程的重要概念, 有时也被称为尾调用优化(tail call optimization, TCO), 作用是将尾递归函数转化成循环, 避免创建许"><meta itemprop=datePublished content="2020-07-05T16:51:00+08:00">
-<meta itemprop=dateModified content="2022-02-26T10:11:32+08:00">
-<meta itemprop=wordCount content="2947">
-<meta itemprop=keywords content="java,"><meta name=twitter:card content="summary">
-<meta name=twitter:title content="java8基于堆实现尾递归优化">
-<meta name=twitter:description content="1 前言 尾调用消除(tail call elimination, TCE)是函数式编程的重要概念, 有时也被称为尾调用优化(tail call optimization, TCO), 作用是将尾递归函数转化成循环, 避免创建许"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
-<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
-</head><body>
-<div id=mobile-navbar class=mobile-navbar>
-<div class=mobile-header-logo>
-<a href=/ class=logo>In Pursuit of Hubris</a>
-</div><div class=mobile-navbar-icon>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>java8基于堆实现尾递归优化 - In Pursuit of Hubris</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="Ramsay Leung"><meta name=description content="1 前言 尾调用消除(tail call elimination, TCE)是函数式编程的重要概念, 有时也被称为尾调用优化(tail call optimization, TCO), 作用是将尾递归函数转化成循环, 避免创建许"><meta name=keywords content="Blog,Software,Enginering"><meta name=generator content="Hugo 0.99.1 with theme even"><link rel=canonical href=https://ramsayleung.github.io/post/2020/java%E5%AE%9E%E7%8E%B0%E5%B0%BE%E9%80%92%E5%BD%92%E4%BC%98%E5%8C%96/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="java8基于堆实现尾递归优化"><meta property="og:description" content="1 前言 尾调用消除(tail call elimination, TCE)是函数式编程的重要概念, 有时也被称为尾调用优化(tail call optimization, TCO), 作用是将尾递归函数转化成循环, 避免创建许"><meta property="og:type" content="article"><meta property="og:url" content="https://ramsayleung.github.io/post/2020/java%E5%AE%9E%E7%8E%B0%E5%B0%BE%E9%80%92%E5%BD%92%E4%BC%98%E5%8C%96/"><meta property="article:section" content="post"><meta property="article:published_time" content="2020-07-05T16:51:00+08:00"><meta property="article:modified_time" content="2022-02-26T10:11:32+08:00"><meta itemprop=name content="java8基于堆实现尾递归优化"><meta itemprop=description content="1 前言 尾调用消除(tail call elimination, TCE)是函数式编程的重要概念, 有时也被称为尾调用优化(tail call optimization, TCO), 作用是将尾递归函数转化成循环, 避免创建许"><meta itemprop=datePublished content="2020-07-05T16:51:00+08:00"><meta itemprop=dateModified content="2022-02-26T10:11:32+08:00"><meta itemprop=wordCount content="2947"><meta itemprop=keywords content="java,"><meta name=twitter:card content="summary"><meta name=twitter:title content="java8基于堆实现尾递归优化"><meta name=twitter:description content="1 前言 尾调用消除(tail call elimination, TCE)是函数式编程的重要概念, 有时也被称为尾调用优化(tail call optimization, TCO), 作用是将尾递归函数转化成循环, 避免创建许"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>In Pursuit of Hubris</a></div><div class=mobile-navbar-icon><span></span>
 <span></span>
-<span></span>
-<span></span>
-</div></div><nav id=mobile-menu class="mobile-menu slideout-menu">
-<ul class=mobile-menu-list>
-<a href=/>
-<li class=mobile-menu-item>Home</li></a><a href=/post/>
-<li class=mobile-menu-item>Archives</li></a><a href=/tags/>
-<li class=mobile-menu-item>Tags</li></a><a href=/about_me>
-<li class=mobile-menu-item>About</li></a>
-</ul></nav><div class=container id=mobile-panel>
-<header id=header class=header>
-<head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-F1N7KS6M5Q"></script>
-<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-F1N7KS6M5Q",{anonymize_ip:!0})}</script>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script>
-<script async src=https://www.google-analytics.com/analytics.js></script>
-</head><div class=logo-wrapper>
-<a href=/ class=logo>In Pursuit of Hubris</a>
-</div><nav class=site-navbar>
-<ul id=menu class=menu>
-<li class=menu-item>
-<a class=menu-item-link href=/>Home</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/post/>Archives</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/tags/>Tags</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/about_me>About</a>
-</li></ul></nav></header><main id=main class=main>
-<div class=content-wrapper>
-<div id=content class=content>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title>java8基于堆实现尾递归优化</h1><div class=post-meta>
-<span class=post-time> 2020-07-05 </span>
-<div class=post-category>
-<a href=/categories/java/> java </a>
-</div><span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
-</div></header><div class=post-toc id=post-toc>
-<h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active">
-<nav id=TableOfContents>
-<ul>
-<li><a href=#前言><span class=section-num>1</span> 前言</a></li><li><a href=#尾调用与尾递归><span class=section-num>2</span> 尾调用与尾递归</a></li><li><a href=#基于堆的尾递归><span class=section-num>3</span> 基于堆的尾递归</a></li><li><a href=#总结><span class=section-num>4</span> 总结</a></li><li><a href=#参考><span class=section-num>5</span> 参考</a></li></ul></nav></div></div><div class=post-content>
-<h2 id=前言><span class=section-num>1</span> 前言</h2><p>尾调用消除(tail call elimination, TCE)是函数式编程的重要概念, 有时也被称为尾调用优化(tail call optimization, TCO),
-作用是将尾递归函数转化成循环, 避免创建许多栈帧, 减少开销.</p><p>遗憾的是, Java不支持TCE, 所以本文主要是介绍, 如何使用java8特性, 基于堆来实现尾递归优化.</p><hr>
-<p>一个有趣的事，这篇文章是我在阿里ATA上发的最后一篇文章。发在内网的第二天，也就是我的last day，有位P8的同事在钉钉上夸我文章写得好，只回复了一句，还未来得及多交流几句，我的离职流程就走完，钉钉被强制下线了，甚至没看到这位同事的回复。</p><h2 id=尾调用与尾递归><span class=section-num>2</span> 尾调用与尾递归</h2><p>想要了解尾递归优化, 首先要了解下什么是尾调用.</p><p>尾调用的概念非常简单,
-一言以蔽之, 指函数的最后一步是调用另一个函数. 以斐波那契数列为例:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/about_me><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><head><script async src="https://www.googletagmanager.com/gtag/js?id=G-F1N7KS6M5Q"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-F1N7KS6M5Q",{anonymize_ip:!0})}</script><script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script><script async src=https://www.google-analytics.com/analytics.js></script></head><div class=logo-wrapper><a href=/ class=logo>In Pursuit of Hubris</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/about_me>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>java8基于堆实现尾递归优化</h1><div class=post-meta><span class=post-time>2020-07-05</span><div class=post-category><a href=/categories/java/>java</a></div><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><a href=#前言><span class=section-num>1</span> 前言</a></li><li><a href=#尾调用与尾递归><span class=section-num>2</span> 尾调用与尾递归</a></li><li><a href=#基于堆的尾递归><span class=section-num>3</span> 基于堆的尾递归</a></li><li><a href=#总结><span class=section-num>4</span> 总结</a></li><li><a href=#参考><span class=section-num>5</span> 参考</a></li></ul></nav></div></div><div class=post-content><h2 id=前言><span class=section-num>1</span> 前言</h2><p>尾调用消除(tail call elimination, TCE)是函数式编程的重要概念, 有时也被称为尾调用优化(tail call optimization, TCO),
+作用是将尾递归函数转化成循环, 避免创建许多栈帧, 减少开销.</p><p>遗憾的是, Java不支持TCE, 所以本文主要是介绍, 如何使用java8特性, 基于堆来实现尾递归优化.</p><hr><p>一个有趣的事，这篇文章是我在阿里ATA上发的最后一篇文章。发在内网的第二天，也就是我的last day，有位P8的同事在钉钉上夸我文章写得好，只回复了一句，还未来得及多交流几句，我的离职流程就走完，钉钉被强制下线了，甚至没看到这位同事的回复。</p><h2 id=尾调用与尾递归><span class=section-num>2</span> 尾调用与尾递归</h2><p>想要了解尾递归优化, 首先要了解下什么是尾调用.</p><p>尾调用的概念非常简单,
+一言以蔽之, 指函数的最后一步是调用另一个函数. 以斐波那契数列为例:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
 </span><span class=lnt>6
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kt>int</span> <span class=nf>fac</span><span class=o>(</span><span class=kt>int</span> <span class=n>n</span><span class=o>)</span> <span class=o>{</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kt>int</span> <span class=nf>fac</span><span class=o>(</span><span class=kt>int</span> <span class=n>n</span><span class=o>)</span> <span class=o>{</span>
 </span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=o>(</span><span class=n>n</span> <span class=o>&lt;</span> <span class=n>2</span><span class=o>)</span> <span class=o>{</span>
 </span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=n>1</span><span class=o>;</span>
 </span></span><span class=line><span class=cl>    <span class=o>}</span>
 </span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>n</span> <span class=o>*</span> <span class=n>fac</span><span class=o>(</span><span class=n>n</span> <span class=o>-</span> <span class=n>1</span><span class=o>);</span>
 </span></span><span class=line><span class=cl><span class=o>}</span>
 </span></span></code></pre></td></tr></table></div></div><p>虽说上面的函数看起来像是尾调用函数, 但实际上它只是普通的递归函数,
-因为它最后一步不是调用函数, 它只是作了加法计算, 上面的逻辑等同于:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+因为它最后一步不是调用函数, 它只是作了加法计算, 上面的逻辑等同于:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
 </span><span class=lnt>6
 </span><span class=lnt>7
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kt>int</span> <span class=nf>fac</span><span class=o>(</span><span class=kt>int</span> <span class=n>n</span><span class=o>){</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kt>int</span> <span class=nf>fac</span><span class=o>(</span><span class=kt>int</span> <span class=n>n</span><span class=o>){</span>
 </span></span><span class=line><span class=cl>    <span class=k>if</span><span class=o>(</span><span class=n>n</span> <span class=o>&lt;</span> <span class=n>2</span><span class=o>){</span>
 </span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=n>1</span><span class=o>;</span>
 </span></span><span class=line><span class=cl>    <span class=o>}</span>
@@ -122,9 +34,7 @@
 </span></span><span class=line><span class=cl><span class=o>}</span>
 </span></span></code></pre></td></tr></table></div></div><p>既然调用 <code>fac(n-1)</code>函数的目的是为了获取累加值,
 那么我们自然将累加值抽出来,
-然后把上面的斐波那契数列函数改成尾调用函数呢:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+然后把上面的斐波那契数列函数改成尾调用函数呢:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -134,8 +44,7 @@
 </span><span class=lnt> 8
 </span><span class=lnt> 9
 </span><span class=lnt>10
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kt>int</span> <span class=nf>fac</span><span class=o>(</span><span class=kt>int</span> <span class=n>n</span><span class=o>)</span> <span class=o>{</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kt>int</span> <span class=nf>fac</span><span class=o>(</span><span class=kt>int</span> <span class=n>n</span><span class=o>)</span> <span class=o>{</span>
 </span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>facTailCall</span><span class=o>(</span><span class=n>1</span><span class=o>,</span> <span class=n>n</span><span class=o>);</span>
 </span></span><span class=line><span class=cl><span class=o>}</span>
 </span></span><span class=line><span class=cl>
@@ -147,9 +56,7 @@
 </span></span><span class=line><span class=cl><span class=o>}</span>
 </span></span></code></pre></td></tr></table></div></div><p>函数调用自身, 称为递归函数. 如果尾调用函数自身, 就称为尾递归函数.
 那尾递归函数有什么用呢? 仅仅是将斐波那契数列的累加值抽了出来么?</p><p>要回答这个问题, 让我们先把目光投回到递归版本的斐波那契数列, 当调用
-<code>fac(6)</code>时发生了什么事情:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+<code>fac(6)</code>时发生了什么事情:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -163,8 +70,7 @@
 </span><span class=lnt>12
 </span><span class=lnt>13
 </span><span class=lnt>14
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>6</span> <span class=o>*</span> <span class=n>fac</span><span class=o>(</span><span class=n>5</span><span class=o>)</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>6</span> <span class=o>*</span> <span class=n>fac</span><span class=o>(</span><span class=n>5</span><span class=o>)</span>
 </span></span><span class=line><span class=cl>    <span class=n>6</span> <span class=o>*</span> <span class=o>(</span><span class=n>5</span> <span class=o>*</span> <span class=n>fac</span><span class=o>(</span><span class=n>4</span><span class=o>))</span>
 </span></span><span class=line><span class=cl>    <span class=n>6</span> <span class=o>*</span> <span class=o>(</span><span class=n>5</span> <span class=o>*</span> <span class=o>(</span><span class=n>4</span> <span class=o>*</span> <span class=n>fac</span><span class=o>(</span><span class=n>3</span><span class=o>)))</span>
 </span></span><span class=line><span class=cl><span class=c1>// N次展开之后
@@ -184,9 +90,7 @@
 对于64位的java8程序而言, 递归的最大次数约为8000.</p><p>我们也没法通过增加栈的大小来增加递归的次数,
 栈的大小相当于是一个全局配置, 所有的线程都会使用相同的栈,
 增加栈的大小只是浪费资源而言.</p><p>那有没有方法可以避免上述的 <code>StackOverflowError</code> 呢? 那当然是有的,
-答案就是上文提到的尾递归.</p><p>让我们来观察下尾递归版本的斐波那契数列, 看看调用 <code>facTailCall(1, 6)</code> 会发生什么事情?</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+答案就是上文提到的尾递归.</p><p>让我们来观察下尾递归版本的斐波那契数列, 看看调用 <code>facTailCall(1, 6)</code> 会发生什么事情?</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -196,8 +100,7 @@
 </span><span class=lnt> 8
 </span><span class=lnt> 9
 </span><span class=lnt>10
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>facTailCall</span><span class=o>(</span><span class=n>1</span><span class=o>,</span> <span class=n>6</span><span class=o>)</span> <span class=c1>// 1 是 fac(0) 的值
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>facTailCall</span><span class=o>(</span><span class=n>1</span><span class=o>,</span> <span class=n>6</span><span class=o>)</span> <span class=c1>// 1 是 fac(0) 的值
 </span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>facTailCall</span><span class=o>(</span><span class=n>6</span><span class=o>,</span> <span class=n>5</span><span class=o>)</span>
 </span></span><span class=line><span class=cl>    <span class=n>facTailCall</span><span class=o>(</span><span class=n>30</span><span class=o>,</span> <span class=n>4</span><span class=o>)</span>
 </span></span><span class=line><span class=cl>    <span class=n>facTailCall</span><span class=o>(</span><span class=n>120</span><span class=o>,</span> <span class=n>3</span><span class=o>)</span>
@@ -213,17 +116,14 @@
 StackOverflowError</strong>.</p><p>所谓的尾递归优化, 可以简单理解成将尾递归函数优化成循环; 在函数式编程中,
 是鼓励大家使用递归, 而不是循环来解决问题.</p><p>这是因为循环会引入变量, 而变量是函数式编程中被视为洪水猛兽一样的存在.</p><p>但如果递归调用的深度比较大, 栈帧会开辟很多, 一来是浪费空间,
 二来性能也必然会下降(有很多读写内存操作);</p><p>相反, 如果使用循环, 则只在一个函数栈空间里, 不会开辟更多的空间, 所以使用循环,
-性能要好于递归.</p><p>所以在函数式编程语言中, 如Scheme, Haskell, Scala, 尾递归优化是标配, 所以不会出现 <strong>StackOverflowError</strong></p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+性能要好于递归.</p><p>所以在函数式编程语言中, 如Scheme, Haskell, Scala, 尾递归优化是标配, 所以不会出现 <strong>StackOverflowError</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
 </span><span class=lnt>6
 </span><span class=lnt>7
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-lisp data-lang=lisp><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>fact</span> <span class=nv>x</span><span class=p>)</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lisp data-lang=lisp><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>fact</span> <span class=nv>x</span><span class=p>)</span>
 </span></span><span class=line><span class=cl>    <span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>fact-tail</span> <span class=nv>x</span> <span class=nv>accum</span><span class=p>)</span>
 </span></span><span class=line><span class=cl>	<span class=p>(</span><span class=k>if</span> <span class=p>(</span><span class=nf>=</span> <span class=nv>x</span> <span class=mi>0</span><span class=p>)</span> <span class=nv>accum</span>
 </span></span><span class=line><span class=cl>	    <span class=p>(</span><span class=nv>fact-tail</span> <span class=p>(</span><span class=nf>-</span> <span class=nv>x</span> <span class=mi>1</span><span class=p>)</span> <span class=p>(</span><span class=nf>*</span> <span class=nv>x</span> <span class=nv>accum</span><span class=p>))))</span>
@@ -232,16 +132,12 @@ StackOverflowError</strong>.</p><p>所谓的尾递归优化, 可以简单理解�
 </span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>fact</span> <span class=mi>1000000</span><span class=p>)</span><span class=o>,</span>  <span class=c1>;;; 返回一个很大很大的数, 使用的空间与(fact 3)相当</span>
 </span></span></code></pre></td></tr></table></div></div><p>遗憾的是, Java并不支持尾递归优化.</p><h2 id=基于堆的尾递归><span class=section-num>3</span> 基于堆的尾递归</h2><p>尾递归优化的一大用处是维持常数级空间, 保证不会爆栈.</p><p>既然爆栈的原因是栈空间不足, 又无法扩大栈的空间,
 那么只能把函数存在其他地方, 比如堆(heap). 使用堆来抽象递归,
-那么需要做的事情如下:</p><ol>
-<li>表示一个函数的调用</li><li>把函数调用存储在栈式结构中, 直到条件终止</li><li>以后进先出(LIFO)的顺序调用函数</li></ol><p>为此我们可以定义一个名为<code>TailCall</code>的抽象类, 它有两个子类:
+那么需要做的事情如下:</p><ol><li>表示一个函数的调用</li><li>把函数调用存储在栈式结构中, 直到条件终止</li><li>以后进先出(LIFO)的顺序调用函数</li></ol><p>为此我们可以定义一个名为<code>TailCall</code>的抽象类, 它有两个子类:
 其一表示挂起一个函数以再次调用该函数对下一步求值, 如下,
 先暂停<code>f()</code>的调用, 先调用出<code>g()</code>的结果, 再对<code>f()</code>进行求值,
-此子类名为<code>Suspend</code>:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+此子类名为<code>Suspend</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>f</span><span class=p>():</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>f</span><span class=p>():</span>
 </span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>g</span><span class=p>()</span> <span class=o>+</span> <span class=mi>1</span>
 </span></span></code></pre></td></tr></table></div></div><p>而一个函数的调用可以通过java8引入的<code>Supplier&lt;T></code>类来表示,
 以此来存储函数, T为TailCall, 表示下一个递归调用.</p><p>这样一来, 就可以通过每个尾调用引用下一个调用的方式来构造一个隐式链表,
@@ -249,9 +145,7 @@ StackOverflowError</strong>.</p><p>所谓的尾递归优化, 可以简单理解�
 不会持有到一个TailCall的引用, 因为已经没有下一个TailCall了,
 所以其名为<code>Return</code>.</p><p>其外, 还需要几个额外的抽象方法: 返回一个调用,
 返回结果, 以及判断是否判断<code>TailCall</code>是<code>Suspend</code>还是<code>Result</code>,
-接口及子类实现如下:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+接口及子类实现如下:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -318,8 +212,7 @@ StackOverflowError</strong>.</p><p>所谓的尾递归优化, 可以简单理解�
 </span><span class=lnt>65
 </span><span class=lnt>66
 </span><span class=lnt>67
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=cm>/**
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=cm>/**
 </span></span></span><span class=line><span class=cl><span class=cm> * @author Ramsay/Ramsayleung@gmail.com
 </span></span></span><span class=line><span class=cl><span class=cm> * Create on 7/5/20
 </span></span></span><span class=line><span class=cl><span class=cm> */</span>
@@ -389,9 +282,7 @@ StackOverflowError</strong>.</p><p>所谓的尾递归优化, 可以简单理解�
 </span></span></code></pre></td></tr></table></div></div><p><code>Return</code>并没有实现<code>resume</code>方法, 只是简单地抛出了异常, 因为前文提到过,
 <code>Return</code>表示最后一个调用, 没有下一个调用了, 自然无法实现<code>resume</code>方法;</p><p>同理, 只要不是最后一个调用, 就没法实现<code>eval()</code>方法,
 因为最后的一个调用才能返回结果.</p><p>那为啥<code>Suspend</code>还实现了<code>eval</code>方法呢? 主要是不让用户感知函数调用并返回结果的逻辑, 将其内敛到<code>Suspend</code>内.
-现在让我们来看看效果:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+现在让我们来看看效果:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -446,8 +337,7 @@ StackOverflowError</strong>.</p><p>所谓的尾递归优化, 可以简单理解�
 </span><span class=lnt>53
 </span><span class=lnt>54
 </span><span class=lnt>55
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=cm>/**
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=cm>/**
 </span></span></span><span class=line><span class=cl><span class=cm> * @author Ramsay/Ramsayleung@gmail.com
 </span></span></span><span class=line><span class=cl><span class=cm> * Create on 7/5/20
 </span></span></span><span class=line><span class=cl><span class=cm> */</span>
@@ -504,67 +394,29 @@ StackOverflowError</strong>.</p><p>所谓的尾递归优化, 可以简单理解�
 </span></span><span class=line><span class=cl><span class=o>}</span>
 </span></span></code></pre></td></tr></table></div></div><h2 id=总结><span class=section-num>4</span> 总结</h2><p>至此, 我们通过java8的lambda, <code>Supplier</code>接口实现了基于堆的尾递归优化,
 虽说没有优化成常数空间, 但终归解决了递归过深时, 栈空间不足导致
-<code>StackOverflowError</code>的问题.</p><p>而按照<a href=https://stackoverflow.com/questions/53354898/tail-call-optimisation-in-java>Stackoverflow问题的说法</a>, java不支持尾调用的原因如下:</p><blockquote>
-<p>In jdk classes there are a number of security sensitive methods that
+<code>StackOverflowError</code>的问题.</p><p>而按照<a href=https://stackoverflow.com/questions/53354898/tail-call-optimisation-in-java>Stackoverflow问题的说法</a>, java不支持尾调用的原因如下:</p><blockquote><p>In jdk classes there are a number of security sensitive methods that
 rely on counting stack frames between jdk library code and calling
-code to figure out who&rsquo;s calling them.</p></blockquote><p>后续java版本也暂无支持尾递归优化的计划, 无奈摊手.jpg</p><h2 id=参考><span class=section-num>5</span> 参考</h2><ul>
-<li><a href=https://en.wikipedia.org/wiki/Tail_call>https://en.wikipedia.org/wiki/Tail_call</a></li><li><a href=https://book.douban.com/subject/26981273/>Functional Programming in Java</a></li><li><a href="https://youtu.be/4tEi86h8-TM?t=32m30s">NightHacking with Venkat Subramaniam</a></li><li><a href=https://stackoverflow.com/questions/43937160/designing-tail-recursion-using-java-8>Designing tail recursion using java 8</a></li></ul></div><div class=post-copyright>
-<p class=copyright-item>
-<span class=item-title>Author</span>
-<span class=item-content>Ramsay Leung</span>
-</p><p class=copyright-item>
-<span class=item-title>LastMod</span>
-<span class=item-content>
-2022-02-26
-</span>
-</p></div><footer class=post-footer>
-<div class=post-tags>
-<a href=/tags/java/>java</a>
-</div><nav class=post-nav>
-<a class=prev href=/post/2020/996%E6%88%90%E5%9B%A0/>
-<i class="iconfont icon-left"></i>
+code to figure out who&rsquo;s calling them.</p></blockquote><p>后续java版本也暂无支持尾递归优化的计划, 无奈摊手.jpg</p><h2 id=参考><span class=section-num>5</span> 参考</h2><ul><li><a href=https://en.wikipedia.org/wiki/Tail_call>https://en.wikipedia.org/wiki/Tail_call</a></li><li><a href=https://book.douban.com/subject/26981273/>Functional Programming in Java</a></li><li><a href="https://youtu.be/4tEi86h8-TM?t=32m30s">NightHacking with Venkat Subramaniam</a></li><li><a href=https://stackoverflow.com/questions/43937160/designing-tail-recursion-using-java-8>Designing tail recursion using java 8</a></li></ul></div><div class=post-copyright><p class=copyright-item><span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span></p><p class=copyright-item><span class=item-title>LastMod</span>
+<span class=item-content>2022-02-26</span></p></div><footer class=post-footer><div class=post-tags><a href=/tags/java/>java</a></div><nav class=post-nav><a class=prev href=/post/2020/996%E6%88%90%E5%9B%A0/><i class="iconfont icon-left"></i>
 <span class="prev-text nav-default">为什么我们要996</span>
-<span class="prev-text nav-mobile">Prev</span>
-</a>
-<a class=next href=/post/2020/%E5%B1%80%E5%A4%96%E4%BA%BA/>
-<span class="next-text nav-default">局外人</span>
+<span class="prev-text nav-mobile">Prev</span></a>
+<a class=next href=/post/2020/%E5%B1%80%E5%A4%96%E4%BA%BA/><span class="next-text nav-default">局外人</span>
 <span class="next-text nav-mobile">Next</span>
-<i class="iconfont icon-right"></i>
-</a>
-</nav></footer></article></div><div id=gitalk-container></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
-<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
-<script type=text/javascript>var gitalk=new Gitalk({id:"2020-07-05 16:51:00 \u002b0800 \u002b0800",title:"java8基于堆实现尾递归优化",clientID:"3c034c97f0926fafd2d6",clientSecret:"192051927d267ce83eb2ef10955890b7db2720ad",repo:"comment",owner:"ramsayleung",admin:["ramsayleung"],body:decodeURI(location.href)});gitalk.render("gitalk-container")</script>
-<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript></div></main><footer id=footer class=footer>
-<div class=social-links>
-<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><div id=gitalk-container></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:"2020-07-05 16:51:00 \u002b0800 \u002b0800",title:"java8基于堆实现尾递归优化",clientID:"3c034c97f0926fafd2d6",clientSecret:"192051927d267ce83eb2ef10955890b7db2720ad",repo:"comment",owner:"ramsayleung",admin:["ramsayleung"],body:decodeURI(location.href)});gitalk.render("gitalk-container")</script><noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
 <a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
 <a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
 <a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
-<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
-</div><div class=copyright>
-<span class=power-by>
-Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
-</span>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a></span>
 <span class=division>|</span>
-<span class=theme-info>
-Theme -
-<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
-</span>
-<div class=busuanzi-footer>
-<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=theme-info>Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span><div class=busuanzi-footer><span id=busuanzi_container_site_pv>site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span></span>
 <span class=division>|</span>
-<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
-</div><span class=copyright-year>
-&copy;
+<span id=busuanzi_container_site_uv>site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span></span></div><span class=copyright-year>&copy;
 2017 -
-2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
-</span>
-</div></footer><div class=back-to-top id=back-to-top>
-<i class="iconfont icon-up"></i>
-</div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
 <script type=text/javascript src=/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js></script>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script>
-<script async src=https://www.google-analytics.com/analytics.js></script>
-</body></html>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script><script async src=https://www.google-analytics.com/analytics.js></script></body></html>

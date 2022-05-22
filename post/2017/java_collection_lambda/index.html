@@ -1,123 +1,28 @@
-<!doctype html><html lang=en>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
-<title>Lambda与Java Collection有感 - In Pursuit of Hubris</title><meta name=renderer content="webkit">
-<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta http-equiv=cache-control content="no-transform">
-<meta http-equiv=cache-control content="no-siteapp">
-<meta name=theme-color content="#f8f5ec">
-<meta name=msapplication-navbutton-color content="#f8f5ec">
-<meta name=apple-mobile-web-app-capable content="yes">
-<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
-<meta name=author content="Ramsay Leung"><meta name=description content="An Discussion abount Java Collection with Lambda Expression"><meta name=keywords content="Blog,Software,Enginering">
-<meta name=generator content="Hugo 0.93.3 with theme even">
-<link rel=canonical href=https://ramsayleung.github.io/post/2017/java_collection_lambda/>
-<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
-<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
-<link rel=manifest href=/manifest.json>
-<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
-<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
-<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
-<meta property="og:title" content="Lambda与Java Collection有感">
-<meta property="og:description" content="An Discussion abount Java Collection with Lambda Expression">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://ramsayleung.github.io/post/2017/java_collection_lambda/"><meta property="article:section" content="post">
-<meta property="article:published_time" content="2017-03-04T00:00:00+08:00">
-<meta property="article:modified_time" content="2022-02-23T21:28:09+08:00">
-<meta itemprop=name content="Lambda与Java Collection有感">
-<meta itemprop=description content="An Discussion abount Java Collection with Lambda Expression"><meta itemprop=datePublished content="2017-03-04T00:00:00+08:00">
-<meta itemprop=dateModified content="2022-02-23T21:28:09+08:00">
-<meta itemprop=wordCount content="987">
-<meta itemprop=keywords content="java,"><meta name=twitter:card content="summary">
-<meta name=twitter:title content="Lambda与Java Collection有感">
-<meta name=twitter:description content="An Discussion abount Java Collection with Lambda Expression"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
-<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
-</head><body>
-<div id=mobile-navbar class=mobile-navbar>
-<div class=mobile-header-logo>
-<a href=/ class=logo>In Pursuit of Hubris</a>
-</div><div class=mobile-navbar-icon>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>Lambda与Java Collection有感 - In Pursuit of Hubris</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="Ramsay Leung"><meta name=description content="An Discussion abount Java Collection with Lambda Expression"><meta name=keywords content="Blog,Software,Enginering"><meta name=generator content="Hugo 0.99.1 with theme even"><link rel=canonical href=https://ramsayleung.github.io/post/2017/java_collection_lambda/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="Lambda与Java Collection有感"><meta property="og:description" content="An Discussion abount Java Collection with Lambda Expression"><meta property="og:type" content="article"><meta property="og:url" content="https://ramsayleung.github.io/post/2017/java_collection_lambda/"><meta property="article:section" content="post"><meta property="article:published_time" content="2017-03-04T00:00:00+08:00"><meta property="article:modified_time" content="2022-02-23T21:28:09+08:00"><meta itemprop=name content="Lambda与Java Collection有感"><meta itemprop=description content="An Discussion abount Java Collection with Lambda Expression"><meta itemprop=datePublished content="2017-03-04T00:00:00+08:00"><meta itemprop=dateModified content="2022-02-23T21:28:09+08:00"><meta itemprop=wordCount content="987"><meta itemprop=keywords content="java,"><meta name=twitter:card content="summary"><meta name=twitter:title content="Lambda与Java Collection有感"><meta name=twitter:description content="An Discussion abount Java Collection with Lambda Expression"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>In Pursuit of Hubris</a></div><div class=mobile-navbar-icon><span></span>
 <span></span>
-<span></span>
-<span></span>
-</div></div><nav id=mobile-menu class="mobile-menu slideout-menu">
-<ul class=mobile-menu-list>
-<a href=/>
-<li class=mobile-menu-item>Home</li></a><a href=/post/>
-<li class=mobile-menu-item>Archives</li></a><a href=/tags/>
-<li class=mobile-menu-item>Tags</li></a><a href=/about_me>
-<li class=mobile-menu-item>About</li></a>
-</ul></nav><div class=container id=mobile-panel>
-<header id=header class=header>
-<head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-F1N7KS6M5Q"></script>
-<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-F1N7KS6M5Q",{anonymize_ip:!0})}</script>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script>
-<script async src=https://www.google-analytics.com/analytics.js></script>
-</head><div class=logo-wrapper>
-<a href=/ class=logo>In Pursuit of Hubris</a>
-</div><nav class=site-navbar>
-<ul id=menu class=menu>
-<li class=menu-item>
-<a class=menu-item-link href=/>Home</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/post/>Archives</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/tags/>Tags</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/about_me>About</a>
-</li></ul></nav></header><main id=main class=main>
-<div class=content-wrapper>
-<div id=content class=content>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title>Lambda与Java Collection有感</h1><div class=post-meta>
-<span class=post-time> 2017-03-04 </span>
-<div class=post-category>
-<a href=/categories/java/> java </a>
-</div><span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
-</div></header><div class=post-toc id=post-toc>
-<h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active">
-<nav id=TableOfContents>
-<ul>
-<li><a href=#java函数式编程><span class=section-num>1</span> Java函数式编程</a></li><li><a href=#流的常用操作><span class=section-num>2</span> 流的常用操作</a>
-<ul>
-<li><a href=#collect--tolist><span class=section-num>2.1</span> collect(toList())</a></li><li><a href=#map><span class=section-num>2.2</span> map</a></li><li><a href=#filter><span class=section-num>2.3</span> filter</a></li><li><a href=#flatmap><span class=section-num>2.4</span> flatMap</a></li><li><a href=#小结><span class=section-num>2.5</span> 小结</a></li></ul></li></ul></nav></div></div><div class=post-content>
-<p>我平时也有浏览各类博客的习惯，毕竟三人行则必有我师嘛。今天在浏览关于Java的一个博客的时候，对博主的观点有一些不同的开发，但是困于没法在博客下评论，内容如下：
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/about_me><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><head><script async src="https://www.googletagmanager.com/gtag/js?id=G-F1N7KS6M5Q"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-F1N7KS6M5Q",{anonymize_ip:!0})}</script><script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script><script async src=https://www.google-analytics.com/analytics.js></script></head><div class=logo-wrapper><a href=/ class=logo>In Pursuit of Hubris</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/about_me>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>Lambda与Java Collection有感</h1><div class=post-meta><span class=post-time>2017-03-04</span><div class=post-category><a href=/categories/java/>java</a></div><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><a href=#java函数式编程><span class=section-num>1</span> Java函数式编程</a></li><li><a href=#流的常用操作><span class=section-num>2</span> 流的常用操作</a><ul><li><a href=#collect--tolist><span class=section-num>2.1</span> collect(toList())</a></li><li><a href=#map><span class=section-num>2.2</span> map</a></li><li><a href=#filter><span class=section-num>2.3</span> filter</a></li><li><a href=#flatmap><span class=section-num>2.4</span> flatMap</a></li><li><a href=#小结><span class=section-num>2.5</span> 小结</a></li></ul></li></ul></nav></div></div><div class=post-content><p>我平时也有浏览各类博客的习惯，毕竟三人行则必有我师嘛。今天在浏览关于Java的一个博客的时候，对博主的观点有一些不同的开发，但是困于没法在博客下评论，内容如下：
 <a href=/ox-hugo/argument.png><img src=/ox-hugo/argument.png alt></a>
-所以打算聊聊Java 中Collection 这个话题。(BTW,窃以为博主对Java8 新引进的Lambda, 应该了解不足)</p><h2 id=java函数式编程><span class=section-num>1</span> Java函数式编程</h2><p>Java8 引进了函数式编程的新特性，让Java的开发人员也可以享受函数式编程的美妙，已经有很多的文章介绍函数式了，珠玉在前，我就不赘言了。</p><p>来说说Java 的Lambda吧：Java8 对核心类库进行了改进，只要包括集合类的API和新引入的流(Stream), 流可以让开发者站在更高的 抽象层次对集合进行操作</p><h2 id=流的常用操作><span class=section-num>2</span> 流的常用操作</h2><h3 id=collect--tolist><span class=section-num>2.1</span> collect(toList())</h3><p><code>collect(toList())</code> 方法可以由Stream 值生成一个List,而Stream 的of方法可以使用初始值生成新的Stream.</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>List</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>collected</span><span class=o>=</span> <span class=n>Stream</span><span class=o>.</span><span class=na>of</span><span class=o>(</span><span class=s>&#34;this&#34;</span><span class=o>,</span><span class=s>&#34;is&#34;</span><span class=o>,</span><span class=s>&#34;a&#34;</span><span class=o>,</span><span class=s>&#34;list&#34;</span><span class=o>).</span><span class=na>collect</span><span class=o>(</span><span class=n>Collectors</span><span class=o>.</span><span class=na>toList</span><span class=o>());</span>
+所以打算聊聊Java 中Collection 这个话题。(BTW,窃以为博主对Java8 新引进的Lambda, 应该了解不足)</p><h2 id=java函数式编程><span class=section-num>1</span> Java函数式编程</h2><p>Java8 引进了函数式编程的新特性，让Java的开发人员也可以享受函数式编程的美妙，已经有很多的文章介绍函数式了，珠玉在前，我就不赘言了。</p><p>来说说Java 的Lambda吧：Java8 对核心类库进行了改进，只要包括集合类的API和新引入的流(Stream), 流可以让开发者站在更高的 抽象层次对集合进行操作</p><h2 id=流的常用操作><span class=section-num>2</span> 流的常用操作</h2><h3 id=collect--tolist><span class=section-num>2.1</span> collect(toList())</h3><p><code>collect(toList())</code> 方法可以由Stream 值生成一个List,而Stream 的of方法可以使用初始值生成新的Stream.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>List</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>collected</span><span class=o>=</span> <span class=n>Stream</span><span class=o>.</span><span class=na>of</span><span class=o>(</span><span class=s>&#34;this&#34;</span><span class=o>,</span><span class=s>&#34;is&#34;</span><span class=o>,</span><span class=s>&#34;a&#34;</span><span class=o>,</span><span class=s>&#34;list&#34;</span><span class=o>).</span><span class=na>collect</span><span class=o>(</span><span class=n>Collectors</span><span class=o>.</span><span class=na>toList</span><span class=o>());</span>
 </span></span></code></pre></td></tr></table></div></div><h3 id=map><span class=section-num>2.2</span> map</h3><p>如果有一个函数可以将一种类型的值转换成另外一种类型，map 操作就可以使用该函数，将一个流中的值转换成一个新的流
-<a href=/ox-hugo/java_map.png><img src=/ox-hugo/java_map.png alt></a></p><h4 id=例子><span class=section-num>2.2.1</span> 例子</h4><p>将字符变成大写格式如果用没有Lambda 时的模式编程</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+<a href=/ox-hugo/java_map.png><img src=/ox-hugo/java_map.png alt></a></p><h4 id=例子><span class=section-num>2.2.1</span> 例子</h4><p>将字符变成大写格式如果用没有Lambda 时的模式编程</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>List</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>oldStyle</span><span class=o>=</span><span class=k>new</span> <span class=n>ArrayList</span><span class=o>&lt;&gt;();</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>List</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>oldStyle</span><span class=o>=</span><span class=k>new</span> <span class=n>ArrayList</span><span class=o>&lt;&gt;();</span>
 </span></span><span class=line><span class=cl><span class=k>for</span><span class=o>(</span><span class=n>String</span> <span class=n>string</span> <span class=o>:</span> <span class=n>Arrays</span><span class=o>.</span><span class=na>asList</span><span class=o>(</span><span class=s>&#34;a&#34;</span><span class=o>,</span><span class=s>&#34;b&#34;</span><span class=o>,</span><span class=s>&#34;c&#34;</span><span class=o>)){</span>
 </span></span><span class=line><span class=cl>    <span class=n>String</span> <span class=n>uppercaseString</span><span class=o>=</span><span class=n>string</span><span class=o>.</span><span class=na>toUpperCase</span><span class=o>();</span>
 </span></span><span class=line><span class=cl>    <span class=n>oldStyle</span><span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=n>uppercaseString</span><span class=o>);</span>
 </span></span><span class=line><span class=cl><span class=o>}</span>
-</span></span></code></pre></td></tr></table></div></div><p>但是如果你有了Lambda</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></span></code></pre></td></tr></table></div></div><p>但是如果你有了Lambda</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>List</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>lambdaStyle</span><span class=o>=</span><span class=n>Stream</span><span class=o>.</span><span class=na>of</span><span class=o>(</span><span class=s>&#34;a&#34;</span><span class=o>,</span><span class=s>&#34;b&#34;</span><span class=o>,</span><span class=s>&#34;c&#34;</span><span class=o>).</span><span class=na>map</span><span class=o>(</span><span class=n>string</span> <span class=o>-&gt;</span> <span class=n>string</span><span class=o>.</span><span class=na>toUpperCase</span><span class=o>())</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>List</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>lambdaStyle</span><span class=o>=</span><span class=n>Stream</span><span class=o>.</span><span class=na>of</span><span class=o>(</span><span class=s>&#34;a&#34;</span><span class=o>,</span><span class=s>&#34;b&#34;</span><span class=o>,</span><span class=s>&#34;c&#34;</span><span class=o>).</span><span class=na>map</span><span class=o>(</span><span class=n>string</span> <span class=o>-&gt;</span> <span class=n>string</span><span class=o>.</span><span class=na>toUpperCase</span><span class=o>())</span>
 </span></span><span class=line><span class=cl>    <span class=o>.</span><span class=na>collect</span><span class=o>(</span><span class=n>Collectors</span><span class=o>.</span><span class=na>toList</span><span class=o>());</span>
-</span></span></code></pre></td></tr></table></div></div><p>真的有种说不出的优雅</p><h3 id=filter><span class=section-num>2.3</span> filter</h3><p>遍历数据并检查其中的元素</p><figure><a href=/ox-hugo/java_filter.png><img src=/ox-hugo/java_filter.png></a>
-</figure><h4 id=例子><span class=section-num>2.3.1</span> 例子</h4><p>你有一个User类，然后你想找出年龄大于30岁的用户</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></span></code></pre></td></tr></table></div></div><p>真的有种说不出的优雅</p><h3 id=filter><span class=section-num>2.3</span> filter</h3><p>遍历数据并检查其中的元素</p><figure><a href=/ox-hugo/java_filter.png><img src=/ox-hugo/java_filter.png></a></figure><h4 id=例子><span class=section-num>2.3.1</span> 例子</h4><p>你有一个User类，然后你想找出年龄大于30岁的用户</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -129,8 +34,7 @@
 </span><span class=lnt>10
 </span><span class=lnt>11
 </span><span class=lnt>12
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>private</span> <span class=kd>static</span> <span class=n>List</span><span class=o>&lt;</span><span class=n>User</span><span class=o>&gt;</span> <span class=n>users</span> <span class=o>=</span> <span class=n>Arrays</span><span class=o>.</span><span class=na>asList</span><span class=o>(</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>private</span> <span class=kd>static</span> <span class=n>List</span><span class=o>&lt;</span><span class=n>User</span><span class=o>&gt;</span> <span class=n>users</span> <span class=o>=</span> <span class=n>Arrays</span><span class=o>.</span><span class=na>asList</span><span class=o>(</span>
 </span></span><span class=line><span class=cl>						<span class=k>new</span> <span class=n>User</span><span class=o>(</span><span class=n>1</span><span class=o>,</span> <span class=s>&#34;Steve&#34;</span><span class=o>,</span> <span class=s>&#34;Vai&#34;</span><span class=o>,</span> <span class=n>40</span><span class=o>),</span>
 </span></span><span class=line><span class=cl>						<span class=k>new</span> <span class=n>User</span><span class=o>(</span><span class=n>4</span><span class=o>,</span> <span class=s>&#34;Joe&#34;</span><span class=o>,</span> <span class=s>&#34;Smith&#34;</span><span class=o>,</span> <span class=n>32</span><span class=o>),</span>
 </span></span><span class=line><span class=cl>						<span class=k>new</span> <span class=n>User</span><span class=o>(</span><span class=n>3</span><span class=o>,</span> <span class=s>&#34;Steve&#34;</span><span class=o>,</span> <span class=s>&#34;Johnson&#34;</span><span class=o>,</span> <span class=n>57</span><span class=o>),</span>
@@ -142,98 +46,48 @@
 </span></span><span class=line><span class=cl>						<span class=k>new</span> <span class=n>User</span><span class=o>(</span><span class=n>6</span><span class=o>,</span> <span class=s>&#34;Jane&#34;</span><span class=o>,</span> <span class=s>&#34;Michaels&#34;</span><span class=o>,</span> <span class=n>47</span><span class=o>),</span>
 </span></span><span class=line><span class=cl>						<span class=k>new</span> <span class=n>User</span><span class=o>(</span><span class=n>7</span><span class=o>,</span> <span class=s>&#34;Kim&#34;</span><span class=o>,</span> <span class=s>&#34;Berlie&#34;</span><span class=o>,</span> <span class=n>60</span><span class=o>)</span>
 </span></span><span class=line><span class=cl>						<span class=o>);</span>
-</span></span></code></pre></td></tr></table></div></div><p>非函数式编程(旧式):</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></span></code></pre></td></tr></table></div></div><p>非函数式编程(旧式):</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
 </span><span class=lnt>6
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>List</span><span class=o>&lt;</span><span class=n>User</span><span class=o>&gt;</span> <span class=n>olderUsers</span> <span class=o>=</span> <span class=k>new</span> <span class=n>ArrayList</span><span class=o>&lt;</span><span class=n>User</span><span class=o>&gt;();</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>List</span><span class=o>&lt;</span><span class=n>User</span><span class=o>&gt;</span> <span class=n>olderUsers</span> <span class=o>=</span> <span class=k>new</span> <span class=n>ArrayList</span><span class=o>&lt;</span><span class=n>User</span><span class=o>&gt;();</span>
 </span></span><span class=line><span class=cl><span class=k>for</span> <span class=o>(</span><span class=n>User</span> <span class=n>u</span> <span class=o>:</span> <span class=n>users</span><span class=o>)</span> <span class=o>{</span>
 </span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=o>(</span><span class=n>u</span><span class=o>.</span><span class=na>age</span> <span class=o>&gt;</span> <span class=n>30</span><span class=o>)</span> <span class=o>{</span>
 </span></span><span class=line><span class=cl>	<span class=n>olderUsers</span><span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=n>u</span><span class=o>);</span>
 </span></span><span class=line><span class=cl>    <span class=o>}</span>
 </span></span><span class=line><span class=cl><span class=o>}</span>
-</span></span></code></pre></td></tr></table></div></div><p>函数式编程：</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>List</span><span class=o>&lt;</span><span class=n>User</span><span class=o>&gt;</span> <span class=n>olderUsers</span> <span class=o>=</span> <span class=n>users</span><span class=o>.</span><span class=na>stream</span><span class=o>().</span><span class=na>filter</span><span class=o>(</span><span class=n>u</span> <span class=o>-&gt;</span> <span class=n>u</span><span class=o>.</span><span class=na>age</span> <span class=o>&gt;</span> <span class=n>30</span><span class=o>).</span><span class=na>collect</span><span class=o>(</span><span class=n>Collectors</span><span class=o>.</span><span class=na>toList</span><span class=o>());</span>
+</span></span></code></pre></td></tr></table></div></div><p>函数式编程：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>List</span><span class=o>&lt;</span><span class=n>User</span><span class=o>&gt;</span> <span class=n>olderUsers</span> <span class=o>=</span> <span class=n>users</span><span class=o>.</span><span class=na>stream</span><span class=o>().</span><span class=na>filter</span><span class=o>(</span><span class=n>u</span> <span class=o>-&gt;</span> <span class=n>u</span><span class=o>.</span><span class=na>age</span> <span class=o>&gt;</span> <span class=n>30</span><span class=o>).</span><span class=na>collect</span><span class=o>(</span><span class=n>Collectors</span><span class=o>.</span><span class=na>toList</span><span class=o>());</span>
 </span></span></code></pre></td></tr></table></div></div><h3 id=flatmap><span class=section-num>2.4</span> flatMap</h3><p>flatMap 方法可用Stream 替换值，然后将多个Stream 连接成一个Stream
-<a href=/ox-hugo/java_flatmap.png><img src=/ox-hugo/java_flatmap.png alt></a></p><h4 id=例子><span class=section-num>2.4.1</span> 例子</h4><p>假设有一个包含多个列表的流，希望得到所有数字的序列</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+<a href=/ox-hugo/java_flatmap.png><img src=/ox-hugo/java_flatmap.png alt></a></p><h4 id=例子><span class=section-num>2.4.1</span> 例子</h4><p>假设有一个包含多个列表的流，希望得到所有数字的序列</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>List</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span> <span class=n>together</span><span class=o>=</span><span class=n>Stream</span><span class=o>.</span><span class=na>of</span><span class=o>(</span><span class=n>Arrays</span><span class=o>.</span><span class=na>asList</span><span class=o>(</span><span class=n>1</span><span class=o>,</span><span class=n>2</span><span class=o>),</span><span class=n>Arrays</span><span class=o>.</span><span class=na>asList</span><span class=o>(</span><span class=n>3</span><span class=o>,</span><span class=n>4</span><span class=o>))</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>List</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span> <span class=n>together</span><span class=o>=</span><span class=n>Stream</span><span class=o>.</span><span class=na>of</span><span class=o>(</span><span class=n>Arrays</span><span class=o>.</span><span class=na>asList</span><span class=o>(</span><span class=n>1</span><span class=o>,</span><span class=n>2</span><span class=o>),</span><span class=n>Arrays</span><span class=o>.</span><span class=na>asList</span><span class=o>(</span><span class=n>3</span><span class=o>,</span><span class=n>4</span><span class=o>))</span>
 </span></span><span class=line><span class=cl>    <span class=o>.</span><span class=na>flatMap</span><span class=o>(</span><span class=n>numbers</span><span class=o>-&gt;</span><span class=n>numbers</span><span class=o>.</span><span class=na>stream</span><span class=o>()).</span><span class=na>collect</span><span class=o>(</span><span class=n>Collectors</span><span class=o>.</span><span class=na>toList</span><span class=o>());</span>
-</span></span></code></pre></td></tr></table></div></div><hr>
-<p>还有其他常用的操作，我就不一一列举了，官方<a href=http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/Lambda-QuickStart/index.html>Quick Start</a>有更详细的介绍。</p><p>但是就我谈到的几种操作，应该可以对那位博主朋友的博文做出回应了，最有效优雅过滤一个Collection 的方法，我觉得是Stream 的filter</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>List</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>filterExample</span><span class=o>=</span><span class=n>Stream</span><span class=o>.</span><span class=na>of</span><span class=o>(</span><span class=s>&#34;a&#34;</span><span class=o>,</span><span class=s>&#34;b&#34;</span><span class=o>,</span><span class=s>&#34;c&#34;</span><span class=o>).</span><span class=na>filter</span><span class=o>(</span><span class=n>string</span><span class=o>-&gt;</span><span class=n>string</span><span class=o>.</span><span class=na>equals</span><span class=o>(</span><span class=s>&#34;a&#34;</span><span class=o>)).</span><span class=na>collect</span><span class=o>(</span><span class=n>Collectors</span><span class=o>.</span><span class=na>toList</span><span class=o>());</span>
-</span></span></code></pre></td></tr></table></div></div><h3 id=小结><span class=section-num>2.5</span> 小结</h3><p>Java Lambda的特性如果不经常使用，很容易又忘了，本文就当是对Java Lambda 的一次review吧</p><p>不过，函数式的引用的确让Java 焕发出新的活力，记得之前一位前辈吐嘈Java语法太啰嗦，现在前辈应该会用得舒心一点吧</p><hr>
-<p>备注：上面的图都是来自《Java8 函数式编程》 一书</p><p>参考：Java8 函数式编程</p></div><div class=post-copyright>
-<p class=copyright-item>
-<span class=item-title>Author</span>
-<span class=item-content>Ramsay Leung</span>
-</p><p class=copyright-item>
-<span class=item-title>LastMod</span>
-<span class=item-content>
-2022-02-23
-</span>
-</p></div><footer class=post-footer>
-<div class=post-tags>
-<a href=/tags/java/>java</a>
-</div><nav class=post-nav>
-<a class=prev href=/post/2017/from-helm-to-ivy/>
-<i class="iconfont icon-left"></i>
+</span></span></code></pre></td></tr></table></div></div><hr><p>还有其他常用的操作，我就不一一列举了，官方<a href=http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/Lambda-QuickStart/index.html>Quick Start</a>有更详细的介绍。</p><p>但是就我谈到的几种操作，应该可以对那位博主朋友的博文做出回应了，最有效优雅过滤一个Collection 的方法，我觉得是Stream 的filter</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>List</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>filterExample</span><span class=o>=</span><span class=n>Stream</span><span class=o>.</span><span class=na>of</span><span class=o>(</span><span class=s>&#34;a&#34;</span><span class=o>,</span><span class=s>&#34;b&#34;</span><span class=o>,</span><span class=s>&#34;c&#34;</span><span class=o>).</span><span class=na>filter</span><span class=o>(</span><span class=n>string</span><span class=o>-&gt;</span><span class=n>string</span><span class=o>.</span><span class=na>equals</span><span class=o>(</span><span class=s>&#34;a&#34;</span><span class=o>)).</span><span class=na>collect</span><span class=o>(</span><span class=n>Collectors</span><span class=o>.</span><span class=na>toList</span><span class=o>());</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=小结><span class=section-num>2.5</span> 小结</h3><p>Java Lambda的特性如果不经常使用，很容易又忘了，本文就当是对Java Lambda 的一次review吧</p><p>不过，函数式的引用的确让Java 焕发出新的活力，记得之前一位前辈吐嘈Java语法太啰嗦，现在前辈应该会用得舒心一点吧</p><hr><p>备注：上面的图都是来自《Java8 函数式编程》 一书</p><p>参考：Java8 函数式编程</p></div><div class=post-copyright><p class=copyright-item><span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span></p><p class=copyright-item><span class=item-title>LastMod</span>
+<span class=item-content>2022-02-23</span></p></div><footer class=post-footer><div class=post-tags><a href=/tags/java/>java</a></div><nav class=post-nav><a class=prev href=/post/2017/from-helm-to-ivy/><i class="iconfont icon-left"></i>
 <span class="prev-text nav-default">(翻译)从Helm到Ivy</span>
-<span class="prev-text nav-mobile">Prev</span>
-</a>
-<a class=next href=/post/2017/magit/>
-<span class="next-text nav-default">(翻译)An Introduction to Magit</span>
+<span class="prev-text nav-mobile">Prev</span></a>
+<a class=next href=/post/2017/magit/><span class="next-text nav-default">(翻译)An Introduction to Magit</span>
 <span class="next-text nav-mobile">Next</span>
-<i class="iconfont icon-right"></i>
-</a>
-</nav></footer></article></div><div id=gitalk-container></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
-<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
-<script type=text/javascript>var gitalk=new Gitalk({id:"2017-03-04 00:00:00 \u002b0800 \u002b0800",title:"Lambda与Java Collection有感",clientID:"3c034c97f0926fafd2d6",clientSecret:"192051927d267ce83eb2ef10955890b7db2720ad",repo:"comment",owner:"ramsayleung",admin:["ramsayleung"],body:decodeURI(location.href)});gitalk.render("gitalk-container")</script>
-<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript></div></main><footer id=footer class=footer>
-<div class=social-links>
-<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><div id=gitalk-container></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:"2017-03-04 00:00:00 \u002b0800 \u002b0800",title:"Lambda与Java Collection有感",clientID:"3c034c97f0926fafd2d6",clientSecret:"192051927d267ce83eb2ef10955890b7db2720ad",repo:"comment",owner:"ramsayleung",admin:["ramsayleung"],body:decodeURI(location.href)});gitalk.render("gitalk-container")</script><noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
 <a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
 <a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
 <a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
-<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
-</div><div class=copyright>
-<span class=power-by>
-Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
-</span>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a></span>
 <span class=division>|</span>
-<span class=theme-info>
-Theme -
-<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
-</span>
-<div class=busuanzi-footer>
-<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=theme-info>Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span><div class=busuanzi-footer><span id=busuanzi_container_site_pv>site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span></span>
 <span class=division>|</span>
-<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
-</div><span class=copyright-year>
-&copy;
+<span id=busuanzi_container_site_uv>site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span></span></div><span class=copyright-year>&copy;
 2017 -
-2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
-</span>
-</div></footer><div class=back-to-top id=back-to-top>
-<i class="iconfont icon-up"></i>
-</div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
 <script type=text/javascript src=/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js></script>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script>
-<script async src=https://www.google-analytics.com/analytics.js></script>
-</body></html>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script><script async src=https://www.google-analytics.com/analytics.js></script></body></html>

@@ -1,104 +1,21 @@
-<!doctype html><html lang=en>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
-<title>Let's make everything iterable - In Pursuit of Hubris</title><meta name=renderer content="webkit">
-<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta http-equiv=cache-control content="no-transform">
-<meta http-equiv=cache-control content="no-siteapp">
-<meta name=theme-color content="#f8f5ec">
-<meta name=msapplication-navbutton-color content="#f8f5ec">
-<meta name=apple-mobile-web-app-capable content="yes">
-<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
-<meta name=author content="Ramsay Leung"><meta name=description content="Iterate through pagination in the Rest API
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>Let's make everything iterable - In Pursuit of Hubris</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="Ramsay Leung"><meta name=description content="Iterate through pagination in the Rest API
 1 Preface About 4 months ago, icewind1991 created an exciting PR that adding Stream/Iterator based versions of methods with paginated results, which makes enpoints in Rspotify more much ergonomic to use, and Mario completed this PR.
 In order to know what this PR brought to us, we have to go back to the orignal story, the paginated results in Spotify&amp;rsquo;s Rest API.
-2 Orignal Story Taking the artist_albums as example, it gets Spotify catalog information about an artist&amp;rsquo;s albums."><meta name=keywords content="Blog,Software,Enginering">
-<meta name=generator content="Hugo 0.93.3 with theme even">
-<link rel=canonical href=https://ramsayleung.github.io/post/2021/iterate_through_pagination_api/>
-<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
-<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
-<link rel=manifest href=/manifest.json>
-<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
-<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
-<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
-<meta property="og:title" content="Let's make everything iterable">
-<meta property="og:description" content="Iterate through pagination in the Rest API
+2 Orignal Story Taking the artist_albums as example, it gets Spotify catalog information about an artist&amp;rsquo;s albums."><meta name=keywords content="Blog,Software,Enginering"><meta name=generator content="Hugo 0.99.1 with theme even"><link rel=canonical href=https://ramsayleung.github.io/post/2021/iterate_through_pagination_api/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<link href=/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="Let's make everything iterable"><meta property="og:description" content="Iterate through pagination in the Rest API
 1 Preface About 4 months ago, icewind1991 created an exciting PR that adding Stream/Iterator based versions of methods with paginated results, which makes enpoints in Rspotify more much ergonomic to use, and Mario completed this PR.
 In order to know what this PR brought to us, we have to go back to the orignal story, the paginated results in Spotify&rsquo;s Rest API.
-2 Orignal Story Taking the artist_albums as example, it gets Spotify catalog information about an artist&rsquo;s albums.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://ramsayleung.github.io/post/2021/iterate_through_pagination_api/"><meta property="article:section" content="post">
-<meta property="article:published_time" content="2021-04-29T11:48:00+08:00">
-<meta property="article:modified_time" content="2022-02-24T14:38:19+08:00">
-<meta itemprop=name content="Let's make everything iterable">
-<meta itemprop=description content="Iterate through pagination in the Rest API
+2 Orignal Story Taking the artist_albums as example, it gets Spotify catalog information about an artist&rsquo;s albums."><meta property="og:type" content="article"><meta property="og:url" content="https://ramsayleung.github.io/post/2021/iterate_through_pagination_api/"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-04-29T11:48:00+08:00"><meta property="article:modified_time" content="2022-02-24T14:38:19+08:00"><meta itemprop=name content="Let's make everything iterable"><meta itemprop=description content="Iterate through pagination in the Rest API
 1 Preface About 4 months ago, icewind1991 created an exciting PR that adding Stream/Iterator based versions of methods with paginated results, which makes enpoints in Rspotify more much ergonomic to use, and Mario completed this PR.
 In order to know what this PR brought to us, we have to go back to the orignal story, the paginated results in Spotify&rsquo;s Rest API.
-2 Orignal Story Taking the artist_albums as example, it gets Spotify catalog information about an artist&rsquo;s albums."><meta itemprop=datePublished content="2021-04-29T11:48:00+08:00">
-<meta itemprop=dateModified content="2022-02-24T14:38:19+08:00">
-<meta itemprop=wordCount content="921">
-<meta itemprop=keywords content="rust,rspotify,"><meta name=twitter:card content="summary">
-<meta name=twitter:title content="Let's make everything iterable">
-<meta name=twitter:description content="Iterate through pagination in the Rest API
+2 Orignal Story Taking the artist_albums as example, it gets Spotify catalog information about an artist&rsquo;s albums."><meta itemprop=datePublished content="2021-04-29T11:48:00+08:00"><meta itemprop=dateModified content="2022-02-24T14:38:19+08:00"><meta itemprop=wordCount content="921"><meta itemprop=keywords content="rust,rspotify,"><meta name=twitter:card content="summary"><meta name=twitter:title content="Let's make everything iterable"><meta name=twitter:description content="Iterate through pagination in the Rest API
 1 Preface About 4 months ago, icewind1991 created an exciting PR that adding Stream/Iterator based versions of methods with paginated results, which makes enpoints in Rspotify more much ergonomic to use, and Mario completed this PR.
 In order to know what this PR brought to us, we have to go back to the orignal story, the paginated results in Spotify&rsquo;s Rest API.
 2 Orignal Story Taking the artist_albums as example, it gets Spotify catalog information about an artist&rsquo;s albums."><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
-<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
-</head><body>
-<div id=mobile-navbar class=mobile-navbar>
-<div class=mobile-header-logo>
-<a href=/ class=logo>In Pursuit of Hubris</a>
-</div><div class=mobile-navbar-icon>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>In Pursuit of Hubris</a></div><div class=mobile-navbar-icon><span></span>
 <span></span>
-<span></span>
-<span></span>
-</div></div><nav id=mobile-menu class="mobile-menu slideout-menu">
-<ul class=mobile-menu-list>
-<a href=/>
-<li class=mobile-menu-item>Home</li></a><a href=/post/>
-<li class=mobile-menu-item>Archives</li></a><a href=/tags/>
-<li class=mobile-menu-item>Tags</li></a><a href=/about_me>
-<li class=mobile-menu-item>About</li></a>
-</ul></nav><div class=container id=mobile-panel>
-<header id=header class=header>
-<head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-F1N7KS6M5Q"></script>
-<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-F1N7KS6M5Q",{anonymize_ip:!0})}</script>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script>
-<script async src=https://www.google-analytics.com/analytics.js></script>
-</head><div class=logo-wrapper>
-<a href=/ class=logo>In Pursuit of Hubris</a>
-</div><nav class=site-navbar>
-<ul id=menu class=menu>
-<li class=menu-item>
-<a class=menu-item-link href=/>Home</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/post/>Archives</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/tags/>Tags</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/about_me>About</a>
-</li></ul></nav></header><main id=main class=main>
-<div class=content-wrapper>
-<div id=content class=content>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title>Let's make everything iterable</h1><div class=post-meta>
-<span class=post-time> 2021-04-29 </span>
-<div class=post-category>
-<a href=/categories/rust/> rust </a>
-</div><span id=busuanzi_container_page_pv class=more-meta> <span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read </span>
-</div></header><div class=post-toc id=post-toc>
-<h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active">
-<nav id=TableOfContents>
-<ul>
-<li><a href=#preface><span class=section-num>1</span> Preface</a></li><li><a href=#orignal-story><span class=section-num>2</span> Orignal Story</a></li><li><a href=#iterator-story><span class=section-num>3</span> Iterator Story</a></li><li><a href=#stream-story><span class=section-num>4</span> Stream Story</a></li><li><a href=#appendix><span class=section-num>5</span> Appendix</a></li></ul></nav></div></div><div class=post-content>
-<p>Iterate through pagination in the Rest API</p><h2 id=preface><span class=section-num>1</span> Preface</h2><p>About 4 months ago, <a href=https://github.com/icewind1991>icewind1991</a> created an exciting <a href=https://github.com/ramsayleung/rspotify/pull/166>PR</a> that adding <code>Stream/Iterator</code> based versions of methods with paginated results, which makes enpoints in <a href=https://github.com/ramsayleung/rspotify>Rspotify</a> more much ergonomic to use, and <a href=https://github.com/marioortizmanero>Mario</a> completed this PR.</p><p>In order to know what this PR brought to us, we have to go back to the orignal story, the paginated results in Spotify&rsquo;s Rest API.</p><h2 id=orignal-story><span class=section-num>2</span> Orignal Story</h2><p>Taking the <code>artist_albums</code> as example, it gets Spotify catalog information about an artist&rsquo;s albums.</p><p>The HTTP response body for this endpoint contains an array of simplified <a href=https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedalbumobject>album object </a>wrapped in a <a href=https://developer.spotify.com/documentation/web-api/reference/#object-pagingobject>paging object</a> and use <code>limit</code> field to control the number of album objects to return and <code>offset</code> field to set the index of the first album to return.</p><p>So designed endpoint in <code>Rspotify</code> looks like this:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/about_me><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><head><script async src="https://www.googletagmanager.com/gtag/js?id=G-F1N7KS6M5Q"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-F1N7KS6M5Q",{anonymize_ip:!0})}</script><script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script><script async src=https://www.google-analytics.com/analytics.js></script></head><div class=logo-wrapper><a href=/ class=logo>In Pursuit of Hubris</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/about_me>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>Let's make everything iterable</h1><div class=post-meta><span class=post-time>2021-04-29</span><div class=post-category><a href=/categories/rust/>rust</a></div><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><a href=#preface><span class=section-num>1</span> Preface</a></li><li><a href=#orignal-story><span class=section-num>2</span> Orignal Story</a></li><li><a href=#iterator-story><span class=section-num>3</span> Iterator Story</a></li><li><a href=#stream-story><span class=section-num>4</span> Stream Story</a></li><li><a href=#appendix><span class=section-num>5</span> Appendix</a></li></ul></nav></div></div><div class=post-content><p>Iterate through pagination in the Rest API</p><h2 id=preface><span class=section-num>1</span> Preface</h2><p>About 4 months ago, <a href=https://github.com/icewind1991>icewind1991</a> created an exciting <a href=https://github.com/ramsayleung/rspotify/pull/166>PR</a> that adding <code>Stream/Iterator</code> based versions of methods with paginated results, which makes enpoints in <a href=https://github.com/ramsayleung/rspotify>Rspotify</a> more much ergonomic to use, and <a href=https://github.com/marioortizmanero>Mario</a> completed this PR.</p><p>In order to know what this PR brought to us, we have to go back to the orignal story, the paginated results in Spotify&rsquo;s Rest API.</p><h2 id=orignal-story><span class=section-num>2</span> Orignal Story</h2><p>Taking the <code>artist_albums</code> as example, it gets Spotify catalog information about an artist&rsquo;s albums.</p><p>The HTTP response body for this endpoint contains an array of simplified <a href=https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedalbumobject>album object </a>wrapped in a <a href=https://developer.spotify.com/documentation/web-api/reference/#object-pagingobject>paging object</a> and use <code>limit</code> field to control the number of album objects to return and <code>offset</code> field to set the index of the first album to return.</p><p>So designed endpoint in <code>Rspotify</code> looks like this:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -127,8 +44,7 @@ In order to know what this PR brought to us, we have to go back to the orignal s
 </span><span class=lnt>27
 </span><span class=lnt>28
 </span><span class=lnt>29
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=sd>/// Paging object
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=sd>/// Paging object
 </span></span></span><span class=line><span class=cl><span class=sd>///
 </span></span></span><span class=line><span class=cl><span class=sd>/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-pagingobject)
 </span></span></span><span class=line><span class=cl><span class=sd></span><span class=cp>#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]</span><span class=w>
@@ -158,37 +74,27 @@ In order to know what this PR brought to us, we have to go back to the orignal s
 </span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>market</span>: <span class=nb>Option</span><span class=o>&lt;&amp;&#39;</span><span class=na>a</span><span class=w> </span><span class=n>Market</span><span class=o>&gt;</span><span class=p>,</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w></span><span class=p>)</span><span class=w> </span>-&gt; <span class=nc>ClientResult</span><span class=o>&lt;</span><span class=n>Page</span><span class=o>&lt;</span><span class=n>SimplifiedAlbum</span><span class=o>&gt;&gt;</span><span class=p>;</span><span class=w>
 </span></span></span></code></pre></td></tr></table></div></div><p>Supposing that you fetched the first page of an artist&rsquo;s ablums, then
-you would to get the data of the next page, you have to parse a URL:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+you would to get the data of the next page, you have to parse a URL:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=line><span class=cl><span class=p>{</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=line><span class=cl><span class=p>{</span>
 </span></span><span class=line><span class=cl>    <span class=nt>&#34;next&#34;</span><span class=p>:</span> <span class=s2>&#34;https://api.spotify.com/v1/browse/categories?offset=2&amp;limit=20&#34;</span>
 </span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></td></tr></table></div></div><p>You have to parse the URL and extract <code>limit</code> and <code>offset</code> parameters, and recall the <code>artist_albums</code> endpoint with setting <code>limit</code> to 20 and <code>offset</code> to 2.</p><p>We have to manually fetch the data again and again until all datas have been consumed. It is not elegant, but works.</p><figure><img src=https://raw.githubusercontent.com/ramsayleung/images/master/20210429172938.png>
-</figure><h2 id=iterator-story><span class=section-num>3</span> Iterator Story</h2><p>Since we have the basic knowledge about the background, let&rsquo;s jump to the iterator version of pagination endpoints.</p><p>First of all, the iterator pattern allows us to perform some tasks on a sequence of items in turn. An iterator is responsible for the logic of itreating over each item and determining when the sequence has finished.</p><p>If you want to know about about <code>Iterator</code>, Jon Gjengset has covered a brilliant <a href="https://www.youtube.com/watch?v=yozQ9C69pNs">tutorial</a> to demonstrate <code>Iterators</code> in Rust.</p><p>All iterators implement a trait named <code>Iterator</code> that is defined in the standard library. The definition of the trait looks like this:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></span></code></pre></td></tr></table></div></div><p>You have to parse the URL and extract <code>limit</code> and <code>offset</code> parameters, and recall the <code>artist_albums</code> endpoint with setting <code>limit</code> to 20 and <code>offset</code> to 2.</p><p>We have to manually fetch the data again and again until all datas have been consumed. It is not elegant, but works.</p><figure><img src=https://raw.githubusercontent.com/ramsayleung/images/master/20210429172938.png></figure><h2 id=iterator-story><span class=section-num>3</span> Iterator Story</h2><p>Since we have the basic knowledge about the background, let&rsquo;s jump to the iterator version of pagination endpoints.</p><p>First of all, the iterator pattern allows us to perform some tasks on a sequence of items in turn. An iterator is responsible for the logic of itreating over each item and determining when the sequence has finished.</p><p>If you want to know about about <code>Iterator</code>, Jon Gjengset has covered a brilliant <a href="https://www.youtube.com/watch?v=yozQ9C69pNs">tutorial</a> to demonstrate <code>Iterators</code> in Rust.</p><p>All iterators implement a trait named <code>Iterator</code> that is defined in the standard library. The definition of the trait looks like this:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
 </span><span class=lnt>6
 </span><span class=lnt>7
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>pub</span><span class=w> </span><span class=k>trait</span><span class=w> </span><span class=nb>Iterator</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>pub</span><span class=w> </span><span class=k>trait</span><span class=w> </span><span class=nb>Iterator</span><span class=w> </span><span class=p>{</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>type</span> <span class=nc>Item</span><span class=p>;</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>fn</span> <span class=nf>next</span><span class=p>(</span><span class=o>&amp;</span><span class=k>mut</span><span class=w> </span><span class=bp>self</span><span class=p>)</span><span class=w> </span>-&gt; <span class=nb>Option</span><span class=o>&lt;</span><span class=bp>Self</span>::<span class=n>Item</span><span class=o>&gt;</span><span class=p>;</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// methods with default implementations elided
 </span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>}</span><span class=w>
-</span></span></span></code></pre></td></tr></table></div></div><p>By implementing the <code>Iterator</code> trait on our own types, we could have iterators that do anything we want. Then working mechanism we want to iterate over paginated result will look like this:</p><figure><img src=https://raw.githubusercontent.com/ramsayleung/images/master/sync_iterator_iterate.png>
-</figure><p>Now let&rsquo;s dive deep into the code, we need to implement <code>Iterator</code> for our own types, the pseudocode looks like:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></span></span></code></pre></td></tr></table></div></div><p>By implementing the <code>Iterator</code> trait on our own types, we could have iterators that do anything we want. Then working mechanism we want to iterate over paginated result will look like this:</p><figure><img src=https://raw.githubusercontent.com/ramsayleung/images/master/sync_iterator_iterate.png></figure><p>Now let&rsquo;s dive deep into the code, we need to implement <code>Iterator</code> for our own types, the pseudocode looks like:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -206,8 +112,7 @@ you would to get the data of the next page, you have to parse a URL:</p><div cla
 </span><span class=lnt>16
 </span><span class=lnt>17
 </span><span class=lnt>18
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>impl</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span><span class=w> </span><span class=nb>Iterator</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=n>PageIterator</span><span class=o>&lt;</span><span class=n>Request</span><span class=o>&gt;</span><span class=w>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>impl</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span><span class=w> </span><span class=nb>Iterator</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=n>PageIterator</span><span class=o>&lt;</span><span class=n>Request</span><span class=o>&gt;</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w></span><span class=p>{</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>type</span> <span class=nc>Item</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>ClientResult</span><span class=o>&lt;</span><span class=n>Page</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;&gt;</span><span class=p>;</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>
@@ -226,9 +131,7 @@ you would to get the data of the next page, you have to parse a URL:</p><div cla
 </span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
 </span></span></span></code></pre></td></tr></table></div></div><p>In order to iterate paginated result from different endpoints, we need a generic type to represent different endpoints. The
-<a href=https://doc.rust-lang.org/std/ops/trait.Fn.html><code>Fn</code></a> trait comes to our mind, the function pointer that points to code, not data.</p><p>Then the next version of pseudocode looks like:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+<a href=https://doc.rust-lang.org/std/ops/trait.Fn.html><code>Fn</code></a> trait comes to our mind, the function pointer that points to code, not data.</p><p>Then the next version of pseudocode looks like:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -249,8 +152,7 @@ you would to get the data of the next page, you have to parse a URL:</p><div cla
 </span><span class=lnt>19
 </span><span class=lnt>20
 </span><span class=lnt>21
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>impl</span><span class=o>&lt;</span><span class=n>T</span><span class=p>,</span><span class=w> </span><span class=n>Request</span><span class=o>&gt;</span><span class=w> </span><span class=nb>Iterator</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=n>PageIterator</span><span class=o>&lt;</span><span class=n>Request</span><span class=o>&gt;</span><span class=w>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>impl</span><span class=o>&lt;</span><span class=n>T</span><span class=p>,</span><span class=w> </span><span class=n>Request</span><span class=o>&gt;</span><span class=w> </span><span class=nb>Iterator</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=n>PageIterator</span><span class=o>&lt;</span><span class=n>Request</span><span class=o>&gt;</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w></span><span class=k>where</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>Request</span>: <span class=nb>Fn</span><span class=p>(</span><span class=kt>u32</span><span class=p>,</span><span class=w> </span><span class=kt>u32</span><span class=p>)</span><span class=w> </span>-&gt; <span class=nc>ClientResult</span><span class=o>&lt;</span><span class=n>Page</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;&gt;</span><span class=p>,</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w></span><span class=p>{</span><span class=w>
@@ -276,9 +178,7 @@ current full version code is
 <a href=https://github.com/ramsayleung/rspotify/blob/master/src/pagination/iter.rs>here</a>,
 check it if you are interested in :)</p><h2 id=stream-story><span class=section-num>4</span> Stream Story</h2><p>Are we done? Not yet. Let&rsquo;s move our eyes to stream story.</p><p>The stream story is mostly similar with iterator story, except that
 iterator is synchronous, stream is asynchronous.</p><p>The <code>Stream</code> trait can yield multiple values before completing, similiar
-to the <code>Iterator</code> trait.</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+to the <code>Iterator</code> trait.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -288,8 +188,7 @@ to the <code>Iterator</code> trait.</p><div class=highlight><div class=chroma>
 </span><span class=lnt> 8
 </span><span class=lnt> 9
 </span><span class=lnt>10
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>trait</span><span class=w> </span><span class=n>Stream</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>trait</span><span class=w> </span><span class=n>Stream</span><span class=w> </span><span class=p>{</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>    </span><span class=sd>/// The type of the value yielded by the stream.
 </span></span></span><span class=line><span class=cl><span class=sd></span><span class=w>    </span><span class=k>type</span> <span class=nc>Item</span><span class=p>;</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>
@@ -300,9 +199,7 @@ to the <code>Iterator</code> trait.</p><div class=highlight><div class=chroma>
 </span></span></span><span class=line><span class=cl><span class=w>	</span>-&gt; <span class=nc>Poll</span><span class=o>&lt;</span><span class=nb>Option</span><span class=o>&lt;</span><span class=bp>Self</span>::<span class=n>Item</span><span class=o>&gt;&gt;</span><span class=p>;</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
 </span></span></span></code></pre></td></tr></table></div></div><p>Since we have already known the <code>iterator</code>, let make the stream story short. We leverage the
-<a href=https://github.com/tokio-rs/async-stream><code>async-stream</code></a> for using macro as Syntactic sugar to avoid clumsy type declaration and notation.</p><p>We use <code>stream!</code> macro to generate an anonymous type implementing the <code>Stream</code> trait, and the <code>Item</code> associated type is the type of the values yielded from the stream, which is <code>ClientResult&lt;T></code> in this case.</p><p>The stream <a href=https://github.com/ramsayleung/rspotify/blob/master/src/pagination/stream.rs>full version</a> is shorter and clearer:</p><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+<a href=https://github.com/tokio-rs/async-stream><code>async-stream</code></a> for using macro as Syntactic sugar to avoid clumsy type declaration and notation.</p><p>We use <code>stream!</code> macro to generate an anonymous type implementing the <code>Stream</code> trait, and the <code>Item</code> associated type is the type of the values yielded from the stream, which is <code>ClientResult&lt;T></code> in this case.</p><p>The stream <a href=https://github.com/ramsayleung/rspotify/blob/master/src/pagination/stream.rs>full version</a> is shorter and clearer:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -327,8 +224,7 @@ to the <code>Iterator</code> trait.</p><div class=highlight><div class=chroma>
 </span><span class=lnt>23
 </span><span class=lnt>24
 </span><span class=lnt>25
-</span></code></pre></td><td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=sd>/// This is used to handle paginated requests automatically.
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=sd>/// This is used to handle paginated requests automatically.
 </span></span></span><span class=line><span class=cl><span class=sd></span><span class=k>pub</span><span class=w> </span><span class=k>fn</span> <span class=nf>paginate</span><span class=o>&lt;</span><span class=n>T</span><span class=p>,</span><span class=w> </span><span class=n>Fut</span><span class=p>,</span><span class=w> </span><span class=n>Request</span><span class=o>&gt;</span><span class=p>(</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>req</span>: <span class=nc>Request</span><span class=p>,</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>page_size</span>: <span class=kt>u32</span><span class=p>,</span><span class=w>
@@ -353,64 +249,28 @@ to the <code>Iterator</code> trait.</p><div class=highlight><div class=chroma>
 </span></span></span><span class=line><span class=cl><span class=w>	</span><span class=p>}</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
-</span></span></span></code></pre></td></tr></table></div></div><h2 id=appendix><span class=section-num>5</span> Appendix</h2><p>Whew! It took more than I expected. Since iterators is the Rust features inspired by functional programming language ideas, which contributes to Rust&rsquo;s capability to clearly express high-level ideas at low-level performance.</p><p>It&rsquo;s good to leverage iterators wherever possible, now we can be thrilled to say that all endpoints don&rsquo;t need to manuallly loop over anymore, they are all iterable and rusty.</p><p>Thanks Mario and icewind1991 again for their works :)</p></div><div class=post-copyright>
-<p class=copyright-item>
-<span class=item-title>Author</span>
-<span class=item-content>Ramsay Leung</span>
-</p><p class=copyright-item>
-<span class=item-title>LastMod</span>
-<span class=item-content>
-2022-02-24
-</span>
-</p></div><footer class=post-footer>
-<div class=post-tags>
-<a href=/tags/rust/>rust</a>
-<a href=/tags/rspotify/>rspotify</a>
-</div><nav class=post-nav>
-<a class=prev href=/post/2021/%E4%B9%A1%E5%9C%9F%E4%B8%AD%E5%9B%BD/>
-<i class="iconfont icon-left"></i>
+</span></span></span></code></pre></td></tr></table></div></div><h2 id=appendix><span class=section-num>5</span> Appendix</h2><p>Whew! It took more than I expected. Since iterators is the Rust features inspired by functional programming language ideas, which contributes to Rust&rsquo;s capability to clearly express high-level ideas at low-level performance.</p><p>It&rsquo;s good to leverage iterators wherever possible, now we can be thrilled to say that all endpoints don&rsquo;t need to manuallly loop over anymore, they are all iterable and rusty.</p><p>Thanks Mario and icewind1991 again for their works :)</p></div><div class=post-copyright><p class=copyright-item><span class=item-title>Author</span>
+<span class=item-content>Ramsay Leung</span></p><p class=copyright-item><span class=item-title>LastMod</span>
+<span class=item-content>2022-02-24</span></p></div><footer class=post-footer><div class=post-tags><a href=/tags/rust/>rust</a>
+<a href=/tags/rspotify/>rspotify</a></div><nav class=post-nav><a class=prev href=/post/2021/%E4%B9%A1%E5%9C%9F%E4%B8%AD%E5%9B%BD/><i class="iconfont icon-left"></i>
 <span class="prev-text nav-default">乡土中国</span>
-<span class="prev-text nav-mobile">Prev</span>
-</a>
-<a class=next href=/post/2021/%E5%AF%BB%E8%B7%AF%E4%B8%AD%E5%9B%BD/>
-<span class="next-text nav-default">寻路中国</span>
+<span class="prev-text nav-mobile">Prev</span></a>
+<a class=next href=/post/2021/%E5%AF%BB%E8%B7%AF%E4%B8%AD%E5%9B%BD/><span class="next-text nav-default">寻路中国</span>
 <span class="next-text nav-mobile">Next</span>
-<i class="iconfont icon-right"></i>
-</a>
-</nav></footer></article></div><div id=gitalk-container></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous>
-<script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
-<script type=text/javascript>var gitalk=new Gitalk({id:"2021-04-29 11:48:00 \u002b0800 \u002b0800",title:"Let\u0027s make everything iterable",clientID:"3c034c97f0926fafd2d6",clientSecret:"192051927d267ce83eb2ef10955890b7db2720ad",repo:"comment",owner:"ramsayleung",admin:["ramsayleung"],body:decodeURI(location.href)});gitalk.render("gitalk-container")</script>
-<noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript></div></main><footer id=footer class=footer>
-<div class=social-links>
-<a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><div id=gitalk-container></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script>
+<script type=text/javascript>var gitalk=new Gitalk({id:"2021-04-29 11:48:00 \u002b0800 \u002b0800",title:"Let\u0027s make everything iterable",clientID:"3c034c97f0926fafd2d6",clientSecret:"192051927d267ce83eb2ef10955890b7db2720ad",repo:"comment",owner:"ramsayleung",admin:["ramsayleung"],body:decodeURI(location.href)});gitalk.render("gitalk-container")</script><noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:ramsayleung@email.com class="iconfont icon-email" title=email></a>
 <a href=https://stackoverflow.com/users/5738112/ramsay class="iconfont icon-stack-overflow" title=stack-overflow></a>
 <a href=http://localhost:1313 class="iconfont icon-twitter" title=twitter></a>
 <a href=https://github.com/ramsayleung class="iconfont icon-github" title=github></a>
-<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
-</div><div class=copyright>
-<span class=power-by>
-Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
-</span>
+<a href=https://ramsayleung.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a></span>
 <span class=division>|</span>
-<span class=theme-info>
-Theme -
-<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
-</span>
-<div class=busuanzi-footer>
-<span id=busuanzi_container_site_pv> site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
+<span class=theme-info>Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span><div class=busuanzi-footer><span id=busuanzi_container_site_pv>site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span></span>
 <span class=division>|</span>
-<span id=busuanzi_container_site_uv> site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> </span>
-</div><span class=copyright-year>
-&copy;
+<span id=busuanzi_container_site_uv>site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span></span></div><span class=copyright-year>&copy;
 2017 -
-2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span>
-</span>
-</div></footer><div class=back-to-top id=back-to-top>
-<i class="iconfont icon-up"></i>
-</div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>Ramsay Leung</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
 <script type=text/javascript src=/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js></script>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script>
-<script async src=https://www.google-analytics.com/analytics.js></script>
-</body></html>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-F1N7KS6M5Q","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"))</script><script async src=https://www.google-analytics.com/analytics.js></script></body></html>
