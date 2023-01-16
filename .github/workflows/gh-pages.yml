@@ -38,5 +38,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
-    	    hugo-version: '0.91.2'
+          hugo-version: '0.91.2'
           extended: true
