@@ -1,7 +1,7 @@
 +++
 title = "RSpotify: 一个用爱发电五年的开源项目"
 date = 2023-02-07T15:40:00+08:00
-lastmod = 2023-02-10T09:53:24+08:00
+lastmod = 2023-02-10T10:37:29+08:00
 tags = ["rspotify", "rust"]
 categories = ["rspotify"]
 draft = false
@@ -43,6 +43,8 @@ toc = true
 在花了2-3个月写完博客之后，觉得自己入门Rust，就想写个开源项目，感受下与其他开发者协作的场景。
 
 当时看到个网易云音乐命令行版本的播放器 [musicbox](https://github.com/darknessomi/musicbox), 当时我在用的是Spotify，就希望可以为Spotify写个类似的播放器。
+
+{{< figure src="/ox-hugo/musicbox.gif" link="/ox-hugo/musicbox.gif" >}}
 
 虽说Spotify API是对外开放，但直接使用HttpClient来请求HTTP API有点太祼，所以就希望使用先封装个library，方便后续的Rust应用直接调用，就不需要自己操心Http请求了。
 
@@ -267,6 +269,8 @@ fn with_block_on() -> Result<String, reqwest::Error> {
 2.  我们做了个好东西，我们要抢占市场。我们就开源，搞人海战术，让竞品淹没在人民群众的汪洋大海中，让我们的东西成为事实的标准。（Android，Chromium, Kubernetes, Vscode）
 3.  就想开源让你们见识下大佬是怎么样子的。
 
+个人理解，****开源是「手段」，而非「目的」****
+
 对于商业公司而言，如果没有收益，为什么要把花钱雇的人写的内部组件开源出来呢？总不成是为了在B站上博取小朋友的称赞吧。
 
 而公司内部的组件，往往是与业务共生，高度适配的，藕断丝连，没有那么容易开源的。
@@ -310,3 +314,6 @@ crates.io 的统计，总计被下载23w次，当然包括很多CI的重复下�
 
 -   [Spotify is first music streaming service to surpass 200M paid subscribers](https://www.theverge.com/2023/1/31/23577499/spotify-q4-2022-earnings-release-subscriber-growth-layoffs)
 -   [RSpotify](https://github.com/ramsayleung/rspotify)
+-   [The lesson learned from refactoring rspotify](https://ramsayleung.github.io/post/2020/serde_lesson/)
+-   [Let's make everything iterable](https://ramsayleung.github.io/post/2021/iterate_through_pagination_api/)
+-   [spotify-tui](https://github.com/Rigellute/spotify-tui)
