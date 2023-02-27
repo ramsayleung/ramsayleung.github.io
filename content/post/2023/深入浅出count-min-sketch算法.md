@@ -1,7 +1,7 @@
 +++
 title = "深入浅出Count-Min Sketch算法"
 date = 2023-02-23T14:52:00+08:00
-lastmod = 2023-02-24T17:41:47+08:00
+lastmod = 2023-02-24T18:13:22+08:00
 tags = ["programming", "algorithm"]
 categories = ["programming"]
 draft = false
@@ -116,11 +116,11 @@ std::unordered_map<std::string, int> count_freq(const std::vector<std::string>& 
 
 {{< figure src="/ox-hugo/matrix_initialization.png" link="/ox-hugo/matrix_initialization.png" >}}
 
-添加元素x: 使用 d 个 hash 函数对元素x 进行hash, 然后递增 `for i in d: matrix[i][hi(x)]+=1` 的值
+添加元素x: 使用 d 个 hash 函数对元素x 进行hash, 然后递增 \\(\forall i \in \\{0..,d\\}: matrix[i][h\_i(x)]+=1\\) 的值
 
 {{< figure src="/ox-hugo/add_element_to_matrix.png" link="/ox-hugo/add_element_to_matrix.png" >}}
 
-获取元素x的计数：取多个 hash 函数对应的最小值  `for i in d: min(matrix[i][hi(x)])`
+获取元素x的计数：取多个 hash 函数对应的最小值  \\(\forall i \in \\{0..,d\\}: min(matrix[i][h\_i(x)])\\)
 
 {{< figure src="/ox-hugo/matrix_retrieve_element_x.png" link="/ox-hugo/matrix_retrieve_element_x.png" >}}
 
@@ -148,7 +148,7 @@ std::unordered_map<std::string, int> count_freq(const std::vector<std::string>& 
 
 并引入两个变量：\\(\varepsilon\\) 和 \\(\delta\\) ,用处后面会提到。
 
-前面提到，估算计数值 \\(\hat{c\_x}\\) 是\\(c\_x\\) 的上限，即 \\(c\_x \le \hat{c\_x} \\)，我们希望可以给 \\(\hat{c\_x}\\) 也设置一个上限，实际计数值与估计计数值的差距, 即误差值不大于 \\(\varepsilon n\\) ，即  \\(\hat{c\_x} \le c\_x + \varepsilon n\\), 可得出： \\(c\_x \le \hat{c\_x} \le c\_x + \varepsilon n\\)
+前面提到，估算计数值 \\(\hat{c\_x}\\) 是\\(c\_x\\) 的上限，即 $c_x &le; \hat{c\_x} $，我们希望可以给 \\(\hat{c\_x}\\) 也设置一个上限，实际计数值与估计计数值的差距, 即误差值不大于 \\(\varepsilon n\\) ，即  \\(\hat{c\_x} \le c\_x + \varepsilon n\\), 可得出： \\(c\_x \le \hat{c\_x} \le c\_x + \varepsilon n\\)
 
 实际情况可能不会100% 如我们所预期，因此我们可以定义结果在这个范围的概率：
 
@@ -163,12 +163,9 @@ std::unordered_map<std::string, int> count_freq(const std::vector<std::string>& 
 3.  选择一个合理的概率值\\((1 - \delta)\\)
 4.  _w_ 和 _d_ 的值可通过以下公式获得（来自论文）：
 
-    \\(
-         d = \lceil \frac{e}{\varepsilon} \rceil \\\ w=\lceil \ln(\frac{1}{\delta}) \rceil
-         \\)
+$ d = &lceil; \frac{e}{\varepsilon} &rceil; \\\\ w=&lceil; ln(\frac{1}{\delta}) &rceil;$
 
-    可以看出，想要错误范围越小，就要更大的 _w_  ，也就是矩阵的宽度；
-
+可以看出，想要错误范围越小，就要更大的 _w_  ，也就是矩阵的宽度；
 同理，想要更高的概率使结果符合预期（更小的 \\(\delta\\)），就要更大的 _d_ ，也就是更多的hash函数。
 
 添加一个新哈希函数可以迅速降低超出边界异常数据的概率，这个降级效果是指数级别的；当然，增加矩阵的宽度也可以增加减少冲突的概率，但这个只是线性级别。
@@ -213,3 +210,4 @@ Count-Min Sketch的最常用场景是在大数据量下实时计算最高频的�
 -   [Wikipedia: Count–min sketch](https://en.wikipedia.org/wiki/Count%E2%80%93min_sketch)
 -   [Count-Min Sketch](https://florian.github.io/count-min-sketch/)
 -   [Count-min Sketch 算法](https://zhuanlan.zhihu.com/p/369981005)
+-   [Top K Problem (Heavy Hitters)](https://www.youtube.com/watch?v=kx-XDoPjoHw)
