@@ -1,7 +1,7 @@
 +++
 title = "OpenAI-translator: 基于ChatGPT的划词翻译及润色应用"
 date = 2023-03-12T10:20:00+08:00
-lastmod = 2023-03-12T11:57:22+08:00
+lastmod = 2023-03-12T12:18:10+08:00
 tags = ["tool"]
 categories = ["tool"]
 draft = false
@@ -128,15 +128,23 @@ openai-translator 总结后的片段：
 
 而你所需要的只是一个chatgpt 账号+ 一个浏览器插件：
 
-1.  注册安装 [openai](https://platform.openai.com/), 此处省去指引，有非常多的教程。
-2.  获取 [openai api key](https://platform.openai.com/account/api-keys)，并复制此key
-    ![](/ox-hugo/api-key.png)
-3.  打开 [Chrome web store](https://chrome.google.com/webstore/detail/openai-translator/ogjibjphoadhljaoicdnjnmgokohngcc), 搜索 OpenAi Translator, 并点击安装
-    ![](/ox-hugo/chrome_web_store.png)
-4.  点击搜件，粘贴刚刚复制的api-key:
-    ![](/ox-hugo/input_key.png)
-5.  划词，并点击 openai-translator 图标进行体验。
-    ![](/ox-hugo/taste_it.gif)
+1.注册安装 [openai](https://platform.openai.com/), 此处省去指引，有非常多的教程。
+
+2.获取 [openai api key](https://platform.openai.com/account/api-keys)，并复制此key
+
+{{< figure src="/ox-hugo/api-key.png" >}}
+
+3.打开 [Chrome web store](https://chrome.google.com/webstore/detail/openai-translator/ogjibjphoadhljaoicdnjnmgokohngcc), 搜索 OpenAi Translator, 并点击安装
+
+{{< figure src="/ox-hugo/chrome_web_store.png" >}}
+
+4.点击搜件，粘贴刚刚复制的api-key:
+
+{{< figure src="/ox-hugo/input_key.png" >}}
+
+5.划词，并点击 openai-translator 图标进行体验。
+
+{{< figure src="/ox-hugo/taste_it.gif" >}}
 
 
 ## <span class="section-num">4</span> 总结 {#总结}
