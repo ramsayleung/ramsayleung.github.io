@@ -1,7 +1,7 @@
 +++
 title = "OpenAI-translator: 基于ChatGPT的划词翻译及润色应用"
 date = 2023-03-12T10:20:00+08:00
-lastmod = 2023-03-12T12:27:56+08:00
+lastmod = 2023-03-12T14:03:35+08:00
 tags = ["tool"]
 categories = ["tool"]
 draft = false
@@ -17,7 +17,7 @@ toc = true
 
 ### <span class="section-num">1.1</span> 开发历程 {#开发历程}
 
-因为在Twitter 上关注了@yetone, 所以能从推文看到@yetone 的开发历程：
+因为在Twitter 上关注了 [@yetone](https://twitter.com/yetone), 所以能从推文看到@yetone 的开发历程：
 
 最开始 yetone 是为 [Bob](https://bobtranslate.com/guide/#%E5%AE%89%E8%A3%85) 开发了基于 ChatGPT-api 的 [openai-translator](https://github.com/yetone/bob-plugin-openai-translator) 插件，广受Bob用户的好评。后面yetone 码力全开，又乘胜追击，为 Bob 开发了基于ChatGPT-api 的润色和语法纠错 [openai-polisher](https://github.com/yetone/bob-plugin-openai-polisher) 插件，完美替代了 Grammarly.
 
