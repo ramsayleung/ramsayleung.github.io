@@ -1,7 +1,7 @@
 +++
 title = "OpenAI-translator: 基于ChatGPT的划词翻译及润色应用"
 date = 2023-03-12T10:20:00+08:00
-lastmod = 2023-03-12T12:18:10+08:00
+lastmod = 2023-03-12T12:27:56+08:00
 tags = ["tool"]
 categories = ["tool"]
 draft = false
@@ -37,7 +37,13 @@ toc = true
 
 翻译的用户体验，对比我之前一直在使用的沙拉划词([ext-saladict](https://github.com/crimx/ext-saladict)):
 
-{{< figure src="/ox-hugo/translating.gif" >}}
+沙拉划词:
+
+{{< figure src="/ox-hugo/ext-translator_translating.gif" >}}
+
+openai-translator:
+
+{{< figure src="/ox-hugo/openai-translator_translating.gif" >}}
 
 翻译的效果（最核心的功能）
 
