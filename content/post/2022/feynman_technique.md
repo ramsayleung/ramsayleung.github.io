@@ -1,7 +1,7 @@
 +++
 title = "最好的学习方式：费曼学习法(Feynman Technique)"
 date = 2022-03-26T17:07:00-07:00
-lastmod = 2023-04-08T17:48:40-07:00
+lastmod = 2023-04-08T18:27:13-07:00
 tags = ["learning"]
 categories = ["learning", "summary"]
 draft = false
@@ -46,7 +46,7 @@ toc = true
 
 虽然费曼他偶尔会开这辆车，但是大部分时间都是他的妻子(Gweneth)开。
 
-有一次，她妻子开这辆车出去，待红灯时，一个识货的司机走过来问，为什么她开着一辆画满费曼图的货车，她回答到，因为我是费曼的妻子。
+有一次，她妻子开这辆车出去，等待红灯时，一个识货的司机走过来问，为什么她开着一辆画满费曼图的货车，她回答到，因为我是费曼的妻子。
 
 > Although Richard occasionally used the van to commute from his home in Altadena to Caltech, the van was usually driven by his wife, Gweneth.
 >
@@ -92,7 +92,7 @@ Your browser does not support the video tag.</video>
 
 > Simple is beautiful.
 
-目标是\*\*通顺，通透\*\* 地向这个「无知」的小朋友解释你所学到的内容。
+目标是 ****通顺，通透**** 地向这个「无知」的小朋友解释你所学到的内容。
 
 
 ### <span class="section-num">2.3</span> 反馈，改进 {#反馈-改进}
