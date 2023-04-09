@@ -118,7 +118,7 @@ params:
     keys: ["title", "permalink", "summary", "content"]
 
 defaultContentLanguageInSubdir: true
-copyright: "Everything is mine"
+copyright: "See this site's source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·"
 defaultContentLanguage: en
 languages:
   en:
