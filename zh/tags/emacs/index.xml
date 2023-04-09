@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>emacs on 中文博客</title>
+    <link>https://ramsayleung.github.io/zh/tags/emacs/</link>
+    <description>Recent content in emacs on 中文博客</description>
+    <image>
+      <title>中文博客</title>
+      <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Everything is mine</copyright>
+    <lastBuildDate>Sat, 04 Mar 2023 21:55:00 +0800</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/tags/emacs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Emacs技巧分享: 使用eww打开在线org-mode文档</title>
+      <link>https://ramsayleung.github.io/zh/post/2023/emacs%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_%E4%BD%BF%E7%94%A8eww%E6%89%93%E5%BC%80%E5%9C%A8%E7%BA%BForg-mode%E6%96%87%E6%A1%A3/</link>
+      <pubDate>Sat, 04 Mar 2023 21:55:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2023/emacs%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_%E4%BD%BF%E7%94%A8eww%E6%89%93%E5%BC%80%E5%9C%A8%E7%BA%BForg-mode%E6%96%87%E6%A1%A3/</guid>
+      <description>1 技巧 对于使用org-mode 格式的文本，例如Emacs官方 tree-sitter 的使用教程 在线阅读不是很易读，相当于人脑解析 org-mode. 我的个人习惯是使用 eww 浏览器来阅读</description>
+    </item>
+    
+    <item>
+      <title>Emacs 技巧分享：dired-mode 批量修改文件名</title>
+      <link>https://ramsayleung.github.io/zh/post/2023/%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_dired%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8D/</link>
+      <pubDate>Sat, 04 Mar 2023 21:34:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2023/%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_dired%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8D/</guid>
+      <description>1 技巧 分享一下平时使用 dired-mode 批量修改文件名的技巧: C-x C-f 指定的文件目录，进入 dired-mode C-x C-q dired-toggle-read-only: Edit Dired buffer with Wdired. 批量修改，手段有 使用 query-replace 批量修改文件名 使用evil的多</description>
+    </item>
+    
+    <item>
+      <title>Eshell实现fzf的历史命令搜索功能</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/search_eshell_history_like_fzf/</link>
+      <pubDate>Sun, 17 Dec 2017 15:46:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/search_eshell_history_like_fzf/</guid>
+      <description>1 前言 目标: 在Eshell中像在bash/zsh中使用fzf那般搜索历史命令 2 fzf 我的主力Shell 是Eshell, 但是平时我也会用Zsh, 而</description>
+    </item>
+    
+    <item>
+      <title>Eshell提示符优化</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/tweak_eshell_prompt/</link>
+      <pubDate>Wed, 07 Jun 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/tweak_eshell_prompt/</guid>
+      <description>Tweak with Emacs shell prompt</description>
+    </item>
+    
+    <item>
+      <title>(翻译)从Helm到Ivy</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/from-helm-to-ivy/</link>
+      <pubDate>Sun, 05 Mar 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/from-helm-to-ivy/</guid>
+      <description>An Translated Post about switch from helm to ivy</description>
+    </item>
+    
+    <item>
+      <title>(翻译)An Introduction to Magit</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/magit/</link>
+      <pubDate>Fri, 03 Mar 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/magit/</guid>
+      <description>An introduction to Magit</description>
+    </item>
+    
+    <item>
+      <title>Shell神器fasd与Eshell的不期而遇</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/fasd-meet-eshell/</link>
+      <pubDate>Thu, 02 Mar 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/fasd-meet-eshell/</guid>
+      <description>An introduction about tweaking eshell with fasd</description>
+    </item>
+    
+    <item>
+      <title>提高Emacs启动速度</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/emacs_startup/</link>
+      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/emacs_startup/</guid>
+      <description>Tips to reduce emacs startup time</description>
+    </item>
+    
+    <item>
+      <title>在Emacs中使用Ipython</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/emacs_ipython/</link>
+      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/emacs_ipython/</guid>
+      <description>Use Ipython in Emasc</description>
+    </item>
+    
+  </channel>
+</rss>

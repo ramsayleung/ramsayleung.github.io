@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>linux on 中文博客</title>
+    <link>https://ramsayleung.github.io/zh/categories/linux/</link>
+    <description>Recent content in linux on 中文博客</description>
+    <image>
+      <title>中文博客</title>
+      <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Everything is mine</copyright>
+    <lastBuildDate>Wed, 11 Apr 2018 15:24:00 +0800</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/categories/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>lsof can&#39;t identify protocol</title>
+      <link>https://ramsayleung.github.io/zh/post/2018/lsof_cant_identify_protocol/</link>
+      <pubDate>Wed, 11 Apr 2018 15:24:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2018/lsof_cant_identify_protocol/</guid>
+      <description>Socket 泄漏引起的Tomcat 宕机问题分析 在2018年4月9号下午，收到反馈：测试集群部分接口访问有问题，请求时而正常，时而超时。 最近的测试环境真</description>
+    </item>
+    
+    <item>
+      <title>大话Linux文件系统</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/linux_file_system/</link>
+      <pubDate>Thu, 30 Mar 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/linux_file_system/</guid>
+      <description>an discussion about linux file system</description>
+    </item>
+    
+    <item>
+      <title>关于工具,关于折腾</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/about_tool_about_tweak/</link>
+      <pubDate>Fri, 24 Mar 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/about_tool_about_tweak/</guid>
+      <description>An discussion about tool and tweak</description>
+    </item>
+    
+    <item>
+      <title>Linux/Unix Shell 二三事之过滤器grep</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/grep/</link>
+      <pubDate>Mon, 13 Mar 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/grep/</guid>
+      <description>an introduction about grep</description>
+    </item>
+    
+    <item>
+      <title>Linux/Unix Shell 二三事之过滤器diff</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/diff/</link>
+      <pubDate>Tue, 28 Feb 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/diff/</guid>
+      <description>An introduction about diff</description>
+    </item>
+    
+    <item>
+      <title>枯树逢春之ArchLinux领风骚</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/install_archlinux/</link>
+      <pubDate>Mon, 27 Feb 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/install_archlinux/</guid>
+      <description>An description about how to install arch linux in an old machine</description>
+    </item>
+    
+    <item>
+      <title>Linux/Unix Shell 二三事之过滤器cat</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/cat/</link>
+      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/cat/</guid>
+      <description>An introduction about cat</description>
+    </item>
+    
+    <item>
+      <title>Linux/Unix Shell 二三事之过滤器head&#43;tail</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/head_tail/</link>
+      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/head_tail/</guid>
+      <description>An introduction about head and tail</description>
+    </item>
+    
+    <item>
+      <title>Linux/Unix Shell 二三事之神器percol</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/percol/</link>
+      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/percol/</guid>
+      <description>An introduction about percol</description>
+    </item>
+    
+  </channel>
+</rss>

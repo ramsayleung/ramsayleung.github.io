@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>design on 中文博客</title>
+    <link>https://ramsayleung.github.io/zh/tags/design/</link>
+    <description>Recent content in design on 中文博客</description>
+    <image>
+      <title>中文博客</title>
+      <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Everything is mine</copyright>
+    <lastBuildDate>Sun, 17 Oct 2021 15:16:36 +0000</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/tags/design/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Non-designer&#39;s design book</title>
+      <link>https://ramsayleung.github.io/zh/post/2021/the_nondesigners_design_book/</link>
+      <pubDate>Sun, 17 Oct 2021 15:16:36 +0000</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2021/the_nondesigners_design_book/</guid>
+      <description>1 Design principle 在谈论四个设计的基本准则前, 作者强调了关于命名的重要性. 作者举了一个例子, 在圣诞节, 他收到一本书介绍树木的分类, 他注意到一种叫Josh</description>
+    </item>
+    
+    <item>
+      <title>关于分布式系统唯一ID的探究</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/distributed_system_unique_id/</link>
+      <pubDate>Tue, 23 May 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/distributed_system_unique_id/</guid>
+      <description>An discussion about unique id in distributed system</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>sqlite on 中文博客</title>
+    <link>https://ramsayleung.github.io/zh/tags/sqlite/</link>
+    <description>Recent content in sqlite on 中文博客</description>
+    <image>
+      <title>中文博客</title>
+      <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Everything is mine</copyright>
+    <lastBuildDate>Sun, 12 Nov 2017 07:05:00 +0800</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/tags/sqlite/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>用python 来操控 sqlite3</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/python_with_sqlite3/</link>
+      <pubDate>Sun, 12 Nov 2017 07:05:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/python_with_sqlite3/</guid>
+      <description>python 与嵌入式关系数据库 sqlite3的邂逅 SQLite 是一个非常优秀的嵌入式数据库，非常轻量，可以与 Mysql, PostgreSQL 这样的 大型数据库互补使用. 而 Python 标准库中的 sqlite3 模块实</description>
+    </item>
+    
+  </channel>
+</rss>

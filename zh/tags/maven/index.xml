@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>maven on 中文博客</title>
+    <link>https://ramsayleung.github.io/zh/tags/maven/</link>
+    <description>Recent content in maven on 中文博客</description>
+    <image>
+      <title>中文博客</title>
+      <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Everything is mine</copyright>
+    <lastBuildDate>Tue, 23 Oct 2018 12:15:00 +0800</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/tags/maven/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Maven 小记</title>
+      <link>https://ramsayleung.github.io/zh/post/2018/maven%E5%B0%8F%E8%AE%B0/</link>
+      <pubDate>Tue, 23 Oct 2018 12:15:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2018/maven%E5%B0%8F%E8%AE%B0/</guid>
+      <description>Maven 在工作中的经验以及《Maven 实战》读后感 1 前言 蚂蚁金服的伯岩大大曾经说 Java 生态都太重量级，连Maven 都是怪兽级的构建工具，需要整整一本书</description>
+    </item>
+    
+  </channel>
+</rss>

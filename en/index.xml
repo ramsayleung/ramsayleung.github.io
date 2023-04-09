@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>In Pursuit of Hubris</title>
+    <link>https://ramsayleung.github.io/en/</link>
+    <description>Recent content on In Pursuit of Hubris</description>
+    <image>
+      <title>In Pursuit of Hubris</title>
+      <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Everything is mine</copyright>
+    <lastBuildDate>Sun, 22 May 2022 10:34:00 +0800</lastBuildDate><atom:link href="https://ramsayleung.github.io/en/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Topological Sort</title>
+      <link>https://ramsayleung.github.io/en/post/2022/topological_sorting/</link>
+      <pubDate>Sun, 22 May 2022 10:34:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/en/post/2022/topological_sorting/</guid>
+      <description>1 Definition In computer science, a topological sort or topological ordering of a directed graph is a linear ordering of its vertices such that for every directed edge uv from vertex u to vertx v, u comes before v in the ordering.
+It sounds pretty academic, but I am sure you are using topological sort unconsciously every single day.
+2 Application Many real world situations can be modeled as a graph with directed edges where some events must occur before others.</description>
+    </item>
+    
+    <item>
+      <title>About Me</title>
+      <link>https://ramsayleung.github.io/en/about_me/</link>
+      <pubDate>Mon, 21 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://ramsayleung.github.io/en/about_me/</guid>
+      <description>About me I&amp;rsquo;m Ramsay, I chase a lot of different things. The slogan of this site is In pursuit of Hubris, since:
+There are three great virtues of a programmer; Laziness, Impatience and Hubris &amp;ndash; Larry Wall
+The first programming language I learned is `Pascal` in a computer-hobbyist group when I was a middle school student. Back to time before, the only thing I could do with `Pascal` was trying to find the maximum or minimum number among the number array, or just calculate the sum of them, which is of less fun.</description>
+    </item>
+    
+    <item>
+      <title>How To Design A Reliable Distributed Timer</title>
+      <link>https://ramsayleung.github.io/en/post/2021/how_to_design_a_reliable_distributed_timer/</link>
+      <pubDate>Thu, 05 Aug 2021 09:19:36 +0000</pubDate>
+      
+      <guid>https://ramsayleung.github.io/en/post/2021/how_to_design_a_reliable_distributed_timer/</guid>
+      <description>1 Preface I have been maintained a legacy distributed timer for months for my employer, then some important pay business are leveraging on it, with 1 billion tasks handled every day and 20k tasks added per second at most.
+Even though it&amp;rsquo;s old and full of black magic code, but it also also have insighted and well-designed code. Based on this old, running timer, I summarize and extract as this article, and it wont include any running code(perhaps pseudocode, and a lot of figures, as an adage says: A picture is worth a thousand words).</description>
+    </item>
+    
+    <item>
+      <title>Let&#39;s make everything iterable</title>
+      <link>https://ramsayleung.github.io/en/post/2021/iterate_through_pagination_api/</link>
+      <pubDate>Thu, 29 Apr 2021 11:48:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/en/post/2021/iterate_through_pagination_api/</guid>
+      <description>Iterate through pagination in the Rest API
+1 Preface About 4 months ago, icewind1991 created an exciting PR that adding Stream/Iterator based versions of methods with paginated results, which makes enpoints in Rspotify more much ergonomic to use, and Mario completed this PR.
+In order to know what this PR brought to us, we have to go back to the orignal story, the paginated results in Spotify&amp;rsquo;s Rest API.
+2 Orignal Story Taking the artist_albums as example, it gets Spotify catalog information about an artist&amp;rsquo;s albums.</description>
+    </item>
+    
+    <item>
+      <title>Serde Tricks</title>
+      <link>https://ramsayleung.github.io/en/post/2020/serde_lesson/</link>
+      <pubDate>Sun, 13 Dec 2020 22:29:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/en/post/2020/serde_lesson/</guid>
+      <description>The lesson learned from refactoring rspotify
+1 Preface Recently, I and Mario are working on refactoring rspotify, trying to improve performance, documentation, error-handling, data model and reduce compile time, to make it easier to use. (For those who has never heard about rspotify, it is a Spotify HTTP SDK implemented in Rust).
+I am partly focusing on polishing the data model, based on the issue created by Koxiaet.
+Since rspotify is API client for Spotify, it has to handle the request and response from Spotify HTTP API.</description>
+    </item>
+    
+    <item>
+      <title>rspotify has come to async/await</title>
+      <link>https://ramsayleung.github.io/en/post/2020/async_await_for_rspotify/</link>
+      <pubDate>Fri, 28 Feb 2020 01:27:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/en/post/2020/async_await_for_rspotify/</guid>
+      <description>1 Preface Today, I am exited to introduce you the v0.9 release I have been continued to work on it for the past few weeks that adds async/await support now!
+2 The road to async/await What is rspotify: &amp;gt; For those who has never heared about rspotify before, rspotify is a Spotify web Api wrapper implemented in Rust.
+With async/await&amp;rsquo;s forthcoming stabilization and reqwest adds async/await support now, I think it&amp;rsquo;s time to let rspotify leverage power from async/await.</description>
+    </item>
+    
+    
+    
+  </channel>
+</rss>

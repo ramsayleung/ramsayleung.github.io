@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>command_line on 中文博客</title>
+    <link>https://ramsayleung.github.io/zh/tags/command_line/</link>
+    <description>Recent content in command_line on 中文博客</description>
+    <image>
+      <title>中文博客</title>
+      <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Everything is mine</copyright>
+    <lastBuildDate>Sat, 22 Apr 2017 00:00:00 +0800</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/tags/command_line/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>脚本分享</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/share_shell_script/</link>
+      <pubDate>Sat, 22 Apr 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/share_shell_script/</guid>
+      <description>share of my shell script snippet</description>
+    </item>
+    
+    <item>
+      <title>Linux/Unix Shell 二三事之过滤器grep</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/grep/</link>
+      <pubDate>Mon, 13 Mar 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/grep/</guid>
+      <description>an introduction about grep</description>
+    </item>
+    
+    <item>
+      <title>Linux/Unix Shell 二三事之过滤器diff</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/diff/</link>
+      <pubDate>Tue, 28 Feb 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/diff/</guid>
+      <description>An introduction about diff</description>
+    </item>
+    
+    <item>
+      <title>Linux/Unix Shell 二三事之过滤器cat</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/cat/</link>
+      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/cat/</guid>
+      <description>An introduction about cat</description>
+    </item>
+    
+    <item>
+      <title>Linux/Unix Shell 二三事之过滤器head&#43;tail</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/head_tail/</link>
+      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/head_tail/</guid>
+      <description>An introduction about head and tail</description>
+    </item>
+    
+  </channel>
+</rss>

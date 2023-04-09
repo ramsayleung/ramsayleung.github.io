@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>eshell on 中文博客</title>
+    <link>https://ramsayleung.github.io/zh/tags/eshell/</link>
+    <description>Recent content in eshell on 中文博客</description>
+    <image>
+      <title>中文博客</title>
+      <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Everything is mine</copyright>
+    <lastBuildDate>Sun, 17 Dec 2017 15:46:00 +0800</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/tags/eshell/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Eshell实现fzf的历史命令搜索功能</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/search_eshell_history_like_fzf/</link>
+      <pubDate>Sun, 17 Dec 2017 15:46:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/search_eshell_history_like_fzf/</guid>
+      <description>1 前言 目标: 在Eshell中像在bash/zsh中使用fzf那般搜索历史命令 2 fzf 我的主力Shell 是Eshell, 但是平时我也会用Zsh, 而</description>
+    </item>
+    
+    <item>
+      <title>Eshell提示符优化</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/tweak_eshell_prompt/</link>
+      <pubDate>Wed, 07 Jun 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/tweak_eshell_prompt/</guid>
+      <description>Tweak with Emacs shell prompt</description>
+    </item>
+    
+    <item>
+      <title>Shell神器fasd与Eshell的不期而遇</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/fasd-meet-eshell/</link>
+      <pubDate>Thu, 02 Mar 2017 00:00:00 +0800</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2017/fasd-meet-eshell/</guid>
+      <description>An introduction about tweaking eshell with fasd</description>
+    </item>
+    
+  </channel>
+</rss>
