@@ -27,6 +27,7 @@ params:
   defaultTheme: auto # dark, light
   disableThemeToggle: false
 
+  ShowFullTextInRSS: true
   ShowReadingTime: true
   ShowShareButtons: true
   ShowPostNavLinks: true
@@ -81,14 +82,16 @@ params:
       _-- **Ramsay Leung**_
 
   socialIcons:
-    - name: twitter
-      url: "https://twitter.com/makosangogogo"
-    - name: stackoverflow
-      url: "https://stackoverflow.com/users/5738112/ramsay"
     - name: github
       url: "https://github.com/ramsayleung"
+    - name: stackoverflow
+      url: "https://stackoverflow.com/users/5738112/ramsay"
     - name: linkedin
       url: "https://www.linkedin.com/in/ramsayleung/"
+    - name: twitter
+      url: "https://twitter.com/makosangogogo"
+    # - name: RSS
+    #   url: "/index.xml"
 
   analytics:
     google:
