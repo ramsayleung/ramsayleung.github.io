@@ -76,7 +76,7 @@ params:
   homeInfoParams:
     Title: "Hi there \U0001F44B"
     Content: >
-      There is Ramsay' Personal Blog, where he writes about life, software enginering, distributed system and thought. \
+      There is Ramsay' personal blog, where he writes about life, software enginering, distributed system and thought. \
 
       _-- **Ramsay Leung**_
 
@@ -144,9 +144,9 @@ languages:
           url: /about_me
           weight: 40
   zh:
-    title: "中文博客"
+    title: "自由庄园"
     languageName: "中文"
-    subtitle: "Yet Another Programming Blog"
+    subtitle: "宫孙的自由庄园"
     contentDir: 'content/zh'
     weight: 2
     menu:
