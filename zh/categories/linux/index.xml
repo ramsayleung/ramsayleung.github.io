@@ -19,6 +19,399 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2018/lsof_cant_identify_protocol/</guid>
       <description>Socket 泄漏引起的Tomcat 宕机问题分析 在2018年4月9号下午，收到反馈：测试集群部分接口访问有问题，请求时而正常，时而超时。 最近的测试环境真</description>
+      <content:encoded><![CDATA[<p>Socket 泄漏引起的Tomcat 宕机问题分析</p>
+<p>在2018年4月9号下午，收到反馈：测试集群部分接口访问有问题，请求时而正常，时而超时。</p>
+<p>最近的测试环境真的是问题多多，可是测试环境就是我搭建的，冏。查看日志发现87 这台 服务器的Tomcat 无法访问：</p>
+<pre tabindex="0"><code class="language-log" data-lang="log">2018-04-09 17:41:31,568 - [ERROR] - from org.apache.tomcat.util.net.NioEndpoint in http-nio-47001-Acceptor-0
+Socket accept failed
+java.io.IOException: Too many open files
+at sun.nio.ch.ServerSocketChannelImpl.accept0(Native Method)
+at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:422)
+at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:250)
+at org.apache.tomcat.util.net.NioEndpoint$Acceptor.run(NioEndpoint.java:825)
+at java.lang.Thread.run(Thread.java:745)
+
+2018-04-09 17:41:33,168 - [ERROR] - from org.apache.tomcat.util.net.NioEndpoint in http-nio-47001-Acceptor-0
+Socket accept failed
+java.io.IOException: Too many open files
+at sun.nio.ch.ServerSocketChannelImpl.accept0(Native Method)
+at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:422)
+at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:250)
+at org.apache.tomcat.util.net.NioEndpoint$Acceptor.run(NioEndpoint.java:825)
+at java.lang.Thread.run(Thread.java:745)
+</code></pre><h2 id="linux-文件句柄限制"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Linux 文件句柄限制</h2>
+<p>报错看起来像是进程打开文件句柄的个数达到了linux的限制。而这种限制是分为系统层面的和用户层面的</p>
+<h3 id="系统层面"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> 系统层面</h3>
+<p>系统层面的在：/proc/sys/fs/file-max里设置</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat /proc/sys/fs/file-max
+</span></span><span class="line"><span class="cl"><span class="m">2442976</span>
+</span></span></code></pre></div><h3 id="用户层面"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> 用户层面</h3>
+<p>用户层面的限制在：/etc/security/limits.conf里设定。通过<code>ulimit -a</code> 查看系统允许单个进程打开的最大文件数：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nb">ulimit</span> -a
+</span></span><span class="line"><span class="cl">core file size          <span class="o">(</span>blocks, -c<span class="o">)</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl">data seg size           <span class="o">(</span>kbytes, -d<span class="o">)</span> unlimited
+</span></span><span class="line"><span class="cl">scheduling priority             <span class="o">(</span>-e<span class="o">)</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl">file size               <span class="o">(</span>blocks, -f<span class="o">)</span> unlimited
+</span></span><span class="line"><span class="cl">pending signals                 <span class="o">(</span>-i<span class="o">)</span> <span class="m">192059</span>
+</span></span><span class="line"><span class="cl">max locked memory       <span class="o">(</span>kbytes, -l<span class="o">)</span> <span class="m">64</span>
+</span></span><span class="line"><span class="cl">max memory size         <span class="o">(</span>kbytes, -m<span class="o">)</span> unlimited
+</span></span><span class="line"><span class="cl">open files                      <span class="o">(</span>-n<span class="o">)</span> <span class="m">65536</span>
+</span></span><span class="line"><span class="cl">pipe size            <span class="o">(</span><span class="m">512</span> bytes, -p<span class="o">)</span> <span class="m">8</span>
+</span></span><span class="line"><span class="cl">POSIX message queues     <span class="o">(</span>bytes, -q<span class="o">)</span> <span class="m">819200</span>
+</span></span><span class="line"><span class="cl">real-time priority              <span class="o">(</span>-r<span class="o">)</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl">stack size              <span class="o">(</span>kbytes, -s<span class="o">)</span> <span class="m">10240</span>
+</span></span><span class="line"><span class="cl">cpu <span class="nb">time</span>               <span class="o">(</span>seconds, -t<span class="o">)</span> unlimited
+</span></span><span class="line"><span class="cl">max user processes              <span class="o">(</span>-u<span class="o">)</span> <span class="m">65535</span>
+</span></span><span class="line"><span class="cl">virtual memory          <span class="o">(</span>kbytes, -v<span class="o">)</span> unlimited
+</span></span><span class="line"><span class="cl">file locks                      <span class="o">(</span>-x<span class="o">)</span> unlimited
+</span></span></code></pre></div><p>单个进程可以打开的最大文件数是 65536</p>
+<h2 id="lsof-显示大量open-file"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> lsof 显示大量open file</h2>
+<p>按照Tomcat 给出的报错信息，登录87 这台服务器检查打开的文件数，发现打开的文件超过70000:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">lsof <span class="p">|</span>wc -l
+</span></span><span class="line"><span class="cl"><span class="m">75924</span>
+</span></span></code></pre></div><p>然后找出打开文件数最多的进程，按文件数降序排列，左边是 open file 的数量，右边是进程ID：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">lsof -n<span class="p">|</span>awk <span class="s1">&#39;{print $2}&#39;</span><span class="p">|</span> sort <span class="p">|</span> uniq -c <span class="p">|</span> sort -nr <span class="p">|</span> head
+</span></span><span class="line"><span class="cl"><span class="m">65966</span> <span class="m">25204</span>
+</span></span><span class="line"><span class="cl"><span class="m">5374</span> <span class="m">20179</span>
+</span></span><span class="line"><span class="cl"><span class="m">184</span> <span class="m">27275</span>
+</span></span><span class="line"><span class="cl"><span class="m">65</span> <span class="m">5361</span>
+</span></span><span class="line"><span class="cl"><span class="m">61</span> <span class="m">29421</span>
+</span></span><span class="line"><span class="cl"><span class="m">16</span> <span class="m">22177</span>
+</span></span><span class="line"><span class="cl"><span class="m">14</span> <span class="m">19751</span>
+</span></span><span class="line"><span class="cl"><span class="m">12</span> <span class="m">22181</span>
+</span></span><span class="line"><span class="cl"><span class="m">12</span> <span class="m">22179</span>
+</span></span><span class="line"><span class="cl"><span class="m">12</span> <span class="m">22178</span>
+</span></span></code></pre></div><p>发现 <code>25204</code> 这个进程打开了大量的文件，已经超过了单个进程的最大文件数限制。而这个进程就是部署的java 应用对应的进程。打开的文件句柄数量已经超过Linux 限制，
+Tomcat 无法创建新的socket 连接。</p>
+<h2 id="can-t-identify-protocol"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> can&rsquo;t identify protocol</h2>
+<p>用 lsof 查看 java 应用打开的文件的时候，发现有非常多奇怪的输出：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">java    <span class="m">25204</span> nemo *516u  sock                0,6       0t0 <span class="m">215137625</span> can<span class="s1">&#39;t identify protocol
+</span></span></span><span class="line"><span class="cl"><span class="s1">java    25204 nemo *517u  sock                0,6       0t0 215137626 can&#39;</span>t identify protocol
+</span></span><span class="line"><span class="cl">java    <span class="m">25204</span> nemo *518u  sock                0,6       0t0 <span class="m">215137627</span> can<span class="s1">&#39;t identify protocol
+</span></span></span><span class="line"><span class="cl"><span class="s1">java    25204 nemo *519u  sock                0,6       0t0 215137628 can&#39;</span>t identify protocol
+</span></span><span class="line"><span class="cl">java    <span class="m">25204</span> nemo *520u  sock                0,6       0t0 <span class="m">215137629</span> can<span class="s1">&#39;t identify protocol
+</span></span></span><span class="line"><span class="cl"><span class="s1">java    25204 nemo *521u  sock                0,6       0t0 215137630 can&#39;</span>t identify protocol
+</span></span><span class="line"><span class="cl">java    <span class="m">25204</span> nemo *522u  sock                0,6       0t0 <span class="m">215137631</span> can<span class="s1">&#39;t identify protocol
+</span></span></span><span class="line"><span class="cl"><span class="s1">java    25204 nemo *523u  sock                0,6       0t0 215137634 can&#39;</span>t identify protocol
+</span></span><span class="line"><span class="cl">java    <span class="m">25204</span> nemo *524u  sock                0,6       0t0 <span class="m">215137635</span> can<span class="s1">&#39;t identify protocol
+</span></span></span><span class="line"><span class="cl"><span class="s1">java    25204 nemo *525u  sock                0,6       0t0 215137636 can&#39;</span>t identify protocol
+</span></span><span class="line"><span class="cl">java    <span class="m">25204</span> nemo *526u  sock                0,6       0t0 <span class="m">215137637</span> can<span class="s1">&#39;t identify protocol
+</span></span></span><span class="line"><span class="cl"><span class="s1">java    25204 nemo *527u  sock                0,6       0t0 215137638 can&#39;</span>t identify protocol
+</span></span><span class="line"><span class="cl">java    <span class="m">25204</span> nemo *528u  sock                0,6       0t0 <span class="m">215137639</span> can<span class="s1">&#39;t identify protocol
+</span></span></span><span class="line"><span class="cl"><span class="s1">java    25204 nemo *529u  sock                0,6       0t0 215137640 can&#39;</span>t identify protocol
+</span></span><span class="line"><span class="cl">java    <span class="m">25204</span> nemo *530u  sock                0,6       0t0 <span class="m">215137641</span> can<span class="s1">&#39;t identify protocol
+</span></span></span><span class="line"><span class="cl"><span class="s1">java    25204 nemo *531u  sock                0,6       0t0 215137642 can&#39;</span>t identify protocol
+</span></span><span class="line"><span class="cl">java    <span class="m">25204</span> nemo *532u  sock                0,6       0t0 <span class="m">215137644</span> can<span class="s1">&#39;t identify protocol
+</span></span></span><span class="line"><span class="cl"><span class="s1">java    25204 nemo *533u  sock                0,6       0t0 215137646 can&#39;</span>t identify protocol
+</span></span></code></pre></div><p>统计之后发现， <code>can't identify protocol</code> 这样的文件数量非常多：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">lsof -p 25204<span class="p">|</span>grep <span class="s2">&#34;can&#39;t identify protocol&#34;</span><span class="p">|</span>wc -l
+</span></span><span class="line"><span class="cl"><span class="m">64214</span>
+</span></span></code></pre></div><p>也就是大部份打开的文件都是属于 <code>cant' identify  protocol</code> 的文件。</p>
+<h2 id="问题定位"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 问题定位</h2>
+<p>Google 搜索之后发现，这个 <code>cant' identify protocol</code> 的东东出现的原因是因为 这些
+sockets 处于 <code>CLOSED</code> 的状态，但是却没有真正close 掉，正处于 <code>half-close</code> 状态。因此，如果使用 <code>netstat</code> 来查看socket 状态，是不会显示这些 <code>half-close</code>的 socket 的：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">netstat  -nat <span class="p">|</span>wc -l
+</span></span><span class="line"><span class="cl"><span class="m">881</span>
+</span></span></code></pre></div><p>使用 <code>netstat</code> 的改进版本 <code>ss</code> 就能发现大量处于 <code>Closed</code> 状态的 socket:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">ss -s
+</span></span><span class="line"><span class="cl">Total: <span class="m">76052</span> <span class="o">(</span>kernel 76254<span class="o">)</span>
+</span></span><span class="line"><span class="cl">TCP:   <span class="m">75924</span> <span class="o">(</span>estab 123, closed 75524, orphaned 0, synrecv 0, timewait 173/0<span class="o">)</span>, ports <span class="m">104</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Transport Total     IP        IPv6
+</span></span><span class="line"><span class="cl">*         <span class="m">76254</span>    -         -
+</span></span><span class="line"><span class="cl">RAW       <span class="m">0</span>         <span class="m">0</span>         <span class="m">0</span>
+</span></span><span class="line"><span class="cl">UDP       <span class="m">9</span>         <span class="m">6</span>         <span class="m">3</span>
+</span></span><span class="line"><span class="cl">TCP       <span class="m">116</span>       <span class="m">80</span>        <span class="m">36</span>
+</span></span><span class="line"><span class="cl">INET      <span class="m">125</span>       <span class="m">86</span>        <span class="m">39</span>
+</span></span><span class="line"><span class="cl">FRAG      <span class="m">0</span>         <span class="m">0</span>         <span class="m">0</span>
+</span></span></code></pre></div><p>接着查看内核的 socket 情况：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat /proc/net/sockstat
+</span></span><span class="line"><span class="cl">sockets: used <span class="m">75724</span>
+</span></span><span class="line"><span class="cl">TCP: inuse <span class="m">886</span> orphan <span class="m">0</span> tw <span class="m">0</span> alloc <span class="m">72134</span> mem <span class="m">222</span>
+</span></span><span class="line"><span class="cl">UDP: inuse <span class="m">5</span> mem <span class="m">0</span>
+</span></span><span class="line"><span class="cl">UDPLITE: inuse <span class="m">0</span>
+</span></span><span class="line"><span class="cl">RAW: inuse <span class="m">0</span>
+</span></span><span class="line"><span class="cl">FRAG: inuse <span class="m">0</span> memory <span class="m">0</span>
+</span></span></code></pre></div><p>很多的 socket 处于 <code>alloc</code>, 只有少量的 socket 处于 <code>inuse</code>. 可以确认是 java 应用出现了 socket fd 的泄漏。 但是为什么会有那么多的socket 泄漏呢？</p>
+<h2 id="大胆假设"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 大胆假设</h2>
+<p>现在可以确定的是 java应用出现了问题，导致了socket 泄漏，让 Tomcat 无法建立新连接，最终宕机。既然导致问题出现的是 java 应用，那么就应该去检查应用日志。</p>
+<pre tabindex="0"><code class="language-log" data-lang="log">2018-04-09 17:41:31,491 - [ERROR] - from com.alibaba.druid.pool.DruidDataSource in Druid-ConnectionPool-CreateScheduler--4-thread-214
+create connection error, url: jdbc:mysql://test-server-host:3306/db_name?readOnlyPropagatesToServer=false&amp;rewriteBatchedStatements=true&amp;failOverReadOnly=false&amp;socketTimeout=6000&amp;connectTimeout=20000&amp;zeroDateTimeBehavior=convertToNull&amp;allowMultiQueries=true&amp;characterEncoding=utf-8&amp;autoReconnect=true
+com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+at sun.reflect.GeneratedConstructorAccessor169.newInstance(Unknown Source)
+at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+at com.mysql.jdbc.Util.getInstance(Util.java:408)
+at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:918)
+at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:897)
+at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:886)
+at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:860)
+at com.mysql.jdbc.ConnectionImpl.connectWithRetries(ConnectionImpl.java:2163)
+at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2088)
+at com.mysql.jdbc.ConnectionImpl.&lt;init&gt;(ConnectionImpl.java:806)
+at com.mysql.jdbc.JDBC4Connection.&lt;init&gt;(JDBC4Connection.java:47)
+at sun.reflect.GeneratedConstructorAccessor152.newInstance(Unknown Source)
+at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:410)
+at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:328)
+at com.alibaba.druid.filter.FilterChainImpl.connection_connect(FilterChainImpl.java:148)
+at com.alibaba.druid.filter.stat.StatFilter.connection_connect(StatFilter.java:211)
+at com.alibaba.druid.filter.FilterChainImpl.connection_connect(FilterChainImpl.java:142)
+at com.alibaba.druid.pool.DruidAbstractDataSource.createPhysicalConnection(DruidAbstractDataSource.java:1423)
+at com.alibaba.druid.pool.DruidAbstractDataSource.createPhysicalConnection(DruidAbstractDataSource.java:1477)
+at com.alibaba.druid.pool.DruidDataSource$CreateConnectionTask.runInternal(DruidDataSource.java:1884)
+at com.alibaba.druid.pool.DruidDataSource$CreateConnectionTask.run(DruidDataSource.java:1849)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+at java.lang.Thread.run(Thread.java:745)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+at sun.reflect.GeneratedConstructorAccessor157.newInstance(Unknown Source)
+at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:989)
+at com.mysql.jdbc.MysqlIO.&lt;init&gt;(MysqlIO.java:341)
+at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2251)
+at com.mysql.jdbc.ConnectionImpl.connectWithRetries(ConnectionImpl.java:2104)
+... 21 common frames omitted
+Caused by: java.net.SocketException: Too many open files
+at java.net.Socket.createImpl(Socket.java:460)
+at java.net.Socket.getImpl(Socket.java:520)
+at java.net.Socket.setTcpNoDelay(Socket.java:980)
+at com.mysql.jdbc.StandardSocketFactory.configureSocket(StandardSocketFactory.java:132)
+at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:203)
+at com.mysql.jdbc.MysqlIO.&lt;init&gt;(MysqlIO.java:300)
+... 23 common frames omitted
+
+2018-04-09 17:41:31,568 - [ERROR] - from org.apache.tomcat.util.net.NioEndpoint in http-nio-47001-Acceptor-0
+Socket accept failed
+java.io.IOException: Too many open files
+at sun.nio.ch.ServerSocketChannelImpl.accept0(Native Method)
+at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:422)
+at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:250)
+at org.apache.tomcat.util.net.NioEndpoint$Acceptor.run(NioEndpoint.java:825)
+at java.lang.Thread.run(Thread.java:745)
+
+2018-04-09 17:41:33,168 - [ERROR] - from org.apache.tomcat.util.net.NioEndpoint in http-nio-47001-Acceptor-0
+Socket accept failed
+java.io.IOException: Too many open files
+at sun.nio.ch.ServerSocketChannelImpl.accept0(Native Method)
+at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:422)
+at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:250)
+at org.apache.tomcat.util.net.NioEndpoint$Acceptor.run(NioEndpoint.java:825)
+at java.lang.Thread.run(Thread.java:745)
+
+2018-04-09 17:41:34,470 - [ERROR] - from com.alibaba.druid.pool.DruidDataSource in Druid-ConnectionPool-CreateScheduler--4-thread-216
+create connection error, url: jdbc:mysql://test-server-url:3306/db_name?readOnlyPropagatesToServer=false&amp;rewriteBatchedStatements=true&amp;failOverReadOnly=false&amp;socketTimeout=6000&amp;connectTimeout=20000&amp;zeroDateTimeBehavior=convertToNull&amp;allowMultiQueries=true&amp;characterEncoding=utf-8&amp;autoReconnect=true
+com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+at sun.reflect.GeneratedConstructorAccessor169.newInstance(Unknown Source)
+at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+at com.mysql.jdbc.Util.getInstance(Util.java:408)
+at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:918)
+at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:897)
+at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:886)
+at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:860)
+at com.mysql.jdbc.ConnectionImpl.connectWithRetries(ConnectionImpl.java:2163)
+at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2088)
+at com.mysql.jdbc.ConnectionImpl.&lt;init&gt;(ConnectionImpl.java:806)
+at com.mysql.jdbc.JDBC4Connection.&lt;init&gt;(JDBC4Connection.java:47)
+at sun.reflect.GeneratedConstructorAccessor152.newInstance(Unknown Source)
+at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:410)
+at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:328)
+at com.alibaba.druid.filter.FilterChainImpl.connection_connect(FilterChainImpl.java:148)
+at com.alibaba.druid.filter.stat.StatFilter.connection_connect(StatFilter.java:211)
+at com.alibaba.druid.filter.FilterChainImpl.connection_connect(FilterChainImpl.java:142)
+at com.alibaba.druid.pool.DruidAbstractDataSource.createPhysicalConnection(DruidAbstractDataSource.java:1423)
+at com.alibaba.druid.pool.DruidAbstractDataSource.createPhysicalConnection(DruidAbstractDataSource.java:1477)
+at com.alibaba.druid.pool.DruidDataSource$CreateConnectionTask.runInternal(DruidDataSource.java:1884)
+at com.alibaba.druid.pool.DruidDataSource$CreateConnectionTask.run(DruidDataSource.java:1849)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
+at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+at java.lang.Thread.run(Thread.java:745)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+at sun.reflect.GeneratedConstructorAccessor157.newInstance(Unknown Source)
+at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:989)
+at com.mysql.jdbc.MysqlIO.&lt;init&gt;(MysqlIO.java:341)
+at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2251)
+at com.mysql.jdbc.ConnectionImpl.connectWithRetries(ConnectionImpl.java:2104)
+... 23 common frames omitted
+Caused by: java.net.SocketException: Too many open files
+at java.net.Socket.createImpl(Socket.java:460)
+at java.net.Socket.getImpl(Socket.java:520)
+at java.net.Socket.setTcpNoDelay(Socket.java:980)
+at com.mysql.jdbc.StandardSocketFactory.configureSocket(StandardSocketFactory.java:132)
+at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:203)
+at com.mysql.jdbc.MysqlIO.&lt;init&gt;(MysqlIO.java:300)
+... 25 common frames omitted
+
+2018-04-09 17:41:34,769 - [ERROR] - from org.apache.tomcat.util.net.NioEndpoint in http-nio-47001-Acceptor-0
+Socket accept failed
+java.io.IOException: Too many open files
+at sun.nio.ch.ServerSocketChannelImpl.accept0(Native Method)
+at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:422)
+at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:250)
+at org.apache.tomcat.util.net.NioEndpoint$Acceptor.run(NioEndpoint.java:825)
+at java.lang.Thread.run(Thread.java:745)
+</code></pre><p>检查日志发现，在 Tomcat 彻底挂机之前，曾经有比较大量的数据源连接池出错，无法访问 Mysql, 但是非常奇怪的是，在87 这台机器上面，是可以使用 mysql 命令行连接到测试数据库的，说明 Mysql 的连接是没有问题。</p>
+<p>但是数据源连接就会出错！！ 真的是很奇怪，为什么连接池会报错，有没有可能是这些异常导致 socket 泄漏呢？后来，在本地运行应用，有时候会发现IDE 的控制台报错：</p>
+<pre tabindex="0"><code class="language-log" data-lang="log">2018-04-11 09:43:48,363 - [ERROR] - from com.alibaba.druid.pool.DruidDataSource in poolTaskScheduler-11
+discard connection
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 100,610 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+at sun.reflect.GeneratedConstructorAccessor108.newInstance(Unknown Source)
+at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:989)
+at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3556)
+at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3456)
+at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3897)
+at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2524)
+at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2677)
+at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2503)
+at com.mysql.jdbc.StatementImpl.executeQuery(StatementImpl.java:1369)
+at com.alibaba.druid.filter.FilterChainImpl.statement_executeQuery(FilterChainImpl.java:2363)
+at com.alibaba.druid.filter.FilterAdapter.statement_executeQuery(FilterAdapter.java:2481)
+at com.alibaba.druid.filter.FilterEventAdapter.statement_executeQuery(FilterEventAdapter.java:302)
+at com.alibaba.druid.filter.FilterChainImpl.statement_executeQuery(FilterChainImpl.java:2360)
+at com.alibaba.druid.proxy.jdbc.StatementProxyImpl.executeQuery(StatementProxyImpl.java:211)
+at com.alibaba.druid.pool.DruidPooledStatement.executeQuery(DruidPooledStatement.java:138)
+at com.taobao.tddl.atom.jdbc.TStatementWrapper.executeQuery(TStatementWrapper.java:315)
+at com.taobao.tddl.group.jdbc.TGroupStatement.executeQueryOnConnection(TGroupStatement.java:549)
+at com.taobao.tddl.group.jdbc.TGroupStatement$4.tryOnDataSource(TGroupStatement.java:633)
+at com.taobao.tddl.group.jdbc.TGroupStatement$4.tryOnDataSource(TGroupStatement.java:615)
+at com.taobao.tddl.group.dbselector.AbstractDBSelector.tryOnDataSourceHolder(AbstractDBSelector.java:155)
+at com.taobao.tddl.group.dbselector.OneDBSelector.tryExecuteInternal(OneDBSelector.java:52)
+at com.taobao.tddl.group.dbselector.AbstractDBSelector.tryExecute(AbstractDBSelector.java:405)
+at com.taobao.tddl.group.dbselector.AbstractDBSelector.tryExecute(AbstractDBSelector.java:412)
+at com.taobao.tddl.group.jdbc.TGroupStatement.executeQuery(TGroupStatement.java:488)
+at com.taobao.tddl.group.jdbc.TGroupStatement.executeInternal(TGroupStatement.java:131)
+at com.taobao.tddl.group.jdbc.TGroupStatement.execute(TGroupStatement.java:101)
+at com.taobao.tddl.repo.mysql.spi.My_JdbcHandler.executeQuery(My_JdbcHandler.java:521)
+at com.taobao.tddl.repo.mysql.spi.My_Cursor.init(My_Cursor.java:106)
+at com.taobao.tddl.repo.mysql.handler.QueryMyHandler.handle(QueryMyHandler.java:89)
+at com.taobao.tddl.executor.AbstractGroupExecutor.executeInner(AbstractGroupExecutor.java:47)
+at com.taobao.tddl.executor.AbstractGroupExecutor.execByExecPlanNode(AbstractGroupExecutor.java:36)
+at com.taobao.tddl.executor.TopologyExecutor.execByExecPlanNode(TopologyExecutor.java:66)
+at com.taobao.tddl.executor.MatrixExecutor.execByExecPlanNodeByOne(MatrixExecutor.java:670)
+at com.taobao.tddl.executor.MatrixExecutor.execByExecPlanNode(MatrixExecutor.java:659)
+at com.taobao.tddl.executor.MatrixExecutor.execute(MatrixExecutor.java:137)
+at com.taobao.tddl.matrix.jdbc.TConnection.executeSQL(TConnection.java:241)
+at com.taobao.tddl.matrix.jdbc.TPreparedStatement.executeSQL(TPreparedStatement.java:64)
+at com.taobao.tddl.matrix.jdbc.TStatement.executeInternal(TStatement.java:133)
+at com.taobao.tddl.matrix.jdbc.TPreparedStatement.execute(TPreparedStatement.java:49)
+at sun.reflect.GeneratedMethodAccessor148.invoke(Unknown Source)
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.lang.reflect.Method.invoke(Method.java:498)
+at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:59)
+at com.sun.proxy.$Proxy102.execute(Unknown Source)
+at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:63)
+at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:79)
+at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:63)
+at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:325)
+at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:156)
+at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:109)
+at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:83)
+at sun.reflect.GeneratedMethodAccessor146.invoke(Unknown Source)
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.lang.reflect.Method.invoke(Method.java:498)
+at org.apache.ibatis.plugin.Invocation.proceed(Invocation.java:49)
+at fastfish.interceptor.DbLogInterceptor.intercept(DbLogInterceptor.java:49)
+at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:61)
+at com.sun.proxy.$Proxy100.query(Unknown Source)
+at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:148)
+at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:141)
+at sun.reflect.GeneratedMethodAccessor145.invoke(Unknown Source)
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.lang.reflect.Method.invoke(Method.java:498)
+at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:434)
+at com.sun.proxy.$Proxy87.selectList(Unknown Source)
+at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:231)
+at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:128)
+at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:68)
+at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:53)
+at com.sun.proxy.$Proxy124.selectAll(Unknown Source)
+at fastfish.services.BusinessService.getAll(BusinessService.java:73)
+at fastfish.services.BusinessService.loadDB(BusinessService.java:38)
+at sun.reflect.GeneratedMethodAccessor190.invoke(Unknown Source)
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.lang.reflect.Method.invoke(Method.java:498)
+at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:65)
+at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+at java.util.concurrent.FutureTask.runAndReset$$$capture(FutureTask.java:308)
+at java.util.concurrent.FutureTask.runAndReset(FutureTask.java)
+at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3008)
+at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3466)
+... 83 common frames omitted
+</code></pre><p>是数据池连接出错。但是我本地的应用确实是可以访问测试数据库的， 比较有趣的异常就是</p>
+<pre tabindex="0"><code class="language-log" data-lang="log">Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+</code></pre><p>数据还没有读完， Connection 就丢了。为什么会 lost connection 呢，可能数据库出问题，也可能是网络出了问题。</p>
+<p>我还能从数据库读到数据，说明数据库没问题的，兼之这个异常只是偶尔出现，所以可能就是网络出问题了。</p>
+<p>如此说来，是否可能是因为测试环境网络不稳定，连接池无法和 Mysql 保持连接，在丢掉 Connection 之后，连接池重新发起连接，但是因为网络不稳定又丢掉了Connection, 不断循环这个过程，导致建立的 socket 连接越 来越多，但是建立的 socket 很快就被Close 掉了，内核又没有把这些 Close 掉的 socket 资源回收掉，因此打开的 socket 文件越来越多，最后导致 Tomcat 因为打开的文件过多无法建立新的 socket 连接。</p>
+<h2 id="小心求证"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> 小心求证</h2>
+<p>如果连接池真的不断尝试连接Mysql 的话，必定会建立很多的连接，而Mysql 是会将这些记录保存下来的，检查Mysql 的变量：</p>
+<figure>
+    <img loading="lazy" src="https://imgur.com/gAxepYH.png"/> 
+</figure>
+
+<p>查看Mysql 的文档关于 <code>Connection</code> 和 <code>Thread_connected</code> 的说明：</p>
+<ul>
+<li>
+<p>Connections</p>
+<blockquote>
+<p>The number of connection attempts (successful or not) to the MySQL server.</p>
+</blockquote>
+</li>
+<li>
+<p>Threads_connected</p>
+<blockquote>
+<p>The number of currently open connections.</p>
+</blockquote>
+</li>
+</ul>
+<p>也就是说，当时共有20000 多的连接请求，但是真正被 Mysql accpet 并且服务的只有 28 个连接。看来的确是因为连接池的连接导致 socket 泄漏</p>
+<h3 id="更新"><!-- raw HTML omitted -->6.1<!-- raw HTML omitted --> 更新</h3>
+<p>和运维同学沟通之后，发现丢连接的原因不是网络不稳定，而是测试集群都是虚拟机，内存 用光，导致无法建立新的连接，内核释放一部分资源之后又可以建立连接了。内存用完，我能怎么办，我也很无奈。</p>
+<h2 id="解决方法"><!-- raw HTML omitted -->7<!-- raw HTML omitted --> 解决方法</h2>
+<p>虽说基本确定了 socket 泄漏的源头，但是对于内核为什么无法回收已经关闭 socket 的原因依然不明确。</p>
+<p>最令人百思不得其解的是，部署了应用的测试服务器有两台，另外一 台服务器也有同样的连接池问题，但是却没有出现 socket 泄漏问题， 出现泄漏的只有 87 这台机器。真的令人费解. 所以最后解决方法就是撤下 87 服务器的应用，换一台服务器来部署。</p>
+<p>新的服务器部署应用之后虽说也有同样的数据库连接池异常，但是却没有出现 socket 泄漏，初步定位是 87这台机器的内核环境存在问题。</p>
+<h2 id="参考"><!-- raw HTML omitted -->8<!-- raw HTML omitted --> 参考</h2>
+<ul>
+<li><a href="http://mdba.cn/2015/03/10/tcp-socket%E6%96%87%E4%BB%B6%E5%8F%A5%E6%9F%84%E6%B3%84%E6%BC%8F/">tcp-socket文件句柄泄漏/</a></li>
+<li><a href="https://idea.popcount.org/2012-12-09-lsof-cant-identify-protocol/">lsof-cant-identify-protocol/</a></li>
+</ul>
+]]></content:encoded>
     </item>
     
     <item>
@@ -28,6 +421,88 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2017/linux_file_system/</guid>
       <description>an discussion about linux file system</description>
+      <content:encoded><![CDATA[<p>不久前，Apple 的文件系统 (Apple File System) 新推出，然后各方便一起挤身向前对APFS &ldquo;评头品足&rdquo;,我是不了解 APFS ,所以也没有什么发言权嘛，不过话分两头；</p>
+<p>对Linux的文件系统，我还是有了解过的，所以可以聊聊Linux 的文件系统；与Windows 和Apple 两家商业公司不同，Linux 是开源的，因此，只要你有足够的时间和能力，你就可以自己写一个文件系统，这个也是Linux 文件系统众多的主要原因。</p>
+<p>那么有众多的Linux 文件系统，它们的差异,优缺点又是什么呢？</p>
+<h2 id="file-system"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> File System</h2>
+<p>在开始 &ldquo;大话&rdquo; 各种文件系统的时候，我先想谈谈什么是文件系统。</p>
+<p>一般用户平时都会有上百G 的数据，那么多的数据，应该怎么保存呢？</p>
+<p>不知道怎么回答，可以先类比一下，想象一下你有很多书，你会怎么放置你的书籍呢？直接丢在客厅中间？或者是按书内容分类 放到书架上？如果分类的话，是按怎么划分呢？你买回来的书架一次可以放置多少书籍呢？怎么才能更快地找到你要找的书呢？</p>
+<p>其实文件系统处理，检索文件和你放置，查找书籍是类似的！此外,在Windows 下常见到的格式化，其实就是在不同的文件系统之间切换，那么为什么数据会丢失呢？</p>
+<p>你可以类比成你家里装修，想换新的书架，但是如果不把原来书架上的书籍搬出准备装修的屋子，装修时肯定会损坏书籍嘛！</p>
+<h2 id="journaling"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Journaling</h2>
+<p>在比较文件系统之前，先聊聊文件系统中的日志 (Journaling), 而有些文件系统是有日志功能的，而有些是没有日志功能的；</p>
+<p>为了了解它们之间的差异，就需要先了解一下什么是日志。日志的出现本质而言都是为了更好地保存数据。</p>
+<p>假设你正在向磁盘里写入文件，突然间断电了，但是你的文件是没有完成写入磁盘的，而你的电脑是不知道是否已经完成写入，所以下次重新来电启动电脑的时候，是没有“人”告知电脑是否要重新写数据的？这样数据就丢失了。</p>
+<p>能不能在文件还没有完成写回磁盘又中途出现错误的时候，告诉系统你的 目标文件还有数据没有写回磁盘，你要记得完成这项工作阿？</p>
+<p>当然可以，这就是文件系统中日志的功能，在日志的协助下，你的电脑会在日志中记着，“我要把某某文件写入到磁盘”，如果顺利完成写入磁盘工作，日志的这项记录就会被删除，如果中途出现异常，例 如断电了，重新启动的时候，你的系统就会发现，我要写入某某文件的工作还没完成，它就会继续未了的事业，这样就可以保障数据不会丢失。</p>
+<p>(而你日常工作生活中，数据的丢失是因为你没有保存数据，即没有把数据写入到磁盘). 如图：</p>
+<figure>
+    <img loading="lazy" src="https://www.howtogeek.com/wp-content/uploads/2017/02/img_58af43716360e.png%20"/> 
+</figure>
+
+<p>因为写入日志需要额外的工作，所以需要额外的资源，但是这样的消耗是相当值得地。</p>
+<h2 id="comparison"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Comparison</h2>
+<p>下面对比一下 各种文件系统的特性</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/comparison_file_system.png"
+         alt="Figure 1: 图来自archwiki"/> <figcaption>
+            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->图来自archwiki</p>
+        </figcaption>
+</figure>
+
+<p>如果你想了解你的Linux 内核所支持的文件系统，你可以</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">cat /proc/filesystems
+</span></span></code></pre></div><p>现在就来比较一下各种常见的Linux文件系统</p>
+<h3 id="ext"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> Ext</h3>
+<p>Ext 是指&quot;Extended file system(扩展文件系统)&quot;,应该算是Linux 文件系统里面的老大爷了，它是从经典的 Minix 的文件系统衍生过来的，为Linux 专门设计的，但是它缺乏很多重要的特性，比如上面提到的日志功能，所以大部份的Linux 发行版本都是不支持 Ext 了</p>
+<h3 id="ext2"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> Ext2</h3>
+<p>Ext2 也是不支持日志的，但是它是第一个支持扩展文件属性和2T 容量的Linux 文件系统，但是正由于Ext2 不支持日志功能，它可以更少地写磁盘，所以它适合像USB 这种闪存，但是Ext2 无法被Windows 识别的，所以它的闪存功能更多地被FAT32和exFAT所代替，换言之，Ext2 用的也不多</p>
+<h3 id="ext3"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> Ext3</h3>
+<p>Ext3 就是Ext2 带有日志功能的扩展，并且Ext3 也向后兼容Ext2,所以你在Ext2 和Ext3 之间切换也是不需要重新格式化滴，但是最常用的还不是Ext3,而是Ext4 :)</p>
+<h3 id="ext4"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> Ext4</h3>
+<p>Ext4 也是向后兼容 Ext3 和Ext2 的，所以你是可以在Ext4,Ext3,Ext2 之间切换而无需格式化文件系统。</p>
+<p>Ext4 包含很多新的特性，例如支持存储更大的文件，支持延迟分配以 改进对闪存的支持，还能有效地减少文件的碎片化，提高利用效率。</p>
+<p>显而易见，Ext4 是最先进的 Ext 系列的文件系统，也是大部分Linux 发行版本的默认文件系统</p>
+<h3 id="zfs"><!-- raw HTML omitted -->3.5<!-- raw HTML omitted --> ZFS</h3>
+<p>ZFS 最初是给Sun 的Solaris 设计的，Sun 被收购后，现在是属于Oracle 的，ZFS 支持 大量非常先进的特性，比如说 快照 (snapshot),动态存储 (dynamic disk striping), 驱动池等 (drive pool);</p>
+<p>此外ZFS 文件的每个文件都是有校验和的，所以通过检查校验和，就能确定文件的完整性。但是，虽说ZFS 非常强大，却因为ZFS license 的缘故， ZFS 无法添加到 Linux 内核的。如果你非常想要尝试ZFS 的话，你可以自行添加对Linux 发行版本上面添加ZFS 的支持</p>
+<h3 id="brtfs"><!-- raw HTML omitted -->3.6<!-- raw HTML omitted --> BrtFS</h3>
+<p>Brtfs 是由Oracle 设计的一个支持写时复制 (copy on write) 的现代文件系统;</p>
+<p>而Btrfs 的意思是 B 树文件系统 (B-Tree File System),它支持大量非常先进的特性，例如 动态inode 分配，数据校验和，有效的增量备份，驱动池，最大支持 2^64 byte 容量即16 Eib 大的文件。</p>
+<p>BtrFS 是被设计成取代Ext 系列的文件系统的，只不过因为现在的BtrFS 还没有足够成熟，所以还没有大公司在生产环境使用 BtrFS,但是BtrFS 的未来可期</p>
+<h3 id="jfs"><!-- raw HTML omitted -->3.7<!-- raw HTML omitted --> JFS</h3>
+<p>JFS 是IBM 为IBM 自家的AIX 操作系统设计的日志文件系统 (Journaled File System), 后来迁移到了Linux 系统上 (HP-UX 也有一个叫做JFS 的文件系统).</p>
+<p>在AIX 系统上是存在过两代的JFS文件系统的，分别是 JFS1和JFS2,而Linux 上就只有JFS2了(Linux 上的JFS都是指JFS2)。</p>
+<p>JFS 无论在处理大文件还是小文件都有非常不错的表现，并且CPU 占用也是比较低的；JFS 也是支持非常多的特性的，例如 B+ 树，动态Inode 分配，并发IO等。</p>
+<p>JFS 也是一个设计优秀的文件系统并且支持大部分的Linux 发行版本，但是因为它最初是为AIX 设计，所以在处于生产环境上的Linux服务器的测试就不如Ext :(.</p>
+<h3 id="reiserfs"><!-- raw HTML omitted -->3.8<!-- raw HTML omitted --> ReiserFS</h3>
+<p>ReiserFs 是第一个被引进Linux 标准内核的日志文件系统(在内核版本为2.4.1的时候引进),也是Linux 文件系统的一次飞跃，那时的ReiserFS 包含了很多Ext 没有的新特性。</p>
+<p>虽说 ReiserFS 在Linux 有一个非常华丽的开头，但是后来ReiserFS 的开发就陷入了停滞，因为ReiserFS 的核心开发者Hans Reiser(ReiserFS 名字的来由)因为谋杀妻子而被收监 :(。</p>
+<p>而后来的ReiserFS 也没有出现在主要的Linux 内核版本里面，虽说ReiserFS是非常好的文件系统，但是它前景如何，我们也只能拭目以待了</p>
+<h3 id="xfs"><!-- raw HTML omitted -->3.9<!-- raw HTML omitted --> XFS</h3>
+<p>XFS 最初是Silicon Graphics 为SGI IRX 操作系统设计的64位高性能文件系统，在2001 年迁移到了Linux.</p>
+<p>得益于XFS 基于 allocation groups 的设计，XFS 拥有非常优秀的并行IO 能力，并支持延迟分配 (delayed allocation) 以改进文件碎片化，在某种程度上，XFS 和Ext 有一定的相似；</p>
+<p>此外，虽说XFS 是高性能的文件系统，但是那只是针对大文件而言的，对于小文件XFS 就有点力所不能及 (当然，这是相对而言).</p>
+<p>所以如果是需要 经常处理大文件的服务器，XFS 会是一个很好的选择</p>
+<h2 id="小结"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 小结</h2>
+<p>如果将Linux 的文件系统进行分类的话，还可以分成 FUSE (Filesystem in Userspace,
+让用户在没有权限的情况下，创建自己的文件系统), Stackable file System (先进的多层次统一文件系统), Read-only file systems (只读文件系统), Clustered file systems
+(集群文件系统)等等。</p>
+<p>Linux 的文件系统还有很多，每一种都有自己的特点；但是如果你想问：&ldquo;Linux 最好的文件系统是什么？&quot;;这个问题就跟 &ldquo;最好的Linux 发行版本是什么？&rdquo;, &ldquo;最好的文本编辑器是什么？&rdquo; 一样，是没有标准答案，一千个人都有一千个哈姆雷特了，你的哈姆雷特是什么样子，只有你自己清楚。</p>
+<p>不同的文件系统对应不同的场景，只有针对特定场景的最优解决方案！如果还不知道怎么选择，那就选择Ext4 吧，无法做出选 择时，默认的就是最好 :)</p>
+<h2 id="参考"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 参考</h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/File_system">https://en.wikipedia.org/wiki/File_system</a></li>
+<li><a href="https://btrfs.wiki.kernel.org/index.php/Main_Page">https://btrfs.wiki.kernel.org/index.php/Main_Page</a></li>
+<li><a href="https://en.wikipedia.org/wiki/JFS_(file_system)">https://en.wikipedia.org/wiki/JFS_(file_system)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/ReiserFS">https://en.wikipedia.org/wiki/ReiserFS</a></li>
+<li><a href="https://www.howtogeek.com/howto/33552/htg-explains-which-linux-file-system-should-you-choose/">https://www.howtogeek.com/howto/33552/htg-explains-which-linux-file-system-should-you-choose/</a></li>
+<li><a href="https://en.wikipedia.org/wiki/ZFS">https://en.wikipedia.org/wiki/ZFS</a></li>
+<li><a href="https://en.wikipedia.org/wiki/XFS">https://en.wikipedia.org/wiki/XFS</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/file_systems">https://wiki.archlinux.org/index.php/file_systems</a></li>
+</ul>
+]]></content:encoded>
     </item>
     
     <item>
@@ -37,6 +512,131 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2017/about_tool_about_tweak/</guid>
       <description>An discussion about tool and tweak</description>
+      <content:encoded><![CDATA[<p>笔者最近一直在思考，关于工具，关于折腾，关于其中的付出与收获</p>
+<h2 id="乐趣"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 乐趣</h2>
+<h3 id="linux"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> Linux</h3>
+<p>回顾笔者大学，从大一开始就是一个不停折腾的过程，在其他的同学还在用Windows玩游戏的时候，笔者已经把系统换成Linux了.</p>
+<p>记得最开始装的第一个发行版本是 <a href="https://www.kali.org/">Kali Linux</a>一个黑客和安全专家使用的发行版本，上面有不计其数的渗透工具；毕竟每一个学 计算机的孩子心中都是有个 hacker dream的嘛，笔者也不例外:)。</p>
+<p>只是笔者最开始并没有能力去使用Kali Linux; 甚至连基本的命令都完全不了解；笔者相当沮丧，因为 hacker并不是想象中的那么容易的. 笔者后来就把自己的系统重装，装了个<a href="https://www.ubuntu.com/global"> Ubuntu</a>, 买 了一本《鸟哥的Linux私房菜》，一边学，一边用，就这样进了Linux的坑了。</p>
+<p>《鸟哥的私房菜》大概看了两年，翻过好几次了，后来也看了《服务器篇》，前后共看了近十本Linux的书籍吧，整个大学大概在自己电脑上前后装了10种的发行版本吧</p>
+<h3 id="vim-emacs"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> Vim/Emacs</h3>
+<p>《鸟哥Linux私房菜》一书中，鸟哥强推Vim, 其他的Linux论坛也对 Vim 推崇备至，笔者 很自然就随大流去学习Vim了，开始的时候，真的非常不习惯，编辑个文本还要分那么多 的模式，真的是反人类，连个单词都不能输入.</p>
+<p>后来，好不容易输完数据之后，又不知道怎么保存 (Ctrl-S? 想多了), 然后直接关闭，重新打开又有什么提示说是否恢复数据。 觉得为何有这样异类难用的编辑器, 真不知道为什么那么多人推崇。</p>
+<p>但当笔者坚持这种煎熬半个月以后，就发现其他的编辑器都非常低效，没错，就是非常低效，又要鼠标， 又要键盘，不断地切换，效率实在太低了。</p>
+<p>就这样，笔者糊里糊涂就进入了Vim的阵营，直到遇到 <a href="https://book.douban.com/subject/25869486/">Vim实用技巧 </a>这本神书，它跟你讲述了如何实现 Vim &ldquo;Edit Text at the speed of thought&rdquo; 的理念，的确是神书. 自然，笔者对Vim就更 &ldquo;坚贞不渝&rdquo; 了；</p>
+<hr>
+<p>直到有一天，在浏览Linux/Unix历史的时候掀开了 Editor War(Vim与Emacs之战)一章， 那些 Emacser 竟敢宣称 Emacs 比 Vim 好用，笔者对此并不服气，不相信有比Vim强的编辑器，这可是编辑器之神阿，而笔者是一个很实在的人，没用过 Emacs 是不会随便发
+言的，所以就跑去折腾Emacs ,打算折腾回来再跟 Emacser 论道，结果嘛，笔者就 &ldquo;叛
+逃&rdquo; 到了 Emacs 了 :)。</p>
+<p>作为一个曾经的 Vim 粉丝，笔者就抛开 &ldquo;宗教因素&rdquo; 比较一下 Vim 跟 Emacs:</p>
+<ul>
+<li>Vim的 modal edit 是最好的，真的难有敌手，所以这也是为什么在各种的 IDE/editor 都有 Vim 插件的原因；</li>
+<li>但 Emacs 的扩展性也是无可匹敌 (毕竟是伪 装成编辑器的操作系统，只缺一个好用的编辑器)，又因为 Emacs lisp这种真正的编程 语言(对比之下 viml真的很弱)的存在, Emacs 就有了无限可能，这也是 Emacs 上面有非常多高质量的插件的原因之一，其中最典型的例子就是 Org-mode ,无愧神器之名，笔者现在的博文也是在 Emacs 里面利用 Org-mode 编写，然后发布的。</li>
+</ul>
+<p>而至于选择神之编辑器还是编辑器之神，那就是信仰的抉择了。笔者选择了在 Emacs 里面使用 Vim 的编
+辑模式 Evil :)</p>
+<h3 id="misc"><!-- raw HTML omitted -->1.3<!-- raw HTML omitted --> Misc</h3>
+<p>除了折腾编辑器之外，笔者还折腾了各种的命令行，Shell 脚本，还有 Firefox, Chrome浏览器。当初那些 Windows 用户一直说 Linux 的桌面丑，笔者就去了折腾各种 的桌面环境 (window manager)这种折腾可不是 Windows 上面的切换壁纸哦，后来把桌 面折腾得非常炫，以至同学看到笔者的电脑就说我装了黑苹果，然而事实并非如此。</p>
+<p>如果你也好奇那些炫酷的 Linux/Unix 桌面，可以查看 <a href="https://reddit.com/r/unixporn">https://reddit.com/r/unixporn</a> 上面有各种 Linuxer/Unixer 分享的炫酷桌面</p>
+<h2 id="投入产出比"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 投入产出比</h2>
+<h3 id="值得否"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 值得否？</h3>
+<p>笔者的大学基本都是在学习并折腾各种的工具或者技术，并且乐在其中.</p>
+<p>但是有一天当笔 者又在跟朋友推荐 Vim/Emacs, 或许是笔者喋喋不休实在太多次了，朋友回了笔者一句 &quot; notepad++, sublime text 不一样可以写代码，你为什么还要花那么多时间去折腾这些东西呢，你写脚本都可以直接用IDE,为什么还要自己折腾呢，把时间花到其他地方不更好么？&quot;.</p>
+<p>笔者难以反驳，笔者之前一直是玩得很开心，从未曾考虑过这个问题，所以那个时候开始询问自己，这是否值得，自己是否要把时间用到其他地方？</p>
+<p>在之后的一段 时间，笔者都难掩沮丧，因为觉得自己浪费了很多的时间来完成一些无用功！</p>
+<h3 id="长期投资"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 长期投资</h3>
+<p>但是最终笔者还是解答了自己的疑问! 笔者之前付出是绝对值得的，先不说笔者在其中获得的乐趣，乐趣是无价的嘛 :)</p>
+<p>笔者在折腾的过程中也学到很多新的东西: 为了用好我配置的 Emacs, 笔者使用 Emacs 写了很多不同的脚本，这种感觉就好像，侠士为了展示手中利刃之威力，苦练武艺; 而在折腾 Emacs lisp 的过程中，也学习很多函数式编程的思想，甚至掌握了一门新的语言 &ndash; elisp, 虽说它的语法很奇怪。</p>
+<p>其实笔者的付出是长期投资，学会了 Vim 的 moral edit, 也可以在其他 IDE使用嘛，这并不矛盾的，无鼠标操作是非常高效的，也是所谓的 modern editor 无法比拟的。</p>
+<p>最重要的是，在折腾过程中所培养的解决困难的动手能力，也是可以受益终生的，笔者知道如何去google，如何去查找文档，如何去提问; 而且在不停的折腾过程中，你对某样技术的理解是单纯的理论学习无法比拟的；</p>
+<p>在大学的操作系统课，笔者基本是没听老师讲解课程的，因为老师讲的，笔者基本都知道，甚至实践过。</p>
+<h2 id="工具集"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 工具集</h2>
+<p>在经历大学的折腾后，笔者现在很多的工具集都基本确定下来了；这些也是对笔者而言，
+最高效的工具集</p>
+<h3 id="编辑器"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 编辑器</h3>
+<ul>
+<li>Emacs 神之编辑器，主力编辑器 <a href="https://github.com/samrayleung/emacs.d">个人配置</a></li>
+<li>Vim 编辑器之神，一般在服务器改改配置的时候用</li>
+</ul>
+<h3 id="浏览器"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> 浏览器</h3>
+<ul>
+<li>Chrome 不常用，特定情况下使用</li>
+<li>Firefox 日常浏览器，笔者也折腾过非常久，所以即使 Chrome 很强，笔者只为
+Firefox 倾心</li>
+</ul>
+<h3 id="firefox扩展"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> FireFox扩展</h3>
+<p>因为 FireFox 对插件的限制相对宽松，所以社区开发出了非常多非常强的插件，笔者就
+列举一下自己使用的扩展集吧</p>
+<ul>
+<li>bitwarden -免费的密码管理器，比LastPass强</li>
+<li>Bluhell Firewall-轻量级的广告拦截器，和隐私保护</li>
+<li>Clear Cache -更方便清除缓存</li>
+<li>FalshGot -下载扩展器，配合axel或者aria2使用更佳</li>
+<li>FoxyProxy -类似Chrome SwitchOmega,但是略有不如，配合Shadowsocks翻墙，必备</li>
+<li>Ghostery -隐私保护</li>
+<li>Greasemonkey -用户自定义插件管理器，神器</li>
+<li>HttpRequester -类似Chrome Postman,发送Http请求</li>
+<li>HTTPtoHTTPS -尽可能使用Https,提高安全性</li>
+<li>KeySnail -把Firefox快捷键设置为Emacs快捷键，无鼠标操作，你也可以为该插件编
+写插件.神器，这个是我无法切换回Chrome的原因</li>
+<li>Octotree -以树状目录来浏览Github代码，非常方便</li>
+<li>uBlock Origin -广告blocker,低资源要求，感觉比Adblock plus好用</li>
+<li>User Agent Switcher -切换User Agent,写爬虫时非常有用</li>
+<li>Xpath checker -直接获取Dom节点的Xpath,配合Lxml解析网页非常高效</li>
+<li>Firebug -神器，但是已经停止开发了。</li>
+</ul>
+<h3 id="桌面"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> 桌面</h3>
+<p>i3wm, 在折腾过炫酷的 KDE, Gnome, xfce, 而笔者最后选择的是 i3这个平铺桌面，可
+以实现无鼠标操作，非常轻量。</p>
+<h3 id="命令行"><!-- raw HTML omitted -->3.5<!-- raw HTML omitted --> 命令行</h3>
+<h4 id="shell"><!-- raw HTML omitted -->3.5.1<!-- raw HTML omitted --> Shell</h4>
+<ul>
+<li>zsh -配合oh-my-zsh,可以非常高效，但是使用频率不高</li>
+<li>Eshell -与Emacs集成，是笔者的主力Shell,不过某些Eshell不支持的操作，只好在
+zsh完成</li>
+</ul>
+<h4 id="过滤器"><!-- raw HTML omitted -->3.5.2<!-- raw HTML omitted --> 过滤器</h4>
+<ul>
+<li><a href="https://github.com/ggreer/the_silver_searcher">ag</a>   grep的加强版，速度快</li>
+<li><a href="https://github.com/BurntSushi/ripgrep">ripgrep </a>最快的命令搜索工具</li>
+<li><a href="https://github.com/mooz/percol">percol</a> 过滤文本，神器</li>
+<li><a href="https://github.com/clvv/fasd">fasd</a> 目录跳转，文件查找，高效</li>
+</ul>
+<h4 id="misc"><!-- raw HTML omitted -->3.5.3<!-- raw HTML omitted --> misc</h4>
+<ul>
+<li><a href="https://github.com/jakubroztocil/httpie">httpie</a> http客户端，发送http请求</li>
+<li>htop top的改进版，信息更详细</li>
+<li><a href="https://github.com/nicolargo/glances">glances</a> 一个好用的系统监控工具</li>
+<li>ncdu Linux最好用的磁盘分析工具</li>
+<li>git Linus又一神作</li>
+</ul>
+<p>其它就是常用的内置命令了</p>
+<h3 id="影音"><!-- raw HTML omitted -->3.6<!-- raw HTML omitted --> 影音</h3>
+<ul>
+<li>VLC Linux最好用的播放器</li>
+<li>网易云音乐 国产良心音乐软件</li>
+<li><a href="https://github.com/darknessomi/musicbox">musicbox</a> 网易云音乐的社区命令行版本</li>
+</ul>
+<h3 id="其它"><!-- raw HTML omitted -->3.7<!-- raw HTML omitted --> 其它</h3>
+<ul>
+<li>Fcitx -中文输入</li>
+<li>VirtualBox -开源虚拟机</li>
+<li>Shadowsocks 翻墙必备</li>
+<li>Zeal 类似Mac 上的Dash,查看各种文档</li>
+<li>Intellij Idea Java IDE(写Java 我是不会使用Emacs 的:) )</li>
+<li>Datagrip SQL IDE</li>
+</ul>
+<p>使用最频繁的就是 I3+Firefox+Emacs,实现无鼠标操作，因为使用鼠标太慢了，效率太
+低。笔者也不是一个疯子，所以只会用Emacs 做力所能及的事情，煮咖啡就算了。</p>
+<h2 id="结语"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 结语</h2>
+<p>如果让笔者的大学重来一遍，估计笔者还是会这样折腾，因为自己动手的感觉还是很美好，充满成就感，这也是玩游戏所不能给予我的感觉，毕竟 <strong>hacker</strong> 不是想出来的嘛，是做出来的。</p>
+<hr>
+<p>更新 2017-4-21</p>
+<p>附上一篇关于折腾的文章 (需翻墙) <a href="https://program-think.blogspot.com/2017/04/The-Importance-of-Zheteng.html">The importance of ZheTeng</a></p>
+<ul>
+<li>Enjoy tweaking;Enjoy Linux :)</li>
+</ul>
+]]></content:encoded>
     </item>
     
     <item>
@@ -46,6 +646,317 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2017/grep/</guid>
       <description>an introduction about grep</description>
+      <content:encoded><![CDATA[<p>文本三剑客之 Grep</p>
+<blockquote>
+<p>grep - print  lines matching a pattern</p>
+</blockquote>
+<p>今天我想聊聊 <strong>grep</strong> 这个命令；据说，有Unix/Linux 的地方就会有 <strong>grep</strong>, 这个可能是安装得最广泛的命令之一；那么 <strong>grep</strong> 是用来干什么的呢？</p>
+<p>grep 其实是用来在文件中搜索特定内容或者模式的工具(配合正则表达式“食用”，味道更佳 :))现在就来一起看看<strong>grep</strong> 的用法</p>
+<h2 id="基本用法"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 基本用法</h2>
+<h3 id="基础用法"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> 基础用法</h3>
+<p>现在假设有一个简单的文本文件(双城记开头)tinytale.txt,内容如下</p>
+<blockquote>
+<p>it was the best of times it was the worst of times
+it was the age of wisdom it was age of foolishness
+it was the epoch of belief it was the epoch of incredulity
+it was the season of light it was the season of darkness
+IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE</p>
+</blockquote>
+<p>现在开始介绍 <strong>grep</strong> 的基本用法： <strong>grep</strong> 的基本用法很简单的，假设我想要搜索单词 <strong>darkness</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grep darkness /tmp/tinytale.txt
+</span></span></code></pre></div><p>输出如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">it was the season of light it was the season of darkness
+</span></span></code></pre></div><h3 id="结合正则表达式"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> 结合正则表达式</h3>
+<p>默认情况下， <strong>grep</strong> 是开启正则表达式的模式的，所以你可以直接在文件搜索中使用
+正则表达式。现在在文件中搜索以字母 <strong>e</strong> 开头后接三个字符，然后以 <strong>h</strong> 结尾的单词：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grep <span class="s2">&#34;e...h&#34;</span> /tmp/tinytale.txt
+</span></span></code></pre></div><p>输出如下：</p>
+<blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">it was the epoch of belief it was the epoch of incredulity
+</span></span></code></pre></div></blockquote>
+<p>可以看到，正则表达式匹配了 <strong>epoch</strong> 这个单词。正则表达式的威力无与伦比的，把 <strong>grep</strong>和正则表达式结合起来可以更好地发挥 <strong>grep</strong> 这个工具的潜力；而本文主要是介绍 <strong>grep</strong>, 更多有关正则表达式的用法不细讲了</p>
+<h3 id="统计出现的次数"><!-- raw HTML omitted -->1.3<!-- raw HTML omitted --> 统计出现的次数</h3>
+<p>有时，如果你需要统计某种模式或者某个单词出现的个数，你会发现 <strong>grep</strong> 非常有用；</p>
+<p>要实现该功能，只需给 <strong>grep</strong> 添加 <strong>-c</strong> 参数；例如统计单词 <strong>the</strong> 出现的个数：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grep -c the /tmp/tinytale.txt
+</span></span></code></pre></div><p>结果输出如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">4
+</span></span></code></pre></div><p>文本中包含4个 <strong>the</strong></p>
+<h3 id="忽略大小写"><!-- raw HTML omitted -->1.4<!-- raw HTML omitted --> 忽略大小写</h3>
+<p>前面提到， <strong>grep</strong> 默认是使用正则表达式来搜索文件的，所以 <strong>grep</strong> 是区分大小写的；</p>
+<p>如果你想修改 <strong>grep</strong> 的默认行为来忽略大小写，你可以添加 <strong>-i</strong> 参数</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grep -i the /tmp/tinytale.txt
+</span></span></code></pre></div><p>输出结果如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">it was the best of times it was the worst of times
+</span></span><span class="line"><span class="cl">it was the age of wisdom it was age of foolishness
+</span></span><span class="line"><span class="cl">it was the epoch of belief it was the epoch of incredulity
+</span></span><span class="line"><span class="cl">it was the season of light it was the season of darkness
+</span></span><span class="line"><span class="cl">IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE
+</span></span></code></pre></div><p>可以发现 <strong>THE</strong> 也是可以被 grep 搜索到的；但是如果没有添加 <strong>-i</strong> ,你只会看到4行输出。</p>
+<p>当然你可以在正则表达式里面添加忽略大小写的模式，只是直接添加 <strong>-i</strong> 会简单很多。</p>
+<h2 id="搜索多个文件"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 搜索多个文件</h2>
+<p>上面搜索的都只是单个文件，而 grep 可以让你同时搜索多个文件；现在就来看看怎么搜索多个文件吧。</p>
+<p>下面两种写法结果都是一样的，但是我个人推崇第一种，因为可以输入更少一些内容 :)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grep belief /tmp/<span class="o">{</span>tinytale.txt,tale.txt<span class="o">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grep belief /tmp/tinytale.txt /tmp/tale.txt
+</span></span></code></pre></div><p>输出结果如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">tinytale.txt:it was the epoch of belief it was the epoch of incredulity
+</span></span><span class="line"><span class="cl">tale.txt:it was the epoch of belief it was the epoch of incredulity
+</span></span><span class="line"><span class="cl">tale.txt:pains of by rearing her in the belief that her father was dead
+</span></span><span class="line"><span class="cl">tale.txt:this was no passive belief but an active weapon which they flashed
+</span></span><span class="line"><span class="cl">tale.txt:belief in solomon deducting a mere trifle for this slight mistake
+</span></span><span class="line"><span class="cl">tale.txt:you will bear testimony to what i have said and to your belief in it
+</span></span><span class="line"><span class="cl">tale.txt:herself into the show of a belief that they would soon be reunited
+</span></span></code></pre></div><p>可以看到， <strong>grep</strong> 把匹配到单词的那一行内容和对应的文件都显示出来了，你就可以很方便地看到搜索结果，并知道匹配单词的来源。</p>
+<p>如果你也像我这样，不想输入那么多的内容，你可以使用正则表达式匹配所有的文本文件，如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grep belief /tmp/*.txt
+</span></span></code></pre></div><p>输出结果也会跟上面一致 (假设你 <strong><em>tmp</em></strong> 目录下只有两个文本文件); 我告诉<strong>grep</strong> 搜索**/tmp** 下所有的 <strong>.txt</strong> 文件。</p>
+<h3 id="递归搜索"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 递归搜索</h3>
+<p>你也可以使用 <strong>grep</strong> 递归搜索目录；你只需在指定目录后，添加 <strong>-R</strong> , <strong>grep</strong> 就会
+递归搜索指定目录的所有子目录。我已经把当前目录切换到 <strong>/tmp</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grep -R <span class="s2">&#34;belief&#34;</span> .
+</span></span></code></pre></div><p>输出结果如下：</p>
+<pre tabindex="0"><code class="language-nil" data-lang="nil">./tale.txt:it was the epoch of belief it was the epoch of incredulity
+./tale.txt:pains of by rearing her in the belief that her father was dead
+./tale.txt:this was no passive belief but an active weapon which they flashed
+./tale.txt:belief in solomon deducting a mere trifle for this slight mistake
+./tale.txt:you will bear testimony to what i have said and to your belief in it
+./tale.txt:herself into the show of a belief that they would soon be reunited
+./tinytale.txt:it was the epoch of belief it was the epoch of incredulity
+</code></pre><p>结果展示了一系列在当前目录和子目录匹配 <strong>belief</strong> 的文件。此外你也可以排除掉某些你
+不需要搜索的文件，例如有一个 <strong>foo.xml</strong> 的文件，里面也可能会有 <strong>belief</strong> 这个单词，
+但是你就是不想搜索这个文件，或者全部的 <strong>.xml</strong> 文件，你可以这么玩：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grep -R --exclude<span class="o">=</span><span class="s2">&#34;*.xml&#34;</span> <span class="s2">&#34;belief&#34;</span> .
+</span></span></code></pre></div><h2 id="在标准输入搜索"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 在标准输入搜索</h2>
+<p><strong>grep</strong> 也是过滤器，所以 <strong>grep</strong> 自然而然具有处理标准输入输出的能力了；处理其他命令的输出结果也是 <strong>grep</strong> 非常常用的场景之一。假设你现在的 <strong>vim</strong> 突然卡顿，挂了:),你想要 <strong>kill</strong> 掉 <strong>vim</strong> 的进程，你可以：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ps -e<span class="p">|</span>grep vim
+</span></span></code></pre></div><p>结果输出如下：</p>
+<pre tabindex="0"><code class="language-nil" data-lang="nil">samray   21939     1  0 19:42 ?        00:00:00 gvim
+</code></pre><p>其中第一条记录就是你想要搜索的进程了，你运行 <strong>kill 21939</strong> 就可以杀掉 vim 的进程了；因为我系统的是图型化界面的 vim, 所以是 gvim.</p>
+<hr>
+<p>正如我之前的文章提到的那样，单纯的过滤器的用处似乎不大，但是如果结合起来就会威力无穷至于，如何结合，就需要慢慢探索了。</p>
+<h2 id="反向搜索"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 反向搜索</h2>
+<p>现在执行的搜索都是匹配搜索，即将匹配的内容显示出来，而 <strong>grep</strong> 还有反向搜索的功能 (invert Searches)就是将不包含有指定模式的内容显示出来。</p>
+<p>该功能在用来修改有很多注释的配置文件时特别有用；例如常用的服务器软件 <strong>nginx</strong>  的配置文件是默认是含有很多注释的，如下</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cfg" data-lang="cfg"><span class="line"><span class="cl"><span class="c1">#user www-data;</span>
+</span></span><span class="line"><span class="cl"><span class="na">worker_processes auto;</span>
+</span></span><span class="line"><span class="cl"><span class="na">pid /run/nginx.pid;</span>
+</span></span><span class="line"><span class="cl"><span class="na">include /etc/nginx/modules-enabled/*.conf;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">events {</span>
+</span></span><span class="line"><span class="cl"><span class="na">worker_connections 1024;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># multi_accept on;</span>
+</span></span><span class="line"><span class="cl"><span class="na">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">http {</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">##</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Basic Settings</span>
+</span></span><span class="line"><span class="cl"><span class="c1">##</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">sendfile on;</span>
+</span></span><span class="line"><span class="cl"><span class="na">tcp_nopush on;</span>
+</span></span><span class="line"><span class="cl"><span class="na">tcp_nodelay on;</span>
+</span></span><span class="line"><span class="cl"><span class="na">keepalive_timeout 65;</span>
+</span></span><span class="line"><span class="cl"><span class="na">types_hash_max_size 2048;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># server_tokens off;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># server_names_hash_bucket_size 64;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># server_name_in_redirect off;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">include /etc/nginx/mime.types;</span>
+</span></span><span class="line"><span class="cl"><span class="na">default_type application/octet-stream;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">##</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># SSL Settings</span>
+</span></span><span class="line"><span class="cl"><span class="c1">##</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # Dropping SSLv3, ref: POODLE</span>
+</span></span><span class="line"><span class="cl"><span class="na">ssl_prefer_server_ciphers on;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">##</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Logging Settings</span>
+</span></span><span class="line"><span class="cl"><span class="c1">##</span>
+</span></span><span class="line"><span class="cl"><span class="na">log_format main &#39;$remote_addr - $remote_user [$time_local] &#34;$request&#34; $status $bytes_sent &#34;$http_referer&#34; &#34;$http_user_agent&#34; &#34;$gzip_ratio&#34;&#39;;</span>
+</span></span><span class="line"><span class="cl"><span class="na">access_log /var/log/nginx/access.log;</span>
+</span></span><span class="line"><span class="cl"><span class="na">error_log /var/log/nginx/error.log;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">##</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Gzip Settings</span>
+</span></span><span class="line"><span class="cl"><span class="c1">##</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">gzip on;</span>
+</span></span><span class="line"><span class="cl"><span class="na">gzip_disable &#34;msie6&#34;;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># gzip_vary on;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># gzip_proxied any;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># gzip_comp_level 6;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># gzip_buffers 16 8k;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># gzip_http_version 1.1;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">##</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Virtual Host Configs</span>
+</span></span><span class="line"><span class="cl"><span class="c1">##</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">include /etc/nginx/conf.d/*.conf;</span>
+</span></span><span class="line"><span class="cl"><span class="na">include /etc/nginx/sites-enabled/*;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">ignore_invalid_headers on;</span>
+</span></span><span class="line"><span class="cl"><span class="na">client_header_timeout 240;</span>
+</span></span><span class="line"><span class="cl"><span class="na">client_body_timeout 240;</span>
+</span></span><span class="line"><span class="cl"><span class="na">send_timeout 240;</span>
+</span></span><span class="line"><span class="cl"><span class="na">client_max_body_size 100m;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_buffer_size 128k;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_buffers 8 128k;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">upstream tomcat_server{</span>
+</span></span><span class="line"><span class="cl"><span class="na">server 127.0.0.1:8080 fail_timeout</span><span class="o">=</span><span class="s">0;</span>
+</span></span><span class="line"><span class="cl"><span class="na">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">upstream gunicorn_server{</span>
+</span></span><span class="line"><span class="cl"><span class="na">server 127.0.0.1:5000 fail_timeout</span><span class="o">=</span><span class="s">0;</span>
+</span></span><span class="line"><span class="cl"><span class="na">}</span>
+</span></span><span class="line"><span class="cl"><span class="na">server{</span>
+</span></span><span class="line"><span class="cl"><span class="na">server_name 127.0.0.1;</span>
+</span></span><span class="line"><span class="cl"><span class="na">listen 443;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ssl on;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ssl_certificate /etc/letsencrypt/live/samray.ren/fullchain.pem;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ssl_certificate_key /etc/letsencrypt/live/samray.ren/privkey.pem;</span>
+</span></span><span class="line"><span class="cl"><span class="na">location / {</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Forward SSL so that Tomcat knows what to do</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_set_header X-Forwarded-Host $host;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_set_header X-Forwarded-Server $host;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_pass http://tomcat_server;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_set_header X-Forwarded-Proto https;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">proxy_redirect off;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_connect_timeout      240;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_send_timeout         240;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_read_timeout         240;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">location /test{</span>
+</span></span><span class="line"><span class="cl"><span class="na">return 402;</span>
+</span></span><span class="line"><span class="cl"><span class="na">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">location /weixin {</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># try_files $uri @proxy_to_app;</span>
+</span></span><span class="line"><span class="cl"><span class="na">return 402;</span>
+</span></span><span class="line"><span class="cl"><span class="na">}</span>
+</span></span><span class="line"><span class="cl"><span class="na">location @proxy_to_app {</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_set_header Host $http_host;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_redirect off;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_pass http://gunicorn_server;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">}</span>
+</span></span><span class="line"><span class="cl"><span class="na">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#mail {</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#	# See sample authentication script at:</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#	# http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#	# auth_http localhost/auth.php;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#	# pop3_capabilities &#34;TOP&#34; &#34;USER&#34;;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#	# imap_capabilities &#34;IMAP4rev1&#34; &#34;UIDPLUS&#34;;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#	server {</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#		listen     localhost:110;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#		protocol   pop3;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#		proxy      on;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#	}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#	server {</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#		listen     localhost:143;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#		protocol   imap;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#		proxy      on;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#	}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#}</span>
+</span></span></code></pre></div><p>里面实在有太多的注释了，虽说是很好的参考，但是看多了会感觉很碍眼，所以你希望可以有一份没有注释的配置文件，你就可以使用 <strong>grep</strong> 和参数 <strong>-v</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">egrep -v <span class="s2">&#34;#|^</span>$<span class="s2">&#34;</span> /etc/nginx/nginx.conf &gt;/tmp/nging.conf
+</span></span></code></pre></div><p>结果如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cfg" data-lang="cfg"><span class="line"><span class="cl"><span class="na">worker_processes auto;</span>
+</span></span><span class="line"><span class="cl"><span class="na">pid /run/nginx.pid;</span>
+</span></span><span class="line"><span class="cl"><span class="na">include /etc/nginx/modules-enabled/*.conf;</span>
+</span></span><span class="line"><span class="cl"><span class="na">events {</span>
+</span></span><span class="line"><span class="cl"><span class="na">worker_connections 1024;</span>
+</span></span><span class="line"><span class="cl"><span class="na">}</span>
+</span></span><span class="line"><span class="cl"><span class="na">http {</span>
+</span></span><span class="line"><span class="cl"><span class="na">sendfile on;</span>
+</span></span><span class="line"><span class="cl"><span class="na">tcp_nopush on;</span>
+</span></span><span class="line"><span class="cl"><span class="na">tcp_nodelay on;</span>
+</span></span><span class="line"><span class="cl"><span class="na">keepalive_timeout 65;</span>
+</span></span><span class="line"><span class="cl"><span class="na">types_hash_max_size 2048;</span>
+</span></span><span class="line"><span class="cl"><span class="na">include /etc/nginx/mime.types;</span>
+</span></span><span class="line"><span class="cl"><span class="na">default_type application/octet-stream;</span>
+</span></span><span class="line"><span class="cl"><span class="na">ssl_prefer_server_ciphers on;</span>
+</span></span><span class="line"><span class="cl"><span class="na">log_format main &#39;$remote_addr - $remote_user [$time_local] &#34;$request&#34; $status $bytes_sent &#34;$http_referer&#34; &#34;$http_user_agent&#34; &#34;$gzip_ratio&#34;&#39;;</span>
+</span></span><span class="line"><span class="cl"><span class="na">access_log /var/log/nginx/access.log;</span>
+</span></span><span class="line"><span class="cl"><span class="na">error_log /var/log/nginx/error.log;</span>
+</span></span><span class="line"><span class="cl"><span class="na">gzip on;</span>
+</span></span><span class="line"><span class="cl"><span class="na">gzip_disable &#34;msie6&#34;;</span>
+</span></span><span class="line"><span class="cl"><span class="na">include /etc/nginx/conf.d/*.conf;</span>
+</span></span><span class="line"><span class="cl"><span class="na">include /etc/nginx/sites-enabled/*;</span>
+</span></span><span class="line"><span class="cl"><span class="na">ignore_invalid_headers on;</span>
+</span></span><span class="line"><span class="cl"><span class="na">client_header_timeout 240;</span>
+</span></span><span class="line"><span class="cl"><span class="na">client_body_timeout 240;</span>
+</span></span><span class="line"><span class="cl"><span class="na">send_timeout 240;</span>
+</span></span><span class="line"><span class="cl"><span class="na">client_max_body_size 100m;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_buffer_size 128k;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_buffers 8 128k;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">upstream tomcat_server{</span>
+</span></span><span class="line"><span class="cl"><span class="na">server 127.0.0.1:8080 fail_timeout</span><span class="o">=</span><span class="s">0;</span>
+</span></span><span class="line"><span class="cl"><span class="na">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">upstream gunicorn_server{</span>
+</span></span><span class="line"><span class="cl"><span class="na">server 127.0.0.1:5000 fail_timeout</span><span class="o">=</span><span class="s">0;</span>
+</span></span><span class="line"><span class="cl"><span class="na">}</span>
+</span></span><span class="line"><span class="cl"><span class="na">server{</span>
+</span></span><span class="line"><span class="cl"><span class="na">server_name 127.0.0.1;</span>
+</span></span><span class="line"><span class="cl"><span class="na">listen 443;</span>
+</span></span><span class="line"><span class="cl"><span class="na">location / {</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">proxy_set_header X-Forwarded-Host $host;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_set_header X-Forwarded-Server $host;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_pass http://tomcat_server;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_set_header X-Forwarded-Proto https;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_redirect off;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_connect_timeout      240;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_send_timeout         240;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_read_timeout         240;</span>
+</span></span><span class="line"><span class="cl"><span class="na">}</span>
+</span></span><span class="line"><span class="cl"><span class="na">location /test{</span>
+</span></span><span class="line"><span class="cl"><span class="na">return 402;</span>
+</span></span><span class="line"><span class="cl"><span class="na">}</span>
+</span></span><span class="line"><span class="cl"><span class="na">location /weixin {</span>
+</span></span><span class="line"><span class="cl"><span class="na">return 402;</span>
+</span></span><span class="line"><span class="cl"><span class="na">}</span>
+</span></span><span class="line"><span class="cl"><span class="na">location @proxy_to_app {</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_set_header Host $http_host;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_redirect off;</span>
+</span></span><span class="line"><span class="cl"><span class="na">proxy_pass http://gunicorn_server;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">}</span>
+</span></span><span class="line"><span class="cl"><span class="na">}</span>
+</span></span><span class="line"><span class="cl"><span class="na">}</span>
+</span></span></code></pre></div><p><strong>egrep</strong> 是 <strong>grep</strong> 的扩展，你也可以通过 <strong>-E</strong> 使用扩展功能。就这样，你就可以得到一份很“干净”的配置文件了。</p>
+<h2 id="小结"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 小结</h2>
+<p>在以前 <strong>grep</strong> 是 <strong>hacker</strong> 工具箱里面审查源代码必不可少的工具之一，但是随着技术的发展，似乎对比其他同类型的工具， <strong>grep</strong> 的性能已经难尽人意，特别是对比 <strong>ag</strong> 这个搜索神器；</p>
+<p>虽说很多人都已经转移到了 <strong>ag</strong> 阵营，但是因为 <strong>grep</strong> 被广泛预装到各类的Linux/Unix 机器，所以 <strong>grep</strong> 还是使用得很广泛滴。</p>
+<p>更多 <strong>grep</strong> 的用法就需要查询手册了：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">man grep
+</span></span></code></pre></div><p>Enjoy Shell :)</p>
+]]></content:encoded>
     </item>
     
     <item>
@@ -55,6 +966,89 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2017/diff/</guid>
       <description>An introduction about diff</description>
+      <content:encoded><![CDATA[<blockquote>
+<p>diff - compare files line by line</p>
+</blockquote>
+<p>如果你有使用过git,那么你一定不会对diff 陌生，因为对你源文件和修改后的文件进行比较的就是 <strong>diff</strong> 这个大名鼎鼎的家伙了。</p>
+<p>多年以来， <strong>diff</strong> 都一直是非常重要的工具，上古大神 都是使用 <strong>diff</strong> 和 <strong>patch</strong> 对程序进行差分和打补丁滴(现在有git了，但是diff同样发挥着重要作用)</p>
+<h2 id="语法"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 语法</h2>
+<p>diff 的语法如下</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">diff <span class="o">[</span>OPTION<span class="o">]</span>.... file1 file2
+</span></span></code></pre></div><p><em>OPTION</em> 指不同的选项参数，file1,file2 是文本文件的名字，如果比较的两个文件相同 diff 将不输出任何东西。如果两个文件有差异，diff 会显示一系列的指示，让你可以把第一个文件修改为与第二个文件一致</p>
+<h2 id="例子"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 例子</h2>
+<h3 id="用法一"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 用法一</h3>
+<p>现在有两个文件，分别保存着不同的地址。
+address1 包含：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">guangdong
+</span></span><span class="line"><span class="cl">shanghai
+</span></span><span class="line"><span class="cl">beijing
+</span></span><span class="line"><span class="cl">chengdu
+</span></span></code></pre></div><p>address2 包含：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">guangdong
+</span></span><span class="line"><span class="cl">shanghai
+</span></span><span class="line"><span class="cl">beijin
+</span></span><span class="line"><span class="cl">chengdu
+</span></span></code></pre></div><p>你可以注意到两个文件的区别就是第三行的 <em>beijing</em>.然后运行 <strong>diff</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">diff address1 address2
+</span></span></code></pre></div><p>输出结果：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">3c3
+</span></span><span class="line"><span class="cl">&lt; beijing
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">&gt; beijin
+</span></span></code></pre></div><p>似乎有点难以理解，输出结果描述了什么呢？其实diff 是在指导如何修改不同的文件使之一致 <strong>&lt;</strong> 后接的是文件1中与文件2不同的部分， <strong>&gt;</strong> 后接的是文件2中与文件1不同的部分</p>
+<p>diff 的输出使用3个不同的单字符指导：a(append,追加),c(change,修改),d(delete,删除). 在上面的例子，只是看到一个 <em>c</em>,意味着，如果想把 <em>address1</em> 修改成 <em>address2</em> 只需将 <em>address1</em> 的第三行修改成 <em>address2</em> 的第三行</p>
+<h3 id="用法2"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 用法2</h3>
+<p>现在把 <em>address2</em> 的最后一行删除，看看运行 <em>diff</em> 结果如何：
+address1 包含：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">guangdong
+</span></span><span class="line"><span class="cl">shanghai
+</span></span><span class="line"><span class="cl">beijing
+</span></span><span class="line"><span class="cl">chengdu
+</span></span></code></pre></div><p>address2 包含：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">guangdong
+</span></span><span class="line"><span class="cl">shanghai
+</span></span><span class="line"><span class="cl">beijing
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">diff address1 address2
+</span></span></code></pre></div><p>输出结果：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">4d3
+</span></span><span class="line"><span class="cl">&lt; chengdu
+</span></span></code></pre></div><p>在该例子中，为了将 <em>address1</em> 变成 <em>address2</em> 只需删除 <em>address1</em> 的第四行</p>
+<h3 id="用法3"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> 用法3</h3>
+<p>现在把 <em>address1</em> 的最后一行删除，看看运行 <em>diff</em> 结果如何：
+address1 包含：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">guangdong
+</span></span><span class="line"><span class="cl">shanghai
+</span></span><span class="line"><span class="cl">beijing
+</span></span></code></pre></div><p>address2 包含：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">guangdong
+</span></span><span class="line"><span class="cl">shanghai
+</span></span><span class="line"><span class="cl">beijing
+</span></span><span class="line"><span class="cl">chengdu
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">diff address1 address2
+</span></span></code></pre></div><p>输出结果：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">3a4
+</span></span><span class="line"><span class="cl">&gt; chengdu
+</span></span></code></pre></div><p>想将第一个文件转换成第二个文件，只需在第一个文件追加第二个文件的第四行(即在第一个文件的第 <strong>3</strong> 行之后追加第二个文件的第 <strong>4</strong> 行)</p>
+<h2 id="diff-选项"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> diff 选项</h2>
+<p>因为diff 是一个相当强大也是一个相当复杂的命令，所以我没办法将所有的用法一一道
+尽所以笔者将比较常用的选项列举出来</p>
+<ul>
+<li><strong>-b</strong>:忽略制表符(不忽略所有的空白符，指忽略空白符数量的差异),例如下面的两行是相同的</li>
+</ul>
+<!-- raw HTML omitted -->
+<pre tabindex="0"><code class="language-nil" data-lang="nil">a    a
+a a
+</code></pre><ul>
+<li><strong>-B(blank lines)</strong>:忽略所有的空白行</li>
+<li><strong>-c(context)</strong>:以上下文的形式显示差异内容，对比默认输出更加容易理解(但是也更加繁杂)</li>
+<li><strong>-q(quiet)</strong>: diff 静默设置，即如果文件file1和file2有差异，diff 也只会显示 <em>File file1 and file2 differ</em></li>
+<li><strong>-w(whitespace)</strong>:忽略所有的空白符</li>
+<li><strong>-u(unified output)</strong>: 上下文形式显示的改进，不会输出重复行</li>
+<li><strong>-y</strong>:将文件分成两列或多列并排进行输出(非常直观，但是输出很繁杂)</li>
+</ul>
+<p>还是老话，更多的用法就需要：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">man diff
+</span></span></code></pre></div>]]></content:encoded>
     </item>
     
     <item>
@@ -64,6 +1058,144 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2017/install_archlinux/</guid>
       <description>An description about how to install arch linux in an old machine</description>
+      <content:encoded><![CDATA[<h2 id="枯树"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 枯树</h2>
+<p>周末回了一趟家，没带自己的笔记本，在家闲来无事，无意中看到墙角的电脑，已经尘封已久反正无事，何不玩玩这台老古董呢？于是把电脑拿去修理店把坏了的硬件修好。</p>
+<p>离开店的时候，老板说：“你的系统有问题，我看到你自己也有Ghost,就不帮搞这系统了， 你自己都能解决的，推荐你还是用XP吧，这电脑配置低，还是XP好用”。我忍不住回头对老板一笑 :)</p>
+<h2 id="春至"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 春至</h2>
+<p>像我这种Linuxer,这么可能再装回XP呢，最初装Win7,也是考虑到老爹的技术 hold 不住 Linux, 现在手机那么发达，他就不需要电脑了，所以，此时不装Linux,更待何时呢？</p>
+<h2 id="arch-linux"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Arch Linux</h2>
+<p>我没有选择 Xubuntu 这种适合老机器的 Ubuntu 衍生发行版本，因为我不喜欢Ubuntu, 所以我最后选择的是 Arch linux,官网说最低配置只需500MB内存，800MB的 硬盘存储空间，正适合家里的老家伙</p>
+<h3 id="安装过程"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 安装过程</h3>
+<h4 id="下载镜像"><!-- raw HTML omitted -->3.1.1<!-- raw HTML omitted --> 下载镜像</h4>
+<p><a href="https://www.archlinux.org/download/">Download Link</a> ,在网易的镜像下载ISO, 然后用dd刻录到U盘，Windows 可以选择 <a href="http://sourceforge.net/projects/usbwriter">USBwriter</a></p>
+<h4 id="分区"><!-- raw HTML omitted -->3.1.2<!-- raw HTML omitted --> 分区</h4>
+<p>使用fdisk, 我的硬盘是/dev/sda,如果还有一块硬盘，那应该就是/dev/sdb</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">fdisk /dev/sda
+</span></span></code></pre></div><ul>
+<li>n:新建一个分区，p 指主分区，e 是指扩展分区(逻辑分区是建立在扩展分区上的)
+一块硬盘主分区加上扩展分区最多只能是4个</li>
+<li>d: 删除</li>
+<li>m: 查询其他命令，不知道怎么操作就输入m 吧</li>
+</ul>
+<p>分区结束以后，输入 <code>w</code> 完成分区 (我分了三个分区 /dev/sda1 -&gt; swap
+/dev/sda2 -&gt; / /dev/sda3 -&gt; /home)</p>
+<h4 id="格式化分区"><!-- raw HTML omitted -->3.1.3<!-- raw HTML omitted --> 格式化分区</h4>
+<p>格式化 sda2 sda3为ext4格式：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mkfs.ext4 /dev/sda2
+</span></span><span class="line"><span class="cl">mkfs.ext4 /dev/sda3
+</span></span></code></pre></div><p>格式化sda1 为swap(虚拟内存),一般是内存的两倍，当然如果你的内存很大的话就不用划这个分区了</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mkswap /dev/sda1
+</span></span></code></pre></div><p>激活swap</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">swapon /dev/sda1
+</span></span></code></pre></div><h4 id="挂载"><!-- raw HTML omitted -->3.1.4<!-- raw HTML omitted --> 挂载</h4>
+<p>将sda2挂载到/mnt,其实就是让sda2分区做系统的根分区，/mnt/home同理</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mount /dev/sda2 /mnt
+</span></span><span class="line"><span class="cl">mount /dev/sda3 /mnt/home
+</span></span></code></pre></div><h4 id="更新pacman源"><!-- raw HTML omitted -->3.1.5<!-- raw HTML omitted --> 更新pacman源</h4>
+<p>网易的源不错，编辑 <code>/etc/pacman.d/mirrorlist</code> 添加 <code>Server = http://mirrors.163.com/archlinux/$repo/os/$arch</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">vim /etc/pacman.d/mirrorlist
+</span></span></code></pre></div><p>然后添加；添加完之后，更新一下</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pacman -Syy
+</span></span></code></pre></div><h4 id="安装基本系统"><!-- raw HTML omitted -->3.1.6<!-- raw HTML omitted --> 安装基本系统</h4>
+<p>安装基本系统到 /mnt,即sda2分区</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pacstrap /mnt base base-devel
+</span></span></code></pre></div><p>需要安装的都安装吧，然后走开煮一杯咖啡，慢慢品尝</p>
+<h4 id="生成fstab"><!-- raw HTML omitted -->3.1.7<!-- raw HTML omitted --> 生成fstab</h4>
+<p>fstab 的作用：</p>
+<blockquote>
+<p>The fstab(5) file can be used to define how disk partitions, various other block devices, or remote filesystems should be mounted into the filesystem</p>
+</blockquote>
+<p>生成fstab,并且查看是否正确生成fstab</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">genfstab -U -p /mnt &gt;&gt; /mnt/etc/fstab
+</span></span><span class="line"><span class="cl">cat /mnt/etc/fstab
+</span></span></code></pre></div><h4 id="配置系统"><!-- raw HTML omitted -->3.1.8<!-- raw HTML omitted --> 配置系统</h4>
+<p>切换到新的系统，然后你会发现命令行提示符发生了改变</p>
+<pre tabindex="0"><code class="language-nil" data-lang="nil">arch-chroot /mnt
+</code></pre><!-- raw HTML omitted -->
+<ol>
+<li>
+<p>设置地区</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+</span></span></code></pre></div></li>
+</ol>
+<!-- raw HTML omitted -->
+<ol start="2">
+<li>
+<p>设置语言</p>
+<p>编辑 <code>/etc/locale.gen</code>,因为该文件所有的信息都是被注释滴，所以在最上面添加<code>en_US.UTF-8 UTF-8</code> 即可</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">vim /etc/locale.gen
+</span></span></code></pre></div><p>然后添加；添加完成后，执行 <code>locale-gen</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">locale-gen
+</span></span></code></pre></div><p>接着配置 <code>locale.conf</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8 &gt; /etc/locale.conf
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
+</span></span></code></pre></div></li>
+</ol>
+<!-- raw HTML omitted -->
+<ol start="3">
+<li>
+<p>设置主机名</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">echo</span> samray-arch &gt; /etc/hostname
+</span></span></code></pre></div></li>
+</ol>
+<!-- raw HTML omitted -->
+<ol start="4">
+<li>
+<p>设置密码</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">passwd
+</span></span></code></pre></div></li>
+</ol>
+<!-- raw HTML omitted -->
+<ol start="5">
+<li>
+<p>配置网络</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pacman -S net-tools
+</span></span><span class="line"><span class="cl">systemctl <span class="nb">enable</span> dhcpcd.service
+</span></span></code></pre></div></li>
+</ol>
+<!-- raw HTML omitted -->
+<ol start="6">
+<li>
+<p>安装GRUB</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pacman -S grub-bios
+</span></span></code></pre></div><p>把grub 安装到硬盘sda,如果双系统的话，还要视情况做更改</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grub-install --recheck /dev/sda
+</span></span><span class="line"><span class="cl">grub-mkconfig -o /boot/grub/grub.cfg
+</span></span></code></pre></div></li>
+</ol>
+<h4 id="收尾工作"><!-- raw HTML omitted -->3.1.9<!-- raw HTML omitted --> 收尾工作</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">exit</span>
+</span></span><span class="line"><span class="cl">umount /mnt/home
+</span></span><span class="line"><span class="cl">umount /mnt
+</span></span><span class="line"><span class="cl">reboot
+</span></span></code></pre></div><p>这样Arch linux 就装好了，不过你重启会发现，你的系统是没有图形化界面的</p>
+<h3 id="安装桌面环境"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> 安装桌面环境</h3>
+<h4 id="安装x服务"><!-- raw HTML omitted -->3.2.1<!-- raw HTML omitted --> 安装x服务</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pacman -S xorg-server xorg-server-utils xorg-xinit
+</span></span></code></pre></div><h4 id="安装显卡驱动"><!-- raw HTML omitted -->3.2.2<!-- raw HTML omitted --> 安装显卡驱动</h4>
+<p>查找自己的显卡类型</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ispci <span class="p">|</span>grep VGA
+</span></span></code></pre></div><p>然后搜索匹配自己显卡的驱动</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pacman -Ss xf86-video <span class="p">|</span>less
+</span></span></code></pre></div><p>Intel 集成显卡：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pacman -S xf86-video-intel
+</span></span></code></pre></div><p>虚拟机显卡：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pacman -S xf86-video-vesa
+</span></span></code></pre></div><p>笔记本触摸板驱动 (老家伙是台式，不需要了):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pacman -S xf86-input-synaptics
+</span></span></code></pre></div><p>安装输入法</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pacman -S scim-pinyin
+</span></span></code></pre></div><p>先安装 slim(图像登录管理器)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pacman -S slim
+</span></span></code></pre></div><p>安装xfce4</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pacman -S xfce4
+</span></span></code></pre></div><p>启动xfce4</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">startxfce4
+</span></span></code></pre></div><p>基本就大功告成了，因为我的台式电脑是bios, 所以不用折腾uefi, 还有无线网络。</p>
+<p><strong>Action is louder than words</strong>,还是多动手才行，我都装了三次才成功，内核空指针和段错误都遇到了 :）</p>
+<h3 id="参考"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> 参考</h3>
+<p><a href="https://wiki.archlinux.org/index.php/installation_guide">https://wiki.archlinux.org/index.php/installation_guide</a></p>
+]]></content:encoded>
     </item>
     
     <item>
@@ -73,6 +1205,84 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2017/cat/</guid>
       <description>An introduction about cat</description>
+      <content:encoded><![CDATA[<blockquote>
+<p>cat - concatenate files and print on the standard output</p>
+</blockquote>
+<h2 id="过滤器"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 过滤器</h2>
+<p>何谓过滤器呢，例如cat,grep,wl 之类的命令就是过滤器了。这样的命令
+读取数据，对数据执行一些操作，然后写入结果。更准确地说，过滤器就是任何能够从标准
+输入读取 <strong>文本</strong> 数据，并向标准输出写入 <strong>文本</strong> 数据的命令。又因为Unix 的 <strong>KISS</strong>
+设计理念，所以每个程序都被设计成能够出色完成一项特定任务的工具。又因为重定向和
+管道的存在，使得可以将这些工具组合起来，发挥无穷威力</p>
+<h2 id="cat"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> cat</h2>
+<p>在shell 里面运行cat,你会被要求输入文本数据，当你输入一行数据以后，然后按下回
+车你输入的数据就会显示在屏幕，当你按下 ^D(&lt;ctrl&gt;+d),发送eof 信号给shell,退出
+cat。cat 做的事就是把你输入的字符，复制到标准输出 (一般情况是指你的屏幕).看到
+这里有人或许会质疑，这东西有什么用呢？似乎什么都作不了。不，它的用处很大呢，
+且容笔者细细禀来</p>
+<h3 id="场景1"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 场景1</h3>
+<p>假如你要新建一个文本文件，里面只是很少的文本，你会怎么做呢？一般情况下，都是用
+vim/emacs 新建一个文本文件，然后输入几行文字，然后保存退出。这是一般的做法，
+看到这里，很自然有人会发问，难道有更优雅的解决方法？有，不用打开文本编辑器写入文本
+的hacking方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &gt; data
+</span></span></code></pre></div><p>输入数据，然后 ^D(&lt;ctrl&gt;+d) 保存。你就新建了一个文本了。当然，如果你已经有一个 <strong>data</strong> 文件
+,就会被代替，当然，你也可以也在原来文本末尾添加的方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &gt;&gt; data
+</span></span></code></pre></div><h3 id="场景2"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 场景2</h3>
+<p>如果你有一个短文件，你想查看一下，同样，你可以使用cat</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &lt; data
+</span></span></code></pre></div><p>当然，你也可以省略 <strong>&lt;</strong> 这个重定向符号：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat data
+</span></span></code></pre></div><p>抑或是，你想显示某个大文件的最后一部分，你也可以如上操作。或许你会觉得，这个功能
+很多命令也有，最典型的就是 <strong>tail</strong>. 但是如果 <strong>cat</strong> 可以很完美地很其他过滤器结合
+充当整套管道线工具流的起始端，这个以后慢慢再阐述</p>
+<h3 id="场景3"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> 场景3</h3>
+<p>如果你想复制文本文件，你首先会想起什么命令？ <strong>cp</strong>,很自然嘛，我也不例外，但是cat
+也可以实现同样的功能，很意外吧：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &lt; file &gt; newfile
+</span></span></code></pre></div><p>即把 <strong>file</strong> 复制到标准输出，然后再把 <strong>file</strong> 当作标准输入复制到 <strong>newfile</strong>.hacking!</p>
+<h3 id="场景4"><!-- raw HTML omitted -->2.4<!-- raw HTML omitted --> 场景4</h3>
+<p>如果你想把多个文本文件的组合到一个文件，你会怎么做？用编辑器打开所有的文件
+然后 select,cut,paste,save.我也会很自然地想到这个方法，但是是否存在着更
+优雅的解决方案呢？当然：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat file1 file2 file3 &gt;newfile
+</span></span></code></pre></div><h2 id="总结"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 总结</h2>
+<p>上面已经介绍了挺多cat 的使用场景了，你觉得cat 表现滴怎么样呢？相信你的感觉是
+还行，但是并没有，我吹嘘的那么令人惊艳。因为这只是cat 最基本的功能，它最大的
+用法还没有完全展现出来，笔者先举一例，以后再慢慢详叙：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat file <span class="p">|</span>grep <span class="s2">&#34;something&#34;</span> <span class="p">|</span>sort -n <span class="p">|</span>tee newfile
+</span></span></code></pre></div><table>
+<thead>
+<tr>
+<th>语法</th>
+<th>用法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cat &gt; file</td>
+<td>读取输入，创建新的文件或替换</td>
+</tr>
+<tr>
+<td>cat &gt;&gt;file</td>
+<td>读取输入，追加新的文件</td>
+</tr>
+<tr>
+<td>cat file/cat &lt;file</td>
+<td>显示一个已有文件</td>
+</tr>
+<tr>
+<td>cat &lt;oldfile&gt; newfile</td>
+<td>复制一个文件</td>
+</tr>
+<tr>
+<td>cat file1 file2 file3&gt;file4</td>
+<td>组合多个文件</td>
+</tr>
+</tbody>
+</table>
+]]></content:encoded>
     </item>
     
     <item>
@@ -82,6 +1292,45 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2017/head_tail/</guid>
       <description>An introduction about head and tail</description>
+      <content:encoded><![CDATA[<blockquote>
+<p>head - output the first part of files
+tail - output the last part of files</p>
+</blockquote>
+<p>当拥有的数据太多的时候，使用cat 来展示数据的话，数据量过大，屏幕就只能显示最后一部分的数据了。</p>
+<p>所以如果你想选取部分的数据的话，cat 就不是一个好选择了。有两个命令可以满足你的要求，分别是 <strong>head</strong> 和 <strong>tail</strong>.顾名思义，head 选取数据的开头部分tail 是选取数据的结尾部分</p>
+<h2 id="用法"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 用法</h2>
+<p>当把 <strong>head</strong> <strong>tail</strong> 当作过滤器来使用的时候，用法很简单</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ head data
+</span></span><span class="line"><span class="cl">$ tail data
+</span></span></code></pre></div><p>默认情况下 <strong>head</strong> 会选取数据开头的10行数据 <strong>tail</strong> 会选取数据最后的10行数据. 如果你想选取更多的数据的时候，你可以指定行数，例如</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ head <span class="o">[</span>-n line<span class="o">]</span> data
+</span></span><span class="line"><span class="cl">$ tail <span class="o">[</span>-n line<span class="o">]</span> data
+</span></span></code></pre></div><p>其中 line 是希望选取的数据行的数量</p>
+<h2 id="惊艳点"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 惊艳点</h2>
+<p>你可能觉得 <strong>head</strong> <strong>tail</strong> 两个命令很简单，似乎用处不大。</p>
+<p>是的，就笔者一直所介绍的那样，单个unix命令只是完成一个特定的工作，但是当它们组合起来的时候，就很威力无穷了</p>
+<h3 id="场景1"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 场景1</h3>
+<p>假如你要生成一串密钥来加密你的某个文件，这是很常见的需求，你会怎么办，用python 或者 java 写一个随机数函数来实现么？无需，你用简单的过滤器加Linux/Unix</p>
+<p>内置的设备(dev):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ cat /dev/urandom <span class="p">|</span> tr -cd <span class="s2">&#34;[[:alnum:]]&#34;</span> <span class="p">|</span>head -c 32<span class="p">;</span><span class="nb">echo</span>
+</span></span></code></pre></div><p>在Unix/Linux 的机器下，运行上面的命令就可以生成一个包含数字和字母的32个字符长的密钥了。</p>
+<p>/dev/urandom 是一个可以通过收集硬件驱动的环境噪音来产生伪随机数特殊的文件，tr 是转换和删除字符的命令；更多详细的东西，以后笔者会慢慢介绍滴</p>
+<h3 id="场景2"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 场景2</h3>
+<p>在日常的开发或者运行环境中，日志是必不可少滴，但是日志是不断产生新的数据的,所以有时候就会出现用编辑器打开日志的时候，就会出现，编辑器不断提醒你文件已经发生了变化，是否重新加载，但是如果只是用cat,tail 来查看日志，日志又是保持在
+打开的那个状态，新产生的日志数据是没办法浏览到，果真如此？</p>
+<p>其实不然, tail 可以在查看日志的时候，保持日志一直在更新。关键就在 <strong>-f</strong> 选项</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ tail -f <span class="o">[</span>-n line<span class="o">]</span> file
+</span></span></code></pre></div><p><strong>-f</strong> 选项告诉tail 当到达文件的末尾不要停止。相反，tail 要一直等下去，并且随着文件的增长，显示更多的输出 (-f -&gt; follow)</p>
+<p>你也可以模拟日志不断生成的过程：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ tail -f -n <span class="m">20</span> something.log
+</span></span></code></pre></div><p>然后打开一个新的Shell, 运行：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">cat &gt;&gt; something.log
+</span></span></code></pre></div><p>使用 <strong>&gt;&gt;</strong> 追加数据，就可以模拟日志生成的过程了</p>
+<h2 id="总结"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 总结</h2>
+<p>要掌握更多的用法还是要查看文档滴：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">man head
+</span></span></code></pre></div><p>Enjoy Shell :)</p>
+]]></content:encoded>
     </item>
     
     <item>
@@ -91,6 +1340,78 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2017/percol/</guid>
       <description>An introduction about percol</description>
+      <content:encoded><![CDATA[<p><a href="https://github.com/mooz/percol">Percol</a> 是Emacs 的一个非常优秀package:js2-mode作者mooz 的又一力作得益于Unix Shell的管道和重定向设计理念，percol 所有的输入输出变得可交互 percol 给我一种很熟悉的感觉，就是 Eamcs 中helm 增量补全 (incremental completion)的感觉，真的可以10倍提高工作效率。</p>
+<h2 id="例子"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 例子</h2>
+<p>假如你要用git 切换分支，但是分支很多，你不能记住你要切换的分支的名字。那么有percol 你可以：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ git checkout <span class="k">$(</span>git branch<span class="p">|</span>percol<span class="k">)</span>
+</span></span></code></pre></div><p>那样，你就可以，选择要切换的分支了</p>
+<p>平时在Linux/Unix 下，如果要kill 掉某个进程的话，我一般是用 <code>htop</code> 或者是ps 找出要kill 掉的进程的pid, 然后在 <code>kill pid</code>. 但是现在有了percol, 可以一步搞定所有的步骤。</p>
+<p>官网给出的例子函数：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="k">function</span> ppgrep<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$1</span> <span class="o">==</span> <span class="s2">&#34;&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">PERCOL</span><span class="o">=</span>percol
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">PERCOL</span><span class="o">=</span><span class="s2">&#34;percol --query </span><span class="nv">$1</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">    ps aux <span class="p">|</span> <span class="nb">eval</span> <span class="nv">$PERCOL</span> <span class="p">|</span> awk <span class="s1">&#39;{ print $2 }&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> ppkill<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$1</span> <span class="o">=</span>~ <span class="s2">&#34;^-&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">QUERY</span><span class="o">=</span><span class="s2">&#34;&#34;</span>            <span class="c1"># options only</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">QUERY</span><span class="o">=</span><span class="nv">$1</span>            <span class="c1"># with a query</span>
+</span></span><span class="line"><span class="cl">	<span class="o">[[</span> <span class="nv">$#</span> &gt; <span class="m">0</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">shift</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">    ppgrep <span class="nv">$QUERY</span> <span class="p">|</span> xargs <span class="nb">kill</span> <span class="nv">$*</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>又或者是更好地进行查找历史命令：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="k">function</span> exists <span class="o">{</span> which <span class="nv">$1</span> <span class="p">&amp;</span>&gt; /dev/null <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> exists percol<span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> percol_select_history<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">local</span> tac
+</span></span><span class="line"><span class="cl">	exists gtac <span class="o">&amp;&amp;</span> <span class="nv">tac</span><span class="o">=</span><span class="s2">&#34;gtac&#34;</span> <span class="o">||</span> <span class="o">{</span> exists tac <span class="o">&amp;&amp;</span> <span class="nv">tac</span><span class="o">=</span><span class="s2">&#34;tac&#34;</span> <span class="o">||</span> <span class="o">{</span> <span class="nv">tac</span><span class="o">=</span><span class="s2">&#34;tail -r&#34;</span> <span class="o">}</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">BUFFER</span><span class="o">=</span><span class="k">$(</span><span class="nb">fc</span> -l -n <span class="m">1</span> <span class="p">|</span> <span class="nb">eval</span> <span class="nv">$tac</span> <span class="p">|</span> percol --query <span class="s2">&#34;</span><span class="nv">$LBUFFER</span><span class="s2">&#34;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">CURSOR</span><span class="o">=</span><span class="nv">$#</span>BUFFER         <span class="c1"># move cursor</span>
+</span></span><span class="line"><span class="cl">	zle -R -c               <span class="c1"># refresh</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    zle -N percol_select_history
+</span></span><span class="line"><span class="cl">    bindkey <span class="s1">&#39;^R&#39;</span> percol_select_history
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span></code></pre></div><h3 id="运行截图"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> 运行截图</h3>
+<p><a href="/ox-hugo/percol1.png"><img loading="lazy" src="/ox-hugo/percol1.png" alt=""  />
+</a>
+有时候，我需要复制当前目录下，某个文件的路径，但是无论是文件管理器，还是shell都要用鼠标来复制指定文件的路径，效率不高且很不方便。在 <a href="http://blog.binchen.org/posts/how-to-use-git-effectively.html">陈斌</a> 代码的启发下，我自己写了一个函数来复制当前文件夹某个特定目录的路径，很方便地解决了问题：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nv">OS_NAME</span><span class="o">=</span><span class="sb">`</span>uname<span class="sb">`</span>
+</span></span><span class="line"><span class="cl"><span class="k">function</span> pclip<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="nv">$OS_NAME</span> <span class="o">=</span> <span class="s2">&#34;CYGWIN&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	putclip <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">[</span> <span class="nv">$OS_NAME</span> <span class="o">=</span> <span class="s2">&#34;Darwin&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	pbcopy <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[</span> -x /usr/bin/xsel <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	    xsel -ib <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">else</span>
+</span></span><span class="line"><span class="cl">	    <span class="k">if</span> <span class="o">[</span> -x /usr/bin/xclip <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		xclip -selection c <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;Neither xsel or xclip is installed!&#34;</span>
+</span></span><span class="line"><span class="cl">	    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> pwdf<span class="o">()</span>
+</span></span><span class="line"><span class="cl"><span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">local</span> <span class="nv">current_dir</span><span class="o">=</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">local</span> <span class="nv">copied_file</span><span class="o">=</span><span class="sb">`</span>find <span class="nv">$current_dir</span> -type f -print <span class="p">|</span>percol<span class="sb">`</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> -n <span class="nv">$copied_file</span> <span class="p">|</span>pclip<span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>更多的用法就要查看官方文档<a href="https://github.com/mooz/percol"> percol</a></p>
+<p>Enjoy Shell :)</p>
+]]></content:encoded>
     </item>
     
   </channel>

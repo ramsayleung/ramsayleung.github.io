@@ -19,6 +19,242 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2023/rspotify_%E4%B8%80%E4%B8%AA%E7%94%A8%E7%88%B1%E5%8F%91%E7%94%B5%E4%BA%94%E5%B9%B4%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</guid>
       <description>1 前言 一周前看到个新闻，Spotify在其第四季度财报中披露，截至2022年12月31日，它的付费订阅用户数达到了2.05亿，同比增长14%</description>
+      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+<p>一周前看到个<a href="https://www.theverge.com/2023/1/31/23577499/spotify-q4-2022-earnings-release-subscriber-growth-layoffs">新闻</a>，Spotify在其第四季度财报中披露，截至2022年12月31日，它的付费订阅用户数达到了2.05亿，同比增长14%；
+月活用户4.89亿。Spotify成为第一家订阅用户数突破2亿的音乐流服务。</p>
+<p>而我突然意识到，我那个使用Rust, 为Spotify开发，挂在Sptofiy官网的<a href="https://developer.spotify.com/documentation/web-api/libraries/">library</a>：<a href="https://github.com/ramsayleung/rspotify">RSpotify</a>，已经维护有五年了：</p>
+<figure><a href="/ox-hugo/web_api_wrapper.png">
+    <img loading="lazy" src="/ox-hugo/web_api_wrapper.png"/> </a>
+</figure>
+
+<figure><a href="/ox-hugo/commit.png">
+    <img loading="lazy" src="/ox-hugo/commit.png"/> </a>
+</figure>
+
+<p>一件用爱发电的开源项目要坚持维护五年，也是有很多话可以说的。</p>
+<h2 id="起源"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 起源</h2>
+<p>还记得大三暑假时，也就是2017年，当时找好了实习，并且拿到了Return Offer.
+在拿到Offer之后，实习还没有离职，就想学习一门新的编程语言。</p>
+<p>因为之前用的是都是Java，Python之类的带GC的编程语言，就想学习点硬核，偏底层的编程语言。
+本来是想学C++，结果在知乎看了一圈之后，大家都说C++要没落了，推荐学习Rust。（然后我现在靠写C++混饭吃）</p>
+<p>搜索了Rust的信息，发现它性能媲美C/C++, 又不需要手动管理内存，还连续几年荣膺Stackoverflow的<a href="https://insights.stackoverflow.com/survey/2017#technology-_-most-loved-dreaded-and-wanted-languages"> Most Loved Programming Language</a>,  就它了。就开始了一边实习一边摸鱼学习了Rust的旅程。</p>
+<p>因为大学前三年把学分都已经修满了，所以大四一整个学年都不需要上课了，就有时间折腾。</p>
+<p>在学了2-3个月之后，就想拿Rust来写些项目。
+但因为我只会写Web应用，又没有想到能写什么，到时就用Rust写了个<a href="https://github.com/ramsayleung/blog">博客</a>，并将博客从原来的Github Pages迁移到自建的博客上。</p>
+<p>很臭屁地在 <a href="https://www.v2ex.com/t/394146">V2ex</a> 和 <a href="https://www.reddit.com/r/rust/comments/72rr96/i_rewrite_my_blog_with_rust_thanks_for_all/">Reddit</a> 分享用Rust重写博客的经历，V2ex 一群人问我为什么不用PHP/xxx语言写，Reddit社区就友好很多。
+（然后过了5年之后，服务器欠费，又把自建博客迁移回Github Pages。当然，那是后话了。）</p>
+<p>在花了2-3个月写完博客之后，觉得自己入门Rust，就想写个开源项目，感受下与其他开发者协作的场景。</p>
+<p>当时看到个网易云音乐命令行版本的播放器 <a href="https://github.com/darknessomi/musicbox">musicbox</a>, 当时我在用的是Spotify，就希望可以为Spotify写个类似的播放器。</p>
+<figure><a href="/ox-hugo/musicbox.gif">
+    <img loading="lazy" src="/ox-hugo/musicbox.gif"/> </a>
+</figure>
+
+<p>虽说Spotify API是对外开放，但直接使用HttpClient来请求HTTP API有点太祼，所以就希望使用先封装个library，方便后续的Rust应用直接调用，就不需要自己操心Http请求了。</p>
+<p>这就是RSpotify这个库的来源。</p>
+<p>这次，我就只在 <a href="https://www.reddit.com/r/rust/comments/7xn9mh/my_first_crate_rspotify_spotify_api_wrapper/">Reddit</a>和<a href="https://ramsayleung.github.io/post/2018/rspotify/">博客</a> 上分享使用Rust来写library 的经历了。</p>
+<h2 id="演进"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 演进</h2>
+<h3 id="野蛮生长阶段"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 野蛮生长阶段</h3>
+<p>刚开始写RSpotify的时候，对于如何设计一个易用，友好的library 完全没有头绪，毕竟设计好用的类库需要相当的经验沉淀。</p>
+<p>对于没有设计思路的我而言，当时能想来的解决方案是去Spotify官方列出来的<a href="https://developer.spotify.com/documentation/web-api/libraries/">library</a>看下，哪个语言的library看得懂，star又多，就把这个library 翻译到Rust上。</p>
+<p>就把目光瞄准到Python版本的 <a href="https://github.com/spotipy-dev/spotipy">spotipy</a> 上。</p>
+<p>在2018-01-08 提交了第一个commit, 经过一个多月的日夜施工，终于在<a href="https://github.com/ramsayleung/rspotify/commit/bb93cc9cc52d5ee62e72b8be1c33a5e3e3ae60ac">2018-02-18</a> 完成了所有的API接口开发，发布了<a href="https://crates.io/crates/rspotify/0.1.0"> 0.1版本</a></p>
+<p>虽然这是我这个学生写的第一个Rust库，但是开源项目需要的标准配置，我还是都加上了：</p>
+<ul>
+<li>自动化流水线，Travis（当时Github Action还没有出现）</li>
+<li>齐全的<a href="https://docs.rs/rspotify/0.1.1/rspotify/index.html">文档说明</a></li>
+<li>完整的单元测试用例</li>
+<li>使用示例</li>
+<li>README说明与License</li>
+</ul>
+<p>为了吸引其他开发者来协作开发，所有的资料都是英文的。</p>
+<p>不过从Rust 包托管网站 <a href="https://crates.io/crates/rspotify/0.1.0">crates.io</a> 的数据可以看到，0.1版本只有300+的下载量，几乎没有什么人在用。</p>
+<figure><a href="/ox-hugo/stats_0.10.png">
+    <img loading="lazy" src="/ox-hugo/stats_0.10.png"/> </a>
+</figure>
+
+<h3 id="async-阶段"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> async 阶段</h3>
+<p>时间来到2019年，对于Rust社区来说，<a href="https://www.reddit.com/r/rust/comments/ct7aus/stabilize_async_await_in_rust_1390/">最激动人心</a>的应该是Rust 1.39版本，将正式包含 <code>async/await</code> 特性，自那天起，Rust正式支持异步编程。</p>
+<p>自此之后，Rust社区在做的事情，就是把已有Rust代码疯狂升级到async await，RSpotify虽迟，但也赶上了这波潮流。</p>
+<p>当时RSpotify 请求Spotify的API使用的HTTP库是 <code>reqwest</code>，在 <code>reqwest</code> 支持异步模式之后，开发者 <a href="https://github.com/Rigellute">Alexander</a>就提了一个超大的<a href="https://github.com/ramsayleung/rspotify/pull/81">PR</a>，把所有已有的api全部修改成<code>async</code>, 我就乐见其成，就把这个PR合并了。</p>
+<figure><a href="/ox-hugo/add_async_await_1.png">
+    <img loading="lazy" src="/ox-hugo/add_async_await_1.png"/> </a>
+</figure>
+
+<p>有社区的同学抱怨说异步模式的代码不好使用，他对性能没有什么要求，能否保留同步模式的接口调用。</p>
+<p>后来为了兼顾同步模式和异步模式这两种调用方式，Alexander 又提了一个超大超大的<a href="https://github.com/ramsayleung/rspotify/pull/82/files">PR</a>，把现有的异步模式代码复制一份，然后把<code>async</code> 关键字去掉。</p>
+<figure><a href="/ox-hugo/add_async_await_2.png">
+    <img loading="lazy" src="/ox-hugo/add_async_await_2.png"/> </a>
+</figure>
+
+<p>从此以后，RSpotify就需要同时维护两份几乎相同的代码，每次新增，修改，删除都需要确保同时变更两份代码。
+着实痛苦不堪，但我也没有思考出更优解。</p>
+<p>这时候，后来和我共同维护RSpotify 的开发者 <a href="https://github.com/ramsayleung/rspotify/pull/102">Mario</a> 出现了。</p>
+<h3 id="maybe-async-阶段"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> maybe_async 阶段</h3>
+<p>当时RSpotify最大的问题在于有两份几乎一样，但是使用同步调用和异步调用模式的代码。</p>
+<p>而异步调用的代码，返回参数都是一个 <code>Future&lt;T&gt;</code> ，将真正的响应结果封装在一个 <code>Future</code> 结构里面。</p>
+<p>所以当时Mario 提出的第一个<a href="https://github.com/ramsayleung/rspotify/issues/112">解决思路</a>，是将对异步代码进行封装，使用同步调用的runtime调用异步函数，然后再把响应结果返回回去：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// 异步代码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">original</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="n">reqwest</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">reqwest</span>::<span class="n">get</span><span class="p">(</span><span class="s">&#34;https://www.rust-lang.org&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="k">await</span><span class="o">?</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="n">text</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="k">await</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">lazy_static</span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Mutex to have mutable access and Arc so that it&#39;s thread-safe.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">ref</span><span class="w"> </span><span class="n">RT</span>: <span class="nc">Arc</span><span class="o">&lt;</span><span class="n">Mutex</span><span class="o">&lt;</span><span class="n">runtime</span>::<span class="n">Runtime</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arc</span>::<span class="n">new</span><span class="p">(</span><span class="n">Mutex</span>::<span class="n">new</span><span class="p">(</span><span class="n">runtime</span>::<span class="n">Builder</span>::<span class="n">new</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">								      </span><span class="p">.</span><span class="n">basic_scheduler</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">								      </span><span class="p">.</span><span class="n">enable_all</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">								      </span><span class="p">.</span><span class="n">build</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">								      </span><span class="p">.</span><span class="n">unwrap</span><span class="p">()));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 同步版本代码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">fn</span> <span class="nf">with_block_on</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="n">reqwest</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">RT</span><span class="p">.</span><span class="n">lock</span><span class="p">().</span><span class="n">unwrap</span><span class="p">().</span><span class="n">block_on</span><span class="p">(</span><span class="k">async</span><span class="w"> </span><span class="k">move</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">original</span><span class="p">().</span><span class="k">await</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>再通过Rust macro来为每个async 函数生成一个block_on 版本的函数。</p>
+<p>但实际上，发现编写<a href="https://github.com/ramsayleung/rspotify/pull/120">macro太复杂</a>，并且这种方案不够灵活，实现起来也相当复杂。</p>
+<p>然后Mario 又调研出一种<a href="https://github.com/ramsayleung/rspotify/pull/129">新方案</a>，通过 <a href="https://github.com/fMeow/maybe-async-rs"><code>maybe_async</code></a> 这个库在同步和异步模式之间切换。
+默认是异步模式，但可以通过 <code>features = [&quot;is_sync&quot;]</code> 编译选项来切换到同步模式，<code>maybe_async</code> 就会把所有的<code>async/await</code> 关键字给去掉。</p>
+<p>这个方案简单，可读性高，易于扩展，也不需要维护复杂的 macro 代码。</p>
+<p>这也是我们最终采取的方案，重构之后，把 <code>blocking</code> 目录的近万行复制粘贴而来的代码删除掉，就非常爽。</p>
+<h3 id="二次重构-阶段"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> 二次重构 阶段</h3>
+<p>前面提到，RSpotify最开始是直接翻译spotipy的代码。
+因为Python是弱类型，而Rust是强类型，直接翻译，难免会有不少代码，写法没有纯正的Rust味道。</p>
+<p>社区的Kestrer同学就在一个<a href="https://github.com/ramsayleung/rspotify/issues/127">issue</a>里面，给RSpotify提了近90条优化建议，指出了RSpotify中设计的各种问题，包括强类型运用不当，使用过多的原始类型，函数出入参设计不够优雅，授权流程设计不够易用等等。</p>
+<figure><a href="/ox-hugo/meta-issue.png">
+    <img loading="lazy" src="/ox-hugo/meta-issue.png"/> </a>
+</figure>
+
+<p>这么多的优化建议，可以看出Kestrer真的花了很多时间来阅读和改善RSpotify的代码，盛情难却（可见原来的代码是<del>多烂</del>, 有非常多激发社区同学参与改进的空间）.</p>
+<p>别人指出问题，就要好好优化。</p>
+<p>所以我和Mario就分别对每个接口返回的数据模型，数据模型与Json间转换的序列化方式，授权流程作了改进。
+并对RSpotify这个library作了拆分，按照功能，拆分成 <code>model</code>, <code>http</code>, <code>macros</code> 三个单独的library。</p>
+<figure><a href="/ox-hugo/trait_hierarchy.png">
+    <img loading="lazy" src="/ox-hugo/trait_hierarchy.png"/> </a>
+</figure>
+
+<figure><a href="/ox-hugo/crate_hierarchy.png">
+    <img loading="lazy" src="/ox-hugo/crate_hierarchy.png"/> </a>
+</figure>
+
+<p>期间提了大概20多个PR，花了超过一年的时间，才处理完Kestrer 提的所有建议。</p>
+<h3 id="pre-release-阶级"><!-- raw HTML omitted -->3.5<!-- raw HTML omitted --> pre-release 阶级</h3>
+<p>在开源社区里面，有一个约定俗成的规范：
+当一个library 发布1.0 之后，就代表这个库已经处于稳定状态，不会再出现大量breaking change 的情况了。（py2, py3不在此约束内）</p>
+<p>而经过4年的开发，RSpotify 已经步入一个相对稳定的开发状态，没有太多的breaking change 或重构了，开始为发布正式的1.0release 版本作准备。</p>
+<p>当功能与架构相对稳定后，近一年时间，我和Mario就开始优化RSpotify的易用性，比如</p>
+<ol>
+<li>添加更多，针对不同场景的 <a href="https://github.com/ramsayleung/rspotify/tree/master/examples">examples</a>；</li>
+<li>尽可能地去掉 <code>unsafe</code> 代码；</li>
+<li>为返回列表的API提供同步及异步版本的<a href="https://github.com/ramsayleung/rspotify/pull/166">Iterator支持</a>;</li>
+<li>保持向前兼容的情况下，尽量使已有接口更加Rust化；</li>
+<li>添加更多的自动化检查，如检查代码中文档的链接是否404；</li>
+<li>性能优化，减少不必要的内存分配</li>
+</ol>
+<p>目前版本已经去到了 <code>0.11.6</code>, 功能也相对稳定, 预计不久后就会正式发布1.0版本。</p>
+<h2 id="感悟"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 感悟</h2>
+<h3 id="开源协作"><!-- raw HTML omitted -->4.1<!-- raw HTML omitted --> 开源协作</h3>
+<p>截至到2023-02-09，RSpotify一共有1673次commit, 但我和Mario都只贡献了1/3的commit，剩下的commit都是社区的其他开发者提交的。</p>
+<figure><a href="/ox-hugo/1673.png">
+    <img loading="lazy" src="/ox-hugo/1673.png"/> </a>
+</figure>
+
+<figure><a href="/ox-hugo/contributor.png">
+    <img loading="lazy" src="/ox-hugo/contributor.png"/> </a>
+</figure>
+
+<p>从RSpotify的演进历程也可以看出，我只是从0开发了最初版本的RSpotify，后面都是随着Rust的演进，有不同的开发者帮忙优化与迭代，我做的事情就从单纯的creator, developer 变成maintainer, reviewer，负责review其他开发者的PR。</p>
+<p>可以说，如果没有其他开发者的贡献与协作，RSpotify不会演进成现在的样子。</p>
+<p>如何吸引更多的开发者加入，让他们乐于为项目作贡献，我个人的见解是：</p>
+<ol>
+<li>所有文档，注释，commit message, issue, CHANGELOG等材料，都只使用英文。</li>
+<li>标准的开源协作流程；
+<ul>
+<li><a href="https://github.com/ramsayleung/rspotify/tree/master/.github/ISSUE_TEMPLATE">issue</a>, <a href="https://github.com/ramsayleung/rspotify/blob/master/.github/pull_request_template.md">PR</a>, <a href="https://github.com/ramsayleung/rspotify/blob/master/CHANGELOG.md">CHANGELOG</a> 都提供标准模板</li>
+<li>要添加新特性，修改已有功能的时候，新建issue讨论动机与可行性</li>
+<li>每个PR都需要一个Peer Reviewer review后才能合并</li>
+<li>每次发新版本，都需要在 <a href="https://github.com/ramsayleung/rspotify/blob/master/CHANGELOG.md">CHANGELOG</a> 注明大的特性变更，以及breaking change</li>
+</ul>
+</li>
+<li>文档，示例，开发指引，测试case完备，降低新开发者参与的成本。</li>
+<li>be nice，态度友好，针对issue，PR都尽量回复，理性，友善讨论。</li>
+</ol>
+<p>开源协作的一个感受就是，在Github讨论问题的时候，可能突然有位大佬也加入群聊。</p>
+<p>比如和<a href="https://github.com/ramsayleung/rspotify/issues/204">Mario讨论</a>, 增加更多更严格cargo clippy 的rule，以便让编译器帮我们发现更多潜在问题时，cargo clippy 的maintainer 也加入讨论，就什么rule 更合适，给出自己的建议。</p>
+<h3 id="收获"><!-- raw HTML omitted -->4.2<!-- raw HTML omitted --> 收获</h3>
+<p>我用C++已经混了三年的饭吃了，但还只能看到C++的门槛，没法说入了C++的门。</p>
+<p>同理，虽然距离我学习Rust已经过去6年了，我依然感觉我还不会Rust，都是编译器教我写代码。</p>
+<p>在Review别人代码的过程中，我也学习到非常多「地道」和高级的Rust用法，项目维护的经验.</p>
+<p>想到的点：</p>
+<ol>
+<li>使用Rust的macro来减少copy-paste的代码（但复杂的 macro，基本不具备可读性。）</li>
+<li>使用serde 自定义序列化函数；</li>
+<li>以workspace 模式管理多个crates;</li>
+<li>编写 async/await 的异步代码；</li>
+<li>使用标准库的Trait, 风格契合标准库；</li>
+<li>结合thiserror 和anyhow 处理异常；</li>
+<li>通过自动化和模式化，减少项目维护的成本（能用机器做的，就不要用人做）。</li>
+<li>规范的开发流程，包括commit message, issue, PR, CHANGELOG, release note 等等</li>
+</ol>
+<p>期间把收获与心得写了两篇文章：</p>
+<ul>
+<li><a href="https://ramsayleung.github.io/post/2020/serde_lesson/">The lesson learned from refactoring rspotify</a></li>
+<li><a href="https://ramsayleung.github.io/post/2021/iterate_through_pagination_api/">Let&rsquo;s make everything iterable</a></li>
+</ul>
+<h3 id="关于开源"><!-- raw HTML omitted -->4.3<!-- raw HTML omitted --> 关于开源</h3>
+<p>维护这个项目5年之后，对于「开源」有了些不一样的理解。</p>
+<p>在1970 年代，Richard Stallman发起自由软件运动，旨在推广用户有使用，复制，研究，修改和分发软件的社会运动。
+自由软件运动人士认为自由软件的精神应该贯彻到所有软件。</p>
+<p>在90年代，又兴起了开源软件运动，则计算机软件的源代码是可以公开，随意获取的。
+（自由软件与开源软件不是同一个概念，自由软件定义更为严格）</p>
+<p>在那个崇尚黑客精神的年代，开源是「目的」，是为了贯彻自由的精神。</p>
+<p>以前听到某某公司内部有好用的工具，组件，框架时，总会问一句，为什么他们不像Google一样把它们开源出来。</p>
+<p>现在的想法可能是，为什么要开源出来，价值和收益是什么？</p>
+<p>开源一个项目的目的可能是：</p>
+<ol>
+<li>我做了个很有用，很有趣的东西，就想分享出来。但是我个人人力有限，大家一起来帮忙做大做好。(Linux, Ruby On Rails等)</li>
+<li>我们做了个好东西，我们要抢占市场。我们就开源，搞人海战术，让竞品淹没在人民群众的汪洋大海中，让我们的东西成为事实的标准。（Android，Chromium, Kubernetes, Vscode）</li>
+<li>就想开源让你们见识下大佬是怎么样子的。</li>
+</ol>
+<p>个人理解，<strong><strong>开源是「手段」，而非「目的」</strong></strong></p>
+<p>对于商业公司而言，如果没有收益，为什么要把花钱雇的人写的内部组件开源出来呢？总不成是为了在B站上博取小朋友的称赞吧。</p>
+<p>而公司内部的组件，往往是与业务共生，高度适配的，藕断丝连，没有那么容易开源的。</p>
+<p>商业公司，只谈收益与预期，如果名声能卖钱，估计也会拿来换取利润。</p>
+<p>更重要的是，开源并不是简单把代码公开出来。</p>
+<p>软件和生物一样，是有生命的，需要长期维护的，而不是一个commit把所有代码一把push 到Github就完事了，或者然后过了几年又push一把，更新几百个文件。</p>
+<p>开源是一个技术与管理结合的决定，需要把开发模式都切换到开源社区，决策过程与动机要对社区可见。</p>
+<p>不仅让人能从代码中读懂功能是「什么」，也要从动机讨论中知道「为什么」要这么改。</p>
+<h3 id="些许成果"><!-- raw HTML omitted -->4.4<!-- raw HTML omitted --> 些许成果</h3>
+<p>在Github上，收获了495个star，被1108个仓库及18个package 所依赖，而其中Alexander的 <a href="https://github.com/Rigellute/spotify-tui">spotify-tui</a> 就是我期望做的终端版本的Spotify。</p>
+<p>开源的好处就是，在开发好基础设施之后，自然就会有其他有相同想法的同学，把应用开发出来。</p>
+<figure><a href="/ox-hugo/dependent_packages.png">
+    <img loading="lazy" src="/ox-hugo/dependent_packages.png"/> </a>
+</figure>
+
+<p>crates.io 的统计，总计被下载23w次，当然包括很多CI的重复下载。</p>
+<figure><a href="/ox-hugo/stats.png">
+    <img loading="lazy" src="/ox-hugo/stats.png"/> </a>
+</figure>
+
+<p>对于有Rust，Spotify，Library等诸多定语的RSpotify来说，目标受众本来就不多，能有现在这样的用户量已远超我最初了预期了。</p>
+<h2 id="总结"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 总结</h2>
+<p>虽然我未曾从这个项目上获得到一分物质上的回报，但在创建这个项目的时候，我可能不会想到，我能维护它长达五年。</p>
+<p>天上的云，飘来又飘走；开源的项目，挖坑又弃坑。</p>
+<p>视线望不到下一个五年，唯有且行且看。</p>
+<h2 id="参考"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> 参考</h2>
+<ul>
+<li><a href="https://www.theverge.com/2023/1/31/23577499/spotify-q4-2022-earnings-release-subscriber-growth-layoffs">Spotify is first music streaming service to surpass 200M paid subscribers</a></li>
+<li><a href="https://github.com/ramsayleung/rspotify">RSpotify</a></li>
+<li><a href="https://ramsayleung.github.io/post/2020/serde_lesson/">The lesson learned from refactoring rspotify</a></li>
+<li><a href="https://ramsayleung.github.io/post/2021/iterate_through_pagination_api/">Let&rsquo;s make everything iterable</a></li>
+<li><a href="https://github.com/Rigellute/spotify-tui">spotify-tui</a></li>
+</ul>
+]]></content:encoded>
     </item>
     
     <item>
@@ -28,6 +264,246 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2023/%E4%B8%80%E4%B8%AA%E7%94%A8%E7%88%B1%E5%8F%91%E7%94%B5%E4%BA%94%E5%B9%B4%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</guid>
       <description>1 前言 一周前看到个新闻，Spotify在其第四季度财报中披露，截至2022年12月31日，它的付费订阅用户数达到了2.05亿，同比增长14%</description>
+      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+<p>一周前看到个<a href="https://www.theverge.com/2023/1/31/23577499/spotify-q4-2022-earnings-release-subscriber-growth-layoffs">新闻</a>，Spotify在其第四季度财报中披露，截至2022年12月31日，它的付费订阅用户数达到了2.05亿，同比增长14%；
+月活用户4.89亿。Spotify成为第一家订阅用户数突破2亿的音乐流服务。</p>
+<p>而我突然意识到，我那个使用Rust, 为Spotify开发，挂在Sptofiy官网的<a href="https://developer.spotify.com/documentation/web-api/libraries/">library</a>：<a href="https://github.com/ramsayleung/rspotify">RSpotify</a>，已经维护有五年了：</p>
+<figure><a href="/ox-hugo/web_api_wrapper.png">
+    <img loading="lazy" src="/ox-hugo/web_api_wrapper.png"/> </a>
+</figure>
+
+<figure><a href="/ox-hugo/commit.png">
+    <img loading="lazy" src="/ox-hugo/commit.png"/> </a>
+</figure>
+
+<p>一件用爱发电的开源项目要坚持维护五年，也是有很多话可以说的。</p>
+<h2 id="起源"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 起源</h2>
+<p>还记得大三暑假时，也就是2017年，当时找好了实习，并且拿到了Return Offer.
+在拿到Offer之后，实习还没有离职，就想学习一门新的编程语言。</p>
+<p>因为之前用的是都是Java，Python之类的带GC的编程语言，就想学习点硬核，偏底层的编程语言。
+本来是想学C++，结果在知乎看了一圈之后，大家都说C++要没落了，推荐学习Rust。（然后我现在靠写C++混饭吃）</p>
+<p>搜索了Rust的信息，发现它性能媲美C/C++, 又不需要手动管理内存，还连续几年荣膺Stackoverflow的<a href="https://insights.stackoverflow.com/survey/2017#technology-_-most-loved-dreaded-and-wanted-languages"> Most Loved Programming Language</a>,  就它了。就开始了一边实习一边摸鱼学习了Rust的旅程。</p>
+<p>因为大学前三年把学分都已经修满了，所以大四一整个学年都不需要上课了，就有时间折腾。</p>
+<p>在学了2-3个月之后，就想拿Rust来写些项目。
+但因为我只会写Web应用，又没有想到能写什么，到时就用Rust写了个<a href="https://github.com/ramsayleung/blog">博客</a>，并将博客从原来的Github Pages迁移到自建的博客上。</p>
+<p>很臭屁地在 <a href="https://www.v2ex.com/t/394146">V2ex</a> 和 <a href="https://www.reddit.com/r/rust/comments/72rr96/i_rewrite_my_blog_with_rust_thanks_for_all/">Reddit</a> 分享用Rust重写博客的经历，V2ex 一群人问我为什么不用PHP/xxx语言写，Reddit社区就友好很多。
+（然后过了5年之后，服务器欠费，又把自建博客迁移回Github Pages。当然，那是后话了。）</p>
+<p>在花了2-3个月写完博客之后，觉得自己入门Rust，就想写个开源项目，感受下与其他开发者协作的场景。</p>
+<p>当时看到个网易云音乐命令行版本的播放器 <a href="https://github.com/darknessomi/musicbox">musicbox</a>, 当时我在用的是Spotify，就希望可以为Spotify写个类似的播放器。</p>
+<figure><a href="/ox-hugo/musicbox.gif">
+    <img loading="lazy" src="/ox-hugo/musicbox.gif"/> </a>
+</figure>
+
+<p>虽说Spotify API是对外开放，但直接使用HttpClient来请求HTTP API有点太祼，所以就希望使用先封装个library，方便后续的Rust应用直接调用，就不需要自己操心Http请求了。</p>
+<p>这就是RSpotify这个库的来源。</p>
+<p>这次，我就只在 <a href="https://www.reddit.com/r/rust/comments/7xn9mh/my_first_crate_rspotify_spotify_api_wrapper/">Reddit</a>和<a href="https://ramsayleung.github.io/post/2018/rspotify/">博客</a> 上分享使用Rust来写library 的经历了。</p>
+<h2 id="演进"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 演进</h2>
+<h3 id="野蛮生长阶段"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 野蛮生长阶段</h3>
+<p>刚开始写RSpotify的时候，对于如何设计一个易用，友好的library 完全没有头绪，毕竟设计好用的类库需要相当的经验沉淀。</p>
+<p>对于没有设计思路的我而言，当时能想来的解决方案是去Spotify官方列出来的<a href="https://developer.spotify.com/documentation/web-api/libraries/">library</a>看下，哪个语言的library看得懂，star又多，就把这个library 翻译到Rust上。</p>
+<p>就把目光瞄准到Python版本的 <a href="https://github.com/spotipy-dev/spotipy">spotipy</a> 上。</p>
+<p>在2018-01-08 提交了第一个commit, 经过一个多月的日夜施工，终于在<a href="https://github.com/ramsayleung/rspotify/commit/bb93cc9cc52d5ee62e72b8be1c33a5e3e3ae60ac">2018-02-18</a> 完成了所有的API接口开发，发布了<a href="https://crates.io/crates/rspotify/0.1.0"> 0.1版本</a></p>
+<p>虽然这是我这个学生写的第一个Rust库，但是开源项目需要的标准配置，我还是都加上了：</p>
+<ul>
+<li>自动化流水线，Travis（当时Github Action还没有出现）</li>
+<li>齐全的<a href="https://docs.rs/rspotify/0.1.1/rspotify/index.html">文档说明</a></li>
+<li>完整的单元测试用例</li>
+<li>使用示例</li>
+<li>README说明与License</li>
+</ul>
+<p>为了吸引其他开发者来协作开发，所有的资料都是英文的。</p>
+<p>不过从Rust 包托管网站 <a href="https://crates.io/crates/rspotify/0.1.0">crates.io</a> 的数据可以看到，0.1版本只有300+的下载量，几乎没有什么人在用。</p>
+<figure><a href="/ox-hugo/stats_0.10.png">
+    <img loading="lazy" src="/ox-hugo/stats_0.10.png"/> </a>
+</figure>
+
+<h3 id="async-阶段"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> async 阶段</h3>
+<p>时间来到2019年，对于Rust社区来说，<a href="https://www.reddit.com/r/rust/comments/ct7aus/stabilize_async_await_in_rust_1390/">最激动人心</a>的应该是Rust 1.39版本，将正式包含 <code>async/await</code> 特性，自那天起，Rust正式支持异步编程。</p>
+<p>自此之后，Rust社区在做的事情，就是把已有Rust代码疯狂升级到async await，RSpotify虽迟，但也赶上了这波潮流。</p>
+<p>当时RSpotify 请求Spotify的API使用的HTTP库是 <code>reqwest</code>，在 <code>reqwest</code> 支持异步模式之后，开发者 <a href="https://github.com/Rigellute">Alexander</a>就提了一个超大的<a href="https://github.com/ramsayleung/rspotify/pull/81">PR</a>，把所有已有的api全部修改成<code>async</code>, 我就乐见其成，就把这个PR合并了。</p>
+<figure><a href="/ox-hugo/add_async_await_1.png">
+    <img loading="lazy" src="/ox-hugo/add_async_await_1.png"/> </a>
+</figure>
+
+<p>有社区的同学抱怨说异步模式的代码不好使用，他对性能没有什么要求，能否保留同步模式的接口调用。</p>
+<p>后来为了兼顾同步模式和异步模式这两种调用方式，Alexander 又提了一个超大超大的<a href="https://github.com/ramsayleung/rspotify/pull/82/files">PR</a>，把现有的异步模式代码复制一份，然后把<code>async</code> 关键字去掉。</p>
+<figure><a href="/ox-hugo/add_async_await_2.png">
+    <img loading="lazy" src="/ox-hugo/add_async_await_2.png"/> </a>
+</figure>
+
+<p>从此以后，RSpotify就需要同时维护两份几乎相同的代码，每次新增，修改，删除都需要确保同时变更两份代码。
+着实痛苦不堪，但我也没有思考出更优解。</p>
+<p>这时候，后来和我共同维护RSpotify 的开发者 <a href="https://github.com/ramsayleung/rspotify/pull/102">Mario</a> 出现了。</p>
+<h3 id="maybe-async-阶段"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> maybe_async 阶段</h3>
+<p>当时RSpotify最大的问题在于有两份几乎一样，但是使用同步调用和异步调用模式的代码。</p>
+<p>而异步调用的代码，返回参数都是一个 <code>Future&lt;T&gt;</code> ，将真正的响应结果封装在一个 <code>Future</code> 结构里面。</p>
+<p>所以当时Mario 提出的第一个<a href="https://github.com/ramsayleung/rspotify/issues/112">解决思路</a>，是将对异步代码进行封装，使用同步调用的runtime调用异步函数，然后再把响应结果返回回去：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// 异步代码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">original</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="n">reqwest</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">reqwest</span>::<span class="n">get</span><span class="p">(</span><span class="s">&#34;https://www.rust-lang.org&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="k">await</span><span class="o">?</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="n">text</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="k">await</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">lazy_static</span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Mutex to have mutable access and Arc so that it&#39;s thread-safe.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">ref</span><span class="w"> </span><span class="n">RT</span>: <span class="nc">Arc</span><span class="o">&lt;</span><span class="n">Mutex</span><span class="o">&lt;</span><span class="n">runtime</span>::<span class="n">Runtime</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arc</span>::<span class="n">new</span><span class="p">(</span><span class="n">Mutex</span>::<span class="n">new</span><span class="p">(</span><span class="n">runtime</span>::<span class="n">Builder</span>::<span class="n">new</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">								      </span><span class="p">.</span><span class="n">basic_scheduler</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">								      </span><span class="p">.</span><span class="n">enable_all</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">								      </span><span class="p">.</span><span class="n">build</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">								      </span><span class="p">.</span><span class="n">unwrap</span><span class="p">()));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 同步版本代码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">fn</span> <span class="nf">with_block_on</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="n">reqwest</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">RT</span><span class="p">.</span><span class="n">lock</span><span class="p">().</span><span class="n">unwrap</span><span class="p">().</span><span class="n">block_on</span><span class="p">(</span><span class="k">async</span><span class="w"> </span><span class="k">move</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">original</span><span class="p">().</span><span class="k">await</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>再通过Rust macro来为每个async 函数生成一个block_on 版本的函数。</p>
+<p>但实际上，发现编写<a href="https://github.com/ramsayleung/rspotify/pull/120">macro太复杂</a>，并且这种方案不够灵活，实现起来也相当复杂。</p>
+<p>然后Mario 又调研出一种<a href="https://github.com/ramsayleung/rspotify/pull/129">新方案</a>，通过 <a href="https://github.com/fMeow/maybe-async-rs"><code>maybe_async</code></a> 这个库在同步和异步模式之间切换。
+默认是异步模式，但可以通过 <code>features = [&quot;is_sync&quot;]</code> 编译选项来切换到同步模式，<code>maybe_async</code> 就会把所有的<code>async/await</code> 关键字给去掉。</p>
+<p>这个方案简单，可读性高，易于扩展，也不需要维护复杂的 macro 代码。</p>
+<p>这也是我们最终采取的方案，重构之后，把 <code>blocking</code> 目录的近万行复制粘贴而来的代码删除掉，就非常爽。</p>
+<h3 id="二次重构-阶段"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> 二次重构 阶段</h3>
+<p>前面提到，RSpotify最开始是直接翻译spotipy的代码。
+因为Python是弱类型，而Rust是强类型，直接翻译，难免会有不少代码，写法没有纯正的Rust味道。</p>
+<p>社区的Kestrer同学就在一个<a href="https://github.com/ramsayleung/rspotify/issues/127">issue</a>里面，给RSpotify提了近90条优化建议，指出了RSpotify中设计的各种问题，包括强类型运用不当，使用过多的原始类型，函数出入参设计不够优雅，授权流程设计不够易用等等。</p>
+<figure><a href="/ox-hugo/meta-issue.png">
+    <img loading="lazy" src="/ox-hugo/meta-issue.png"/> </a>
+</figure>
+
+<p>这么多的优化建议，可以看出Kestrer真的花了很多时间来阅读和改善RSpotify的代码，盛情难却（可见原来的代码是<del>多烂</del>, 有非常多激发社区同学参与改进的空间）.</p>
+<p>别人指出问题，就要好好优化。</p>
+<p>所以我和Mario就分别对每个接口返回的数据模型，数据模型与Json间转换的序列化方式，授权流程作了改进。
+并对RSpotify这个library作了拆分，按照功能，拆分成 <code>model</code>, <code>http</code>, <code>macros</code> 三个单独的library。</p>
+<figure><a href="/ox-hugo/trait_hierarchy.png">
+    <img loading="lazy" src="/ox-hugo/trait_hierarchy.png"/> </a>
+</figure>
+
+<figure><a href="/ox-hugo/crate_hierarchy.png">
+    <img loading="lazy" src="/ox-hugo/crate_hierarchy.png"/> </a>
+</figure>
+
+<p>期间提了大概20多个PR，花了超过一年的时间，才处理完Kestrer 提的所有建议。</p>
+<h3 id="pre-release-阶级"><!-- raw HTML omitted -->3.5<!-- raw HTML omitted --> pre-release 阶级</h3>
+<p>在开源社区里面，有一个约定俗成的规范：
+当一个library 发布1.0 之后，就代表这个库已经处于稳定状态，不会再出现大量breaking change 的情况了。（py2, py3不在此约束内）</p>
+<p>而经过4年的开发，RSpotify 已经步入一个相对稳定的开发状态，没有太多的breaking change 或重构了，开始为发布正式的1.0release 版本作准备。</p>
+<p>当功能与架构相对稳定后，近一年时间，我和Mario就开始优化RSpotify的易用性，比如</p>
+<ol>
+<li>添加更多，针对不同场景的 <a href="https://github.com/ramsayleung/rspotify/tree/master/examples">examples</a>；</li>
+<li>尽可能地去掉 <code>unsafe</code> 代码；</li>
+<li>为返回列表的API提供同步及异步版本的<a href="https://github.com/ramsayleung/rspotify/pull/166">Iterator支持</a>;</li>
+<li>保持向前兼容的情况下，尽量使已有接口更加Rust化；</li>
+<li>添加更多的自动化检查，如检查代码中文档的链接是否404；</li>
+<li>性能优化，减少不必要的内存分配</li>
+</ol>
+<p>目前版本已经去到了 <code>0.11.6</code>, 功能也相对稳定, 预计不久后就会正式发布1.0版本。</p>
+<h2 id="感悟"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 感悟</h2>
+<h3 id="开源协作"><!-- raw HTML omitted -->4.1<!-- raw HTML omitted --> 开源协作</h3>
+<p>截至到2023-02-09，RSpotify一共有1673次commit, 但我和Mario都只贡献了1/3的commit，剩下的commit都是社区的其他开发者提交的。</p>
+<figure><a href="/ox-hugo/1673.png">
+    <img loading="lazy" src="/ox-hugo/1673.png"/> </a>
+</figure>
+
+<figure><a href="/ox-hugo/contributor.png">
+    <img loading="lazy" src="/ox-hugo/contributor.png"/> </a>
+</figure>
+
+<p>从RSpotify的演进历程也可以看出，我只是从0开发了最初版本的RSpotify，后面都是随着Rust的演进，有不同的开发者帮忙优化与迭代，我做的事情就从单纯的creator, developer 变成maintainer, reviewer，负责review其他开发者的PR。</p>
+<p>可以说，如果没有其他开发者的贡献与协作，RSpotify不会演进成现在的样子。</p>
+<p>如何吸引更多的开发者加入，让他们乐于为项目作贡献，我个人的见解是：</p>
+<ol>
+<li>所有文档，注释，commit message, issue, CHANGELOG等材料，都只使用英文。</li>
+<li>标准的开源协作流程；
+<ul>
+<li><a href="https://github.com/ramsayleung/rspotify/tree/master/.github/ISSUE_TEMPLATE">issue</a>, <a href="https://github.com/ramsayleung/rspotify/blob/master/.github/pull_request_template.md">PR</a>, <a href="https://github.com/ramsayleung/rspotify/blob/master/CHANGELOG.md">CHANGELOG</a> 都提供标准模板</li>
+<li>要添加新特性，修改已有功能的时候，新建issue讨论动机与可行性</li>
+<li>每个PR都需要一个Peer Reviewer review后才能合并</li>
+<li>每次发新版本，都需要在 <a href="https://github.com/ramsayleung/rspotify/blob/master/CHANGELOG.md">CHANGELOG</a> 注明大的特性变更，以及breaking change</li>
+</ul>
+</li>
+<li>文档，示例，开发指引，测试case完备，降低新开发者参与的成本。</li>
+<li>be nice，态度友好，针对issue，PR都尽量回复，理性，友善讨论。</li>
+</ol>
+<p>开源协作的一个感受就是，在Github讨论问题的时候，可能突然有位大佬也加入群聊。</p>
+<p>比如和<a href="https://github.com/ramsayleung/rspotify/issues/204">Mario讨论</a>, 增加更多更严格cargo clippy 的rule，以便让编译器帮我们发现更多潜在问题时，cargo clippy 的maintainer 也加入讨论，就什么rule 更合适，给出自己的建议。</p>
+<h3 id="收获"><!-- raw HTML omitted -->4.2<!-- raw HTML omitted --> 收获</h3>
+<p>我用C++已经混了三年的饭吃了，但还只能看到C++的门槛，没法说入了C++的门。</p>
+<p>同理，虽然距离我学习Rust已经过去6年了，我依然感觉我还不会Rust，都是编译器教我写代码。</p>
+<p>在Review别人代码的过程中，我也学习到非常多「地道」和高级的Rust用法，项目维护的经验.</p>
+<p>想到的点：</p>
+<ol>
+<li>使用Rust的macro来减少copy-paste的代码（但复杂的 macro，基本不具备可读性。）</li>
+<li>使用serde 自定义序列化函数；</li>
+<li>以workspace 模式管理多个crates;</li>
+<li>编写 async/await 的异步代码；</li>
+<li>使用标准库的Trait, 风格契合标准库；</li>
+<li>结合thiserror 和anyhow 处理异常；</li>
+<li>通过自动化和模式化，减少项目维护的成本（能用机器做的，就不要用人做）。</li>
+<li>规范的开发流程，包括commit message, issue, PR, CHANGELOG, release note 等等</li>
+</ol>
+<p>期间把收获与心得写了两篇文章：</p>
+<ul>
+<li><a href="https://ramsayleung.github.io/post/2020/serde_lesson/">The lesson learned from refactoring rspotify</a></li>
+<li><a href="https://ramsayleung.github.io/post/2021/iterate_through_pagination_api/">Let&rsquo;s make everything iterable</a></li>
+</ul>
+<h3 id="关于开源"><!-- raw HTML omitted -->4.3<!-- raw HTML omitted --> 关于开源</h3>
+<p>维护这个项目5年之后，对于「开源」有了些不一样的理解。</p>
+<p>在1970 年代，Richard Stallman发起自由软件运动，旨在推广用户有使用，复制，研究，修改和分发软件的社会运动。
+自由软件运动人士认为自由软件的精神应该贯彻到所有软件。</p>
+<p>在90年代，又兴起了开源软件运动，则计算机软件的源代码是可以公开，随意获取的。
+（自由软件与开源软件不是同一个概念，自由软件定义更为严格）</p>
+<p>在那个崇尚黑客精神的年代，开源是「目的」，是为了贯彻自由的精神。</p>
+<p>以前听到某某公司内部有好用的工具，组件，框架时，总会问一句，为什么他们不像Google一样把它们开源出来。</p>
+<p>现在的想法可能是，为什么要开源出来，价值和收益是什么？</p>
+<p>开源一个项目的目的可能是：</p>
+<ol>
+<li>我做了个很有用，很有趣的东西，就想分享出来。但是我个人人力有限，大家一起来帮忙做大做好。(Linux, Ruby On Rails等)</li>
+<li>我们做了个好东西，我们要抢占市场。我们就开源，搞人海战术，让竞品淹没在人民群众的汪洋大海中，让我们的东西成为事实的标准。（Android，Chromium, Kubernetes, Vscode）</li>
+<li>就想开源让你们见识下大佬是怎么样子的。</li>
+</ol>
+<p>个人理解，<strong><strong>开源是「手段」，而非「目的」</strong></strong></p>
+<p>对于商业公司而言，如果没有收益，为什么要把花钱雇的人写的内部组件开源出来呢？总不成是为了在B站上博取小朋友的称赞吧。</p>
+<p>而公司内部的组件，往往是与业务共生，高度适配的，藕断丝连，没有那么容易开源的。</p>
+<p>商业公司，只谈收益与预期，如果名声能卖钱，估计也会拿来换取利润。</p>
+<p>更重要的是，开源并不是简单把代码公开出来。</p>
+<p>软件和生物一样，是有生命的，需要长期维护的，而不是一个commit把所有代码一把push 到Github就完事了，或者然后过了几年又push一把，更新几百个文件。</p>
+<p>开源是一个技术与管理结合的决定，需要把开发模式都切换到开源社区，决策过程与动机要对社区可见。</p>
+<p>不仅让人能从代码中读懂功能是「什么」，也要从动机讨论中知道「为什么」要这么改。</p>
+<h3 id="些许成果"><!-- raw HTML omitted -->4.4<!-- raw HTML omitted --> 些许成果</h3>
+<p>在Github上，收获了495个star，被1108个仓库及18个package 所依赖，而其中Alexander的 <a href="https://github.com/Rigellute/spotify-tui">spotify-tui</a> 就是我期望做的终端版本的Spotify。</p>
+<p>开源的好处就是，在开发好基础设施之后，自然就会有其他有相同想法的同学，把应用开发出来。</p>
+<figure><a href="/ox-hugo/dependent_packages.png">
+    <img loading="lazy" src="/ox-hugo/dependent_packages.png"/> </a>
+</figure>
+
+<p>crates.io 的统计，总计被下载23w次，当然包括很多CI的重复下载。</p>
+<figure><a href="/ox-hugo/stats.png">
+    <img loading="lazy" src="/ox-hugo/stats.png"/> </a>
+</figure>
+
+<p>对于有Rust，Spotify，Library等诸多定语的RSpotify来说，目标受众本来就不多，能有现在这样的用户量已远超我最初了预期了。</p>
+<h2 id="总结"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 总结</h2>
+<p>虽然我未曾从这个项目上获得到一分物质上的回报，但在创建这个项目的时候，我可能不会想到，我能维护它长达五年。</p>
+<p>天上的云，飘来又飘走；开源的项目，挖坑又弃坑。</p>
+<p>视线望不到下一个五年，唯有且行且看。</p>
+<figure><a href="/ox-hugo/commitstrip_on_foss.jpeg">
+    <img loading="lazy" src="/ox-hugo/commitstrip_on_foss.jpeg"/> </a>
+</figure>
+
+<h2 id="参考"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> 参考</h2>
+<ul>
+<li><a href="https://www.theverge.com/2023/1/31/23577499/spotify-q4-2022-earnings-release-subscriber-growth-layoffs">Spotify is first music streaming service to surpass 200M paid subscribers</a></li>
+<li><a href="https://github.com/ramsayleung/rspotify">RSpotify</a></li>
+<li><a href="https://ramsayleung.github.io/post/2020/serde_lesson/">The lesson learned from refactoring rspotify</a></li>
+<li><a href="https://ramsayleung.github.io/post/2021/iterate_through_pagination_api/">Let&rsquo;s make everything iterable</a></li>
+<li><a href="https://github.com/Rigellute/spotify-tui">spotify-tui</a></li>
+</ul>
+]]></content:encoded>
     </item>
     
     <item>
@@ -40,6 +516,168 @@
 1 Preface About 4 months ago, icewind1991 created an exciting PR that adding Stream/Iterator based versions of methods with paginated results, which makes enpoints in Rspotify more much ergonomic to use, and Mario completed this PR.
 In order to know what this PR brought to us, we have to go back to the orignal story, the paginated results in Spotify&amp;rsquo;s Rest API.
 2 Orignal Story Taking the artist_albums as example, it gets Spotify catalog information about an artist&amp;rsquo;s albums.</description>
+      <content:encoded><![CDATA[<p>Iterate through pagination in the Rest API</p>
+<h2 id="preface"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Preface</h2>
+<p>About 4 months ago, <a href="https://github.com/icewind1991">icewind1991</a> created an exciting <a href="https://github.com/ramsayleung/rspotify/pull/166">PR</a> that adding <code>Stream/Iterator</code> based versions of methods with paginated results, which makes enpoints in <a href="https://github.com/ramsayleung/rspotify">Rspotify</a> more much ergonomic to use, and <a href="https://github.com/marioortizmanero">Mario</a> completed this PR.</p>
+<p>In order to know what this PR brought to us, we have to go back to the orignal story, the paginated results in Spotify&rsquo;s Rest API.</p>
+<h2 id="orignal-story"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Orignal Story</h2>
+<p>Taking the <code>artist_albums</code> as example, it gets Spotify catalog information about an artist&rsquo;s albums.</p>
+<p>The HTTP response body for this endpoint contains an array of simplified <a href="https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedalbumobject">album object </a>wrapped in a <a href="https://developer.spotify.com/documentation/web-api/reference/#object-pagingobject">paging object</a> and use <code>limit</code> field to control the number of album objects to return and <code>offset</code> field to set the index of the first album to return.</p>
+<p>So designed endpoint in <code>Rspotify</code> looks like this:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="sd">/// Paging object
+</span></span></span><span class="line"><span class="cl"><span class="sd">///
+</span></span></span><span class="line"><span class="cl"><span class="sd">/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#object-pagingobject)
+</span></span></span><span class="line"><span class="cl"><span class="sd"></span><span class="cp">#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">Page</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">href</span>: <span class="nb">String</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">items</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">limit</span>: <span class="kt">u32</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">next</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">offset</span>: <span class="kt">u32</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">previous</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">total</span>: <span class="kt">u32</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sd">/// Get Spotify catalog information about an artist&#39;s albums.
+</span></span></span><span class="line"><span class="cl"><span class="sd">///
+</span></span></span><span class="line"><span class="cl"><span class="sd">/// Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="sd">/// - artist_id - the artist ID, URI or URL
+</span></span></span><span class="line"><span class="cl"><span class="sd">/// - album_type - &#39;album&#39;, &#39;single&#39;, &#39;appears_on&#39;, &#39;compilation&#39;
+</span></span></span><span class="line"><span class="cl"><span class="sd">/// - market - limit the response to one particular country.
+</span></span></span><span class="line"><span class="cl"><span class="sd">/// - limit  - the number of albums to return
+</span></span></span><span class="line"><span class="cl"><span class="sd">/// - offset - the index of the first album to return
+</span></span></span><span class="line"><span class="cl"><span class="sd">/// [Reference](https://developer.spotify.com/documentation/web-api/reference/#endpoint-get-an-artists-albums)
+</span></span></span><span class="line"><span class="cl"><span class="sd"></span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">artist_albums</span><span class="o">&lt;&#39;</span><span class="na">a</span><span class="o">&gt;</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">&amp;&#39;</span><span class="na">a</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">artist_id</span>: <span class="kp">&amp;</span><span class="o">&#39;</span><span class="na">a</span> <span class="nc">ArtistId</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">album_type</span>: <span class="nb">Option</span><span class="o">&lt;&amp;&#39;</span><span class="na">a</span><span class="w"> </span><span class="n">AlbumType</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">market</span>: <span class="nb">Option</span><span class="o">&lt;&amp;&#39;</span><span class="na">a</span><span class="w"> </span><span class="n">Market</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">ClientResult</span><span class="o">&lt;</span><span class="n">Page</span><span class="o">&lt;</span><span class="n">SimplifiedAlbum</span><span class="o">&gt;&gt;</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><p>Supposing that you fetched the first page of an artist&rsquo;s ablums, then
+you would to get the data of the next page, you have to parse a URL:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;next&#34;</span><span class="p">:</span> <span class="s2">&#34;https://api.spotify.com/v1/browse/categories?offset=2&amp;limit=20&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>You have to parse the URL and extract <code>limit</code> and <code>offset</code> parameters, and recall the <code>artist_albums</code> endpoint with setting <code>limit</code> to 20 and <code>offset</code> to 2.</p>
+<p>We have to manually fetch the data again and again until all datas have been consumed. It is not elegant, but works.</p>
+<figure>
+    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210429172938.png"/> 
+</figure>
+
+<h2 id="iterator-story"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Iterator Story</h2>
+<p>Since we have the basic knowledge about the background, let&rsquo;s jump to the iterator version of pagination endpoints.</p>
+<p>First of all, the iterator pattern allows us to perform some tasks on a sequence of items in turn. An iterator is responsible for the logic of itreating over each item and determining when the sequence has finished.</p>
+<p>If you want to know about about <code>Iterator</code>, Jon Gjengset has covered a brilliant <a href="https://www.youtube.com/watch?v=yozQ9C69pNs">tutorial</a> to demonstrate <code>Iterators</code> in Rust.</p>
+<p>All iterators implement a trait named <code>Iterator</code> that is defined in the standard library. The definition of the trait looks like this:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="nb">Iterator</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">type</span> <span class="nc">Item</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">next</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Option</span><span class="o">&lt;</span><span class="bp">Self</span>::<span class="n">Item</span><span class="o">&gt;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// methods with default implementations elided
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>By implementing the <code>Iterator</code> trait on our own types, we could have iterators that do anything we want. Then working mechanism we want to iterate over paginated result will look like this:</p>
+<figure>
+    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/sync_iterator_iterate.png"/> 
+</figure>
+
+<p>Now let&rsquo;s dive deep into the code, we need to implement <code>Iterator</code> for our own types, the pseudocode looks like:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="nb">Iterator</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">PageIterator</span><span class="o">&lt;</span><span class="n">Request</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">type</span> <span class="nc">Item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ClientResult</span><span class="o">&lt;</span><span class="n">Page</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">next</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Option</span><span class="o">&lt;</span><span class="bp">Self</span>::<span class="n">Item</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">match</span><span class="w"> </span><span class="n">call</span><span class="w"> </span><span class="n">endpoints</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">limit</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="nb">Ok</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">page</span><span class="p">.</span><span class="n">items</span><span class="p">.</span><span class="n">is_empty</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="n">we</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">done</span><span class="w"> </span><span class="n">here</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nb">None</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="nb">Ok</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="n">offset</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">page</span><span class="p">.</span><span class="n">items</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">u32</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nb">Some</span><span class="p">(</span><span class="nb">Ok</span><span class="p">(</span><span class="n">page</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="nb">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="nb">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>In order to iterate paginated result from different endpoints, we need a generic type to represent different endpoints. The
+<a href="https://doc.rust-lang.org/std/ops/trait.Fn.html"><code>Fn</code></a> trait comes to our mind, the function pointer that points to code, not data.</p>
+<p>Then the next version of pseudocode looks like:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">Request</span><span class="o">&gt;</span><span class="w"> </span><span class="nb">Iterator</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">PageIterator</span><span class="o">&lt;</span><span class="n">Request</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Request</span>: <span class="nb">Fn</span><span class="p">(</span><span class="kt">u32</span><span class="p">,</span><span class="w"> </span><span class="kt">u32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">ClientResult</span><span class="o">&lt;</span><span class="n">Page</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">type</span> <span class="nc">Item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ClientResult</span><span class="o">&lt;</span><span class="n">Page</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">next</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Option</span><span class="o">&lt;</span><span class="bp">Self</span>::<span class="n">Item</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">match</span><span class="w"> </span><span class="p">(</span><span class="n">function_pointer</span><span class="p">)(</span><span class="n">offset</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">limit</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="nb">Ok</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">page</span><span class="p">.</span><span class="n">items</span><span class="p">.</span><span class="n">is_empty</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="n">we</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">done</span><span class="w"> </span><span class="n">here</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nb">None</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="nb">Ok</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="n">offset</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">page</span><span class="p">.</span><span class="n">items</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">u32</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nb">Some</span><span class="p">(</span><span class="nb">Ok</span><span class="p">(</span><span class="n">page</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="nb">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="nb">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>Now, our iterator story has iterated to the end, the next item is that
+current full version code is
+<a href="https://github.com/ramsayleung/rspotify/blob/master/src/pagination/iter.rs">here</a>,
+check it if you are interested in :)</p>
+<h2 id="stream-story"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Stream Story</h2>
+<p>Are we done? Not yet. Let&rsquo;s move our eyes to stream story.</p>
+<p>The stream story is mostly similar with iterator story, except that
+iterator is synchronous, stream is asynchronous.</p>
+<p>The <code>Stream</code> trait can yield multiple values before completing, similiar
+to the <code>Iterator</code> trait.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">trait</span><span class="w"> </span><span class="n">Stream</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="sd">/// The type of the value yielded by the stream.
+</span></span></span><span class="line"><span class="cl"><span class="sd"></span><span class="w">    </span><span class="k">type</span> <span class="nc">Item</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="sd">/// Attempt to resolve the next item in the stream.
+</span></span></span><span class="line"><span class="cl"><span class="sd"></span><span class="w">    </span><span class="sd">/// Returns `Poll::Pending` if not ready, `Poll::Ready(Some(x))` if a value
+</span></span></span><span class="line"><span class="cl"><span class="sd"></span><span class="w">    </span><span class="sd">/// is ready, and `Poll::Ready(None)` if the stream has completed.
+</span></span></span><span class="line"><span class="cl"><span class="sd"></span><span class="w">    </span><span class="k">fn</span> <span class="nf">poll_next</span><span class="p">(</span><span class="bp">self</span>: <span class="nc">Pin</span><span class="o">&lt;&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">Self</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">cx</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">Context</span><span class="o">&lt;&#39;</span><span class="nb">_</span><span class="o">&gt;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span>-&gt; <span class="nc">Poll</span><span class="o">&lt;</span><span class="nb">Option</span><span class="o">&lt;</span><span class="bp">Self</span>::<span class="n">Item</span><span class="o">&gt;&gt;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>Since we have already known the <code>iterator</code>, let make the stream story short. We leverage the
+<a href="https://github.com/tokio-rs/async-stream"><code>async-stream</code></a> for using macro as Syntactic sugar to avoid clumsy type declaration and notation.</p>
+<p>We use <code>stream!</code> macro to generate an anonymous type implementing the <code>Stream</code> trait, and the <code>Item</code> associated type is the type of the values yielded from the stream, which is <code>ClientResult&lt;T&gt;</code> in this case.</p>
+<p>The stream <a href="https://github.com/ramsayleung/rspotify/blob/master/src/pagination/stream.rs">full version</a> is shorter and clearer:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="sd">/// This is used to handle paginated requests automatically.
+</span></span></span><span class="line"><span class="cl"><span class="sd"></span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">paginate</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">Fut</span><span class="p">,</span><span class="w"> </span><span class="n">Request</span><span class="o">&gt;</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">req</span>: <span class="nc">Request</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">page_size</span>: <span class="kt">u32</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">impl</span><span class="w"> </span><span class="n">Stream</span><span class="o">&lt;</span><span class="n">Item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ClientResult</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">T</span>: <span class="nb">Unpin</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Fut</span>: <span class="nc">Future</span><span class="o">&lt;</span><span class="n">Output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ClientResult</span><span class="o">&lt;</span><span class="n">Page</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Request</span>: <span class="nb">Fn</span><span class="p">(</span><span class="kt">u32</span><span class="p">,</span><span class="w"> </span><span class="kt">u32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Fut</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="n">async_stream</span>::<span class="n">stream</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">stream</span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">loop</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="kd">let</span><span class="w"> </span><span class="n">page</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">req</span><span class="p">(</span><span class="n">page_size</span><span class="p">,</span><span class="w"> </span><span class="n">offset</span><span class="p">).</span><span class="k">await</span><span class="o">?</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="n">offset</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">page</span><span class="p">.</span><span class="n">items</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">u32</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="k">for</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">page</span><span class="p">.</span><span class="n">items</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="kr">yield</span><span class="w"> </span><span class="nb">Ok</span><span class="p">(</span><span class="n">item</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="k">if</span><span class="w"> </span><span class="n">page</span><span class="p">.</span><span class="n">next</span><span class="p">.</span><span class="n">is_none</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="k">break</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="appendix"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> Appendix</h2>
+<p>Whew! It took more than I expected. Since iterators is the Rust features inspired by functional programming language ideas, which contributes to Rust&rsquo;s capability to clearly express high-level ideas at low-level performance.</p>
+<p>It&rsquo;s good to leverage iterators wherever possible, now we can be thrilled to say that all endpoints don&rsquo;t need to manuallly loop over anymore, they are all iterable and rusty.</p>
+<p>Thanks Mario and icewind1991 again for their works :)</p>
+]]></content:encoded>
     </item>
     
     <item>
@@ -52,6 +690,398 @@ In order to know what this PR brought to us, we have to go back to the orignal s
 1 Preface Recently, I and Mario are working on refactoring rspotify, trying to improve performance, documentation, error-handling, data model and reduce compile time, to make it easier to use. (For those who has never heard about rspotify, it is a Spotify HTTP SDK implemented in Rust).
 I am partly focusing on polishing the data model, based on the issue created by Koxiaet.
 Since rspotify is API client for Spotify, it has to handle the request and response from Spotify HTTP API.</description>
+      <content:encoded><![CDATA[<p>The lesson learned from refactoring rspotify</p>
+<h2 id="preface"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Preface</h2>
+<p>Recently, I and <a href="https://github.com/marioortizmanero">Mario</a> are working on refactoring <a href="https://github.com/ramsayleung/rspotify"><code>rspotify</code></a>, trying to improve performance, documentation, error-handling, data model and reduce compile time, to make it easier to use. (For those who has never heard about <code>rspotify</code>, it is a Spotify HTTP SDK implemented in Rust).</p>
+<p>I am partly focusing on polishing the data model, based on the <a href="https://github.com/ramsayleung/rspotify/issues/127">issue</a> created by <a href="https://github.com/Koxiaet">Koxiaet</a>.</p>
+<p>Since <code>rspotify</code> is API client for Spotify, it has to handle the request and response from Spotify HTTP API.</p>
+<p>Generally speaking, the data model is something about how to structure the response data, and used <a href="http://serde.rs/"><code>Serde</code></a> to parse JSON response from HTTP API to Rust <code>struct</code>, and I have learnt a lot Serde tricks from refactoring.</p>
+<h2 id="serde-lesson"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Serde Lesson</h2>
+<h3 id="deserialize-json-map-to-vec-based-on-its-value-dot"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> Deserialize JSON map to Vec based on its value.</h3>
+<p>An actions object which contains a <code>disallows</code> object, allows to update the user interface based on which playback actions are available within the current context.</p>
+<p>The response JSON data from HTTP API:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">...</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&#34;disallows&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	    <span class="nt">&#34;resuming&#34;</span><span class="p">:</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="err">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>The original model representing actions was:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[derive(Clone, Debug, Serialize, PartialEq, Eq)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">Actions</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">disallows</span>: <span class="nc">HashMap</span><span class="o">&lt;</span><span class="n">DisallowKey</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cp">#[derive(Clone, Serialize, Deserialize, Copy, PartialEq, Eq, Debug, Hash, ToString)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cp">#[serde(rename_all = </span><span class="s">&#34;snake_case&#34;</span><span class="cp">)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cp">#[strum(serialize_all = </span><span class="s">&#34;snake_case&#34;</span><span class="cp">)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">enum</span> <span class="nc">DisallowKey</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">InterruptingPlayback</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Pausing</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Resuming</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">..</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>And Koxiaet gave great advice about how to polish <code>Actions</code>:</p>
+<blockquote>
+<p><code>Actions::disallows</code> can be replaced with a <code>Vec&lt;DisallowKey&gt;</code> or <code>HashSet&lt;DisallowKey&gt;</code> by removing all entires whose value is false, which will result in a simpler API.</p>
+</blockquote>
+<p>To be honest, I was not that familiar with <code>Serde</code> before, after digging in its official documentation for a while, it seems there is now a built-in way to convert JSON map to <code>Vec&lt;T&gt;</code> base on map&rsquo;s value.</p>
+<p>After reading the <a href="https://serde.rs/custom-serialization.html">Custom serialization</a> from documentation, there was a simple solution came to my mind, so I wrote my first customized deserialize function.</p>
+<p>I created a dumb <code>Actions</code> struct inside the <code>deserialize</code> function, and converted <code>HashMap</code> to <code>Vec</code> by filtering its value.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[derive(Clone, Debug, Serialize, PartialEq, Eq)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">Actions</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">disallows</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="n">DisallowKey</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">impl</span><span class="o">&lt;&#39;</span><span class="na">de</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Deserialize</span><span class="o">&lt;&#39;</span><span class="na">de</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Actions</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">deserialize</span><span class="o">&lt;</span><span class="n">D</span><span class="o">&gt;</span><span class="p">(</span><span class="n">deserializer</span>: <span class="nc">D</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="bp">Self</span><span class="p">,</span><span class="w"> </span><span class="n">D</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">where</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">D</span>: <span class="nc">Deserializer</span><span class="o">&lt;&#39;</span><span class="na">de</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="cp">#[derive(Deserialize)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">struct</span> <span class="nc">OriginalActions</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="k">pub</span><span class="w"> </span><span class="n">disallows</span>: <span class="nc">HashMap</span><span class="o">&lt;</span><span class="n">DisallowKey</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="kd">let</span><span class="w"> </span><span class="n">orignal_actions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OriginalActions</span>::<span class="n">deserialize</span><span class="p">(</span><span class="n">deserializer</span><span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nb">Ok</span><span class="p">(</span><span class="n">Actions</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="n">disallows</span>: <span class="nc">orignal_actions</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="p">.</span><span class="n">disallows</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="p">.</span><span class="n">into_iter</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="p">.</span><span class="n">filter</span><span class="p">(</span><span class="o">|</span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="o">|</span><span class="w"> </span><span class="o">*</span><span class="n">value</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="p">)</span><span class="o">|</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="p">.</span><span class="n">collect</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>The types should be familiar if you&rsquo;ve used <code>Serde</code> before.</p>
+<p>If you&rsquo;re not used to Rust then the function signature will likely look a little strange. What it&rsquo;s trying to tell is that d will be something that implements <code>Serde</code>&rsquo;s <code>Deserializer</code> trait, and that any references to memory will live for the <code>'de</code> lifetime.</p>
+<h3 id="deserialize-unix-milliseconds-timestamp-to-datetime"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> Deserialize Unix milliseconds timestamp to Datetime</h3>
+<p>A currently playing object which contains information about currently playing item, and the <code>timestamp</code> field is an integer, representing the Unix millisecond timestamp when data was fetched.</p>
+<p>The response JSON data from HTTP API:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">...</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&#34;timestamp&#34;</span><span class="p">:</span> <span class="mi">1490252122574</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;progress_ms&#34;</span><span class="p">:</span> <span class="mi">44272</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;is_playing&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;currently_playing_type&#34;</span><span class="p">:</span> <span class="s2">&#34;track&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;actions&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&#34;disallows&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	    <span class="nt">&#34;resuming&#34;</span><span class="p">:</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="err">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>The original model was:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="sd">/// Currently playing object
+</span></span></span><span class="line"><span class="cl"><span class="sd">///
+</span></span></span><span class="line"><span class="cl"><span class="sd">/// [Reference](https://developer.spotify.com/documentation/web-api/reference/player/get-the-users-currently-playing-track/)
+</span></span></span><span class="line"><span class="cl"><span class="sd"></span><span class="cp">#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">CurrentlyPlayingContext</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">timestamp</span>: <span class="kt">u64</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">progress_ms</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="kt">u32</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">is_playing</span>: <span class="kt">bool</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">item</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="n">PlayingItem</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">currently_playing_type</span>: <span class="nc">CurrentlyPlayingType</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">actions</span>: <span class="nc">Actions</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>As before, Koxiaet made a great point about <code>timestamp</code> and =progress_ms=(I will talk about it later):</p>
+<blockquote>
+<p><code>CurrentlyPlayingContext::timestamp</code> should be a <code>chrono::DateTime&lt;Utc&gt;</code>, which could be easier to use.</p>
+</blockquote>
+<p>The polished struct looks like:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">CurrentlyPlayingContext</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">context</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="n">Context</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[serde(
+</span></span></span><span class="line"><span class="cl"><span class="cp">	deserialize_with = </span><span class="s">&#34;from_millisecond_timestamp&#34;</span><span class="cp">,
+</span></span></span><span class="line"><span class="cl"><span class="cp">	serialize_with = </span><span class="s">&#34;to_millisecond_timestamp&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">    )]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">timestamp</span>: <span class="nc">DateTime</span><span class="o">&lt;</span><span class="n">Utc</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">progress_ms</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="kt">u32</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">is_playing</span>: <span class="kt">bool</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">item</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="n">PlayingItem</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">currently_playing_type</span>: <span class="nc">CurrentlyPlayingType</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">actions</span>: <span class="nc">Actions</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>Using the <code>deserialize_with</code> attribute tells <code>Serde</code> to use custom deserialization code for the <code>timestamp</code> field. The
+<code>from_millisecond_timestamp</code> code is:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="sd">/// Deserialize Unix millisecond timestamp to `DateTime&lt;Utc&gt;`
+</span></span></span><span class="line"><span class="cl"><span class="sd"></span><span class="k">pub</span><span class="p">(</span><span class="k">in</span><span class="w"> </span><span class="k">crate</span><span class="p">)</span><span class="w"> </span><span class="k">fn</span> <span class="nf">from_millisecond_timestamp</span><span class="o">&lt;&#39;</span><span class="na">de</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="o">&gt;</span><span class="p">(</span><span class="n">d</span>: <span class="nc">D</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="n">DateTime</span><span class="o">&lt;</span><span class="n">Utc</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">D</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">D</span>: <span class="nc">de</span>::<span class="n">Deserializer</span><span class="o">&lt;&#39;</span><span class="na">de</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">d</span><span class="p">.</span><span class="n">deserialize_u64</span><span class="p">(</span><span class="n">DateTimeVisitor</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>The code calls <code>d.deserialize_u64</code> passing in a struct. The passed in struct implements <code>Serde</code>&rsquo;s <code>Visitor</code>, and look like:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// Vistor to help deserialize unix millisecond timestamp to `chrono::DateTime`
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">struct</span> <span class="nc">DateTimeVisitor</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">impl</span><span class="o">&lt;&#39;</span><span class="na">de</span><span class="o">&gt;</span><span class="w"> </span><span class="n">de</span>::<span class="n">Visitor</span><span class="o">&lt;&#39;</span><span class="na">de</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">DateTimeVisitor</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">type</span> <span class="nc">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DateTime</span><span class="o">&lt;</span><span class="n">Utc</span><span class="o">&gt;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">expecting</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">formatter</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">fmt</span>::<span class="n">Formatter</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">fmt</span>::<span class="nb">Result</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="fm">write!</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="n">formatter</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="s">&#34;an unix millisecond timestamp represents DataTime&lt;UTC&gt;&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">visit_u64</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">v</span>: <span class="kt">u64</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="bp">Self</span>::<span class="n">Value</span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">where</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">E</span>: <span class="nc">de</span>::<span class="n">Error</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="o">..</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>The struct <code>DateTimeVisitor</code> doesn&rsquo;t have any fields, it just a type implemented the custom visitor which delegates to parse the <code>u64</code>.</p>
+<p>Since there is no way to construct <code>DataTime</code> directly from Unix millisecond timestamp, I have to figure out how to handle the
+construction. And it turns out that there is a way to construct <code>DateTime</code> from seconds and nanoseconds:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">chrono</span>::<span class="p">{</span><span class="n">DateTime</span><span class="p">,</span><span class="w"> </span><span class="n">TimeZone</span><span class="p">,</span><span class="w"> </span><span class="n">NaiveDateTime</span><span class="p">,</span><span class="w"> </span><span class="n">Utc</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DateTime</span>::<span class="o">&lt;</span><span class="n">Utc</span><span class="o">&gt;</span>::<span class="n">from_utc</span><span class="p">(</span><span class="n">NaiveDateTime</span>::<span class="n">from_timestamp</span><span class="p">(</span><span class="mi">61</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="n">Utc</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><p>Thus, what I need to do is just convert millisecond to second and nanosecond:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">visit_u64</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">v</span>: <span class="kt">u64</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="bp">Self</span>::<span class="n">Value</span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">E</span>: <span class="nc">de</span>::<span class="n">Error</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">second</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">1000</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">nanosecond</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">v</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">1000</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1000000</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">u32</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// The maximum value of i64 is large enough to hold millisecond, so it would be safe to convert it i64
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DateTime</span>::<span class="o">&lt;</span><span class="n">Utc</span><span class="o">&gt;</span>::<span class="n">from_utc</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">NaiveDateTime</span>::<span class="n">from_timestamp</span><span class="p">(</span><span class="n">second</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">i64</span><span class="p">,</span><span class="w"> </span><span class="n">nanosecond</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">Utc</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nb">Ok</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>The <code>to_millisecond_timestamp</code> function is similar to <code>from_millisecond_timestamp</code>, but it&rsquo;s eaiser to implement, check
+<a href="https://github.com/ramsayleung/rspotify/pull/157/files#">this PR</a> for more detail.</p>
+<h3 id="deserialize-milliseconds-to-duration"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> Deserialize milliseconds to Duration</h3>
+<p>The simplified episode object contains the simplified episode information, and the <code>duration_ms</code> field is an integer, which represents the episode length in milliseconds.</p>
+<p>The response JSON data from HTTP API:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">...</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&#34;audio_preview_url&#34;</span> <span class="p">:</span> <span class="s2">&#34;https://p.scdn.co/mp3-preview/83bc7f2d40e850582a4ca118b33c256358de06ff&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;description&#34;</span> <span class="p">:</span> <span class="s2">&#34;Följ med Tobias Svanelid till Sveriges äldsta tegelkyrka&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;duration_ms&#34;</span> <span class="p">:</span> <span class="mi">2685023</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;explicit&#34;</span> <span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="err">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>The original model was</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">SimplifiedEpisode</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">audio_preview_url</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">description</span>: <span class="nb">String</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">duration_ms</span>: <span class="kt">u32</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">..</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>As before without saying, Koxiaet pointed out that</p>
+<blockquote>
+<p><code>SimplifiedEpisode::duration_ms</code> should be replaced with a <code>duration</code> of type <code>Duration</code>, since a built-in <code>Duration</code> type works better than primitive type.</p>
+</blockquote>
+<p>Since I have worked with <code>Serde</code>&rsquo;s custome deserialization, it&rsquo;s not a hard job for me any more. I easily figure out how to deserialize <code>u64</code> to <code>Duration</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">SimplifiedEpisode</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">audio_preview_url</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">description</span>: <span class="nb">String</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[serde(
+</span></span></span><span class="line"><span class="cl"><span class="cp">	deserialize_with = </span><span class="s">&#34;from_duration_ms&#34;</span><span class="cp">,
+</span></span></span><span class="line"><span class="cl"><span class="cp">	serialize_with = </span><span class="s">&#34;to_duration_ms&#34;</span><span class="cp">,
+</span></span></span><span class="line"><span class="cl"><span class="cp">	rename = </span><span class="s">&#34;duration_ms&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">    )]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">duration</span>: <span class="nc">Duration</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">..</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sd">/// Vistor to help deserialize duration represented as millisecond to `std::time::Duration`
+</span></span></span><span class="line"><span class="cl"><span class="sd"></span><span class="k">struct</span> <span class="nc">DurationVisitor</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">impl</span><span class="o">&lt;&#39;</span><span class="na">de</span><span class="o">&gt;</span><span class="w"> </span><span class="n">de</span>::<span class="n">Visitor</span><span class="o">&lt;&#39;</span><span class="na">de</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">DurationVisitor</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">type</span> <span class="nc">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Duration</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">expecting</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">formatter</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">fmt</span>::<span class="n">Formatter</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">fmt</span>::<span class="nb">Result</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="fm">write!</span><span class="p">(</span><span class="n">formatter</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;a milliseconds represents std::time::Duration&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">visit_u64</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">v</span>: <span class="kt">u64</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="bp">Self</span>::<span class="n">Value</span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">where</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">E</span>: <span class="nc">de</span>::<span class="n">Error</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nb">Ok</span><span class="p">(</span><span class="n">Duration</span>::<span class="n">from_millis</span><span class="p">(</span><span class="n">v</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sd">/// Deserialize `std::time::Duration` from millisecond(represented as u64)
+</span></span></span><span class="line"><span class="cl"><span class="sd"></span><span class="k">pub</span><span class="p">(</span><span class="k">in</span><span class="w"> </span><span class="k">crate</span><span class="p">)</span><span class="w"> </span><span class="k">fn</span> <span class="nf">from_duration_ms</span><span class="o">&lt;&#39;</span><span class="na">de</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="o">&gt;</span><span class="p">(</span><span class="n">d</span>: <span class="nc">D</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="n">Duration</span><span class="p">,</span><span class="w"> </span><span class="n">D</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">D</span>: <span class="nc">de</span>::<span class="n">Deserializer</span><span class="o">&lt;&#39;</span><span class="na">de</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">d</span><span class="p">.</span><span class="n">deserialize_u64</span><span class="p">(</span><span class="n">DurationVisitor</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>Now, the life is easier than before.</p>
+<h3 id="deserialize-milliseconds-to-option"><!-- raw HTML omitted -->2.4<!-- raw HTML omitted --> Deserialize milliseconds to Option</h3>
+<p>Let&rsquo;s go back to <code>CurrentlyPlayingContext</code> model, since we have replaced millisecond (represents as <code>u32</code>) with <code>Duration</code>, it makes sense to replace all millisecond fields to <code>Duration</code>.</p>
+<p>But hold on, it seems <code>progress_ms</code> field is a bit different.</p>
+<p>The <code>progress_ms</code> field is either not present or a millisecond, the <code>u32</code> handles the milliseconds, as its value might not be present in the response, it&rsquo;s an <code>Option&lt;u32&gt;</code>, so it won&rsquo;t work with <code>from_duration_ms</code>.</p>
+<p>Thus, it&rsquo;s necessary to figure out how to handle the <code>Option</code> type, and the answer is in the documentation, the <code>deserialize_option</code> function:</p>
+<blockquote>
+<p>Hint that the <code>Deserialize</code> type is expecting an optional value.</p>
+</blockquote>
+<!-- raw HTML omitted -->
+<blockquote>
+<p>This allows deserializers that encode an optional value as a nullable value to convert the null value into <code>None</code> and a regular value into <code>Some(value)</code>.</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">CurrentlyPlayingContext</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">context</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="n">Context</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[serde(
+</span></span></span><span class="line"><span class="cl"><span class="cp">	deserialize_with = </span><span class="s">&#34;from_millisecond_timestamp&#34;</span><span class="cp">,
+</span></span></span><span class="line"><span class="cl"><span class="cp">	serialize_with = </span><span class="s">&#34;to_millisecond_timestamp&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">    )]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">timestamp</span>: <span class="nc">DateTime</span><span class="o">&lt;</span><span class="n">Utc</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[serde(default)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[serde(
+</span></span></span><span class="line"><span class="cl"><span class="cp">	deserialize_with = </span><span class="s">&#34;from_option_duration_ms&#34;</span><span class="cp">,
+</span></span></span><span class="line"><span class="cl"><span class="cp">	serialize_with = </span><span class="s">&#34;to_option_duration_ms&#34;</span><span class="cp">,
+</span></span></span><span class="line"><span class="cl"><span class="cp">	rename = </span><span class="s">&#34;progress_ms&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">    )]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">progress</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="n">Duration</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sd">/// Deserialize `Option&lt;std::time::Duration&gt;` from millisecond(represented as u64)
+</span></span></span><span class="line"><span class="cl"><span class="sd"></span><span class="k">pub</span><span class="p">(</span><span class="k">in</span><span class="w"> </span><span class="k">crate</span><span class="p">)</span><span class="w"> </span><span class="k">fn</span> <span class="nf">from_option_duration_ms</span><span class="o">&lt;&#39;</span><span class="na">de</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="o">&gt;</span><span class="p">(</span><span class="n">d</span>: <span class="nc">D</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="nb">Option</span><span class="o">&lt;</span><span class="n">Duration</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">D</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">D</span>: <span class="nc">de</span>::<span class="n">Deserializer</span><span class="o">&lt;&#39;</span><span class="na">de</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">d</span><span class="p">.</span><span class="n">deserialize_option</span><span class="p">(</span><span class="n">OptionDurationVisitor</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>As before, the <code>OptionDurationVisitor</code> is an empty struct implemented <code>Visitor</code> trait, but key point is in order to work with
+<code>deserialize_option</code>, the <code>OptionDurationVisitor</code> has to implement the <code>visit_none</code> and <code>visit_some</code> method:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">impl</span><span class="o">&lt;&#39;</span><span class="na">de</span><span class="o">&gt;</span><span class="w"> </span><span class="n">de</span>::<span class="n">Visitor</span><span class="o">&lt;&#39;</span><span class="na">de</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">OptionDurationVisitor</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">type</span> <span class="nc">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Option</span><span class="o">&lt;</span><span class="n">Duration</span><span class="o">&gt;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">expecting</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">formatter</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">fmt</span>::<span class="n">Formatter</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">fmt</span>::<span class="nb">Result</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="fm">write!</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="n">formatter</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="s">&#34;a optional milliseconds represents std::time::Duration&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">visit_none</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="bp">Self</span>::<span class="n">Value</span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">where</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">E</span>: <span class="nc">de</span>::<span class="n">Error</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nb">Ok</span><span class="p">(</span><span class="nb">None</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">visit_some</span><span class="o">&lt;</span><span class="n">D</span><span class="o">&gt;</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">deserializer</span>: <span class="nc">D</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="bp">Self</span>::<span class="n">Value</span><span class="p">,</span><span class="w"> </span><span class="n">D</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">where</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">D</span>: <span class="nc">de</span>::<span class="n">Deserializer</span><span class="o">&lt;&#39;</span><span class="na">de</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nb">Ok</span><span class="p">(</span><span class="nb">Some</span><span class="p">(</span><span class="n">deserializer</span><span class="p">.</span><span class="n">deserialize_u64</span><span class="p">(</span><span class="n">DurationVisitor</span><span class="p">)</span><span class="o">?</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>The <code>visit_none</code> method return <code>Ok(None)</code> so the <code>progress</code> value in the struct will be None, and the <code>visit_some</code> delegates the parsing logic to <code>DurationVisitor</code> via the <code>deserialize_u64</code> call, so deserializing <code>Some(u64)</code> works like the <code>u64</code>.</p>
+<h3 id="deserialize-enum-from-number"><!-- raw HTML omitted -->2.5<!-- raw HTML omitted --> Deserialize enum from number</h3>
+<p>An <code>AudioAnalysisSection</code> model contains a <code>mode</code> field, which indicates the modality(major or minor) of a track, the type of scle from which its melodic content is derived. This field will contain a 0 for <code>minor</code>, a 1 for <code>major</code>, or a -1 for no result.</p>
+<p>The response JSON data from HTTP API:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">...</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&#34;mode&#34;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;mode_confidence&#34;</span><span class="p">:</span> <span class="mf">0.414</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="err">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>The original struct representing <code>AudioAnalysisSection</code> was like this, since <code>mode</code> field was stored into a <code>f32=(=f8</code> was a better choice for this case):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">AudioAnalysisSection</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">..</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">pub</span><span class="w"> </span><span class="n">mode</span>: <span class="kt">f32</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">mode_confidence</span>: <span class="kt">f32</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">..</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>Koxiaet made a great point about <code>mode</code> field:</p>
+<blockquote>
+<p><code>AudioAnalysisSection::mode</code> and <code>AudioFeatures::mode</code> are <code>f32=s but should be =Option&lt;Mode&gt;=s where =enum Mode { Major, Minor }</code> as it is more useful.</p>
+</blockquote>
+<p>In this case, we don&rsquo;t need the <code>Opiton</code> type and in order to deserialize enum from number, we firstly need to define a C-like enum:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">enum</span> <span class="nc">Modality</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[serde(rename = </span><span class="s">&#34;0&#34;</span><span class="cp">)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Minor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[serde(rename = </span><span class="s">&#34;1&#34;</span><span class="cp">)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Major</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[serde(rename = </span><span class="s">&#34;1&#34;</span><span class="cp">)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">NoResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">AudioAnalysisSection</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">..</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">pub</span><span class="w"> </span><span class="n">mode</span>: <span class="nc">Modality</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">mode_confidence</span>: <span class="kt">f32</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">..</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>And then, what&rsquo;s the next step? It seems serde doesn&rsquo;t allow C-like enums to be formatted as integers rather that strings in JSON natively:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="err">working</span> <span class="err">version:</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">...</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&#34;mode&#34;</span><span class="p">:</span> <span class="s2">&#34;0&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;mode_confidence&#34;</span><span class="p">:</span> <span class="mf">0.414</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="err">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">failed</span> <span class="err">version:</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">...</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&#34;mode&#34;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;mode_confidence&#34;</span><span class="p">:</span> <span class="mf">0.414</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="err">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Then the failed version is exactly what we want. I know that the serde&rsquo;s official documentation has a solution for this case, the <a href="https://github.com/dtolnay/serde-repr">serde_repr</a> crate provides alternative derive macros that derive the same Serialize and Deserialize traits but delegate to the underlying representation of a C-like enum.</p>
+<p>Since we are trying to reduce the compiled time of rspotify, so we are cautious about introducing new dependencies. So a custom-made serialize function would be a better choice, it just needs to <code>match</code> the number, and convert to a related enum value.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="sd">/// Deserialize/Serialize `Modality` to integer(0, 1, -1).
+</span></span></span><span class="line"><span class="cl"><span class="sd"></span><span class="k">pub</span><span class="p">(</span><span class="k">in</span><span class="w"> </span><span class="k">crate</span><span class="p">)</span><span class="w"> </span><span class="k">mod</span> <span class="nn">modality</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="k">super</span>::<span class="n">enums</span>::<span class="n">Modality</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="n">serde</span>::<span class="p">{</span><span class="n">de</span><span class="p">,</span><span class="w"> </span><span class="n">Deserialize</span><span class="p">,</span><span class="w"> </span><span class="n">Serializer</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">deserialize</span><span class="o">&lt;&#39;</span><span class="na">de</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="o">&gt;</span><span class="p">(</span><span class="n">d</span>: <span class="nc">D</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="n">Modality</span><span class="p">,</span><span class="w"> </span><span class="n">D</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">where</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">D</span>: <span class="nc">de</span>::<span class="n">Deserializer</span><span class="o">&lt;&#39;</span><span class="na">de</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">i8</span>::<span class="n">deserialize</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">match</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="mi">0</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Ok</span><span class="p">(</span><span class="n">Modality</span>::<span class="n">Minor</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="mi">1</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Ok</span><span class="p">(</span><span class="n">Modality</span>::<span class="n">Major</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Ok</span><span class="p">(</span><span class="n">Modality</span>::<span class="n">NoResult</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Err</span><span class="p">(</span><span class="n">de</span>::<span class="n">Error</span>::<span class="n">invalid_value</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="n">de</span>::<span class="n">Unexpected</span>::<span class="n">Signed</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">into</span><span class="p">()),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="o">&amp;</span><span class="s">&#34;valid value: 0, 1, -1&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="p">)),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">serialize</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span>: <span class="kp">&amp;</span><span class="nc">Modality</span><span class="p">,</span><span class="w"> </span><span class="n">s</span>: <span class="nc">S</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="n">S</span>::<span class="nb">Ok</span><span class="p">,</span><span class="w"> </span><span class="n">S</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">where</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">S</span>: <span class="nc">Serializer</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">match</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="n">Modality</span>::<span class="n">Minor</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">serialize_i8</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="n">Modality</span>::<span class="n">Major</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">serialize_i8</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="n">Modality</span>::<span class="n">NoResult</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">serialize_i8</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="move-into-module"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Move into module</h2>
+<p>Update:</p>
+<p>2021-01-15</p>
+<ul>
+<li><code>from(to)_millisecond_timestamp</code> have been moved into its module <code>millisecond_timestamp</code> and rename them to <code>deserialize</code> &amp; <code>serialize</code></li>
+<li><code>from(to)_duration_ms</code> have been moved into its module <code>duration_ms</code> and rename them to <code>deserialize</code> &amp; <code>serialize</code></li>
+<li><code>from(to)_option_duration_ms</code> have been moved into its module <code>option_duration_ms</code> and rename them to <code>deserialize</code> &amp; <code>serialize</code></li>
+</ul>
+<h2 id="summary"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Summary</h2>
+<p>To be honest, it&rsquo;s the first time I have needed some customized works, which took me some time to understand how does <code>Serde</code> works. Finally, all investments paid off, it works great now.</p>
+<p>Serde is such an awesome deserialize/serialize framework which I have learnt a lot of from and still have a lot of to learn from.</p>
+<h2 id="reference"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> Reference</h2>
+<ul>
+<li><a href="https://chrismcg.com/2019/04/30/deserializing-optional-datetimes-with-serde/">Deserializing optional datetimes with serde</a></li>
+<li><a href="https://github.com/ramsayleung/rspotify/pull/157">PR: Keep polishing the models</a></li>
+<li><a href="https://github.com/ramsayleung/rspotify/pull/145">PR: Refactor model</a></li>
+<li><a href="https://github.com/ramsayleung/rspotify/pull/177">PR: Deserialize enum from number</a></li>
+</ul>
+]]></content:encoded>
     </item>
     
     <item>
@@ -63,6 +1093,77 @@ Since rspotify is API client for Spotify, it has to handle the request and respo
       <description>1 Preface Today, I am exited to introduce you the v0.9 release I have been continued to work on it for the past few weeks that adds async/await support now!
 2 The road to async/await What is rspotify: &amp;gt; For those who has never heared about rspotify before, rspotify is a Spotify web Api wrapper implemented in Rust.
 With async/await&amp;rsquo;s forthcoming stabilization and reqwest adds async/await support now, I think it&amp;rsquo;s time to let rspotify leverage power from async/await.</description>
+      <content:encoded><![CDATA[<h2 id="preface"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Preface</h2>
+<p>Today, I am exited to introduce you the <a href="https://github.com/ramsayleung/rspotify/releases/tag/v0.9">v0.9</a> release I have been continued to work on it for the past few weeks that
+adds <code>async/await</code> support now!</p>
+<h2 id="the-road-to-async-await"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> The road to async/await</h2>
+<p>What is rspotify: &gt; For those who has never heared about rspotify
+before, <a href="https://github.com/ramsayleung/rspotify">rspotify</a> is a
+Spotify web Api wrapper implemented in Rust.</p>
+<p>With async/await&rsquo;s forthcoming stabilization and reqwest adds
+<code>async/await</code> support now, I think it&rsquo;s time to let rspotify leverage
+power from <code>async/await</code>. To be honest, I was not familiar with
+<code>async/await</code> before, because of my Java background from where I just
+get used to multiple thread and sync stuff(Yes, I know Java has <code>future</code>
+either).</p>
+<p>After reading some good learning resources, such as <a href="https://rust-lang.github.io/async-book/">Async book</a>, <a href="https://www.youtube.com/watch?v=skos4B5x7qE">Zero-cost Async IO</a>, I
+started to step into the world of <code>async/await</code>. <code>async/await</code> is a way
+to write functions that can &ldquo;pause&rdquo;, return control to the runtime, ant
+then pick up from where they left off.</p>
+<p>I think perhaps the most important part of <code>async/await</code> is runtime, which defines how to
+schedule the functions.</p>
+<p>Now, by leveraging the <code>async/await</code> power of <code>reqwest</code>, rspotify could
+send HTTP request and handle response asynchronously.</p>
+<p>Futhermore, not only do I refactor the old blocking endpoint functions to <code>async/await</code>
+version, but also keep the old blocking endpoint functions with a new
+additional feature <code>blocking</code>, then other developers could choose API to
+their taste.</p>
+<h2 id="overview"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Overview</h2>
+<p><code>album</code> example:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">rspotify</span>::<span class="n">client</span>::<span class="n">Spotify</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">rspotify</span>::<span class="n">oauth2</span>::<span class="n">SpotifyClientCredentials</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cp">#[tokio::main]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Set client_id and client_secret in .env file or
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="c1">// export CLIENT_ID=&#34;your client_id&#34;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="c1">// export CLIENT_SECRET=&#34;secret&#34;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">client_credential</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SpotifyClientCredentials</span>::<span class="n">default</span><span class="p">().</span><span class="n">build</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Or set client_id and client_secret explictly
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="c1">// let client_credential = SpotifyClientCredentials::default()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="c1">//     .client_id(&#34;this-is-my-client-id&#34;)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="c1">//     .client_secret(&#34;this-is-my-client-secret&#34;)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="c1">//     .build();
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">spotify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Spotify</span>::<span class="n">default</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="n">client_credentials_manager</span><span class="p">(</span><span class="n">client_credential</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="n">build</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">birdy_uri</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;spotify:album:0sNOF9WDwhWunNAHPD3Baj&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">albums</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spotify</span><span class="p">.</span><span class="n">album</span><span class="p">(</span><span class="n">birdy_uri</span><span class="p">).</span><span class="k">await</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;{:?}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">albums</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>Just change the default API to async, and moving the previous
+synchronous API to <code>blocking</code> module.</p>
+<p>Notes that I think the v0.9 release of rspotify is going to be a huge
+break change because of the support for <code>async/await</code>, which definitely
+breaks backward compatibility.</p>
+<p>So I decide to make an other break change
+into the next release, just refactoring the project structure to shorten
+the import path:</p>
+<p>before:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">rspotify</span>::<span class="n">spotify</span>::<span class="n">client</span>::<span class="n">Spotify</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">rspotify</span>::<span class="n">spotify</span>::<span class="n">oauth2</span>::<span class="n">SpotifyClientCredentials</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><p>after:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">rspotify</span>::<span class="n">client</span>::<span class="n">Spotify</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">rspotify</span>::<span class="n">oauth2</span>::<span class="n">SpotifyClientCredentials</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><p>the <code>spotify</code> module is unnecessary and inelegant, so I just remove it.</p>
+<h2 id="conclusion"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Conclusion</h2>
+<p><a href="https://github.com/ramsayleung/rspotify/releases/tag/v0.9">rspotify v0.9</a> is now available! There is <a href="https://docs.rs/crate/rspotify/">documentation</a>, <a href="https://github.com/ramsayleung/rspotify/tree/master/examples">examples</a> and an <a href="https://github.com/ramsayleung/rspotify/issues/new">issue</a>
+tracker!</p>
+<p>Please provide any feedback, as I would love to improve this library any way I can! Thanks <a href="https://github.com/Rigellute">@Alexander</a> so much for actively participate in the refactor work for support
+<code>async/await</code>.</p>
+]]></content:encoded>
     </item>
     
     <item>
@@ -72,6 +1173,130 @@ With async/await&amp;rsquo;s forthcoming stabilization and reqwest adds async/aw
       
       <guid>https://ramsayleung.github.io/zh/post/2018/rspotify/</guid>
       <description>开发第一个Rust crate 的感受和踩到的坑 最近写了人生第一个 Rust crate&amp;ndash; rspotify. 虽说并不是什么惊天地，泣鬼神的大作，但是也是我花费了近两个月实现的。 现在就来聊聊</description>
+      <content:encoded><![CDATA[<p>开发第一个Rust crate 的感受和踩到的坑</p>
+<p>最近写了人生第一个 Rust crate&ndash; <a href="https://github.com/samrayleung/rspotify">rspotify</a>. 虽说并不是什么惊天地，泣鬼神的大作，但是也是我花费了近两个月实现的。</p>
+<p>现在就来聊聊这个开发过程的感悟和踩到的坑</p>
+<h2 id="感悟"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 感悟</h2>
+<h3 id="函数的缺省值"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> 函数的缺省值</h3>
+<p>因为我是参考着 Python 版本的 Spotify API SDK 来写 rspotify的，Spotify 某些API 需要请求的时候附加上默认值，例如在获取一个歌手最热的10首歌的时候需要指定country.</p>
+<p>因为Python 的函数是有缺省参数的，所以用 python 来实现就很方便</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">artist_top_tracks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artist_id</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;US&#39;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34; Get Spotify catalog information about an artist&#39;s top 10 tracks
+</span></span></span><span class="line"><span class="cl"><span class="s2">	by country.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">	Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">	    - artist_id - the artist ID, URI or URL
+</span></span></span><span class="line"><span class="cl"><span class="s2">	    - country - limit the response to one particular country.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">trid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_id</span><span class="p">(</span><span class="s1">&#39;artist&#39;</span><span class="p">,</span> <span class="n">artist_id</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="s1">&#39;artists/&#39;</span> <span class="o">+</span> <span class="n">trid</span> <span class="o">+</span> <span class="s1">&#39;/top-tracks&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="n">country</span><span class="p">)</span>
+</span></span></code></pre></div><p>但是用 Rust 来实现的时候，问题就来了，因为Rust 是没有缺省参数的。而Rust 处理缺省参数的策略一般是<code>Builder Pattern</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">Part1</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">points</span>: <span class="kt">u32</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">tf</span>: <span class="kt">f64</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">dt</span>: <span class="kt">f64</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">impl</span><span class="w"> </span><span class="n">Part1</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">new</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nc">Part1</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">Part1</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">points</span>: <span class="mi">30_</span><span class="k">u32</span><span class="p">,</span><span class="w"> </span><span class="n">tf</span>: <span class="mi">3_</span><span class="k">f64</span><span class="p">,</span><span class="w"> </span><span class="n">dt</span>: <span class="mf">0.1_</span><span class="k">f64</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">tf</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">tf</span>: <span class="kt">f64</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="bp">self</span><span class="p">.</span><span class="n">tf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tf</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="bp">self</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">points</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">points</span>: <span class="kt">u32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="bp">self</span><span class="p">.</span><span class="n">points</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">points</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="bp">self</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">dt</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">dt</span>: <span class="kt">f64</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="bp">self</span><span class="p">.</span><span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dt</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="bp">self</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="w">  </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="c1">// code here
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;{:?}&#34;</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">//调用函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Part1</span>::<span class="n">new</span><span class="p">().</span><span class="n">points</span><span class="p">(</span><span class="mi">10_</span><span class="k">u32</span><span class="p">).</span><span class="n">run</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Part1</span>::<span class="n">new</span><span class="p">().</span><span class="n">tf</span><span class="p">(</span><span class="mi">7_</span><span class="k">f64</span><span class="p">).</span><span class="n">dt</span><span class="p">(</span><span class="mi">15_</span><span class="k">f64</span><span class="p">).</span><span class="n">run</span><span class="p">();</span><span class="w">
+</span></span></span></code></pre></div><p>具体情况具体分析，就 rspotify 而言， <code>Builder Pattern</code> 并不适用，因为 rspotify
+有很多函数都需要缺省参数，而不同函数的缺省值可能又不一样。</p>
+<p>例如，有些函数的 <code>offset</code>参数是 0, 而另外一些函数的 <code>offset</code> 参数是1. 为此，我还在 <a href="https://www.reddit.com/r/rust/comments/7u1zjl/question_about_default_values_for_function/">Reddit</a> 发贴询问意见，<a href="https://www.reddit.com/user/PM_ME_WALLPAPER">PM_ME_WALLPAPER</a> 建议我用<code>Into&lt;Option&lt;T&gt;&gt;</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">foo</span><span class="o">&lt;</span><span class="n">T</span>: <span class="nb">Into</span><span class="o">&lt;</span><span class="nb">Option</span><span class="o">&lt;</span><span class="kt">usize</span><span class="o">&gt;&gt;&gt;</span><span class="p">(</span><span class="n">limit</span>: <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">limit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">limit</span><span class="p">.</span><span class="n">into</span><span class="p">().</span><span class="n">unwrap_or</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="err">…</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>在他的建议下，我把 <code>artist_top_tracks()</code> 修改成：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">artist_top_tracks</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">artist_id</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="kt">str</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">country</span>: <span class="nc">impl</span><span class="w"> </span><span class="nb">Into</span><span class="o">&lt;</span><span class="nb">Option</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Option</span><span class="o">&lt;</span><span class="n">FullTracks</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">params</span>: <span class="nc">HashMap</span><span class="o">&lt;&amp;</span><span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HashMap</span>::<span class="n">new</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">params</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&#34;country&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">country</span><span class="p">.</span><span class="n">into</span><span class="p">().</span><span class="n">unwrap_or</span><span class="p">(</span><span class="s">&#34;US&#34;</span><span class="p">.</span><span class="n">to_owned</span><span class="p">()));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">trid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">get_id</span><span class="p">(</span><span class="n">Type</span>::<span class="n">Artist</span><span class="p">,</span><span class="w"> </span><span class="n">artist_id</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;artists/&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">url</span><span class="p">.</span><span class="n">push_str</span><span class="p">(</span><span class="o">&amp;</span><span class="n">trid</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">url</span><span class="p">.</span><span class="n">push_str</span><span class="p">(</span><span class="s">&#34;/top-tracks&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">match</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">url</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">params</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nb">Some</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="c1">// let mut albums: Albums = ;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	    </span><span class="k">match</span><span class="w"> </span><span class="n">serde_json</span>::<span class="n">from_str</span>::<span class="o">&lt;</span><span class="n">FullTracks</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">result</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nb">Ok</span><span class="p">(</span><span class="n">_tracks</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">_tracks</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nb">Err</span><span class="p">(</span><span class="n">why</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		    </span><span class="fm">eprintln!</span><span class="p">(</span><span class="s">&#34;convert albums from String to Albums failed {:?}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">why</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		    </span><span class="nb">None</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nb">None</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">None</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>虽说不如Python 那样优雅，但是看起来还是不错滴</p>
+<h3 id="错误处理"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> 错误处理</h3>
+<p>对于一个 library 而言，错误处理是设计的重要一环。</p>
+<p>因为我之前只有开发应用的经验， 而开发应用的错误处理和开发类库的错误处理显然需要考虑的东西不一样，所以我还谨慎思考过这个问题。后来，我决定不处理调用Spotify API 或者其他操作导致的错误，将错误进行一次包装(wrap), 然后再返回给library 的调用者。</p>
+<p>最开始的时候，我是自己定义错误类型的，后来觉得过于累赘，就用上<code>error_chain</code>. 用上 error_chain 之后， <code>errors.rs</code>这个文件也非常简单：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="sd">///The kind of spotify error.
+</span></span></span><span class="line"><span class="cl"><span class="sd"></span><span class="k">use</span><span class="w"> </span><span class="n">serde_json</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">error_chain</span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">errors</span><span class="w"> </span><span class="p">{}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">foreign_links</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">Json</span><span class="p">(</span><span class="n">serde_json</span>::<span class="n">Error</span><span class="p">)</span><span class="w"> </span><span class="cp">#[doc = </span><span class="s">&#34;An error happened while serializing JSON&#34;</span><span class="cp">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>而刚刚我提到了只对错误作简单的包装，得益于 <code>error_chain</code>的设计，这个特性也很容易实现：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">convert_result</span><span class="o">&lt;&#39;</span><span class="na">a</span><span class="p">,</span><span class="w"> </span><span class="n">T</span>: <span class="nc">Deserialize</span><span class="o">&lt;&#39;</span><span class="na">a</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">input</span>: <span class="kp">&amp;</span><span class="o">&#39;</span><span class="na">a</span> <span class="kt">str</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">serde_json</span>::<span class="n">from_str</span>::<span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">input</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="n">chain_err</span><span class="p">(</span><span class="o">||</span><span class="w"> </span><span class="fm">format!</span><span class="p">(</span><span class="s">&#34;convert result failed, content {:?}&#34;</span><span class="p">,</span><span class="n">input</span><span class="p">))</span><span class="o">?</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nb">Ok</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>这个函数是将 Spotify 的响应体映射成对应的 object(例如 playlist, album 等). 如果转换过程出错了，那么就返回<code>convert result failed, content {:?}</code>错误信息之后，返回 <code>serde_json</code> 转换时出现的错误信息。</p>
+<h3 id="reddit-plus-clippy"><!-- raw HTML omitted -->1.3<!-- raw HTML omitted --> Reddit+clippy</h3>
+<p>剩下的是在纠结定义一个函数传参的时候是传值，参数是 mutable 还是 immutable, 以及其他类似的考虑。</p>
+<p>或许 Effective Rust 和 More Effective Rust 出现之后，我读完就知道什么样的设计才是 best practice. 因为有诸多设计的不确定，所以在完成rspotify 90% 的代码量之后，我在 <a href="https://www.reddit.com/r/rust/comments/7xn9mh/my_first_crate_rspotify_spotify_api_wrapper/">Reddit</a>
+上发贴，邀请社区的同学来 review code 以帮我完善代码。</p>
+<p>他们的确给了我很多建议，我也根据他们的建议修改 rspotify. 在经过人肉 code review 之后，是时候祭出
+<a href="https://github.com/rust-lang-nursery/rust-clippy">clippy</a> 这个大杀器， clippy 就代码的编写给出了非常多的建议，比如将函数 <code>Vec&lt;String&gt;</code> 的参数类型修改成
+<code>&amp;[String]</code>, 因为函数并没有使用(consume) 这个参数，所以传引用比传值更合适，类似 的建议不胜枚举。</p>
+<p>最后在 clippy 的建议下， 我几乎将所有的 clippy warning 都消除掉。 邀请别人经常帮你 review code 有点不实际，但是 clippy 确是不会因为帮你审查代码而感到厌烦的，真的是非常强大的工具</p>
+<h2 id="坑"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 坑</h2>
+<h3 id="debugger"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> Debugger</h3>
+<p>虽说 Rust 也有Debugger&ndash; gdb-rust. gdb 我以前写c 的时候用过，gdb 熟悉程度虽然谈 不上精通，但是也能熟练使用。但是用gdb-rust 调试并不是非常便利，比如在使用 <a href="https://rocket.rs/">Rocket</a> 这个Web框架的时候，就很难使用gdb来调试Web程序。</p>
+<p>虽说 <a href="https://intellij-rust.github.io/">intellij-rust</a> 这个 Intellij Idea 的插件也支 持Debugger, 但是只有配合<a href="https://www.jetbrains.com/clion/">Clion</a>才能使用。因为 只有 Clion 才能调用 gdb, 无奈。所以在开发 rspotify 的时候，我用得都是 <code>println!()</code>调试大法。</p>
+<h3 id="编译器bug"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 编译器Bug</h3>
+<p>战战兢兢地开发着，终于到发布到 <a href="https://crates.io/">crates.io</a> 的大喜日子了，怎知在发布之后一直没办法看到生成的文档，本地不是一切正常么？</p>
+<p>后来在<a href="https://www.reddit.com/r/rust/comments/7yrofg/rspotify_is_published_to_cratesio/">社区</a> 同学的提醒下， 我才发现我踩到了 Rust 编译器的一个bug, 最后我就顺手提交了一个 <a href="https://github.com/rust-lang/rust/issues/48368">issue</a>, 虽说这个问题已经在 <code>nightly</code> 里面修复了。</p>
+<h2 id="结语"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 结语</h2>
+<p>前后两个月的时间，终于发布了 rspotify. 项目不大，但是也是我花费时间，精力去开发的，也得到其他同学的肯定，喔耶 :)</p>
+]]></content:encoded>
     </item>
     
   </channel>

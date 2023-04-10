@@ -19,6 +19,110 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2023/%E6%80%9D%E8%80%83_%E5%85%AC%E4%BC%97%E5%8F%B7%E8%83%8C%E5%90%8E%E7%9A%84%E4%BA%A7%E5%93%81%E9%80%BB%E8%BE%91/</guid>
       <description>1 前言 在公众号开通10天之际，我已经在公众号写了10来篇文章了，也基本熟悉了公众号的写作，发文以及与用户的互动流程。 对比个人博客，公众号多了</description>
+      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+<p>在公众号开通10天之际，我已经在公众号写了10来篇文章了，也基本熟悉了公众号的写作，发文以及与用户的互动流程。</p>
+<p>对比个人博客，公众号多了很多额外的限制和规则。
+所谓人在屋檐下，不得不低头，选择在公众号这个平台创作，自然只能接受各种合理和不合理的规则。</p>
+<p>在了解清楚规则是「什么」之后，我开始思考「为什么」会有这些规则？许多问题的本质，就藏在诸多的「为什么」后面。</p>
+<p>所以就来分享下我个人对公众号产品规则的思考与见解，仅为一家之言。</p>
+<h2 id="审核"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 审核</h2>
+<p>我的文章<a href="https://mp.weixin.qq.com/s/qOuJjW5HVCiuA9bqNuzLdw">《为什么梦想买不想，故乡回不去》</a>大概有7到8次发布失败，原因都是「审核不通过」。
+虽说「自由」是创作的基础，但是既然选择公众号，只能接受就被审核的命运。</p>
+<p>但这里让我抓狂的是，公众号不会像个编辑一样告诉我哪里审核不通过，什么地方需要修改，
+只有一句含糊的「此内容因违规无法查看，请前往草稿箱修改后重试」：</p>
+<figure><a href="/ox-hugo/%e5%ae%a1%e6%a0%b8.png">
+    <img loading="lazy" src="/ox-hugo/%e5%ae%a1%e6%a0%b8.png"/> </a>
+</figure>
+
+<p>我只能重读文章，把那些我认为「不利于团结」的话逐条删除，然后重新发布，审核不通过，如此循环。</p>
+<p>思考下来，公众号平台不告诉作者哪里审核不通过的原因可能是：</p>
+<p>让作者自我审查，所谓「刑不可知 则威不可测」：
+如果告知作者哪里有问题，也就是让作者知道高压线在哪里，作者就会肆无忌惮地在高压线下起舞。
+哪天「上面」觉得作者舞姿过于妖娆，那么公众号平台就会一起受罚。</p>
+<p>所以就只告诉作者有高压线，但是这条高压线却是移动且隐形的，只有被电到才知道线在何方，让作者心中时刻紧绷着一根弦。</p>
+<p>指明修改点还可能会让「不利于团结」的内容扩散。
+假如一个电影解说公众号，写了一篇解读诺兰蝙蝠侠的文章审核不通过，作者原来以为只是血腥场面审核不通过，没想到公众号却标明审核不通过的是「小丑」。</p>
+<p>作者只会好奇，为什么「小丑」一词会被敏感，就会了解原因。
+根据传播学原理，只会导致原来需要被和谐的和「小丑」相关的内容以另类的形式传播起来。</p>
+<h2 id="图片素材"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 图片素材</h2>
+<p>把在外部写好的文章复制到公众号编辑器的时候，所有的图片都要上传到公众号的图片素材库上，无法直接使用图片的链接。</p>
+<figure><a href="/ox-hugo/%e5%9b%be%e7%89%87%e6%8b%89%e5%8f%96.png">
+    <img loading="lazy" src="/ox-hugo/%e5%9b%be%e7%89%87%e6%8b%89%e5%8f%96.png"/> </a>
+</figure>
+
+<p>很多程序员（比如我）喜欢把博客搭建在Github Pages上，然后把图片都上传到Github 仓库，然后把博客内容复制到公众号时，就会出现图片获取失败的问题。</p>
+<figure><a href="/ox-hugo/%e8%bd%bd%e5%85%a5%e5%a4%b1%e8%b4%a5.png">
+    <img loading="lazy" src="/ox-hugo/%e8%bd%bd%e5%85%a5%e5%a4%b1%e8%b4%a5.png"/> </a>
+</figure>
+
+<p>原因无非是伟大的防火墙把Github给墙了，导致微信的服务器无法拉取到Github 的图片。</p>
+<figure><a href="/ox-hugo/GFW.png">
+    <img loading="lazy" src="/ox-hugo/GFW.png"/> </a>
+</figure>
+
+<p>问题就来了，为什么公众号要大费周章把图片拉取并保存起来，直接使用图片链接来访问不好么？</p>
+<p>个人理解，主要是出于「用户体验」与「安全」两方面考虑：</p>
+<p>如果让用户通过图片链接直接访问外部的图片服务器，图片链接可能失效，也就是图片无法再访问，就出现「图裂」了的情况，极大地影响用户体验。</p>
+<figure><a href="/ox-hugo/%e5%9b%be%e8%a3%82%e4%ba%86.jpg">
+    <img loading="lazy" src="/ox-hugo/%e5%9b%be%e8%a3%82%e4%ba%86.jpg"/> </a>
+</figure>
+
+<p>也有可能是，图片服务器能访问，但是访问速度非常慢，用户加载图片速度非常慢，用户只会抱怨微信的公众号怎么这么卡，图片都加载不出来。
+用户可不管是外部服务器，还是公众号服务器，反正都是微信卡，骂人只会挑最显眼的来骂。</p>
+<p>另外一种可能是图片链接原来是一张正常的图片，待文章阅读量到10W+之后，就换成一张敏感图片，那么就会防不胜防。</p>
+<figure><a href="/ox-hugo/%e5%9b%be%e7%89%87%e5%ae%89%e5%85%a8.png">
+    <img loading="lazy" src="/ox-hugo/%e5%9b%be%e7%89%87%e5%ae%89%e5%85%a8.png"/> </a>
+</figure>
+
+<p>从系统安全的角度来说，到外部服务器拉取文件，保存并展现给用户，是一个危险的操作，这样的操作应该越少越好，微信这样的APP注定会是各种攻击者的目标。</p>
+<p>所以一次性，把图片拉取到公众号内部的服务器，就是最稳妥的方法</p>
+<h2 id="限制外链"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 限制外链</h2>
+<p>在公众号文章里面，是无法插入外部网站链接的，只能引用公众号文章，或者公众号文章链接。</p>
+<p>让我这种习惯在文章末尾写上一大堆引用和参考链接的人无所适从，毕竟不注明引用，就有剽窃之嫌。</p>
+<figure><a href="/ox-hugo/%e8%b6%85%e9%93%be%e6%8e%a5.png">
+    <img loading="lazy" src="/ox-hugo/%e8%b6%85%e9%93%be%e6%8e%a5.png"/> </a>
+</figure>
+
+<p>这样的做法，背后的暖心原因大概是：</p>
+<ol>
+<li>避免为外部网站和App引流，避免把用户从公众号的生态，引流到抖音号，小红书号上，避免从平台沦为引流工具，「肉要都烂在锅里」，内容只能在微信生态内流传</li>
+<li>安全因素：避免公众号作者把各种诈骗，钓鱼链接放到公众号里面，让用户在公众号上受害，避免成为黑产的温床，保证微信的口碑。
+毕竟用户受骗骂人的时候，才不会骂公众号作者，只会骂最显眼的那个，就是公众号平台，乃至微信。</li>
+</ol>
+<p>话虽如此，但无法引用外部链接的做法，让我这种崇尚开放Web精神的人，相当难受。</p>
+<h2 id="群发次数"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 群发次数</h2>
+<p>对文章，公众号有所谓的「群发」和「发布」之分。</p>
+<p>「群发」是指把文章推送给所有的关注者，并且会出现在作者公众号的主页。而「发布」只是将文章发布出来，不会推送，也不会出现在主页，但是可以被链接到。</p>
+<figure><a href="/ox-hugo/%e7%be%a4%e5%8f%91%e4%b8%8e%e5%8f%91%e5%b8%83.png">
+    <img loading="lazy" src="/ox-hugo/%e7%be%a4%e5%8f%91%e4%b8%8e%e5%8f%91%e5%b8%83.png"/> </a>
+</figure>
+
+<p>「群发」是限制次数的，一天只能「群发」一次，但是「发布」却是无限制的。</p>
+<p>「群发」的次数限制成一次，我理解是保证用户体验避免过多的公众号消息推送，给用户造成困扰，让公众号成为商户引流推广的工具。毕竟根据墨菲定律，可能会被滥用的规则，就一定要被滥用。</p>
+<p>另外一个是对作者的潜在约束，让作者好好珍惜「群发」的机会，尽量写出好文章。按照《<a href="https://mp.weixin.qq.com/s/PHDaAlT7LZGqt_Lm1o-oRQ">影响力</a>》里提到的「稀缺」原理，机会越少见, 价值似乎越高。</p>
+<p>同样的原理，还运用到「账号详情」信息的修改，限制修改次数，就能让用户审慎修改，审慎着，审慎着，可能就不会修改了。</p>
+<figure><a href="/ox-hugo/%e7%a8%80%e7%bc%ba.png">
+    <img loading="lazy" src="/ox-hugo/%e7%a8%80%e7%bc%ba.png"/> </a>
+</figure>
+
+<p>对于系统而言，修改1次与修改100次成本几乎无差别，只是通过产品规则，来作限定，人为制造「稀缺」。</p>
+<h2 id="限制修改"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> 限制修改</h2>
+<p>公众号文章一经「发布」或「群发」，就无法大幅修改内容，只能更正最多20个错别字，这个规则让许多作者大为诟病，认为限制了其修改文章的权利。</p>
+<p>那么为什么会有这条规则呢？</p>
+<p>我个人揣摩，认为是公众号产品认为文章因为是类似报纸书刊等出版物，落笔无悔，一旦写出去的文章，就无法修改（错别字除外）。</p>
+<p>因为公众号是和微信这个聊天工具紧密结合在一起的，如果分享，转发的过程中，文章的内容发生多次变更，就会出现「罗生门」的情况，就是没有人知道文章内容最初的观点究竟是什么。</p>
+<p>那些事后诸葛亮就会跑出来，说自己是事前诸葛亮。
+比如那些鼓吹俄罗斯2小时攻陷基辅的军事爱好者们，虽然一年过去了，但是在他们看来，还没有到2小时。</p>
+<p>另外一个就是对「作者」的约束，当你知道你写出去的东西无法修改，你应付审慎对待，文理顺畅，前后呼应的情况才能发布，迫使作者尽量产出高质量的文章。</p>
+<h2 id="总结"><!-- raw HTML omitted -->7<!-- raw HTML omitted --> 总结</h2>
+<p>电视剧《雍正王朝》中，为描绘年羹尧身为大将军，生活奢华，介绍其有一道菜，名为小炒肉。</p>
+<p>虽为小炒肉，但这道菜做法十分复杂，就是在取肉之前，要找数名壮汉对肥猪展开暴力围殴。</p>
+<p>棍棒之下，猪吃痛嚎叫，血管也因此爆裂，猪血会聚集至脊梁附近，由此，厨师才会下刀，将猪杀死后去其尾骨附近的精肉。
+据称，此法制作出来的猪肉，因为有鲜血的浸透，吃起来会极为鲜嫩可口，味道不逊色于各类山珍海味。</p>
+<p>所谓的「产品规则」，背后都是「人性」，都是对作者与读者心理的揣摩和把玩。
+公众号对作者施加诸多的限制与规则，无非是像壮汉殴猪，希望最终可以取出精肉，以飨读者。</p>
+<p>难怪文章不好看，因为作者是头猪。难怪文章好看，因为作者是头挨过打的猪。</p>
+]]></content:encoded>
     </item>
     
     <item>
@@ -28,6 +132,74 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E5%86%99%E4%BD%9C%E6%B5%81/</guid>
       <description>1 前言 自大学起，已经写过好几年的东西，写作工具和流程也反复折腾过好多回. 目前的写作流程已经很流程顺手，所以想分享一下。 2 写作工具 我不倾向任何</description>
+      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+<p>自大学起，已经写过好几年的东西，写作工具和流程也反复折腾过好多回. 目前的写作流程已经很流程顺手，所以想分享一下。</p>
+<h2 id="写作工具"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 写作工具</h2>
+<p>我不倾向任何专用格式的写作软件（如Word）, 或者笔记云服务（EverNote，xx笔记等）。</p>
+<p>因为前者只能使用专门的软件打开，和该软件绑定，会导致文本内容被专用的软件绑架。
+可能过个10年，可能该软件不再流行，你甚至无法打开自己的文章。</p>
+<p>对于笔记服务，你的文章数据甚至不掌握在你手里，该服务停用，你的数据就会全部丢失。</p>
+<p>所以我倾向于「本地化储存」+「文本格式」 + 「易于同步」的写作方案</p>
+<p>最后我选择的写作工具是 <code>Emacs</code> + <code>org-mode</code>，不熟悉<code>org-mode</code> 的读者可能不知道 <code>org-mode</code> 是什么，可能理解成类似是<code>markdown</code> 的标记语言，但是和<code>Emacs</code> 结合后，易用性与扩展性比<code>markdown</code> 提高了一个数量级。</p>
+<p>这篇文章就是使用 <code>Emacs</code> + <code>org-mode</code> 写出来的:</p>
+<figure><a href="/ox-hugo/emacs_org_mode.png">
+    <img loading="lazy" src="/ox-hugo/emacs_org_mode.png"/> </a>
+</figure>
+
+<h2 id="写作平台"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 写作平台</h2>
+<h3 id="博客"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 博客</h3>
+<p>在大学时期，我使用的是 <a href="https://github.com/emacsorphanage/org-page"><code>org-page</code></a> + <code>org-mode</code> 来自建博客在 <a href="https://pages.github.com/"><code>Github Pages</code></a>, 写了大概一年的博客文章。</p>
+<p>后来因为 <code>org-page</code> 总是存在各种奇怪的小bug，博客样式也只有那么几种，不能满足折腾欲望很强烈的我
+（这种行为和年少时喜欢在QQ空间换皮肤差不多）。</p>
+<p>大概是2018年，我当时学习了Rust，打算找个机会来练手，然后就使用Rust搭建了个人的博客，开源在<a href="https://github.com/ramsayleung/blog">Github</a>上，还有100+的star，就这样，在自己的博客上又写了几年文章。</p>
+<p>直到2022年，因为工作太忙碌，没有太多时间来维护博客的代码以及运维博客的服务。
+自建博客的初衷只是为了有个地方可以承载我写的内容，只是因为年轻，有精力折腾，就自己写代码，搭建服务。</p>
+<p>但总体而言，写作的流程并不顺手: 因为我一直都是使用<code>org-mode</code> 来写作，而我自己的博客只支持<code>markdown</code> 格式，这就意味着我必须每次写作完成后，需要将<code>org-mode</code> 转换成<code>markdown</code> , 然后再在博客后台发布。</p>
+<p>如果涉及到图片就更麻烦，需要将图片逐张上传到图床，然后再插入到<code>org-mode</code>中, 而博客使用的<code>markdown</code> 编辑器过了5年后，开发者已经不维护了，所以免不了又会有各种小问题。</p>
+<p>我又尝试了<code>Emacs</code> + <code>org-mode</code> + <code>hugo</code> 的博客方案，发现使用起来非常舒心，发布文章几乎无成本。正好碰上博客服务器到期，就干脆切换回<code>Github Pages</code>.</p>
+<p><code>hugo</code> 是使用<code>markdown</code> 来构建网站的框架，而我使用的<code>org-mode</code>，所以还需要一个工具将<code>org-mode</code> 转换为<code>hugo markdown</code>，这个就是<code>Emacs</code> 插件<a href="https://ox-hugo.scripter.co/"><code>ox-hugo</code></a>。当然， <code>hugo</code> 原生也支持<code>org-mode</code>, 只是功能支持不完整， 不及<code>ox-hugo</code>.</p>
+<p><code>ox-hugo</code> 只需要将在<code>org-mode</code> 内容的最开始插入标记：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-org" data-lang="org"><span class="line"><span class="cl"><span class="cs">#+HUGO_BASE_DIR</span><span class="c">: ~/code/org/ramsayleung.github.io</span>
+</span></span><span class="line"><span class="cl"><span class="cs">#+HUGO_SECTION</span><span class="c">: post/2023</span>
+</span></span><span class="line"><span class="cl"><span class="cs">#+HUGO_CUSTOM_FRONT_MATTER</span><span class="c">: :toc true</span>
+</span></span><span class="line"><span class="cl"><span class="cs">#+HUGO_AUTO_SET_LASTMOD</span><span class="c">: t</span>
+</span></span><span class="line"><span class="cl"><span class="cs">#+HUGO_DRAFT</span><span class="c">: false</span>
+</span></span><span class="line"><span class="cl"><span class="cs">#+DATE</span><span class="c">: [2023-01-25 Wed 14:25]</span>
+</span></span><span class="line"><span class="cl"><span class="cs">#+TITLE</span><span class="c">: 我的写作流</span>
+</span></span><span class="line"><span class="cl"><span class="cs">#+HUGO_TAGS</span><span class="c">: writing</span>
+</span></span><span class="line"><span class="cl"><span class="cs">#+HUGO_CATEGORIES</span><span class="c">: writing</span>
+</span></span></code></pre></div><p>Emacs一个快捷键 <code>C-c C-e H h</code> 就可以将<code>org-mode</code> 转换成<code>hugo</code> 格式的<code>markdown</code>:</p>
+<figure><a href="/ox-hugo/one-post-per-subtree.png">
+    <img loading="lazy" src="/ox-hugo/one-post-per-subtree.png"/> </a>
+</figure>
+
+<p>结合<a href="https://github.com/ramsayleung/ramsayleung.github.io/blob/master/.github/workflows/gh-pages.yml">Github Action</a>，就可以自动把导出的markdown 博文部署到Github Pages，称得上是一键部署。</p>
+<p>不过，说出来有点心酸，我在博客写的文章，读者大多是我自己。</p>
+<h3 id="公众号"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> 公众号</h3>
+<p>在过新年的时候，闲来无事，新开了一个公众号「宫孙说」，用来「一鱼多吃」，将自己文章也转到公众号。</p>
+<p>因为Richard Stallman的影响，我一直是倾向于开放，自由的软件与生态，所以对于公众号这样仅限于「微信」封闭生态的平台不感冒。</p>
+<p>另外，关于「公众号」的看法，我是与陈皓一致的，详见他的文章<a href="https://coolshell.cn/articles/17391.html">《为什么我不在微信公众号上写文章》</a></p>
+<p>但不可否认的是，「公众号」是国内最完善的创作平台，有完整的分享，阅读生态。</p>
+<p>毕竟我不只写技术文章，还会写一些历史，人文类的文章，我希望可以分享给朋友，但Github Pages会间歇性被墙，朋友们大多是在微信阅读文章，虽然博客支持移动端，但是体验终究不及「公众号」。</p>
+<p>屈服于现实压力，我最终开了这个公众号。</p>
+<h3 id="知乎"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> 知乎</h3>
+<p>知乎也是国内创作氛围相对自由和蓬勃的平台，本着「一鱼多吃」的心态，我也会把文章转载到知乎上。</p>
+<h3 id="km"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> KM</h3>
+<p>这是公司内部的知识交流创作平台，算是私域流量。有点难以置信的是，在这个读者数量远不如外部的平台，我写的文章有最多的阅读与收藏.
+或许是因为我写的内容贴近业务，是同事比较感兴趣的。</p>
+<h3 id="一鱼多吃的问题"><!-- raw HTML omitted -->3.5<!-- raw HTML omitted --> 一鱼多吃的问题</h3>
+<p>将同一篇文章分发到多个平台，就难免会有不同平台格式不通的问题。</p>
+<p>上面这些平台，都是不支持 <code>org-mode</code> 这种相对小众的文本格式，所以 <code>markdown</code> 算是比较理想的中间格式，可以先把<code>org-mode</code> 转换成<code>hugo markdown</code>，再将<code>hugo markdown</code> 转换成<code>markdown</code>:</p>
+<figure><a href="/ox-hugo/%e5%86%99%e4%bd%9c%e6%b5%81%e7%a8%8b.png">
+    <img loading="lazy" src="/ox-hugo/%e5%86%99%e4%bd%9c%e6%b5%81%e7%a8%8b.png"/> </a>
+</figure>
+
+<p>使用 <code>ox-hugo</code>，可以将<code>org-mode</code> 转换成<code>hugo markdown</code> , 至于将<code>hugo markdown</code> 转换成<code>markdown</code>, 我写了个脚本 <a href="https://gist.github.com/ramsayleung/4b408dddc9ac1b4ef3464f5e9df1a9ef#file-hugomd2md-sh"><code>hugomd2md.sh</code></a>来处理：</p>
+<p>除了将<code>hugo markdown</code> 转换成<code>markdown</code>，使用Github Pages 当作图床，还在最后插入一个公众号广告。</p>
+<h2 id="写在最后"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 写在最后</h2>
+<p>因为使用<code>Emacs</code> + <code>org-mode</code> 写文章非常顺手，所以我写下了很多的文稿，只是思绪杂乱，不方便都发布出来.</p>
+<p>现在正逐步将存稿往公众号平台上迁移，只是公众号有诸多限制，其中一条是一天只能群发一篇文章，只能「小刀锯大树」，慢慢来了。</p>
+]]></content:encoded>
     </item>
     
   </channel>
