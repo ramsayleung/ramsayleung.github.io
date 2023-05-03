@@ -1,7 +1,7 @@
 +++
-title = "Amazon温哥华的国内专场招聘 Event"
+title = "做个摆渡人：Amazon Canada的国内专场招聘"
 date = 2023-05-02T18:17:00-07:00
-lastmod = 2023-05-02T18:59:16-07:00
+lastmod = 2023-05-02T20:00:25-07:00
 tags = ["amazon"]
 categories = ["amazon"]
 draft = false
@@ -97,6 +97,9 @@ BQ（Behavioral Qusetion），即行为面试问题，Amazon 面试官会通过B
 1.  Customer Obsession
 2.  Ownership
 3.  Invent and Simplify
+4.  ...
+
+具体可见官网说明：<https://www.amazon.jobs/content/en/our-workplace/leadership-principles>
 
 常见的问题如：
 
@@ -104,6 +107,7 @@ BQ（Behavioral Qusetion），即行为面试问题，Amazon 面试官会通过B
 2.  Tell me about a time when you took on something significant outside your area of responsibility
 3.  Tell me about something you deliver above standards
 4.  Tell me about a time when you couldn't meet your deadline
+5.  Tell me about xxx
 
 相当于命题作文，需要结合你自己的简历内容，提前准备小故事
 
@@ -115,4 +119,9 @@ BQ（Behavioral Qusetion），即行为面试问题，Amazon 面试官会通过B
 
 ### <span class="section-num">2.9</span> 我要刷多少题Leetcode 呢？ {#我要刷多少题leetcode-呢}
 
-well, 这个也很难回答，毕竟每个人能力不一样，但一般来说，400题 + Amazon 的题库应该可以应付了。
+well, 这个也很难回答，毕竟每个人能力不一样，但一般来说，300题 + Amazon 的题库应该可以应付了。
+
+
+### <span class="section-num">2.10</span> 我是写xxx 语言的，可以去面试么？ {#我是写xxx-语言的-可以去面试么}
+
+就我所知，无论你是写Javascript/Java/C++/C/Python/Ruby/Assembly 还是Lisp, 只要你能通过面试即可，使用什么语言都没关系。
