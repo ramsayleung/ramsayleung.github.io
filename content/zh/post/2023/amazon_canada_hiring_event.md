@@ -1,7 +1,7 @@
 +++
 title = "做个摆渡人：Amazon Canada的国内专场招聘"
 date = 2023-05-02T18:17:00-07:00
-lastmod = 2023-05-02T20:00:25-07:00
+lastmod = 2023-05-02T20:03:02-07:00
 tags = ["amazon"]
 categories = ["amazon"]
 draft = false
@@ -18,7 +18,7 @@ toc = true
 
 {{< figure src="/ox-hugo/amazon_hire_event_qrcode.png" >}}
 
-可以微信或者邮箱找我帮忙内推, 我可以帮忙递简历和咨询进度，我邮箱是 cmFtc2F5bGV1bmdAZ21haWwuY29tCg== (base64 decode)，希望能做个摆渡人吧。
+可以微信或者邮箱找我帮忙内推, 我可以帮忙递简历和咨询进度，我邮箱是 cmFtc2F5bGV1bmcrYW16bl9oaXJlX2V2ZW50QGdtYWlsLmNvbQo= (base64 decode)，希望能做个摆渡人吧。
 
 
 ### <span class="section-num">1.1</span> 面试流程 {#面试流程}
