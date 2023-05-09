@@ -11,7 +11,86 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Tue, 02 May 2023 18:17:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 05 May 2023 08:24:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>软件工程师的软技能指北（一）：总览篇</title>
+      <link>https://ramsayleung.github.io/zh/post/2023/%E6%80%BB%E8%A7%88%E7%AF%87/</link>
+      <pubDate>Fri, 05 May 2023 08:24:00 -0700</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2023/%E6%80%BB%E8%A7%88%E7%AF%87/</guid>
+      <description>1 背景 上大学时，曾经看过一本书《软技能，代码之外的生存指南》，主要介绍程序员要想取得成功的职业生涯，所必需的软技能。 所谓的软技能，是区别与使</description>
+      <content:encoded><![CDATA[<h2 id="背景"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 背景</h2>
+<p>上大学时，曾经看过一本书《软技能，代码之外的生存指南》，主要介绍程序员要想取得成功的职业生涯，所必需的软技能。</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/book_cover_v1.jpg"/> 
+</figure>
+
+<p>所谓的软技能，是区别与使用C++或Java 编写业务逻辑和单元测试代码，使用Docker 部署等「硬技能」，而是注重职场，心态，身体与理财等各方面提升的「软技能」。</p>
+<p>大学时候的我还沉迷于编写各种很cool 的代码，学各种编程语言，觉得此书不过是面向程序员的「鸡汤」一本。</p>
+<h3 id="再读"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> 再读</h3>
+<p>工作第三年时，换了一份工作，对职业充满了迷茫与困惑，然后再读了一次这本书，得出的结论是书挺不错的，但是不符合中国程序员的国情。</p>
+<p>比如理财方面，建议程序员在低房价时买房，我也想买，但是在深圳只能是望楼兴叹；</p>
+<p>健身方面，下班后多运动，自己做饭，控制饮食以增肌减脂，着实没有时间自己做饭。</p>
+<p>但里面的思路和哲学很有参考意义。</p>
+<h3 id="三读"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> 三读</h3>
+<p>最近突然想起了这本书，搜索之后发现，英文原版在2020能出了第二版，而中文版本也在2022年翻译出版了；</p>
+<p>因为书再版了，所以又重读了一次这本书，英文书名会更正常一些：Soft Skills: The Software Developer&rsquo;s Life Manual</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/book_cover.jpg"/> 
+</figure>
+
+<p>得出的结论还是与之前一致：「书中的思路和哲学很有参考意义，做法却不一定适用」。</p>
+<p>但区别在于，我这次打算把我自己的做法与行动也总结下来，「用他的旧瓶子，装我的新酒」。</p>
+<p>就成功的标准而言，我的职业生涯还远谈不上成功，甚至可以说还有很多失败之处，这也算是我自己反思的心得。</p>
+<p>毕竟也不只有别人优秀的经历，我这种潦倒的经历也是可以参考的。</p>
+<blockquote>
+<p>见贤思齐焉，见不贤而内自省也。</p>
+</blockquote>
+<p>这让想起了Netflix 的高分纪录片《我心永随桑德兰》，别人拍纪录片是纪录成功，这部豆瓣9.2分的片子却是在纪录失败：</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/%e6%88%91%e5%bf%83%e6%b0%b8%e9%9a%8f%e6%a1%91%e5%be%b7%e5%85%b0.png"/> 
+</figure>
+
+<p>英超保级劲旅桑德兰，在2017年终于花光自己在英超的保级运气，从顶级联赛英超跌入二级联赛英冠。</p>
+<p>然后俱乐部高层想拍一部纪录片，纪录自己奋发图强，卧薪尝胆杀回英超的经历，以此吸引投资者，最后却是二连跳，跌入到三级联赛英甲的神剧情。</p>
+<p>把我不开心的事说出来，拿出来给大家一起开心下嘛。</p>
+<h2 id="软技能"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 软技能</h2>
+<p>就软技能而言，绝不止「软件工程师」这个职业需要这个技能，而是绝大部分职业都需要的。</p>
+<p>因为绝大部分的工作都是与人打交道，而软技能就是如果更高效与人沟通的关键技能。</p>
+<p>如果有「软件工程师」认为自己只要写代码就可以了（我曾经就是这么认为的）；或者觉得，写代码才是最有趣的部分（我现在也是这么认为的），我不想理这么多事情；</p>
+<p>那么你的可替代性就非常高，当代码生成工具足够成熟之后，你就可以被裁掉了。</p>
+<p>之前办信用卡时候，我说的职业是Software Engineer，银行客户经理问我，你们是不是只要埋头对着电脑敲键盘即可，不需要和人说话的？（我心想，你是美剧看多了吧）</p>
+<p>而事实恰恰与直觉相反，软件工程师大部分时间都在与人打交道：</p>
+<ol>
+<li>拿到需求时，需要分析需求的可行性，与产品经理扯皮，理清模糊之处</li>
+<li>撰写设计文档，和组员及老板介绍方案，比较方案优劣，选择最优解</li>
+<li>与上下游团队扯皮，求下游团队帮忙干活，给上游团队表演太极</li>
+<li>和老板画饼，只要再给我些时间，定然能做得成绩斐然。</li>
+</ol>
+<p>哪项不是与人打交道呢？项项都是我缺乏的技能阿，我就只会接活，干活，然后再接再干。</p>
+<p>老黄牛听到我这境况，估计都得叫我一声兄弟；流水线见我这际遇，也会直呼一声「内行」</p>
+<p>所以「软技能」真的是不可或缺。</p>
+<p>或许是我给银行客户经理的答案不合他意，我信用卡申请被拒了；</p>
+<p>或许我「软技能」再强大一些就能通过了.</p>
+<h2 id="主旨"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 主旨</h2>
+<p>原书把主旨分成七部分，分别是:</p>
+<ol>
+<li>事业(Career): 像经营企业一样，打磨自己的职业生涯</li>
+<li>自我营销(Marketing Yourself): 通过高质量文章和视频，打造自己的个人品牌</li>
+<li>学习(Learning): 终身学习，自我学习</li>
+<li>生产力（Productivity）：提高生产力的方式</li>
+<li>理财（Finanacial）：如何复利，创造被动收入</li>
+<li>健身（Fitness）：健康，有型的体魄</li>
+<li>心态（Mindset）：培养积极的心态，To be a better man(woman).</li>
+</ol>
+<p>我就不会按照作者的主旨来阐述我自己的想法，毕竟「他瓶装我酒」，想怎么「装」就是我自己的选择了。</p>
+<p>感触多些的主旨，就拆分开多几个篇幅，没有太多感慨的部分，可能就选择性省略了。</p>
+<h2 id="总结"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 总结</h2>
+<p>所以要「软硬都抓，内外兼修」，才能成长为一个优秀的软件工程师。</p>
+<p>其他的职业与岗位也大抵如此。</p>
+]]></content:encoded>
+    </item>
+    
     <item>
       <title>做个摆渡人：Amazon Canada的国内专场招聘</title>
       <link>https://ramsayleung.github.io/zh/post/2023/amazon_canada_hiring_event/</link>
@@ -20,8 +99,11 @@
       <guid>https://ramsayleung.github.io/zh/post/2023/amazon_canada_hiring_event/</guid>
       <description>1 Amazon Canada国内专场招聘 刚刚有群里消息灵通的小伙伴分享，Amazon Canada(主要Base 在Vancouver )会在国内的深圳，上海</description>
       <content:encoded><![CDATA[<h2 id="amazon-canada国内专场招聘"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Amazon Canada国内专场招聘</h2>
-<p>刚刚有群里消息灵通的小伙伴分享，Amazon Canada(主要Base 在Vancouver )会在国内的深圳，上海和香港有专场的招聘会，最近有比较多的同学和朋友咨询加拿大工作的事情，所以就把招聘Event 分享出来。</p>
-<p>国内专场招聘的链接：<a href="https://amazon.jobs/en/jobs/2361958/hong-kong-event-sde-amazon-stores">https://amazon.jobs/en/jobs/2361958/hong-kong-event-sde-amazon-stores</a></p>
+<p>刚刚有群里消息灵通的小伙伴分享，Amazon Canada(主要Base 在Vancouver )会在国内的深圳，上海及周边（杭州，苏州）和香港有专场的招聘会。</p>
+<p>最近有比较多的同学和朋友咨询加拿大工作的事情，所以就把招聘Event 分享出来。</p>
+<p>本次招聘的主要对象是L5的工程师，L4和L6也有少数的HC.</p>
+<p>国内专场招聘的链接：</p>
+<p><a href="https://amazon.jobs/en/jobs/2361958/hong-kong-event-sde-amazon-stores">https://amazon.jobs/en/jobs/2361958/hong-kong-event-sde-amazon-stores</a></p>
 <p>二维码：</p>
 <figure>
     <img loading="lazy" src="/ox-hugo/amazon_hire_event_qrcode.png"/> 
@@ -33,7 +115,7 @@
 <p>所以招聘写着HongKong Event, 也并不需要去香港面试。</p>
 <p>这次主要是面向SDE(Software Development Engineer), 职位大多是L5.</p>
 <p>面试时间大概是6月底，所以大概有2个月的时间来准备。</p>
-<p>面试流程，以我个人经验，L5 大概是：</p>
+<p>以我个人经验，L5面试流程大概是：</p>
 <ol>
 <li>Online Assessment(OA), 做一到两道算法题，难度大概是Leetcode Medium - Hard, 多刷题库，有机会试上原题。</li>
 <li>Phone Screen(Phone Interview), 视OA 结果而定，根据OA 的答题结果，系统会给出建议是否需要Phone Screen, 如果答得比较好，可能就不需要。我当时也没有这一轮</li>
@@ -62,10 +144,11 @@
 <h3 id="面试通过后多久入职"><!-- raw HTML omitted -->2.4<!-- raw HTML omitted --> 面试通过后多久入职？</h3>
 <p>一般大概需要半年，主要是办工签，等IRCC 审批。</p>
 <h3 id="amazon不是刚裁员-怎么又招人了"><!-- raw HTML omitted -->2.5<!-- raw HTML omitted --> Amazon不是刚裁员，怎么又招人了？</h3>
-<p>well, I don&rsquo;t know. 我也想知道，可能只有VP级别以上才能知道。</p>
+<p>well, I don&rsquo;t know，我也想知道。</p>
 <h3 id="amazon的面试难么"><!-- raw HTML omitted -->2.6<!-- raw HTML omitted --> Amazon的面试难么？</h3>
 <p>这个嘛，只能说见仁见智。</p>
 <p>只是相对来说，Amazon 是北美大厂FANNG 里面的地板难度，主要是多刷题，就有机会遇到原題。</p>
+<p>多刷面经，亚麻的面试套路还是相对固定的。</p>
 <h3 id="behavioral-qusetion-与leadership-principle-究竟是什么"><!-- raw HTML omitted -->2.7<!-- raw HTML omitted --> Behavioral Qusetion 与Leadership Principle 究竟是什么？</h3>
 <p>BQ（Behavioral Qusetion），即行为面试问题，Amazon 面试官会通过BQ考察你的性格特征和职场软技能，判断你与企业的文化、价值观等原则是否匹配，最终决定是否录用你。</p>
 <p>而判断标准就是Amazon 的17条「价值观」，即 Leadership Principle, 例如:</p>
@@ -85,12 +168,13 @@
 <li>Tell me about xxx</li>
 </ol>
 <p>相当于命题作文，需要结合你自己的简历内容，提前准备小故事</p>
-<h3 id="招聘的部门是哪些"><!-- raw HTML omitted -->2.8<!-- raw HTML omitted --> 招聘的部门是哪些？</h3>
+<h3 id="招聘的业务部门是哪些"><!-- raw HTML omitted -->2.8<!-- raw HTML omitted --> 招聘的业务部门是哪些？</h3>
 <p>据recruiter 所说，这次是个专场的招聘，相当于是放到一个大池子里面，通过之后再做Team Match, 所以她们也不知道具体的业务团队是哪些？</p>
 <h3 id="我要刷多少题leetcode-呢"><!-- raw HTML omitted -->2.9<!-- raw HTML omitted --> 我要刷多少题Leetcode 呢？</h3>
 <p>well, 这个也很难回答，毕竟每个人能力不一样，但一般来说，300题 + Amazon 的题库应该可以应付了。</p>
 <h3 id="我是写xxx-语言的-可以去面试么"><!-- raw HTML omitted -->2.10<!-- raw HTML omitted --> 我是写xxx 语言的，可以去面试么？</h3>
-<p>就我所知，无论你是写Javascript/Java/C++/C/Python/Ruby/Assembly 还是Lisp, 只要你能通过面试即可，使用什么语言都没关系。</p>
+<p>就我所知，无论你是写 Javascript/Java/C++/C/Python/Ruby/Assembly 还是Lisp,</p>
+<p>只要你能通过面试即可，使用什么语言都没关系。</p>
 ]]></content:encoded>
     </item>
     
