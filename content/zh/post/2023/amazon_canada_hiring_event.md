@@ -1,7 +1,7 @@
 +++
 title = "做个摆渡人：Amazon Canada的国内专场招聘"
 date = 2023-05-02T18:17:00-07:00
-lastmod = 2023-05-02T20:03:02-07:00
+lastmod = 2023-05-03T14:40:02-07:00
 tags = ["amazon"]
 categories = ["amazon"]
 draft = false
@@ -10,9 +10,15 @@ toc = true
 
 ## <span class="section-num">1</span> Amazon Canada国内专场招聘 {#amazon-canada国内专场招聘}
 
-刚刚有群里消息灵通的小伙伴分享，Amazon Canada(主要Base 在Vancouver )会在国内的深圳，上海和香港有专场的招聘会，最近有比较多的同学和朋友咨询加拿大工作的事情，所以就把招聘Event 分享出来。
+刚刚有群里消息灵通的小伙伴分享，Amazon Canada(主要Base 在Vancouver )会在国内的深圳，上海及周边（杭州，苏州）和香港有专场的招聘会。
 
-国内专场招聘的链接：<https://amazon.jobs/en/jobs/2361958/hong-kong-event-sde-amazon-stores>
+最近有比较多的同学和朋友咨询加拿大工作的事情，所以就把招聘Event 分享出来。
+
+本次招聘的主要对象是L5的工程师，L4和L6也有少数的HC.
+
+国内专场招聘的链接：
+
+<https://amazon.jobs/en/jobs/2361958/hong-kong-event-sde-amazon-stores>
 
 二维码：
 
@@ -31,7 +37,7 @@ toc = true
 
 面试时间大概是6月底，所以大概有2个月的时间来准备。
 
-面试流程，以我个人经验，L5 大概是：
+以我个人经验，L5面试流程大概是：
 
 1.  Online Assessment(OA), 做一到两道算法题，难度大概是Leetcode Medium - Hard, 多刷题库，有机会试上原题。
 2.  Phone Screen(Phone Interview), 视OA 结果而定，根据OA 的答题结果，系统会给出建议是否需要Phone Screen, 如果答得比较好，可能就不需要。我当时也没有这一轮
@@ -78,7 +84,7 @@ toc = true
 
 ### <span class="section-num">2.5</span> Amazon不是刚裁员，怎么又招人了？ {#amazon不是刚裁员-怎么又招人了}
 
-well, I don't know. 我也想知道，可能只有VP级别以上才能知道。
+well, I don't know，我也想知道。
 
 
 ### <span class="section-num">2.6</span> Amazon的面试难么？ {#amazon的面试难么}
@@ -86,6 +92,8 @@ well, I don't know. 我也想知道，可能只有VP级别以上才能知道。
 这个嘛，只能说见仁见智。
 
 只是相对来说，Amazon 是北美大厂FANNG 里面的地板难度，主要是多刷题，就有机会遇到原題。
+
+多刷面经，亚麻的面试套路还是相对固定的。
 
 
 ### <span class="section-num">2.7</span> Behavioral Qusetion 与Leadership Principle 究竟是什么？ {#behavioral-qusetion-与leadership-principle-究竟是什么}
@@ -112,7 +120,7 @@ BQ（Behavioral Qusetion），即行为面试问题，Amazon 面试官会通过B
 相当于命题作文，需要结合你自己的简历内容，提前准备小故事
 
 
-### <span class="section-num">2.8</span> 招聘的部门是哪些？ {#招聘的部门是哪些}
+### <span class="section-num">2.8</span> 招聘的业务部门是哪些？ {#招聘的业务部门是哪些}
 
 据recruiter 所说，这次是个专场的招聘，相当于是放到一个大池子里面，通过之后再做Team Match, 所以她们也不知道具体的业务团队是哪些？
 
@@ -124,4 +132,6 @@ well, 这个也很难回答，毕竟每个人能力不一样，但一般来说�
 
 ### <span class="section-num">2.10</span> 我是写xxx 语言的，可以去面试么？ {#我是写xxx-语言的-可以去面试么}
 
-就我所知，无论你是写Javascript/Java/C++/C/Python/Ruby/Assembly 还是Lisp, 只要你能通过面试即可，使用什么语言都没关系。
+就我所知，无论你是写 Javascript/Java/C++/C/Python/Ruby/Assembly 还是Lisp,
+
+只要你能通过面试即可，使用什么语言都没关系。
