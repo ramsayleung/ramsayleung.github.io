@@ -11,7 +11,127 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Fri, 05 May 2023 08:24:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 11 May 2023 21:32:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>软件工程师的软技能指北（二）：事业篇</title>
+      <link>https://ramsayleung.github.io/zh/post/2023/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%BD%AF%E6%8A%80%E8%83%BD%E6%8C%87%E5%8C%97_%E4%BA%8B%E4%B8%9A%E7%AF%872/</link>
+      <pubDate>Thu, 11 May 2023 21:32:00 -0700</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2023/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%BD%AF%E6%8A%80%E8%83%BD%E6%8C%87%E5%8C%97_%E4%BA%8B%E4%B8%9A%E7%AF%872/</guid>
+      <description>1 前情提要 软件工程师的软技能指北（一）：总览篇 2 前言 打工是不可能打工的，这辈子都不可能打工的。 3 心态转变 很多软件工程师容易把自己定义成「写代</description>
+      <content:encoded><![CDATA[<h2 id="前情提要"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前情提要</h2>
+<ol>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%80%BB%E8%A7%88%E7%AF%87/">软件工程师的软技能指北（一）：总览篇</a> <!-- raw HTML omitted --></li>
+</ol>
+<h2 id="前言"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 前言</h2>
+<blockquote>
+<p>打工是不可能打工的，这辈子都不可能打工的。 <!-- raw HTML omitted --></p>
+</blockquote>
+<h2 id="心态转变"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 心态转变</h2>
+<p>很多软件工程师容易把自己定义成「写代码的」，或者是「码农」，就是以写软件为生的人。 <!-- raw HTML omitted --></p>
+<p>也只愿意接受写代码相关的任务，什么文档，设计，需求分析，是一概不想理的，我就是一把唆。 <!-- raw HTML omitted --></p>
+<p>也有工程师觉得，反正我把事情做好也只有这么点工资，摆烂收入也不一定会下降，那不如就躺平，反正我的收入是固定。 <!-- raw HTML omitted --></p>
+<p>也不能说毫无道理，只是把自己定位成「需求翻译机」，着实和「流水线的工人」区别不大。 <!-- raw HTML omitted --></p>
+<p>随着自动化技术的进步，「流水线工人」很容易就被机器人所取代，它们只要能源充足，就可以24小时不停地产出 <!-- raw HTML omitted --></p>
+<p>但是踏实干活的工程师，也难免容易有与以上类似的疑惑。 <!-- raw HTML omitted --></p>
+<p>那不如换个思路： <!-- raw HTML omitted --></p>
+<p>把你的工作当成是你自己的生意（business），那你眼中的一切都会变得截然不同。 <!-- raw HTML omitted --></p>
+<h3 id="客户"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 客户</h3>
+<p>既然是生意，自然要找对目标客户。 <!-- raw HTML omitted --></p>
+<p>如果把工作当成生意，那么你的客户就是你的雇主，虽然你的客户大多数情况下只有一个。 <!-- raw HTML omitted --></p>
+<p>但是很多的公司，都是靠给某一个大客户供货而做大做强的。 <!-- raw HTML omitted --></p>
+<h4 id="客户-customer-与用户-user"><!-- raw HTML omitted -->3.1.1<!-- raw HTML omitted --> 客户（customer）与用户（user）</h4>
+<p>谈起business, 我就想聊一下个人对于客户与用户的浅薄见解。 <!-- raw HTML omitted --></p>
+<p>归纳起来，就是两点： <!-- raw HTML omitted --></p>
+<p><strong><strong>商业公司总是客户第一</strong></strong> <!-- raw HTML omitted --></p>
+<p><strong><strong>用户不等于客户</strong></strong> <!-- raw HTML omitted --></p>
+<p>简而言之，用户是使用某项服务或者产品的人，而客户是为某项服务或者产品付费的人。 <!-- raw HTML omitted --></p>
+<p>举个例子，经常有人说，微信不注重用户体验，微信不倾听用户的声音，微信有着地球上第二傲慢的产品经理团队（第一可能是苹果）。 <!-- raw HTML omitted --></p>
+<p>就我在微信的开发经历而言，的确如此。 <!-- raw HTML omitted --></p>
+<p>没有见过哪些产品经理提的需求是来自于改善用户体验的， <!-- raw HTML omitted -->
+腾讯内网上都是挂着各种反馈微信用户体验的帖子，最后都是以「这个问题，楼主可以私聊我们讨论」结束的。 <!-- raw HTML omitted --></p>
+<p>因为，对于微信而言，微信用户只是使用微信这个软件的人，而不是为微信付费的人，不是微信收入的来源。 <!-- raw HTML omitted --></p>
+<p>对于微信支付而言，客户是各种接入微信支付的商户，因为每笔交易，他们要交约等于交易金额 0.0021%或者更多的手续费，属于躺着赚钱的模式； <!-- raw HTML omitted --></p>
+<p>对于微信朋友圈，公众号而言，客户是各种广告主； <!-- raw HTML omitted --></p>
+<p>在微信用户面前，微信就是个爹，教育你们怎么使用微信；但是在微信客户面前，比如美团，快手这些微信支付的大客户，微信就是孙子。 <!-- raw HTML omitted --></p>
+<p>要做什么需求，产品经理根本没有办法推；要什么时候上线，就什么时候上线，即使不合理，也只能回来压榨工程师的时间。 <!-- raw HTML omitted --></p>
+<p>毕竟客户说了，你们不做我们就切到支付宝去。 <!-- raw HTML omitted --></p>
+<p>所以微信用户本质上只是微信收入来源的耗材和燃料，反正用户离不开微信这口灶，产品经理为什么还要听燃料的心声呢。 <!-- raw HTML omitted --></p>
+<p>当然，背后的商业逻辑是这样，用户体验又是另外一回事了。 <!-- raw HTML omitted --></p>
+<h3 id="产品"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> 产品</h3>
+<p>既然是生意，那么自然要有可以营利的产品或服务，对于大部分工程师而言，他们能提供的产品，就是生产软件的服务。 <!-- raw HTML omitted --></p>
+<p>那和「写代码的」也没有什么差别嘛？ <!-- raw HTML omitted --></p>
+<p>稍安勿躁，这只是第一步嘛。 <!-- raw HTML omitted --></p>
+<p>如果我们提供的生产软件的服务是生意的话，那么要想营利，产生更大的利润，就需要我们考虑一个问题： <!-- raw HTML omitted --></p>
+<p>如何大家都是生产软件的生意，你的产品又如何从同质化严重的同行中脱颖而出。 <!-- raw HTML omitted --></p>
+<h3 id="竞争优势"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> 竞争优势</h3>
+<p>搞低价倾销（加班巻死他们）？ <!-- raw HTML omitted --></p>
+<p>这也是个可行但不能持久的法子： <!-- raw HTML omitted --></p>
+<ol>
+<li>毕竟你搞低价倾销，即使把生意都抢到，你产能有限，客户的单不一定都能接过来； <!-- raw HTML omitted --></li>
+<li>另外低价倾销，只会把市场搞坏，降低了利润空间，只会让客户单方面受益 <!-- raw HTML omitted --></li>
+<li>强中自有强中手，一山还有一山高，万一遇到比你还能搞低价倾销的同行，那不是哑巴吃黄莲，有苦说不出嘛。 <!-- raw HTML omitted --></li>
+</ol>
+<p>所以最优解应该是你提供更优质的服务，将优质服务作为自己的竞争优势。 <!-- raw HTML omitted --></p>
+<p>既然要提供优势的服务，就需要 <!-- raw HTML omitted --></p>
+<ol>
+<li>学会与客户沟通交流，先明确客户的需求， <!-- raw HTML omitted --></li>
+<li>然后分析需求，明确这服务是否客户想要的， <!-- raw HTML omitted --></li>
+<li>再动工建设，保证最终成品贴近客户的诉求。 <!-- raw HTML omitted --></li>
+</ol>
+<p>或者是成为某个领域的专家，提供差异化的服务。 <!-- raw HTML omitted --></p>
+<p>所谓人无我有，人有我优。 <!-- raw HTML omitted --></p>
+<p>看到这里，有朋友可能会质疑：即使我做了这么多，做得这么好，但是工资（产品的售价）还是不涨阿，那还有什么意思？ <!-- raw HTML omitted --></p>
+<p>如果把这个当作自己的生意，提供优质服务之后，自然是需要和客户重新谈合同的嘛（加薪）。 <!-- raw HTML omitted --></p>
+<p>如果谈不拢，那就换家客户就好了，反正我只要产品够好，自然不缺客户，我还可以拿现有的供货合同和未来的客户谈。 <!-- raw HTML omitted --></p>
+<p>生意是自己，服务做优质之后，最终受益的还是自己（当然，需要些时间和策略） <!-- raw HTML omitted --></p>
+<h3 id="大厂光环"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> 大厂光环</h3>
+<p>所谓的大厂光环，和偶像光环类似，就觉得个人会因为进去某个公司，把平台优势当作自己的成就，从而骄傲了起来。 <!-- raw HTML omitted --></p>
+<p>坦白讲，以前我也有大厂光环，在自己去了某家大厂之后。 <!-- raw HTML omitted --></p>
+<p>走路的时候，头抬得更高了，背挺得更直了，以便于胸前的工牌更加醒目。 <!-- raw HTML omitted --></p>
+<p>如果把自己的职业生涯比作一门生意后，我想我应该不会再为与某个客户合作而沾沾自喜，毕竟客户的商业成就，与我关系不大。 <!-- raw HTML omitted --></p>
+<p>客户可以有很多个，没有必要为别人的成就而自得不已。 <!-- raw HTML omitted --></p>
+<p>最近新读到一首诗，唐代孟郊的《劝学》： <!-- raw HTML omitted --></p>
+<blockquote>
+<p>击石乃有火，不击元无烟。 <!-- raw HTML omitted --></p>
+<p>人学始知道，不学非自然。 <!-- raw HTML omitted --></p>
+<p>万事须己运，他得非我贤。 <!-- raw HTML omitted --></p>
+<p>青春须早为，岂能长少年。 <!-- raw HTML omitted --></p>
+</blockquote>
+<p><strong><strong>万事须己运，他得非我贤。</strong></strong> <!-- raw HTML omitted --></p>
+<h2 id="十项全能"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 十项全能</h2>
+<p>既然是要做生意，那么只会写代码，注定是不可行。 <!-- raw HTML omitted --></p>
+<p>毕竟没有见过哪家成功的商业公司，只在车间生产产品即可，不需要一系列配套的商业运作流程： <!-- raw HTML omitted --></p>
+<ol>
+<li>营销与广告，打造个人品牌，写博客或者做Up主 <!-- raw HTML omitted --></li>
+<li>持续学习，没有什么生意是一成不变，就能从爷爷辈做到孙子辈的 <!-- raw HTML omitted --></li>
+<li>如何提升个人效率，以更少的投入获取更多的产出 <!-- raw HTML omitted --></li>
+<li>如何理财，管理你生意的营收与支出 <!-- raw HTML omitted --></li>
+<li>如何健身，管理你自己的身材 <!-- raw HTML omitted --></li>
+<li>旋转720度，落地无水花 <!-- raw HTML omitted --></li>
+</ol>
+<p>诸如此类，这些技能要求也就变成理所当然。 <!-- raw HTML omitted --></p>
+<h2 id="总结"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 总结</h2>
+<p>把工作当作生意的思路转变，只是第一步。 <!-- raw HTML omitted --></p>
+<p>套用《霸王别姬》的一句台词： <!-- raw HTML omitted --></p>
+<blockquote>
+<p>今儿个是破题儿 <!-- raw HTML omitted --></p>
+<p>文章还在后头呢 <!-- raw HTML omitted --></p>
+</blockquote>
+<p>客户或公司是一个抽象的概念，实际也是由形形色色的人组成。 <!-- raw HTML omitted --></p>
+<p>与客户合作，实际是与各种人打交道，如何高效沟通和交流就是一个非常有用的技能。 <!-- raw HTML omitted --></p>
+<p>但对于曾经社恐的我来说，跨出第一步却是非常艰难。 <!-- raw HTML omitted --></p>
+<p>所以软技能系统的下一篇是： <!-- raw HTML omitted --></p>
+<p>软件工程师的软技能指北（三）：高效交流篇 <!-- raw HTML omitted --></p>
+<p>对于后续的篇章，呼应上文，我有了大概腹稿，分别是： <!-- raw HTML omitted --></p>
+<ul>
+<li>软件工程师的软技能指北（四）：简历篇 <!-- raw HTML omitted --></li>
+<li>软件工程师的软技能指北（五）：面试篇 <!-- raw HTML omitted --></li>
+<li>软件工程师的软技能指北（六）：谈薪篇 <!-- raw HTML omitted --></li>
+</ul>
+]]></content:encoded>
+    </item>
+    
     <item>
       <title>软件工程师的软技能指北（一）：总览篇</title>
       <link>https://ramsayleung.github.io/zh/post/2023/%E6%80%BB%E8%A7%88%E7%AF%87/</link>
@@ -46,20 +166,21 @@
 <blockquote>
 <p>见贤思齐焉，见不贤而内自省也。</p>
 </blockquote>
-<p>这让想起了Netflix 的高分纪录片《我心永随桑德兰》，别人拍纪录片是纪录成功，这部豆瓣9.2分的片子却是在纪录失败：</p>
+<p>这让我想起了Netflix 的高分纪录片《我心永随桑德兰》，别人拍纪录片是记录成功，这部豆瓣9.2分的片子却是在记录失败：</p>
 <figure>
     <img loading="lazy" src="/ox-hugo/%e6%88%91%e5%bf%83%e6%b0%b8%e9%9a%8f%e6%a1%91%e5%be%b7%e5%85%b0.png"/> 
 </figure>
 
 <p>英超保级劲旅桑德兰，在2017年终于花光自己在英超的保级运气，从顶级联赛英超跌入二级联赛英冠。</p>
-<p>然后俱乐部高层想拍一部纪录片，纪录自己奋发图强，卧薪尝胆杀回英超的经历，以此吸引投资者，最后却是二连跳，跌入到三级联赛英甲的神剧情。</p>
+<p>然后俱乐部高层想拍一部纪录片，记录自己奋发图强，卧薪尝胆杀回英超的经历，以此吸引投资者，最后却是二连跳，跌入到三级联赛英甲的神剧情。</p>
 <p>把我不开心的事说出来，拿出来给大家一起开心下嘛。</p>
 <h2 id="软技能"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 软技能</h2>
 <p>就软技能而言，绝不止「软件工程师」这个职业需要这个技能，而是绝大部分职业都需要的。</p>
 <p>因为绝大部分的工作都是与人打交道，而软技能就是如果更高效与人沟通的关键技能。</p>
 <p>如果有「软件工程师」认为自己只要写代码就可以了（我曾经就是这么认为的）；或者觉得，写代码才是最有趣的部分（我现在也是这么认为的），我不想理这么多事情；</p>
 <p>那么你的可替代性就非常高，当代码生成工具足够成熟之后，你就可以被裁掉了。</p>
-<p>之前办信用卡时候，我说的职业是Software Engineer，银行客户经理问我，你们是不是只要埋头对着电脑敲键盘即可，不需要和人说话的？（我心想，你是美剧看多了吧）</p>
+<p>之前办信用卡时候，我说的职业是Software Engineer，银行客户经理问我，你们是不是只要埋头对着电脑敲键盘即可，不需要和人说话的？</p>
+<p>（我心想，你是美剧看多了吧）</p>
 <p>而事实恰恰与直觉相反，软件工程师大部分时间都在与人打交道：</p>
 <ol>
 <li>拿到需求时，需要分析需求的可行性，与产品经理扯皮，理清模糊之处</li>
@@ -84,9 +205,10 @@
 <li>心态（Mindset）：培养积极的心态，To be a better man(woman).</li>
 </ol>
 <p>我就不会按照作者的主旨来阐述我自己的想法，毕竟「他瓶装我酒」，想怎么「装」就是我自己的选择了。</p>
-<p>感触多些的主旨，就拆分开多几个篇幅，没有太多感慨的部分，可能就选择性省略了。</p>
+<p>感触多些的主旨，就拆分开多几篇文章，没有太多感慨的部分，可能就选择性省略了。</p>
 <h2 id="总结"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 总结</h2>
 <p>所以要「软硬都抓，内外兼修」，才能成长为一个优秀的软件工程师。</p>
+<p>只会写代码的软件工程师，真的是注定吃亏，酒香也怕巷子深。这是多次吃亏之后得出的经验总结。</p>
 <p>其他的职业与岗位也大抵如此。</p>
 ]]></content:encoded>
     </item>
