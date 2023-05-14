@@ -169,7 +169,7 @@ languages:
           url: zh/tags/
           weight: 30
         - name: "关于"
-          url: zh/about/
+          url: zh/about_me_zh/
           weight: 40
 # Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
 pygmentsUseClasses: true
