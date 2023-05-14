@@ -13,6 +13,42 @@
     <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
     <lastBuildDate>Thu, 11 May 2023 21:32:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>关于我</title>
+      <link>https://ramsayleung.github.io/zh/about_me_zh/</link>
+      <pubDate>Sun, 14 May 2023 12:32:00 -0700</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/about_me_zh/</guid>
+      <description>1 主业 Ramsay 是位软件工程师，以写程序为业，曾经就职于蚂蚁金服，微信，目前在Amazon Web Service 工作。 职业经历可详见 Linkedin 推崇开源与动手精神，使用Emac</description>
+      <content:encoded><![CDATA[<h2 id="主业"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 主业</h2>
+<p>Ramsay 是位软件工程师，以写程序为业，曾经就职于蚂蚁金服，微信，目前在Amazon Web Service 工作。</p>
+<p>职业经历可详见 <a href="https://www.linkedin.com/in/ramsayleung/">Linkedin</a></p>
+<p>推崇开源与动手精神，使用Emacs 与Linux 多年，喜欢动手折腾。</p>
+<p>写过C++, Java, Python, Javascript/Typescript这四种语言的生产代码，喜欢Rust 与 Ruby，常用EmacsLisp 为自己的工作流写小工具。</p>
+<h2 id="写作"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 写作</h2>
+<p>从16年开始在博客上写博文，期间经历过多次迁移，但大多时候，博客的读者都只有我自己。</p>
+<p>「自由庄园」名字部分来源于乔治-奥威尔的名作《动物庄园》。</p>
+<p>此前在公众号和公司内网写文章，被人要求过删文章以及被直接删过文章，所以希望有属于自己的写作自留地，可以畅所欲言。</p>
+<p>「自由庄园」还有一个对应的英文博客，名为「In pursuit of Simplicity」，主要是记录一些英文写作与感悟的平台。</p>
+<blockquote>
+<p>Simple is Beautiful</p>
+</blockquote>
+<p>非纯技术文章大多会同步发布到公众号「宫孙说」上：</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/mp_qr_code.jpg"/> 
+</figure>
+
+<h2 id="开源"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 开源</h2>
+<p>在 <a href="https://github.com/ramsayleung">Github</a> 上有若干个开源项目，但目前主要在维护<a href="https://github.com/ramsayleung/rspotify">RSpotify</a> 这个使用Rust 语言编写的 Spotify SDK。</p>
+<p>在<a href="https://stackoverflow.com/users/5738112/ramsay">Stackoverflow</a> 上也会帮忙解答其他开发者的疑问，反馈社区。</p>
+<h2 id="交流"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 交流</h2>
+<p>Ramsay 喜读书，电影，历史；亦爱生活，料理；闲暇时常涂鸦写作，抒发感想。</p>
+<p>绿蚁新醅酒，红泥小火炉。晚来天欲雪，能饮一杯无？</p>
+<p>望与君，共举杯。</p>
+<p>个人邮箱：cmFtc2F5bGV1bmcrYmxvZ0BnbWFpbC5jb20K（base64）</p>
+]]></content:encoded>
+    </item>
+    
+    <item>
       <title>软件工程师的软技能指北（二）：事业篇</title>
       <link>https://ramsayleung.github.io/zh/post/2023/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%BD%AF%E6%8A%80%E8%83%BD%E6%8C%87%E5%8C%97_%E4%BA%8B%E4%B8%9A%E7%AF%872/</link>
       <pubDate>Thu, 11 May 2023 21:32:00 -0700</pubDate>
@@ -3629,33 +3665,6 @@ Your browser does not support the video tag.<!-- raw HTML omitted --></p>
 <li><a href="https://www.zhihu.com/question/31311463">费曼是一个什么样的人</a></li>
 <li><a href="https://program-think.blogspot.com/2019/10/Systematic-Learning.html#head-5">如何【系统性学习】——从“媒介形态”聊到“DIKW 模型”</a></li>
 </ul>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>About Me</title>
-      <link>https://ramsayleung.github.io/zh/about/</link>
-      <pubDate>Mon, 21 Feb 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://ramsayleung.github.io/zh/about/</guid>
-      <description>关于我 I&amp;rsquo;m Ramsay, I chase a lot of different things. The slogan of this site is In pursuit of Hubris, since: There are three great virtues of a programmer; Laziness, Impatience and Hubris &amp;ndash; Larry Wall The first programming language I learned is `Pascal` in a computer-hobbyist group when I was a middle school student. Back to time before, the only thing I could do with `Pascal` was</description>
-      <content:encoded><![CDATA[<h2 id="about-me">关于我</h2>
-<p>I&rsquo;m Ramsay, I chase a lot of different things. The slogan of this site is <strong><strong>In pursuit of Hubris</strong></strong>, since:</p>
-<blockquote>
-<p>There are three great virtues of a programmer; Laziness, Impatience and Hubris &ndash; <a href="https://en.wikipedia.org/wiki/Larry_Wall">Larry Wall</a></p>
-</blockquote>
-<p>The first programming language I learned is `Pascal` in a computer-hobbyist group when I was a middle school student. Back to time before, the only thing I could do with `Pascal` was trying to find the maximum or minimum number among the number array, or just calculate the sum of them, which is of less fun. I didn&rsquo;t really start programming before I became a fresh student majared in software enginering in my university. I&rsquo;ve build a lot of different stuffs for personal use or simply out of curiosity, you could find them at my <a href="https://github.com/ramsayleung">Github project</a>.</p>
-<p>Nowaday, I am employed by Ant Financial(Alibaba group), aka Alipay, make a living by doing some Java stuff, working overtime every working day(whick also known as <a href="https://github.com/996icu/996.ICU">996 work schedule</a>). I am also interested in Rust/Python/C++, but find no way to build some industrial level softwares with these languages.</p>
-<p>Update:
-I have left Ant Financial,  now I am working for Wechat Pay, just embracing the change, as what my ex-employer encourages to do.</p>
-<h2 id="projects">Projects</h2>
-<ul>
-<li><a href="https://github.com/ramsayleung/rspotify">rspotify</a>: A Spotify Web API wrapper implemented in Rust.</li>
-<li><a href="https://github.com/ramsayleung/jd_spider">jd spiders</a>: A dumb distributed crawler built on Scrapy to scrape goods data and comments data from a famous Chinese E-commerce company, implemented in Python.</li>
-<li><a href="https://github.com/ramsayleung/blog">blog</a>: A clean, elegant blog built on Rust/Javascript(which is also known as the source code of this blog)</li>
-</ul>
-<h2 id="book">Book</h2>
-<p>I love to reading books, the reading of all good books is like a comfortable conversation with the most brilliant people of the past centuries, it also brings me unknown friends. As for book, my taste is history, politics, novel and computer science. Right, I get used to write summary of them after reading(mostly in Chinese). Reading does feed me.</p>
 ]]></content:encoded>
     </item>
     
