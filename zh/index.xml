@@ -28,10 +28,8 @@
 <h2 id="灵感"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 灵感</h2>
 <p>但是知乎问题里面的部分回答给了我灵感，让我们想起国内某些APP 为了保活，避免被系统kill 掉，在后台播放无声音频的操作。 <!-- raw HTML omitted --></p>
 <p>我可以以低音量循环播放一段音频，以实现保活的作用： <!-- raw HTML omitted --></p>
-<blockquote>
-<p>mpg123 -f 1000 ~/music/listen_to_the_sea.mp3 &ndash;loop -1 <!-- raw HTML omitted --></p>
-</blockquote>
-<p>mpg123 是mp3 播放命令行，=-f 1000= 参数的含义是：100%的音量是32768, 1000 约等于是1000/32768= 3% 的音量，=-loop -1= 就是指无限循环播放。 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mpg123 -f <span class="m">1000</span> ~/music/listen_to_the_sea.mp3 --loop -1
+</span></span></code></pre></div><p>mpg123 是mp3 播放命令行， <code>-f 1000</code> 参数的含义是：100%的音量是32768, 1000 约等于是1000/32768 = 3% 的音量， <code>-loop -1</code> 就是指无限循环播放。 <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">man mpg123
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">...
@@ -43,11 +41,9 @@
 </span></span><span class="line"><span class="cl"><span class="k">for</span> looping track<span class="o">(</span>s<span class="o">)</span> a certain number of times, &lt; <span class="m">0</span> means infinite loop <span class="o">(</span>not with --random!<span class="o">)</span>.
 </span></span></code></pre></div><h2 id="优化"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 优化</h2>
 <p>这样就实现了一个可用的版本，只是还要依赖一个 mp3 文件，肯定还有优化的空间。 <!-- raw HTML omitted --></p>
-<p>一番调研之后发现，=play/sox= 命令可以播放指定频率和时长的声音，可以播放20 hz以下的声音，这个频率下的声音人耳是听不到的： <!-- raw HTML omitted --></p>
-<blockquote>
-<p>play -q -n synth 10 sin 20 <!-- raw HTML omitted --></p>
-</blockquote>
-<ul>
+<p>一番调研之后发现， <code>play/sox</code> 命令可以播放指定频率和时长的声音，可以播放20 hz以下的声音，这个频率下的声音人耳是听不到的： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">play -q -n synth <span class="m">10</span> sin <span class="m">20</span>
+</span></span></code></pre></div><ul>
 <li><code>-q</code>: 不显示播放进度条 <!-- raw HTML omitted --></li>
 <li><code>-n synth 10</code> 播放10秒的音频 <!-- raw HTML omitted --></li>
 <li><code>sin 20</code> 频率为20 hz(如果听到了，可以设置成更低) <!-- raw HTML omitted --></li>
