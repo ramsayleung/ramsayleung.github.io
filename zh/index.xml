@@ -11,7 +11,70 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sun, 14 May 2023 16:51:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 15 May 2023 20:48:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux避免蓝牙音箱自动关机</title>
+      <link>https://ramsayleung.github.io/zh/post/2023/linux%E9%81%BF%E5%85%8D%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E8%87%AA%E5%8A%A8%E5%85%B3%E6%9C%BA/</link>
+      <pubDate>Mon, 15 May 2023 20:48:00 -0700</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2023/linux%E9%81%BF%E5%85%8D%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E8%87%AA%E5%8A%A8%E5%85%B3%E6%9C%BA/</guid>
+      <description>1 问题 最近方便布线，整理了桌上乱糟糟的线，把原来使用aux 线连接的蓝牙音响换成通过蓝牙连接。 然后就发现一个问题，只要音响没有发出声音超过30</description>
+      <content:encoded><![CDATA[<h2 id="问题"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 问题</h2>
+<p>最近方便布线，整理了桌上乱糟糟的线，把原来使用aux 线连接的蓝牙音响换成通过蓝牙连接。 <!-- raw HTML omitted --></p>
+<p>然后就发现一个问题，只要音响没有发出声音超过30分钟，蓝牙音响就会断开连接，并且自动关机，即使蓝牙音响连接着电源。 <!-- raw HTML omitted --></p>
+<p>一番搜索之后，就在知乎上发现了这个问题：<a href="https://www.zhihu.com/question/41682642">求问如何避免蓝牙音箱自动关机？</a> <!-- raw HTML omitted --></p>
+<p>但里面提到的解决方案，大多只适用于特定平台，例如Windows 或者Macos, 没有提到 Linux 上的解决方案。 <!-- raw HTML omitted --></p>
+<p>每过半个小时手动打开蓝牙音响再连接的方式，实在是太蠢了。 <!-- raw HTML omitted --></p>
+<h2 id="灵感"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 灵感</h2>
+<p>但是知乎问题里面的部分回答给了我灵感，让我们想起国内某些APP 为了保活，避免被系统kill 掉，在后台播放无声音频的操作。 <!-- raw HTML omitted --></p>
+<p>我可以以低音量循环播放一段音频，以实现保活的作用： <!-- raw HTML omitted --></p>
+<blockquote>
+<p>mpg123 -f 1000 ~/music/listen_to_the_sea.mp3 &ndash;loop -1 <!-- raw HTML omitted --></p>
+</blockquote>
+<p>mpg123 是mp3 播放命令行，=-f 1000= 参数的含义是：100%的音量是32768, 1000 约等于是1000/32768= 3% 的音量，=-loop -1= 就是指无限循环播放。 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">man mpg123
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-f factor, --scale factor
+</span></span><span class="line"><span class="cl">Change scale factor <span class="o">(</span>default: 32768<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">--loop <span class="nb">times</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> looping track<span class="o">(</span>s<span class="o">)</span> a certain number of times, &lt; <span class="m">0</span> means infinite loop <span class="o">(</span>not with --random!<span class="o">)</span>.
+</span></span></code></pre></div><h2 id="优化"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 优化</h2>
+<p>这样就实现了一个可用的版本，只是还要依赖一个 mp3 文件，肯定还有优化的空间。 <!-- raw HTML omitted --></p>
+<p>一番调研之后发现，=play/sox= 命令可以播放指定频率和时长的声音，可以播放20 hz以下的声音，这个频率下的声音人耳是听不到的： <!-- raw HTML omitted --></p>
+<blockquote>
+<p>play -q -n synth 10 sin 20 <!-- raw HTML omitted --></p>
+</blockquote>
+<ul>
+<li><code>-q</code>: 不显示播放进度条 <!-- raw HTML omitted --></li>
+<li><code>-n synth 10</code> 播放10秒的音频 <!-- raw HTML omitted --></li>
+<li><code>sin 20</code> 频率为20 hz(如果听到了，可以设置成更低) <!-- raw HTML omitted --></li>
+</ul>
+<p>执行命令之后，可以使用=pavucontrol= 查看声音输出，应该是类似这样的效果： <!-- raw HTML omitted --></p>
+<p><figure>
+    <img loading="lazy" src="/ox-hugo/sox_pavucontrol.png"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<h2 id="定时执行"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 定时执行</h2>
+<p>一直开着个terminal 窗口运行命令有点麻烦，这种重复性的工作，就可以交给 crontab, 让它每分钟执行一次，每次播放10秒。 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">* * * * * play -q -n synth <span class="m">10</span> sin <span class="m">20</span>
+</span></span></code></pre></div><p>但实际运行，发现声音不能如预期那样播放。一番搜索之后，发现 StackExchange 上有个答案提到需要 export 个环境变量，所以最好创建个脚本 <code>play_beep.sh</code>: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">export</span> <span class="nv">XDG_RUNTIME_DIR</span><span class="o">=</span>/run/user/1000
+</span></span><span class="line"><span class="cl">play -q -n synth <span class="m">10</span> sin <span class="m">10</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="k">$(</span>date<span class="k">)</span> <span class="c1"># 打印日期，主要是为了方便排查</span>
+</span></span></code></pre></div><p>然后再安装一个 crontab 任务: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">* * * * * /usr/bin/sh /home/ramsay/code/shell/play_beep.sh &gt;&gt; /tmp/beep.log 2&gt;<span class="p">&amp;</span><span class="m">1</span>
+</span></span></code></pre></div><p>经过验证，一天都没有断开过蓝牙，自动关机了。 <!-- raw HTML omitted --></p>
+<h2 id="参考"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 参考</h2>
+<ul>
+<li><a href="https://www.zhihu.com/question/41682642">求问如何避免蓝牙音箱自动关机？</a> <!-- raw HTML omitted --></li>
+</ul>
+]]></content:encoded>
+    </item>
+    
     <item>
       <title>软件工程师的软技能指北：高效交流篇（三）</title>
       <link>https://ramsayleung.github.io/zh/post/2023/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%BD%AF%E6%8A%80%E8%83%BD%E6%8C%87%E5%8C%97_%E9%AB%98%E6%95%88%E4%BA%A4%E6%B5%81%E7%AF%873/</link>
