@@ -1,7 +1,7 @@
 +++
 title = "Linux下如何避免蓝牙音箱自动关机"
 date = 2023-05-15T20:48:00-07:00
-lastmod = 2023-05-15T21:50:18-07:00
+lastmod = 2023-05-15T21:53:53-07:00
 tags = ["linux"]
 categories = ["linux"]
 draft = false
@@ -60,7 +60,7 @@ play -q -n synth 10 sin 20
 -   `-n synth 10` 播放10秒的音频 <br/>
 -   `sin 20` 频率为20 hz(如果听到了，可以设置成更低) <br/>
 
-执行命令之后，可以使用=pavucontrol= 查看声音输出，应该是类似这样的效果： <br/>
+执行命令之后，可以使用 `pavucontrol` 命令查看声音输出，应该是类似这样的效果： <br/>
 
 {{< figure src="/ox-hugo/sox_pavucontrol.png" >}} <br/>
 
