@@ -48,7 +48,7 @@
 <li><code>-n synth 10</code> 播放10秒的音频 <!-- raw HTML omitted --></li>
 <li><code>sin 20</code> 频率为20 hz(如果听到了，可以设置成更低) <!-- raw HTML omitted --></li>
 </ul>
-<p>执行命令之后，可以使用=pavucontrol= 查看声音输出，应该是类似这样的效果： <!-- raw HTML omitted --></p>
+<p>执行命令之后，可以使用 <code>pavucontrol</code> 命令查看声音输出，应该是类似这样的效果： <!-- raw HTML omitted --></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/sox_pavucontrol.png"/> 
 </figure>
