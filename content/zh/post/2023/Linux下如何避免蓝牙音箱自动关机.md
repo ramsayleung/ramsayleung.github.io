@@ -1,7 +1,7 @@
 +++
 title = "Linux下如何避免蓝牙音箱自动关机"
 date = 2023-05-15T20:48:00-07:00
-lastmod = 2023-05-15T21:44:30-07:00
+lastmod = 2023-05-15T21:50:18-07:00
 tags = ["linux"]
 categories = ["linux"]
 draft = false
@@ -27,9 +27,11 @@ toc = true
 
 我可以以低音量循环播放一段音频，以实现保活的作用： <br/>
 
-> mpg123 -f 1000 ~/music/listen_to_the_sea.mp3 --loop -1 <br/>
+```shell
+mpg123 -f 1000 ~/music/listen_to_the_sea.mp3 --loop -1
+```
 
-mpg123 是mp3 播放命令行，=-f 1000= 参数的含义是：100%的音量是32768, 1000 约等于是1000/32768= 3% 的音量，=-loop -1= 就是指无限循环播放。 <br/>
+mpg123 是mp3 播放命令行， `-f 1000` 参数的含义是：100%的音量是32768, 1000 约等于是1000/32768 = 3% 的音量， `-loop -1` 就是指无限循环播放。 <br/>
 
 ```shell
 man mpg123
@@ -48,9 +50,11 @@ for looping track(s) a certain number of times, < 0 means infinite loop (not wit
 
 这样就实现了一个可用的版本，只是还要依赖一个 mp3 文件，肯定还有优化的空间。 <br/>
 
-一番调研之后发现，=play/sox= 命令可以播放指定频率和时长的声音，可以播放20 hz以下的声音，这个频率下的声音人耳是听不到的： <br/>
+一番调研之后发现， `play/sox` 命令可以播放指定频率和时长的声音，可以播放20 hz以下的声音，这个频率下的声音人耳是听不到的： <br/>
 
-> play -q -n synth 10 sin 20 <br/>
+```shell
+play -q -n synth 10 sin 20
+```
 
 -   `-q`: 不显示播放进度条 <br/>
 -   `-n synth 10` 播放10秒的音频 <br/>
