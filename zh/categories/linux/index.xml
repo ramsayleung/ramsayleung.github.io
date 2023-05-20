@@ -18,9 +18,9 @@
       <pubDate>Mon, 15 May 2023 20:48:00 -0700</pubDate>
       
       <guid>https://ramsayleung.github.io/zh/post/2023/linux%E4%B8%8B%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E8%87%AA%E5%8A%A8%E5%85%B3%E6%9C%BA/</guid>
-      <description>1 问题 最近方便布线，整理了桌上乱糟糟的线，把原来使用aux 线连接的蓝牙音响换成通过蓝牙连接。 然后就发现一个问题，只要音响没有发出声音超过30</description>
+      <description>1 问题 最近整理了桌上乱糟糟的线，把原来使用aux 线连接的蓝牙音响换成通过蓝牙连接。 然后就发现一个问题，只要音响没有发出声音超过30分钟，蓝牙</description>
       <content:encoded><![CDATA[<h2 id="问题"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 问题</h2>
-<p>最近方便布线，整理了桌上乱糟糟的线，把原来使用aux 线连接的蓝牙音响换成通过蓝牙连接。 <!-- raw HTML omitted --></p>
+<p>最近整理了桌上乱糟糟的线，把原来使用aux 线连接的蓝牙音响换成通过蓝牙连接。 <!-- raw HTML omitted --></p>
 <p>然后就发现一个问题，只要音响没有发出声音超过30分钟，蓝牙音响就会断开连接，并且自动关机，即使蓝牙音响连接着电源。 <!-- raw HTML omitted --></p>
 <p>一番搜索之后，就在知乎上发现了这个问题：<a href="https://www.zhihu.com/question/41682642">求问如何避免蓝牙音箱自动关机？</a> <!-- raw HTML omitted --></p>
 <p>但里面提到的解决方案，大多只适用于特定平台，例如Windows 或者Macos, 没有提到 Linux 上的解决方案。 <!-- raw HTML omitted --></p>
