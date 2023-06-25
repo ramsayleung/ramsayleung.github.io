@@ -1,7 +1,7 @@
 +++
 title = "两个鲜为人知的Gmail地址技巧"
 date = 2023-06-24T20:15:00-07:00
-lastmod = 2023-06-24T20:59:51-07:00
+lastmod = 2023-06-24T21:07:58-07:00
 tags = ["tool", "productivity", "gmail"]
 categories = ["tool", "productivity", "gmail"]
 draft = false
@@ -10,7 +10,7 @@ toc = true
 
 ## <span class="section-num">1</span> 前言 {#前言}
 
-分享两个鲜为人知，但是却相当有用的 Gmail 地址技巧。文章并非是标题党，而是引用Gmail 博客原话： <br/>
+分享两个鲜为人知，但是却相当有用的 Gmail 地址技巧。「鲜为人知」并非是标题党，而是引用Gmail 博客原话： <br/>
 
 > I recently discovered some ****little-known**** ways to use your Gmail address that can give you greater control over your inbox and save you some time and headache. <br/>
 
@@ -54,7 +54,7 @@ toc = true
 
 而通过 Gmail 加号的技巧，我就可以做到垃圾邮件溯源. <br/>
 
-首先，在注册每个网站的时候，都给他们加上一个tag, 例如注册Twitter, 那就用 `xiaoming+twitter@gmail.com`, 如果注册Github, 那就用=xiaoming+github@gmail.com=, 依此类推。 <br/>
+首先，在注册每个网站的时候，都给他们加上一个tag, 例如注册Twitter, 那就用 `xiaoming+twitter@gmail.com`, 如果注册Github, 那就用 `xiaoming+github@gmail.com`, 依此类推。 <br/>
 
 只要有垃圾邮件，我就能通过加号的后缀，知道是哪个浓眉大眼的网站把我的信息给泄漏出去了。 <br/>
 
