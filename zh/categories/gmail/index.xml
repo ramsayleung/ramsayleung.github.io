@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>gmail on 自由庄园</title>
+    <link>https://ramsayleung.github.io/zh/categories/gmail/</link>
+    <description>Recent content in gmail on 自由庄园</description>
+    <image>
+      <title>自由庄园</title>
+      <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
+    <lastBuildDate>Sat, 24 Jun 2023 20:15:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/categories/gmail/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>两个鲜为人知的Gmail地址技巧</title>
+      <link>https://ramsayleung.github.io/zh/post/2023/gmail%E5%9C%B0%E5%9D%80%E7%9A%84%E9%9A%90%E8%97%8F%E6%8A%80%E5%B7%A7/</link>
+      <pubDate>Sat, 24 Jun 2023 20:15:00 -0700</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2023/gmail%E5%9C%B0%E5%9D%80%E7%9A%84%E9%9A%90%E8%97%8F%E6%8A%80%E5%B7%A7/</guid>
+      <description>1 前言 分享两个鲜为人知，但是却相当有用的 Gmail 地址技巧。文章并非是标题党，而是引用Gmail 博客原话： I recently discovered some little-known ways to use your Gmail address that can give you greater control over your inbox and</description>
+      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+<p>分享两个鲜为人知，但是却相当有用的 Gmail 地址技巧。文章并非是标题党，而是引用Gmail 博客原话： <!-- raw HTML omitted --></p>
+<blockquote>
+<p>I recently discovered some <strong><strong>little-known</strong></strong> ways to use your Gmail address that can give you greater control over your inbox and save you some time and headache. <!-- raw HTML omitted --></p>
+</blockquote>
+<h2 id="技巧"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 技巧</h2>
+<p>假设你的Gmail 地址是 <code>xiaoming@gmail.com</code>: <!-- raw HTML omitted --></p>
+<h3 id="加号"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 加号</h3>
+<p>你可以将在用户名后面增加一个加号 <code>+</code>, 并在加号后面增加任意数量的字符，比如 <code>xiaoming+happy@gmail.com</code>, <code>xiaoming+upset@gmail.com</code>, Gmail 都会把这些地址当作成 <code>xiaoming@gmail.com</code>, 发送到你的地址邮箱中。 <!-- raw HTML omitted --></p>
+<h3 id="点号"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 点号</h3>
+<p>你也可以在地址的任意地方插入任意数量的点号: <code>.</code>, 比如 <code>x.i.a..o.ming@gmail.com</code>, <code>xiao...mi..ng@gmail.com</code>, Gmail 都会把点号忽略掉，解析成 <code>xiaoming@gmail.com</code> <!-- raw HTML omitted --></p>
+<h2 id="用途"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 用途</h2>
+<p>技巧比较简单，寥寥数语就说完了，好像也没有什么大不了，有什么用处么？ <!-- raw HTML omitted --></p>
+<p>这个就要发挥想象力了。 <!-- raw HTML omitted --></p>
+<h3 id="用途一-重复注册用户"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 用途一：重复注册用户</h3>
+<p>这个主要是针对能使用邮箱注册的网站，可能大多数是国外网站。 <!-- raw HTML omitted --></p>
+<p>如果网站的邮箱地址校验正则写得不好，允许加号和点号，不知道Gmail的这两个规则，那么 <code>xiaoming+user1@gmail.com</code>, <code>xiaoming+user2@gmail.com</code>, <code>xi..aoming@gmail.com</code> 就会被认为是三个不同的邮箱地址，就可以重复注册。 <!-- raw HTML omitted --></p>
+<p>在薅羊毛等需要重复注册用户的场景就比较有用了。 <!-- raw HTML omitted --></p>
+<h3 id="用途二-溯源"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> 用途二：溯源</h3>
+<p>个人邮箱难免会收到一些奇怪的邮件，例如：猎头的招聘邮件，钓鱼邮件等等。 <!-- raw HTML omitted --></p>
+<p>收到这些邮件的第一反应肯定是把邮件删掉，之后就会思考，究竟是哪里泄漏了个人邮箱。 <!-- raw HTML omitted --></p>
+<p>而通过 Gmail 加号的技巧，我就可以做到垃圾邮件溯源. <!-- raw HTML omitted --></p>
+<p>首先，在注册每个网站的时候，都给他们加上一个tag, 例如注册Twitter, 那就用 <code>xiaoming+twitter@gmail.com</code>, 如果注册Github, 那就用=xiaoming+github@gmail.com=, 依此类推。 <!-- raw HTML omitted --></p>
+<p>只要有垃圾邮件，我就能通过加号的后缀，知道是哪个浓眉大眼的网站把我的信息给泄漏出去了。 <!-- raw HTML omitted --></p>
+<p>比如下面这个垃圾邮件，我就知道它是通过爬虫爬取我Github 公开邮件群发的. <!-- raw HTML omitted --></p>
+<p><figure>
+    <img loading="lazy" src="/ox-hugo/gmail_plus_sign_example.png"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>我就可以选择不公开 Github 邮箱，来避免后续收到类似的邮件。 <!-- raw HTML omitted --></p>
+<h2 id="参考"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 参考</h2>
+<ul>
+<li><a href="https://gmail.googleblog.com/2008/03/2-hidden-ways-to-get-more-from-your.html">Google Gmail Blog: 2 hidden ways to get more from your Gmail address</a> <!-- raw HTML omitted --></li>
+</ul>
+]]></content:encoded>
+    </item>
+    
+  </channel>
+</rss>
