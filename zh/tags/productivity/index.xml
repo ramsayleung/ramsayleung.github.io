@@ -131,28 +131,22 @@
 </code></pre><h3 id="chrome-chromium-site-search"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> Chrome/Chromium Site Search</h3>
 <p>打开Chrome/Chromium -&gt; 点击设置(Setting) -&gt; 点击搜索引擎（Search Engine） -&gt; Manage search engines and site search -&gt; Site search [Add] <!-- raw HTML omitted --></p>
 <ul>
-<li>
-<p>Search Engine: OpenGrok Code Search Find Reference(取个有意义的名字) <!-- raw HTML omitted --></p>
-</li>
-<li>
-<p>Keyword: csr <!-- raw HTML omitted --></p>
-</li>
-<li>
-<p>URL: <code>https://opengrok.libreoffice.org/search?full=&amp;defs=&amp;refs=%s&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=refs&amp;searchall=true&amp;si=refs</code> <!-- raw HTML omitted --></p>
+<li>Search Engine: OpenGrok Code Search Find Reference(取个有意义的名字) <!-- raw HTML omitted --></li>
+<li>Keyword: csr <!-- raw HTML omitted --></li>
+<li>URL: <code>https://opengrok.libreoffice.org/search?full=&amp;defs=&amp;refs=%s&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=refs&amp;searchall=true&amp;si=refs</code> <!-- raw HTML omitted --></li>
+</ul>
 <p><figure>
-        <img loading="lazy" src="/ox-hugo/google_site_search_ref.png"/> 
-    </figure>
+    <img loading="lazy" src="/ox-hugo/google_site_search_ref.png"/> 
+</figure>
  <!-- raw HTML omitted --></p>
 <p>然后，在Chrome 的浏览器地址，输入 <code>csr</code>, 空格, 再搜索 <code>Intersection</code>, 回车。就可以直接在Chrome 地址栏里面搜索指定网页的代码. <!-- raw HTML omitted --></p>
 <p><figure>
-        <img loading="lazy" src="/ox-hugo/google_site_search_csr.gif"/> 
-    </figure>
+    <img loading="lazy" src="/ox-hugo/google_site_search_csr.gif"/> 
+</figure>
  <!-- raw HTML omitted --></p>
 <p>而搜索代码定义，URL 如下: <!-- raw HTML omitted --></p>
 <pre tabindex="0"><code class="language-log" data-lang="log">https://opengrok.libreoffice.org/search?full=&amp;defs=Intersection&amp;refs=&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=defs&amp;searchall=true&amp;si=defs
 </code></pre><p>只需要将 <code>defs</code> 后面的内容修改成 <code>%s</code>, 再建一个新的site search, 名为 <code>Opengrok Code Search Find Definition</code>, keyword 为 <code>csd</code>, 就可以快速搜索代码定义. <!-- raw HTML omitted --></p>
-</li>
-</ul>
 <p>如果想要搜索其他网站，比如公司内网: <a href="https://search.xxoa.com/query=Foobar">https://search.xxoa.com/query=Foobar</a>, <!-- raw HTML omitted -->
 只需要把查询内容修改为 %s, 再新建个Site Search 即可。 <!-- raw HTML omitted --></p>
 <p>在老东家，搜索错误码，或者是搜索内网上的文章，我都是这么干的；所以到新东家之后，我也是这么搞的。 <!-- raw HTML omitted --></p>
