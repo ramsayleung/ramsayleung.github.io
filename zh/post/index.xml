@@ -12,7 +12,214 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sat, 24 Jun 2023 20:15:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 25 Jun 2023 13:55:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>我的搜索流：高效搜索经验分享</title>
+      <link>https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E6%90%9C%E7%B4%A2%E6%B5%81/</link>
+      <pubDate>Sun, 25 Jun 2023 13:55:00 -0700</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E6%90%9C%E7%B4%A2%E6%B5%81/</guid>
+      <description>1 前言 人并非全知全能，工作和生活难免会有各种的疑问，有问题自然可以询问有经验的同事或朋友。 但为了避免一有问题就去问人，给别人造成困扰，更推荐</description>
+      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+<p>人并非全知全能，工作和生活难免会有各种的疑问，有问题自然可以询问有经验的同事或朋友。 <!-- raw HTML omitted --></p>
+<p>但为了避免一有问题就去问人，给别人造成困扰，更推荐的就是: 自己先搜索，然后再去问人(Do a search before you ask a question) <!-- raw HTML omitted --></p>
+<p>当然，如果你不想打扰他人，直接问ChatGPT也未尝不可，只是答案的准确性不一定有保证。 <!-- raw HTML omitted --></p>
+<p>如何高效地搜索，缩小搜索的范围，如何快速地检索到答案呢？ <!-- raw HTML omitted --></p>
+<p>那么我来分享一下自己的个人经验： <!-- raw HTML omitted --></p>
+<h2 id="google-search"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Google Search</h2>
+<p>虽然我认为「搜索并不仅限于使用搜索引擎」，但是「搜索引擎」却是搜索并不可少的一部分。 <!-- raw HTML omitted --></p>
+<p>虽然搜索引擎有很多，但是我基本只用 Google；如果没法使用 Google, 那么推荐使用Bing, 反正百度不在我的推荐之列. <!-- raw HTML omitted --></p>
+<p>Google 搜索的界面很简单，只有一个搜索框，用户只需要把想要搜索的内容输入进去并回车即可。 <!-- raw HTML omitted --></p>
+<p>比如搜索：「cpp modules」，返回了 7,320,000条结果。 <!-- raw HTML omitted --></p>
+<p><figure>
+    <img loading="lazy" src="/ox-hugo/google_search_result.png"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>搜索结果太多，我想对搜索内容进行筛选，google 就提供了相当多的搜索指令(search operator) <!-- raw HTML omitted --></p>
+<h3 id="时间"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 时间</h3>
+<p>cpp modules是c++20 才新增的特性，如果我想按时间搜索下相关的内容，可以使用 <code>:before</code>, <code>:after</code> 指令，后面跟着一个日期: <!-- raw HTML omitted --></p>
+<pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules :before 2020
+</code></pre><p><figure>
+    <img loading="lazy" src="/ox-hugo/google_search_before.png"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>可以看到搜索结果变成了185,000条，并且返回的搜索结果都是在 2020 年以前的纪录，这个在查看历史新闻时特别有用，比如看历史合订本。 <!-- raw HTML omitted --></p>
+<h3 id="站点"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 站点</h3>
+<p>如果你只想搜索某个站点，但是这个站点没有提供搜索功能（比如学校或者公司官网），或者搜索质量不够好，那么就可以加上 <code>site:</code> 的关键词, 要求 Google 只返回某个网站的检索结果: <!-- raw HTML omitted --></p>
+<p>比如我想看下 jetbrains家的IDE 对 c++ 20 Modules的支持程度: <!-- raw HTML omitted --></p>
+<pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules site:jetbrains.com
+</code></pre><p><figure>
+    <img loading="lazy" src="/ox-hugo/google_search_site.png"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>又或者，我搜索网站的时候，想把某个网站排除掉, 比如使用中文搜索编程相关关键词的时候，经常会被CSDN 的垃圾内容污染，那么就可以使用 <code>-</code>, 来排除掉某些内容. <!-- raw HTML omitted --></p>
+<pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules -microsoft
+</code></pre><p><figure>
+    <img loading="lazy" src="/ox-hugo/google_search_exclude.png"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>原来排名第二的 Miscrosft 就被过滤掉了. <!-- raw HTML omitted --></p>
+<h3 id="社交媒体"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> 社交媒体</h3>
+<p>如果你想在社交媒体上搜索某个关键词，那么可以使用 <code>@</code> 后跟社交媒体的名字来进行搜索，例如 &ldquo;cpp modules @twitter&rdquo; 或者 &ldquo;cpp modules @reddit&rdquo;, 可以把 <code>@</code> 理解成是 <code>:site</code> 指令的简化版本. <!-- raw HTML omitted --></p>
+<p>只是社交媒体(social media)的定义比较含糊, Google没有给出具体的说明，但是比较有名的社交媒体都是支持的. <!-- raw HTML omitted --></p>
+<pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules @reddit
+</code></pre><p><figure>
+    <img loading="lazy" src="/ox-hugo/google_search_reddit.png"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules @zhihu
+</code></pre><p><figure>
+    <img loading="lazy" src="/ox-hugo/google_search_zhihu.png"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<h3 id="文件类型"><!-- raw HTML omitted -->2.4<!-- raw HTML omitted --> 文件类型</h3>
+<p>可以通过 <code>filetype</code> 来指定想要搜索的文件类型，比如想搜索 pdf 相关的内容: <!-- raw HTML omitted --></p>
+<pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules filetype:pdf
+</code></pre><p><figure>
+    <img loading="lazy" src="/ox-hugo/google_search_pdf.png"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>这个在知道书名，想要搜索电子书的时候特别有用. <!-- raw HTML omitted --></p>
+<h3 id="关键字匹配"><!-- raw HTML omitted -->2.5<!-- raw HTML omitted --> 关键字匹配</h3>
+<p>Google 支持若干个关键字匹配的指令: <!-- raw HTML omitted --></p>
+<p>双引号: &ldquo;cpp modules&rdquo;, 精确匹配，只匹配包含&quot;cpp modules&quot;的内容 <!-- raw HTML omitted --></p>
+<pre tabindex="0"><code class="language-nil" data-lang="nil">&#34;cpp modules&#34;
+</code></pre><p><figure>
+    <img loading="lazy" src="/ox-hugo/google_search_precise_match.png"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>搜索结果变成 3530 条纪录了. <!-- raw HTML omitted --></p>
+<ul>
+<li>星号: &ldquo;* modules&rdquo;, 通配符，所有包含 &ldquo;modules&quot;的内容都会被检索出来。个人觉得用处不大，只会让搜索结果膨胀. <!-- raw HTML omitted --></li>
+<li>OR: &ldquo;cpp or module&rdquo;, 匹配包含 &ldquo;cpp&rdquo; 或者&quot;module&rdquo; 的内容, <code>or</code> 可以使用竖线代替 <code>|</code> 个人觉得用处不大，也只会让搜索结果膨胀 <!-- raw HTML omitted --></li>
+<li>AND: &ldquo;cpp and module&rdquo;, 匹配包含 &ldquo;cpp&rdquo; 与&quot;module&quot; 的内容, <code>and</code> 可以使用与符号代替 <code>&amp;</code> <!-- raw HTML omitted --></li>
+</ul>
+<p><figure>
+    <img loading="lazy" src="/ox-hugo/google_search_and.png"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<h2 id="custome-search"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Custome Search</h2>
+<p>前面提到「搜索并不仅限于使用搜索引擎」，是因为有很多内容，搜索引擎检索不到。 <!-- raw HTML omitted --></p>
+<p>比如在公司内网的信息，Google 再强大，也不可能会检索得到的，因为不公开。 <!-- raw HTML omitted --></p>
+<p>这个时候就可以借助浏览器的 Custom Search能力（Chrome 叫 Site Search, Firefox叫 Keyword Search）。 <!-- raw HTML omitted --></p>
+<p>举个例子，我的老东家用的是代码搜索工具是 <a href="https://oracle.github.io/opengrok/">OpenGrok</a>, 可以搜索整个事业群的代码，支持多种语言，可以搜索代码的定义，引用，历史记录等。 <!-- raw HTML omitted --></p>
+<p>（下文以同样使用 OpenGrok 部署的开源项目 <code>LibreOffice</code> 的代码为例子） <!-- raw HTML omitted --></p>
+<p>因为在日常开发的时候，遇到陌生的函数名或者枚举定义，就需要看下他们的定义与实现，看下有没有问题： <!-- raw HTML omitted --></p>
+<p>比如想看下 <code>contains</code> 这个函数的实现： <!-- raw HTML omitted --></p>
+<p><figure>
+    <img loading="lazy" src="/ox-hugo/libre_office_definition.png"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>或者想看下 <code>Intersection</code> 这个函数的引用，看下其他人是怎么用这个函数的，我也顺便抄下。 <!-- raw HTML omitted --></p>
+<p><figure>
+    <img loading="lazy" src="/ox-hugo/libre_office_symbol.png"/> 
+</figure>
+  <!-- raw HTML omitted --></p>
+<p>一般的步骤是: <!-- raw HTML omitted --></p>
+<ol>
+<li>打开或切换到浏览器(Chrome/Firefox) <!-- raw HTML omitted --></li>
+<li>打开内网网站链接, 在例子中就是 <a href="https://opengrok.libreoffice.org">https://opengrok.libreoffice.org</a> <!-- raw HTML omitted --></li>
+<li>点击 <code>Definition</code> 或者 <code>Symbol</code> <!-- raw HTML omitted --></li>
+<li>输入或者粘贴想要查询的内容，比如 <code>contains</code> <!-- raw HTML omitted --></li>
+</ol>
+<p>一套流程下来，大概需要30-40秒，不能说很慢吧，但是起码算不上快。 <!-- raw HTML omitted --></p>
+<p>但是如果使用 Custom Search, 大概可以缩短至 7-8秒, 并且适用于绝对大部分的网站. <!-- raw HTML omitted --></p>
+<p>首先把查询函数引用的url 复制下来, 观察： <!-- raw HTML omitted --></p>
+<pre tabindex="0"><code class="language-log" data-lang="log">https://opengrok.libreoffice.org/search?full=&amp;defs=&amp;refs=Intersection&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=refs&amp;searchall=true&amp;si=refs
+</code></pre><p><code>refs</code> 后面跟着的就是需要查询的内容, 即 <code>Intersection</code>, 将 <code>Intersection</code> 替换成 <code>%s</code> : <!-- raw HTML omitted --></p>
+<pre tabindex="0"><code class="language-log" data-lang="log">https://opengrok.libreoffice.org/search?full=&amp;defs=&amp;refs=%s&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=refs&amp;searchall=true&amp;si=refs
+</code></pre><h3 id="chrome-chromium-site-search"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> Chrome/Chromium Site Search</h3>
+<p>打开Chrome/Chromium -&gt; 点击设置(Setting) -&gt; 点击搜索引擎（Search Engine） -&gt; Manage search engines and site search -&gt; Site search [Add] <!-- raw HTML omitted --></p>
+<ul>
+<li>
+<p>Search Engine: OpenGrok Code Search Find Reference(取个有意义的名字) <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>Keyword: csr <!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>URL: <code>https://opengrok.libreoffice.org/search?full=&amp;defs=&amp;refs=%s&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=refs&amp;searchall=true&amp;si=refs</code> <!-- raw HTML omitted --></p>
+<p><figure>
+        <img loading="lazy" src="/ox-hugo/google_site_search_ref.png"/> 
+    </figure>
+ <!-- raw HTML omitted --></p>
+<p>然后，在Chrome 的浏览器地址，输入 <code>csr</code>, 空格, 再搜索 <code>Intersection</code>, 回车。就可以直接在Chrome 地址栏里面搜索指定网页的代码. <!-- raw HTML omitted --></p>
+<p><figure>
+        <img loading="lazy" src="/ox-hugo/google_site_search_csr.gif"/> 
+    </figure>
+ <!-- raw HTML omitted --></p>
+<p>而搜索代码定义，URL 如下: <!-- raw HTML omitted --></p>
+<pre tabindex="0"><code class="language-log" data-lang="log">https://opengrok.libreoffice.org/search?full=&amp;defs=Intersection&amp;refs=&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=defs&amp;searchall=true&amp;si=defs
+</code></pre><p>只需要将 <code>defs</code> 后面的内容修改成 <code>%s</code>, 再建一个新的site search, 名为 <code>Opengrok Code Search Find Definition</code>, keyword 为 <code>csd</code>, 就可以快速搜索代码定义. <!-- raw HTML omitted --></p>
+</li>
+</ul>
+<p>如果想要搜索其他网站，比如公司内网: <a href="https://search.xxoa.com/query=Foobar">https://search.xxoa.com/query=Foobar</a>, <!-- raw HTML omitted -->
+只需要把查询内容修改为 %s, 再新建个Site Search 即可。 <!-- raw HTML omitted --></p>
+<p>在老东家，搜索错误码，或者是搜索内网上的文章，我都是这么干的；所以到新东家之后，我也是这么搞的。 <!-- raw HTML omitted --></p>
+<h3 id="firefox"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> Firefox</h3>
+<p>Firefox 也提供类似的功能，叫 Keyword Search, 添加起来甚至更方便: <!-- raw HTML omitted --></p>
+<ol>
+<li>打开想要搜索的网站 <!-- raw HTML omitted --></li>
+<li>在搜索框点击鼠标右键，然后会看到一个「Add a Keyword for this Search&hellip;」 <!-- raw HTML omitted --></li>
+<li>修改名字与 keyword <!-- raw HTML omitted --></li>
+</ol>
+<p><figure>
+    <img loading="lazy" src="/ox-hugo/firefox_add_key_word_search.png"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<p><figure>
+    <img loading="lazy" src="/ox-hugo/firefox_add_key_word_search_bookmark.png"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>然后，在 Firefox 的浏览器地址，输入 <code>csd</code>, 空格, 再搜索 <code>Intersection</code>, 回车。就可以直接在 Firefox 地址栏里面搜索指定网页的代码. <!-- raw HTML omitted --></p>
+<p><figure>
+    <img loading="lazy" src="/ox-hugo/firefox_keyword_search.gif"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>如果没有右键时没有找到 「Add a Keyword for this Search&hellip;」的选项，也可以使用添加书签的方式，手动添加一个 keyword search: <!-- raw HTML omitted --></p>
+<p><figure>
+    <img loading="lazy" src="/ox-hugo/firefox_add_bookmark.png"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<h2 id="alfred-web-search"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Alfred Web Search</h2>
+<p>如果使用的是 Mac OS, 那么通过Alfred 插件的 Web Search功能，甚至可以不用手动切换到浏览器，直接就可以进行搜索，可以把搜索流的耗时进一步缩短到1-3秒。 <!-- raw HTML omitted --></p>
+<p>Alfred -&gt; Preference -&gt; Web Search -&gt; Add custome Search <!-- raw HTML omitted --></p>
+<p><figure>
+    <img loading="lazy" src="/ox-hugo/alfred_web_seasch.jpg"/> 
+</figure>
+  <!-- raw HTML omitted --></p>
+<p>除了要将 <code>%s</code> 换成 <code>{query}</code> 之外, 其他添加的步骤与 Site Search 一致： <!-- raw HTML omitted --></p>
+<p><figure>
+    <img loading="lazy" src="/ox-hugo/alfred_code_search.gif"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>录制 Gif 只花了1.5 秒. <!-- raw HTML omitted --></p>
+<h2 id="总结"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 总结</h2>
+<p>Perl语言之父Larry Wall 有句广为人知的名言：「程序员要有三大美德：急躁，懒惰，自大」。 <!-- raw HTML omitted --></p>
+<ul>
+<li>急躁意味着不愿意花时间等待缓慢的程序，会想办法优化程序； <!-- raw HTML omitted --></li>
+<li>自大意味着不愿让人指谪，对自身要求强，要写出高质量的代码； <!-- raw HTML omitted --></li>
+<li>懒惰意味着不想花精心做重复无用的事情，会想办法自动化，让电脑帮忙处理。 <!-- raw HTML omitted --></li>
+</ul>
+<blockquote>
+<p>&ldquo;We will encourage you to develop the three great virtues of a programmer: laziness, impatience, and hubris.&rdquo; &ndash; LarryWall <!-- raw HTML omitted --></p>
+</blockquote>
+<p>而我对搜索流的优化，就是在培养「急躁」与「懒惰」的美德。 <!-- raw HTML omitted --></p>
+<h2 id="延伸阅读"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> 延伸阅读</h2>
+<p>我的各种「流」： <!-- raw HTML omitted --></p>
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E5%86%99%E4%BD%9C%E6%B5%81/">我的写作流：写作工具与平台分享</a> <!-- raw HTML omitted --></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E7%94%BB%E5%9B%BE%E6%B5%81/">我的画图流：画图工具与技巧分享</a> <!-- raw HTML omitted --></li>
+</ul>
+<h2 id="参考"><!-- raw HTML omitted -->7<!-- raw HTML omitted --> 参考</h2>
+<ul>
+<li><a href="https://support.mozilla.org/en-US/kb/how-search-from-address-bar">Mozilla Support: How to search IMDB, Wikipedia and more from the address bar</a> <!-- raw HTML omitted --></li>
+<li><a href="https://support.google.com/websearch/answer/2466433">Google Document: Refine web searches</a> <!-- raw HTML omitted --></li>
+<li><a href="https://support.google.com/websearch/answer/35890">Google Document: Do an Advanced Search on Google</a> <!-- raw HTML omitted --></li>
+</ul>
+]]></content:encoded>
+    </item>
+    
     <item>
       <title>两个鲜为人知的Gmail地址技巧</title>
       <link>https://ramsayleung.github.io/zh/post/2023/gmail%E5%9C%B0%E5%9D%80%E7%9A%84%E9%9A%90%E8%97%8F%E6%8A%80%E5%B7%A7/</link>
@@ -1247,149 +1454,6 @@
     <img loading="lazy" src="/ox-hugo/easter_egg.png"/> 
 </figure>
 
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>那些年，我从微信支付学到的东西</title>
-      <link>https://ramsayleung.github.io/zh/post/2023/%E4%BB%8E%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E7%A6%BB%E7%BA%BF_%E6%88%91%E5%B8%A6%E8%B5%B0%E4%BA%86%E4%BB%80%E4%B9%88/</link>
-      <pubDate>Thu, 06 Apr 2023 18:31:00 -0700</pubDate>
-      
-      <guid>https://ramsayleung.github.io/zh/post/2023/%E4%BB%8E%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E7%A6%BB%E7%BA%BF_%E6%88%91%E5%B8%A6%E8%B5%B0%E4%BA%86%E4%BB%80%E4%B9%88/</guid>
-      <description>1 前言 从微信支付离职，我能带走什么？文档，代码，设计方案还是微信支付的漏洞？ 如果我带走这些资产，那我现在就在深圳的看守所里面吃着公家饭了。 既</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
-<p>从微信支付离职，我能带走什么？文档，代码，设计方案还是微信支付的漏洞？</p>
-<p>如果我带走这些资产，那我现在就在深圳的看守所里面吃着公家饭了。</p>
-<p>既然这些资产不能带走，那么我能带走什么？</p>
-<p>如果沉下心思考，就会发现，这些资产价值并不大，对于工程师而言，也没有领导想象中的那么重要，除非我们试图将代码放在黑市售卖。</p>
-<p>对于业务开发而言，也可能是同样的道理。业务开发每天对着业务需求做CRUD，可能会羡慕开发底层组件的工程师，可以学习并提升技术水平，而自己技术水平还是在原地打转，能学习到的东西随着时间的推移，越来越少。</p>
-<p>王安石的《游褒禅山记》有这样的感叹：</p>
-<blockquote>
-<p>夫夷以近，则遊者众；险以远，则至者少；而世之奇伟瑰怪非常之观，常在于险远，而人之所罕至焉；故非有志者，不能至也。</p>
-</blockquote>
-<p>所谓的「险以远」，并不特指深奥难懂的底层组件技术，也指思考的深度；</p>
-<p>如果多去思考技术和业务，挖掘背后的本质，我们也可以看到许多「世之奇伟瑰怪非常之观」</p>
-<h3 id="鱼与渔"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> 鱼与渔</h3>
-<p>文档，代码，设计都是针对特定问题的解决方案，如果离职到新公司之后，我们遇到的问题肯定不会完全一样，或者手头可用的工具不一样，那么这些资产的价值就会打折扣。</p>
-<p>更何况这些资产都是「一次性的」，用完即止；是属于「授人以鱼不如授人以渔」中的「鱼」；是「生产线」上的「成品」，而我对能生产「成品」的「生产线」更感兴趣。</p>
-<p>二战结束以后，美国把1600多名德国科学家、工程师、技术人员带到美国，包括沃纳.冯.布劳恩和他的V-2火箭研究团队；</p>
-<p>而苏联凭借地理位置靠近德国占领了一些重要的工厂，比如著名的德国光学巨头卡尔蔡司公司，苏联几乎搬空了该公司的设备，把1万多台设备中的9000多台都搬到了苏联。</p>
-<p>有人对现成的「鱼」感兴趣，也有人对未来的「渔」感兴趣，我属于后者。</p>
-<h2 id="思路"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 思路</h2>
-<p>既然选择「渔」，那么，要怎么挑选适合的「渔」来丰富自己的「渔库」呢？</p>
-<p>两千多年前的老师孔子就已经给出自己的答案：</p>
-<blockquote>
-<p>见贤思齐焉，见不贤而内自省也</p>
-</blockquote>
-<p>见到那些优秀的实践和思路，就学下来；对于有弊端的实践，就要分析弊端形成的原因，再想办法避免和改进，别人掉进去的坑，我们就不要进去凑热闹了。</p>
-<h2 id="贤"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 贤</h2>
-<h3 id="模式化"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 模式化</h3>
-<p>1994年，4个博士合著了一本书，书中对常见的设计问题进行了分类，归纳与总结，并且针对每一类问题，给出可重用的解决方案。他们将这些可以复用的解决方案，称之为设计模式(design pattern)。</p>
-<p>这本书也成为软件工程和面向对象设计经久不衰的经典。</p>
-<p>这本书即是《设计模式：可复用面向对象软件的基础》(Design Patterns:
-Elements of Reusable Object-Oriented Software)，这四位博士也被称为Gang of Four (GoF)</p>
-<blockquote>
-<p>A design pattern is the re-usable form of a solution to a design problem.</p>
-</blockquote>
-<p>那么什么是模式呢？</p>
-<p>按照另外一本经典名著《面向模式的软件架构卷一》的定义：</p>
-<blockquote>
-<p>当专家求解一个问题时，他们一般不会发明一种和已有解决方案完全不同的方案来处理这个问题。他们往往想起已解决过的相似的问题，并重用其解法的精华来解决新问题。</p>
-</blockquote>
-<p>在微信支付研发理念中，程序设计和开发，很多问题都是类似，或者是重复出现的。</p>
-<p>针对此类重复问题，直接复制代码来解决，是下下策。</p>
-<p>对代码进行抽象，复用代码来解决重复问题，也是下策。因为使用公共库会导致代码之间无法隔离，并且把逻辑隐藏在公共库，会导致无法分析代码的调用关系。</p>
-<p>微信支付研发理念推崇的上策是对问题进行抽象，归纳出这类问题的通用解法，即模式；更进一步的是，为模式定义对应的代码模板，直接生成代码。</p>
-<p>即使不生成代码，也可以将模式实现成对应的组件或库，方便直接调用。</p>
-<p>具体例子如：</p>
-<p>微信支付就总结常见的分布式事务场景，设计和开发了分布式事务编排中间件。通过在画板编排事务资源，即可生成对应的代码模板，开发者只需要在指定的地方编写个性化代码即可。</p>
-<p>针对常见的领域服务，抽象了基于状态机和事件驱动的模型，设计了领域服务的代码生成组件。可通过绘制状态机UML图，直接生成接口代码，由开发者填充实现。</p>
-<p>以上算是技术组件的模式化，对业务开发而言，还有对业务的模式化。</p>
-<p>比如对扣款模式进行抽象，扣款时开启事务，进行风控校验，创建（或不创建）业务单，查询支付方式，轮询支付方式进行扣款，异常关单等。</p>
-<p>当时组里的大神龙哥，就是对已有的扣款模式进行了抽象，基于面向对象，设计成同步扣款框架，定义了以上的接口，由业务进行继承和扩展。再使用同步扣款框架对已有的3个类似但不完全一致的代扣扣款业务进行了重构，把扣款模式都统一了。</p>
-<h3 id="复盘"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> 复盘</h3>
-<p>没有人能保证自己写的代码绝对不会出错，当错误与问题不期而至的时候，我们能做的就是将「错误」的效益最大化，即从「错误」中吸引教训，做到「不二过」。</p>
-<p>复盘，就是在「错误」中吸引教训，做到「不二过」的手段。Amazon 也有类似的概念与机制，称为 Correctness Of Error(COE)</p>
-<p>我们一直说「失败是成功之母」，但根据生物学常识，只有「成功才是成功之母」，或者说「小步的成功才是大步成功之母」，别人踩过的坑，我们就不要进去了。</p>
-<p>复盘的一般步骤：</p>
-<ol>
-<li>回顾目标</li>
-<li>故障影响</li>
-<li>时间精确到分钟（甚至秒级别）的过程回顾。比如是新需求写出一级故障的bug, 就从拿到需求，设计方案，开发，部署上线，流量灰度，问题告警，处理手段，到故障排除，每个时间点操作都写下来。</li>
-<li>分析问题原因，挖掘导致故障的表面原因与根本原因</li>
-<li>总结针对问题的改进措施。</li>
-<li>落实改进措施</li>
-</ol>
-<p>通过这样的复盘过程，确保同样的问题不会再次出现。</p>
-<p>这样的工作方式和理念，无论是对个人还是组织，才同样适用。</p>
-<h3 id="持续学习"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> 持续学习</h3>
-<p>微信支付一直在推广全栈工程师，认为只从自己做的事情来思考问题，容易导致盲维和短板，看待问题的眼光容易受限。</p>
-<p>此外，根据《人月神话》的理念，工程师之间的沟通成本，会随着人数的增加，呈指数水平上涨。而成为全栈工程师，可以一个人处理完需求，沟通成本就下降到0，极大地提交工作效率。</p>
-<p>微信支付的全栈工程师定义是前端工程师 + 服务端工程师 + 数据开发工程师。</p>
-<p>当然，某一端的开发工程师，不会某天突然自己变成全栈工程师，这些都是需要持续学习的，人总是需要不断提升自己的。</p>
-<p>不能人为能给自己设限，把自己定义成「前端工程师」，「后端工程师」，或者「数据工程师」，应该是「工程师」。</p>
-<h3 id="需求分析"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> 需求分析</h3>
-<p>每个工程师都需要做需求，与正确地做需求相比，做正确的需求显然更重要。</p>
-<p>如何确保做正确的需求呢？</p>
-<p>微信支付选择的方法论是：​需求分析与业务建模，脱胎自UML专家潘家宇的著作《软件方法》。大概的流程是：</p>
-<ol>
-<li>寻找老大（需要满足谁的诉求）</li>
-<li>寻找业务用例（业务执行者做什么事情，比如QQ音乐用户购买QQ音乐会员，就是一个业务用例）</li>
-<li>根据业务用例，寻找系统用例。（例如商户发起扣款是一个系统用例；扣款成功回调通知商户也是一个系统用例）</li>
-<li>将需求的业务规则，总结归纳成系统用例的规则。</li>
-</ol>
-<p>当然，业务用例和系统用例这套东西，可能只有微信支付用。但找准客户，帮客户解决真正的痛点，创造真正的价值，这个是有普适性的。</p>
-<p>做需求时，可以多问这两个问题：</p>
-<ol>
-<li>谁是我们的客户。</li>
-<li>我们在帮他们解决什么问题。</li>
-</ol>
-<h3 id="云雨伞"><!-- raw HTML omitted -->3.5<!-- raw HTML omitted --> “云雨伞”</h3>
-<p>“云雨伞”这个概念来自内部的一份PPT，讲述的是如何更好地向别人提出建议，内容大概是：</p>
-<blockquote>
-<p>屋外乌云密布，儿子要出门，妈妈对儿子说，马上要下雨，淋雨容易生病，把伞带上吧。</p>
-</blockquote>
-<p>“云雨伞”的步骤就是：</p>
-<ol>
-<li>指出现状：乌云密布，马上要下雨</li>
-<li>导致的问题与影响：淋雨容易生病</li>
-<li>提出措施和建议：把伞带上。</li>
-</ol>
-<p>通过这样的表述方式，会比「把伞带上」这样直接命令的话，更容易让人接受。</p>
-<p>当然，如果阅读过《非暴力沟通》，会发现“云雨伞”的表述，其实是《非暴力沟通》总结的有效沟通方式的简化版本：</p>
-<ol>
-<li>清楚地表达观察结果</li>
-<li>表达感受</li>
-<li>说出是什么需求和原因导致了这样的感受</li>
-<li>具体的请求</li>
-</ol>
-<p>当然，总是强调「云雨伞」的做法，把问题归咎到提问者身上，我是不赞同的。</p>
-<p>领导经常说，提问题的时候，要把自己的解决方案也提出来，没有人喜欢听吐槽。</p>
-<p>话虽如此，但是我想起之间还在蚂蚁时，一位P10工程师的文章，《没有答案，也可以提问题》。</p>
-<p>提问题是为了帮助组织发现问题，如果不能吐槽的话，很多问题也不会被发现，自然也得不到解决，毕竟也没有人喜欢帮别人的问题提解决方案。</p>
-<hr>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted -->&lt;2023-05-20 六&gt;<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
-<p>针对如何高效交流，我写了一篇自己的心得文章：<a href="https://ramsayleung.github.io/zh/post/2023/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%BD%AF%E6%8A%80%E8%83%BD%E6%8C%87%E5%8C%97_%E9%AB%98%E6%95%88%E4%BA%A4%E6%B5%81%E7%AF%873/">软件工程师的软技能指北（三）：高效交流篇</a></p>
-<h3 id="一致性"><!-- raw HTML omitted -->3.6<!-- raw HTML omitted --> 一致性</h3>
-<p>领导总说，软件工程的本质就是管理和控制复杂度，而一致性就是减少复杂度的有力工具。所谓的一致性，可以理解成统一的流程，统一的组件等等</p>
-<p>在这种理念的驱动下，微信支付内部使用统一的编程语言，统一的工具库，统一的存储组件（使用别的存储需要特殊审批和说明），统一的数据访问组件，使用统一的研发流程。</p>
-<p>保证每个研发工程师，即使调到微信支付的其他团队，也是使用同样的工具，即插即用，和车床生产的螺丝一样。</p>
-<p>开始我对这样的理念是持支持态度的，但到AWS以后，我的想法发生了动摇。</p>
-<p>因为我发现AWS的工具真的是琳琅满目，应有尽有，而Amazon也并未对使用什么样的组件作要求。</p>
-<p>反正AWS对各种组件的支持都很好，所以业务团队可以自行选择适合自身业务的任意组件，能完成需求就好。</p>
-<p>所以我现在不确定，通过追求一致性来降低复杂度这样的做法是否合理。</p>
-<h3 id="设计优于实现"><!-- raw HTML omitted -->3.7<!-- raw HTML omitted --> 设计优于实现</h3>
-<p>从2020年初起，微信支付内部的需求都需要先写设计文档，Leader 评审通过才能开发。</p>
-<p>设计时有个非常关键的点，就是列出所有能想到的可行方法，而后比较各个方案的优劣，再作出取舍，选择最终方案。</p>
-<p>软件工程没有银弹，系统/软件设计就是不断地在做取舍，当然，人生也是。</p>
-<p>设计才是最重要的，而编码和实现都是简单的，因为这只是水到渠成的事（我也不是说可以不用重视代码质量，毕竟这是吃饭的手艺）</p>
-<p>我个人觉得，对于业务开发（或者对于软件工程师）而言，不要过多花时间关注在编码上，而应该是花时间思考需求和问题，找到好的设计上。</p>
-<p>良好设计带来的红利，是要多于良好编码带来的红利的。</p>
-<p>如果把编码比作战术，设计就是战略，不要让战术的勤奋，掩盖了战略上的懒惰。</p>
-<p>编码算是建筑的外墙和玻璃，而设计就是承重墙和地基，毕竟换皮容易换根难。</p>
-<p>微信支付对于业务代码的态度是，能生成就尽量生成，就不要人写了，要多花些时间在设计上。</p>
-<h2 id="总结"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 总结</h2>
-<p>拿走「代码，文档」终究是术，学走「思想和理念」才是道。</p>
 ]]></content:encoded>
     </item>
     
