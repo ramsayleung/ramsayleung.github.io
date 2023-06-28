@@ -48,7 +48,7 @@
 </figure>
 
 <h2 id="solution"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Solution</h2>
-<p>Fortunately, CDK offer a facility named <code>CfnOutput</code> to export a deployed resource, so that the consumer of the resource is able to <code>Import</code> required resource.</p>
+<p>Fortunately, CDK offers a facility named <code>CfnOutput</code> to export a deployed resource, so that the consumer of the resource is able to <code>Import</code> required resource.</p>
 <figure>
     <img loading="lazy" src="/ox-hugo/export.jpg"/> 
 </figure>
