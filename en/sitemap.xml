@@ -2,6 +2,67 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://ramsayleung.github.io/en/tags/aws/</loc>
+    <lastmod>2023-06-28T15:45:39-07:00</lastmod>
+  </url><url>
+    <loc>https://ramsayleung.github.io/en/categories/aws/</loc>
+    <lastmod>2023-06-28T15:45:39-07:00</lastmod>
+  </url><url>
+    <loc>https://ramsayleung.github.io/en/categories/</loc>
+    <lastmod>2023-06-28T15:45:39-07:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://ramsayleung.github.io/zh/categories/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://ramsayleung.github.io/en/categories/"
+                />
+  </url><url>
+    <loc>https://ramsayleung.github.io/en/post/2023/how_to_share_resource_between_cdk_stacks/</loc>
+    <lastmod>2023-06-28T15:45:39-07:00</lastmod>
+  </url><url>
+    <loc>https://ramsayleung.github.io/en/</loc>
+    <lastmod>2023-06-28T15:45:39-07:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://ramsayleung.github.io/zh/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://ramsayleung.github.io/en/"
+                />
+  </url><url>
+    <loc>https://ramsayleung.github.io/en/post/</loc>
+    <lastmod>2023-06-28T15:45:39-07:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://ramsayleung.github.io/zh/post/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://ramsayleung.github.io/en/post/"
+                />
+  </url><url>
+    <loc>https://ramsayleung.github.io/en/tags/</loc>
+    <lastmod>2023-06-28T15:45:39-07:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://ramsayleung.github.io/zh/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://ramsayleung.github.io/en/tags/"
+                />
+  </url><url>
     <loc>https://ramsayleung.github.io/en/tags/algorithm/</loc>
     <lastmod>2022-05-22T16:22:34+08:00</lastmod>
     <xhtml:link
@@ -28,19 +89,6 @@
                 href="https://ramsayleung.github.io/en/categories/algorithm/"
                 />
   </url><url>
-    <loc>https://ramsayleung.github.io/en/categories/</loc>
-    <lastmod>2022-05-22T16:22:34+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="https://ramsayleung.github.io/zh/categories/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://ramsayleung.github.io/en/categories/"
-                />
-  </url><url>
     <loc>https://ramsayleung.github.io/en/tags/graph/</loc>
     <lastmod>2022-05-22T16:22:34+08:00</lastmod>
     <xhtml:link
@@ -52,45 +100,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://ramsayleung.github.io/en/tags/graph/"
-                />
-  </url><url>
-    <loc>https://ramsayleung.github.io/en/</loc>
-    <lastmod>2022-05-22T16:22:34+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="https://ramsayleung.github.io/zh/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://ramsayleung.github.io/en/"
-                />
-  </url><url>
-    <loc>https://ramsayleung.github.io/en/post/</loc>
-    <lastmod>2022-05-22T16:22:34+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="https://ramsayleung.github.io/zh/post/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://ramsayleung.github.io/en/post/"
-                />
-  </url><url>
-    <loc>https://ramsayleung.github.io/en/tags/</loc>
-    <lastmod>2022-05-22T16:22:34+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="https://ramsayleung.github.io/zh/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://ramsayleung.github.io/en/tags/"
                 />
   </url><url>
     <loc>https://ramsayleung.github.io/en/post/2022/topological_sorting/</loc>

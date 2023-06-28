@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>aws on In Pursuit of Hubris</title>
+    <link>https://ramsayleung.github.io/en/categories/aws/</link>
+    <description>Recent content in aws on In Pursuit of Hubris</description>
+    <image>
+      <title>In Pursuit of Hubris</title>
+      <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
+    <lastBuildDate>Wed, 28 Jun 2023 09:41:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/en/categories/aws/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How to share resource between CDK stacks</title>
+      <link>https://ramsayleung.github.io/en/post/2023/how_to_share_resource_between_cdk_stacks/</link>
+      <pubDate>Wed, 28 Jun 2023 09:41:00 -0700</pubDate>
+      
+      <guid>https://ramsayleung.github.io/en/post/2023/how_to_share_resource_between_cdk_stacks/</guid>
+      <description>1 Introduction 1.1 IaC Infrastructure as code(IaC) is the managing and provisioning of infrastructure through code instead of manual processes, for example, clicking button, adding or editing roles in AWS console.
+1.2 AWS CloudFormation AWS CloudFormation is the original IaC tool for AWS, released in 2011, which uses template files to automate and mange the setup of AWS resources.
+1.3 AWS CDK AWS Cloud Development Kit(CDK) is a product provided by AWS that makes it easier for developers to manage their infrastructure with familiar programming languages like TypeScript, Python, Java, etc.</description>
+      <content:encoded><![CDATA[<h2 id="introduction"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Introduction</h2>
+<h3 id="iac"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> IaC</h3>
+<p>Infrastructure as code(IaC) is the managing and provisioning of infrastructure through code instead of manual processes, for example, clicking button, adding or editing roles in AWS console.</p>
+<h3 id="aws-cloudformation"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> AWS CloudFormation</h3>
+<p>AWS CloudFormation is the original IaC tool for AWS, released in 2011, which uses template files to automate and mange the setup of AWS resources.</p>
+<h3 id="aws-cdk"><!-- raw HTML omitted -->1.3<!-- raw HTML omitted --> AWS CDK</h3>
+<p>AWS Cloud Development Kit(CDK) is a product provided by AWS that makes it easier for developers to manage their infrastructure with familiar programming languages like TypeScript, Python, Java, etc.</p>
+<p>And, CDK is standing on the shoulder of Cloudformation, providing tools for developers by leveraging Cloudformation.</p>
+<p>A stack is a collection of AWS resources that you can manage as a single unit, like a box.</p>
+<p>For instance, this box could include all the resources required to run an application or Lambda service, such as S3 Buckets (storage), Roles (authorization), Lambda Function (computing), API Gateway (access point), Alarm, Monitoring, etc.</p>
+<h2 id="problem"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Problem</h2>
+<p>I am currently working on a project which requires to set up two stacks, one stack( <code>GlueStack</code> ) for defining a list of AWS Glue tables and the other stack( <code>ServiceStack</code> ) for definition of Lambda service and associated resources.</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/two_stacks.jpg"/> 
+</figure>
+
+<p>In fact, S3 bucket names have to be globally unique within a partition, which means crossing the whole AWS customer base.</p>
+<p>You are unable to create a S3 bucket with bucket name which is in use by another AWS customer or your own account.</p>
+<p>So it&rsquo;s safer to let CloudFormation generate a random bucket name for a developer when he need to initialize a S3 bucket.</p>
+<p>However, there is new a problem I face: since the S3 bucket name is randomly generated characters, if <code>GlueStack</code> need to read the bucket created by <code>ServiceStack</code>, how could I share the bucket name between two stacks?</p>
+<p>While these two stacks are isolated and separated, resources collection.</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/s3_bucket_problem.jpg"/> 
+</figure>
+
+<h2 id="solution"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Solution</h2>
+<p>Fortunately, CDK offer a facility named <code>CfnOutput</code> to export a deployed resource, so that the consumer of the resource is able to <code>Import</code> required resource.</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/export.jpg"/> 
+</figure>
+
+<ol>
+<li>Define the required resource in <code>ServiceStack</code> (producer), for instance, a S3 bucket:
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">Bucket</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;aws-cdk-lib/aws-s3&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">s3Bucket</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Bucket</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;MyBucketId&#39;</span><span class="p">,</span> <span class="p">{});</span>
+</span></span></code></pre></div></li>
+<li>Export the resource by specifying the <code>value</code> and <code>exportName</code>:
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">CfnOutput</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;aws-cdk-lib&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// export the generated bucket name to other stack
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">new</span> <span class="nx">CfnOutput</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;exportRequiredS3Bucket&#39;</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">value</span><span class="o">:</span> <span class="nx">s3Bucket</span><span class="p">.</span><span class="nx">bucketName</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">exportName</span><span class="o">:</span> <span class="s1">&#39;exportRequiredS3Bucket&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></div></li>
+<li>Import the required resource in <code>GlueStack</code> (consumer):
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">Fn</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;aws-cdk-lib&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">requiredS3BucketName</span> <span class="o">=</span> <span class="nx">Fn</span><span class="p">.</span><span class="nx">importValue</span><span class="p">(</span><span class="s1">&#39;exportRequiredS3Bucket&#39;</span><span class="p">);</span>
+</span></span></code></pre></div></li>
+</ol>
+<p>If we take a closer look at the synthesized CFN template for ServiceStack, we could find:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="s2">&#34;Outputs&#34;</span><span class="err">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;exportRequiredS3Bucket&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&#34;Value&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;Ref&#34;</span><span class="p">:</span> <span class="s2">&#34;MyBucketId737FC949&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&#34;Export&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;Name&#34;</span><span class="p">:</span> <span class="s2">&#34;exportRequiredS3Bucket&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></div><p>The synthesized CFN template for <code>GlueStack</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;Fn::ImportValue&#34;</span><span class="p">:</span> <span class="s2">&#34;exportRequiredS3Bucket&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>This is the way about how to share value between two stacks.</p>
+<h2 id="reference"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Reference</h2>
+<ul>
+<li><a href="https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.CfnOutput.html">API Document: class CfnOutput (construct)</a></li>
+<li><a href="https://docs.aws.amazon.com/cdk/v2/guide/stacks.html">AWS Cloud Development Kit (AWS CDK) v2</a></li>
+</ul>
+]]></content:encoded>
+    </item>
+    
+  </channel>
+</rss>
