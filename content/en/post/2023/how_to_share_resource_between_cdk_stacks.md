@@ -1,7 +1,7 @@
 +++
 title = "How to share resource between CDK stacks"
 date = 2023-06-28T09:41:00-07:00
-lastmod = 2023-06-28T15:45:39-07:00
+lastmod = 2023-06-28T15:52:51-07:00
 tags = ["aws"]
 categories = ["aws"]
 draft = false
@@ -53,7 +53,7 @@ While these two stacks are isolated and separated, resources collection.
 
 ## <span class="section-num">3</span> Solution {#solution}
 
-Fortunately, CDK offer a facility named `CfnOutput` to export a deployed resource, so that the consumer of the resource is able to `Import` required resource.
+Fortunately, CDK offers a facility named `CfnOutput` to export a deployed resource, so that the consumer of the resource is able to `Import` required resource.
 
 {{< figure src="/ox-hugo/export.jpg" >}}
 
