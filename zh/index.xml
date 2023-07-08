@@ -12,7 +12,54 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sat, 01 Jul 2023 10:28:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 07 Jul 2023 15:06:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>产品的快速试错与及早反馈</title>
+      <link>https://ramsayleung.github.io/zh/post/2023/%E4%BA%A7%E5%93%81%E7%9A%84%E5%BF%AB%E9%80%9F%E8%AF%95%E9%94%99%E4%B8%8E%E5%8F%8A%E6%97%A9%E5%8F%8D%E9%A6%88/</link>
+      <pubDate>Fri, 07 Jul 2023 15:06:00 -0700</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2023/%E4%BA%A7%E5%93%81%E7%9A%84%E5%BF%AB%E9%80%9F%E8%AF%95%E9%94%99%E4%B8%8E%E5%8F%8A%E6%97%A9%E5%8F%8D%E9%A6%88/</guid>
+      <description>1 关于 Demo 昨天下班路上，和朋友闲聊的时候，想起了当年大学时候看过的《李开复自传》的一个故事。 当年李开复在卡内基梅隆大学的研究方向是语音识别，即</description>
+      <content:encoded><![CDATA[<h2 id="关于-demo"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 关于 Demo</h2>
+<p>昨天下班路上，和朋友闲聊的时候，想起了当年大学时候看过的《李开复自传》的一个故事。 <!-- raw HTML omitted --></p>
+<p>当年李开复在卡内基梅隆大学的研究方向是语音识别，即如何将人说的声音，转变成计算机可以识别的文字内容。 <!-- raw HTML omitted --></p>
+<p>他的语音识别的研究成果还被《商业周刊》评选为「1988年最重要科学创新奖」。 <!-- raw HTML omitted --></p>
+<p>但是令我印象深刻的并非是语音识别的成果，而是他导师教他的，如何向世人展示他的成果的市场营销手段： <!-- raw HTML omitted --></p>
+<blockquote>
+<p>1988 年 4 月，我受邀到纽约参加一年一度的世界语音学术会议，发表学术论 <!-- raw HTML omitted -->
+文。赴会的一个月前，我的导师瑞迪教授又给我上了一课，但是不是学术方面，而 <!-- raw HTML omitted -->
+是市场方面的。 <!-- raw HTML omitted --></p>
+<p>他对我说：“学术演讲的 30 分钟，你只要讲 25 分钟就行了，最后 5 分钟你拿 <!-- raw HTML omitted -->
+一个话筒传给观众，让他们自己试试，这个系统是不是真的。” <!-- raw HTML omitted --></p>
+<p>我说：“但是，会场噪音很大，一定会打折扣，达不到 96％成功率，而且那么多日本 <!-- raw HTML omitted -->
+学者，他们的口音我的系统可没听过。” <!-- raw HTML omitted --></p>
+<p>老师说：“实际上你的识别率是 90％还是 96％，没有什么差别。我们这么做的 <!-- raw HTML omitted -->
+目的，不是要监测你的识别率，而是要造成一个效果，让每个学者终生都会记得， <!-- raw HTML omitted -->
+第一次接触不指定语者系统就是在纽约，在李开复的演讲上。” <!-- raw HTML omitted --></p>
+</blockquote>
+<p>在学术结果和演示效果的交互相映之下，李开复的研究成果撼动了整个学术领域，认为他的研究成果，建立起了人机沟通的桥梁。 <!-- raw HTML omitted --></p>
+<p>纵然演示者的PPT美轮美奂，演讲舌灿莲花，带来的冲击，远不如用户亲身体验来得强烈。 <!-- raw HTML omitted --></p>
+<h2 id="mvp与及早反馈"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> MVP与及早反馈</h2>
+<p>无论是所谓的敏捷和精益迭代开发，都强调快速试错，快速反馈，开发最小可用的产品(minimial viable product, MVP)。 <!-- raw HTML omitted --></p>
+<p>所谓的快速试错，及早反馈，就是把产品原型做出来，然后让用户进行体验，收集用户反馈，再根据用户的评价，进行后续的优化和调整。 <!-- raw HTML omitted --></p>
+<p>这样的理念无缝是非常有价值的，可以避免花了好几年，大量人力物力，做了一个过时或者不受市场青睐的产品。 <!-- raw HTML omitted --></p>
+<p>而其中的「用户」，并不一定指的是最终使用你产品的「用户」，你的产品经理，组长，总监都是你的用户。 <!-- raw HTML omitted --></p>
+<p>他们才是能决定你的产品方向的人，所以在做完产品原型之后，应该尽快让他们尝试产品原型，可以及早得到反馈和修改建议。 <!-- raw HTML omitted --></p>
+<p>在展示 Demo 的时候，也应该由他们亲身去尝试产品，观察他们作为新用户的使用习惯； <!-- raw HTML omitted -->
+以此得到的反馈和惊喜，也会比工程师亲身演示来得更真实和贴切。 <!-- raw HTML omitted --></p>
+<p>此外，正如《动物庄园》里面说「所有动物生而平等，但有些动物比其他动物更平等」。 <!-- raw HTML omitted --></p>
+<p>每个用户的反馈和建议都应该被平等对待的，只是他们的意见比普通用户的更平等。 <!-- raw HTML omitted --></p>
+<p>而从管理者的角度来说，管理者对员工抱有高信任度的终究在少数，即使每位员工起早贪黑地干活，写周报，日报；开晨会，周会汇报进度； <!-- raw HTML omitted --></p>
+<p>管理者难免会有疑问，项目什么时候才能做完，他们是否有在认真干活？ <!-- raw HTML omitted --></p>
+<p>可能会有管理者跳出来说，「哪有这样的想法？」。 <!-- raw HTML omitted --></p>
+<p>但事实就是许多的管理措施，都体现出这种不信任。 <!-- raw HTML omitted --></p>
+<p>而提供MVP供管理者体验就是不断地告知管理者项目的进度： <!-- raw HTML omitted --></p>
+<p><strong><strong>项目正在从蓝图，变为现实。</strong></strong> <!-- raw HTML omitted --></p>
+<h2 id="后话"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 后话</h2>
+<p>但，尽早反馈，快速试错，从来都不应该成为加班的借口或理由。 <!-- raw HTML omitted --></p>
+]]></content:encoded>
+    </item>
+    
     <item>
       <title>闲聊写作的好处</title>
       <link>https://ramsayleung.github.io/zh/post/2023/%E9%97%B2%E8%81%8A%E5%86%99%E4%BD%9C/</link>
@@ -1023,87 +1070,6 @@
 <li>软件工程师的软技能指北（五）：面试篇 <!-- raw HTML omitted --></li>
 <li>软件工程师的软技能指北（六）：谈薪篇 <!-- raw HTML omitted --></li>
 </ul>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>软件工程师的软技能指北（一）：总览篇</title>
-      <link>https://ramsayleung.github.io/zh/post/2023/%E6%80%BB%E8%A7%88%E7%AF%87/</link>
-      <pubDate>Fri, 05 May 2023 08:24:00 -0700</pubDate>
-      
-      <guid>https://ramsayleung.github.io/zh/post/2023/%E6%80%BB%E8%A7%88%E7%AF%87/</guid>
-      <description>1 背景 上大学时，曾经看过一本书《软技能，代码之外的生存指南》，主要介绍程序员要想取得成功的职业生涯，所必需的软技能。 所谓的软技能，是区别与使</description>
-      <content:encoded><![CDATA[<h2 id="背景"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 背景</h2>
-<p>上大学时，曾经看过一本书《软技能，代码之外的生存指南》，主要介绍程序员要想取得成功的职业生涯，所必需的软技能。</p>
-<figure>
-    <img loading="lazy" src="/ox-hugo/book_cover_v1.jpg"/> 
-</figure>
-
-<p>所谓的软技能，是区别与使用C++或Java 编写业务逻辑和单元测试代码，使用Docker 部署等「硬技能」，而是注重职场，心态，身体与理财等各方面提升的「软技能」。</p>
-<p>大学时候的我还沉迷于编写各种很cool 的代码，学各种编程语言，觉得此书不过是面向程序员的「鸡汤」一本。</p>
-<h3 id="再读"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> 再读</h3>
-<p>工作第三年时，换了一份工作，对职业充满了迷茫与困惑，然后再读了一次这本书，得出的结论是书挺不错的，但是不符合中国程序员的国情。</p>
-<p>比如理财方面，建议程序员在低房价时买房，我也想买，但是在深圳只能是望楼兴叹；</p>
-<p>健身方面，下班后多运动，自己做饭，控制饮食以增肌减脂，着实没有时间自己做饭。</p>
-<p>但里面的思路和哲学很有参考意义。</p>
-<h3 id="三读"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> 三读</h3>
-<p>最近突然想起了这本书，搜索之后发现，英文原版在2020能出了第二版，而中文版本也在2022年翻译出版了；</p>
-<p>因为书再版了，所以又重读了一次这本书，英文书名会更正常一些：Soft Skills: The Software Developer&rsquo;s Life Manual</p>
-<figure>
-    <img loading="lazy" src="/ox-hugo/book_cover.jpg"/> 
-</figure>
-
-<p>得出的结论还是与之前一致：「书中的思路和哲学很有参考意义，做法却不一定适用」。</p>
-<p>但区别在于，我这次打算把我自己的做法与行动也总结下来，「用他的旧瓶子，装我的新酒」。</p>
-<p>就成功的标准而言，我的职业生涯还远谈不上成功，甚至可以说还有很多失败之处，这也算是我自己反思的心得。</p>
-<p>毕竟也不只有别人优秀的经历，我这种潦倒的经历也是可以参考的。</p>
-<blockquote>
-<p>见贤思齐焉，见不贤而内自省也。</p>
-</blockquote>
-<p>这让我想起了Netflix 的高分纪录片《我心永随桑德兰》，别人拍纪录片是记录成功，这部豆瓣9.2分的片子却是在记录失败：</p>
-<figure>
-    <img loading="lazy" src="/ox-hugo/%e6%88%91%e5%bf%83%e6%b0%b8%e9%9a%8f%e6%a1%91%e5%be%b7%e5%85%b0.png"/> 
-</figure>
-
-<p>英超保级劲旅桑德兰，在2017年终于花光自己在英超的保级运气，从顶级联赛英超跌入二级联赛英冠。</p>
-<p>然后俱乐部高层想拍一部纪录片，记录自己奋发图强，卧薪尝胆杀回英超的经历，以此吸引投资者，最后却是二连跳，跌入到三级联赛英甲的神剧情。</p>
-<p>把我不开心的事说出来，拿出来给大家一起开心下嘛。</p>
-<h2 id="软技能"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 软技能</h2>
-<p>就软技能而言，绝不止「软件工程师」这个职业需要这个技能，而是绝大部分职业都需要的。</p>
-<p>因为绝大部分的工作都是与人打交道，而软技能就是如果更高效与人沟通的关键技能。</p>
-<p>如果有「软件工程师」认为自己只要写代码就可以了（我曾经就是这么认为的）；或者觉得，写代码才是最有趣的部分（我现在也是这么认为的），我不想理这么多事情；</p>
-<p>那么你的可替代性就非常高，当代码生成工具足够成熟之后，你就可以被裁掉了。</p>
-<p>之前办信用卡时候，我说的职业是Software Engineer，银行客户经理问我，你们是不是只要埋头对着电脑敲键盘即可，不需要和人说话的？</p>
-<p>（我心想，你是美剧看多了吧）</p>
-<p>而事实恰恰与直觉相反，软件工程师大部分时间都在与人打交道：</p>
-<ol>
-<li>拿到需求时，需要分析需求的可行性，与产品经理扯皮，理清模糊之处</li>
-<li>撰写设计文档，和组员及老板介绍方案，比较方案优劣，选择最优解</li>
-<li>与上下游团队扯皮，求下游团队帮忙干活，给上游团队表演太极</li>
-<li>和老板画饼，只要再给我些时间，定然能做得成绩斐然。</li>
-</ol>
-<p>哪项不是与人打交道呢？项项都是我缺乏的技能阿，我就只会接活，干活，然后再接再干。</p>
-<p>老黄牛听到我这境况，估计都得叫我一声兄弟；流水线见我这际遇，也会直呼一声「内行」</p>
-<p>所以「软技能」真的是不可或缺。</p>
-<p>或许是我给银行客户经理的答案不合他意，我信用卡申请被拒了；</p>
-<p>或许我「软技能」再强大一些就能通过了.</p>
-<h2 id="主旨"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 主旨</h2>
-<p>原书把主旨分成七部分，分别是:</p>
-<ol>
-<li>事业(Career): 像经营企业一样，打磨自己的职业生涯</li>
-<li>自我营销(Marketing Yourself): 通过高质量文章和视频，打造自己的个人品牌</li>
-<li>学习(Learning): 终身学习，自我学习</li>
-<li>生产力（Productivity）：提高生产力的方式</li>
-<li>理财（Finanacial）：如何复利，创造被动收入</li>
-<li>健身（Fitness）：健康，有型的体魄</li>
-<li>心态（Mindset）：培养积极的心态，To be a better man(woman).</li>
-</ol>
-<p>我就不会按照作者的主旨来阐述我自己的想法，毕竟「他瓶装我酒」，想怎么「装」就是我自己的选择了。</p>
-<p>感触多些的主旨，就拆分开多几篇文章，没有太多感慨的部分，可能就选择性省略了。</p>
-<h2 id="总结"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 总结</h2>
-<p>所以要「软硬都抓，内外兼修」，才能成长为一个优秀的软件工程师。</p>
-<p>只会写代码的软件工程师，真的是注定吃亏，酒香也怕巷子深。这是多次吃亏之后得出的经验总结。</p>
-<p>其他的职业与岗位也大抵如此。</p>
 ]]></content:encoded>
     </item>
     

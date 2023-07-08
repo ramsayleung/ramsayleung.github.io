@@ -12,7 +12,54 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sat, 01 Jul 2023 10:28:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 07 Jul 2023 15:06:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>产品的快速试错与及早反馈</title>
+      <link>https://ramsayleung.github.io/zh/post/2023/%E4%BA%A7%E5%93%81%E7%9A%84%E5%BF%AB%E9%80%9F%E8%AF%95%E9%94%99%E4%B8%8E%E5%8F%8A%E6%97%A9%E5%8F%8D%E9%A6%88/</link>
+      <pubDate>Fri, 07 Jul 2023 15:06:00 -0700</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2023/%E4%BA%A7%E5%93%81%E7%9A%84%E5%BF%AB%E9%80%9F%E8%AF%95%E9%94%99%E4%B8%8E%E5%8F%8A%E6%97%A9%E5%8F%8D%E9%A6%88/</guid>
+      <description>1 关于 Demo 昨天下班路上，和朋友闲聊的时候，想起了当年大学时候看过的《李开复自传》的一个故事。 当年李开复在卡内基梅隆大学的研究方向是语音识别，即</description>
+      <content:encoded><![CDATA[<h2 id="关于-demo"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 关于 Demo</h2>
+<p>昨天下班路上，和朋友闲聊的时候，想起了当年大学时候看过的《李开复自传》的一个故事。 <!-- raw HTML omitted --></p>
+<p>当年李开复在卡内基梅隆大学的研究方向是语音识别，即如何将人说的声音，转变成计算机可以识别的文字内容。 <!-- raw HTML omitted --></p>
+<p>他的语音识别的研究成果还被《商业周刊》评选为「1988年最重要科学创新奖」。 <!-- raw HTML omitted --></p>
+<p>但是令我印象深刻的并非是语音识别的成果，而是他导师教他的，如何向世人展示他的成果的市场营销手段： <!-- raw HTML omitted --></p>
+<blockquote>
+<p>1988 年 4 月，我受邀到纽约参加一年一度的世界语音学术会议，发表学术论 <!-- raw HTML omitted -->
+文。赴会的一个月前，我的导师瑞迪教授又给我上了一课，但是不是学术方面，而 <!-- raw HTML omitted -->
+是市场方面的。 <!-- raw HTML omitted --></p>
+<p>他对我说：“学术演讲的 30 分钟，你只要讲 25 分钟就行了，最后 5 分钟你拿 <!-- raw HTML omitted -->
+一个话筒传给观众，让他们自己试试，这个系统是不是真的。” <!-- raw HTML omitted --></p>
+<p>我说：“但是，会场噪音很大，一定会打折扣，达不到 96％成功率，而且那么多日本 <!-- raw HTML omitted -->
+学者，他们的口音我的系统可没听过。” <!-- raw HTML omitted --></p>
+<p>老师说：“实际上你的识别率是 90％还是 96％，没有什么差别。我们这么做的 <!-- raw HTML omitted -->
+目的，不是要监测你的识别率，而是要造成一个效果，让每个学者终生都会记得， <!-- raw HTML omitted -->
+第一次接触不指定语者系统就是在纽约，在李开复的演讲上。” <!-- raw HTML omitted --></p>
+</blockquote>
+<p>在学术结果和演示效果的交互相映之下，李开复的研究成果撼动了整个学术领域，认为他的研究成果，建立起了人机沟通的桥梁。 <!-- raw HTML omitted --></p>
+<p>纵然演示者的PPT美轮美奂，演讲舌灿莲花，带来的冲击，远不如用户亲身体验来得强烈。 <!-- raw HTML omitted --></p>
+<h2 id="mvp与及早反馈"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> MVP与及早反馈</h2>
+<p>无论是所谓的敏捷和精益迭代开发，都强调快速试错，快速反馈，开发最小可用的产品(minimial viable product, MVP)。 <!-- raw HTML omitted --></p>
+<p>所谓的快速试错，及早反馈，就是把产品原型做出来，然后让用户进行体验，收集用户反馈，再根据用户的评价，进行后续的优化和调整。 <!-- raw HTML omitted --></p>
+<p>这样的理念无缝是非常有价值的，可以避免花了好几年，大量人力物力，做了一个过时或者不受市场青睐的产品。 <!-- raw HTML omitted --></p>
+<p>而其中的「用户」，并不一定指的是最终使用你产品的「用户」，你的产品经理，组长，总监都是你的用户。 <!-- raw HTML omitted --></p>
+<p>他们才是能决定你的产品方向的人，所以在做完产品原型之后，应该尽快让他们尝试产品原型，可以及早得到反馈和修改建议。 <!-- raw HTML omitted --></p>
+<p>在展示 Demo 的时候，也应该由他们亲身去尝试产品，观察他们作为新用户的使用习惯； <!-- raw HTML omitted -->
+以此得到的反馈和惊喜，也会比工程师亲身演示来得更真实和贴切。 <!-- raw HTML omitted --></p>
+<p>此外，正如《动物庄园》里面说「所有动物生而平等，但有些动物比其他动物更平等」。 <!-- raw HTML omitted --></p>
+<p>每个用户的反馈和建议都应该被平等对待的，只是他们的意见比普通用户的更平等。 <!-- raw HTML omitted --></p>
+<p>而从管理者的角度来说，管理者对员工抱有高信任度的终究在少数，即使每位员工起早贪黑地干活，写周报，日报；开晨会，周会汇报进度； <!-- raw HTML omitted --></p>
+<p>管理者难免会有疑问，项目什么时候才能做完，他们是否有在认真干活？ <!-- raw HTML omitted --></p>
+<p>可能会有管理者跳出来说，「哪有这样的想法？」。 <!-- raw HTML omitted --></p>
+<p>但事实就是许多的管理措施，都体现出这种不信任。 <!-- raw HTML omitted --></p>
+<p>而提供MVP供管理者体验就是不断地告知管理者项目的进度： <!-- raw HTML omitted --></p>
+<p><strong><strong>项目正在从蓝图，变为现实。</strong></strong> <!-- raw HTML omitted --></p>
+<h2 id="后话"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 后话</h2>
+<p>但，尽早反馈，快速试错，从来都不应该成为加班的借口或理由。 <!-- raw HTML omitted --></p>
+]]></content:encoded>
+    </item>
+    
     <item>
       <title>闲聊写作的好处</title>
       <link>https://ramsayleung.github.io/zh/post/2023/%E9%97%B2%E8%81%8A%E5%86%99%E4%BD%9C/</link>
@@ -1064,93 +1111,6 @@
 <p>所以要「软硬都抓，内外兼修」，才能成长为一个优秀的软件工程师。</p>
 <p>只会写代码的软件工程师，真的是注定吃亏，酒香也怕巷子深。这是多次吃亏之后得出的经验总结。</p>
 <p>其他的职业与岗位也大抵如此。</p>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>做个摆渡人：Amazon Canada的国内专场招聘</title>
-      <link>https://ramsayleung.github.io/zh/post/2023/amazon_canada_hiring_event/</link>
-      <pubDate>Tue, 02 May 2023 18:17:00 -0700</pubDate>
-      
-      <guid>https://ramsayleung.github.io/zh/post/2023/amazon_canada_hiring_event/</guid>
-      <description>1 Amazon Canada国内专场招聘 刚刚有群里消息灵通的小伙伴分享，Amazon Canada(主要Base 在Vancouver )会在国内的深圳，上海</description>
-      <content:encoded><![CDATA[<h2 id="amazon-canada国内专场招聘"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Amazon Canada国内专场招聘</h2>
-<p>刚刚有群里消息灵通的小伙伴分享，Amazon Canada(主要Base 在Vancouver )会在国内的深圳，上海及周边（杭州，苏州）和香港有专场的招聘会。</p>
-<p>最近有比较多的同学和朋友咨询加拿大工作的事情，所以就把招聘Event 分享出来。</p>
-<p>本次招聘的主要对象是L5的工程师，L4和L6也有少数的HC.</p>
-<p>国内专场招聘的链接：</p>
-<p><a href="https://amazon.jobs/en/jobs/2361958/hong-kong-event-sde-amazon-stores">https://amazon.jobs/en/jobs/2361958/hong-kong-event-sde-amazon-stores</a></p>
-<p>二维码：</p>
-<figure>
-    <img loading="lazy" src="/ox-hugo/amazon_hire_event_qrcode.png"/> 
-</figure>
-
-<p>可以微信或者邮箱找我帮忙内推, 我可以帮忙递简历和咨询进度，我邮箱是 cmFtc2F5bGV1bmcrYW16bl9oaXJlX2V2ZW50QGdtYWlsLmNvbQo= (base64 decode)，希望能做个摆渡人吧。</p>
-<h3 id="面试流程"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> 面试流程</h3>
-<p>与招聘的 recruiter 沟通过，应该还不会有 in person 的面试，还是线上的virtual 面试，给面试候选人发一个会议链接，然后进行线上面试。</p>
-<p>所以招聘写着HongKong Event, 也并不需要去香港面试。</p>
-<p>这次主要是面向SDE(Software Development Engineer), 职位大多是L5.</p>
-<p>面试时间大概是6月底，所以大概有2个月的时间来准备。</p>
-<p>以我个人经验，L5面试流程大概是：</p>
-<ol>
-<li>Online Assessment(OA), 做一到两道算法题，难度大概是Leetcode Medium - Hard, 多刷题库，有机会试上原题。</li>
-<li>Phone Screen(Phone Interview), 视OA 结果而定，根据OA 的答题结果，系统会给出建议是否需要Phone Screen, 如果答得比较好，可能就不需要。我当时也没有这一轮</li>
-<li>4轮onsite, 一天搞完，包括：
-<ul>
-<li>一至两道基于Leadership Principle的 Behavioral Qusetion(BQ) + 一题算法题，Leetcode Medium 水平</li>
-<li>一至两道基于Leadership Principle的 Behavioral Qusetion(BQ) + 一题算法题，Leetcode Medium 水平</li>
-<li>一至两道基于Leadership Principle的 Behavioral Qusetion(BQ) + System Design(SD)</li>
-<li>一至两道基于Leadership Principle的 Behavioral Qusetion(BQ) + Object Oriented Design(OOD)</li>
-</ul>
-</li>
-<li>拿 Offer</li>
-</ol>
-<h2 id="q-and-a"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Q&amp;A</h2>
-<p>在微信上和朋友分享之后，有比较多的朋友咨询问题，我就尽量总结下Q&amp;A</p>
-<h3 id="面试是全英文的么"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 面试是全英文的么？</h3>
-<p>如无意外，是的。毕竟去了温哥华工作，也不可能只说中文。</p>
-<h3 id="我英语口语不行-可以试试么"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 我英语口语不行，可以试试么？</h3>
-<p>其实，只要能沟通就会了，不是雅思考试，不需要4个7，能让面试官听懂就可以了。</p>
-<p>即使去尝试下，最多也只是付出时间成本，也损失不了什么。</p>
-<p>小马过河，你也不知道你是松鼠还是黄牛。</p>
-<h3 id="面试通过后公司帮办工签么"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> 面试通过后公司帮办工签么？</h3>
-<p>是的，公司会指派对应的律所来帮忙申请工签，只需要按律所要求提供材料即可。</p>
-<p>时间大概需要4-6个月，视情况而定。</p>
-<p>配偶和子女也可以一并办理签证。</p>
-<h3 id="面试通过后多久入职"><!-- raw HTML omitted -->2.4<!-- raw HTML omitted --> 面试通过后多久入职？</h3>
-<p>一般大概需要半年，主要是办工签，等IRCC 审批。</p>
-<h3 id="amazon不是刚裁员-怎么又招人了"><!-- raw HTML omitted -->2.5<!-- raw HTML omitted --> Amazon不是刚裁员，怎么又招人了？</h3>
-<p>well, I don&rsquo;t know，我也想知道。</p>
-<h3 id="amazon的面试难么"><!-- raw HTML omitted -->2.6<!-- raw HTML omitted --> Amazon的面试难么？</h3>
-<p>这个嘛，只能说见仁见智。</p>
-<p>只是相对来说，Amazon 是北美大厂FANNG 里面的地板难度，主要是多刷题，就有机会遇到原題。</p>
-<p>多刷面经，亚麻的面试套路还是相对固定的。</p>
-<h3 id="behavioral-qusetion-与leadership-principle-究竟是什么"><!-- raw HTML omitted -->2.7<!-- raw HTML omitted --> Behavioral Qusetion 与Leadership Principle 究竟是什么？</h3>
-<p>BQ（Behavioral Qusetion），即行为面试问题，Amazon 面试官会通过BQ考察你的性格特征和职场软技能，判断你与企业的文化、价值观等原则是否匹配，最终决定是否录用你。</p>
-<p>而判断标准就是Amazon 的17条「价值观」，即 Leadership Principle, 例如:</p>
-<ol>
-<li>Customer Obsession</li>
-<li>Ownership</li>
-<li>Invent and Simplify</li>
-<li>&hellip;</li>
-</ol>
-<p>具体可见官网说明：<a href="https://www.amazon.jobs/content/en/our-workplace/leadership-principles">https://www.amazon.jobs/content/en/our-workplace/leadership-principles</a></p>
-<p>常见的问题如：</p>
-<ol>
-<li>Tell me a time when you had a deal with a very difficult customer</li>
-<li>Tell me about a time when you took on something significant outside your area of responsibility</li>
-<li>Tell me about something you deliver above standards</li>
-<li>Tell me about a time when you couldn&rsquo;t meet your deadline</li>
-<li>Tell me about xxx</li>
-</ol>
-<p>相当于命题作文，需要结合你自己的简历内容，提前准备小故事</p>
-<h3 id="招聘的业务部门是哪些"><!-- raw HTML omitted -->2.8<!-- raw HTML omitted --> 招聘的业务部门是哪些？</h3>
-<p>据recruiter 所说，这次是个专场的招聘，相当于是放到一个大池子里面，通过之后再做Team Match, 所以她们也不知道具体的业务团队是哪些？</p>
-<h3 id="我要刷多少题leetcode-呢"><!-- raw HTML omitted -->2.9<!-- raw HTML omitted --> 我要刷多少题Leetcode 呢？</h3>
-<p>well, 这个也很难回答，毕竟每个人能力不一样，但一般来说，300题 + Amazon 的题库应该可以应付了。</p>
-<h3 id="我是写xxx-语言的-可以去面试么"><!-- raw HTML omitted -->2.10<!-- raw HTML omitted --> 我是写xxx 语言的，可以去面试么？</h3>
-<p>就我所知，无论你是写 Javascript/Java/C++/C/Python/Ruby/Assembly 还是Lisp,</p>
-<p>只要你能通过面试即可，使用什么语言都没关系。</p>
 ]]></content:encoded>
     </item>
     
