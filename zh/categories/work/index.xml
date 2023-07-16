@@ -508,8 +508,16 @@
       <pubDate>Fri, 05 May 2023 08:24:00 -0700</pubDate>
       
       <guid>https://ramsayleung.github.io/zh/post/2023/%E6%80%BB%E8%A7%88%E7%AF%87/</guid>
-      <description>1 背景 上大学时，曾经看过一本书《软技能，代码之外的生存指南》，主要介绍程序员要想取得成功的职业生涯，所必需的软技能。 所谓的软技能，是区别与使</description>
-      <content:encoded><![CDATA[<h2 id="背景"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 背景</h2>
+      <description>1 目录 为了方便阅读，把本系列的文章的目录整理如下： 软件工程师的软技能指北（一）：总览篇 软件工程师的软技能指北（二）：事业篇 软件工程师的软技能</description>
+      <content:encoded><![CDATA[<h2 id="目录"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 目录</h2>
+<p>为了方便阅读，把本系列的文章的目录整理如下：</p>
+<ol>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%80%BB%E8%A7%88%E7%AF%87/">软件工程师的软技能指北（一）：总览篇</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%BD%AF%E6%8A%80%E8%83%BD%E6%8C%87%E5%8C%97_%E4%BA%8B%E4%B8%9A%E7%AF%872/">软件工程师的软技能指北（二）：事业篇</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%BD%AF%E6%8A%80%E8%83%BD%E6%8C%87%E5%8C%97_%E9%AB%98%E6%95%88%E4%BA%A4%E6%B5%81%E7%AF%873/">软件工程师的软技能指北（三）：高效交流篇</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%BD%AF%E6%8A%80%E8%83%BD%E6%8C%87%E5%8C%97_%E7%AE%80%E5%8E%86%E7%AF%87/">软件工程师的软技能指北（四）：简历篇</a></li>
+</ol>
+<h2 id="背景"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 背景</h2>
 <p>上大学时，曾经看过一本书《软技能，代码之外的生存指南》，主要介绍程序员要想取得成功的职业生涯，所必需的软技能。</p>
 <figure>
     <img loading="lazy" src="/ox-hugo/book_cover_v1.jpg"/> 
@@ -517,12 +525,12 @@
 
 <p>所谓的软技能，是区别与使用C++或Java 编写业务逻辑和单元测试代码，使用Docker 部署等「硬技能」，而是注重职场，心态，身体与理财等各方面提升的「软技能」。</p>
 <p>大学时候的我还沉迷于编写各种很cool 的代码，学各种编程语言，觉得此书不过是面向程序员的「鸡汤」一本。</p>
-<h3 id="再读"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> 再读</h3>
+<h3 id="再读"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 再读</h3>
 <p>工作第三年时，换了一份工作，对职业充满了迷茫与困惑，然后再读了一次这本书，得出的结论是书挺不错的，但是不符合中国程序员的国情。</p>
 <p>比如理财方面，建议程序员在低房价时买房，我也想买，但是在深圳只能是望楼兴叹；</p>
 <p>健身方面，下班后多运动，自己做饭，控制饮食以增肌减脂，着实没有时间自己做饭。</p>
 <p>但里面的思路和哲学很有参考意义。</p>
-<h3 id="三读"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> 三读</h3>
+<h3 id="三读"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 三读</h3>
 <p>最近突然想起了这本书，搜索之后发现，英文原版在2020能出了第二版，而中文版本也在2022年翻译出版了；</p>
 <p>因为书再版了，所以又重读了一次这本书，英文书名会更正常一些：Soft Skills: The Software Developer&rsquo;s Life Manual</p>
 <figure>
@@ -544,7 +552,7 @@
 <p>英超保级劲旅桑德兰，在2017年终于花光自己在英超的保级运气，从顶级联赛英超跌入二级联赛英冠。</p>
 <p>然后俱乐部高层想拍一部纪录片，记录自己奋发图强，卧薪尝胆杀回英超的经历，以此吸引投资者，最后却是二连跳，跌入到三级联赛英甲的神剧情。</p>
 <p>把我不开心的事说出来，拿出来给大家一起开心下嘛。</p>
-<h2 id="软技能"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 软技能</h2>
+<h2 id="软技能"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 软技能</h2>
 <p>就软技能而言，绝不止「软件工程师」这个职业需要这个技能，而是绝大部分职业都需要的。</p>
 <p>因为绝大部分的工作都是与人打交道，而软技能就是如果更高效与人沟通的关键技能。</p>
 <p>如果有「软件工程师」认为自己只要写代码就可以了（我曾经就是这么认为的）；或者觉得，写代码才是最有趣的部分（我现在也是这么认为的），我不想理这么多事情；</p>
@@ -563,7 +571,7 @@
 <p>所以「软技能」真的是不可或缺。</p>
 <p>或许是我给银行客户经理的答案不合他意，我信用卡申请被拒了；</p>
 <p>或许我「软技能」再强大一些就能通过了.</p>
-<h2 id="主旨"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 主旨</h2>
+<h2 id="主旨"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 主旨</h2>
 <p>原书把主旨分成七部分，分别是:</p>
 <ol>
 <li>事业(Career): 像经营企业一样，打磨自己的职业生涯</li>
@@ -576,7 +584,7 @@
 </ol>
 <p>我就不会按照作者的主旨来阐述我自己的想法，毕竟「他瓶装我酒」，想怎么「装」就是我自己的选择了。</p>
 <p>感触多些的主旨，就拆分开多几篇文章，没有太多感慨的部分，可能就选择性省略了。</p>
-<h2 id="总结"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 总结</h2>
+<h2 id="总结"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 总结</h2>
 <p>所以要「软硬都抓，内外兼修」，才能成长为一个优秀的软件工程师。</p>
 <p>只会写代码的软件工程师，真的是注定吃亏，酒香也怕巷子深。这是多次吃亏之后得出的经验总结。</p>
 <p>其他的职业与岗位也大抵如此。</p>
