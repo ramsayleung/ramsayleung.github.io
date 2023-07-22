@@ -45,7 +45,7 @@
     <img loading="lazy" src="/ox-hugo/Capitoline_she-wolf_Musei_Capitolini_MC1181.jpg"/> 
 </figure>
  <!-- raw HTML omitted --></p>
-<p>甚至意甲球队罗马的队徽也是母狼喂养罗穆路斯和瑞摩斯图: <!-- raw HTML omitted --></p>
+<p>甚至意甲球队罗马（就是现在穆里尼奥执教的那支球队）的队徽也是母狼喂养罗穆路斯和瑞摩斯图: <!-- raw HTML omitted --></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/AS_Roma_logo.png"/> 
 </figure>
@@ -85,7 +85,7 @@
       <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
 <p>前段时间流行一种关于程序员效率的说法，叫「10x程序员」，即一个好的程序员的工作效率是普通程序员的10倍。 <!-- raw HTML omitted --></p>
 <p>但是，在编程界，有这么一群人，他们的工作效率，可以说是百倍，甚至千倍于普通程序员； <!-- raw HTML omitted --></p>
-<p>更令人惊叹的是，他们创造了普通程序员即使百倍努力也无法写出的作品，对于这样的大神，唯有叹服。 <!-- raw HTML omitted --></p>
+<p>更令人叹服的是，他们创造了普通程序员即使百倍努力也无法写出的作品。 <!-- raw HTML omitted --></p>
 <p>使用「程序员」这个职业来称呼他们，未免流于平凡，无法展现出他们竖立起的丰碑；而使用「计算机科学家」，又未免过于学术，不接地气； <!-- raw HTML omitted --></p>
 <p>那么，就回到最初，用「黑客(hacker)」这个称谓来称呼他们吧。 <!-- raw HTML omitted --></p>
 <h2 id="关于黑客"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 关于黑客</h2>
@@ -171,6 +171,9 @@
 <p>除了基础设施外，GNU项目还希望类似通过美国宪法保证言论自由一样，通过法律和版权，确保软件开放源代码。 <!-- raw HTML omitted --></p>
 <p>因此, 在1989年, RMS 发布了 GNU General Public License(GPL)授权, 主要内容是: 用户可以自由使用，复制，修改GPL软件, 派生的软件也必须使用GPL, 不能转换成闭源软件. <!-- raw HTML omitted --></p>
 <p>从法律层面保证了GPL软件不会被有心人直接拿去闭源赚钱。 <!-- raw HTML omitted --></p>
+<p>此外, RMS 还将自由软件发展成社会运动，将软件开发这个程序员小圈子的活动，成为扩展到整个社会的思想运动。 <!-- raw HTML omitted --></p>
+<p>在人类没有进化到「无私」的精神境界前（可能永远都达不到），通过GPL法律条款来保证「自由」的权利， <!-- raw HTML omitted -->
+不得不说是一种创举，从而让世界上每个人都有机会享受到软件发展所带来的好处。 <!-- raw HTML omitted --></p>
 <h3 id="开花结果"><!-- raw HTML omitted -->5.2<!-- raw HTML omitted --> 开花结果</h3>
 <p>时间来到90年代, 经过近10年的耕耘, 在基础组件和配套设施相继完善之后，GNU 项目终于来到最关键的节点，开发出可以替换Unix 系统的内核(kernel). <!-- raw HTML omitted --></p>
 <p>如果电脑硬件来比喻操作系统的话，就是内存，硬盘，主板，显示器，电源全部都就绪，就差最后的CPU, 画龙最后的点睛. <!-- raw HTML omitted --></p>
@@ -207,7 +210,7 @@
 <h3 id="教主与教主"><!-- raw HTML omitted -->6.2<!-- raw HTML omitted --> 教主与教主</h3>
 <p>乔布斯被「果迷」尊称为「教主」，大家可能不知道的是，这两位「教主」曾经有过一场交锋。 <!-- raw HTML omitted --></p>
 <p>1993年, 当时乔布斯还在 NeXT公司, 买下了 <code>Objective-C</code> 语言来开发应用程序(后来的IOS用的也是 <code>Objective-C</code>), 使用的编译器也是 GCC. <!-- raw HTML omitted --></p>
-<p>NeXT 修改了 GCC的源码，以便增加对 =Objective-C=的支持，而GCC 使用的又是GPL 授权，而根据GPL 的授权，任何对GPL软件的修改，也必须要开放源代码。 <!-- raw HTML omitted --></p>
+<p>NeXT 修改了 GCC的源码，以便增加对 <code>Objective-C</code> 的支持，而GCC 使用的又是GPL 授权，而根据GPL 的授权，任何对GPL软件的修改，也必须要开放源代码。 <!-- raw HTML omitted --></p>
 <p>所以乔布斯就问RMS, 他能否把 GCC 拆分成两部分，一部分是原来GCC, 继续开放源代码；另外一部分是增加 <code>Objective-C</code> 的GCC 编译器前端，闭源收费商用。 <!-- raw HTML omitted --></p>
 <p>RMS 回复，当然是不可以。我估计老爷子心想，防的就是你这种人。 <!-- raw HTML omitted --></p>
 <p>乔布斯只好将 <code>Objective-C</code> 编译器的前端也以GPL 授权开放出源代码。 <!-- raw HTML omitted --></p>
