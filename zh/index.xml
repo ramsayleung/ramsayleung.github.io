@@ -68,7 +68,7 @@
 <li>随意点击一个视频，进行播放：<a href="https://www.youtube.com/watch?v=-pKGaxoVhok">https://www.youtube.com/watch?v=-pKGaxoVhok</a> ，脚本就不会运行了。 <!-- raw HTML omitted --></li>
 <li>如果我在视频播放页刷新，脚本又会重新运行。 <!-- raw HTML omitted --></li>
 </ol>
-<p>但分析了2个小时，都没有找到原因，我甚至怀疑是 Tampermonkey 有Bug(虽然主观感觉这个可能性较小) <!-- raw HTML omitted --></p>
+<p>但分析了1个小时，都没有找到原因，我甚至怀疑是 Tampermonkey 有Bug(虽然主观感觉这个可能性较小) <!-- raw HTML omitted --></p>
 <h2 id="分析"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 分析</h2>
 <p>结合 Tampermonkey 的表现，我觉得可能是 Tampermonkey 的执行机制有问题，可能是判断 youtube.com 和 youtube.com/watch?v=xxxx 是同一个页面，就不会运行两次。 <!-- raw HTML omitted --></p>
 <p>在Stackoverflow上搜索了一下，发现果然如此： <!-- raw HTML omitted --></p>
