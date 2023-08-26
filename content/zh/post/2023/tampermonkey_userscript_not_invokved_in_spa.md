@@ -1,7 +1,7 @@
 +++
 title = "TamperMonkey userscript在 Single Page Application 跳转链接后不运行问题分析"
 date = 2023-08-26T09:29:00-07:00
-lastmod = 2023-08-26T11:39:37-07:00
+lastmod = 2023-08-26T11:41:17-07:00
 tags = ["javascript", "userscript", "debug"]
 categories = ["javascript", "userscript", "debug"]
 draft = false
@@ -68,7 +68,7 @@ toc = true
 3.  随意点击一个视频，进行播放：<https://www.youtube.com/watch?v=-pKGaxoVhok> ，脚本就不会运行了。 <br/>
 4.  如果我在视频播放页刷新，脚本又会重新运行。 <br/>
 
-但分析了2个小时，都没有找到原因，我甚至怀疑是 Tampermonkey 有Bug(虽然主观感觉这个可能性较小) <br/>
+但分析了1个小时，都没有找到原因，我甚至怀疑是 Tampermonkey 有Bug(虽然主观感觉这个可能性较小) <br/>
 
 
 ## <span class="section-num">3</span> 分析 {#分析}
