@@ -1,7 +1,7 @@
 +++
 title = "How to share resource between CDK stacks"
 date = 2023-06-28T09:41:00-07:00
-lastmod = 2023-06-28T15:52:51-07:00
+lastmod = 2023-12-02T10:09:35-08:00
 tags = ["aws"]
 categories = ["aws"]
 draft = false
@@ -104,8 +104,54 @@ The synthesized CFN template for `GlueStack`:
 
 This is the way about how to share value between two stacks.
 
+---
 
-## <span class="section-num">4</span> Reference {#reference}
+
+## <span class="section-num">4</span> Loose couping solution {#loose-couping-solution}
+
+Updated on 2023-12-02
+
+People learn from mistake.
+
+After applying this practice in my project, I recently learn that it's not good practice to share resource across stack.
+
+With using `export/import`, I tightly couple my stacks with a commitment that I can never update that unless I remove that couping later on.
+
+It means it will become a disaster[^fn:1] whenever I need to update/delete the `S3Bucket`, `CloudFormation` will raise an error, complaining something like: "ServiceStack cannot be deleted as it's in use by GlueStack".
+
+A better practice I learnt is adding a loose couping between `ServiceStack` and `GlueStack` by sharing a constant variable:
+
+1.  Define a constant variable somewhere:
+    ```javascript
+    export const Constants = {
+        MyBucketName: 'TestBucket'
+    }
+    ```
+
+2.  Refine the definition of `s3Bucket`
+    ```javascript
+    import { Bucket } from 'aws-cdk-lib/aws-s3';
+
+    const s3Bucket = new Bucket(this, 'MyBucketId', {
+        bucketName: Constants.MyBucketName,
+    });
+    ```
+
+3.  Refer the `s3Bucket` in `GlueStack` by `MyBucketName` instead of CDK exported reference
+    ```javascript
+    const requiredS3BucketName = Constants.MyBucketName;
+    ```
+
+Therefore, these two stacks are not directly coupled, but they are referencing the same constant variable.
+
+Then, CloudFormation won't prevent you from updating the `S3Bucket` as there is not direct relation between these two stacks anymore.
+
+This is the benefit of loose couping.
+
+
+## <span class="section-num">5</span> Reference {#reference}
 
 -   [API Document: class CfnOutput (construct)](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.CfnOutput.html)
 -   [AWS Cloud Development Kit (AWS CDK) v2](https://docs.aws.amazon.com/cdk/v2/guide/stacks.html)
+
+[^fn:1]: <https://stackoverflow.com/questions/63350346/delete-resource-with-references>
