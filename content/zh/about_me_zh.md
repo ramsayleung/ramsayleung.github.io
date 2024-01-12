@@ -8,9 +8,7 @@ toc = true
 
 ## <span class="section-num">1</span> 主业 {#主业}
 
-Ramsay 是位软件工程师，以写程序为业，曾经就职于蚂蚁金服，微信，目前在Amazon Web Service 工作。 <br/>
-
-职业经历可详见 [Linkedin](https://www.linkedin.com/in/ramsayleung/)  <br/>
+Ramsay 是位软件工程师，以写程序为业.<br/>
 
 推崇开源与动手精神，使用Emacs 与Linux 多年，喜欢动手折腾。 <br/>
 
@@ -21,12 +19,7 @@ Ramsay 是位软件工程师，以写程序为业，曾经就职于蚂蚁金服�
 
 从16年开始在博客上写博文，期间经历过多次迁移，但大多时候，博客的读者都只有我自己。 <br/>
 
-「自由庄园」名字部分来源于乔治-奥威尔的名作《动物庄园》。 <br/>
-
-此前在公众号和公司内网写文章，被人要求过删文章以及被直接删过文章， <br/>
-所以希望有属于自己的写作自留地，可以畅所欲言。 <br/>
-
-「自由庄园」还有一个对应的英文博客，名为「In pursuit of Simplicity」，主要是记录一些英文写作与感悟的平台。 <br/>
+博客还有一个对应的英文博客，名为「In pursuit of Simplicity」，主要是记录一些英文写作与感悟的平台。 <br/>
 
 > Simple is Beautiful <br/>
 
@@ -51,6 +44,4 @@ Ramsay 喜读书，电影，历史；亦爱生活，料理；闲暇时常涂鸦�
 > 晚来天欲雪，能饮一杯无？ <br/>
 
 望与君，共举杯。 <br/>
-
-个人邮箱：cmFtc2F5bGV1bmcrYmxvZ0BnbWFpbC5jb20K（base64） <br/>
 
