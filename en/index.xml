@@ -316,26 +316,18 @@ It sounds pretty academic, but I am sure you are using topological sort unconsci
       <pubDate>Mon, 21 Feb 2022 00:00:00 +0000</pubDate>
       
       <guid>https://ramsayleung.github.io/en/about_me/</guid>
-      <description>About me I&amp;rsquo;m Ramsay, I chase a lot of different things. The slogan of this site is In pursuit of Hubris, since:
-There are three great virtues of a programmer; Laziness, Impatience and Hubris &amp;ndash; Larry Wall
-The first programming language I learned is `Pascal` in a computer-hobbyist group when I was a middle school student. Back to time before, the only thing I could do with `Pascal` was trying to find the maximum or minimum number among the number array, or just calculate the sum of them, which is of less fun.</description>
+      <description>About me I&amp;rsquo;m Ramsay, a software engineer making a living by pressing keyboard, an amateur cook, an Emacs deadhead and Linux enthusiast.
+The slogan of this site is In pursuit of Simplicity, because I prefer simple over complex
+Projects I&amp;rsquo;ve contributed multiple projects to open source community, I mainly focus on RSpotify right now due to the constrained energy.
+RSpotify: A Spotify Web API wrapper implemented in Rust. </description>
       <content:encoded><![CDATA[<h2 id="about-me">About me</h2>
-<p>I&rsquo;m Ramsay, I chase a lot of different things. The slogan of this site is <strong><strong>In pursuit of Hubris</strong></strong>, since:</p>
-<blockquote>
-<p>There are three great virtues of a programmer; Laziness, Impatience and Hubris &ndash; <a href="https://en.wikipedia.org/wiki/Larry_Wall">Larry Wall</a></p>
-</blockquote>
-<p>The first programming language I learned is `Pascal` in a computer-hobbyist group when I was a middle school student. Back to time before, the only thing I could do with `Pascal` was trying to find the maximum or minimum number among the number array, or just calculate the sum of them, which is of less fun. I didn&rsquo;t really start programming before I became a fresh student majared in software enginering in my university. I&rsquo;ve build a lot of different stuffs for personal use or simply out of curiosity, you could find them at my <a href="https://github.com/ramsayleung">Github project</a>.</p>
-<p>Nowaday, I am employed by Ant Financial(Alibaba group), aka Alipay, make a living by doing some Java stuff, working overtime every working day(whick also known as <a href="https://github.com/996icu/996.ICU">996 work schedule</a>). I am also interested in Rust/Python/C++, but find no way to build some industrial level softwares with these languages.</p>
-<p>Update:
-I have left Ant Financial,  now I am working for Wechat Pay, just embracing the change, as what my ex-employer encourages to do.</p>
+<p>I&rsquo;m Ramsay, a software engineer making a living by pressing keyboard, an amateur cook, an Emacs deadhead and Linux enthusiast.</p>
+<p>The slogan of this site is <strong><strong>In pursuit of Simplicity</strong></strong>, because I prefer simple over complex</p>
 <h2 id="projects">Projects</h2>
+<p>I&rsquo;ve contributed multiple projects to open source community, I mainly focus on RSpotify right now due to the constrained energy.</p>
 <ul>
-<li><a href="https://github.com/ramsayleung/rspotify">rspotify</a>: A Spotify Web API wrapper implemented in Rust.</li>
-<li><a href="https://github.com/ramsayleung/jd_spider">jd spiders</a>: A dumb distributed crawler built on Scrapy to scrape goods data and comments data from a famous Chinese E-commerce company, implemented in Python.</li>
-<li><a href="https://github.com/ramsayleung/blog">blog</a>: A clean, elegant blog built on Rust/Javascript(which is also known as the source code of this blog)</li>
+<li><a href="https://github.com/ramsayleung/rspotify">RSpotify</a>: A Spotify Web API wrapper implemented in Rust.</li>
 </ul>
-<h2 id="book">Book</h2>
-<p>I love to reading books, the reading of all good books is like a comfortable conversation with the most brilliant people of the past centuries, it also brings me unknown friends. As for book, my taste is history, politics, novel and computer science. Right, I get used to write summary of them after reading(mostly in Chinese). Reading does feed me.</p>
 ]]></content:encoded>
     </item>
     
