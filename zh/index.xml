@@ -12,7 +12,323 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sun, 25 Feb 2024 20:27:00 -0800</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 15 Mar 2024 20:27:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>简明写作指南</title>
+      <link>https://ramsayleung.github.io/zh/post/2024/%E7%AE%80%E6%98%8E%E5%86%99%E4%BD%9C%E6%8C%87%E5%8D%97/</link>
+      <pubDate>Fri, 15 Mar 2024 20:27:00 -0700</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2024/%E7%AE%80%E6%98%8E%E5%86%99%E4%BD%9C%E6%8C%87%E5%8D%97/</guid>
+      <description>1 前言 最近在阅读李笑来的《人人都能用英语》1，想要继续提升自己的英语能力。 李笑来是新东方出来的英语教学名师，此书由浅入深来介绍如何「用」好英</description>
+      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+<p>最近在阅读李笑来的<a href="https://github.com/xiaolai/everyone-can-use-english/blob/main/book/README.md">《人人都能用英语》</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>，想要继续提升自己的英语能力。 <!-- raw HTML omitted -->
+李笑来是新东方出来的英语教学名师，此书由浅入深来介绍如何「用」好英语，而不是像在学校那样「学」好英语。 <!-- raw HTML omitted --></p>
+<p>在《口语篇》中，李笑来提到，比口语更重要的是思考能力，英文说不出口的原因，可能是脑子里面没有什么思考沉淀的东西可以说的，并藉此推荐了三本关于文风（Style）的必读书籍，其中一本就叫：<a href="https://www.sec.gov/pdf/handbook.pdf">A Plain English Handbook</a>(简明英文写作指南)<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>。 <!-- raw HTML omitted --></p>
+<p>这本书竟然是美国的证券交易委员会(Securities and Exchange Commission)1998年编著的, 旨在指导投资机构和金融机构创建更清晰，更易理解的披露文件。 <!-- raw HTML omitted --></p>
+<p>可能是投资机构写的东西，普通投资者根本看不懂，逼得证券交易委员会都要下场指导投资机构写作了。 <!-- raw HTML omitted --></p>
+<p>这本小册子只有83页，内容却很详实，读完之后，觉得其中的许多技巧不只适用于英文写作， <!-- raw HTML omitted -->
+因此就结合读后感和个人心得，分享下简明写作的心得。 <!-- raw HTML omitted --></p>
+<h2 id="为什么写作"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 为什么写作</h2>
+<p>以我自己的工作为例，日常开发新项目，需要撰写文档来向同事和经理介绍项目背景， <!-- raw HTML omitted -->
+动机和具体的实现细节，以寻求支持并推动项目的进展；技术交流时，需要撰写文档分享你的成果和经验；在晋升时，需要撰写文档，给自己找数据点来说服经理，为什么要给我晋升。 <!-- raw HTML omitted --></p>
+<p>需要让别人「看见」我的时候，写文章就是一种非常好的手段，默默无闻的老黄牛，是很难被人看到的，酒香也怕巷子深。 <!-- raw HTML omitted --></p>
+<p>你可能会认为自己工作用不到文档，但是你总归是要向同事或者上司阐述自己的观点， <!-- raw HTML omitted -->
+无论是述职，晋升，演讲，甚至口头汇报，用文档作腹稿, 理清脉络，做到胸有成竹。 <!-- raw HTML omitted --></p>
+<p>关于写作的动机和好处，我之前写过一篇文章专门来聊：<a href="https://ramsayleung.github.io/zh/post/2023/%E9%97%B2%E8%81%8A%E5%86%99%E4%BD%9C/">《闲聊写作的好处》</a>，这里就不赘述了。 <!-- raw HTML omitted --></p>
+<h2 id="如何写"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 如何写</h2>
+<p>如果把文章比作一个人的话，那么文风就是人的血肉和皮囊，文章的结构就是人的骨架，只有当骨架先立了起来，才能在其上涂血肉，张皮囊。 <!-- raw HTML omitted --></p>
+<p>A Plain English Handbook 主要介绍的是改善文风的技巧，那么如何立起文章的骨架呢？我推荐的是黄金圈法则和金字塔原理。 <!-- raw HTML omitted --></p>
+<h3 id="结构"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 结构</h3>
+<h4 id="黄金圈法则"><!-- raw HTML omitted -->3.1.1<!-- raw HTML omitted --> 黄金圈法则</h4>
+<p>所谓的黄金圈法则，概括来说，就是思考问题的三个层面，分别是： <!-- raw HTML omitted --></p>
+<ul>
+<li>Why: 最内层, 为什么，做一件事的原因或者目的，也就是我们为什么做这样的事情，战略层面。 <!-- raw HTML omitted --></li>
+<li>How: 中间层, 怎么做，我们如何实现我们想要做的事情, 战术层面的事 <!-- raw HTML omitted --></li>
+<li>What: 最外层，事情的表象，我们具体做的每一件具体的事，执行层面的事 <!-- raw HTML omitted --></li>
+</ul>
+<p><figure>
+    <img loading="lazy" src="/ox-hugo/%e9%bb%84%e9%87%91%e5%9c%88%e6%b3%95%e5%88%99.png"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>比如我要推动一个新项目，需要写项目文档，或者口头向老板阐述项目，如果不用黄金圈法则，可能会是这样表述的： <!-- raw HTML omitted --></p>
+<ul>
+<li>What: 我要做一个XX的服务，会有哪些新功能 <!-- raw HTML omitted --></li>
+<li>How: 我是通过什么业界领先的XX技术实现的，用到了什么组件. <!-- raw HTML omitted --></li>
+</ul>
+<p>如果以黄金圈法则来重写项目文档，那么文章的结构应该是如何的： <!-- raw HTML omitted --></p>
+<ul>
+<li>Why: 我们为什么要做这个项目？这个项目能给我们带来什么好处，不做会有什么损失？ <!-- raw HTML omitted --></li>
+<li>How: 大方向上应该怎么实施，大概会用到什么组件，架构如何？ <!-- raw HTML omitted --></li>
+<li>What: 具体的底层实现是什么，每个组件是怎么实现的？ <!-- raw HTML omitted --></li>
+</ul>
+<p>大方向没有定好，再走下去也只是南辕北辙，于事无补。 <!-- raw HTML omitted --></p>
+<p>其实这篇文章也使用了黄金圈法则，开篇就介绍为什么要写作，后续再介绍如何写作。 <!-- raw HTML omitted --></p>
+<h4 id="金字塔原理"><!-- raw HTML omitted -->3.1.2<!-- raw HTML omitted --> 金字塔原理</h4>
+<p>关于金字塔原理，我觉得冯唐的<a href="https://zhuanlan.zhihu.com/p/196733201">《老聃的金字塔原理》</a>一文<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>已经解释得非常清晰明了了： <!-- raw HTML omitted --></p>
+<blockquote>
+<p>用一句话说，金字塔原则就是，任何事情都可以归纳出一个中心论点，而此中心论点可由三至七个论据支持，这些一级论据本身也可以是个论点，被二级的三至七个论据支持，如此延伸，状如金字塔。 <!-- raw HTML omitted --></p>
+</blockquote>
+<p><figure>
+    <img loading="lazy" src="/ox-hugo/%e9%87%91%e5%ad%97%e5%a1%94%e5%8e%9f%e7%90%86.png"/> 
+</figure>
+  <!-- raw HTML omitted --></p>
+<p>如果用金字塔原理来分析「为什么小王是个好对象」的论点，那么论据就可以拆分成： <!-- raw HTML omitted --></p>
+<ul>
+<li>家境殷实 <!-- raw HTML omitted -->
+<ul>
+<li>年入百万 <!-- raw HTML omitted --></li>
+<li>有车有房无贷 <!-- raw HTML omitted --></li>
+<li>父母养老无忧 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>前景光明 <!-- raw HTML omitted -->
+<ul>
+<li>名校毕业 <!-- raw HTML omitted --></li>
+<li>年纪轻轻身居中层 <!-- raw HTML omitted --></li>
+<li>领导赏识 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>相处融洽 <!-- raw HTML omitted -->
+<ul>
+<li>提供情绪价值 <!-- raw HTML omitted --></li>
+<li>共同话题多 <!-- raw HTML omitted --></li>
+<li>情绪稳定 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>颜值高 <!-- raw HTML omitted -->
+<ul>
+<li>皮肤白里透红 <!-- raw HTML omitted --></li>
+<li>五官端正 <!-- raw HTML omitted --></li>
+<li>身材修长 <!-- raw HTML omitted --></li>
+<li>穿衣显瘦，脱衣有肉 <!-- raw HTML omitted --></li>
+<li>基因好，后代获得先发优势 <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<p>写作时，每个一级论据就是一个大的篇章，每个二级论据就是篇章下的章节，三级论据就是章节里面的小节， <!-- raw HTML omitted -->
+依此类推，并给予最底层的论据适当的文字描述。 <!-- raw HTML omitted -->
+如果还不够的话，还可以继续向下拆分论据。 <!-- raw HTML omitted --></p>
+<p>有了黄金圈法则和金字塔原理，就很容易把一篇文章的结构给搭起来。 <!-- raw HTML omitted --></p>
+<h3 id="文风"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> 文风</h3>
+<h4 id="明确你的观众"><!-- raw HTML omitted -->3.2.1<!-- raw HTML omitted --> 明确你的观众</h4>
+<p>明确你的观众，是确保你写的文档能让人理解的最重要步骤。 <!-- raw HTML omitted --></p>
+<p>不同的读者，有不同的背景，对你要传递的信息是有不同的理解难度。 <!-- raw HTML omitted --></p>
+<p>以我自己为例，因为我在公众号写的文章大多都是与编程技术无关的， <!-- raw HTML omitted -->
+那么吸引到的读者自然也不会是编程从业者，所以我在公众号里面写技术文章，基本不会有什么读者阅读。 <!-- raw HTML omitted --></p>
+<p>兼之微信这个阅读平台本身的局限，大多数情况下只能是在手机上阅读， <!-- raw HTML omitted -->
+读者无法投入大量时间「沉浸式」地主动阅读，可能是快速下拉翻页读完了。 <!-- raw HTML omitted -->
+而图表和代码在手机屏幕上展示效果不佳，就进一步影响阅读体验了。 <!-- raw HTML omitted --></p>
+<p>如果我把写满技术名词和代码的文档给一个完全没有技术背景的读者来阅读， <!-- raw HTML omitted -->
+即使我的文档写得妙笔生花，对他也没有任何信息可言。 <!-- raw HTML omitted --></p>
+<p>因此我基本不会在公众号写技术文章，技术文章都放在更适合在电脑阅读的博客上。 <!-- raw HTML omitted --></p>
+<p>这里还有个小技巧，就是在明确你的观众的时候，可以设定到一个具体的人， <!-- raw HTML omitted -->
+例如是你的女友/男友，你的同事，或者是你的经理。 <!-- raw HTML omitted --></p>
+<p>具体的人比抽象的概念更深入人心。 <!-- raw HTML omitted --></p>
+<h4 id="言简意赅"><!-- raw HTML omitted -->3.2.2<!-- raw HTML omitted --> 言简意赅</h4>
+<p>能用简洁明了的段落表达全的信息，就不要长篇大论。 <!-- raw HTML omitted --></p>
+<p>读者是有心智负担的，文章的内容越长，读者的负担越重，就越有可能在还没读完的情况下将文章关闭。 <!-- raw HTML omitted -->
+另外一方面，如果要传递的信息量是固定的，你的文章内容越长，你文章的信息密度越低，通俗点来说，就是干货越少。 <!-- raw HTML omitted --></p>
+<p>所以我对「万字长文，讲透xxx」,「爆肝x天，四万字长文带你解读xxx」之类的文章不感冒， <!-- raw HTML omitted -->
+文字多也不能说明干货多，爆不爆肝和干货含量也没有逻辑关联。 <!-- raw HTML omitted --></p>
+<p>现在写作不按字数算稿酬，不需要搞「文字腐败」。 <!-- raw HTML omitted --></p>
+<p>《唐宋八家丛话》中有一说： <!-- raw HTML omitted --></p>
+<blockquote>
+<p>欧阳修在翰林院时，常常与同院他人出游。 <!-- raw HTML omitted --></p>
+<p>一次，见有匹飞驰的马踩死了一只狗。 <!-- raw HTML omitted --></p>
+<p>欧阳修说：“请你们尝试描述一下这事。” <!-- raw HTML omitted --></p>
+<p>一人说：“有犬卧于通衢，逸马蹄而杀之。” <!-- raw HTML omitted --></p>
+<p>另一人说：“有马逸于街衢，卧犬遭之而毙。” <!-- raw HTML omitted --></p>
+<p>欧阳修笑说：“像你们这样修史，一万卷也写不完。”那二人说：“那你说呢？” <!-- raw HTML omitted --></p>
+<p>欧阳修道：“逸马杀犬于道。” <!-- raw HTML omitted --></p>
+<p>那二人相互笑了起来。 <!-- raw HTML omitted --></p>
+</blockquote>
+<h4 id="少说黑话"><!-- raw HTML omitted -->3.2.3<!-- raw HTML omitted --> 少说黑话</h4>
+<p>少说黑话和行话，例如「组合拳」，「赋能」，「抓手」之类的，字我都认识，合起来就不明白是什么意思。 <!-- raw HTML omitted --></p>
+<p>如果你明确了你的观众，你可能就会意识到你的观众大概率无法理解这些话语。 <!-- raw HTML omitted --></p>
+<p>多用具体的，意思明确的词，会更让读者更容易理解。能用简单的话解释清楚一个复杂的概念，就说明你对这个概念的认识越到位。 <!-- raw HTML omitted --></p>
+<p>黑话用多了，也是一种「文字腐败」。 <!-- raw HTML omitted --></p>
+<h4 id="控制段落长度"><!-- raw HTML omitted -->3.2.4<!-- raw HTML omitted --> 控制段落长度</h4>
+<p>上文提到，读者是有心智负担，负担越大，他们就越有可能在阅读你文章时「半途而弃」。 <!-- raw HTML omitted --></p>
+<p>而一大片文字密密麻麻糊在一个段落，就会进一步加重他们的心智负担。 <!-- raw HTML omitted --></p>
+<p>我一般推荐80到150个字一个段落，这样看上去不至于太吓到读者。 <!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<ol>
+<li>
+<p>使用空行</p>
+<p>段落与段落之间，用 <strong><strong>空行</strong></strong> 分隔. 空行是个非常简单，但是却异常有效的技巧，既可以拆分段落，控制单个段落的长度，也可以表达不同段落逻辑上存在并列或者递进的关系，便于读者理解。 <!-- raw HTML omitted --></p>
+<p>同样的文字，使用空行分隔段落的前后对比如下： <!-- raw HTML omitted --></p>
+<p><figure>
+        <img loading="lazy" src="/ox-hugo/%e6%8e%a7%e5%88%b6%e6%ae%b5%e8%90%bd%e9%95%bf%e5%ba%a61.png"/> 
+    </figure>
+ <!-- raw HTML omitted --></p>
+<p><figure>
+        <img loading="lazy" src="/ox-hugo/%e6%8e%a7%e5%88%b6%e6%ae%b5%e8%90%bd%e9%95%bf%e5%ba%a62.png"/> 
+    </figure>
+ <!-- raw HTML omitted --></p>
+</li>
+</ol>
+<!-- raw HTML omitted -->
+<ol start="2">
+<li>
+<p>使用列表</p>
+<p>另外一个控制段落长度的有用技巧，是使用列表(bullet list)，可以表达列表中的每个点都是并列关系。 <!-- raw HTML omitted --></p>
+<p>例如，分析跑步的好处： <!-- raw HTML omitted --></p>
+<blockquote>
+<p>跑步不仅可以增强免疫系统，帮助抵御病毒和细菌，降低患病风险； <!-- raw HTML omitted -->
+还有助于心肺功能，降低心脏病和中风的风险； <!-- raw HTML omitted -->
+更可以减脂、增强肌肉，改善体形； <!-- raw HTML omitted -->
+甚至促进肠道蠕动，有助于消化。 <!-- raw HTML omitted --></p>
+</blockquote>
+<p>如果换成列表，那么跑步的好处就是： <!-- raw HTML omitted --></p>
+<ul>
+<li>提高免疫力：增强免疫系统，帮助抵御病毒和细菌，降低患病风险 <!-- raw HTML omitted --></li>
+<li>改善心血管健康：有助于心肺功能，降低心脏病和中风的风险 <!-- raw HTML omitted --></li>
+<li>塑造好身材：可以减脂、增强肌肉，改善体形 <!-- raw HTML omitted --></li>
+<li>促进消化：促进肠道蠕动，有助于消化 <!-- raw HTML omitted --></li>
+</ul>
+<p>如果还有优点补充，只需要继续增加列表就好了。 <!-- raw HTML omitted --></p>
+</li>
+</ol>
+<h4 id="一图-表胜千言"><!-- raw HTML omitted -->3.2.5<!-- raw HTML omitted --> 一图/表胜千言</h4>
+<p>人的大脑对图片远比文字和声音敏感。 <!-- raw HTML omitted --></p>
+<p>图片比文字来说，更容易被大脑接受，大脑储存图片信息也不需要进行过多的转译，而文字进入大脑之后，还需要用“想象力”处理成画面进行记忆，这也就是为什么带生活实例的文字会比概念化的文字更容易让人记住，因为前者更容易让你想象具体的画面。 <!-- raw HTML omitted --></p>
+<p>通俗地讲，就是一图胜千言。 <!-- raw HTML omitted --></p>
+<p>所以要减少读者的心智负担，那么就应该多使用图表，因为它能更直观地传递更多信息。 <!-- raw HTML omitted --></p>
+<p>以国家统计局发布的2月份居民消费价格分类同比涨跌幅为例，文字描述如下： <!-- raw HTML omitted --></p>
+<blockquote>
+<p>其中，教育文化娱乐、其他用品及服务、衣着价格分别上涨3.9%、3.0%和1.6%，医疗保健、生活用品及服务、居住价格分别上涨1.5%、0.5%和0.2%；交通通信价格下降0.4%。 <!-- raw HTML omitted --></p>
+</blockquote>
+<p>图表如下： <!-- raw HTML omitted --></p>
+<p><figure>
+    <img loading="lazy" src="/ox-hugo/2%e6%9c%88%e4%bb%bd%e5%b1%85%e6%b0%91%e6%b6%88%e8%b4%b9%e4%bb%b7%e6%a0%bc%e5%88%86%e7%b1%bb%e5%90%8c%e6%af%94%e6%b6%a8%e8%b7%8c%e5%b9%85%e5%9b%be.png"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>或者换成表格: <!-- raw HTML omitted --></p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>涨跌幅</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>教育文化娱乐</td>
+<td>+ 3.9%</td>
+</tr>
+<tr>
+<td>其他用品及服务</td>
+<td>+ 3.0%</td>
+</tr>
+<tr>
+<td>衣着</td>
+<td>+ 1.6%</td>
+</tr>
+<tr>
+<td>医疗保健</td>
+<td>+ 1.5%</td>
+</tr>
+<tr>
+<td>生活用品及服务</td>
+<td>+ 0.5%</td>
+</tr>
+<tr>
+<td>居住</td>
+<td>+ 0.2%</td>
+</tr>
+<tr>
+<td>食品烟酒</td>
+<td>- 0.1%</td>
+</tr>
+<tr>
+<td>交通通信</td>
+<td>- 0.4%</td>
+</tr>
+</tbody>
+</table>
+<h2 id="如何写好"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 如何写好</h2>
+<h3 id="多读多思"><!-- raw HTML omitted -->4.1<!-- raw HTML omitted --> 多读多思</h3>
+<p>杜甫说，读书破万卷，下笔如有神。诗圣的意思是如果你通读过万卷书，就好像ChatGPT一样，思如泉涌，下笔如有神 <!-- raw HTML omitted --></p>
+<p>陆游又说，纸上得来终觉浅，绝知此事要躬行。陆放翁的意思是，你在书上的读到的东西，也只是信息，如果没有实践过，终究不能成为技能的。 <!-- raw HTML omitted --></p>
+<p>总结两位老人家的话，也就是说，多读书是写好文章的必要条件，多读书不一定能写好文章，但是不多读书呢，就一定写不出好文章。 <!-- raw HTML omitted --></p>
+<p>毕竟写出来的东西，不会凭空而来，还是你脑子思考好的结果。 <!-- raw HTML omitted --></p>
+<h3 id="多写多改"><!-- raw HTML omitted -->4.2<!-- raw HTML omitted --> 多写多改</h3>
+<p>与金庸并称香港四大才子的倪匡，一生写了300多部小说、400多部电影剧本。 <!-- raw HTML omitted --></p>
+<p>他曾经自嘲没有谋生本能，所以看见人家写自己也写，自称是全世界写汉字最多和最快的人，自入文坛已写作三十年， <!-- raw HTML omitted -->
+一个星期写足七天，每天写数万字。他在创作最高峰曾同时写作十二本科幻小说。 <!-- raw HTML omitted --></p>
+<p>当被问及有何建议赠给写作的人，倪匡说只有一个「写」字，只有多写才能得到更多的灵感。 <!-- raw HTML omitted --></p>
+<hr>
+<p>苏轼的《东坡志林》写到，有人问欧阳修怎么写文章，他回答说： <!-- raw HTML omitted --></p>
+<blockquote>
+<p>无他术，唯勤读书而多为之，自工。 <!-- raw HTML omitted --></p>
+<p>世人患作文字少，又懒读书，每一篇出，即求过人，如此少有至者。 <!-- raw HTML omitted --></p>
+<p>疵病不必待人指摘，多做自能见之。” <!-- raw HTML omitted --></p>
+</blockquote>
+<p>世人文字写得少，又懒读书，写一篇文章就希望可以超越别人，像这样是难有写得好的人。 <!-- raw HTML omitted --></p>
+<p>书读多了，落笔为文，文章写多了，自然就写好了。 <!-- raw HTML omitted --></p>
+<p>写作的「捷径」就是老老实实多读书、多思考、勤写作。 <!-- raw HTML omitted --></p>
+<p>多练多写多修改。 <!-- raw HTML omitted --></p>
+<p>只有产量提上来了，工艺才会成熟，良品率才会提高。 <!-- raw HTML omitted --></p>
+<h2 id="总结"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 总结</h2>
+<p>写作并非是雄关漫道，遥不可及。 <!-- raw HTML omitted --></p>
+<p>大家都写过作文，写作也只是一种交流方式，无非是把脑海中的想法以文字的形式付诸于纸上，比聊天更加正式而已。 <!-- raw HTML omitted --></p>
+<p>千里之行始于足下，万巻之文始于笔下，开始写就好了。 <!-- raw HTML omitted --></p>
+<hr>
+<h3 id="历史文章推荐"><!-- raw HTML omitted -->5.1<!-- raw HTML omitted --> 历史文章推荐</h3>
+<ul>
+<li>旅加经历 <!-- raw HTML omitted -->
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E8%BF%99%E4%BA%9B%E5%B9%B4%E8%B5%B0%E8%BF%87%E7%9A%84%E8%B7%AF_%E4%BB%8E%E5%B9%BF%E5%B7%9E%E5%88%B0%E6%B8%A9%E5%93%A5%E5%8D%8E/">这些年走过的路：从广州到温哥华</a> <!-- raw HTML omitted --></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B9%8B%E5%88%9D%E4%BD%93%E9%AA%8C/">加拿大之初体验</a> <!-- raw HTML omitted --></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E5%8A%A0%E6%8B%BF%E5%A4%A7%E8%80%83%E9%A9%BE%E7%85%A7%E7%9A%84%E7%BB%8F%E5%8E%86/">加拿大考驾照的经历</a> <!-- raw HTML omitted --></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%99%BB%E9%99%86%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B8%80%E5%B9%B4%E7%9A%84%E4%BD%93%E4%BC%9A/">登陆加拿大一年后的体会</a> <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>历史与思考 <!-- raw HTML omitted -->
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E7%BD%AE%E8%BA%AB%E4%BA%8B%E5%86%85/">为什么梦想买不起，故乡回不去</a>(和谐版本, 原版本<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>) <!-- raw HTML omitted --></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%B6%A6%E5%90%91%E4%BD%95%E6%96%B9_%E4%B8%8D%E5%AE%8C%E5%85%A8%E8%82%89%E8%BA%AB%E7%BF%BB%E5%A2%99%E6%8C%87%E5%8C%97/">润向何方：不完全肉身翻墙指北</a> <!-- raw HTML omitted --></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E7%9A%87%E5%B8%9D%E4%B8%8E%E5%AE%98%E5%83%9A/">皇帝与官僚：「上面」与「下面」</a> <!-- raw HTML omitted --></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E9%97%B2%E8%81%8A%E5%86%99%E4%BD%9C/">闲聊写作的好处</a> <!-- raw HTML omitted --></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E9%87%91%E6%A6%9C%E9%A2%98%E5%90%8D%E4%B9%8B%E5%90%8E/">金榜题名之后</a> <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>工具与分享 <!-- raw HTML omitted -->
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E5%86%99%E4%BD%9C%E6%B5%81/">我的写作流</a> <!-- raw HTML omitted --></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E7%94%BB%E5%9B%BE%E6%B5%81/">我的画图流：画图工具与技巧分享</a> <!-- raw HTML omitted --></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E6%90%9C%E7%B4%A2%E6%B5%81/">我的搜索流：高效搜索经验分享</a> <!-- raw HTML omitted --></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2022/feynman_technique/">最好的学习方式：费曼学习法(Feynman Technique)</a> <!-- raw HTML omitted --></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2021/%E7%B3%BB%E7%BB%9F%E6%80%9D%E8%80%83/">系统思考：既见树木，又见森林</a> <!-- raw HTML omitted --></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/gmail%E5%9C%B0%E5%9D%80%E7%9A%84%E9%9A%90%E8%97%8F%E6%8A%80%E5%B7%A7/">两个鲜为人知的Gmail地址技巧</a> <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>职场与思考 <!-- raw HTML omitted -->
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E4%BB%8E%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E7%A6%BB%E7%BA%BF_%E6%88%91%E5%B8%A6%E8%B5%B0%E4%BA%86%E4%BB%80%E4%B9%88/">那些年，我从微信支付学到的东西</a> <!-- raw HTML omitted --></li>
+</ul>
+</li>
+</ul>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://github.com/xiaolai/everyone-can-use-english/blob/main/book/README.md">https://github.com/xiaolai/everyone-can-use-english/blob/main/book/README.md</a> <!-- raw HTML omitted -->&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://www.sec.gov/pdf/handbook.pdf">https://www.sec.gov/pdf/handbook.pdf</a>  <!-- raw HTML omitted -->&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://zhuanlan.zhihu.com/p/196733201">https://zhuanlan.zhihu.com/p/196733201</a> <!-- raw HTML omitted -->&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="http://ramsayleung.github.io/zh/post/2023/%E7%BD%AE%E8%BA%AB%E4%BA%8B%E5%86%85/">http://ramsayleung.github.io/zh/post/2023/%E7%BD%AE%E8%BA%AB%E4%BA%8B%E5%86%85/</a> <!-- raw HTML omitted -->&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+]]></content:encoded>
+    </item>
+    
     <item>
       <title>金榜题名之后</title>
       <link>https://ramsayleung.github.io/zh/post/2024/%E9%87%91%E6%A6%9C%E9%A2%98%E5%90%8D%E4%B9%8B%E5%90%8E/</link>
@@ -1003,207 +1319,6 @@
 <p>前段时间，在家里的柜子发现我这些用稚嫩笔迹写下的日记，翻看着有些泛黄的，写着的各种生活小事或者心情的纸张，忍不住笑了起来。 <!-- raw HTML omitted --></p>
 <p>又或者翻开自己大二大三写的博客，记录着自己当初学习的一些笔记，稚嫩的思考，都会有种翻看旧照片的感觉。 <!-- raw HTML omitted --></p>
 <p>写作，大概就相当于是用笔触作胶卷，给当下自己的思考和感悟拍下一幅幅「游客照」，以待日后再聆听昔日「雁行」时所留下过的声音。 <!-- raw HTML omitted --></p>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>我的搜索流：高效搜索经验分享</title>
-      <link>https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E6%90%9C%E7%B4%A2%E6%B5%81/</link>
-      <pubDate>Sun, 25 Jun 2023 13:55:00 -0700</pubDate>
-      
-      <guid>https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E6%90%9C%E7%B4%A2%E6%B5%81/</guid>
-      <description>1 前言 人并非全知全能，工作和生活难免会有各种的疑问，有问题自然可以询问有经验的同事或朋友。 但为了避免一有问题就去问人，给别人造成困扰，更推荐</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
-<p>人并非全知全能，工作和生活难免会有各种的疑问，有问题自然可以询问有经验的同事或朋友。 <!-- raw HTML omitted --></p>
-<p>但为了避免一有问题就去问人，给别人造成困扰，更推荐的就是: 自己先搜索，然后再去问人(Do a search before you ask a question) <!-- raw HTML omitted --></p>
-<p>当然，如果你不想打扰他人，直接问ChatGPT也未尝不可，只是答案的准确性不一定有保证。 <!-- raw HTML omitted --></p>
-<p>如何高效地搜索，缩小搜索的范围，如何快速地检索到答案呢？ <!-- raw HTML omitted --></p>
-<p>那么我来分享一下自己的个人经验： <!-- raw HTML omitted --></p>
-<h2 id="google-search"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Google Search</h2>
-<p>虽然我认为「搜索并不仅限于使用搜索引擎」，但是「搜索引擎」却是搜索并不可少的一部分。 <!-- raw HTML omitted --></p>
-<p>虽然搜索引擎有很多，但是我基本只用 Google；如果没法使用 Google, 那么推荐使用Bing, 反正百度不在我的推荐之列. <!-- raw HTML omitted --></p>
-<p>Google 搜索的界面很简单，只有一个搜索框，用户只需要把想要搜索的内容输入进去并回车即可。 <!-- raw HTML omitted --></p>
-<p>比如搜索：「cpp modules」，返回了 7,320,000条结果。 <!-- raw HTML omitted --></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_result.png"/> 
-</figure>
- <!-- raw HTML omitted --></p>
-<p>搜索结果太多，我想对搜索内容进行筛选，google 就提供了相当多的搜索指令(search operator) <!-- raw HTML omitted --></p>
-<h3 id="时间"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 时间</h3>
-<p>cpp modules是c++20 才新增的特性，如果我想按时间搜索下相关的内容，可以使用 <code>:before</code>, <code>:after</code> 指令，后面跟着一个日期: <!-- raw HTML omitted --></p>
-<pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules :before 2020
-</code></pre><p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_before.png"/> 
-</figure>
- <!-- raw HTML omitted --></p>
-<p>可以看到搜索结果变成了185,000条，并且返回的搜索结果都是在 2020 年以前的纪录，这个在查看历史新闻时特别有用，比如看历史合订本。 <!-- raw HTML omitted --></p>
-<h3 id="站点"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 站点</h3>
-<p>如果你只想搜索某个站点，但是这个站点没有提供搜索功能（比如学校或者公司官网），或者搜索质量不够好，那么就可以加上 <code>site:</code> 的关键词, 要求 Google 只返回某个网站的检索结果: <!-- raw HTML omitted --></p>
-<p>比如我想看下 jetbrains家的IDE 对 c++ 20 Modules的支持程度: <!-- raw HTML omitted --></p>
-<pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules site:jetbrains.com
-</code></pre><p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_site.png"/> 
-</figure>
- <!-- raw HTML omitted --></p>
-<p>又或者，我搜索网站的时候，想把某个网站排除掉, 比如使用中文搜索编程相关关键词的时候，经常会被CSDN 的垃圾内容污染，那么就可以使用 <code>-</code>, 来排除掉某些内容. <!-- raw HTML omitted --></p>
-<pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules -microsoft
-</code></pre><p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_exclude.png"/> 
-</figure>
- <!-- raw HTML omitted --></p>
-<p>原来排名第二的 Miscrosft 就被过滤掉了. <!-- raw HTML omitted --></p>
-<h3 id="社交媒体"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> 社交媒体</h3>
-<p>如果你想在社交媒体上搜索某个关键词，那么可以使用 <code>@</code> 后跟社交媒体的名字来进行搜索，例如 &ldquo;cpp modules @twitter&rdquo; 或者 &ldquo;cpp modules @reddit&rdquo;, 可以把 <code>@</code> 理解成是 <code>:site</code> 指令的简化版本. <!-- raw HTML omitted --></p>
-<p>只是社交媒体(social media)的定义比较含糊, Google没有给出具体的说明，但是比较有名的社交媒体都是支持的. <!-- raw HTML omitted --></p>
-<pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules @reddit
-</code></pre><p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_reddit.png"/> 
-</figure>
- <!-- raw HTML omitted --></p>
-<pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules @zhihu
-</code></pre><p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_zhihu.png"/> 
-</figure>
- <!-- raw HTML omitted --></p>
-<h3 id="文件类型"><!-- raw HTML omitted -->2.4<!-- raw HTML omitted --> 文件类型</h3>
-<p>可以通过 <code>filetype</code> 来指定想要搜索的文件类型，比如想搜索 pdf 相关的内容: <!-- raw HTML omitted --></p>
-<pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules filetype:pdf
-</code></pre><p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_pdf.png"/> 
-</figure>
- <!-- raw HTML omitted --></p>
-<p>这个在知道书名，想要搜索电子书的时候特别有用. <!-- raw HTML omitted --></p>
-<h3 id="关键字匹配"><!-- raw HTML omitted -->2.5<!-- raw HTML omitted --> 关键字匹配</h3>
-<p>Google 支持若干个关键字匹配的指令: <!-- raw HTML omitted --></p>
-<p>双引号: &ldquo;cpp modules&rdquo;, 精确匹配，只匹配包含&quot;cpp modules&quot;的内容 <!-- raw HTML omitted --></p>
-<pre tabindex="0"><code class="language-nil" data-lang="nil">&#34;cpp modules&#34;
-</code></pre><p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_precise_match.png"/> 
-</figure>
- <!-- raw HTML omitted --></p>
-<p>搜索结果变成 3530 条纪录了. <!-- raw HTML omitted --></p>
-<ul>
-<li>星号: &ldquo;* modules&rdquo;, 通配符，所有包含 &ldquo;modules&quot;的内容都会被检索出来。个人觉得用处不大，只会让搜索结果膨胀. <!-- raw HTML omitted --></li>
-<li>OR: &ldquo;cpp or module&rdquo;, 匹配包含 &ldquo;cpp&rdquo; 或者&quot;module&rdquo; 的内容, <code>or</code> 可以使用竖线代替 <code>|</code> 个人觉得用处不大，也只会让搜索结果膨胀 <!-- raw HTML omitted --></li>
-<li>AND: &ldquo;cpp and module&rdquo;, 匹配包含 &ldquo;cpp&rdquo; 与&quot;module&quot; 的内容, <code>and</code> 可以使用与符号代替 <code>&amp;</code> <!-- raw HTML omitted --></li>
-</ul>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_and.png"/> 
-</figure>
- <!-- raw HTML omitted --></p>
-<h2 id="custome-search"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Custome Search</h2>
-<p>前面提到「搜索并不仅限于使用搜索引擎」，是因为有很多内容，搜索引擎检索不到。 <!-- raw HTML omitted --></p>
-<p>比如在公司内网的信息，Google 再强大，也不可能会检索得到的，因为不公开。 <!-- raw HTML omitted --></p>
-<p>这个时候就可以借助浏览器的 Custom Search能力（Chrome 叫 Site Search, Firefox叫 Keyword Search）。 <!-- raw HTML omitted --></p>
-<p>举个例子，我的老东家用的是代码搜索工具是 <a href="https://oracle.github.io/opengrok/">OpenGrok</a>, 可以搜索整个事业群的代码，支持多种语言，可以搜索代码的定义，引用，历史记录等。 <!-- raw HTML omitted --></p>
-<p>（下文以同样使用 OpenGrok 部署的开源项目 <code>LibreOffice</code> 的代码为例子） <!-- raw HTML omitted --></p>
-<p>因为在日常开发的时候，遇到陌生的函数名或者枚举定义，就需要看下他们的定义与实现，看下有没有问题： <!-- raw HTML omitted --></p>
-<p>比如想看下 <code>contains</code> 这个函数的实现： <!-- raw HTML omitted --></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/libre_office_definition.png"/> 
-</figure>
- <!-- raw HTML omitted --></p>
-<p>或者想看下 <code>Intersection</code> 这个函数的引用，看下其他人是怎么用这个函数的，我也顺便抄下。 <!-- raw HTML omitted --></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/libre_office_symbol.png"/> 
-</figure>
-  <!-- raw HTML omitted --></p>
-<p>一般的步骤是: <!-- raw HTML omitted --></p>
-<ol>
-<li>打开或切换到浏览器(Chrome/Firefox) <!-- raw HTML omitted --></li>
-<li>打开内网网站链接, 在例子中就是 <a href="https://opengrok.libreoffice.org">https://opengrok.libreoffice.org</a> <!-- raw HTML omitted --></li>
-<li>点击 <code>Definition</code> 或者 <code>Symbol</code> <!-- raw HTML omitted --></li>
-<li>输入或者粘贴想要查询的内容，比如 <code>contains</code> <!-- raw HTML omitted --></li>
-</ol>
-<p>一套流程下来，大概需要30-40秒，不能说很慢吧，但是起码算不上快。 <!-- raw HTML omitted --></p>
-<p>但是如果使用 Custom Search, 大概可以缩短至 7-8秒, 并且适用于绝对大部分的网站. <!-- raw HTML omitted --></p>
-<p>首先把查询函数引用的url 复制下来, 观察： <!-- raw HTML omitted --></p>
-<pre tabindex="0"><code class="language-log" data-lang="log">https://opengrok.libreoffice.org/search?full=&amp;defs=&amp;refs=Intersection&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=refs&amp;searchall=true&amp;si=refs
-</code></pre><p><code>refs</code> 后面跟着的就是需要查询的内容, 即 <code>Intersection</code>, 将 <code>Intersection</code> 替换成 <code>%s</code> : <!-- raw HTML omitted --></p>
-<pre tabindex="0"><code class="language-log" data-lang="log">https://opengrok.libreoffice.org/search?full=&amp;defs=&amp;refs=%s&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=refs&amp;searchall=true&amp;si=refs
-</code></pre><h3 id="chrome-chromium-site-search"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> Chrome/Chromium Site Search</h3>
-<p>打开Chrome/Chromium -&gt; 点击设置(Setting) -&gt; 点击搜索引擎（Search Engine） -&gt; Manage search engines and site search -&gt; Site search [Add] <!-- raw HTML omitted --></p>
-<ul>
-<li>Search Engine: OpenGrok Code Search Find Reference(取个有意义的名字) <!-- raw HTML omitted --></li>
-<li>Keyword: csr <!-- raw HTML omitted --></li>
-<li>URL: <code>https://opengrok.libreoffice.org/search?full=&amp;defs=&amp;refs=%s&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=refs&amp;searchall=true&amp;si=refs</code> <!-- raw HTML omitted --></li>
-</ul>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/google_site_search_ref.png"/> 
-</figure>
- <!-- raw HTML omitted --></p>
-<p>然后，在Chrome 的浏览器地址，输入 <code>csr</code>, 空格, 再搜索 <code>Intersection</code>, 回车。就可以直接在Chrome 地址栏里面搜索指定网页的代码. <!-- raw HTML omitted --></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/google_site_search_csr.gif"/> 
-</figure>
- <!-- raw HTML omitted --></p>
-<p>而搜索代码定义，URL 如下: <!-- raw HTML omitted --></p>
-<pre tabindex="0"><code class="language-log" data-lang="log">https://opengrok.libreoffice.org/search?full=&amp;defs=Intersection&amp;refs=&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=defs&amp;searchall=true&amp;si=defs
-</code></pre><p>只需要将 <code>defs</code> 后面的内容修改成 <code>%s</code>, 再建一个新的site search, 名为 <code>Opengrok Code Search Find Definition</code>, keyword 为 <code>csd</code>, 就可以快速搜索代码定义. <!-- raw HTML omitted --></p>
-<p>如果想要搜索其他网站，比如公司内网: <a href="https://search.xxoa.com/query=Foobar">https://search.xxoa.com/query=Foobar</a>, <!-- raw HTML omitted -->
-只需要把查询内容修改为 %s, 再新建个Site Search 即可。 <!-- raw HTML omitted --></p>
-<p>在老东家，搜索错误码，或者是搜索内网上的文章，我都是这么干的；所以到新东家之后，我也是这么搞的。 <!-- raw HTML omitted --></p>
-<h3 id="firefox"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> Firefox</h3>
-<p>Firefox 也提供类似的功能，叫 Keyword Search, 添加起来甚至更方便: <!-- raw HTML omitted --></p>
-<ol>
-<li>打开想要搜索的网站 <!-- raw HTML omitted --></li>
-<li>在搜索框点击鼠标右键，然后会看到一个「Add a Keyword for this Search&hellip;」 <!-- raw HTML omitted --></li>
-<li>修改名字与 keyword <!-- raw HTML omitted --></li>
-</ol>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/firefox_add_key_word_search.png"/> 
-</figure>
- <!-- raw HTML omitted --></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/firefox_add_key_word_search_bookmark.png"/> 
-</figure>
- <!-- raw HTML omitted --></p>
-<p>然后，在 Firefox 的浏览器地址，输入 <code>csd</code>, 空格, 再搜索 <code>Intersection</code>, 回车。就可以直接在 Firefox 地址栏里面搜索指定网页的代码. <!-- raw HTML omitted --></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/firefox_keyword_search.gif"/> 
-</figure>
- <!-- raw HTML omitted --></p>
-<p>如果没有右键时没有找到 「Add a Keyword for this Search&hellip;」的选项，也可以使用添加书签的方式，手动添加一个 keyword search: <!-- raw HTML omitted --></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/firefox_add_bookmark.png"/> 
-</figure>
- <!-- raw HTML omitted --></p>
-<h2 id="alfred-web-search"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Alfred Web Search</h2>
-<p>如果使用的是 Mac OS, 那么通过Alfred 插件的 Web Search功能，甚至可以不用手动切换到浏览器，直接就可以进行搜索，可以把搜索流的耗时进一步缩短到1-3秒。 <!-- raw HTML omitted --></p>
-<p>Alfred -&gt; Preference -&gt; Web Search -&gt; Add custome Search <!-- raw HTML omitted --></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/alfred_web_seasch.jpg"/> 
-</figure>
-  <!-- raw HTML omitted --></p>
-<p>除了要将 <code>%s</code> 换成 <code>{query}</code> 之外, 其他添加的步骤与 Site Search 一致： <!-- raw HTML omitted --></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/alfred_code_search.gif"/> 
-</figure>
- <!-- raw HTML omitted --></p>
-<p>录制 Gif 只花了1.5 秒. <!-- raw HTML omitted --></p>
-<h2 id="总结"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 总结</h2>
-<p>Perl语言之父Larry Wall 有句广为人知的名言：「程序员要有三大美德：急躁，懒惰，自大」。 <!-- raw HTML omitted --></p>
-<ul>
-<li>急躁意味着不愿意花时间等待缓慢的程序，会想办法优化程序； <!-- raw HTML omitted --></li>
-<li>自大意味着不愿让人指谪，对自身要求强，要写出高质量的代码； <!-- raw HTML omitted --></li>
-<li>懒惰意味着不想花精心做重复无用的事情，会想办法自动化，让电脑帮忙处理。 <!-- raw HTML omitted --></li>
-</ul>
-<blockquote>
-<p>&ldquo;We will encourage you to develop the three great virtues of a programmer: laziness, impatience, and hubris.&rdquo; &ndash; LarryWall <!-- raw HTML omitted --></p>
-</blockquote>
-<p>而我对搜索流的优化，就是在培养「急躁」与「懒惰」的美德。 <!-- raw HTML omitted --></p>
-<h2 id="延伸阅读"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> 延伸阅读</h2>
-<p>我的各种「流」： <!-- raw HTML omitted --></p>
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E5%86%99%E4%BD%9C%E6%B5%81/">我的写作流：写作工具与平台分享</a> <!-- raw HTML omitted --></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E7%94%BB%E5%9B%BE%E6%B5%81/">我的画图流：画图工具与技巧分享</a> <!-- raw HTML omitted --></li>
-</ul>
-<h2 id="参考"><!-- raw HTML omitted -->7<!-- raw HTML omitted --> 参考</h2>
-<ul>
-<li><a href="https://support.mozilla.org/en-US/kb/how-search-from-address-bar">Mozilla Support: How to search IMDB, Wikipedia and more from the address bar</a> <!-- raw HTML omitted --></li>
-<li><a href="https://support.google.com/websearch/answer/2466433">Google Document: Refine web searches</a> <!-- raw HTML omitted --></li>
-<li><a href="https://support.google.com/websearch/answer/35890">Google Document: Do an Advanced Search on Google</a> <!-- raw HTML omitted --></li>
-</ul>
 ]]></content:encoded>
     </item>
     
