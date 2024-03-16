@@ -166,10 +166,7 @@
 <p>另外一个控制段落长度的有用技巧，是使用列表(bullet list)，可以表达列表中的每个点都是并列关系。 <!-- raw HTML omitted --></p>
 <p>例如，分析跑步的好处： <!-- raw HTML omitted --></p>
 <blockquote>
-<p>跑步不仅可以增强免疫系统，帮助抵御病毒和细菌，降低患病风险； <!-- raw HTML omitted -->
-还有助于心肺功能，降低心脏病和中风的风险； <!-- raw HTML omitted -->
-更可以减脂、增强肌肉，改善体形； <!-- raw HTML omitted -->
-甚至促进肠道蠕动，有助于消化。 <!-- raw HTML omitted --></p>
+<p>跑步不仅可以增强免疫系统，帮助抵御病毒和细菌，降低患病风险； 还有助于心肺功能，降低心脏病和中风的风险； 更可以减脂、增强肌肉，改善体形； 甚至促进肠道蠕动，有助于消化。 <!-- raw HTML omitted --></p>
 </blockquote>
 <p>如果换成列表，那么跑步的好处就是： <!-- raw HTML omitted --></p>
 <ul>
@@ -193,6 +190,7 @@
     <img loading="lazy" src="/ox-hugo/2%e6%9c%88%e4%bb%bd%e5%b1%85%e6%b0%91%e6%b6%88%e8%b4%b9%e4%bb%b7%e6%a0%bc%e5%88%86%e7%b1%bb%e5%90%8c%e6%af%94%e6%b6%a8%e8%b7%8c%e5%b9%85%e5%9b%be.png"/> 
 </figure>
  <!-- raw HTML omitted --></p>
+<p>关于如何画图，我之前也写过一篇文章来分享心得：《<a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E7%94%BB%E5%9B%BE%E6%B5%81/">我的画图流：画图工具与技巧分享</a>》 <!-- raw HTML omitted --></p>
 <p>或者换成表格: <!-- raw HTML omitted --></p>
 <table>
 <thead>
