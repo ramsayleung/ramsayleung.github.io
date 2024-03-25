@@ -48,4 +48,4 @@ Ramsay 喜读书，电影，历史；亦爱生活，料理；闲暇时常涂鸦�
 
 ## <span class="section-num">5</span> 友链 {#友链}
 
-- [AsyncX: 🌌 Per Aspera Ad Astra](https://blog.asyncx.top/favicon.svg)
+- [AsyncX: 🌌 Per Aspera Ad Astra](https://blog.asyncx.top)
