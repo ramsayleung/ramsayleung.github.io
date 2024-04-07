@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>git on In Pursuit of Hubris</title>
+    <link>https://ramsayleung.github.io/en/categories/git/</link>
+    <description>Recent content in git on In Pursuit of Hubris</description>
+    <image>
+      <title>In Pursuit of Hubris</title>
+      <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
+    <lastBuildDate>Sun, 07 Apr 2024 12:38:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/en/categories/git/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TIL: Git Conditional Configs</title>
+      <link>https://ramsayleung.github.io/en/post/2024/git_conditional_configs/</link>
+      <pubDate>Sun, 07 Apr 2024 12:38:00 -0700</pubDate>
+      
+      <guid>https://ramsayleung.github.io/en/post/2024/git_conditional_configs/</guid>
+      <description>Every Git user will have probably been asked to set up their Git at the first time: git config --global user.name &amp;#34;Ramsay Leung&amp;#34; git config --global user.email ramsayleung@gmail.com The above command will simply add the user.name and user.email value into your ~/.gitconfig file &amp;gt; cat ~/.gitconfig [user] name = Ramsay Leung email = ramsayleung@gmail.com [core] quotepath = false [init] defaultBranch = master You could also specify --local argument to writes the config values to .</description>
+      <content:encoded><![CDATA[<p>Every Git user will have probably been asked to set up their Git at the first time: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">git config --global user.name <span class="s2">&#34;Ramsay Leung&#34;</span>
+</span></span><span class="line"><span class="cl">git config --global user.email ramsayleung@gmail.com
+</span></span></code></pre></div><p>The above command will simply add the <code>user.name</code> and <code>user.email</code> value into your <code>~/.gitconfig</code> file <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">&gt; cat ~/.gitconfig
+</span></span><span class="line"><span class="cl"><span class="o">[</span>user<span class="o">]</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">name</span> <span class="o">=</span> Ramsay Leung
+</span></span><span class="line"><span class="cl">    <span class="nv">email</span> <span class="o">=</span> ramsayleung@gmail.com
+</span></span><span class="line"><span class="cl"><span class="o">[</span>core<span class="o">]</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">quotepath</span> <span class="o">=</span> <span class="nb">false</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>init<span class="o">]</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">defaultBranch</span> <span class="o">=</span> master
+</span></span></code></pre></div><p>You could also specify <code>--local</code> argument to writes the config values to <code>.git/config</code> in whatever project you&rsquo;re currently in. <!-- raw HTML omitted --></p>
+<p>If you need to simultaneously contribute to your work and open source project on the same laptop, with different Git config values, e.g.(company email address for work-specific projects, personal email address for open source project), what should you do? <!-- raw HTML omitted --></p>
+<p>You could definitely set up work-specific config as global config, then set up personal config with <code>--local</code> for every personal project separately. It works, but tedious and easy to mess-up. <!-- raw HTML omitted --></p>
+<p>Fortunately, starting from Git version 2.13, Git supports conditional configuration includes, you are capable of setting up different configs for different repositories. <!-- raw HTML omitted --></p>
+<p>If you add the following config to your global config file: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl"><span class="p">[</span><span class="nx">includeIf</span> <span class="s2">&#34;gitdir:~/projects/oss/&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">path</span> <span class="p">=</span> <span class="err">~/</span><span class="p">.</span><span class="nx">gitconfig-oss</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="nx">includeIf</span> <span class="s2">&#34;gitdir:~/projects/work/&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">path</span> <span class="p">=</span> <span class="err">~/</span><span class="p">.</span><span class="nx">gitconfig-work</span>
+</span></span></code></pre></div><p>Then Git will look in the <code>~/.gitconfig-oss</code> files for values only if the project you are currently working on matches <code>~/projects/oss/</code>. <!-- raw HTML omitted --></p>
+<p><strong><strong>Caution</strong></strong>: If you forget to specify the &ldquo;/&rdquo; at the end of the git dir, e.g. &ldquo;~/projects/oss&rdquo;, Conditional Config won&rsquo;t work! <!-- raw HTML omitted --></p>
+<p>Therefore, you could have a &ldquo;work&rdquo; directory and work-specific config here and an &ldquo;oss&rdquo; directory with values for your open source projects, etc. <!-- raw HTML omitted --></p>
+<p><figure>
+    <img loading="lazy" src="/ox-hugo/conditional_config.png"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>Git also supports other filters more than <code>gitdir</code>, you could specify a branch name as an include filter with <code>onbranch</code> <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl">  <span class="err">;</span> <span class="nx">include</span> <span class="nx">only</span> <span class="nx">if</span> <span class="nx">we</span> <span class="nx">are</span> <span class="nx">in</span> <span class="nx">a</span> <span class="nx">worktree</span> <span class="nx">where</span> <span class="nx">foo-branch</span> <span class="nx">is</span>
+</span></span><span class="line"><span class="cl"><span class="err">;</span> <span class="nx">currently</span> <span class="nx">checked</span> <span class="nx">out</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="nx">includeIf</span> <span class="s2">&#34;onbranch:foo-branch&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">path</span> <span class="p">=</span> <span class="nx">foo</span><span class="p">.</span><span class="nx">inc</span>
+</span></span></code></pre></div><p>Check out <a href="https://git-scm.com/docs/git-config?ref=blog.gitbutler.com#_includes">the Git docs</a> for more details <!-- raw HTML omitted --></p>
+]]></content:encoded>
+    </item>
+    
+  </channel>
+</rss>
