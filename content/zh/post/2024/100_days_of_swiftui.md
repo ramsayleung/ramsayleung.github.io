@@ -1,7 +1,7 @@
 +++
 title = "100 Days of SwiftUI"
 date = 2024-04-09T19:04:00-07:00
-lastmod = 2024-04-09T23:12:58-07:00
+lastmod = 2024-04-09T23:49:12-07:00
 tags = ["swift", "swiftui", "ios"]
 categories = ["swift", "swiftui", "ios"]
 draft = false
@@ -39,7 +39,7 @@ Swift 是由LLVM之父 [Chris Lattner](https://en.wikipedia.org/wiki/Chris_Lattn
 
 按照官方的说法，Swift从 Objective-C, Rust, Haskell, Ruby, Python, C#身上都有不同程度的借鉴和学习。 <br/>
 
-因为我对上面提到的语言多少有涉猎，所以学习Swift起来基本没有什么困难，=Optional=, `Error Handling`, `Result`, `Generic`, `Enumerations`, `Protocol` 这些概念都和Rust的大同小异。 <br/>
+因为我对上面提到的语言多少有涉猎，所以学习Swift起来基本没有什么困难, `Optional`, `Error Handling`, `Result`, `Generic`, `Enumerations`, `Protocol` 这些概念都和Rust的大同小异。 <br/>
 
 又是由LLVM之父来操刀，所以语言本身也设计得很优雅. <br/>
 
@@ -159,10 +159,12 @@ struct ContentView: View {
 
 ## <span class="section-num">4</span> 问题 {#问题}
 
-听起来好像很美好: IDE新功能好用，编程语言优雅, UI框架简洁好用; 但是苹果的开发思路却有大问题： 苹果开发的SwiftUI不向后兼容老版本的IOS。 <br/>
+听起来好像很美好: IDE新功能好用，编程语言优雅, UI框架简洁好用; 但是苹果的开发思路却有问题： 苹果开发的SwiftUI不向后兼容老版本的IOS。 <br/>
 
 SwiftUI大部分功能都是只支持IOS16及以后的版本，而苹果新出来的数据持久框架 `SwiftData` 甚至只支持IOS17, <br/>
 更离谱的是，SwiftUI的 BugFix 也只支持高版本IOS, 这就意味着用户不升级IOS版本，甚至SwiftUI的bug开发者都没法修复。 <br/>
+
+我自己的手机也只更新到IOS16，所以我时常会遇到我自己写的App没法运行到我自己手机上的情况。 <br/>
 
 不支持旧版本的IOS就让一大批的开发者和公司都没有动力去使用SwiftUI: <br/>
 
@@ -210,7 +212,7 @@ func loadImage() {
 ## <span class="section-num">5</span> 总结 {#总结}
 
 过了一把野生IOS开发的瘾，但是除非是苹果愿意让SwiftUI支持低版本的IOS， <br/>
-不然我是不会继续使用SwiftUI来开发IOS了，受众太有限了，也没有太大的前景。 <br/>
+不然我是没有太大意愿继续使用SwiftUI来开发IOS了，受众比较有限了。 <br/>
 
 想要支持低版本的IOS，就只能走UIKit和Objective-C这条历史老路，我对此着实是望而生畏，有空还是学习点其他有趣的东西。 <br/>
 
