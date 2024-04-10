@@ -1,7 +1,7 @@
 +++
 title = "100 Days of SwiftUI"
 date = 2024-04-09T19:04:00-07:00
-lastmod = 2024-04-09T22:28:36-07:00
+lastmod = 2024-04-09T23:12:58-07:00
 tags = ["swift", "swiftui", "ios"]
 categories = ["swift", "swiftui", "ios"]
 draft = false
@@ -12,7 +12,7 @@ toc = true
 
 我花了半年多的时间，在闲暇时间，学习了苹果的Swift语言和SwiftUI框架，想体验下IOS开发，再看下有没有机会通过写软件来做点副业。 <br/>
 
-先花了大概3个月时间，通过阅读 [The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/guidedtour/) 这本官方电子书[^fn:1]来学习Swift这门语言，又花了接近4个月的时候来学习 [100 Days of SwiftUI](https://www.hackingwithswift.com/100/swiftui) 这门课程[^fn:2]，每天花费1到2小时来学习一课，总共100课，所以顾名思义叫 100 Days of SwiftUI. <br/>
+先花了大概3个月时间，通过阅读 [The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/guidedtour/) 这本官方电子书[^fn:1]来学习Swift这门语言，又花了接近4个月的时候来学习 [100 Days of SwiftUI](https://www.hackingwithswift.com/100/swiftui) 这门课程[^fn:2]，每天花费1到2小时来学习一课，总共100课，所以顾名思义叫 100 Days of SwiftUI, 课程非常新且好，讲师功力深厚，课讲得深入浅出，娓娓道来。 <br/>
 
 每完成一课，就在Twitter上发一条推文，今天刚好把第100天的推文发了. <br/>
 
