@@ -47,7 +47,7 @@
 <h2 id="swift-初体验"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Swift 初体验</h2>
 <p>Swift 是由LLVM之父 <a href="https://en.wikipedia.org/wiki/Chris_Lattner">Chris Lattner</a> <sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>在2010开始开发，在2014年的WWDC苹果开发者大会正式推出的一门编程语言。 <!-- raw HTML omitted --></p>
 <p>按照官方的说法，Swift从 Objective-C, Rust, Haskell, Ruby, Python, C#身上都有不同程度的借鉴和学习。 <!-- raw HTML omitted --></p>
-<p>因为我对上面提到的语言多少有涉猎，所以学习Swift起来基本没有什么困难，=Optional=, <code>Error Handling</code>, <code>Result</code>, <code>Generic</code>, <code>Enumerations</code>, <code>Protocol</code> 这些概念都和Rust的大同小异。 <!-- raw HTML omitted --></p>
+<p>因为我对上面提到的语言多少有涉猎，所以学习Swift起来基本没有什么困难, <code>Optional</code>, <code>Error Handling</code>, <code>Result</code>, <code>Generic</code>, <code>Enumerations</code>, <code>Protocol</code> 这些概念都和Rust的大同小异。 <!-- raw HTML omitted --></p>
 <p>又是由LLVM之父来操刀，所以语言本身也设计得很优雅. <!-- raw HTML omitted --></p>
 <p>让我眼前一亮的可能是借鉴自 <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/extension-methods">C# Extension Methods</a> <sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>的 <code>extension</code> 功能 , 可以对已有的 class, enum 或者是 protocol 类型增加新的函数，也就是在不修改源码的情况下，扩展已有的功能. <!-- raw HTML omitted --></p>
 <p>例如，以下的代码就可以扩展内置的 <code>Double</code> 类型, 实现以米为单位，进行千米, 厘米，毫米，公尺的转换: <!-- raw HTML omitted --></p>
@@ -150,9 +150,10 @@
 </figure>
  <!-- raw HTML omitted --></p>
 <h2 id="问题"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 问题</h2>
-<p>听起来好像很美好: IDE新功能好用，编程语言优雅, UI框架简洁好用; 但是苹果的开发思路却有大问题： 苹果开发的SwiftUI不向后兼容老版本的IOS。 <!-- raw HTML omitted --></p>
+<p>听起来好像很美好: IDE新功能好用，编程语言优雅, UI框架简洁好用; 但是苹果的开发思路却有问题： 苹果开发的SwiftUI不向后兼容老版本的IOS。 <!-- raw HTML omitted --></p>
 <p>SwiftUI大部分功能都是只支持IOS16及以后的版本，而苹果新出来的数据持久框架 <code>SwiftData</code> 甚至只支持IOS17, <!-- raw HTML omitted -->
 更离谱的是，SwiftUI的 BugFix 也只支持高版本IOS, 这就意味着用户不升级IOS版本，甚至SwiftUI的bug开发者都没法修复。 <!-- raw HTML omitted --></p>
+<p>我自己的手机也只更新到IOS16，所以我时常会遇到我自己写的App没法运行到我自己手机上的情况。 <!-- raw HTML omitted --></p>
 <p>不支持旧版本的IOS就让一大批的开发者和公司都没有动力去使用SwiftUI: <!-- raw HTML omitted --></p>
 <p>对于开发新应用的开发者而言，只支持IOS17就意味着会流失一大群使用IOS16及以下版本的用户， <!-- raw HTML omitted -->
 而对于拥有存量用户的公司而言，更没有动力去使用SwiftUI，用了之后，旧版本IOS的用户可能直接无法打开应用。 <!-- raw HTML omitted --></p>
@@ -184,7 +185,7 @@
 <p>但是对比SwiftUI只支持高版本的问题，Objective-C和Swift的互操作问题也只能算是恶心，但是起码有解决方法，对于前者，开发者是完全没法自行解决. <!-- raw HTML omitted --></p>
 <h2 id="总结"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 总结</h2>
 <p>过了一把野生IOS开发的瘾，但是除非是苹果愿意让SwiftUI支持低版本的IOS， <!-- raw HTML omitted -->
-不然我是不会继续使用SwiftUI来开发IOS了，受众太有限了，也没有太大的前景。 <!-- raw HTML omitted --></p>
+不然我是没有太大意愿继续使用SwiftUI来开发IOS了，受众比较有限了。 <!-- raw HTML omitted --></p>
 <p>想要支持低版本的IOS，就只能走UIKit和Objective-C这条历史老路，我对此着实是望而生畏，有空还是学习点其他有趣的东西。 <!-- raw HTML omitted --></p>
 <div class="footnotes" role="doc-endnotes">
 <hr>
