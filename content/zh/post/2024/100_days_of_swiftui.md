@@ -1,7 +1,7 @@
 +++
 title = "100 Days of SwiftUI"
 date = 2024-04-09T19:04:00-07:00
-lastmod = 2024-04-09T22:16:43-07:00
+lastmod = 2024-04-09T22:28:36-07:00
 tags = ["swift", "swiftui", "ios"]
 categories = ["swift", "swiftui", "ios"]
 draft = false
@@ -10,9 +10,9 @@ toc = true
 
 ## <span class="section-num">1</span> 缘起 {#缘起}
 
-我花了半年多的时间，在工作之余的闲暇时间，学习了苹果的Swift语言和SwiftUI框架，想体现下IOS开发，再看下有没有机会通过写软件来做点副业。 <br/>
+我花了半年多的时间，在闲暇时间，学习了苹果的Swift语言和SwiftUI框架，想体验下IOS开发，再看下有没有机会通过写软件来做点副业。 <br/>
 
-先花了大概3个月时间，通过 [The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/guidedtour/) 这本官方电子书[^fn:1]来学习Swift这门语言，又花了接近4个月的时候来学习 [100 Days of SwiftUI](https://www.hackingwithswift.com/100/swiftui) 这门课程[^fn:2]，每天花费1到2小时来学习一课，总共100课，所以顾名思义叫 100 Days of SwiftUI. <br/>
+先花了大概3个月时间，通过阅读 [The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/guidedtour/) 这本官方电子书[^fn:1]来学习Swift这门语言，又花了接近4个月的时候来学习 [100 Days of SwiftUI](https://www.hackingwithswift.com/100/swiftui) 这门课程[^fn:2]，每天花费1到2小时来学习一课，总共100课，所以顾名思义叫 100 Days of SwiftUI. <br/>
 
 每完成一课，就在Twitter上发一条推文，今天刚好把第100天的推文发了. <br/>
 
@@ -26,22 +26,22 @@ toc = true
 
 {{< figure src="/ox-hugo/100_days_of_swiftui_certificate.jpg" >}} <br/>
 
-并在整个课程中，写了19个IOS App, 源码也基本放在[ GitHub](https://github.com/ramsayleung?tab=repositories&q=&type=&language=swift&sort=)&nbsp;[^fn:3]上了，不过所有的App都没有上架App Store，因为我还没有给苹果交税(99美刀的注册费). <br/>
+在整个课程中，我写了19个IOS App(虽说大部分是功能简单的App), 源码也基本放在[ GitHub](https://github.com/ramsayleung?tab=repositories&q=&type=&language=swift&sort=)&nbsp;[^fn:3]上了，不过所有的App都没有上架App Store，因为我还没有给苹果交税(99美刀的开发者注册费). <br/>
 
-经过这100节课和19个APP的训练，我已经掌握了使用Swift和SwiftUI的基础开发技能，算是个入门的IOS开发了, 现在我可以说自己是前端，后端，数据开发，IOS开发都搞过的全栈(~~干~~)工程师了（不是） <br/>
+经过这100节课和19个APP的训练，我自觉已经掌握了使用Swift和SwiftUI的基础开发技能，算是个入门的IOS开发了, 现在我可以说自己是前端，后端，数据开发，IOS开发都搞过的全栈(~~干~~)工程师了（不是） <br/>
 
-但是在苹果做出改变之前，我SwiftUI之旅可能就先到此为止了，原因下文再谈 <br/>
+但是在苹果对SwiftUI开发思路做出改变之前，我SwiftUI之旅可能就先到此为止了，原因下文再谈 <br/>
 
 
 ## <span class="section-num">2</span> Swift 初体验 {#swift-初体验}
 
-Swift 是由LLVM之父 [Chris Lattner](https://en.wikipedia.org/wiki/Chris_Lattner)&nbsp;[^fn:4]在2010开始开发，在2014年的WWDC苹果开发者大会被苹果正式推出的一门编程语言。 <br/>
+Swift 是由LLVM之父 [Chris Lattner](https://en.wikipedia.org/wiki/Chris_Lattner)&nbsp;[^fn:4]在2010开始开发，在2014年的WWDC苹果开发者大会正式推出的一门编程语言。 <br/>
 
-按照官方的说法，Swift从Objective-C, Rust, Haskell, Ruby, Python, C# 都有不同程度的借鉴和学习。 <br/>
+按照官方的说法，Swift从 Objective-C, Rust, Haskell, Ruby, Python, C#身上都有不同程度的借鉴和学习。 <br/>
 
 因为我对上面提到的语言多少有涉猎，所以学习Swift起来基本没有什么困难，=Optional=, `Error Handling`, `Result`, `Generic`, `Enumerations`, `Protocol` 这些概念都和Rust的大同小异。 <br/>
 
-又因为是由LLVM之父来操刀，所以语言本身也设计得很优雅. <br/>
+又是由LLVM之父来操刀，所以语言本身也设计得很优雅. <br/>
 
 让我眼前一亮的可能是借鉴自 [C# Extension Methods](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/extension-methods)&nbsp;[^fn:5]的 `extension` 功能 , 可以对已有的 class, enum 或者是 protocol 类型增加新的函数，也就是在不修改源码的情况下，扩展已有的功能. <br/>
 
@@ -63,7 +63,7 @@ print("Three feet is \(threeFeet) meters")
 // Prints "Three feet is 0.914399970739201 meters"
 ```
 
-总体而言, Swift是一门吸收了众多PL理论的现代编程语言 <br/>
+总体而言, Swift是一门吸收了众多PL理论的现代编程语言, 官方说支持Linux，Windows，MacOS等多个平台，不过我估计大多是在MacOS上用来写IOS和Mac应用 <br/>
 
 
 ## <span class="section-num">3</span> SwiftUI {#swiftui}
@@ -159,10 +159,10 @@ struct ContentView: View {
 
 ## <span class="section-num">4</span> 问题 {#问题}
 
-听起来好像很美好, IDE新功能好用，编程语言优雅, UI框架简洁好用，但是苹果的开发思路却有大问题： 苹果开发的SwiftUI不向后兼容老版本的IOS。 <br/>
+听起来好像很美好: IDE新功能好用，编程语言优雅, UI框架简洁好用; 但是苹果的开发思路却有大问题： 苹果开发的SwiftUI不向后兼容老版本的IOS。 <br/>
 
 SwiftUI大部分功能都是只支持IOS16及以后的版本，而苹果新出来的数据持久框架 `SwiftData` 甚至只支持IOS17, <br/>
-更离谱的是，SwiftUI的BugFix 也只支持高版本IOS, 这就意味着用户不升级IOS版本，甚至SwiftUI的bug开发者都没法修复。 <br/>
+更离谱的是，SwiftUI的 BugFix 也只支持高版本IOS, 这就意味着用户不升级IOS版本，甚至SwiftUI的bug开发者都没法修复。 <br/>
 
 不支持旧版本的IOS就让一大批的开发者和公司都没有动力去使用SwiftUI: <br/>
 
@@ -179,7 +179,7 @@ SwiftUI大部分功能都是只支持IOS16及以后的版本，而苹果新出�
 
 另外一个问题就是SwiftUI与苹果现有框架整合得不够好，如 `CoreImage` 框架，顾名思义是用来作图片处理. <br/>
 
-但之前是使用Objective-C写的，直接使用SwiftUI来调用，就会变成相当恶心，需要把Swift的数据结构传换成Objective-C来处理, 如： <br/>
+但之前是使用Objective-C写的，通过SwiftUI来调用，就会变成相当恶心，需要把Swift的数据结构传换成Objective-C来处理, 如： <br/>
 
 ```swift
 func applyProcess(){
