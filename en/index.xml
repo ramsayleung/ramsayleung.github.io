@@ -12,7 +12,60 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sun, 07 Apr 2024 12:38:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/en/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 13 Apr 2024 12:46:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/en/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TIL: Git Blame with Following</title>
+      <link>https://ramsayleung.github.io/en/post/2024/git_blame_with_following/</link>
+      <pubDate>Sat, 13 Apr 2024 12:46:00 -0700</pubDate>
+      
+      <guid>https://ramsayleung.github.io/en/post/2024/git_blame_with_following/</guid>
+      <description>Developers usually use git blame in GUI tools like GitHub Blame or using GitLens blame in VSCode: Even though GUI tools is intuitive, but the Git CLI has much more powerful tooling for finding something closer to the real story behind your code. There are many scenarios that CLI is valuable, the first is ignoring the whitespace changes. For example, if you formatted your C++ codebase with clang-format or Javascript codebase with prettier, you haven&amp;rsquo;t actually changed the codebase, but you&amp;rsquo;re the owner of tons of lines of code.</description>
+      <content:encoded><![CDATA[<p>Developers usually use <code>git blame</code> in GUI tools like GitHub Blame <!-- raw HTML omitted --></p>
+<p><figure>
+    <img loading="lazy" src="/ox-hugo/github_blame.png"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>or using GitLens blame in VSCode: <!-- raw HTML omitted --></p>
+<p><figure>
+    <img loading="lazy" src="/ox-hugo/git_blame_git_lens_vscode.png"/> 
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>Even though GUI tools is intuitive, but the Git CLI has much more powerful tooling for finding something closer to the real story behind your code. <!-- raw HTML omitted --></p>
+<p>There are many scenarios that CLI is valuable, the first is ignoring the whitespace changes. <!-- raw HTML omitted --></p>
+<p>For example, if you formatted your C++ codebase with <code>clang-format</code> or Javascript codebase with <code>prettier</code>, you haven&rsquo;t actually changed the codebase, but you&rsquo;re the owner of tons of lines of code. <!-- raw HTML omitted --></p>
+<p>The <code>git blame -w</code> option will ignore these type of whitespace changes. <!-- raw HTML omitted --></p>
+<p>The other great option is <code>-C</code> which will look for code movement between files in a commit. <!-- raw HTML omitted --></p>
+<p>For example, if you refactor a function from one file to another, the normal <code>git</code> blame will simply show you as the author in the new file, but the <code>-C</code> option will follow that movement and show the last person who actually change those lines of code. <!-- raw HTML omitted --></p>
+<p><code>-C</code> is extremely helpful when I need to find out the original author of some lines of code after file renames or refactors, to know more about the background and context behind this code <!-- raw HTML omitted --></p>
+<p>According to the <code>git blame</code> doc, you could pass <code>-C</code> up to three times to ask Git try even harder: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">-C<span class="o">[</span>&lt;num&gt;<span class="o">]</span>
+</span></span><span class="line"><span class="cl">           In addition to -M, detect lines moved or copied from other files that were modified in the same commit.
+</span></span><span class="line"><span class="cl">           This is useful when you reorganize your program and move code around across files.
+</span></span><span class="line"><span class="cl">           When this option is given twice, the <span class="nb">command</span> additionally looks <span class="k">for</span> copies from other files in the commit that creates the file.
+</span></span><span class="line"><span class="cl">           When this option is given three times, the <span class="nb">command</span> additionally looks <span class="k">for</span> copies from other files in any commit.
+</span></span></code></pre></div><p>(it&rsquo;s a bit of odd design) <!-- raw HTML omitted --></p>
+<p>Let&rsquo;s take <a href="https://github.com/rails/rails/blob/main/activemodel/lib/active_model/access.rb">the access.rb file of ActiveModel module in Rails framework</a> for example: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git blame activemodel/lib/active_model/access.rb
+</span></span></code></pre></div><p><figure>
+    <img loading="lazy" src="/ox-hugo/normal_git_blame.png"
+         alt="Figure 1: Vanilla git blame"/> <figcaption>
+            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->Vanilla git blame</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>Ok, it looks like Jonathan Hefner wrote all of this code it appears, let&rsquo;s look at the same code with <code>git blame -w -C -C -C activemodel/lib/active_model/access.rb</code> <!-- raw HTML omitted --></p>
+<p><figure>
+    <img loading="lazy" src="/ox-hugo/git_blame_-w_-C_-C_-C.png"
+         alt="Figure 2: git blame -w -C -C -C"/> <figcaption>
+            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->git blame -w -C -C -C</p>
+        </figcaption>
+</figure>
+ <!-- raw HTML omitted --></p>
+<p>Now we can see that Git has followed this code from file to file over the course of multiple renames, it turns out Jonathan Hefner is the most recent file renamer, Guillermo Iguaran is the original author. <!-- raw HTML omitted --></p>
+<p>If we want to know the history about this file, it&rsquo;s much better to ask Guillermo rather than Jonathan, which is beyond what the GUI blame or normal Git blame tool reveals <!-- raw HTML omitted --></p>
+]]></content:encoded>
+    </item>
+    
     <item>
       <title>TIL: Git Conditional Configs</title>
       <link>https://ramsayleung.github.io/en/post/2024/git_conditional_configs/</link>
@@ -1192,7 +1245,6 @@ tracker!</p>
 <code>async/await</code>.</p>
 ]]></content:encoded>
     </item>
-    
     
   </channel>
 </rss>
