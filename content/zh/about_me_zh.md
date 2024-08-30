@@ -12,7 +12,7 @@ Ramsay 是位软件工程师，以写程序为业.<br/>
 
 推崇开源与动手精神，使用Emacs 与Linux 多年，喜欢动手折腾。 <br/>
 
-写过 C++, Java, Python, Javascript/Typescript, Rust, Ruby这几种语言的生产代码，目前在[AWS S3](https://aws.amazon.com/s3/)写Rust和Java养活自己，偶尔用[EmacsLisp](https://github.com/ramsayleung/emacs.d) 为自己的工作流写小工具。 <br/>
+写过 C++, Java, Javascript/Typescript, Rust这几种语言的生产代码，目前在[AWS S3](https://aws.amazon.com/s3/) 写Rust和Java养活自己，偶尔用[EmacsLisp](https://github.com/ramsayleung/emacs.d) 为自己的工作流写小工具，喜欢用 Python 做自动化，使用 Ruby on Rails 写 Web <br/>
 
 
 ## <span class="section-num">2</span> 写作 {#写作}
@@ -43,7 +43,7 @@ Ramsay 喜读书，电影，历史；亦爱生活，料理；闲暇时常涂鸦�
 > 
 > 晚来天欲雪，能饮一杯无？ <br/>
 
-有想法交流的朋友可以我发邮件。 <br/>
+有想法交流的朋友可以给我发邮件: ramsayleung+blog[AT]gmail.com <br/>
 
 
 ## <span class="section-num">5</span> 友链 {#友链}
