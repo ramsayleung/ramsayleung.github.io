@@ -49,6 +49,10 @@
 </span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">func1</span><span class="p">(</span><span class="n">Type2</span> <span class="n">bar</span><span class="p">);</span>
 </span></span></code></pre></div><p>参数类型 <code>Type1</code> 和 <code>Type2</code> 并不需要存在任何关系，但是在 Rust 版本中，需要两个类型之间支持相互转换，所以可以理解成 Rust 的「函数重载」本质就是通过显示类型转换来实现的。 <!-- raw HTML omitted --></p>
 <p>毕竟 Rust 设计初衷之一就是支持强类型，就函数重载而言，终归聊胜于无啦。 <!-- raw HTML omitted --></p>
+<h2 id="参考"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 参考</h2>
+<ul>
+<li><a href="https://www.oreilly.com/library/view/programming-rust-2nd/9781492052586/">Programming Rust, 2nd Edition</a> <!-- raw HTML omitted --></li>
+</ul>
 ]]></content:encoded>
     </item>
     
