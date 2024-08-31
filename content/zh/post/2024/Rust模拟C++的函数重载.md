@@ -1,7 +1,7 @@
 +++
 title = "Rust模拟C++的函数重载"
 date = 2024-08-30T22:23:00-07:00
-lastmod = 2024-08-30T22:55:01-07:00
+lastmod = 2024-08-30T22:57:12-07:00
 tags = ["rust", "c++"]
 categories = ["rust", "c++"]
 draft = false
@@ -62,4 +62,9 @@ void func1(Type2 bar);
 参数类型 `Type1` 和 `Type2` 并不需要存在任何关系，但是在 Rust 版本中，需要两个类型之间支持相互转换，所以可以理解成 Rust 的「函数重载」本质就是通过显示类型转换来实现的。 <br/>
 
 毕竟 Rust 设计初衷之一就是支持强类型，就函数重载而言，终归聊胜于无啦。 <br/>
+
+
+## <span class="section-num">4</span> 参考 {#参考}
+
+-   [Programming Rust, 2nd Edition](https://www.oreilly.com/library/view/programming-rust-2nd/9781492052586/) <br/>
 
