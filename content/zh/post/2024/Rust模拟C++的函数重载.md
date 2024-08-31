@@ -1,7 +1,7 @@
 +++
 title = "Rust模拟C++的函数重载"
 date = 2024-08-30T22:23:00-07:00
-lastmod = 2024-08-30T22:57:12-07:00
+lastmod = 2024-08-30T23:00:10-07:00
 tags = ["rust", "c++"]
 categories = ["rust", "c++"]
 draft = false
@@ -36,7 +36,7 @@ where A: Into<Ipv4Addr>
 }
 ```
 
-需要注意的是，上面函数的入参并不是 `Ipv4Addr`, 而是 `Into<Ipv4Addr>=，这就是意味着，所有实现了 =Into<Ipv4Addr>` 这个 trait 的类型都可以是 `ping` 的入参，而恰好 `u32` 和 `[u8; 4]` 都实现了 =Into&lt;Ipv4Addr&gt;=，所以下面的调用都是编译通过的： <br/>
+需要注意的是，上面函数的入参并不是 `Ipv4Addr`, 而是 `Into<Ipv4Addr>` ，这就是意味着，所有实现了 `Into<Ipv4Addr>` 这个 trait 的类型都可以是 `ping` 的入参，而恰好 `u32` 和 `[u8; 4]` 都实现了 `Into<Ipv4Addr>` ，所以下面的调用都是编译通过的： <br/>
 
 ```rust
 println!("{:?}", ping(Ipv4Addr::new(23, 21, 68, 141))); // pass an Ipv4Addr
