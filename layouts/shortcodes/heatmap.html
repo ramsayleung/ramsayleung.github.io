@@ -1,0 +1,151 @@
+<!-- credit for https://blog.douchi.space/hugo-blog-heatmap/ -->
+<div 
+    id="heatmap" 
+    style="
+    display: block;
+    height: 150px;
+    width: 75%;
+    padding: 2px;
+    text-align: center;"
+></div>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/dist/echarts.min.js"></script>
+<script type="text/javascript">
+    var chartDom = document.getElementById('heatmap');
+    var myChart = echarts.init(chartDom);
+    window.onresize = function() {
+        myChart.resize();
+    };
+    var option;
+
+    // get date range by number of months
+    function getDateRange(months){            
+        var startDate = new Date();
+        var mill = startDate.setMonth((startDate.getMonth() - months));
+        var endDate = +new Date();
+        startDate = +new Date(mill);
+
+        endDate = echarts.format.formatTime('yyyy-MM-dd', endDate);
+        startDate = echarts.format.formatTime('yyyy-MM-dd', startDate);
+
+        var dateRange = [];
+        dateRange.push([
+            startDate,
+            endDate
+        ]);
+        return dateRange
+    };
+
+    // get number of months by window size
+    function getMonthCount(){
+        const windowWidth = window.innerWidth;
+        if (windowWidth >= 600) {
+            return 12;
+        }
+        if (windowWidth >= 400) {
+            return 9;
+        }
+        return 6;
+    }
+
+    var postsByDate = new Map();
+    {{ range ((where .Site.RegularPages "Type" "post"))  }}
+
+        var date = {{ .Date.Format "2006-01-02" }};
+        var postObj = new Map();
+        postObj.set("title", {{ .Title }});
+        postObj.set("link", {{ .RelPermalink }});
+        var wordCount = {{ .WordCount }};
+
+        var data = postsByDate.get(date);
+        if (data === undefined) {
+            data = new Map();
+            data.set("posts", []);
+            data.set("totalWordCount", 0);
+        }
+        var posts = data.get("posts");
+        posts.push(postObj);
+        var totalWordCount = data.get("totalWordCount");
+        totalWordCount += wordCount;
+        data.set("totalWordCount", totalWordCount);
+        postsByDate.set(date, data);
+    {{- end -}}
+
+    var heatmapData = [];
+    for (const [date, data] of postsByDate.entries()) {
+        heatmapData.push([date, data.get("totalWordCount")]);
+    }
+
+    option = {
+    title: {
+        show: true,
+        top: 0,
+        left: 'center',
+        text: '{{ .Get "title_text" }}'
+    },
+    legend: {
+        show: false,
+    },
+    visualMap: {
+        show: false,
+        min: 0,
+        max: 10000,
+        type: 'piecewise',
+        showLable: false,
+        orient: 'horizontal',
+        left: 'center',
+        top: 0,
+        itemGap: 10,
+        inRange: {
+            color: ['#c6e48b', '#7bc96f', '#239a3b', '#196127'],
+        },
+    },
+    calendar: {
+        top: 50,
+        left: 30,
+        right: 30,
+        cellSize: ['auto', 'auto'],
+        range: getDateRange(getMonthCount()),
+        itemStyle: {
+            color: '#fff',
+            borderWidth: 0.5,
+            borderColor: '#eee',
+        },
+        yearLabel: { 
+            show: false,
+        },
+        dayLabel: {
+            align: 'center',
+            nameMap: 'ZH',
+        },
+        monthLabel: {
+            nameMap: 'EN',
+        },
+        splitLine: {
+            show: false,
+        },
+    },
+    tooltip: {
+        hideDelay: 1000,
+        enterable: true,
+        formatter: function(params) {
+            const date = params.data[0];
+            const posts = postsByDate.get(date).get("posts");
+            var content = `${date}`;
+            for (const [i, post] of posts.entries()) {
+                content += "<br>";
+                var link = post.get("link");
+                var title = post.get("title");
+                content += `<a href="${link}" target="_blank">${title}</a>`
+            }
+            return content;
+        }
+
+    },
+    series: {
+        type: 'heatmap',
+        coordinateSystem: 'calendar',
+        data: heatmapData
+    }
+};
+option && myChart.setOption(option);
+</script>
