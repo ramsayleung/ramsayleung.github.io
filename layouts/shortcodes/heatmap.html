@@ -141,6 +141,8 @@
           hideDelay: 1000,
           enterable: true,
           formatter: function (params) {
+	          const thousandWordsText = {{ .Get "language" }} === "EN" ? 'k words': '千字';
+	          const thousandWords = (params.data[1]/1000.0).toFixed(1);
               const date = params.data[0];
               const posts = postsByDate.get(date).get("posts");
               var content = `${date}`;
@@ -148,7 +150,7 @@
                   content += "<br>";
                   var link = post.get("link");
                   var title = post.get("title");
-                  content += `<a href="${link}" target="_blank">${title}</a>`
+                  content += `<a href="${link}" target="_blank">${title} | ${thousandWords}${thousandWordsText}</a>`
               }
               return content;
           }
