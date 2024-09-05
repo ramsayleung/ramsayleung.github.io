@@ -414,11 +414,312 @@ It sounds pretty academic, but I am sure you are using topological sort unconsci
       <pubDate>Mon, 21 Feb 2022 00:00:00 +0000</pubDate>
       
       <guid>https://ramsayleung.github.io/en/about_me/</guid>
-      <description>About me I&amp;rsquo;m Ramsay, a software engineer making a living by pressing keyboard, an amateur cook, an Emacs deadhead and Linux enthusiast.
+      <description> About me I&amp;rsquo;m Ramsay, a software engineer making a living by pressing keyboard, an amateur cook, an Emacs deadhead and Linux enthusiast.
 The slogan of this site is In pursuit of Simplicity, because I prefer simple over complex
 Projects I&amp;rsquo;ve contributed multiple projects to open source community, I mainly focus on RSpotify right now due to the constrained energy.
 RSpotify: A Spotify Web API wrapper implemented in Rust. </description>
-      <content:encoded><![CDATA[<h2 id="about-me">About me</h2>
+      <content:encoded><![CDATA[
+<div 
+    id="heatmap" 
+    style="
+    display: block;
+    height: 150px;
+    width: 75%;
+    padding: 2px;
+    text-align: center;"
+></div>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/dist/echarts.min.js"></script>
+<script type="text/javascript">
+    var chartDom = document.getElementById('heatmap');
+    var myChart = echarts.init(chartDom);
+    window.onresize = function() {
+        myChart.resize();
+    };
+    var option;
+
+    
+    function getDateRange(months){            
+        var startDate = new Date();
+        var mill = startDate.setMonth((startDate.getMonth() - months));
+        var endDate = +new Date();
+        startDate = +new Date(mill);
+
+        endDate = echarts.format.formatTime('yyyy-MM-dd', endDate);
+        startDate = echarts.format.formatTime('yyyy-MM-dd', startDate);
+
+        var dateRange = [];
+        dateRange.push([
+            startDate,
+            endDate
+        ]);
+        return dateRange
+    };
+
+    
+    function getMonthCount(){
+        const windowWidth = window.innerWidth;
+        if (windowWidth >= 600) {
+            return 12;
+        }
+        if (windowWidth >= 400) {
+            return 9;
+        }
+        return 6;
+    }
+
+    var postsByDate = new Map();
+    
+
+        var date = "2024-04-13";
+        var postObj = new Map();
+        postObj.set("title", "TIL: Git Blame with Following");
+        postObj.set("link", "/en/post/2024/git_blame_with_following/");
+        var wordCount =  425 ;
+
+        var data = postsByDate.get(date);
+        if (data === undefined) {
+            data = new Map();
+            data.set("posts", []);
+            data.set("totalWordCount", 0);
+        }
+        var posts = data.get("posts");
+        posts.push(postObj);
+        var totalWordCount = data.get("totalWordCount");
+        totalWordCount += wordCount;
+        data.set("totalWordCount", totalWordCount);
+        postsByDate.set(date, data);
+
+        var date = "2024-04-07";
+        var postObj = new Map();
+        postObj.set("title", "TIL: Git Conditional Configs");
+        postObj.set("link", "/en/post/2024/git_conditional_configs/");
+        var wordCount =  307 ;
+
+        var data = postsByDate.get(date);
+        if (data === undefined) {
+            data = new Map();
+            data.set("posts", []);
+            data.set("totalWordCount", 0);
+        }
+        var posts = data.get("posts");
+        posts.push(postObj);
+        var totalWordCount = data.get("totalWordCount");
+        totalWordCount += wordCount;
+        data.set("totalWordCount", totalWordCount);
+        postsByDate.set(date, data);
+
+        var date = "2024-01-01";
+        var postObj = new Map();
+        postObj.set("title", "Rewind your Github summary");
+        postObj.set("link", "/en/post/2024/github_summary/");
+        var wordCount =  241 ;
+
+        var data = postsByDate.get(date);
+        if (data === undefined) {
+            data = new Map();
+            data.set("posts", []);
+            data.set("totalWordCount", 0);
+        }
+        var posts = data.get("posts");
+        posts.push(postObj);
+        var totalWordCount = data.get("totalWordCount");
+        totalWordCount += wordCount;
+        data.set("totalWordCount", totalWordCount);
+        postsByDate.set(date, data);
+
+        var date = "2023-06-28";
+        var postObj = new Map();
+        postObj.set("title", "How to share resource between CDK stacks");
+        postObj.set("link", "/en/post/2023/how_to_share_resource_between_cdk_stacks/");
+        var wordCount =  683 ;
+
+        var data = postsByDate.get(date);
+        if (data === undefined) {
+            data = new Map();
+            data.set("posts", []);
+            data.set("totalWordCount", 0);
+        }
+        var posts = data.get("posts");
+        posts.push(postObj);
+        var totalWordCount = data.get("totalWordCount");
+        totalWordCount += wordCount;
+        data.set("totalWordCount", totalWordCount);
+        postsByDate.set(date, data);
+
+        var date = "2022-05-22";
+        var postObj = new Map();
+        postObj.set("title", "Topological Sort");
+        postObj.set("link", "/en/post/2022/topological_sorting/");
+        var wordCount =  874 ;
+
+        var data = postsByDate.get(date);
+        if (data === undefined) {
+            data = new Map();
+            data.set("posts", []);
+            data.set("totalWordCount", 0);
+        }
+        var posts = data.get("posts");
+        posts.push(postObj);
+        var totalWordCount = data.get("totalWordCount");
+        totalWordCount += wordCount;
+        data.set("totalWordCount", totalWordCount);
+        postsByDate.set(date, data);
+
+        var date = "2021-08-05";
+        var postObj = new Map();
+        postObj.set("title", "How To Design A Reliable Distributed Timer");
+        postObj.set("link", "/en/post/2021/how_to_design_a_reliable_distributed_timer/");
+        var wordCount =  1845 ;
+
+        var data = postsByDate.get(date);
+        if (data === undefined) {
+            data = new Map();
+            data.set("posts", []);
+            data.set("totalWordCount", 0);
+        }
+        var posts = data.get("posts");
+        posts.push(postObj);
+        var totalWordCount = data.get("totalWordCount");
+        totalWordCount += wordCount;
+        data.set("totalWordCount", totalWordCount);
+        postsByDate.set(date, data);
+
+        var date = "2021-04-29";
+        var postObj = new Map();
+        postObj.set("title", "Let's make everything iterable");
+        postObj.set("link", "/en/post/2021/iterate_through_pagination_api/");
+        var wordCount =  1004 ;
+
+        var data = postsByDate.get(date);
+        if (data === undefined) {
+            data = new Map();
+            data.set("posts", []);
+            data.set("totalWordCount", 0);
+        }
+        var posts = data.get("posts");
+        posts.push(postObj);
+        var totalWordCount = data.get("totalWordCount");
+        totalWordCount += wordCount;
+        data.set("totalWordCount", totalWordCount);
+        postsByDate.set(date, data);
+
+        var date = "2020-12-13";
+        var postObj = new Map();
+        postObj.set("title", "Serde Tricks");
+        postObj.set("link", "/en/post/2020/serde_lesson/");
+        var wordCount =  2007 ;
+
+        var data = postsByDate.get(date);
+        if (data === undefined) {
+            data = new Map();
+            data.set("posts", []);
+            data.set("totalWordCount", 0);
+        }
+        var posts = data.get("posts");
+        posts.push(postObj);
+        var totalWordCount = data.get("totalWordCount");
+        totalWordCount += wordCount;
+        data.set("totalWordCount", totalWordCount);
+        postsByDate.set(date, data);
+
+        var date = "2020-02-28";
+        var postObj = new Map();
+        postObj.set("title", "rspotify has come to async/await");
+        postObj.set("link", "/en/post/2020/async_await_for_rspotify/");
+        var wordCount =  432 ;
+
+        var data = postsByDate.get(date);
+        if (data === undefined) {
+            data = new Map();
+            data.set("posts", []);
+            data.set("totalWordCount", 0);
+        }
+        var posts = data.get("posts");
+        posts.push(postObj);
+        var totalWordCount = data.get("totalWordCount");
+        totalWordCount += wordCount;
+        data.set("totalWordCount", totalWordCount);
+        postsByDate.set(date, data);var heatmapData = [];
+    for (const [date, data] of postsByDate.entries()) {
+        heatmapData.push([date, data.get("totalWordCount")]);
+    }
+
+    option = {
+    title: {
+        show: true,
+        top: 0,
+        left: 'center',
+        text: 'Article Calendar'
+    },
+    legend: {
+        show: false,
+    },
+    visualMap: {
+        show: false,
+        min: 0,
+        max: 10000,
+        type: 'piecewise',
+        showLable: false,
+        orient: 'horizontal',
+        left: 'center',
+        top: 0,
+        itemGap: 10,
+        inRange: {
+            color: ['#c6e48b', '#7bc96f', '#239a3b', '#196127'],
+        },
+    },
+    calendar: {
+        top: 50,
+        left: 30,
+        right: 30,
+        cellSize: ['auto', 'auto'],
+        range: getDateRange(getMonthCount()),
+        itemStyle: {
+            color: '#fff',
+            borderWidth: 0.5,
+            borderColor: '#eee',
+        },
+        yearLabel: { 
+            show: false,
+        },
+        dayLabel: {
+            align: 'center',
+            nameMap: 'ZH',
+        },
+        monthLabel: {
+            nameMap: 'EN',
+        },
+        splitLine: {
+            show: false,
+        },
+    },
+    tooltip: {
+        hideDelay: 1000,
+        enterable: true,
+        formatter: function(params) {
+            const date = params.data[0];
+            const posts = postsByDate.get(date).get("posts");
+            var content = `${date}`;
+            for (const [i, post] of posts.entries()) {
+                content += "<br>";
+                var link = post.get("link");
+                var title = post.get("title");
+                content += `<a href="${link}" target="_blank">${title}</a>`
+            }
+            return content;
+        }
+
+    },
+    series: {
+        type: 'heatmap',
+        coordinateSystem: 'calendar',
+        data: heatmapData
+    }
+};
+option && myChart.setOption(option);
+</script>
+
+<h2 id="about-me">About me</h2>
 <p>I&rsquo;m Ramsay, a software engineer making a living by pressing keyboard, an amateur cook, an Emacs deadhead and Linux enthusiast.</p>
 <p>The slogan of this site is <strong><strong>In pursuit of Simplicity</strong></strong>, because I prefer simple over complex</p>
 <h2 id="projects">Projects</h2>
