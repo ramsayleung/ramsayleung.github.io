@@ -2,7 +2,7 @@
 <div>
   <div style="display: flex; justify-content: center; align-items: center">
     <p style="margin-right: 15px; margin-bottom: 0; color: #333; padding: 8px">
-      {{ .Get "title_text" }}
+      {{ default "Article Activity" (.Get "title_text") }}
     </p>
     <select
       id="yearSelector"
@@ -128,10 +128,10 @@
           yearLabel: { show: false },
           dayLabel: {
               firstDay: 1,
-              nameMap: {{ .Get "language" }}
+              nameMap: {{ default "EN" (.Get "language")}}
           },
           monthLabel: {
-              nameMap: {{ .Get "language" }}
+              nameMap: {{ default "EN" (.Get "language")}}
           },
           splitLine: {
               show: false,
@@ -141,7 +141,7 @@
           hideDelay: 1000,
           enterable: true,
           formatter: function (params) {
-	          const thousandWordsText = {{ .Get "language" }} === "EN" ? 'k words': '千字';
+	          const thousandWordsText = {{ default "EN" (.Get "language")}} === "EN" ? 'k words': '千字';
 	          const thousandWords = (params.data[1]/1000.0).toFixed(1);
               const date = params.data[0];
               const posts = postsByDate.get(date).get("posts");
