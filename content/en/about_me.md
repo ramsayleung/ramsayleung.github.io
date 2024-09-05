@@ -5,7 +5,7 @@ lastmod = 2022-02-23T17:23:37+08:00
 draft = false
 +++
 
-{{< heatmap title_text="Article Calendar" >}}
+{{< heatmap title_text="Article Activity" language="EN">}}
 
 ## About me {#about-me}
 
