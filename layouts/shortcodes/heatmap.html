@@ -1,35 +1,61 @@
 <!-- credit to https://blog.douchi.space/hugo-blog-heatmap/ -->
-<div>
-  <div style="display: flex; justify-content: center; align-items: center">
-    <p style="margin-right: 15px; margin-bottom: 0; color: #333; padding: 8px">
-      {{ default "Article Activity" (.Get "title_text") }}
-    </p>
-    <select
-      id="yearSelector"
-      style="
-        padding: 8px 12px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        background-color: #fff;
-        cursor: pointer;
-        transition: border-color 0.3s ease, box-shadow 0.3s ease;
-      "
-    >
-      <!-- Years will be dynamically added here -->
-    </select>
-  </div>
-  <div
-    id="heatmap"
-    style="
-      display: block;
-      height: 150px;
-      width: 75%;
-      padding: 2px;
-      margin: 0 auto;
-      text-align: center;
-    "
-  ></div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Heatmap</title>
+    <style>
+        /* Default styles */
+        .heatmap-container {
+            display: block;
+        }
+
+        /* For mobile phones and iPads */
+        @media only screen and (max-width: 1024px) {
+            .heatmap-container {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="heatmap-container">
+        <div>
+            <div style="display: flex; justify-content: center; align-items: center">
+                <p style="margin-right: 15px; margin-bottom: 0; color: #333; padding: 8px">
+                    {{ default "Article Activity" (.Get "title_text") }}
+                </p>
+                <select
+                    id="yearSelector"
+                    style="
+                        padding: 8px 12px;
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                        background-color: #fff;
+                        cursor: pointer;
+                        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+                    "
+                >
+                    <!-- Years will be dynamically added here -->
+                </select>
+            </div>
+            <div
+                id="heatmap"
+                style="
+                    display: block;
+                    height: 150px;
+                    width: 75%;
+                    padding: 2px;
+                    margin: 0 auto;
+                    text-align: center;
+                "
+            ></div>
+        </div>
+    </div>
+</body>
+</html>
+
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/dist/echarts.min.js"></script>
 <script type="text/javascript">
   var chartDom = document.getElementById('heatmap');
