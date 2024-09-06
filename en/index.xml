@@ -414,42 +414,68 @@ It sounds pretty academic, but I am sure you are using topological sort unconsci
       <pubDate>Mon, 21 Feb 2022 00:00:00 +0000</pubDate>
       
       <guid>https://ramsayleung.github.io/en/about_me/</guid>
-      <description>Article Activity About me I&amp;rsquo;m Ramsay, a software engineer making a living by pressing keyboard, an amateur cook, an Emacs deadhead and Linux enthusiast.
+      <description>&lt;!DOCTYPE html&gt; Responsive Heatmap Article Activity About me I&amp;rsquo;m Ramsay, a software engineer making a living by pressing keyboard, an amateur cook, an Emacs deadhead and Linux enthusiast.
 The slogan of this site is In pursuit of Simplicity, because I prefer simple over complex
 Projects I&amp;rsquo;ve contributed multiple projects to open source community, I mainly focus on RSpotify right now due to the constrained energy.
 RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
       <content:encoded><![CDATA[
-<div>
-  <div style="display: flex; justify-content: center; align-items: center">
-    <p style="margin-right: 15px; margin-bottom: 0; color: #333; padding: 8px">
-      Article Activity
-    </p>
-    <select
-      id="yearSelector"
-      style="
-        padding: 8px 12px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        background-color: #fff;
-        cursor: pointer;
-        transition: border-color 0.3s ease, box-shadow 0.3s ease;
-      "
-    >
-      
-    </select>
-  </div>
-  <div
-    id="heatmap"
-    style="
-      display: block;
-      height: 150px;
-      width: 75%;
-      padding: 2px;
-      margin: 0 auto;
-      text-align: center;
-    "
-  ></div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Heatmap</title>
+    <style>
+         
+        .heatmap-container {
+            display: block;
+        }
+
+         
+        @media only screen and (max-width: 1024px) {
+            .heatmap-container {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="heatmap-container">
+        <div>
+            <div style="display: flex; justify-content: center; align-items: center">
+                <p style="margin-right: 15px; margin-bottom: 0; color: #333; padding: 8px">
+                    Article Activity
+                </p>
+                <select
+                    id="yearSelector"
+                    style="
+                        padding: 8px 12px;
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                        background-color: #fff;
+                        cursor: pointer;
+                        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+                    "
+                >
+                    
+                </select>
+            </div>
+            <div
+                id="heatmap"
+                style="
+                    display: block;
+                    height: 150px;
+                    width: 75%;
+                    padding: 2px;
+                    margin: 0 auto;
+                    text-align: center;
+                "
+            ></div>
+        </div>
+    </div>
+</body>
+</html>
+
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/dist/echarts.min.js"></script>
 <script type="text/javascript">
   var chartDom = document.getElementById('heatmap');
