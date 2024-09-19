@@ -1,7 +1,7 @@
 +++
 title = "使用Rust的Iterator优雅解决FizzBuzz问题"
 date = 2024-09-18T22:46:00-07:00
-lastmod = 2024-09-18T23:58:05-07:00
+lastmod = 2024-09-19T00:03:03-07:00
 tags = ["rust"]
 categories = ["rust"]
 draft = false
@@ -95,7 +95,7 @@ assert_eq!(None, four_fours.next());
 
 ### <span class="section-num">3.2</span> once {#once}
 
-有生成无限个元素的 `iterator=， 自然就有只生成一个元素的 =iterator`, 那就是 `once()`, 这个 `iterator` 只会返回一个指定的元素。 <br/>
+有生成无限个元素的 `iterator`, 自然就有只生成一个元素的 `iterator`, 那就是 `once()`, 这个 `iterator` 只会返回一个指定的元素。 <br/>
 
 所以 `once("fizz")` 就是创建一个只会返回一个 `"fizz"` 的 `iterator` : <br/>
 
@@ -198,7 +198,7 @@ assert_eq!(iter.next(), None);
 
 最核心的是Rust的 pattern matching, 用来匹配不同的值, `(i, ("", ""))` 就是匹配所有 fizz 和 buzz为 `("", "")` 的值，什么情况下 `fizz` 和 `buzz` 会都为 "" 呢，无法整除3以及无法整除5的时候，那么就直接返回数字 `i`; <br/>
 
-`(_, (fizz,buzz))`, `_` 就是通配符，就是匹配掉所有其他的情况，无论是 fizz = "", fizz = "fizz", buzz `"" 或者 buzz = "buzz", 都把返回 "{fizz}{buzz}", 也就是 =(_, (fizz,buzz))` 匹配了4种情况. <br/>
+`(_, (fizz,buzz))`, `_` 就是通配符，就是匹配掉所有其他的情况，无论是 fizz = "", fizz = "fizz", buzz = "" 或者 buzz = "buzz", 都把返回 `"{fizz}{buzz}"`, 也就是 `(_, (fizz,buzz))` 匹配了4种情况. <br/>
 
 `map` 迭代器返回的是一个 String, 最后再加 String 打印出来. <br/>
 
