@@ -1,7 +1,7 @@
 +++
 title = "使用Rust的Iterator优雅解决FizzBuzz问题"
 date = 2024-09-18T22:46:00-07:00
-lastmod = 2024-09-18T23:53:02-07:00
+lastmod = 2024-09-18T23:58:05-07:00
 tags = ["rust"]
 categories = ["rust"]
 draft = false
@@ -95,9 +95,9 @@ assert_eq!(None, four_fours.next());
 
 ### <span class="section-num">3.2</span> once {#once}
 
-有生成无限个元素的 `iterator=，自然就有只生成一个元素的 =iterator`, 那就是 `once()`, 这个 `iterator` 只会返回一个指定的元素。 <br/>
+有生成无限个元素的 `iterator=， 自然就有只生成一个元素的 =iterator`, 那就是 `once()`, 这个 `iterator` 只会返回一个指定的元素。 <br/>
 
-所以 `once("fizz")` 就是创建一个只会返回一个 "fizz" 的 `iterator` : <br/>
+所以 `once("fizz")` 就是创建一个只会返回一个 `"fizz"` 的 `iterator` : <br/>
 
 ```rust
 use std::iter;
@@ -149,7 +149,7 @@ assert_eq!(spin.next(), Some(&"North"));
 assert_eq!(spin.next(), Some(&"East"));
 ```
 
-把4个 iterator 组合起来的 `repeat("").take(2).chain(once("fizz")).cycle();` 表达式的意思就是, 返回一个 iterator, 这个 iterator 无限循环: `"" "" "fizz" "" "" "fizz" ...` <br/>
+把4个 iterator 组合起来的 `repeat("").take(2).chain(once("fizz")).cycle();` 表达式的意思就是: 返回一个 iterator, 这个 iterator 无限循环: `"" "" "fizz" "" "" "fizz" ...` <br/>
 
 
 ### <span class="section-num">3.5</span> zip {#zip}
@@ -168,7 +168,7 @@ assert_eq!(iter.next(), Some((&3, &6)));
 assert_eq!(iter.next(), None);
 ```
 
-`zip` 就是把 `a1` 和 `a2` 两个iterator 「拉起来」了，每次返回一对的元素. 所以 =fizzes.zip(buzzes)=，就是合并了两个 iterator : <br/>
+`zip` 就是把 `a1` 和 `a2` 两个iterator 「拉起来」了，每次返回一对的元素. 所以 `fizzes.zip(buzzes)` ，就是合并了两个 iterator : <br/>
 
 ```rust
 // fizzes: "" "" "fizz" "" "" "fizz" "" "" "fizz" ..
