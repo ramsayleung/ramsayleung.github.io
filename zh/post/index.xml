@@ -12,7 +12,167 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Fri, 30 Aug 2024 22:23:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 18 Sep 2024 22:46:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用Rust的Iterator优雅解决FizzBuzz问题</title>
+      <link>https://ramsayleung.github.io/zh/post/2024/%E4%BD%BF%E7%94%A8rust%E7%9A%84iterator%E8%A7%A3%E5%86%B3fizzbuzz%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Wed, 18 Sep 2024 22:46:00 -0700</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2024/%E4%BD%BF%E7%94%A8rust%E7%9A%84iterator%E8%A7%A3%E5%86%B3fizzbuzz%E9%97%AE%E9%A2%98/</guid>
+      <description>1 前言 按照维基百科的说法，FizzBuzz问题 是一个简单但是常见的面试编程问题（可能以前常见，现在都是考Leetcode了,这种连Easy 都</description>
+      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+<p>按照维基百科的说法，<a href="https://en.wikipedia.org/wiki/Fizz_buzz">FizzBuzz问题</a> 是一个简单但是常见的面试编程问题（可能以前常见，现在都是考Leetcode了,这种连Easy 都不算了），这个问题的要求如下： <!-- raw HTML omitted --></p>
+<ol>
+<li>写一个程序，输出从1到100的数字 <!-- raw HTML omitted --></li>
+<li>对于3的倍数，不输出数字，而是输出 &ldquo;Fizz&rdquo; <!-- raw HTML omitted --></li>
+<li>对于5的倍数，不输出数字，而是输出 &ldquo;Buzz&rdquo; <!-- raw HTML omitted --></li>
+<li>对于即是3的倍数又是5的倍数的数字（即15的倍数），打印 &ldquo;FizzBuzz&rdquo; <!-- raw HTML omitted --></li>
+</ol>
+<h2 id="常规解法"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 常规解法</h2>
+<p>问题非常简单，刚学编程的学生都可以写出符合要求的代码，下面是 Rust 的常规解法： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">0</span><span class="o">..=</span><span class="mi">100</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;FizzBuzz&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;Fizz&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;Buzz&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;{i}&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>这个没有什么太多可说的，就是直接按需求翻译代码了。 <!-- raw HTML omitted --></p>
+<h2 id="iterator-解法"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Iterator 解法</h2>
+<p>如果现在给 FizzBuzz 问题再加一个限制，不能使用乘法，除法，或者取模操作，那么又要怎么实现呢？ <!-- raw HTML omitted --></p>
+<p>Rust 标准库中的各式 <code>Iterator</code> 可以算是Rust零开销抽象(Zero Cost Abstraction)与表达能力的最佳体现了。 <!-- raw HTML omitted --></p>
+<p>最近在读 Programming Rust, 2nd edition, 里面就有使用各种 Iterator 组合，不使用除法或者取模操作来解决 FizzBuzz 问题的实现, 可以说是把 <code>iterator</code> 玩得非常花了： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">iter</span>::<span class="p">{</span><span class="n">once</span><span class="p">,</span><span class="w"> </span><span class="n">repeat</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">fizzes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">repeat</span><span class="p">(</span><span class="s">&#34;&#34;</span><span class="p">).</span><span class="n">take</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="n">chain</span><span class="p">(</span><span class="n">once</span><span class="p">(</span><span class="s">&#34;fizz&#34;</span><span class="p">)).</span><span class="n">cycle</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">buzzes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">repeat</span><span class="p">(</span><span class="s">&#34;&#34;</span><span class="p">).</span><span class="n">take</span><span class="p">(</span><span class="mi">4</span><span class="p">).</span><span class="n">chain</span><span class="p">(</span><span class="n">once</span><span class="p">(</span><span class="s">&#34;buzz&#34;</span><span class="p">)).</span><span class="n">cycle</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">fizzes_buzzes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fizzes</span><span class="p">.</span><span class="n">zip</span><span class="p">(</span><span class="n">buzzes</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">fizz_buzz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="o">..=</span><span class="mi">100</span><span class="p">).</span><span class="n">zip</span><span class="p">(</span><span class="n">fizzes_buzzes</span><span class="p">).</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">tuple</span><span class="o">|</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="n">tuple</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="s">&#34;&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;&#34;</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">fizz</span><span class="p">,</span><span class="w"> </span><span class="n">buzz</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">format!</span><span class="p">(</span><span class="s">&#34;{}{}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">fizz</span><span class="p">,</span><span class="w"> </span><span class="n">buzz</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">fizz_buzz</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;{line}&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>看起来是否不知道所云呢? 现在可以把每个 <code>iterator</code> 的作用逐一拆解。 <!-- raw HTML omitted --></p>
+<h3 id="repeat-plus-take"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> repeat + take</h3>
+<p><code>repeat</code> 的作用就是无限重复某个传入的元素, 例如 <code>repeat(4)</code> 就是生成无限个数字4, <code>repeat(&quot;&quot;)</code> 就是生成无限个空白字符. <!-- raw HTML omitted --></p>
+<p>虽然 <code>repeat</code> 能生成无限个指定的元素，但是我只想要若干个元素，怎么整呢？ <code>take</code> 就可以满足这个要求，所以 <code>repeat(4).take(4)</code> 就是生成4个数字4的意思，而 <code>repeat(&quot;&quot;).take(2)</code> 就是生成2个空字符 <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">iter</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// that last example was too many fours. Let&#39;s only have four fours.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">four_fours</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iter</span>::<span class="n">repeat</span><span class="p">(</span><span class="mi">4</span><span class="p">).</span><span class="n">take</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="nb">Some</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="n">four_fours</span><span class="p">.</span><span class="n">next</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="nb">Some</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="n">four_fours</span><span class="p">.</span><span class="n">next</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="nb">Some</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="n">four_fours</span><span class="p">.</span><span class="n">next</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="nb">Some</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="n">four_fours</span><span class="p">.</span><span class="n">next</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// ... and now we&#39;re done
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="nb">None</span><span class="p">,</span><span class="w"> </span><span class="n">four_fours</span><span class="p">.</span><span class="n">next</span><span class="p">());</span><span class="w">
+</span></span></span></code></pre></div><h3 id="once"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> once</h3>
+<p>有生成无限个元素的 <code>iterator=，自然就有只生成一个元素的 =iterator</code>, 那就是 <code>once()</code>, 这个 <code>iterator</code> 只会返回一个指定的元素。 <!-- raw HTML omitted --></p>
+<p>所以 <code>once(&quot;fizz&quot;)</code> 就是创建一个只会返回一个 &ldquo;fizz&rdquo; 的 <code>iterator</code> : <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">iter</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// one is the loneliest number
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iter</span>::<span class="n">once</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="nb">Some</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">one</span><span class="p">.</span><span class="n">next</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// just one, that&#39;s all we get
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="nb">None</span><span class="p">,</span><span class="w"> </span><span class="n">one</span><span class="p">.</span><span class="n">next</span><span class="p">());</span><span class="w">
+</span></span></span></code></pre></div><h3 id="chain"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> chain</h3>
+<p>顾名思义，就是把两个 iterator 像链子一样串起来, 合并成一个 iterator: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">iter</span>::<span class="n">chain</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">];</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">];</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">iter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chain</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="mi">4</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="mi">6</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">None</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><h3 id="circle"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> circle</h3>
+<p><code>circle</code> 就比较有趣了，它的作用是无限循环一个 <code>iterator</code>, <code>repeat</code> 循环一个元素，而 <code>circle</code> 是循环一个 iterator: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">dirs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#34;North&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;East&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;South&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;West&#34;</span><span class="p">];</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">spin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dirs</span><span class="p">.</span><span class="n">iter</span><span class="p">().</span><span class="n">cycle</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">spin</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="s">&#34;North&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">spin</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="s">&#34;East&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">spin</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="s">&#34;South&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">spin</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="s">&#34;West&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">spin</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="s">&#34;North&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">spin</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="s">&#34;East&#34;</span><span class="p">));</span><span class="w">
+</span></span></span></code></pre></div><p>把4个 iterator 组合起来的 <code>repeat(&quot;&quot;).take(2).chain(once(&quot;fizz&quot;)).cycle();</code> 表达式的意思就是, 返回一个 iterator, 这个 iterator 无限循环: <code>&quot;&quot; &quot;&quot; &quot;fizz&quot; &quot;&quot; &quot;&quot; &quot;fizz&quot; ...</code> <!-- raw HTML omitted --></p>
+<h3 id="zip"><!-- raw HTML omitted -->3.5<!-- raw HTML omitted --> zip</h3>
+<p><code>zip</code> iterator 的含义就是 &ldquo;zips up&rdquo;, 翻译过来就是拉上拉链，它的作用就是把两个 <code>iterator</code> 像拉链一样拉起来，返回一个 iterator，用代码来解释会更直观: <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">a1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">];</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">a2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">];</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">iter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a1</span><span class="p">.</span><span class="n">iter</span><span class="p">().</span><span class="n">zip</span><span class="p">(</span><span class="n">a2</span><span class="p">.</span><span class="n">iter</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">((</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="mi">4</span><span class="p">)));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">((</span><span class="o">&amp;</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="mi">5</span><span class="p">)));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">((</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="mi">6</span><span class="p">)));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">None</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><p><code>zip</code> 就是把 <code>a1</code> 和 <code>a2</code> 两个iterator 「拉起来」了，每次返回一对的元素. 所以 =fizzes.zip(buzzes)=，就是合并了两个 iterator : <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// fizzes: &#34;&#34; &#34;&#34; &#34;fizz&#34; &#34;&#34; &#34;&#34; &#34;fizz&#34; &#34;&#34; &#34;&#34; &#34;fizz&#34; ..
+</span></span></span><span class="line"><span class="cl"><span class="c1">// buzzes: &#34;&#34; &#34;&#34; &#34;&#34; &#34;&#34; &#34;buzz&#34; &#34;&#34; &#34;&#34; &#34;&#34; &#34;&#34; &#34;buzz&#34;
+</span></span></span><span class="line"><span class="cl"><span class="c1">// fizzes_buzzes: (&#34;&#34; &#34;&#34;) (&#34;&#34; &#34;&#34;) (&#34;fizz&#34; &#34;&#34;) (&#34;&#34; &#34;&#34;) (&#34;&#34; &#34;buzz&#34;) ...
+</span></span></span></code></pre></div><p>而 <code>(1..=100).zip(fizzes_buzzes)</code> 就是创建一个包含三个元素的 tuple： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// (1..=100): 1 2 3 4 5 6 7 ...
+</span></span></span><span class="line"><span class="cl"><span class="c1">// fizzes_buzzes: (&#34;&#34; &#34;&#34;) (&#34;&#34; &#34;&#34;) (&#34;fizz&#34; &#34;&#34;) (&#34;&#34; &#34;&#34;) (&#34;&#34; &#34;buzz&#34;) ...
+</span></span></span><span class="line"><span class="cl"><span class="c1">// (1..=100).zip(fizzes_buzzes): (1 (&#34;&#34; &#34;&#34;)) (2 (&#34;&#34; &#34;&#34;)) (3 (&#34;fizz&#34; &#34;&#34;)) (4 (&#34;&#34; &#34;&#34;)) (5 (&#34;&#34; &#34;buzz&#34;)) ..
+</span></span></span></code></pre></div><h3 id="map"><!-- raw HTML omitted -->3.6<!-- raw HTML omitted --> map</h3>
+<p><code>map</code> 这个 iterator 在其他语言也有相同的实现，入参是一个闭包函数，然后把每个元素作为入参，调用闭包函数，在新的迭代返回函数的调用结果. <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">tuple</span><span class="o">|</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="n">tuple</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="s">&#34;&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;&#34;</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">fizz</span><span class="p">,</span><span class="w"> </span><span class="n">buzz</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">format!</span><span class="p">(</span><span class="s">&#34;{}{}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">fizz</span><span class="p">,</span><span class="w"> </span><span class="n">buzz</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">})</span><span class="w">
+</span></span></span></code></pre></div><p>最核心的是Rust的 pattern matching, 用来匹配不同的值, <code>(i, (&quot;&quot;, &quot;&quot;))</code> 就是匹配所有 fizz 和 buzz为 <code>(&quot;&quot;, &quot;&quot;)</code> 的值，什么情况下 <code>fizz</code> 和 <code>buzz</code> 会都为 &quot;&quot; 呢，无法整除3以及无法整除5的时候，那么就直接返回数字 <code>i</code>; <!-- raw HTML omitted --></p>
+<p><code>(_, (fizz,buzz))</code>, <code>_</code> 就是通配符，就是匹配掉所有其他的情况，无论是 fizz = &ldquo;&rdquo;, fizz = &ldquo;fizz&rdquo;, buzz <code>&quot;&quot; 或者 buzz = &quot;buzz&quot;, 都把返回 &quot;{fizz}{buzz}&quot;, 也就是 =(_, (fizz,buzz))</code> 匹配了4种情况. <!-- raw HTML omitted --></p>
+<p><code>map</code> 迭代器返回的是一个 String, 最后再加 String 打印出来. <!-- raw HTML omitted --></p>
+<p>同样是解决问题，这个版本的解法肯定是看起来「高大上」得多，说不定能让面试官眼前一亮，又或者是把自己绕晕。 <!-- raw HTML omitted --></p>
+<h2 id="zero-cost-abstraction"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Zero Cost Abstraction</h2>
+<p>所谓的是零开销抽象（Zero Cost Abstraction），用C++之父的话来解释就是: <!-- raw HTML omitted --></p>
+<blockquote>
+<p>In general, C++ implementations obey the zero-overhead principle: What you don’t use, you don’t pay for. And further: What you do use, you couldn’t hand code any better. <!-- raw HTML omitted --></p>
+</blockquote>
+<p>概括来说，就是使用 Iterator 写出来的代码，和你自己 for-loop 手写是性能是一样的，并不会有额外的抽象开销。 <!-- raw HTML omitted --></p>
+<p>换个角度讲，你手写的代码也没法实现得比 Iterator 更快，表达力还可能没有那么强。 <!-- raw HTML omitted --></p>
+<p>如果看上面的 Iterator 实现觉得着实难以理解，我们可以再来一版兼具优雅与简洁的实现： <!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">..=</span><span class="mi">100</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;FizzBuzz&#34;</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;Fizz&#34;</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;Buzz&#34;</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;{}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="reference"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> Reference</h2>
+<ul>
+<li>Programming Rust, 2nd edition <!-- raw HTML omitted --></li>
+</ul>
+]]></content:encoded>
+    </item>
+    
     <item>
       <title>Rust模拟C&#43;&#43;的函数重载</title>
       <link>https://ramsayleung.github.io/zh/post/2024/rust%E6%A8%A1%E6%8B%9Fc&#43;&#43;%E7%9A%84%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD/</link>
@@ -1270,140 +1430,6 @@
 <p>所以总会有朋友问我，【后面你会回国么？】 <!-- raw HTML omitted --></p>
 <p>我只能说，未来的事无法计划，我也没有一个确切的答案。 <!-- raw HTML omitted --></p>
 <p>当初想要出来只是某些契机因缘际会的结果，未来的事谁也不知道，只能拭目以待。 <!-- raw HTML omitted --></p>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>胡说：从西游记看职场感悟</title>
-      <link>https://ramsayleung.github.io/zh/post/2023/%E4%BB%8E%E8%A5%BF%E6%B8%B8%E8%AE%B0%E7%9C%8B%E8%81%8C%E5%9C%BA%E6%84%9F%E6%82%9F/</link>
-      <pubDate>Sat, 16 Dec 2023 09:46:00 -0800</pubDate>
-      
-      <guid>https://ramsayleung.github.io/zh/post/2023/%E4%BB%8E%E8%A5%BF%E6%B8%B8%E8%AE%B0%E7%9C%8B%E8%81%8C%E5%9C%BA%E6%84%9F%E6%82%9F/</guid>
-      <description>1 前言 前几天在讨论刷题工作，分享职场经历（也就是水群）的群里，有位「老好人」senior 工程师向大家倾诉他的职场烦恼。 他作为项目的后端负责人</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
-<p>前几天在讨论刷题工作，分享职场经历（也就是水群）的群里，有位「老好人」senior 工程师向大家倾诉他的职场烦恼。 <!-- raw HTML omitted --></p>
-<p>他作为项目的后端负责人，把后端的活都又快又好地干完了，然后前端毫无进度，大家看起来还没有什么责任心和紧迫感。 <!-- raw HTML omitted --></p>
-<p>如果项目不做成，原有的客户都会决定放弃公司的产品，转投其他公司。 <!-- raw HTML omitted --></p>
-<p>所以这位老哥就会忍不住在干好自己的活的同时，去前端帮帮忙. <!-- raw HTML omitted --></p>
-<p>然后过了一段时间之后，不干活的前端们开始疯狂向后端推卸责任，明里暗里，阴阳怪气指责后端问题，导致项目被block住. <!-- raw HTML omitted --></p>
-<p>群友们纷纷给自己的建议，有建议和经理1:1 把事情捅出来的；有建议下次提前和经理同步进度，暴露风险的。 <!-- raw HTML omitted --></p>
-<p>此时，老道的群主也出来给出自己的建议： <!-- raw HTML omitted --></p>
-<ol>
-<li>找到自己工作的亮点，要把亮点展示给老板们，然后离这群不干活的人远点，有啥要求就去捧杀下他们，说他们能力强，进度喜人，自己就不过去拖后腿了 <!-- raw HTML omitted --></li>
-<li>通过提管理手段来暴露他们的问题，而不是直接去和经理说谁谁不好，口说无凭的; 代码质量差就多组织代码review, 没进度就每周或每两周review 进度, 没产出就建议review 代码量和设计文档. <!-- raw HTML omitted --></li>
-<li>如果没人听自己的建议，那就放慢点节奏，自己找点事消磨下时间，总不能指望没人重视自己的项目，还为它夙兴夜寐 <!-- raw HTML omitted --></li>
-</ol>
-<p>用群主的原话来总结： <!-- raw HTML omitted --></p>
-<blockquote>
-<p>银行被抢了，是冲上去和歹徒搏斗，牺牲了还要为是不是工伤扯皮？还是顺便把自己和领导亏空的那部分也算在损失里，提拔一下？ <!-- raw HTML omitted --></p>
-</blockquote>
-<p>群主的话可谓是振聋发聩。 <!-- raw HTML omitted --></p>
-<p>当然，企业老板听了可能会不高兴，觉得给了员工工资，即使公司搞996，搞降本增效，裁员减薪，员工也应该献出自己的心脏。 <!-- raw HTML omitted --></p>
-<p>因为我总是读些乱七八糟的东西，所以我思绪比较容易飞扬，总是会联想到一些不搭边的东西。 <!-- raw HTML omitted --></p>
-<p>群主的话让我联想到了《西游记》，如果以职场视角来打开《西游记》，就会发现完全不一样的内容，也解了我的心头之惑。 <!-- raw HTML omitted --></p>
-<h2 id="胡说西游记"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 胡说西游记</h2>
-<p>年少时读《西游记》，读到的只是神魔鬼怪，孙悟空如何大战各路觊觎唐僧肉的妖魔鬼怪，一路通关刷副本护送师父西天取经的故事。 <!-- raw HTML omitted --></p>
-<p>现在想来，如果《西游记》只是日本少年热血漫画的内容类似，又是如何被位列中国的四大名著之一的呢？ <!-- raw HTML omitted --></p>
-<p>有人说西游记的仙魔志怪只是皮，骨是人性，所以才能经久不衰，流传数百年。 <!-- raw HTML omitted --></p>
-<p>那么人性又体现在哪呢？ <!-- raw HTML omitted --></p>
-<h3 id="困惑"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 困惑</h3>
-<p>先来看下我曾经困惑的地方。 <!-- raw HTML omitted --></p>
-<p>每次唐僧师徒落难，孙悟空营救未果，都向去天上的神仙，或者去地府的阎王救助，众人总是口称「大圣爷」， <!-- raw HTML omitted -->
-恭敬相待，殷勤相从，基本是有求必应。 <!-- raw HTML omitted --></p>
-<p>年少时觉得合情合理，因为孙悟空是「齐天大圣」，所谓众神都小心应付着。 <!-- raw HTML omitted --></p>
-<p>出来打工之后，才意识到这些个情节非常不合理： <!-- raw HTML omitted --></p>
-<p>按理说天上的众神都位列仙班，都是「体制内」有头有脸的人物， <!-- raw HTML omitted -->
-哪天来了个石头蹦出来的破落户，连个「编制」都没有，敢自封「齐天大圣」， <!-- raw HTML omitted -->
-还把我们的机关单位大闹了一场，让我们在领导面前丢光了脸面，连大领导「玉帝」都被牵连了。 <!-- raw HTML omitted --></p>
-<p>现在他有事要来求我们帮忙， <!-- raw HTML omitted -->
-谁有空谁帮，反正我手上的事情是非常紧急的，会影响到万千生民的，不比你救个师父重要？ <!-- raw HTML omitted --></p>
-<p>你自己不是很能么，自己去救嘛，找我们干嘛？ <!-- raw HTML omitted --></p>
-<p>有人可能会觉得我以「小人」之心揣度「神仙」之腹，人家都是「神仙」了，还会计较这些嘛？ <!-- raw HTML omitted --></p>
-<p>肯定是能修炼到喜、怒、哀、惧、爱、恶、欲七情皆去的境界。 <!-- raw HTML omitted --></p>
-<p>只是《西游记》中有明确描述，「神仙」并非是没有七情六欲的。 <!-- raw HTML omitted --></p>
-<p>在《西游记》的结尾，唐僧师徒历尽艰辛，终于到了灵山见佛祖，得偿所愿要把真经取回去，却遇到佛祖座下弟子阿傩，迦叶索贿。 <!-- raw HTML omitted --></p>
-<p>他们索贿不成，甚至只给了唐僧师徒无字经让他们带回去。 <!-- raw HTML omitted --></p>
-<p>「佛」犹如此，「神」何以堪？ <!-- raw HTML omitted --></p>
-<h3 id="涂生死簿"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 涂生死簿</h3>
-<p>在孙悟空在菩提祖师学到学到出神入化的神通和七十二变的本领后， <!-- raw HTML omitted -->
-为了改变自己以及猴子猴孙们都逃避不了生老病死的命运，去地府把生死簿中，把猴属之类，但有名者，一概勾之： <!-- raw HTML omitted --></p>
-<blockquote>
-<p>悟空道：“我也不记寿数几何，且只消了名字便罢。取笔过来。” <!-- raw HTML omitted --></p>
-<p>那判官慌忙捧笔，饱掭浓墨。 <!-- raw HTML omitted --></p>
-<p>悟空拿过簿子，把猴属之类，但有名者，一概勾之。捽下簿子道：“了帐，了帐，今番不伏你管了。”一路棒，打出幽冥界。 <!-- raw HTML omitted --></p>
-<p>那十王不敢相近，都去翠云宫，同拜地藏王菩萨，商量启表，奏闻上天，不在话下。 <!-- raw HTML omitted --></p>
-</blockquote>
-<p>相当于孙悟空把地府这个机构最重要的账本都给改没了，阎王这个主管相当于严重渎职啊，负有重大管理责任! <!-- raw HTML omitted --></p>
-<p>那么为什么每次孙悟空来找阎王，阎王都毕恭毕敬的呢？ <!-- raw HTML omitted --></p>
-<p>以前觉得是阎王怕了孙悟空，所以因惧生敬。 <!-- raw HTML omitted --></p>
-<p>现在联想到群主的话，意识到阎王不但不会因失职而沮丧，并记恨孙悟空，反而会乐得鼻涕泡都出来。 <!-- raw HTML omitted --></p>
-<p>孙悟空就是「抢劫银行」的劫匪阿，自己有多少亏空和前科， <!-- raw HTML omitted -->
-有什么亲戚好友免除死期的，有什么用钱换阳寿的事，全部都可以算到孙悟空头上。 <!-- raw HTML omitted --></p>
-<p>有审计机构过来审查，我都可以说是被孙悟空涂掉的。 <!-- raw HTML omitted --></p>
-<p>有这么个冤大头，阎王自然开心得不行，可能阎王他父亲都没有对他这么好，在工作上这么关照他。 <!-- raw HTML omitted --></p>
-<h3 id="纵天马"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> 纵天马</h3>
-<p>在孙悟空在东海夺取了「定海神针」作「如意金箍棒」，大闹森罗殿，私改生死簿后，玉帝大为震惊，然后听从建议， <!-- raw HTML omitted -->
-招安了孙悟空，封为「弼马温」. <!-- raw HTML omitted --></p>
-<p>「弼马温」就是御马监正堂管事，手下还有监丞、监副、典簿、力士等大小官员不少人，管辖天马千匹, 所以是个管后勤的职位。 <!-- raw HTML omitted --></p>
-<p>原来孙悟空以为这是个「一品」大官，最后却在旁人口中知晓，这个是个未入流的小官，不禁大怒，把公案推倒，在天河放走了所有的天马。 <!-- raw HTML omitted --></p>
-<p>想来天马虽然名为天马，也不是以云雾为食的，想必也要有后勤草料供应，还有各种马具，马廊等配套设施。 <!-- raw HTML omitted --></p>
-<p>现在孙悟空把天马都放了，那么属下的亏空，上下游的贪墨，又可以把锅栽在孙悟空头上了。 <!-- raw HTML omitted --></p>
-<p>虽然我们中饱私囊，1000匹天马的财政拨款，贪了900匹，实际只有100匹，但是你孙悟空把马都放了，我们就咬死说马就是有1000匹的。 <!-- raw HTML omitted --></p>
-<p>好比粮仓主管离任，对上官不满，放火把粮仓烧了，不管里面是陈米，沙土还是精米，下属一概都说是精米，那都是主管的责任了。 <!-- raw HTML omitted --></p>
-<h3 id="关系"><!-- raw HTML omitted -->2.4<!-- raw HTML omitted --> 关系</h3>
-<p>唐僧，转世前为金蝉子，如来佛祖的二弟子，因犯错被贬，转世成为唐僧, 要通过取真经，重新成佛，回来佛祖身边。 <!-- raw HTML omitted --></p>
-<p>也就是说，取经队伍里面，带头那个是如来董事长的亲信秘书，和董事长关系密切。 <!-- raw HTML omitted --></p>
-<p>而取经也变成了一件在大领导「玉帝」CEO和如来董事长那挂上号的，核心KPI项目了. <!-- raw HTML omitted --></p>
-<p>那么当孙悟空来求助的时候，也就变成了一件可以在CEO和董事长那里展示自己手段的事了。 <!-- raw HTML omitted --></p>
-<p>既能露脸，也能赚credit. <!-- raw HTML omitted --></p>
-<p>如果能帮上忙，那么就可以在领导面前露把脸，展示下自己的本领； <!-- raw HTML omitted -->
-如果帮不上忙，也没什么大碍，你看孙悟空他业务能力多强，他都求助，肯定不是啥容易啃的骨头，我处理不成也很正常。 <!-- raw HTML omitted --></p>
-<p>反正有事没事去老板面前刷刷脸总是好的，你没看到，领导叫踢球，群里一群人响应么？ <!-- raw HTML omitted --></p>
-<p>你觉得他们是想踢球呢，还是想和领导踢球呢？ <!-- raw HTML omitted --></p>
-<h2 id="总结"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 总结</h2>
-<p>经典之所以能经得起时间的洗礼，历久弥新，大抵是因为总有人能拿书里的事，说自己的话吧。 <!-- raw HTML omitted --></p>
-<hr>
-<h3 id="历史文章精选"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 历史文章精选</h3>
-<ul>
-<li>旅加经历 <!-- raw HTML omitted -->
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E8%BF%99%E4%BA%9B%E5%B9%B4%E8%B5%B0%E8%BF%87%E7%9A%84%E8%B7%AF_%E4%BB%8E%E5%B9%BF%E5%B7%9E%E5%88%B0%E6%B8%A9%E5%93%A5%E5%8D%8E/">这些年走过的路：从广州到温哥华</a> <!-- raw HTML omitted --></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B9%8B%E5%88%9D%E4%BD%93%E9%AA%8C/">加拿大之初体验</a> <!-- raw HTML omitted --></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E5%8A%A0%E6%8B%BF%E5%A4%A7%E8%80%83%E9%A9%BE%E7%85%A7%E7%9A%84%E7%BB%8F%E5%8E%86/">加拿大考驾照的经历</a> <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>历史与思考 <!-- raw HTML omitted -->
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E7%BD%AE%E8%BA%AB%E4%BA%8B%E5%86%85/">为什么梦想买不起，故乡回不去</a>(和谐版本, 原版本<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>) <!-- raw HTML omitted --></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%B6%A6%E5%90%91%E4%BD%95%E6%96%B9_%E4%B8%8D%E5%AE%8C%E5%85%A8%E8%82%89%E8%BA%AB%E7%BF%BB%E5%A2%99%E6%8C%87%E5%8C%97/">润向何方：不完全肉身翻墙指北</a> <!-- raw HTML omitted --></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E7%9A%87%E5%B8%9D%E4%B8%8E%E5%AE%98%E5%83%9A/">皇帝与官僚：「上面」与「下面」</a> <!-- raw HTML omitted --></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2021/%E5%90%9B%E4%B8%BB%E8%AE%BA/">《君主论》：所谓「帝王心术」</a> <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>工具与分享 <!-- raw HTML omitted -->
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E5%86%99%E4%BD%9C%E6%B5%81/">我的写作流</a> <!-- raw HTML omitted --></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E7%94%BB%E5%9B%BE%E6%B5%81/">我的画图流：画图工具与技巧分享</a> <!-- raw HTML omitted --></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E6%90%9C%E7%B4%A2%E6%B5%81/">我的搜索流：高效搜索经验分享</a> <!-- raw HTML omitted --></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2022/feynman_technique/">最好的学习方式：费曼学习法(Feynman Technique)</a> <!-- raw HTML omitted --></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2021/%E7%B3%BB%E7%BB%9F%E6%80%9D%E8%80%83/">系统思考：既见树木，又见森林</a> <!-- raw HTML omitted --></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/gmail%E5%9C%B0%E5%9D%80%E7%9A%84%E9%9A%90%E8%97%8F%E6%8A%80%E5%B7%A7/">两个鲜为人知的Gmail地址技巧</a> <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li>职场与思考 <!-- raw HTML omitted -->
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E4%BB%8E%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E7%A6%BB%E7%BA%BF_%E6%88%91%E5%B8%A6%E8%B5%B0%E4%BA%86%E4%BB%80%E4%B9%88/">那些年，我从微信支付学到的东西</a> <!-- raw HTML omitted --></li>
-</ul>
-</li>
-</ul>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>: <a href="http://ramsayleung.github.io/zh/post/2023/%E7%BD%AE%E8%BA%AB%E4%BA%8B%E5%86%85/">http://ramsayleung.github.io/zh/post/2023/%E7%BD%AE%E8%BA%AB%E4%BA%8B%E5%86%85/</a>  <!-- raw HTML omitted -->&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>
 ]]></content:encoded>
     </item>
     

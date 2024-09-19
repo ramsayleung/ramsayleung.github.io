@@ -2,14 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://ramsayleung.github.io/zh/tags/c&#43;&#43;/</loc>
-    <lastmod>2024-08-30T23:00:10-07:00</lastmod>
-  </url><url>
-    <loc>https://ramsayleung.github.io/zh/categories/c&#43;&#43;/</loc>
-    <lastmod>2024-08-30T23:00:10-07:00</lastmod>
-  </url><url>
     <loc>https://ramsayleung.github.io/zh/categories/</loc>
-    <lastmod>2024-08-30T23:00:10-07:00</lastmod>
+    <lastmod>2024-09-18T23:53:02-07:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -22,7 +16,7 @@
                 />
   </url><url>
     <loc>https://ramsayleung.github.io/zh/post/</loc>
-    <lastmod>2024-08-30T23:00:10-07:00</lastmod>
+    <lastmod>2024-09-18T23:53:02-07:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -35,7 +29,7 @@
                 />
   </url><url>
     <loc>https://ramsayleung.github.io/zh/tags/rust/</loc>
-    <lastmod>2024-08-30T23:00:10-07:00</lastmod>
+    <lastmod>2024-09-18T23:53:02-07:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -48,7 +42,7 @@
                 />
   </url><url>
     <loc>https://ramsayleung.github.io/zh/categories/rust/</loc>
-    <lastmod>2024-08-30T23:00:10-07:00</lastmod>
+    <lastmod>2024-09-18T23:53:02-07:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -60,11 +54,8 @@
                 href="https://ramsayleung.github.io/zh/categories/rust/"
                 />
   </url><url>
-    <loc>https://ramsayleung.github.io/zh/post/2024/rust%E6%A8%A1%E6%8B%9Fc&#43;&#43;%E7%9A%84%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD/</loc>
-    <lastmod>2024-08-30T23:00:10-07:00</lastmod>
-  </url><url>
     <loc>https://ramsayleung.github.io/zh/tags/</loc>
-    <lastmod>2024-08-30T23:00:10-07:00</lastmod>
+    <lastmod>2024-09-18T23:53:02-07:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -76,8 +67,11 @@
                 href="https://ramsayleung.github.io/zh/tags/"
                 />
   </url><url>
+    <loc>https://ramsayleung.github.io/zh/post/2024/%E4%BD%BF%E7%94%A8rust%E7%9A%84iterator%E8%A7%A3%E5%86%B3fizzbuzz%E9%97%AE%E9%A2%98/</loc>
+    <lastmod>2024-09-18T23:53:02-07:00</lastmod>
+  </url><url>
     <loc>https://ramsayleung.github.io/zh/</loc>
-    <lastmod>2024-08-30T23:00:10-07:00</lastmod>
+    <lastmod>2024-09-18T23:53:02-07:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -88,6 +82,15 @@
                 hreflang="zh"
                 href="https://ramsayleung.github.io/zh/"
                 />
+  </url><url>
+    <loc>https://ramsayleung.github.io/zh/tags/c&#43;&#43;/</loc>
+    <lastmod>2024-08-30T23:00:10-07:00</lastmod>
+  </url><url>
+    <loc>https://ramsayleung.github.io/zh/categories/c&#43;&#43;/</loc>
+    <lastmod>2024-08-30T23:00:10-07:00</lastmod>
+  </url><url>
+    <loc>https://ramsayleung.github.io/zh/post/2024/rust%E6%A8%A1%E6%8B%9Fc&#43;&#43;%E7%9A%84%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD/</loc>
+    <lastmod>2024-08-30T23:00:10-07:00</lastmod>
   </url><url>
     <loc>https://ramsayleung.github.io/zh/post/2024/%E8%B5%B0%E5%87%BA%E6%88%88%E5%A3%81/</loc>
     <lastmod>2024-08-25T23:37:49-07:00</lastmod>
