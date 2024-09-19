@@ -81,7 +81,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// ... and now we&#39;re done
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="nb">None</span><span class="p">,</span><span class="w"> </span><span class="n">four_fours</span><span class="p">.</span><span class="n">next</span><span class="p">());</span><span class="w">
 </span></span></span></code></pre></div><h3 id="once"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> once</h3>
-<p>有生成无限个元素的 <code>iterator=， 自然就有只生成一个元素的 =iterator</code>, 那就是 <code>once()</code>, 这个 <code>iterator</code> 只会返回一个指定的元素。 <!-- raw HTML omitted --></p>
+<p>有生成无限个元素的 <code>iterator</code>, 自然就有只生成一个元素的 <code>iterator</code>, 那就是 <code>once()</code>, 这个 <code>iterator</code> 只会返回一个指定的元素。 <!-- raw HTML omitted --></p>
 <p>所以 <code>once(&quot;fizz&quot;)</code> 就是创建一个只会返回一个 <code>&quot;fizz&quot;</code> 的 <code>iterator</code> : <!-- raw HTML omitted --></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">iter</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -145,7 +145,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">fizz</span><span class="p">,</span><span class="w"> </span><span class="n">buzz</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">format!</span><span class="p">(</span><span class="s">&#34;{}{}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">fizz</span><span class="p">,</span><span class="w"> </span><span class="n">buzz</span><span class="p">),</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">})</span><span class="w">
 </span></span></span></code></pre></div><p>最核心的是Rust的 pattern matching, 用来匹配不同的值, <code>(i, (&quot;&quot;, &quot;&quot;))</code> 就是匹配所有 fizz 和 buzz为 <code>(&quot;&quot;, &quot;&quot;)</code> 的值，什么情况下 <code>fizz</code> 和 <code>buzz</code> 会都为 &quot;&quot; 呢，无法整除3以及无法整除5的时候，那么就直接返回数字 <code>i</code>; <!-- raw HTML omitted --></p>
-<p><code>(_, (fizz,buzz))</code>, <code>_</code> 就是通配符，就是匹配掉所有其他的情况，无论是 fizz = &ldquo;&rdquo;, fizz = &ldquo;fizz&rdquo;, buzz <code>&quot;&quot; 或者 buzz = &quot;buzz&quot;, 都把返回 &quot;{fizz}{buzz}&quot;, 也就是 =(_, (fizz,buzz))</code> 匹配了4种情况. <!-- raw HTML omitted --></p>
+<p><code>(_, (fizz,buzz))</code>, <code>_</code> 就是通配符，就是匹配掉所有其他的情况，无论是 fizz = &ldquo;&rdquo;, fizz = &ldquo;fizz&rdquo;, buzz = &quot;&quot; 或者 buzz = &ldquo;buzz&rdquo;, 都把返回 <code>&quot;{fizz}{buzz}&quot;</code>, 也就是 <code>(_, (fizz,buzz))</code> 匹配了4种情况. <!-- raw HTML omitted --></p>
 <p><code>map</code> 迭代器返回的是一个 String, 最后再加 String 打印出来. <!-- raw HTML omitted --></p>
 <p>同样是解决问题，这个版本的解法肯定是看起来「高大上」得多，说不定能让面试官眼前一亮，又或者是把自己绕晕。 <!-- raw HTML omitted --></p>
 <h2 id="zero-cost-abstraction"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Zero Cost Abstraction</h2>
