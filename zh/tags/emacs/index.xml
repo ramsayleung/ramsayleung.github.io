@@ -20,7 +20,7 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2023/emacs%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_%E4%BD%BF%E7%94%A8eww%E6%89%93%E5%BC%80%E5%9C%A8%E7%BA%BForg-mode%E6%96%87%E6%A1%A3/</guid>
       <description>1 技巧 对于使用org-mode 格式的文本，例如Emacs官方 tree-sitter 的使用教程 在线阅读不是很易读，相当于人脑解析 org-mode. 我的个人习惯是使用 eww 浏览器来阅读</description>
-      <content:encoded><![CDATA[<h2 id="技巧"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 技巧</h2>
+      <content:encoded><![CDATA[<h2 id="技巧"><span class="section-num">1</span> 技巧</h2>
 <p>对于使用org-mode 格式的文本，例如Emacs官方<a href="https://git.savannah.gnu.org/cgit/emacs.git/plain/admin/notes/tree-sitter/starter-guide?h=feature/tree-sitter"> tree-sitter 的使用教程</a></p>
 <p>在线阅读不是很易读，相当于人脑解析 <code>org-mode</code>. 我的个人习惯是使用 <code>eww</code> 浏览器来阅读:</p>
 <figure><a href="/ox-hugo/tree-sitter-doc.png">
@@ -46,7 +46,7 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2023/%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_dired%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8D/</guid>
       <description>1 技巧 分享一下平时使用 dired-mode 批量修改文件名的技巧: C-x C-f 指定的文件目录，进入 dired-mode C-x C-q dired-toggle-read-only: Edit Dired buffer with Wdired. 批量修改，手段有 使用 query-replace 批量修改文件名 使用evil的多</description>
-      <content:encoded><![CDATA[<h2 id="技巧"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 技巧</h2>
+      <content:encoded><![CDATA[<h2 id="技巧"><span class="section-num">1</span> 技巧</h2>
 <p>分享一下平时使用 <code>dired-mode</code> 批量修改文件名的技巧:</p>
 <ol>
 <li><code>C-x C-f</code> 指定的文件目录，进入 <code>dired-mode</code></li>
@@ -63,14 +63,14 @@
 <figure><a href="/ox-hugo/dired_rename_multi_files.gif">
     <img loading="lazy" src="/ox-hugo/dired_rename_multi_files.gif"
          alt="Figure 1: 使用 rectangle-command 进行批量修改"/> </a><figcaption>
-            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->使用 <code>rectangle-command</code> 进行批量修改</p>
+            <p><span class="figure-number">Figure 1: </span>使用 <code>rectangle-command</code> 进行批量修改</p>
         </figcaption>
 </figure>
 
 <figure><a href="/ox-hugo/dired_rename_multi_files_2.gif">
     <img loading="lazy" src="/ox-hugo/dired_rename_multi_files_2.gif"
          alt="Figure 2: 使用 evil的多行编辑模式进行批量修改"/> </a><figcaption>
-            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->使用 evil的多行编辑模式进行批量修改</p>
+            <p><span class="figure-number">Figure 2: </span>使用 evil的多行编辑模式进行批量修改</p>
         </figcaption>
 </figure>
 
@@ -84,29 +84,29 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2017/search_eshell_history_like_fzf/</guid>
       <description>1 前言 目标: 在Eshell中像在bash/zsh中使用fzf那般搜索历史命令 2 fzf 我的主力Shell 是Eshell, 但是平时我也会用Zsh, 而</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>目标: 在<code>Eshell</code>中像在bash/zsh中使用<code>fzf</code>那般搜索历史命令</p>
-<h2 id="fzf"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> fzf</h2>
+<h2 id="fzf"><span class="section-num">2</span> fzf</h2>
 <p>我的主力Shell 是Eshell, 但是平时我也会用Zsh, 而<a href="https://github.com/junegunn/fzf">fzf</a> 是一个非常好用的命令行工具，用了<code>fzf</code>搜索历史命令:</p>
 <figure>
     <img loading="lazy" src="https://i.imgur.com/pPMxauw.gif"
          alt="Figure 1: fzf"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->fzf</p>
+            <p><span class="figure-number">Figure 1: </span>fzf</p>
         </figcaption>
 </figure>
 
-<h2 id="eshell"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Eshell</h2>
+<h2 id="eshell"><span class="section-num">3</span> Eshell</h2>
 <p>我日常的操作基本都是在 Eshell 上面进行的，不过 Eshell 是没办法直接像 Bash 那样调用 <code>fzf</code>来查找命令历史的，所以我希望把这个功能迁移到到Eshell 上面来。</p>
 <p>我在 Emacs 使用的补全框架是 <code>Ivy/Counsel</code>,它有一个 <code>counsel-esh-history</code>的命令可以使用 <code>Ivy</code> 来搜索命令，但是没办法使用用户已经输入的内容来过滤命令，所以我就在自己折腾了一个</p>
 <p><code>counsel-esh-history</code> 命令。效果如下：</p>
 <figure>
     <img loading="lazy" src="https://i.imgur.com/3tvGDzW.gif"
          alt="Figure 2: 感觉很不错嘛 :)"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->感觉很不错嘛 :)</p>
+            <p><span class="figure-number">Figure 2: </span>感觉很不错嘛 :)</p>
         </figcaption>
 </figure>
 
-<h2 id="源代码"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 源代码</h2>
+<h2 id="源代码"><span class="section-num">4</span> 源代码</h2>
 <p>得益于 <code>Ivy</code>强大的内置函数, 功能实现起来相当便利，完整代码如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-lisp" data-lang="lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">samray/esh-history</span> <span class="p">()</span>
 </span></span><span class="line"><span class="cl">  <span class="s">&#34;Interactive search eshell history.&#34;</span>
@@ -130,7 +130,7 @@
 </span></span><span class="line"><span class="cl">  <span class="p">)</span>
 </span></span></code></pre></div><p>代码不是很复杂, 主要功能是获取用户输入的命令, 然后把所有的历史命令读取出来,最后使用<code>ivy-read</code>内置的<code>ivy-completion-in-region-action</code>功能, 用用户的输入的命令与历史命令进行匹配, 由用户选择最终的命令.</p>
 <p><code>ivy-read</code>是Emacs内置<code>completing-read</code>的函数的强化, 关于<code>ivy-read</code>具体用法可以参考文档<a href="https://oremacs.com/swiper/#getting-started">ivy-read</a>.</p>
-<h2 id="总结"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 总结</h2>
+<h2 id="总结"><span class="section-num">5</span> 总结</h2>
 <p>最后, 我也顺便把代码分享到 <a href="https://www.reddit.com/r/emacs/comments/7k54px/snippet_share_make_eshell_search_command_history/">Emacs社区</a>, 而 <a href="https://github.com/manateelazycat">manateelazycat</a>也把这段代码的功能加入到<a href="https://github.com/manateelazycat/aweshell/commit/ecaddac98b87f881910dbee8b51a98f00b6d9d5d">aweshell</a>, Oh yeah !</p>
 ]]></content:encoded>
     </item>
@@ -142,7 +142,7 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2017/tweak_eshell_prompt/</guid>
       <description>Tweak with Emacs shell prompt</description>
-      <content:encoded><![CDATA[<h2 id="发现帅气的提示符"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 发现帅气的提示符</h2>
+      <content:encoded><![CDATA[<h2 id="发现帅气的提示符"><span class="section-num">1</span> 发现帅气的提示符</h2>
 <p>近日，笔者在浏览 <a href="https://www.reddit.com/r/emacs/comments/6f0rkz/my_fancy_eshell_prompt/">Reddit</a> 的时候，发现了一位 Emacs 用户把他的 Eshell 提示符修改得很帅，如图：</p>
 <p><a href="/ox-hugo/eshell_prompt.png"><img loading="lazy" src="/ox-hugo/eshell_prompt.png" alt=""  />
 </a>
@@ -163,7 +163,7 @@
 </span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">=</span> <span class="p">(</span><span class="nf">user-uid</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="s">&#34; # &#34;</span> <span class="s">&#34; $ &#34;</span><span class="p">)</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">	 <span class="p">)))</span>
 </span></span></code></pre></div><p>效果自然是很 sexy.</p>
-<h2 id="与原有提示符冲突"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 与原有提示符冲突</h2>
+<h2 id="与原有提示符冲突"><span class="section-num">2</span> 与原有提示符冲突</h2>
 <p>但是我原来使用的 <a href="https://github.com/kaihaosw/eshell-prompt-extras">eshell-prompt-extra</a> 的效果就被覆盖了。而 <code>eshell_prompt_extra</code> 可以提供的额外信息非常多，包括：git, python virtualenv, 以及远程登录时的主机信息，如图：</p>
 <figure><a href="/ox-hugo/eshell_extra_prompt.png">
     <img loading="lazy" src="/ox-hugo/eshell_extra_prompt.png"/> </a>
@@ -171,7 +171,7 @@
 
 <p>如果用上这个 sexy 的提示符，eshell-extra-prompt 的额外的信息就不能显示，感觉好亏:(</p>
 <p>鱼和熊掌我都想要，似乎太贪心了？怎么办，自己去修改 <code>eshell_prompt_extra</code> 的<a href="https://github.com/kaihaosw/eshell-prompt-extras/blob/master/eshell-prompt-extras.el">源码</a> :).</p>
-<h2 id="折腾源码"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 折腾源码</h2>
+<h2 id="折腾源码"><span class="section-num">3</span> 折腾源码</h2>
 <p><code>eshell_prompt_extra</code> 这个包注释加上全部代码也只是 400 行，代码也写得很清晰. 其中大部份是辅助函数，而 Eshell 的提示符效果是通过两个 eshell-theme 函数来实现的。use-package 的配置：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">eshell-prompt-extras</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:ensure</span> <span class="no">t</span>
@@ -220,7 +220,7 @@
 </span></span><span class="line"><span class="cl">   <span class="s">&#34; &#34;</span><span class="p">))</span>
 </span></span></code></pre></div><p>代码主要逻辑是调用之前定义的辅助函数，判断是否需要显示 git, python, 远程主机等信息，然后对相应的提示符进行拼接。</p>
 <p>而其中出现得比较频繁的 <code>epe-colorize-with-face</code> 就是作者定义的一个宏(macro), 用来显示字符串以及对应的 face(其实就是不同的颜色啦). 看懂了代码就好办了，现在就可以自己添加一个 Eshell 主题。</p>
-<h3 id="定义所需的-face"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 定义所需的 face</h3>
+<h3 id="定义所需的-face"><span class="section-num">3.1</span> 定义所需的 face</h3>
 <p>因为我需要显示的 face(颜色), <code>eshell-extra-prompt</code> 并没有定义，所以就只好自己动手啦：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defface</span> <span class="nv">epe-pipeline-delimiter-face</span>
 </span></span><span class="line"><span class="cl">  <span class="o">&#39;</span><span class="p">((</span><span class="no">t</span> <span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
@@ -290,7 +290,7 @@
 </span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">=</span> <span class="p">(</span><span class="nf">user-uid</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="s">&#34;#&#34;</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">			   <span class="ss">&#39;epe-sudo-symbol-face</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">   <span class="s">&#34; &#34;</span><span class="p">))</span>
-</span></span></code></pre></div><h2 id="总结"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 总结</h2>
+</span></span></code></pre></div><h2 id="总结"><span class="section-num">4</span> 总结</h2>
 <p>这样一个新的 Eshell 主题就完工了，然后我给 <code>eshell-extra-prompt</code> 发了一个<a href="https://github.com/kaihaosw/eshell-prompt-extras/pull/16">Pull Request</a>, 最终效果如下：</p>
 <figure><a href="/ox-hugo/epe.png">
     <img loading="lazy" src="/ox-hugo/epe.png"/> </a>
@@ -339,7 +339,7 @@
 <figure>
     <img loading="lazy" src="http://i.imgur.com/g1Oz9JY.png"
          alt="Figure 1: 补全结果总是显示在同一个窗口"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->补全结果总是显示在同一个窗口</p>
+            <p><span class="figure-number">Figure 1: </span>补全结果总是显示在同一个窗口</p>
         </figcaption>
 </figure>
 
@@ -506,13 +506,13 @@ Counsel 也只有7500 行代码</p>
 <p>Magit 现在还是处于活跃的开发中。在2013年12月，增加了很多很多新的很有用特性的一次 release, 让Magit 变得比以前更强大了，所以本教程是基于比较新的Magit 版本的，并且 假定你也已经安装了新的版本</p>
 <p>如果想安装处于 <code>master</code> 分支的Magit,我建议你使用 <code>Melpa</code> 来安装；此外你也可以选择直接拉取<a href="https://github.com/magit/magit">magit github</a> 仓库的最新版本，然后按照README 上面的指导来构建 <code>magit</code></p>
 <p>这是我Magit 教程的第一部分。这部分会介绍状态窗口(status window); 已暂存和未暂存的项目 (staging and unstagin item);已经提交的更改 (committing changes) 和查看历史提交 (history view)</p>
-<h2 id="getting-started"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Getting Started</h2>
+<h2 id="getting-started"><span class="section-num">1</span> Getting Started</h2>
 <p>首先：Magit 并没有隐藏git 的复杂性，所以，如果你想高效地使用Magit ,你最好清楚了解git 究竟做了哪些工作。</p>
 <p>事实上，我更原意把Magit 当作一个取代了git 枯燥的纯命令行操作的工具，它也表现得出乎意料地好。</p>
 <p>你可以通过 <code>M-x magit-status</code> 来使用Magit,该命令会打开一个窗口(如果你的缓冲区 所在的目录不是一个git 项目，Magit 会提示你进入一个git项目的目录),然后展示Magit 当前的状态。</p>
 <p>你是通过 <code>magit-status</code> 这个接口来使用Magit 的。此外，如果你是使用 Emacs VC的，你需要知道的是，Magit是没有集成到Emacs VC(Version Control)的 抽象层。</p>
 <p>虽然你没法在VC 使用Magit,不过你还是可以在大多数版本控制工具使用Magit 的，Magit 为这些版本控制工具都提供了统一的接口；你如果想调用Magit,你只需要 <code>M-x magit-status</code></p>
-<h2 id="the-magit-status"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> The Magit Status</h2>
+<h2 id="the-magit-status"><span class="section-num">2</span> The Magit Status</h2>
 <figure>
     <img loading="lazy" src="https://www.masteringemacs.org/static/uploads/Screenshot-from-2013-12-06-114511.png"/> 
 </figure>
@@ -525,7 +525,7 @@ Counsel 也只有7500 行代码</p>
 <p>Magit 之前的稳定版本在帮助用户更好使用Magit这方面做得略有不足，所以在最新的版本有了相应的改进，你可以通过按下 ~?&lt;/kbd&gt; 来显示一系列带注解说明的操作。我觉得在最开始的时候，Magit 真的很难用，因为我总是在「茫茫」的菜单选项中迷失，好不容易才能找到我想要的操作。</p>
 <p>即使是现在，也并不是所有的操作都有注解说明了；有一些命令
 (对于我的工作流来说很重要的命令)依然是没有说明的，特别是用来重新定位的 <code>E</code>.</p>
-<h2 id="staging-and-unstaging-items"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Staging and Unstaging Items</h2>
+<h2 id="staging-and-unstaging-items"><span class="section-num">3</span> Staging and Unstaging Items</h2>
 <p>把你的文件放到git下面是你经常需要完成工作之一，Magit 有一系列的按键绑定和工具可以帮助你更好地完成工作。</p>
 <p>Magit 操作不仅可以暂存文件，还可以暂存在 <strong>diff</strong> 中选定 的代码块。</p>
 <p>Magit&quot;杀手级&quot;特性之一就是它使用不同的等级来显示相关的信息。Magit 可以让你通过 <code>tab</code> 展开或者折叠已经暂存或者未暂存文件。</p>
@@ -557,7 +557,7 @@ Counsel 也只有7500 行代码</p>
 <hr>
 <p>有时候你对某些修改并不在意，你也不关心这部分修改是否已经提交；你可以像上面的暂存(撤销暂存)操作一样，通过按下按键 <code>K</code> 来忽略选定的代码块和文件，并且从你的电脑删除未提交到暂存区(untracked)的文件；</p>
 <p>这个命令可以比暂存(撤销暂存)命令完成更多的操作，例如，删除已保存的文件或目录(stash)</p>
-<h2 id="committing-changes"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Committing Changes</h2>
+<h2 id="committing-changes"><span class="section-num">4</span> Committing Changes</h2>
 <p>如果你想打开提交菜单，只需按下 <code>c</code>,然后你就会看到琳罗满目的选项，不过大部份选项 你都是用不上的了。你真正有用的操作，不仅可以让你提交已暂存的修改，还可以完成更多的任务：</p>
 <ul>
 <li>你可以扩展(extend <code>e</code>) <em>HEAD</em> 所指向的提交</li>
@@ -570,7 +570,7 @@ Counsel 也只有7500 行代码</p>
 <p>重写可以重写你的提交信息但是无需提交你已暂存的修改；如果你不小心按错了选项，想重写你的提交信息，<em>重写</em> 选项就是你最好的选择</p>
 <p>如果你想在最新一次提交下创建一个 <code>fixup</code> 或者 <code>squash</code> 提交的话，使用修整或压缩命令 可以重整或者 <code>--(自动压缩)autosquash</code> 最新一次提交。</p>
 <p>如果你不会去重写你的git历史或者你未使用过重整，你可能觉得这两个命令不是很有用</p>
-<h2 id="logging"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> Logging</h2>
+<h2 id="logging"><span class="section-num">5</span> Logging</h2>
 <figure>
     <img loading="lazy" src="https://www.masteringemacs.org/static/uploads/Screenshot-from-2013-12-06-142317.png"/> 
 </figure>
@@ -594,7 +594,7 @@ Counsel 也只有7500 行代码</p>
 </ul>
 <p>需要注意的是：即使你关闭了日志的窗口，标记的命令还是会继续作用的；标记是非常有用的工具，但是你很容易忘记你是否曾经作过标记。如果你在magit 使用 <code>M-n</code> 或者 <code>N-p</code> 向上或者向下浏览日志，
 maigt 会自动为你在另外一个窗口显示提交信息</p>
-<h2 id="conclusion"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> Conclusion</h2>
+<h2 id="conclusion"><span class="section-num">6</span> Conclusion</h2>
 <p>对于有经验的Git 用户来说，Magit 是一个非常好的工具；此外，如果你是Git 的新手， Magit可以帮助你了解Git 是怎么工作的，但是它永远不会教你使用Git.</p>
 <p>在我看来，阻碍 你使用Magit 最大的障碍就是Magit缺乏对选项的描述说明；即使Magit 包含了成千上万 Git的选项，参数和操作，但是它并没有教你如何找到并使用这些命令。</p>
 <p>我发现Git 的命令行真的无可替代(不是因为我喜欢git 的命令行我才这么说，事实是它真的很棒)因为我 想要完成的操作真的隐藏得很深，没有那么容易在Magit找到。</p>
@@ -619,7 +619,7 @@ maigt 会自动为你在另外一个窗口显示提交信息</p>
 <p>之前一位 Windows 用户看到我在 Shell 下面的操作，他很奇怪，觉得明明已经有图形化界面，为什么还要用这种命令行呢，直接用鼠标点击不就很好了么。</p>
 <p>我觉得很难直接跟他解释，因为他没有用过Linux/Unix,完全不熟悉命令行，不知道其强大之处，其高效率是图形化界面完全无法比拟的(当然，命令行的学习成本和学习曲线肯定比图型化界面高), So I live in terminal.</p>
 <p>而今天我要介绍的神器 fasd 就是可以让命令行操作变得更加高效</p>
-<h2 id="fasd"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Fasd</h2>
+<h2 id="fasd"><span class="section-num">1</span> Fasd</h2>
 <p>在 Shell 下面有非常多的命令操作是与文件和目录相关的，如果你要进入到另外一个目 录你可以使用相对或者绝对路径来访问该目录，但是如果这是一个与当前目录不相关的目 录你就只能通过绝对路径来访问。</p>
 <p>以我自己的目录为例，当前目录是 <strong><em>home/samray</em>.emacs.d/elisp/</strong> ,我希望访问 <strong>Document</strong> 目录下一个的子目录 <strong>Python</strong>, 我可以通过下面的命令来访问：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> ~/Document/Programming/Python
@@ -629,7 +629,7 @@ maigt 会自动为你在另外一个窗口显示提交信息</p>
 <hr>
 <p>Fasd以访问的频繁程度和最近是否有访问对文件和目录分配优先级，然后通过判断已访问的文件以及其优先级来切换目录或者打开文件，所以如果你之前已经访问过某个目录.</p>
 <p>那么 你很容易就可以切换到那个目录</p>
-<h3 id="常用选项"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> 常用选项</h3>
+<h3 id="常用选项"><span class="section-num">1.1</span> 常用选项</h3>
 <ul>
 <li>
 <p><strong>-a(any)</strong>: 匹配文件和目录</p>
@@ -664,12 +664,12 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">vim <span class="sb">`</span>f rc conf<span class="sb">`</span>
 </span></span></code></pre></div></li>
 </ul>
-<h3 id="例子"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> 例子</h3>
+<h3 id="例子"><span class="section-num">1.2</span> 例子</h3>
 <p>你可以将fasd 配合正则表达式使用，例如列举以 <em>py</em> 结尾的最近访问的文件：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">f py$
 </span></span></code></pre></div><p>又或者使用Emacs 打开最近频繁访问的文件 <em>bar</em></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">f -e emacs bar
-</span></span></code></pre></div><h2 id="fasd-plus-eshell"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Fasd +Eshell</h2>
+</span></span></code></pre></div><h2 id="fasd-plus-eshell"><span class="section-num">2</span> Fasd +Eshell</h2>
 <p>fasd 真的可以大幅度提高效率，但是我有点不太满意的是，我是个 Emacser, 我的操作基本是在 Emacs 里完成的，而我在 Emacs里面使用的 shell 是 Eshell,Eshell 似乎不能与 fasd 无缝结合，似乎可以折腾一下。</p>
 <hr>
 <p><strong>z</strong> 和 <strong>zz</strong> 命令是无法在Eshell 里面运行，因为 <strong>z</strong> 是 <strong>fasd_cd</strong> 的别名，而<strong>fasd_cd</strong> 是一个shell script 函数，Eshell无法运行该函数，代码如下：</p>
@@ -722,7 +722,7 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 </ul>
 </blockquote>
 <p>有时候，经常看到社区里面有人吐嘈Emacs 什么都好，就是启动时间太长了，其实是存在一些技巧来缩短加载时间的</p>
-<h2 id="技巧1"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 技巧1</h2>
+<h2 id="技巧1"><span class="section-num">1</span> 技巧1</h2>
 <p>在你的 <strong>.emacs</strong> 或者相应的初始化文件里面添加如下代码</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="err">#</span> <span class="nv">Increase</span> <span class="nv">the</span> <span class="nv">garbage</span> <span class="nv">collection</span> <span class="nv">threshold</span> <span class="nv">to</span> <span class="mi">128</span> <span class="nv">MB</span> <span class="nv">to</span> <span class="nv">ease</span> <span class="nv">startup</span>
 </span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">setq</span> <span class="nv">gc-cons-threshold</span> <span class="p">(</span><span class="nf">*</span> <span class="mi">128</span> <span class="mi">1024</span> <span class="mi">1024</span> <span class="p">))</span>
@@ -733,7 +733,7 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 </span></span><span class="line"><span class="cl"><span class="err">#</span> <span class="nv">init.el</span> <span class="nv">ends</span> <span class="nv">here</span>
 </span></span></code></pre></div><p><strong>gc-cons-threshold</strong> 指定了emacs 进行垃圾回收的阀值，默认值是 <strong>800000byte</strong>,实在是太小了，所以Emacs 会在启动期间进行非常多次的垃圾回收，启动时间自然长了。</p>
 <p>在加载完以后，再把 <strong>gc-cons-threshold</strong> 的值调低，当然，如果你的内存很大，也可以不改回来</p>
-<h2 id="技巧2"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 技巧2</h2>
+<h2 id="技巧2"><span class="section-num">2</span> 技巧2</h2>
 <p><strong>(let((file-name-hander-alist nil))init.file)</strong> 包裹(wrap)你的初始化文件，即：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">setq</span> <span class="nv">gc-cons-threshold</span> <span class="p">(</span><span class="nf">*</span> <span class="mi">500</span> <span class="mi">1024</span> <span class="mi">1024</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">let</span> <span class="p">((</span><span class="nv">file-name-handler-alist</span> <span class="no">nil</span><span class="p">))</span>
@@ -747,9 +747,9 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 </span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">provide</span> <span class="ss">&#39;init</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="c1">;;; init.el ends here</span>
 </span></span></code></pre></div><p>因为 <strong>file-name-handler-alist</strong> 的默认值是一些正则表达式，也就是说Emacs 在启动过程中加载el和elc 文件都会将文件名和正则表达式进行匹配</p>
-<h2 id="技巧3"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 技巧3</h2>
+<h2 id="技巧3"><span class="section-num">3</span> 技巧3</h2>
 <p>Emacs lisp 有一项auto-load 的技术，类似延迟加载，合理运用延迟，让笔者的Emacs启动加载时间减少一半，因为笔者用 <strong>use-package</strong> 这个macro,而 <strong>use-package</strong> 又集成了延迟加载的功能，所以笔者就直接拿自己的代码举例了</p>
-<h3 id="after"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> :after</h3>
+<h3 id="after"><span class="section-num">3.1</span> :after</h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="c1">;;; Export to twitter bootstrap</span>
 </span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">ox-twbs</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:after</span> <span class="nv">org</span>
@@ -757,7 +757,7 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 </span></span><span class="line"><span class="cl">  <span class="p">)</span>
 </span></span></code></pre></div><p><strong>:after</strong> 关键字的作用基本跟 <strong>with-eval-after-load</strong> 的作用是相同的，所以笔者所
 有类似的org-mode 插件包都会在org-mode 加载以后才会加载</p>
-<h3 id="commands"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> :commands</h3>
+<h3 id="commands"><span class="section-num">3.2</span> :commands</h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">avy</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:commands</span> <span class="p">(</span><span class="nv">avy-goto-char</span> <span class="nv">avy-goto-line</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:ensure</span> <span class="no">t</span><span class="p">)</span>
@@ -767,7 +767,7 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 and defers loading of the module until they are used</p>
 </blockquote>
 <p>也就是 <strong>:commands</strong> 关键字就创建了后面所接的命令的 <strong>autoloads</strong> 机制了</p>
-<h3 id="bind-mode"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> :bind :mode</h3>
+<h3 id="bind-mode"><span class="section-num">3.3</span> :bind :mode</h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">hi-lock</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:bind</span> <span class="p">((</span><span class="s">&#34;M-o l&#34;</span> <span class="o">.</span> <span class="nv">highlight-lines-matching-regexp</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="s">&#34;M-o r&#34;</span> <span class="o">.</span> <span class="nv">highlight-regexp</span><span class="p">)</span>
@@ -812,7 +812,7 @@ creating any autoloads for you.</p>
       
       <guid>https://ramsayleung.github.io/zh/post/2017/emacs_ipython/</guid>
       <description>Use Ipython in Emasc</description>
-      <content:encoded><![CDATA[<h2 id="emacs-ipython-输出错误"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Emacs Ipython 输出错误</h2>
+      <content:encoded><![CDATA[<h2 id="emacs-ipython-输出错误"><span class="section-num">1</span> Emacs Ipython 输出错误</h2>
 <p>在Emacs 运行 <strong>run-python</strong> 的时候，报错了，如下</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">[</span><span class="sc">?1</span><span class="nv">2l</span><span class="p">[</span><span class="sc">?2</span><span class="nv">5h2+2</span>
 </span></span><span class="line"><span class="cl">      <span class="p">[</span><span class="nv">J</span><span class="p">[</span><span class="sc">?7</span><span class="nv">h</span><span class="p">[</span><span class="sc">?1</span><span class="nv">2l</span><span class="p">[</span><span class="sc">?2</span><span class="nv">5h</span><span class="p">[</span><span class="sc">?2</span><span class="nv">004l</span><span class="p">[</span><span class="sc">?7</span><span class="nv">hOut</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">:</span> <span class="mi">4</span>
@@ -823,14 +823,14 @@ creating any autoloads for you.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">setq</span> <span class="nv">python-shell-interpreter</span> <span class="s">&#34;ipython&#34;</span>
 </span></span><span class="line"><span class="cl">      <span class="nv">python-shell-interpreter-args</span> <span class="s">&#34;--simple-prompt -i&#34;</span><span class="p">)</span>
 </span></span></code></pre></div><hr>
-<h3 id="update-2017-3-15"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> Update 2017-3-15</h3>
+<h3 id="update-2017-3-15"><span class="section-num">1.1</span> Update 2017-3-15</h3>
 <p>在添加了 <strong>&ndash;simple-promp -i</strong> 参数以后，虽说乱码的问题解决了，但是新的问题又出现了
 在Ipython 里面是没法无法输入多行内容的，即使是一个简单的循环，详情查看这条issue
 <a href="https://github.com/ipython/ipython/issues/9816">https://github.com/ipython/ipython/issues/9816</a>. 现在Ipython 开发社区还没有解决这个
 问题，所以现在的权宜之计就是使用 Ipython4,等到社区解决了这个问题在升级为 Ipython5</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pip install --force-reinstall <span class="nv">ipython</span><span class="o">==</span>4.2.1
-</span></span></code></pre></div><h2 id="emacs-ipython-的使用优化"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Emacs Ipython 的使用优化</h2>
-<h3 id="python-pop"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> python-pop</h3>
+</span></span></code></pre></div><h2 id="emacs-ipython-的使用优化"><span class="section-num">2</span> Emacs Ipython 的使用优化</h2>
+<h3 id="python-pop"><span class="section-num">2.1</span> python-pop</h3>
 <p>因为我之前使用Emacs的时候，是使用Spacemacs的配置的，但是后来觉得还是自己的
 配置用的更舒服，所以又切换回自己的配置，但是我还是很想念Spacemacs的一些绑定
 例如shell在底下弹出，或者是关闭，然后找到了<a href="https://github.com/kyagi/shell-pop-el">Shell-pop</a> 这package,就可以用回
@@ -857,7 +857,7 @@ shell-pop 的功能</p>
 </span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">end-of-buffer</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">evil-insert-state</span><span class="p">))))</span>
 </span></span></code></pre></div><p>如果没有使用Evil,可以把 **(evil-insert-state)**去掉</p>
-<h3 id="ipython-history"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> Ipython History</h3>
+<h3 id="ipython-history"><span class="section-num">2.2</span> Ipython History</h3>
 <p>我在普通的Shell使用Ipython的时候，很自然地使用上下方向键翻到上一条/下一条
 执行的命令，因为shell的使用习惯就是这样滴，但是在Emacs里面使用Ipython,上下
 方向键是去到上一行/下一行，就好像 vim 的 <strong>j</strong> <strong>k</strong>,如果要翻到上一条命令，快捷键

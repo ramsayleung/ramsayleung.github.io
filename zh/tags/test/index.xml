@@ -21,20 +21,20 @@
       <guid>https://ramsayleung.github.io/zh/post/2019/%E5%A6%82%E4%BD%95%E5%88%B7pojo%E7%B1%BB%E7%9A%84%E5%8F%98%E6%9B%B4%E8%A1%8C%E8%A6%86%E7%9B%96%E7%8E%87/</guid>
       <description>刷POJO类的变更行覆盖率 1 反射大法好 1.1 背景 众所周知，蚂蚁对代码质量要求很高，质量红线其中一项指标就是变更行覆盖率。如果你的变更行覆盖率没有</description>
       <content:encoded><![CDATA[<p>刷POJO类的变更行覆盖率</p>
-<h2 id="反射大法好"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 反射大法好</h2>
-<h3 id="背景"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> 背景</h3>
+<h2 id="反射大法好"><span class="section-num">1</span> 反射大法好</h2>
+<h3 id="背景"><span class="section-num">1.1</span> 背景</h3>
 <p>众所周知，蚂蚁对代码质量要求很高，质量红线其中一项指标就是变更行覆盖率。如果你的变更行覆盖率没有达到80%，测试同学是不会允许你上测试环境的（如果对此有所不满，测试同学就会过来捶你)。
 为了提高代码质量，这项要求倒是无可厚非，变更的代码逻辑需要充分的测试；但是如果我新增了一堆的POJO类，只是为了逻辑模型，变更行也会变得非常可观。为了覆盖这些POJO类的变更，你免不了会测试一堆的Getter/Setter
 方法：</p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191104102036.png"
          alt="Figure 1: getter/setter"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->getter/setter</p>
+            <p><span class="figure-number">Figure 1: </span>getter/setter</p>
         </figcaption>
 </figure>
 
 <p>(红色是指没有覆盖到的变更行)</p>
-<h3 id="反射"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> 反射</h3>
+<h3 id="反射"><span class="section-num">1.2</span> 反射</h3>
 <p>如果为了变更行覆盖了，我要写上一堆的Getter/Setter 方法测试用例，测试用例也只是单纯调用一下方法，未免过于痛苦，能否偷个懒，解决覆盖率问题，也不需手写这些没啥用的测试用例.</p>
 <p>但是一时间没有想到解决方法，我就一边写这些没啥用的用例，一边思考，突然发现了规律：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="n">SomeType</span> <span class="nf">getXxxx</span><span class="o">(){}</span>
@@ -92,7 +92,7 @@
 19/03/14 10:46:32 WARN util.ModelUtils: (,N,20190314104632257,-,,,-,-,-,)[调用方法, method: MerchantBusiModel.getLegalPerson]
 19/03/14 10:46:32 WARN util.ModelUtils: (,N,20190314104632257,-,,,-,-,-,)[调用方法, method: MerchantBusiModel.getPrincipalCertType]
 省略一大片类似的输出，省点篇幅
-</code></pre><h3 id="org-dot-reflections-dot-reflections"><!-- raw HTML omitted -->1.3<!-- raw HTML omitted --> org.reflections.Reflections</h3>
+</code></pre><h3 id="org-dot-reflections-dot-reflections"><span class="section-num">1.3</span> org.reflections.Reflections</h3>
 <p>通过反射，就很完美地解决了POJO类的变更行覆盖率问题了，反正POJO类都是Getter/Setter 方法，我的反射方法能把它们全覆盖上啦 (๑&gt;◡&lt;๑) .</p>
 <p>很快，我就遇到了另外的一个问题:
 像<code>MerchantBusiModel</code>这样的Model类有十几二十个，难道每个Model我都需要写一个<code>XxxModelTest</code>的测试类么？也实在是太痛苦了，也太不优雅了(其实是我懒)，能不能自动把所有的Model类扫出来，然后循环执行每个Model的Getter/Setter方法呢？</p>
@@ -180,7 +180,7 @@
 </span></span><span class="line"><span class="cl">	<span class="o">}</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h3 id="总结"><!-- raw HTML omitted -->1.4<!-- raw HTML omitted --> 总结</h3>
+</span></span></code></pre></div><h3 id="总结"><span class="section-num">1.4</span> 总结</h3>
 <ol>
 <li>Reflections 包是真的强，有空要去看一下源码</li>
 <li>懒惰是程序员的第一生产力, 这话真不是我编的，是Perl 语言之父 Larry
@@ -201,7 +201,7 @@ Wall 说的</li>
       <description>an introduction about spock</description>
       <content:encoded><![CDATA[<p>因为需要编写 RESTful api 测试的缘故，重拾了 Spock 这个适用于 Groovy/Java 的测试
 框架，顺便把以前写的一篇旧文整理了一下，权当重温。</p>
-<h2 id="关于-spock"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 关于 Spock</h2>
+<h2 id="关于-spock"><span class="section-num">1</span> 关于 Spock</h2>
 <p>Spock 是一个适用于 Java(Groovy) 的一个优雅并且全面的测试框架, 说 Spock 全面，是
 因为 Spock 集成了现有的 Java 测试库；至于为什么赞美 Spock 优雅，阅读完全文你就会
 有体会的了</p>
@@ -212,7 +212,7 @@ Wall 说的</li>
 <p>因为基于 Groovy, 使得 Spock 可以更容易地写出表达能力更强的测试用例。又因为它内置
 了 Junit Runner, 所以 Spock 兼容大部分的 IDE，测试工具，和持续集成服务器。接下来
 就介绍一下 Spock 的特性</p>
-<h2 id="spock-特性"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Spock 特性</h2>
+<h2 id="spock-特性"><span class="section-num">2</span> Spock 特性</h2>
 <ol>
 <li>内置支持 mocking stubbing，可以很容易地模拟复杂的类的行为</li>
 <li>Spock 实现了 BDD 范式(behavior-driven development)</li>
@@ -222,7 +222,7 @@ Wall 说的</li>
 <li>取长补短，吸收了现有框架的优点，并加以改进</li>
 <li>Spock 代码风格简短，易读，表达性强，扩展性强，还有更清晰显示 bug</li>
 </ol>
-<h2 id="为什么是-spock"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 为什么是 Spock</h2>
+<h2 id="为什么是-spock"><span class="section-num">3</span> 为什么是 Spock</h2>
 <p>Spock 似乎有很多不错的特性，但是为什么有 Junit 这个那么强大的测试框架, 还要去
 使用 Spock 呢? 甚至可以用 Spock 来代替 Junit 呢? 下面就用一些简单的例子来诠释
 一下Spock 的强大. 以一个简单的加法为例：</p>
@@ -261,8 +261,8 @@ Junit 的测试用例, 你会发现 Spock 的测试用例, 只需函数名, 就�
 但是 Spock 就很清晰地给出了答案。不难看出 Spock 的语法更加简洁, 优雅; 此外, 得
 益于 Spock 独特的命名方式，只需查看函数名字便可以了解测试用例的目的，无需额外
 的注释。而这只是 Spock 和 Junit 的一部分差异，其他的差异，接下来会继续说明。</p>
-<h2 id="spock-语法"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Spock 语法</h2>
-<h3 id="specification"><!-- raw HTML omitted -->4.1<!-- raw HTML omitted --> Specification</h3>
+<h2 id="spock-语法"><span class="section-num">4</span> Spock 语法</h2>
+<h3 id="specification"><span class="section-num">4.1</span> Specification</h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">MyFirstSpecification</span> <span class="n">extend</span> <span class="n">Specification</span><span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">//fields
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//fixture methods
@@ -271,16 +271,16 @@ Junit 的测试用例, 你会发现 Spock 的测试用例, 只需函数名, 就�
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">}</span>
 </span></span></code></pre></div><p>Specification 是指一个继承于 <strong>spock.lang.Specification</strong> 的一个 Groovy 类. 而
 Specification 的名字一般是跟系统或者业务逻辑有关的组合词，例如之前的AdderSpec</p>
-<h3 id="fields"><!-- raw HTML omitted -->4.2<!-- raw HTML omitted --> Fields</h3>
+<h3 id="fields"><span class="section-num">4.2</span> Fields</h3>
 <p>实例化一个类</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kt">def</span> <span class="n">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClassUnderSpecification</span><span class="o">()</span>
 </span></span><span class="line"><span class="cl"><span class="kt">def</span> <span class="n">coll</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Collaborator</span><span class="o">()</span>
-</span></span></code></pre></div><h3 id="feature-methods"><!-- raw HTML omitted -->4.3<!-- raw HTML omitted --> Feature Methods</h3>
+</span></span></code></pre></div><h3 id="feature-methods"><span class="section-num">4.3</span> Feature Methods</h3>
 <p>Feature Methods 指具体的测试用例方法</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kt">def</span> <span class="s2">&#34;pushing an element on the stack&#34;</span><span class="o">()</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">// blocks go here
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">}</span>
-</span></span></code></pre></div><h3 id="fixture-methods"><!-- raw HTML omitted -->4.4<!-- raw HTML omitted --> Fixture Methods</h3>
+</span></span></code></pre></div><h3 id="fixture-methods"><span class="section-num">4.4</span> Fixture Methods</h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kt">def</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{}</span>          <span class="c1">// run before every feature method
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">def</span> <span class="nf">cleanup</span><span class="o">()</span> <span class="o">{}</span>        <span class="c1">// run after every feature method
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">def</span> <span class="nf">setupSpec</span><span class="o">()</span> <span class="o">{}</span>     <span class="c1">// run before the first feature method
@@ -300,7 +300,7 @@ All fixture methods are optional.</p>
 
 <p>以上就是 Spock 的基本用法， 也只能说是中规中矩，难言惊艳。那么，接下来介绍的
 就是 Spock <strong>killer</strong> 级别的特性了</p>
-<h3 id="blocks"><!-- raw HTML omitted -->4.5<!-- raw HTML omitted --> Blocks</h3>
+<h3 id="blocks"><span class="section-num">4.5</span> Blocks</h3>
 <p>关于 Blocks 的用法， 这里引用官网的一段话</p>
 <blockquote>
 <p>Spock has built-in support for implementing each of the conceptual phases of a
@@ -315,17 +315,17 @@ cleanup, and where blocks</p>
 </figure>
 
 <p>下面就了解一下不同 Block 的功能</p>
-<h4 id="the-given-block"><!-- raw HTML omitted -->4.5.1<!-- raw HTML omitted --> The <strong>given</strong>: block</h4>
+<h4 id="the-given-block"><span class="section-num">4.5.1</span> The <strong>given</strong>: block</h4>
 <p><strong>given</strong>: 应该包含所有的初始化条件或者初始化类，例如你可以把要测试的类的实例化放在
 <strong>given</strong>. 总而言之， <strong>given</strong> 就是放置所有单元测试开始前的准备工作的地方</p>
-<h4 id="the-setup-block"><!-- raw HTML omitted -->4.5.2<!-- raw HTML omitted --> The <strong>setup</strong>: block</h4>
+<h4 id="the-setup-block"><span class="section-num">4.5.2</span> The <strong>setup</strong>: block</h4>
 <p><strong>setup</strong>: 笔者个人理解功能跟 <strong>given</strong> 很相似，所以初始化的时候可以二选一(笔者
 个人推荐用 given，因为这样更符合 BDD 范式)</p>
-<h4 id="the-when-blcok"><!-- raw HTML omitted -->4.5.3<!-- raw HTML omitted --> The <strong>when</strong>: blcok</h4>
+<h4 id="the-when-blcok"><span class="section-num">4.5.3</span> The <strong>when</strong>: blcok</h4>
 <p><strong>when</strong>: 是 Spock 测试中最重要的一部分，这里放置的就是你要测试的代码，和你如
 何测试的用例，这里的测试代码应该尽可能地短。有经验的 Spock 用户可以直接看
 <strong>when</strong>: block 就了解测试流程了</p>
-<h4 id="the-then-block"><!-- raw HTML omitted -->4.5.4<!-- raw HTML omitted --> The <strong>then</strong>: block</h4>
+<h4 id="the-then-block"><span class="section-num">4.5.4</span> The <strong>then</strong>: block</h4>
 <p><strong>then</strong>: block 包含隐式的断言, 补充一下，Spock 是没有 assert 这个断言函数的，
 Spock 使用的是 assertion, 笔者个人理解成这是一种隐式的断言。概括来说, <strong>then</strong>
 就是放置你预期测试结果的地方。</p>
@@ -371,7 +371,7 @@ Spock 使用的是 assertion, 笔者个人理解成这是一种隐式的断言�
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></div><p>现在对 Spock 有一个初步的认识了。也可以使用 given-when-then 这 &ldquo;三板斧&rdquo; 来写
 一些逻辑不是非常复杂的测试用例了。</p>
-<h4 id="the-and-block"><!-- raw HTML omitted -->4.5.5<!-- raw HTML omitted --> The <strong>and</strong>: block</h4>
+<h4 id="the-and-block"><span class="section-num">4.5.5</span> The <strong>and</strong>: block</h4>
 <p><strong>and</strong>: 它的用法有点像语法糖，它自己本身是没有什么功能，它只是拿来扩展其他的
 功能的. 用上面的例子来解释一下用法:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kt">def</span> <span class="s2">&#34;A basket with one product has equal weight&#34;</span><span class="o">(){</span>
@@ -400,7 +400,7 @@ Product 类型进行了细分。如下图</p>
 
 <p>使用 <strong>and</strong> block 可以代码结构更简洁优雅. 此外, 如果 <strong>and</strong> 是紧跟在 <strong>when</strong> 后
 面, 那么 <strong>and</strong> 就据有和 <strong>when</strong> block 一样的功能，依此类推</p>
-<h4 id="the-expect-block"><!-- raw HTML omitted -->4.5.6<!-- raw HTML omitted --> The <strong>expect</strong>: block</h4>
+<h4 id="the-expect-block"><span class="section-num">4.5.6</span> The <strong>expect</strong>: block</h4>
 <p><strong>expect</strong> 是一个很强大的特性，它用很多种用法，最常用的用法就是把
 given-when-then 都结合起来</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kt">def</span> <span class="s2">&#34;An empty basket has no weight&#34;</span><span class="o">(){</span>
@@ -442,10 +442,10 @@ given-when-then 都结合起来</p>
 </span></span></span><span class="line"><span class="cl"><span class="cm">     the final result*/</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></div><p>上面那个例子是在添加产品之前检查初始化条件，这种情况下，能更容易看出是哪里测试 fail</p>
-<h4 id="the-clean-block"><!-- raw HTML omitted -->4.5.7<!-- raw HTML omitted --> The <strong>clean</strong>: block</h4>
+<h4 id="the-clean-block"><span class="section-num">4.5.7</span> The <strong>clean</strong>: block</h4>
 <p>clean 就相当于在所有的测试结束以后执行的操作，例如，如果在测试中新建了 IO 流，
 就可以在 clean 里面关闭 IO 流，那样就可以保证代码的正确性了</p>
-<h3 id="spock-killer-future"><!-- raw HTML omitted -->4.6<!-- raw HTML omitted --> Spock killer future</h3>
+<h3 id="spock-killer-future"><span class="section-num">4.6</span> Spock killer future</h3>
 <p>确定需求:（例子来自 Java_test_with_spock 一书），假设有一个核反应堆，这个反应
 堆的系统组成：</p>
 <ul>
@@ -601,14 +601,14 @@ given-when-then 都结合起来</p>
 判断输出结果是否符合预期结果. 而数据添加或者减少输入参数或者输出结果的操作，
 只需在 <strong>where</strong> block 里面对应地添加或者减少具体的参数，整个操作一目了然. 参数
 的新增或者移除也很容易地实现</p>
-<h2 id="结语"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 结语</h2>
+<h2 id="结语"><span class="section-num">5</span> 结语</h2>
 <p>笔者在项目中正是使用 Spock 编写测试， 或许对比 Junit, Spock 在流行度方面还难而
 望其项背, 但是综合多方考虑，Spock 真的值得一试，兼之 Groovy 语言的语法加成，就
 有一种在使用脚本编写 Java 的感觉 (好吧，笔者知道 Groovy 就是基于 jvm 的脚本)，
 无需再为 Java 啰嗦的语法而烦恼。此外 Spock还有很多很强大的功能，例如内置的
 Mocking Stubbing (Junit 需要第三方库支持), 还有支持企业级应用，Spring, Spring
 boot, 和 Restful service 测试等。更多的用法，就要查阅官方文档了</p>
-<h2 id="参考"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">6</span> 参考</h2>
 <ul>
 <li><a href="https://www.amazon.com/Java-Testing-Spock-Konstantinos-Kapelonis/dp/1617292532">Java Testing with Spock</a></li>
 <li><a href="http://spockframework.org/spock/docs/1.1-rc-3/index.html">Spock Framework Reference Documentation</a></li>

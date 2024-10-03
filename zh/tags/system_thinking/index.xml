@@ -20,7 +20,7 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2021/%E7%B3%BB%E7%BB%9F%E6%80%9D%E8%80%83/</guid>
       <description>1 前言 领导平日开会时，总是对我们说，你们思考问题角度太单一与片面，没有想清楚问题背后的逻辑与​作用因子。 所以领导总是会不厌其烦地给我们推荐《</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>领导平日开会时，总是对我们说，你们思考问题角度太单一与片面，没有想清楚问题背后的逻辑与​作用因子。</p>
 <p>所以领导总是会不厌其烦地给我们推荐《系统思考》这本书：</p>
 <figure><a href="/ox-hugo/%e7%b3%bb%e7%bb%9f%e6%80%9d%e8%80%83.png">
@@ -29,7 +29,7 @@
 
 <p>初读觉得平平无奇，后来开始使用《系统思考》的系统循环图来分析问题。
 既能帮助自己理解清问题的脉络，又能清晰地向他人​阐述自己的思路，可谓利器一件。</p>
-<h2 id="概念"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 概念</h2>
+<h2 id="概念"><span class="section-num">2</span> 概念</h2>
 <p>所谓的系统思考, 即在真实世界中，问题不是简单且孤立的，而是相互联系，交织影响的。</p>
 <p>所以处理真实世界中复杂问题的最佳方式就是用整体的观点观察周围的事物。</p>
 <p>只有拓宽视野，才能避免“竖井”式思绪和组织“近视”问题，做到既见树木，又见森林。</p>
@@ -39,9 +39,9 @@
 <li>自组织：在没有外力的干涉下，动态系统仍能展示出某种的稳定结构, 即自行车的运动，鸟群的盘旋等</li>
 <li>涌现：存在一股将给定系统与周围环境联系起来的能量流. 自组织系统与周围环境的能量交换，构成&quot;开放系统&quot;(有点玄幻)</li>
 </ul>
-<h2 id="系统循环图"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 系统循环图</h2>
+<h2 id="系统循环图"><span class="section-num">3</span> 系统循环图</h2>
 <p>系统循环图是进行系统思考的主要工具</p>
-<h3 id="连接"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 连接</h3>
+<h3 id="连接"><span class="section-num">3.1</span> 连接</h3>
 <p>所有的系统循环图都具有如下基本形式:</p>
 <p>“原因”处于连接箭头的起点，而“结果”处在箭头的尾部。</p>
 <ul>
@@ -49,28 +49,28 @@
 <li>O型（-）连接: 原因的增长导致了结果的下降的连接</li>
 </ul>
 <p>系统循环图中的每个连接必须是S型连接或者O型连接两者中的一种&ndash;不会有其他可能性</p>
-<h3 id="回路"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> 回路</h3>
+<h3 id="回路"><span class="section-num">3.2</span> 回路</h3>
 <p>代表因果链的回路最终连接自己身上，整个回路没有起点，没有终点，每项事物都最终和其他事物产生联系，这样的回路就被称为反馈回路</p>
 <figure><a href="/ox-hugo/%e5%8f%8d%e9%a6%88%e5%9b%9e%e8%b7%af.png">
     <img loading="lazy" src="/ox-hugo/%e5%8f%8d%e9%a6%88%e5%9b%9e%e8%b7%af.png"/> </a>
 </figure>
 
-<h4 id="增加回路"><!-- raw HTML omitted -->3.2.1<!-- raw HTML omitted --> 增加回路</h4>
+<h4 id="增加回路"><span class="section-num">3.2.1</span> 增加回路</h4>
 <p>随着环的每次旋转而不断得到加强，这个情况被称为正反馈，与此对应的系统循环图被称为正反馈回路或增强回路</p>
 <figure><a href="/ox-hugo/%e5%ae%b6%e5%ba%ad%e5%85%b3%e7%b3%bb.png">
     <img loading="lazy" src="/ox-hugo/%e5%ae%b6%e5%ba%ad%e5%85%b3%e7%b3%bb.png"/> </a>
 </figure>
 
 <p>相同的算法, 不同的输入导致不同的输出; 因此对于增加回路, 如果输入为正, 则为良性循环; 否则则为恶性循环。</p>
-<h4 id="调节回路"><!-- raw HTML omitted -->3.2.2<!-- raw HTML omitted --> 调节回路</h4>
+<h4 id="调节回路"><span class="section-num">3.2.2</span> 调节回路</h4>
 <p>寻求达到某个特定的目标, 减少目标与现实差距的回路，被称为调节回路</p>
 <figure><a href="/ox-hugo/%e8%b0%83%e8%8a%82%e5%9b%9e%e8%b7%af.png">
     <img loading="lazy" src="/ox-hugo/%e8%b0%83%e8%8a%82%e5%9b%9e%e8%b7%af.png"/> </a>
 </figure>
 
-<h4 id="分辨增加回路与调节回路"><!-- raw HTML omitted -->3.2.3<!-- raw HTML omitted --> 分辨增加回路与调节回路</h4>
+<h4 id="分辨增加回路与调节回路"><span class="section-num">3.2.3</span> 分辨增加回路与调节回路</h4>
 <p>对于任何连续闭合回路, 如果有偶数个O型连接，该回路为增加回路；否则为调节回路。</p>
-<h3 id="绘制系统循环图黄金法则"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> 绘制系统循环图黄金法则</h3>
+<h3 id="绘制系统循环图黄金法则"><span class="section-num">3.3</span> 绘制系统循环图黄金法则</h3>
 <ol>
 <li>了解问题的边界</li>
 <li>从有趣的地方开始</li>
@@ -85,13 +85,13 @@
 <li>不要爱上你的图表</li>
 <li>没有“已经完成”的图表</li>
 </ol>
-<h2 id="实操"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 实操</h2>
+<h2 id="实操"><span class="section-num">4</span> 实操</h2>
 <p>使用系统循环图来分析「置身事内」一书中的政府土地财政与债务风险的问题：</p>
 <figure><a href="/ox-hugo/%e5%9c%9f%e5%9c%b0%e9%87%91%e8%9e%8d-%e6%94%bf%e5%ba%9c%e5%80%ba%e5%8a%a1.png">
     <img loading="lazy" src="/ox-hugo/%e5%9c%9f%e5%9c%b0%e9%87%91%e8%9e%8d-%e6%94%bf%e5%ba%9c%e5%80%ba%e5%8a%a1.png"/> </a>
 </figure>
 
-<h2 id="后续"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 后续</h2>
+<h2 id="后续"><span class="section-num">5</span> 后续</h2>
 <p>有用的东西就到这里了，剩下的都是例子和实践。</p>
 <p>讲的东西可能很有用，但是用简单的话就能讲清楚，最后写成了一本书，有点灌水了。</p>
 ]]></content:encoded>

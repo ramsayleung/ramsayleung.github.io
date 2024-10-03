@@ -20,7 +20,7 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BC%98%E9%9B%85%E6%A0%A1%E9%AA%8C%E6%95%B0%E6%8D%AE/</guid>
       <description>1 前言 根据防御式编程的要求, 在日常的开发中, 总少不了对函数的各种入参做校验, 以便保证函数能按照预期的流程执行下去. 比如各种费率的值就没可能是</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>根据防御式编程的要求, 在日常的开发中, 总少不了对函数的各种入参做校验,
 以便保证函数能按照预期的流程执行下去.</p>
 <p>比如各种费率的值就没可能是负数, 如果费率出现负数, 所以数据有问题,
@@ -29,13 +29,13 @@
 <p>Guava 提供了一系列的静态方法用于校验函数和类的构造器是否符合预期,
 并称其为前置条件(preconditions). 如果前置条件校验失败,
 就会抛出一个指定的异常.</p>
-<h2 id="前置函数特征"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 前置函数特征</h2>
+<h2 id="前置函数特征"><span class="section-num">2</span> 前置函数特征</h2>
 <p>目前的前置校验方法有如下特征: 须需要, 下面例子中的<code>checkArgument</code>函数可以替换成任何一个前置条件校验函数</p>
 <ol>
 <li>这些前置方法一般接受一个布尔表达式作为入参，并判断表达是否为<code>true</code>,
 格式如:</li>
 </ol>
-<!-- raw HTML omitted -->
+<!--listend-->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Preconditions</span><span class="o">.</span><span class="na">checkArgument</span><span class="o">(</span><span class="n">a</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">)</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 如果表达式为false, 抛出IllegalArgumentException
 </span></span></span></code></pre></div><ol start="2">
@@ -43,7 +43,7 @@
 前置方法可以接受一个额外的<code>Object</code>作为入参, 在抛出异常的时候,
 把<code>Object.toString()</code>作为异常信息, 如:</li>
 </ol>
-<!-- raw HTML omitted -->
+<!--listend-->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">enum</span> <span class="n">ErrorDetail</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="n">SC_NOT_FOUND</span><span class="o">(</span><span class="s">&#34;404&#34;</span><span class="o">,</span> <span class="s">&#34;Resource could not be fount&#34;</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">// 省略部分内容
@@ -65,12 +65,12 @@
 只不过出于兼容性和性能的考虑, 只支持使用<code>%s</code>指示符格式化字符串,
 不支持其他类型. 如:</li>
 </ol>
-<!-- raw HTML omitted -->
+<!--listend-->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">i</span><span class="o">=-</span><span class="mi">1</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl"><span class="n">checkArgument</span><span class="o">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">,</span> <span class="s">&#34;Argument was %s but expected nonnegative&#34;</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 结果如下:
 </span></span></span><span class="line"><span class="cl"><span class="c1">// java.lang.IllegalArgumentException: Argument was -1 but expected nonnegative
-</span></span></span></code></pre></div><h2 id="前置条件函数介绍"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 前置条件函数介绍</h2>
+</span></span></span></code></pre></div><h2 id="前置条件函数介绍"><span class="section-num">3</span> 前置条件函数介绍</h2>
 <p>须注意的是, 下面介绍的<code>checkArgument</code>, <code>checkArgument</code>,
 <code>checkState</code>函数都有三个对应的重载函数，分别对应前文所述的三种特征,
 下文不会三种函数都介绍, 只介绍标准格式的前置条件函数.
@@ -78,7 +78,7 @@
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkArgument</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkArgument</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">,</span> <span class="nd">@Nullable</span> <span class="n">Object</span> <span class="n">errorMessage</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkArgument</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">,</span><span class="nd">@Nullable</span> <span class="n">String</span> <span class="n">errorMessageTemplate</span><span class="o">,</span><span class="nd">@Nullable</span> <span class="n">Object</span><span class="o">...</span> <span class="n">errorMessageArgs</span><span class="o">)</span>
-</span></span></code></pre></div><h3 id="checkargument"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> checkArgument</h3>
+</span></span></code></pre></div><h3 id="checkargument"><span class="section-num">3.1</span> checkArgument</h3>
 <p>函数的签名如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkArgument</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">);</span>
 </span></span></code></pre></div><p>入参是一个布尔表达式, 函数校验这个表达式是否为<code>true</code>, 如果为<code>false</code>,
@@ -87,7 +87,7 @@
 </span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testCheckArgument</span><span class="o">()</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="n">Preconditions</span><span class="o">.</span><span class="na">checkArgument</span><span class="o">(</span><span class="mi">1</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h3 id="checknotnull"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> checkNotNull</h3>
+</span></span></code></pre></div><h3 id="checknotnull"><span class="section-num">3.2</span> checkNotNull</h3>
 <p>这是个泛型函数, 函数签名如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">checkNotNull</span><span class="o">(</span><span class="n">T</span> <span class="n">reference</span><span class="o">);</span>
 </span></span></code></pre></div><p>入参是个任意类型的对象, 函数校验这个对象是否为<code>null</code>, 如果为空,
@@ -96,7 +96,7 @@
 例子如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">PreconditionTest</span> <span class="n">caller</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PreconditionTest</span><span class="o">();</span>
 </span></span><span class="line"><span class="cl"><span class="n">caller</span><span class="o">.</span><span class="na">setErrorDetail</span><span class="o">(</span><span class="n">Preconditions</span><span class="o">.</span><span class="na">checkNotNull</span><span class="o">(</span><span class="n">ErrorDetail</span><span class="o">.</span><span class="na">SC_INTERNAL_SERVER_ERROR</span><span class="o">));</span>
-</span></span></code></pre></div><h3 id="checkstate"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> checkState</h3>
+</span></span></code></pre></div><h3 id="checkstate"><span class="section-num">3.3</span> checkState</h3>
 <p>函数签名如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkState</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">);</span>
 </span></span></code></pre></div><p>看着这个函数, 我个人感觉很奇怪:
@@ -115,7 +115,7 @@
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></div><p>此外, 因为这两个函数相当类似, 就不展示相应例子了.</p>
-<h3 id="checkelementindex"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> checkElementIndex</h3>
+<h3 id="checkelementindex"><span class="section-num">3.4</span> checkElementIndex</h3>
 <p>函数签名如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">checkElementIndex</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">,</span> <span class="kt">int</span> <span class="n">size</span><span class="o">);</span>
 </span></span></code></pre></div><p>这个函数用于判断指定数组, 列表, 字符串的下标是否越界, <code>index</code>是下标,
@@ -130,7 +130,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">Preconditions</span><span class="o">.</span><span class="na">checkElementIndex</span><span class="o">(</span><span class="s">&#34;test&#34;</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">-</span> <span class="mi">1</span><span class="o">,</span> <span class="s">&#34;test&#34;</span><span class="o">.</span><span class="na">length</span><span class="o">()));</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 运行结果:
 </span></span></span><span class="line"><span class="cl"><span class="c1">// 通过
-</span></span></span></code></pre></div><h2 id="checkpositionindex"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> checkPositionIndex</h2>
+</span></span></span></code></pre></div><h2 id="checkpositionindex"><span class="section-num">4</span> checkPositionIndex</h2>
 <p>函数的签名如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">checkPositionIndex</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">,</span> <span class="kt">int</span> <span class="n">size</span><span class="o">);</span>
 </span></span></code></pre></div><p>这个函数和<code>checkElementIndex</code>非常类似, 连Guava wiki的说明也基本一致(只有一个单词不同).</p>
@@ -143,7 +143,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">Preconditions</span><span class="o">.</span><span class="na">checkPositionIndex</span><span class="o">(</span><span class="s">&#34;test&#34;</span><span class="o">.</span><span class="na">length</span><span class="o">(),</span> <span class="s">&#34;test&#34;</span><span class="o">.</span><span class="na">length</span><span class="o">()));</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 运行结果:
 </span></span></span><span class="line"><span class="cl"><span class="c1">// 通过
-</span></span></span></code></pre></div><h3 id="checkpositionindexes"><!-- raw HTML omitted -->4.1<!-- raw HTML omitted --> checkPositionIndexes</h3>
+</span></span></span></code></pre></div><h3 id="checkpositionindexes"><span class="section-num">4.1</span> checkPositionIndexes</h3>
 <p>函数的签名如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkPositionIndexes</span><span class="o">(</span><span class="kt">int</span> <span class="n">start</span><span class="o">,</span> <span class="kt">int</span> <span class="n">end</span><span class="o">,</span> <span class="kt">int</span> <span class="n">size</span><span class="o">);</span>
 </span></span></code></pre></div><p>这个函数是用于判断<code>[start,end]</code>这个范围是否是个有效范围, 即<code>[start, end]</code> 是否在<code>[0, size]</code> 范围内(如果<code>[start, end]</code>
@@ -155,7 +155,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">Preconditions</span><span class="o">.</span><span class="na">checkPositionIndexes</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 运行结果:
 </span></span></span><span class="line"><span class="cl"><span class="c1">// 校验通过
-</span></span></span></code></pre></div><h2 id="前置条件在实际项目的应用"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 前置条件在实际项目的应用</h2>
+</span></span></span></code></pre></div><h2 id="前置条件在实际项目的应用"><span class="section-num">5</span> 前置条件在实际项目的应用</h2>
 <p>前置条件在检验条件不成交的时候抛的异常类型虽说是合情合理(比如,
 <code>checkArgument</code>函数抛出<code>IllegalArgumentException</code>),</p>
 <p>但是对于业务系统来说, 你抛出个<code>IllegalArgumentException</code>或者<code>NullPointerException</code>, 接口调用方对于这个异常摸不着头脑, 虽说只是正常的数据问题,
@@ -206,7 +206,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 调用例子:
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">AssertUtils</span><span class="o">.</span><span class="na">checkArgument</span><span class="o">(</span><span class="n">merchantEntity</span><span class="o">.</span><span class="na">exist</span><span class="o">(),</span> <span class="n">ErrDetailEnum</span><span class="o">.</span><span class="na">DATA_NOT_EXIT</span><span class="o">,</span> <span class="s">&#34;商户不存在&#34;</span><span class="o">);</span>
-</span></span></code></pre></div><h2 id="guava-precondition-vs-apache-common-validate"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> Guava Precondition vs Apache Common Validate</h2>
+</span></span></code></pre></div><h2 id="guava-precondition-vs-apache-common-validate"><span class="section-num">6</span> Guava Precondition vs Apache Common Validate</h2>
 <p>自古文无第一, 武无第二, 文人之间的口水战总是少不了的.</p>
 <p>没想到这不是国人的专利, 原来国外也有文人相轻的风气: Guava wiki
 在介绍完preconditions之后, 还踩了一波竞品Apache Common Validate,
@@ -219,10 +219,10 @@ Guava wiki 还提了两点最佳实践(best practice):</p>
 <li>使用前置条件校验的时候, 尽量提供有用的错误信息,
 这样可以更快地定位问题.</li>
 </ol>
-<h2 id="总结"><!-- raw HTML omitted -->7<!-- raw HTML omitted --> 总结</h2>
+<h2 id="总结"><span class="section-num">7</span> 总结</h2>
 <p>代码大全一书有一章是关于防御式编程的, 用于提高程序的健壮性, 主要思想是子程序应该不因传入错误数据而被破坏，要保护程序免遭非法输入数据的破坏.</p>
 <p>而Guava的preconditions 就是实现防御式编程的有力工具呢. oh yeah!</p>
-<h2 id="参考"><!-- raw HTML omitted -->8<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">8</span> 参考</h2>
 <ul>
 <li><a href="https://github.com/google/guava/wiki/PreconditionsExplained">PreconditionsExplained</a></li>
 </ul>

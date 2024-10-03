@@ -20,29 +20,29 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2017/search_eshell_history_like_fzf/</guid>
       <description>1 前言 目标: 在Eshell中像在bash/zsh中使用fzf那般搜索历史命令 2 fzf 我的主力Shell 是Eshell, 但是平时我也会用Zsh, 而</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>目标: 在<code>Eshell</code>中像在bash/zsh中使用<code>fzf</code>那般搜索历史命令</p>
-<h2 id="fzf"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> fzf</h2>
+<h2 id="fzf"><span class="section-num">2</span> fzf</h2>
 <p>我的主力Shell 是Eshell, 但是平时我也会用Zsh, 而<a href="https://github.com/junegunn/fzf">fzf</a> 是一个非常好用的命令行工具，用了<code>fzf</code>搜索历史命令:</p>
 <figure>
     <img loading="lazy" src="https://i.imgur.com/pPMxauw.gif"
          alt="Figure 1: fzf"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->fzf</p>
+            <p><span class="figure-number">Figure 1: </span>fzf</p>
         </figcaption>
 </figure>
 
-<h2 id="eshell"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Eshell</h2>
+<h2 id="eshell"><span class="section-num">3</span> Eshell</h2>
 <p>我日常的操作基本都是在 Eshell 上面进行的，不过 Eshell 是没办法直接像 Bash 那样调用 <code>fzf</code>来查找命令历史的，所以我希望把这个功能迁移到到Eshell 上面来。</p>
 <p>我在 Emacs 使用的补全框架是 <code>Ivy/Counsel</code>,它有一个 <code>counsel-esh-history</code>的命令可以使用 <code>Ivy</code> 来搜索命令，但是没办法使用用户已经输入的内容来过滤命令，所以我就在自己折腾了一个</p>
 <p><code>counsel-esh-history</code> 命令。效果如下：</p>
 <figure>
     <img loading="lazy" src="https://i.imgur.com/3tvGDzW.gif"
          alt="Figure 2: 感觉很不错嘛 :)"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->感觉很不错嘛 :)</p>
+            <p><span class="figure-number">Figure 2: </span>感觉很不错嘛 :)</p>
         </figcaption>
 </figure>
 
-<h2 id="源代码"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 源代码</h2>
+<h2 id="源代码"><span class="section-num">4</span> 源代码</h2>
 <p>得益于 <code>Ivy</code>强大的内置函数, 功能实现起来相当便利，完整代码如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-lisp" data-lang="lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">samray/esh-history</span> <span class="p">()</span>
 </span></span><span class="line"><span class="cl">  <span class="s">&#34;Interactive search eshell history.&#34;</span>
@@ -66,7 +66,7 @@
 </span></span><span class="line"><span class="cl">  <span class="p">)</span>
 </span></span></code></pre></div><p>代码不是很复杂, 主要功能是获取用户输入的命令, 然后把所有的历史命令读取出来,最后使用<code>ivy-read</code>内置的<code>ivy-completion-in-region-action</code>功能, 用用户的输入的命令与历史命令进行匹配, 由用户选择最终的命令.</p>
 <p><code>ivy-read</code>是Emacs内置<code>completing-read</code>的函数的强化, 关于<code>ivy-read</code>具体用法可以参考文档<a href="https://oremacs.com/swiper/#getting-started">ivy-read</a>.</p>
-<h2 id="总结"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 总结</h2>
+<h2 id="总结"><span class="section-num">5</span> 总结</h2>
 <p>最后, 我也顺便把代码分享到 <a href="https://www.reddit.com/r/emacs/comments/7k54px/snippet_share_make_eshell_search_command_history/">Emacs社区</a>, 而 <a href="https://github.com/manateelazycat">manateelazycat</a>也把这段代码的功能加入到<a href="https://github.com/manateelazycat/aweshell/commit/ecaddac98b87f881910dbee8b51a98f00b6d9d5d">aweshell</a>, Oh yeah !</p>
 ]]></content:encoded>
     </item>
@@ -78,7 +78,7 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2017/tweak_eshell_prompt/</guid>
       <description>Tweak with Emacs shell prompt</description>
-      <content:encoded><![CDATA[<h2 id="发现帅气的提示符"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 发现帅气的提示符</h2>
+      <content:encoded><![CDATA[<h2 id="发现帅气的提示符"><span class="section-num">1</span> 发现帅气的提示符</h2>
 <p>近日，笔者在浏览 <a href="https://www.reddit.com/r/emacs/comments/6f0rkz/my_fancy_eshell_prompt/">Reddit</a> 的时候，发现了一位 Emacs 用户把他的 Eshell 提示符修改得很帅，如图：</p>
 <p><a href="/ox-hugo/eshell_prompt.png"><img loading="lazy" src="/ox-hugo/eshell_prompt.png" alt=""  />
 </a>
@@ -99,7 +99,7 @@
 </span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">=</span> <span class="p">(</span><span class="nf">user-uid</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="s">&#34; # &#34;</span> <span class="s">&#34; $ &#34;</span><span class="p">)</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">	 <span class="p">)))</span>
 </span></span></code></pre></div><p>效果自然是很 sexy.</p>
-<h2 id="与原有提示符冲突"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 与原有提示符冲突</h2>
+<h2 id="与原有提示符冲突"><span class="section-num">2</span> 与原有提示符冲突</h2>
 <p>但是我原来使用的 <a href="https://github.com/kaihaosw/eshell-prompt-extras">eshell-prompt-extra</a> 的效果就被覆盖了。而 <code>eshell_prompt_extra</code> 可以提供的额外信息非常多，包括：git, python virtualenv, 以及远程登录时的主机信息，如图：</p>
 <figure><a href="/ox-hugo/eshell_extra_prompt.png">
     <img loading="lazy" src="/ox-hugo/eshell_extra_prompt.png"/> </a>
@@ -107,7 +107,7 @@
 
 <p>如果用上这个 sexy 的提示符，eshell-extra-prompt 的额外的信息就不能显示，感觉好亏:(</p>
 <p>鱼和熊掌我都想要，似乎太贪心了？怎么办，自己去修改 <code>eshell_prompt_extra</code> 的<a href="https://github.com/kaihaosw/eshell-prompt-extras/blob/master/eshell-prompt-extras.el">源码</a> :).</p>
-<h2 id="折腾源码"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 折腾源码</h2>
+<h2 id="折腾源码"><span class="section-num">3</span> 折腾源码</h2>
 <p><code>eshell_prompt_extra</code> 这个包注释加上全部代码也只是 400 行，代码也写得很清晰. 其中大部份是辅助函数，而 Eshell 的提示符效果是通过两个 eshell-theme 函数来实现的。use-package 的配置：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">eshell-prompt-extras</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:ensure</span> <span class="no">t</span>
@@ -156,7 +156,7 @@
 </span></span><span class="line"><span class="cl">   <span class="s">&#34; &#34;</span><span class="p">))</span>
 </span></span></code></pre></div><p>代码主要逻辑是调用之前定义的辅助函数，判断是否需要显示 git, python, 远程主机等信息，然后对相应的提示符进行拼接。</p>
 <p>而其中出现得比较频繁的 <code>epe-colorize-with-face</code> 就是作者定义的一个宏(macro), 用来显示字符串以及对应的 face(其实就是不同的颜色啦). 看懂了代码就好办了，现在就可以自己添加一个 Eshell 主题。</p>
-<h3 id="定义所需的-face"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 定义所需的 face</h3>
+<h3 id="定义所需的-face"><span class="section-num">3.1</span> 定义所需的 face</h3>
 <p>因为我需要显示的 face(颜色), <code>eshell-extra-prompt</code> 并没有定义，所以就只好自己动手啦：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defface</span> <span class="nv">epe-pipeline-delimiter-face</span>
 </span></span><span class="line"><span class="cl">  <span class="o">&#39;</span><span class="p">((</span><span class="no">t</span> <span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
@@ -226,7 +226,7 @@
 </span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">=</span> <span class="p">(</span><span class="nf">user-uid</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="s">&#34;#&#34;</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">			   <span class="ss">&#39;epe-sudo-symbol-face</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">   <span class="s">&#34; &#34;</span><span class="p">))</span>
-</span></span></code></pre></div><h2 id="总结"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 总结</h2>
+</span></span></code></pre></div><h2 id="总结"><span class="section-num">4</span> 总结</h2>
 <p>这样一个新的 Eshell 主题就完工了，然后我给 <code>eshell-extra-prompt</code> 发了一个<a href="https://github.com/kaihaosw/eshell-prompt-extras/pull/16">Pull Request</a>, 最终效果如下：</p>
 <figure><a href="/ox-hugo/epe.png">
     <img loading="lazy" src="/ox-hugo/epe.png"/> </a>
@@ -249,7 +249,7 @@
 <p>之前一位 Windows 用户看到我在 Shell 下面的操作，他很奇怪，觉得明明已经有图形化界面，为什么还要用这种命令行呢，直接用鼠标点击不就很好了么。</p>
 <p>我觉得很难直接跟他解释，因为他没有用过Linux/Unix,完全不熟悉命令行，不知道其强大之处，其高效率是图形化界面完全无法比拟的(当然，命令行的学习成本和学习曲线肯定比图型化界面高), So I live in terminal.</p>
 <p>而今天我要介绍的神器 fasd 就是可以让命令行操作变得更加高效</p>
-<h2 id="fasd"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Fasd</h2>
+<h2 id="fasd"><span class="section-num">1</span> Fasd</h2>
 <p>在 Shell 下面有非常多的命令操作是与文件和目录相关的，如果你要进入到另外一个目 录你可以使用相对或者绝对路径来访问该目录，但是如果这是一个与当前目录不相关的目 录你就只能通过绝对路径来访问。</p>
 <p>以我自己的目录为例，当前目录是 <strong><em>home/samray</em>.emacs.d/elisp/</strong> ,我希望访问 <strong>Document</strong> 目录下一个的子目录 <strong>Python</strong>, 我可以通过下面的命令来访问：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> ~/Document/Programming/Python
@@ -259,7 +259,7 @@
 <hr>
 <p>Fasd以访问的频繁程度和最近是否有访问对文件和目录分配优先级，然后通过判断已访问的文件以及其优先级来切换目录或者打开文件，所以如果你之前已经访问过某个目录.</p>
 <p>那么 你很容易就可以切换到那个目录</p>
-<h3 id="常用选项"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> 常用选项</h3>
+<h3 id="常用选项"><span class="section-num">1.1</span> 常用选项</h3>
 <ul>
 <li>
 <p><strong>-a(any)</strong>: 匹配文件和目录</p>
@@ -294,12 +294,12 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">vim <span class="sb">`</span>f rc conf<span class="sb">`</span>
 </span></span></code></pre></div></li>
 </ul>
-<h3 id="例子"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> 例子</h3>
+<h3 id="例子"><span class="section-num">1.2</span> 例子</h3>
 <p>你可以将fasd 配合正则表达式使用，例如列举以 <em>py</em> 结尾的最近访问的文件：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">f py$
 </span></span></code></pre></div><p>又或者使用Emacs 打开最近频繁访问的文件 <em>bar</em></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">f -e emacs bar
-</span></span></code></pre></div><h2 id="fasd-plus-eshell"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Fasd +Eshell</h2>
+</span></span></code></pre></div><h2 id="fasd-plus-eshell"><span class="section-num">2</span> Fasd +Eshell</h2>
 <p>fasd 真的可以大幅度提高效率，但是我有点不太满意的是，我是个 Emacser, 我的操作基本是在 Emacs 里完成的，而我在 Emacs里面使用的 shell 是 Eshell,Eshell 似乎不能与 fasd 无缝结合，似乎可以折腾一下。</p>
 <hr>
 <p><strong>z</strong> 和 <strong>zz</strong> 命令是无法在Eshell 里面运行，因为 <strong>z</strong> 是 <strong>fasd_cd</strong> 的别名，而<strong>fasd_cd</strong> 是一个shell script 函数，Eshell无法运行该函数，代码如下：</p>

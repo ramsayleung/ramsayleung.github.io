@@ -20,16 +20,16 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2024/%E4%BD%BF%E7%94%A8rust%E7%9A%84iterator%E8%A7%A3%E5%86%B3fizzbuzz%E9%97%AE%E9%A2%98/</guid>
       <description>1 前言 按照维基百科的说法，FizzBuzz问题 是一个简单但是常见的面试编程问题（可能以前常见，现在都是考Leetcode了,这种连Easy 都</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
-<p>按照维基百科的说法，<a href="https://en.wikipedia.org/wiki/Fizz_buzz">FizzBuzz问题</a> 是一个简单但是常见的面试编程问题（可能以前常见，现在都是考Leetcode了,这种连Easy 都不算了），这个问题的要求如下： <!-- raw HTML omitted --></p>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
+<p>按照维基百科的说法，<a href="https://en.wikipedia.org/wiki/Fizz_buzz">FizzBuzz问题</a> 是一个简单但是常见的面试编程问题（可能以前常见，现在都是考Leetcode了,这种连Easy 都不算了），这个问题的要求如下： <br/></p>
 <ol>
-<li>写一个程序，输出从1到100的数字 <!-- raw HTML omitted --></li>
-<li>对于3的倍数，不输出数字，而是输出 &ldquo;Fizz&rdquo; <!-- raw HTML omitted --></li>
-<li>对于5的倍数，不输出数字，而是输出 &ldquo;Buzz&rdquo; <!-- raw HTML omitted --></li>
-<li>对于即是3的倍数又是5的倍数的数字（即15的倍数），打印 &ldquo;FizzBuzz&rdquo; <!-- raw HTML omitted --></li>
+<li>写一个程序，输出从1到100的数字 <br/></li>
+<li>对于3的倍数，不输出数字，而是输出 &ldquo;Fizz&rdquo; <br/></li>
+<li>对于5的倍数，不输出数字，而是输出 &ldquo;Buzz&rdquo; <br/></li>
+<li>对于即是3的倍数又是5的倍数的数字（即15的倍数），打印 &ldquo;FizzBuzz&rdquo; <br/></li>
 </ol>
-<h2 id="常规解法"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 常规解法</h2>
-<p>问题非常简单，刚学编程的学生都可以写出符合要求的代码，下面是 Rust 的常规解法： <!-- raw HTML omitted --></p>
+<h2 id="常规解法"><span class="section-num">2</span> 常规解法</h2>
+<p>问题非常简单，刚学编程的学生都可以写出符合要求的代码，下面是 Rust 的常规解法： <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">0</span><span class="o">..=</span><span class="mi">100</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -43,11 +43,11 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>这个没有什么太多可说的，就是直接按需求翻译代码了。 <!-- raw HTML omitted --></p>
-<h2 id="iterator-解法"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Iterator 解法</h2>
-<p>如果现在给 FizzBuzz 问题再加一个限制，不能使用乘法，除法，或者取模操作，那么又要怎么实现呢？ <!-- raw HTML omitted --></p>
-<p>Rust 标准库中的各式 <code>Iterator</code> 可以算是Rust零开销抽象(Zero Cost Abstraction)与表达能力的最佳体现了。 <!-- raw HTML omitted --></p>
-<p>最近在读 Programming Rust, 2nd edition, 里面就有使用各种 Iterator 组合，不使用除法或者取模操作来解决 FizzBuzz 问题的实现, 可以说是把 <code>iterator</code> 玩得非常花了： <!-- raw HTML omitted --></p>
+</span></span></span></code></pre></div><p>这个没有什么太多可说的，就是直接按需求翻译代码了。 <br/></p>
+<h2 id="iterator-解法"><span class="section-num">3</span> Iterator 解法</h2>
+<p>如果现在给 FizzBuzz 问题再加一个限制，不能使用乘法，除法，或者取模操作，那么又要怎么实现呢？ <br/></p>
+<p>Rust 标准库中的各式 <code>Iterator</code> 可以算是Rust零开销抽象(Zero Cost Abstraction)与表达能力的最佳体现了。 <br/></p>
+<p>最近在读 Programming Rust, 2nd edition, 里面就有使用各种 Iterator 组合，不使用除法或者取模操作来解决 FizzBuzz 问题的实现, 可以说是把 <code>iterator</code> 玩得非常花了： <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">iter</span>::<span class="p">{</span><span class="n">once</span><span class="p">,</span><span class="w"> </span><span class="n">repeat</span><span class="p">};</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -64,10 +64,10 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;{line}&#34;</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>看起来是否不知道所云呢? 现在可以把每个 <code>iterator</code> 的作用逐一拆解。 <!-- raw HTML omitted --></p>
-<h3 id="repeat-plus-take"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> repeat + take</h3>
-<p><code>repeat</code> 的作用就是无限重复某个传入的元素, 例如 <code>repeat(4)</code> 就是生成无限个数字4, <code>repeat(&quot;&quot;)</code> 就是生成无限个空白字符. <!-- raw HTML omitted --></p>
-<p>虽然 <code>repeat</code> 能生成无限个指定的元素，但是我只想要若干个元素，怎么整呢？ <code>take</code> 就可以满足这个要求，所以 <code>repeat(4).take(4)</code> 就是生成4个数字4的意思，而 <code>repeat(&quot;&quot;).take(2)</code> 就是生成2个空字符 <!-- raw HTML omitted --></p>
+</span></span></span></code></pre></div><p>看起来是否不知道所云呢? 现在可以把每个 <code>iterator</code> 的作用逐一拆解。 <br/></p>
+<h3 id="repeat-plus-take"><span class="section-num">3.1</span> repeat + take</h3>
+<p><code>repeat</code> 的作用就是无限重复某个传入的元素, 例如 <code>repeat(4)</code> 就是生成无限个数字4, <code>repeat(&quot;&quot;)</code> 就是生成无限个空白字符. <br/></p>
+<p>虽然 <code>repeat</code> 能生成无限个指定的元素，但是我只想要若干个元素，怎么整呢？ <code>take</code> 就可以满足这个要求，所以 <code>repeat(4).take(4)</code> 就是生成4个数字4的意思，而 <code>repeat(&quot;&quot;).take(2)</code> 就是生成2个空字符 <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">iter</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// that last example was too many fours. Let&#39;s only have four fours.
@@ -80,9 +80,9 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// ... and now we&#39;re done
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="nb">None</span><span class="p">,</span><span class="w"> </span><span class="n">four_fours</span><span class="p">.</span><span class="n">next</span><span class="p">());</span><span class="w">
-</span></span></span></code></pre></div><h3 id="once"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> once</h3>
-<p>有生成无限个元素的 <code>iterator</code>, 自然就有只生成一个元素的 <code>iterator</code>, 那就是 <code>once()</code>, 这个 <code>iterator</code> 只会返回一个指定的元素。 <!-- raw HTML omitted --></p>
-<p>所以 <code>once(&quot;fizz&quot;)</code> 就是创建一个只会返回一个 <code>&quot;fizz&quot;</code> 的 <code>iterator</code> : <!-- raw HTML omitted --></p>
+</span></span></span></code></pre></div><h3 id="once"><span class="section-num">3.2</span> once</h3>
+<p>有生成无限个元素的 <code>iterator</code>, 自然就有只生成一个元素的 <code>iterator</code>, 那就是 <code>once()</code>, 这个 <code>iterator</code> 只会返回一个指定的元素。 <br/></p>
+<p>所以 <code>once(&quot;fizz&quot;)</code> 就是创建一个只会返回一个 <code>&quot;fizz&quot;</code> 的 <code>iterator</code> : <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">iter</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// one is the loneliest number
@@ -92,8 +92,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// just one, that&#39;s all we get
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="nb">None</span><span class="p">,</span><span class="w"> </span><span class="n">one</span><span class="p">.</span><span class="n">next</span><span class="p">());</span><span class="w">
-</span></span></span></code></pre></div><h3 id="chain"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> chain</h3>
-<p>顾名思义，就是把两个 iterator 像链子一样串起来, 合并成一个 iterator: <!-- raw HTML omitted --></p>
+</span></span></span></code></pre></div><h3 id="chain"><span class="section-num">3.3</span> chain</h3>
+<p>顾名思义，就是把两个 iterator 像链子一样串起来, 合并成一个 iterator: <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">iter</span>::<span class="n">chain</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">];</span><span class="w">
@@ -108,8 +108,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="mi">6</span><span class="p">));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">None</span><span class="p">);</span><span class="w">
-</span></span></span></code></pre></div><h3 id="circle"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> circle</h3>
-<p><code>circle</code> 就比较有趣了，它的作用是无限循环一个 <code>iterator</code>, <code>repeat</code> 循环一个元素，而 <code>circle</code> 是循环一个 iterator: <!-- raw HTML omitted --></p>
+</span></span></span></code></pre></div><h3 id="circle"><span class="section-num">3.4</span> circle</h3>
+<p><code>circle</code> 就比较有趣了，它的作用是无限循环一个 <code>iterator</code>, <code>repeat</code> 循环一个元素，而 <code>circle</code> 是循环一个 iterator: <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">dirs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#34;North&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;East&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;South&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;West&#34;</span><span class="p">];</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">spin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dirs</span><span class="p">.</span><span class="n">iter</span><span class="p">().</span><span class="n">cycle</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">spin</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="s">&#34;North&#34;</span><span class="p">));</span><span class="w">
@@ -118,9 +118,9 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">spin</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="s">&#34;West&#34;</span><span class="p">));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">spin</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="s">&#34;North&#34;</span><span class="p">));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">spin</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="s">&#34;East&#34;</span><span class="p">));</span><span class="w">
-</span></span></span></code></pre></div><p>把4个 iterator 组合起来的 <code>repeat(&quot;&quot;).take(2).chain(once(&quot;fizz&quot;)).cycle();</code> 表达式的意思就是: 返回一个 iterator, 这个 iterator 无限循环: <code>&quot;&quot; &quot;&quot; &quot;fizz&quot; &quot;&quot; &quot;&quot; &quot;fizz&quot; ...</code> <!-- raw HTML omitted --></p>
-<h3 id="zip"><!-- raw HTML omitted -->3.5<!-- raw HTML omitted --> zip</h3>
-<p><code>zip</code> iterator 的含义就是 &ldquo;zips up&rdquo;, 翻译过来就是拉上拉链，它的作用就是把两个 <code>iterator</code> 像拉链一样拉起来，返回一个 iterator，用代码来解释会更直观: <!-- raw HTML omitted --></p>
+</span></span></span></code></pre></div><p>把4个 iterator 组合起来的 <code>repeat(&quot;&quot;).take(2).chain(once(&quot;fizz&quot;)).cycle();</code> 表达式的意思就是: 返回一个 iterator, 这个 iterator 无限循环: <code>&quot;&quot; &quot;&quot; &quot;fizz&quot; &quot;&quot; &quot;&quot; &quot;fizz&quot; ...</code> <br/></p>
+<h3 id="zip"><span class="section-num">3.5</span> zip</h3>
+<p><code>zip</code> iterator 的含义就是 &ldquo;zips up&rdquo;, 翻译过来就是拉上拉链，它的作用就是把两个 <code>iterator</code> 像拉链一样拉起来，返回一个 iterator，用代码来解释会更直观: <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">a1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">];</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">a2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">];</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -130,32 +130,32 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">((</span><span class="o">&amp;</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="mi">5</span><span class="p">)));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">((</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="mi">6</span><span class="p">)));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">None</span><span class="p">);</span><span class="w">
-</span></span></span></code></pre></div><p><code>zip</code> 就是把 <code>a1</code> 和 <code>a2</code> 两个iterator 「拉起来」了，每次返回一对的元素. 所以 <code>fizzes.zip(buzzes)</code> ，就是合并了两个 iterator : <!-- raw HTML omitted --></p>
+</span></span></span></code></pre></div><p><code>zip</code> 就是把 <code>a1</code> 和 <code>a2</code> 两个iterator 「拉起来」了，每次返回一对的元素. 所以 <code>fizzes.zip(buzzes)</code> ，就是合并了两个 iterator : <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// fizzes: &#34;&#34; &#34;&#34; &#34;fizz&#34; &#34;&#34; &#34;&#34; &#34;fizz&#34; &#34;&#34; &#34;&#34; &#34;fizz&#34; ..
 </span></span></span><span class="line"><span class="cl"><span class="c1">// buzzes: &#34;&#34; &#34;&#34; &#34;&#34; &#34;&#34; &#34;buzz&#34; &#34;&#34; &#34;&#34; &#34;&#34; &#34;&#34; &#34;buzz&#34;
 </span></span></span><span class="line"><span class="cl"><span class="c1">// fizzes_buzzes: (&#34;&#34; &#34;&#34;) (&#34;&#34; &#34;&#34;) (&#34;fizz&#34; &#34;&#34;) (&#34;&#34; &#34;&#34;) (&#34;&#34; &#34;buzz&#34;) ...
-</span></span></span></code></pre></div><p>而 <code>(1..=100).zip(fizzes_buzzes)</code> 就是创建一个包含三个元素的 tuple： <!-- raw HTML omitted --></p>
+</span></span></span></code></pre></div><p>而 <code>(1..=100).zip(fizzes_buzzes)</code> 就是创建一个包含三个元素的 tuple： <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// (1..=100): 1 2 3 4 5 6 7 ...
 </span></span></span><span class="line"><span class="cl"><span class="c1">// fizzes_buzzes: (&#34;&#34; &#34;&#34;) (&#34;&#34; &#34;&#34;) (&#34;fizz&#34; &#34;&#34;) (&#34;&#34; &#34;&#34;) (&#34;&#34; &#34;buzz&#34;) ...
 </span></span></span><span class="line"><span class="cl"><span class="c1">// (1..=100).zip(fizzes_buzzes): (1 (&#34;&#34; &#34;&#34;)) (2 (&#34;&#34; &#34;&#34;)) (3 (&#34;fizz&#34; &#34;&#34;)) (4 (&#34;&#34; &#34;&#34;)) (5 (&#34;&#34; &#34;buzz&#34;)) ..
-</span></span></span></code></pre></div><h3 id="map"><!-- raw HTML omitted -->3.6<!-- raw HTML omitted --> map</h3>
-<p><code>map</code> 这个 iterator 在其他语言也有相同的实现，入参是一个闭包函数，然后把每个元素作为入参，调用闭包函数，在新的迭代返回函数的调用结果. <!-- raw HTML omitted --></p>
+</span></span></span></code></pre></div><h3 id="map"><span class="section-num">3.6</span> map</h3>
+<p><code>map</code> 这个 iterator 在其他语言也有相同的实现，入参是一个闭包函数，然后把每个元素作为入参，调用闭包函数，在新的迭代返回函数的调用结果. <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">tuple</span><span class="o">|</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="n">tuple</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="s">&#34;&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;&#34;</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">fizz</span><span class="p">,</span><span class="w"> </span><span class="n">buzz</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">format!</span><span class="p">(</span><span class="s">&#34;{}{}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">fizz</span><span class="p">,</span><span class="w"> </span><span class="n">buzz</span><span class="p">),</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">})</span><span class="w">
-</span></span></span></code></pre></div><p>最核心的是Rust的 pattern matching, 用来匹配不同的值, <code>(i, (&quot;&quot;, &quot;&quot;))</code> 就是匹配所有 fizz 和 buzz为 <code>(&quot;&quot;, &quot;&quot;)</code> 的值，什么情况下 <code>fizz</code> 和 <code>buzz</code> 会都为 &quot;&quot; 呢，无法整除3以及无法整除5的时候，那么就直接返回数字 <code>i</code>; <!-- raw HTML omitted --></p>
-<p><code>(_, (fizz,buzz))</code>, <code>_</code> 就是通配符，就是匹配掉所有其他的情况，无论是 fizz = &ldquo;&rdquo;, fizz = &ldquo;fizz&rdquo;, buzz = &quot;&quot; 或者 buzz = &ldquo;buzz&rdquo;, 都把返回 <code>&quot;{fizz}{buzz}&quot;</code>, 也就是 <code>(_, (fizz,buzz))</code> 匹配了4种情况. <!-- raw HTML omitted --></p>
-<p><code>map</code> 迭代器返回的是一个 String, 最后再加 String 打印出来. <!-- raw HTML omitted --></p>
-<p>同样是解决问题，这个版本的解法肯定是看起来「高大上」得多，说不定能让面试官眼前一亮，又或者是把自己绕晕。 <!-- raw HTML omitted --></p>
-<h2 id="zero-cost-abstraction"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Zero Cost Abstraction</h2>
-<p>所谓的是零开销抽象（Zero Cost Abstraction），用C++之父的话来解释就是: <!-- raw HTML omitted --></p>
+</span></span></span></code></pre></div><p>最核心的是Rust的 pattern matching, 用来匹配不同的值, <code>(i, (&quot;&quot;, &quot;&quot;))</code> 就是匹配所有 fizz 和 buzz为 <code>(&quot;&quot;, &quot;&quot;)</code> 的值，什么情况下 <code>fizz</code> 和 <code>buzz</code> 会都为 &quot;&quot; 呢，无法整除3以及无法整除5的时候，那么就直接返回数字 <code>i</code>; <br/></p>
+<p><code>(_, (fizz,buzz))</code>, <code>_</code> 就是通配符，就是匹配掉所有其他的情况，无论是 fizz = &ldquo;&rdquo;, fizz = &ldquo;fizz&rdquo;, buzz = &quot;&quot; 或者 buzz = &ldquo;buzz&rdquo;, 都把返回 <code>&quot;{fizz}{buzz}&quot;</code>, 也就是 <code>(_, (fizz,buzz))</code> 匹配了4种情况. <br/></p>
+<p><code>map</code> 迭代器返回的是一个 String, 最后再加 String 打印出来. <br/></p>
+<p>同样是解决问题，这个版本的解法肯定是看起来「高大上」得多，说不定能让面试官眼前一亮，又或者是把自己绕晕。 <br/></p>
+<h2 id="zero-cost-abstraction"><span class="section-num">4</span> Zero Cost Abstraction</h2>
+<p>所谓的是零开销抽象（Zero Cost Abstraction），用C++之父的话来解释就是: <br/></p>
 <blockquote>
-<p>In general, C++ implementations obey the zero-overhead principle: What you don’t use, you don’t pay for. And further: What you do use, you couldn’t hand code any better. <!-- raw HTML omitted --></p>
+<p>In general, C++ implementations obey the zero-overhead principle: What you don’t use, you don’t pay for. And further: What you do use, you couldn’t hand code any better. <br/></p>
 </blockquote>
-<p>概括来说，就是使用 Iterator 写出来的代码，和你自己 for-loop 手写是性能是一样的，并不会有额外的抽象开销。 <!-- raw HTML omitted --></p>
-<p>换个角度讲，你手写的代码也没法实现得比 Iterator 更快，表达力还可能没有那么强。 <!-- raw HTML omitted --></p>
-<p>如果看上面的 Iterator 实现觉得着实难以理解，我们可以再来一版兼具优雅与简洁的实现： <!-- raw HTML omitted --></p>
+<p>概括来说，就是使用 Iterator 写出来的代码，和你自己 for-loop 手写是性能是一样的，并不会有额外的抽象开销。 <br/></p>
+<p>换个角度讲，你手写的代码也没法实现得比 Iterator 更快，表达力还可能没有那么强。 <br/></p>
+<p>如果看上面的 Iterator 实现觉得着实难以理解，我们可以再来一版兼具优雅与简洁的实现： <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">..=</span><span class="mi">100</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -166,9 +166,9 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="reference"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> Reference</h2>
+</span></span></span></code></pre></div><h2 id="reference"><span class="section-num">5</span> Reference</h2>
 <ul>
-<li>Programming Rust, 2nd edition <!-- raw HTML omitted --></li>
+<li>Programming Rust, 2nd edition <br/></li>
 </ul>
 ]]></content:encoded>
     </item>
@@ -180,15 +180,15 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2024/rust%E6%A8%A1%E6%8B%9Fc&#43;&#43;%E7%9A%84%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD/</guid>
       <description>1 函数重载(function overloading) 所谓的函数重载，指的是某些语言支持创建函数名相同，但函数签名不同的多个函数，所谓的函数签名，既指参数类型，也指</description>
-      <content:encoded><![CDATA[<h2 id="函数重载--function-overloading"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 函数重载(function overloading)</h2>
-<p>所谓的函数重载，指的是某些语言支持创建函数名相同，但函数签名不同的多个函数，所谓的函数签名，既指参数类型，也指参数的数量。 <!-- raw HTML omitted --></p>
-<p>如C++，Java都是支持函数重载的，而Rust是不支持函数重载的, 个人猜测可能是Rust最初的设计者认为函数重载可能会导致增加代码理解难度，尤其是在C++里面，隐式类型转换叠加函数重载，可能看代码都看不出实际调用的是哪个版本的函数。 <!-- raw HTML omitted --></p>
-<h2 id="rust版本的函数重载"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Rust版本的函数重载</h2>
-<p>但是我个人觉得函数重载在大部分情况下都是很方便，也不需要为相同的函数想不同的名字，毕竟命名是编程最难的问题之一。 <!-- raw HTML omitted -->
-今天重读 Programming Rust, 2nd Edition关于 <code>Into</code> 这个trait 的功能的时候，突然意识到，可以使用 <code>Into</code> 模拟出部分的函数重载功能。 <!-- raw HTML omitted --></p>
-<p>为什么说是「部分」呢，因为前文提到，所谓的函数重载是指多个同名但函数签名不一样的函数，而Rust能模拟的就是参数类型不一样，但是参数数量一致的重载函数。 <!-- raw HTML omitted --></p>
-<p>假设我们想实现自己的 <code>ping</code> 命名, 入参可以是 <a href="https://doc.rust-lang.org/std/net/struct.Ipv4Addr.html"><code>Ipv4Addr</code></a> 这个 struct, ipv4的地址也可以使用2进制来表示, 又或者可以使用 u32 来表示，毕竟只有32位。 <!-- raw HTML omitted --></p>
-<p>如果用 C++, 我们可以写3个重载函数，入参分别是, <code>Ipv4Addr</code>, <code>bitset</code> 和 <code>uint32</code>. 在 Rust, 我们也实现类似的函数： <!-- raw HTML omitted --></p>
+      <content:encoded><![CDATA[<h2 id="函数重载--function-overloading"><span class="section-num">1</span> 函数重载(function overloading)</h2>
+<p>所谓的函数重载，指的是某些语言支持创建函数名相同，但函数签名不同的多个函数，所谓的函数签名，既指参数类型，也指参数的数量。 <br/></p>
+<p>如C++，Java都是支持函数重载的，而Rust是不支持函数重载的, 个人猜测可能是Rust最初的设计者认为函数重载可能会导致增加代码理解难度，尤其是在C++里面，隐式类型转换叠加函数重载，可能看代码都看不出实际调用的是哪个版本的函数。 <br/></p>
+<h2 id="rust版本的函数重载"><span class="section-num">2</span> Rust版本的函数重载</h2>
+<p>但是我个人觉得函数重载在大部分情况下都是很方便，也不需要为相同的函数想不同的名字，毕竟命名是编程最难的问题之一。 <br/>
+今天重读 Programming Rust, 2nd Edition关于 <code>Into</code> 这个trait 的功能的时候，突然意识到，可以使用 <code>Into</code> 模拟出部分的函数重载功能。 <br/></p>
+<p>为什么说是「部分」呢，因为前文提到，所谓的函数重载是指多个同名但函数签名不一样的函数，而Rust能模拟的就是参数类型不一样，但是参数数量一致的重载函数。 <br/></p>
+<p>假设我们想实现自己的 <code>ping</code> 命名, 入参可以是 <a href="https://doc.rust-lang.org/std/net/struct.Ipv4Addr.html"><code>Ipv4Addr</code></a> 这个 struct, ipv4的地址也可以使用2进制来表示, 又或者可以使用 u32 来表示，毕竟只有32位。 <br/></p>
+<p>如果用 C++, 我们可以写3个重载函数，入参分别是, <code>Ipv4Addr</code>, <code>bitset</code> 和 <code>uint32</code>. 在 Rust, 我们也实现类似的函数： <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">net</span>::<span class="n">Ipv4Addr</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">ping</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">(</span><span class="n">address</span>: <span class="nc">A</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">std</span>::<span class="n">io</span>::<span class="nb">Result</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w"> </span><span class="n">A</span>: <span class="nb">Into</span><span class="o">&lt;</span><span class="n">Ipv4Addr</span><span class="o">&gt;</span><span class="w">
@@ -196,22 +196,22 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">ipv4_address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">into</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">..</span><span class="p">.</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>需要注意的是，上面函数的入参并不是 <code>Ipv4Addr</code>, 而是 <code>Into&lt;Ipv4Addr&gt;</code> ，这就是意味着，所有实现了 <code>Into&lt;Ipv4Addr&gt;</code> 这个 trait 的类型都可以是 <code>ping</code> 的入参，而恰好 <code>u32</code> 和 <code>[u8; 4]</code> 都实现了 <code>Into&lt;Ipv4Addr&gt;</code> ，所以下面的调用都是编译通过的： <!-- raw HTML omitted --></p>
+</span></span></span></code></pre></div><p>需要注意的是，上面函数的入参并不是 <code>Ipv4Addr</code>, 而是 <code>Into&lt;Ipv4Addr&gt;</code> ，这就是意味着，所有实现了 <code>Into&lt;Ipv4Addr&gt;</code> 这个 trait 的类型都可以是 <code>ping</code> 的入参，而恰好 <code>u32</code> 和 <code>[u8; 4]</code> 都实现了 <code>Into&lt;Ipv4Addr&gt;</code> ，所以下面的调用都是编译通过的： <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;{:?}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">ping</span><span class="p">(</span><span class="n">Ipv4Addr</span>::<span class="n">new</span><span class="p">(</span><span class="mi">23</span><span class="p">,</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">,</span><span class="w"> </span><span class="mi">141</span><span class="p">)));</span><span class="w"> </span><span class="c1">// pass an Ipv4Addr
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;{:?}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">ping</span><span class="p">([</span><span class="mi">66</span><span class="p">,</span><span class="w"> </span><span class="mi">146</span><span class="p">,</span><span class="w"> </span><span class="mi">219</span><span class="p">,</span><span class="w"> </span><span class="mi">98</span><span class="p">]));</span><span class="w">             </span><span class="c1">// pass a [u8; 4]
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;{:?}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">ping</span><span class="p">(</span><span class="mh">0xd076eb94_</span><span class="k">u32</span><span class="p">));</span><span class="w">                 </span><span class="c1">// pass a u32
-</span></span></span></code></pre></div><p>当然，如果你实现了 <code>impl From&lt;u32&gt; for Ipv4Addr</code>, Rust 编译器也会贴心地帮你把反向的 <code>Into&lt;Ipv4Addr&gt;</code> 也实现掉。 <!-- raw HTML omitted --></p>
-<h2 id="限制"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 限制</h2>
-<p>看完上面的函数实现，有经验的朋友可能就会发现了，Rust版本的函数重载限制比C++的要多。 <!-- raw HTML omitted --></p>
-<p>在C++版本的函数重载中： <!-- raw HTML omitted --></p>
+</span></span></span></code></pre></div><p>当然，如果你实现了 <code>impl From&lt;u32&gt; for Ipv4Addr</code>, Rust 编译器也会贴心地帮你把反向的 <code>Into&lt;Ipv4Addr&gt;</code> 也实现掉。 <br/></p>
+<h2 id="限制"><span class="section-num">3</span> 限制</h2>
+<p>看完上面的函数实现，有经验的朋友可能就会发现了，Rust版本的函数重载限制比C++的要多。 <br/></p>
+<p>在C++版本的函数重载中： <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">func1</span><span class="p">(</span><span class="n">Type1</span> <span class="n">foo</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">func1</span><span class="p">(</span><span class="n">Type2</span> <span class="n">bar</span><span class="p">);</span>
-</span></span></code></pre></div><p>参数类型 <code>Type1</code> 和 <code>Type2</code> 并不需要存在任何关系，但是在 Rust 版本中，需要两个类型之间支持相互转换，所以可以理解成 Rust 的「函数重载」本质就是通过显示类型转换来实现的。 <!-- raw HTML omitted --></p>
-<p>毕竟 Rust 设计初衷之一就是支持强类型，就函数重载而言，终归聊胜于无啦。 <!-- raw HTML omitted --></p>
-<h2 id="参考"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 参考</h2>
+</span></span></code></pre></div><p>参数类型 <code>Type1</code> 和 <code>Type2</code> 并不需要存在任何关系，但是在 Rust 版本中，需要两个类型之间支持相互转换，所以可以理解成 Rust 的「函数重载」本质就是通过显示类型转换来实现的。 <br/></p>
+<p>毕竟 Rust 设计初衷之一就是支持强类型，就函数重载而言，终归聊胜于无啦。 <br/></p>
+<h2 id="参考"><span class="section-num">4</span> 参考</h2>
 <ul>
-<li><a href="https://www.oreilly.com/library/view/programming-rust-2nd/9781492052586/">Programming Rust, 2nd Edition</a> <!-- raw HTML omitted --></li>
+<li><a href="https://www.oreilly.com/library/view/programming-rust-2nd/9781492052586/">Programming Rust, 2nd Edition</a> <br/></li>
 </ul>
 ]]></content:encoded>
     </item>
@@ -223,7 +223,7 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2023/rspotify_%E4%B8%80%E4%B8%AA%E7%94%A8%E7%88%B1%E5%8F%91%E7%94%B5%E4%BA%94%E5%B9%B4%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</guid>
       <description>1 前言 一周前看到个新闻，Spotify在其第四季度财报中披露，截至2022年12月31日，它的付费订阅用户数达到了2.05亿，同比增长14%</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>一周前看到个<a href="https://www.theverge.com/2023/1/31/23577499/spotify-q4-2022-earnings-release-subscriber-growth-layoffs">新闻</a>，Spotify在其第四季度财报中披露，截至2022年12月31日，它的付费订阅用户数达到了2.05亿，同比增长14%；
 月活用户4.89亿。Spotify成为第一家订阅用户数突破2亿的音乐流服务。</p>
 <p>而我突然意识到，我那个使用Rust, 为Spotify开发，挂在Sptofiy官网的<a href="https://developer.spotify.com/documentation/web-api/libraries/">library</a>：<a href="https://github.com/ramsayleung/rspotify">RSpotify</a>，已经维护有五年了：</p>
@@ -236,7 +236,7 @@
 </figure>
 
 <p>一件用爱发电的开源项目要坚持维护五年，也是有很多话可以说的。</p>
-<h2 id="起源"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 起源</h2>
+<h2 id="起源"><span class="section-num">2</span> 起源</h2>
 <p>还记得大三暑假时，也就是2017年，当时找好了实习，并且拿到了Return Offer.
 在拿到Offer之后，实习还没有离职，就想学习一门新的编程语言。</p>
 <p>因为之前用的是都是Java，Python之类的带GC的编程语言，就想学习点硬核，偏底层的编程语言。
@@ -256,8 +256,8 @@
 <p>虽说Spotify API是对外开放，但直接使用HttpClient来请求HTTP API有点太祼，所以就希望使用先封装个library，方便后续的Rust应用直接调用，就不需要自己操心Http请求了。</p>
 <p>这就是RSpotify这个库的来源。</p>
 <p>这次，我就只在 <a href="https://www.reddit.com/r/rust/comments/7xn9mh/my_first_crate_rspotify_spotify_api_wrapper/">Reddit</a>和<a href="https://ramsayleung.github.io/post/2018/rspotify/">博客</a> 上分享使用Rust来写library 的经历了。</p>
-<h2 id="演进"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 演进</h2>
-<h3 id="野蛮生长阶段"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 野蛮生长阶段</h3>
+<h2 id="演进"><span class="section-num">3</span> 演进</h2>
+<h3 id="野蛮生长阶段"><span class="section-num">3.1</span> 野蛮生长阶段</h3>
 <p>刚开始写RSpotify的时候，对于如何设计一个易用，友好的library 完全没有头绪，毕竟设计好用的类库需要相当的经验沉淀。</p>
 <p>对于没有设计思路的我而言，当时能想来的解决方案是去Spotify官方列出来的<a href="https://developer.spotify.com/documentation/web-api/libraries/">library</a>看下，哪个语言的library看得懂，star又多，就把这个library 翻译到Rust上。</p>
 <p>就把目光瞄准到Python版本的 <a href="https://github.com/spotipy-dev/spotipy">spotipy</a> 上。</p>
@@ -276,7 +276,7 @@
     <img loading="lazy" src="/ox-hugo/stats_0.10.png"/> </a>
 </figure>
 
-<h3 id="async-阶段"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> async 阶段</h3>
+<h3 id="async-阶段"><span class="section-num">3.2</span> async 阶段</h3>
 <p>时间来到2019年，对于Rust社区来说，<a href="https://www.reddit.com/r/rust/comments/ct7aus/stabilize_async_await_in_rust_1390/">最激动人心</a>的应该是Rust 1.39版本，将正式包含 <code>async/await</code> 特性，自那天起，Rust正式支持异步编程。</p>
 <p>自此之后，Rust社区在做的事情，就是把已有Rust代码疯狂升级到async await，RSpotify虽迟，但也赶上了这波潮流。</p>
 <p>当时RSpotify 请求Spotify的API使用的HTTP库是 <code>reqwest</code>，在 <code>reqwest</code> 支持异步模式之后，开发者 <a href="https://github.com/Rigellute">Alexander</a>就提了一个超大的<a href="https://github.com/ramsayleung/rspotify/pull/81">PR</a>，把所有已有的api全部修改成<code>async</code>, 我就乐见其成，就把这个PR合并了。</p>
@@ -293,7 +293,7 @@
 <p>从此以后，RSpotify就需要同时维护两份几乎相同的代码，每次新增，修改，删除都需要确保同时变更两份代码。
 着实痛苦不堪，但我也没有思考出更优解。</p>
 <p>这时候，后来和我共同维护RSpotify 的开发者 <a href="https://github.com/ramsayleung/rspotify/pull/102">Mario</a> 出现了。</p>
-<h3 id="maybe-async-阶段"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> maybe_async 阶段</h3>
+<h3 id="maybe-async-阶段"><span class="section-num">3.3</span> maybe_async 阶段</h3>
 <p>当时RSpotify最大的问题在于有两份几乎一样，但是使用同步调用和异步调用模式的代码。</p>
 <p>而异步调用的代码，返回参数都是一个 <code>Future&lt;T&gt;</code> ，将真正的响应结果封装在一个 <code>Future</code> 结构里面。</p>
 <p>所以当时Mario 提出的第一个<a href="https://github.com/ramsayleung/rspotify/issues/112">解决思路</a>，是将对异步代码进行封装，使用同步调用的runtime调用异步函数，然后再把响应结果返回回去：</p>
@@ -326,7 +326,7 @@
 默认是异步模式，但可以通过 <code>features = [&quot;is_sync&quot;]</code> 编译选项来切换到同步模式，<code>maybe_async</code> 就会把所有的<code>async/await</code> 关键字给去掉。</p>
 <p>这个方案简单，可读性高，易于扩展，也不需要维护复杂的 macro 代码。</p>
 <p>这也是我们最终采取的方案，重构之后，把 <code>blocking</code> 目录的近万行复制粘贴而来的代码删除掉，就非常爽。</p>
-<h3 id="二次重构-阶段"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> 二次重构 阶段</h3>
+<h3 id="二次重构-阶段"><span class="section-num">3.4</span> 二次重构 阶段</h3>
 <p>前面提到，RSpotify最开始是直接翻译spotipy的代码。
 因为Python是弱类型，而Rust是强类型，直接翻译，难免会有不少代码，写法没有纯正的Rust味道。</p>
 <p>社区的Kestrer同学就在一个<a href="https://github.com/ramsayleung/rspotify/issues/127">issue</a>里面，给RSpotify提了近90条优化建议，指出了RSpotify中设计的各种问题，包括强类型运用不当，使用过多的原始类型，函数出入参设计不够优雅，授权流程设计不够易用等等。</p>
@@ -347,7 +347,7 @@
 </figure>
 
 <p>期间提了大概20多个PR，花了超过一年的时间，才处理完Kestrer 提的所有建议。</p>
-<h3 id="pre-release-阶级"><!-- raw HTML omitted -->3.5<!-- raw HTML omitted --> pre-release 阶级</h3>
+<h3 id="pre-release-阶级"><span class="section-num">3.5</span> pre-release 阶级</h3>
 <p>在开源社区里面，有一个约定俗成的规范：
 当一个library 发布1.0 之后，就代表这个库已经处于稳定状态，不会再出现大量breaking change 的情况了。（py2, py3不在此约束内）</p>
 <p>而经过4年的开发，RSpotify 已经步入一个相对稳定的开发状态，没有太多的breaking change 或重构了，开始为发布正式的1.0release 版本作准备。</p>
@@ -361,8 +361,8 @@
 <li>性能优化，减少不必要的内存分配</li>
 </ol>
 <p>目前版本已经去到了 <code>0.11.6</code>, 功能也相对稳定, 预计不久后就会正式发布1.0版本。</p>
-<h2 id="感悟"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 感悟</h2>
-<h3 id="开源协作"><!-- raw HTML omitted -->4.1<!-- raw HTML omitted --> 开源协作</h3>
+<h2 id="感悟"><span class="section-num">4</span> 感悟</h2>
+<h3 id="开源协作"><span class="section-num">4.1</span> 开源协作</h3>
 <p>截至到2023-02-09，RSpotify一共有1673次commit, 但我和Mario都只贡献了1/3的commit，剩下的commit都是社区的其他开发者提交的。</p>
 <figure><a href="/ox-hugo/1673.png">
     <img loading="lazy" src="/ox-hugo/1673.png"/> </a>
@@ -390,7 +390,7 @@
 </ol>
 <p>开源协作的一个感受就是，在Github讨论问题的时候，可能突然有位大佬也加入群聊。</p>
 <p>比如和<a href="https://github.com/ramsayleung/rspotify/issues/204">Mario讨论</a>, 增加更多更严格cargo clippy 的rule，以便让编译器帮我们发现更多潜在问题时，cargo clippy 的maintainer 也加入讨论，就什么rule 更合适，给出自己的建议。</p>
-<h3 id="收获"><!-- raw HTML omitted -->4.2<!-- raw HTML omitted --> 收获</h3>
+<h3 id="收获"><span class="section-num">4.2</span> 收获</h3>
 <p>我用C++已经混了三年的饭吃了，但还只能看到C++的门槛，没法说入了C++的门。</p>
 <p>同理，虽然距离我学习Rust已经过去6年了，我依然感觉我还不会Rust，都是编译器教我写代码。</p>
 <p>在Review别人代码的过程中，我也学习到非常多「地道」和高级的Rust用法，项目维护的经验.</p>
@@ -410,7 +410,7 @@
 <li><a href="https://ramsayleung.github.io/post/2020/serde_lesson/">The lesson learned from refactoring rspotify</a></li>
 <li><a href="https://ramsayleung.github.io/post/2021/iterate_through_pagination_api/">Let&rsquo;s make everything iterable</a></li>
 </ul>
-<h3 id="关于开源"><!-- raw HTML omitted -->4.3<!-- raw HTML omitted --> 关于开源</h3>
+<h3 id="关于开源"><span class="section-num">4.3</span> 关于开源</h3>
 <p>维护这个项目5年之后，对于「开源」有了些不一样的理解。</p>
 <p>在1970 年代，Richard Stallman发起自由软件运动，旨在推广用户有使用，复制，研究，修改和分发软件的社会运动。
 自由软件运动人士认为自由软件的精神应该贯彻到所有软件。</p>
@@ -433,7 +433,7 @@
 <p>软件和生物一样，是有生命的，需要长期维护的，而不是一个commit把所有代码一把push 到Github就完事了，或者然后过了几年又push一把，更新几百个文件。</p>
 <p>开源是一个技术与管理结合的决定，需要把开发模式都切换到开源社区，决策过程与动机要对社区可见。</p>
 <p>不仅让人能从代码中读懂功能是「什么」，也要从动机讨论中知道「为什么」要这么改。</p>
-<h3 id="些许成果"><!-- raw HTML omitted -->4.4<!-- raw HTML omitted --> 些许成果</h3>
+<h3 id="些许成果"><span class="section-num">4.4</span> 些许成果</h3>
 <p>在Github上，收获了495个star，被1108个仓库及18个package 所依赖，而其中Alexander的 <a href="https://github.com/Rigellute/spotify-tui">spotify-tui</a> 就是我期望做的终端版本的Spotify。</p>
 <p>开源的好处就是，在开发好基础设施之后，自然就会有其他有相同想法的同学，把应用开发出来。</p>
 <figure><a href="/ox-hugo/dependent_packages.png">
@@ -446,11 +446,11 @@
 </figure>
 
 <p>对于有Rust，Spotify，Library等诸多定语的RSpotify来说，目标受众本来就不多，能有现在这样的用户量已远超我最初了预期了。</p>
-<h2 id="总结"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 总结</h2>
+<h2 id="总结"><span class="section-num">5</span> 总结</h2>
 <p>虽然我未曾从这个项目上获得到一分物质上的回报，但在创建这个项目的时候，我可能不会想到，我能维护它长达五年。</p>
 <p>天上的云，飘来又飘走；开源的项目，挖坑又弃坑。</p>
 <p>视线望不到下一个五年，唯有且行且看。</p>
-<h2 id="参考"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">6</span> 参考</h2>
 <ul>
 <li><a href="https://www.theverge.com/2023/1/31/23577499/spotify-q4-2022-earnings-release-subscriber-growth-layoffs">Spotify is first music streaming service to surpass 200M paid subscribers</a></li>
 <li><a href="https://github.com/ramsayleung/rspotify">RSpotify</a></li>
@@ -468,7 +468,7 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2023/%E4%B8%80%E4%B8%AA%E7%94%A8%E7%88%B1%E5%8F%91%E7%94%B5%E4%BA%94%E5%B9%B4%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</guid>
       <description>1 前言 一周前看到个新闻，Spotify在其第四季度财报中披露，截至2022年12月31日，它的付费订阅用户数达到了2.05亿，同比增长14%</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>一周前看到个<a href="https://www.theverge.com/2023/1/31/23577499/spotify-q4-2022-earnings-release-subscriber-growth-layoffs">新闻</a>，Spotify在其第四季度财报中披露，截至2022年12月31日，它的付费订阅用户数达到了2.05亿，同比增长14%；
 月活用户4.89亿。Spotify成为第一家订阅用户数突破2亿的音乐流服务。</p>
 <p>而我突然意识到，我那个使用Rust, 为Spotify开发，挂在Sptofiy官网的<a href="https://developer.spotify.com/documentation/web-api/libraries/">library</a>：<a href="https://github.com/ramsayleung/rspotify">RSpotify</a>，已经维护有五年了：</p>
@@ -481,7 +481,7 @@
 </figure>
 
 <p>一件用爱发电的开源项目要坚持维护五年，也是有很多话可以说的。</p>
-<h2 id="起源"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 起源</h2>
+<h2 id="起源"><span class="section-num">2</span> 起源</h2>
 <p>还记得大三暑假时，也就是2017年，当时找好了实习，并且拿到了Return Offer.
 在拿到Offer之后，实习还没有离职，就想学习一门新的编程语言。</p>
 <p>因为之前用的是都是Java，Python之类的带GC的编程语言，就想学习点硬核，偏底层的编程语言。
@@ -501,8 +501,8 @@
 <p>虽说Spotify API是对外开放，但直接使用HttpClient来请求HTTP API有点太祼，所以就希望使用先封装个library，方便后续的Rust应用直接调用，就不需要自己操心Http请求了。</p>
 <p>这就是RSpotify这个库的来源。</p>
 <p>这次，我就只在 <a href="https://www.reddit.com/r/rust/comments/7xn9mh/my_first_crate_rspotify_spotify_api_wrapper/">Reddit</a>和<a href="https://ramsayleung.github.io/post/2018/rspotify/">博客</a> 上分享使用Rust来写library 的经历了。</p>
-<h2 id="演进"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 演进</h2>
-<h3 id="野蛮生长阶段"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 野蛮生长阶段</h3>
+<h2 id="演进"><span class="section-num">3</span> 演进</h2>
+<h3 id="野蛮生长阶段"><span class="section-num">3.1</span> 野蛮生长阶段</h3>
 <p>刚开始写RSpotify的时候，对于如何设计一个易用，友好的library 完全没有头绪，毕竟设计好用的类库需要相当的经验沉淀。</p>
 <p>对于没有设计思路的我而言，当时能想来的解决方案是去Spotify官方列出来的<a href="https://developer.spotify.com/documentation/web-api/libraries/">library</a>看下，哪个语言的library看得懂，star又多，就把这个library 翻译到Rust上。</p>
 <p>就把目光瞄准到Python版本的 <a href="https://github.com/spotipy-dev/spotipy">spotipy</a> 上。</p>
@@ -521,7 +521,7 @@
     <img loading="lazy" src="/ox-hugo/stats_0.10.png"/> </a>
 </figure>
 
-<h3 id="async-阶段"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> async 阶段</h3>
+<h3 id="async-阶段"><span class="section-num">3.2</span> async 阶段</h3>
 <p>时间来到2019年，对于Rust社区来说，<a href="https://www.reddit.com/r/rust/comments/ct7aus/stabilize_async_await_in_rust_1390/">最激动人心</a>的应该是Rust 1.39版本，将正式包含 <code>async/await</code> 特性，自那天起，Rust正式支持异步编程。</p>
 <p>自此之后，Rust社区在做的事情，就是把已有Rust代码疯狂升级到async await，RSpotify虽迟，但也赶上了这波潮流。</p>
 <p>当时RSpotify 请求Spotify的API使用的HTTP库是 <code>reqwest</code>，在 <code>reqwest</code> 支持异步模式之后，开发者 <a href="https://github.com/Rigellute">Alexander</a>就提了一个超大的<a href="https://github.com/ramsayleung/rspotify/pull/81">PR</a>，把所有已有的api全部修改成<code>async</code>, 我就乐见其成，就把这个PR合并了。</p>
@@ -538,7 +538,7 @@
 <p>从此以后，RSpotify就需要同时维护两份几乎相同的代码，每次新增，修改，删除都需要确保同时变更两份代码。
 着实痛苦不堪，但我也没有思考出更优解。</p>
 <p>这时候，后来和我共同维护RSpotify 的开发者 <a href="https://github.com/ramsayleung/rspotify/pull/102">Mario</a> 出现了。</p>
-<h3 id="maybe-async-阶段"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> maybe_async 阶段</h3>
+<h3 id="maybe-async-阶段"><span class="section-num">3.3</span> maybe_async 阶段</h3>
 <p>当时RSpotify最大的问题在于有两份几乎一样，但是使用同步调用和异步调用模式的代码。</p>
 <p>而异步调用的代码，返回参数都是一个 <code>Future&lt;T&gt;</code> ，将真正的响应结果封装在一个 <code>Future</code> 结构里面。</p>
 <p>所以当时Mario 提出的第一个<a href="https://github.com/ramsayleung/rspotify/issues/112">解决思路</a>，是将对异步代码进行封装，使用同步调用的runtime调用异步函数，然后再把响应结果返回回去：</p>
@@ -571,7 +571,7 @@
 默认是异步模式，但可以通过 <code>features = [&quot;is_sync&quot;]</code> 编译选项来切换到同步模式，<code>maybe_async</code> 就会把所有的<code>async/await</code> 关键字给去掉。</p>
 <p>这个方案简单，可读性高，易于扩展，也不需要维护复杂的 macro 代码。</p>
 <p>这也是我们最终采取的方案，重构之后，把 <code>blocking</code> 目录的近万行复制粘贴而来的代码删除掉，就非常爽。</p>
-<h3 id="二次重构-阶段"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> 二次重构 阶段</h3>
+<h3 id="二次重构-阶段"><span class="section-num">3.4</span> 二次重构 阶段</h3>
 <p>前面提到，RSpotify最开始是直接翻译spotipy的代码。
 因为Python是弱类型，而Rust是强类型，直接翻译，难免会有不少代码，写法没有纯正的Rust味道。</p>
 <p>社区的Kestrer同学就在一个<a href="https://github.com/ramsayleung/rspotify/issues/127">issue</a>里面，给RSpotify提了近90条优化建议，指出了RSpotify中设计的各种问题，包括强类型运用不当，使用过多的原始类型，函数出入参设计不够优雅，授权流程设计不够易用等等。</p>
@@ -592,7 +592,7 @@
 </figure>
 
 <p>期间提了大概20多个PR，花了超过一年的时间，才处理完Kestrer 提的所有建议。</p>
-<h3 id="pre-release-阶级"><!-- raw HTML omitted -->3.5<!-- raw HTML omitted --> pre-release 阶级</h3>
+<h3 id="pre-release-阶级"><span class="section-num">3.5</span> pre-release 阶级</h3>
 <p>在开源社区里面，有一个约定俗成的规范：
 当一个library 发布1.0 之后，就代表这个库已经处于稳定状态，不会再出现大量breaking change 的情况了。（py2, py3不在此约束内）</p>
 <p>而经过4年的开发，RSpotify 已经步入一个相对稳定的开发状态，没有太多的breaking change 或重构了，开始为发布正式的1.0release 版本作准备。</p>
@@ -606,8 +606,8 @@
 <li>性能优化，减少不必要的内存分配</li>
 </ol>
 <p>目前版本已经去到了 <code>0.11.6</code>, 功能也相对稳定, 预计不久后就会正式发布1.0版本。</p>
-<h2 id="感悟"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 感悟</h2>
-<h3 id="开源协作"><!-- raw HTML omitted -->4.1<!-- raw HTML omitted --> 开源协作</h3>
+<h2 id="感悟"><span class="section-num">4</span> 感悟</h2>
+<h3 id="开源协作"><span class="section-num">4.1</span> 开源协作</h3>
 <p>截至到2023-02-09，RSpotify一共有1673次commit, 但我和Mario都只贡献了1/3的commit，剩下的commit都是社区的其他开发者提交的。</p>
 <figure><a href="/ox-hugo/1673.png">
     <img loading="lazy" src="/ox-hugo/1673.png"/> </a>
@@ -635,7 +635,7 @@
 </ol>
 <p>开源协作的一个感受就是，在Github讨论问题的时候，可能突然有位大佬也加入群聊。</p>
 <p>比如和<a href="https://github.com/ramsayleung/rspotify/issues/204">Mario讨论</a>, 增加更多更严格cargo clippy 的rule，以便让编译器帮我们发现更多潜在问题时，cargo clippy 的maintainer 也加入讨论，就什么rule 更合适，给出自己的建议。</p>
-<h3 id="收获"><!-- raw HTML omitted -->4.2<!-- raw HTML omitted --> 收获</h3>
+<h3 id="收获"><span class="section-num">4.2</span> 收获</h3>
 <p>我用C++已经混了三年的饭吃了，但还只能看到C++的门槛，没法说入了C++的门。</p>
 <p>同理，虽然距离我学习Rust已经过去6年了，我依然感觉我还不会Rust，都是编译器教我写代码。</p>
 <p>在Review别人代码的过程中，我也学习到非常多「地道」和高级的Rust用法，项目维护的经验.</p>
@@ -655,7 +655,7 @@
 <li><a href="https://ramsayleung.github.io/post/2020/serde_lesson/">The lesson learned from refactoring rspotify</a></li>
 <li><a href="https://ramsayleung.github.io/post/2021/iterate_through_pagination_api/">Let&rsquo;s make everything iterable</a></li>
 </ul>
-<h3 id="关于开源"><!-- raw HTML omitted -->4.3<!-- raw HTML omitted --> 关于开源</h3>
+<h3 id="关于开源"><span class="section-num">4.3</span> 关于开源</h3>
 <p>维护这个项目5年之后，对于「开源」有了些不一样的理解。</p>
 <p>在1970 年代，Richard Stallman发起自由软件运动，旨在推广用户有使用，复制，研究，修改和分发软件的社会运动。
 自由软件运动人士认为自由软件的精神应该贯彻到所有软件。</p>
@@ -678,7 +678,7 @@
 <p>软件和生物一样，是有生命的，需要长期维护的，而不是一个commit把所有代码一把push 到Github就完事了，或者然后过了几年又push一把，更新几百个文件。</p>
 <p>开源是一个技术与管理结合的决定，需要把开发模式都切换到开源社区，决策过程与动机要对社区可见。</p>
 <p>不仅让人能从代码中读懂功能是「什么」，也要从动机讨论中知道「为什么」要这么改。</p>
-<h3 id="些许成果"><!-- raw HTML omitted -->4.4<!-- raw HTML omitted --> 些许成果</h3>
+<h3 id="些许成果"><span class="section-num">4.4</span> 些许成果</h3>
 <p>在Github上，收获了495个star，被1108个仓库及18个package 所依赖，而其中Alexander的 <a href="https://github.com/Rigellute/spotify-tui">spotify-tui</a> 就是我期望做的终端版本的Spotify。</p>
 <p>开源的好处就是，在开发好基础设施之后，自然就会有其他有相同想法的同学，把应用开发出来。</p>
 <figure><a href="/ox-hugo/dependent_packages.png">
@@ -691,7 +691,7 @@
 </figure>
 
 <p>对于有Rust，Spotify，Library等诸多定语的RSpotify来说，目标受众本来就不多，能有现在这样的用户量已远超我最初了预期了。</p>
-<h2 id="总结"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 总结</h2>
+<h2 id="总结"><span class="section-num">5</span> 总结</h2>
 <p>虽然我未曾从这个项目上获得到一分物质上的回报，但在创建这个项目的时候，我可能不会想到，我能维护它长达五年。</p>
 <p>天上的云，飘来又飘走；开源的项目，挖坑又弃坑。</p>
 <p>视线望不到下一个五年，唯有且行且看。</p>
@@ -699,7 +699,7 @@
     <img loading="lazy" src="/ox-hugo/commitstrip_on_foss.jpeg"/> </a>
 </figure>
 
-<h2 id="参考"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">6</span> 参考</h2>
 <ul>
 <li><a href="https://www.theverge.com/2023/1/31/23577499/spotify-q4-2022-earnings-release-subscriber-growth-layoffs">Spotify is first music streaming service to surpass 200M paid subscribers</a></li>
 <li><a href="https://github.com/ramsayleung/rspotify">RSpotify</a></li>
@@ -721,10 +721,10 @@
 In order to know what this PR brought to us, we have to go back to the orignal story, the paginated results in Spotify&amp;rsquo;s Rest API.
 2 Orignal Story Taking the artist_albums as example, it gets Spotify catalog information about an artist&amp;rsquo;s albums.</description>
       <content:encoded><![CDATA[<p>Iterate through pagination in the Rest API</p>
-<h2 id="preface"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Preface</h2>
+<h2 id="preface"><span class="section-num">1</span> Preface</h2>
 <p>About 4 months ago, <a href="https://github.com/icewind1991">icewind1991</a> created an exciting <a href="https://github.com/ramsayleung/rspotify/pull/166">PR</a> that adding <code>Stream/Iterator</code> based versions of methods with paginated results, which makes enpoints in <a href="https://github.com/ramsayleung/rspotify">Rspotify</a> more much ergonomic to use, and <a href="https://github.com/marioortizmanero">Mario</a> completed this PR.</p>
 <p>In order to know what this PR brought to us, we have to go back to the orignal story, the paginated results in Spotify&rsquo;s Rest API.</p>
-<h2 id="orignal-story"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Orignal Story</h2>
+<h2 id="orignal-story"><span class="section-num">2</span> Orignal Story</h2>
 <p>Taking the <code>artist_albums</code> as example, it gets Spotify catalog information about an artist&rsquo;s albums.</p>
 <p>The HTTP response body for this endpoint contains an array of simplified <a href="https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedalbumobject">album object </a>wrapped in a <a href="https://developer.spotify.com/documentation/web-api/reference/#object-pagingobject">paging object</a> and use <code>limit</code> field to control the number of album objects to return and <code>offset</code> field to set the index of the first album to return.</p>
 <p>So designed endpoint in <code>Rspotify</code> looks like this:</p>
@@ -768,7 +768,7 @@ you would to get the data of the next page, you have to parse a URL:</p>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210429172938.png"/> 
 </figure>
 
-<h2 id="iterator-story"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Iterator Story</h2>
+<h2 id="iterator-story"><span class="section-num">3</span> Iterator Story</h2>
 <p>Since we have the basic knowledge about the background, let&rsquo;s jump to the iterator version of pagination endpoints.</p>
 <p>First of all, the iterator pattern allows us to perform some tasks on a sequence of items in turn. An iterator is responsible for the logic of itreating over each item and determining when the sequence has finished.</p>
 <p>If you want to know about about <code>Iterator</code>, Jon Gjengset has covered a brilliant <a href="https://www.youtube.com/watch?v=yozQ9C69pNs">tutorial</a> to demonstrate <code>Iterators</code> in Rust.</p>
@@ -832,7 +832,7 @@ you would to get the data of the next page, you have to parse a URL:</p>
 current full version code is
 <a href="https://github.com/ramsayleung/rspotify/blob/master/src/pagination/iter.rs">here</a>,
 check it if you are interested in :)</p>
-<h2 id="stream-story"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Stream Story</h2>
+<h2 id="stream-story"><span class="section-num">4</span> Stream Story</h2>
 <p>Are we done? Not yet. Let&rsquo;s move our eyes to stream story.</p>
 <p>The stream story is mostly similar with iterator story, except that
 iterator is synchronous, stream is asynchronous.</p>
@@ -877,7 +877,7 @@ to the <code>Iterator</code> trait.</p>
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="appendix"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> Appendix</h2>
+</span></span></span></code></pre></div><h2 id="appendix"><span class="section-num">5</span> Appendix</h2>
 <p>Whew! It took more than I expected. Since iterators is the Rust features inspired by functional programming language ideas, which contributes to Rust&rsquo;s capability to clearly express high-level ideas at low-level performance.</p>
 <p>It&rsquo;s good to leverage iterators wherever possible, now we can be thrilled to say that all endpoints don&rsquo;t need to manuallly loop over anymore, they are all iterable and rusty.</p>
 <p>Thanks Mario and icewind1991 again for their works :)</p>
@@ -895,13 +895,13 @@ to the <code>Iterator</code> trait.</p>
 I am partly focusing on polishing the data model, based on the issue created by Koxiaet.
 Since rspotify is API client for Spotify, it has to handle the request and response from Spotify HTTP API.</description>
       <content:encoded><![CDATA[<p>The lesson learned from refactoring rspotify</p>
-<h2 id="preface"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Preface</h2>
+<h2 id="preface"><span class="section-num">1</span> Preface</h2>
 <p>Recently, I and <a href="https://github.com/marioortizmanero">Mario</a> are working on refactoring <a href="https://github.com/ramsayleung/rspotify"><code>rspotify</code></a>, trying to improve performance, documentation, error-handling, data model and reduce compile time, to make it easier to use. (For those who has never heard about <code>rspotify</code>, it is a Spotify HTTP SDK implemented in Rust).</p>
 <p>I am partly focusing on polishing the data model, based on the <a href="https://github.com/ramsayleung/rspotify/issues/127">issue</a> created by <a href="https://github.com/Koxiaet">Koxiaet</a>.</p>
 <p>Since <code>rspotify</code> is API client for Spotify, it has to handle the request and response from Spotify HTTP API.</p>
 <p>Generally speaking, the data model is something about how to structure the response data, and used <a href="http://serde.rs/"><code>Serde</code></a> to parse JSON response from HTTP API to Rust <code>struct</code>, and I have learnt a lot Serde tricks from refactoring.</p>
-<h2 id="serde-lesson"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Serde Lesson</h2>
-<h3 id="deserialize-json-map-to-vec-based-on-its-value-dot"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> Deserialize JSON map to Vec based on its value.</h3>
+<h2 id="serde-lesson"><span class="section-num">2</span> Serde Lesson</h2>
+<h3 id="deserialize-json-map-to-vec-based-on-its-value-dot"><span class="section-num">2.1</span> Deserialize JSON map to Vec based on its value.</h3>
 <p>An actions object which contains a <code>disallows</code> object, allows to update the user interface based on which playback actions are available within the current context.</p>
 <p>The response JSON data from HTTP API:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
@@ -961,7 +961,7 @@ Since rspotify is API client for Spotify, it has to handle the request and respo
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>The types should be familiar if you&rsquo;ve used <code>Serde</code> before.</p>
 <p>If you&rsquo;re not used to Rust then the function signature will likely look a little strange. What it&rsquo;s trying to tell is that d will be something that implements <code>Serde</code>&rsquo;s <code>Deserializer</code> trait, and that any references to memory will live for the <code>'de</code> lifetime.</p>
-<h3 id="deserialize-unix-milliseconds-timestamp-to-datetime"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> Deserialize Unix milliseconds timestamp to Datetime</h3>
+<h3 id="deserialize-unix-milliseconds-timestamp-to-datetime"><span class="section-num">2.2</span> Deserialize Unix milliseconds timestamp to Datetime</h3>
 <p>A currently playing object which contains information about currently playing item, and the <code>timestamp</code> field is an integer, representing the Unix millisecond timestamp when data was fetched.</p>
 <p>The response JSON data from HTTP API:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
@@ -1059,7 +1059,7 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>The <code>to_millisecond_timestamp</code> function is similar to <code>from_millisecond_timestamp</code>, but it&rsquo;s eaiser to implement, check
 <a href="https://github.com/ramsayleung/rspotify/pull/157/files#">this PR</a> for more detail.</p>
-<h3 id="deserialize-milliseconds-to-duration"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> Deserialize milliseconds to Duration</h3>
+<h3 id="deserialize-milliseconds-to-duration"><span class="section-num">2.3</span> Deserialize milliseconds to Duration</h3>
 <p>The simplified episode object contains the simplified episode information, and the <code>duration_ms</code> field is an integer, which represents the episode length in milliseconds.</p>
 <p>The response JSON data from HTTP API:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
@@ -1119,7 +1119,7 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">d</span><span class="p">.</span><span class="n">deserialize_u64</span><span class="p">(</span><span class="n">DurationVisitor</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>Now, the life is easier than before.</p>
-<h3 id="deserialize-milliseconds-to-option"><!-- raw HTML omitted -->2.4<!-- raw HTML omitted --> Deserialize milliseconds to Option</h3>
+<h3 id="deserialize-milliseconds-to-option"><span class="section-num">2.4</span> Deserialize milliseconds to Option</h3>
 <p>Let&rsquo;s go back to <code>CurrentlyPlayingContext</code> model, since we have replaced millisecond (represents as <code>u32</code>) with <code>Duration</code>, it makes sense to replace all millisecond fields to <code>Duration</code>.</p>
 <p>But hold on, it seems <code>progress_ms</code> field is a bit different.</p>
 <p>The <code>progress_ms</code> field is either not present or a millisecond, the <code>u32</code> handles the milliseconds, as its value might not be present in the response, it&rsquo;s an <code>Option&lt;u32&gt;</code>, so it won&rsquo;t work with <code>from_duration_ms</code>.</p>
@@ -1127,7 +1127,7 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 <blockquote>
 <p>Hint that the <code>Deserialize</code> type is expecting an optional value.</p>
 </blockquote>
-<!-- raw HTML omitted -->
+<!--quoteend-->
 <blockquote>
 <p>This allows deserializers that encode an optional value as a nullable value to convert the null value into <code>None</code> and a regular value into <code>Some(value)</code>.</p>
 </blockquote>
@@ -1180,7 +1180,7 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>The <code>visit_none</code> method return <code>Ok(None)</code> so the <code>progress</code> value in the struct will be None, and the <code>visit_some</code> delegates the parsing logic to <code>DurationVisitor</code> via the <code>deserialize_u64</code> call, so deserializing <code>Some(u64)</code> works like the <code>u64</code>.</p>
-<h3 id="deserialize-enum-from-number"><!-- raw HTML omitted -->2.5<!-- raw HTML omitted --> Deserialize enum from number</h3>
+<h3 id="deserialize-enum-from-number"><span class="section-num">2.5</span> Deserialize enum from number</h3>
 <p>An <code>AudioAnalysisSection</code> model contains a <code>mode</code> field, which indicates the modality(major or minor) of a track, the type of scle from which its melodic content is derived. This field will contain a 0 for <code>minor</code>, a 1 for <code>major</code>, or a -1 for no result.</p>
 <p>The response JSON data from HTTP API:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
@@ -1267,7 +1267,7 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="move-into-module"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Move into module</h2>
+</span></span></span></code></pre></div><h2 id="move-into-module"><span class="section-num">3</span> Move into module</h2>
 <p>Update:</p>
 <p>2021-01-15</p>
 <ul>
@@ -1275,10 +1275,10 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 <li><code>from(to)_duration_ms</code> have been moved into its module <code>duration_ms</code> and rename them to <code>deserialize</code> &amp; <code>serialize</code></li>
 <li><code>from(to)_option_duration_ms</code> have been moved into its module <code>option_duration_ms</code> and rename them to <code>deserialize</code> &amp; <code>serialize</code></li>
 </ul>
-<h2 id="summary"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Summary</h2>
+<h2 id="summary"><span class="section-num">4</span> Summary</h2>
 <p>To be honest, it&rsquo;s the first time I have needed some customized works, which took me some time to understand how does <code>Serde</code> works. Finally, all investments paid off, it works great now.</p>
 <p>Serde is such an awesome deserialize/serialize framework which I have learnt a lot of from and still have a lot of to learn from.</p>
-<h2 id="reference"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> Reference</h2>
+<h2 id="reference"><span class="section-num">5</span> Reference</h2>
 <ul>
 <li><a href="https://chrismcg.com/2019/04/30/deserializing-optional-datetimes-with-serde/">Deserializing optional datetimes with serde</a></li>
 <li><a href="https://github.com/ramsayleung/rspotify/pull/157">PR: Keep polishing the models</a></li>
@@ -1297,10 +1297,10 @@ construction. And it turns out that there is a way to construct <code>DateTime</
       <description>1 Preface Today, I am exited to introduce you the v0.9 release I have been continued to work on it for the past few weeks that adds async/await support now!
 2 The road to async/await What is rspotify: &amp;gt; For those who has never heared about rspotify before, rspotify is a Spotify web Api wrapper implemented in Rust.
 With async/await&amp;rsquo;s forthcoming stabilization and reqwest adds async/await support now, I think it&amp;rsquo;s time to let rspotify leverage power from async/await.</description>
-      <content:encoded><![CDATA[<h2 id="preface"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Preface</h2>
+      <content:encoded><![CDATA[<h2 id="preface"><span class="section-num">1</span> Preface</h2>
 <p>Today, I am exited to introduce you the <a href="https://github.com/ramsayleung/rspotify/releases/tag/v0.9">v0.9</a> release I have been continued to work on it for the past few weeks that
 adds <code>async/await</code> support now!</p>
-<h2 id="the-road-to-async-await"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> The road to async/await</h2>
+<h2 id="the-road-to-async-await"><span class="section-num">2</span> The road to async/await</h2>
 <p>What is rspotify: &gt; For those who has never heared about rspotify
 before, <a href="https://github.com/ramsayleung/rspotify">rspotify</a> is a
 Spotify web Api wrapper implemented in Rust.</p>
@@ -1322,7 +1322,7 @@ send HTTP request and handle response asynchronously.</p>
 version, but also keep the old blocking endpoint functions with a new
 additional feature <code>blocking</code>, then other developers could choose API to
 their taste.</p>
-<h2 id="overview"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Overview</h2>
+<h2 id="overview"><span class="section-num">3</span> Overview</h2>
 <p><code>album</code> example:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">rspotify</span>::<span class="n">client</span>::<span class="n">Spotify</span><span class="p">;</span><span class="w">
@@ -1362,7 +1362,7 @@ the import path:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">rspotify</span>::<span class="n">client</span>::<span class="n">Spotify</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">rspotify</span>::<span class="n">oauth2</span>::<span class="n">SpotifyClientCredentials</span><span class="p">;</span><span class="w">
 </span></span></span></code></pre></div><p>the <code>spotify</code> module is unnecessary and inelegant, so I just remove it.</p>
-<h2 id="conclusion"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Conclusion</h2>
+<h2 id="conclusion"><span class="section-num">4</span> Conclusion</h2>
 <p><a href="https://github.com/ramsayleung/rspotify/releases/tag/v0.9">rspotify v0.9</a> is now available! There is <a href="https://docs.rs/crate/rspotify/">documentation</a>, <a href="https://github.com/ramsayleung/rspotify/tree/master/examples">examples</a> and an <a href="https://github.com/ramsayleung/rspotify/issues/new">issue</a>
 tracker!</p>
 <p>Please provide any feedback, as I would love to improve this library any way I can! Thanks <a href="https://github.com/Rigellute">@Alexander</a> so much for actively participate in the refactor work for support
@@ -1380,8 +1380,8 @@ tracker!</p>
       <content:encoded><![CDATA[<p>开发第一个Rust crate 的感受和踩到的坑</p>
 <p>最近写了人生第一个 Rust crate&ndash; <a href="https://github.com/samrayleung/rspotify">rspotify</a>. 虽说并不是什么惊天地，泣鬼神的大作，但是也是我花费了近两个月实现的。</p>
 <p>现在就来聊聊这个开发过程的感悟和踩到的坑</p>
-<h2 id="感悟"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 感悟</h2>
-<h3 id="函数的缺省值"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> 函数的缺省值</h3>
+<h2 id="感悟"><span class="section-num">1</span> 感悟</h2>
+<h3 id="函数的缺省值"><span class="section-num">1.1</span> 函数的缺省值</h3>
 <p>因为我是参考着 Python 版本的 Spotify API SDK 来写 rspotify的，Spotify 某些API 需要请求的时候附加上默认值，例如在获取一个歌手最热的10首歌的时候需要指定country.</p>
 <p>因为Python 的函数是有缺省参数的，所以用 python 来实现就很方便</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">artist_top_tracks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artist_id</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;US&#39;</span><span class="p">):</span>
@@ -1462,7 +1462,7 @@ tracker!</p>
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>虽说不如Python 那样优雅，但是看起来还是不错滴</p>
-<h3 id="错误处理"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> 错误处理</h3>
+<h3 id="错误处理"><span class="section-num">1.2</span> 错误处理</h3>
 <p>对于一个 library 而言，错误处理是设计的重要一环。</p>
 <p>因为我之前只有开发应用的经验， 而开发应用的错误处理和开发类库的错误处理显然需要考虑的东西不一样，所以我还谨慎思考过这个问题。后来，我决定不处理调用Spotify API 或者其他操作导致的错误，将错误进行一次包装(wrap), 然后再返回给library 的调用者。</p>
 <p>最开始的时候，我是自己定义错误类型的，后来觉得过于累赘，就用上<code>error_chain</code>. 用上 error_chain 之后， <code>errors.rs</code>这个文件也非常简单：</p>
@@ -1483,7 +1483,7 @@ tracker!</p>
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nb">Ok</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>这个函数是将 Spotify 的响应体映射成对应的 object(例如 playlist, album 等). 如果转换过程出错了，那么就返回<code>convert result failed, content {:?}</code>错误信息之后，返回 <code>serde_json</code> 转换时出现的错误信息。</p>
-<h3 id="reddit-plus-clippy"><!-- raw HTML omitted -->1.3<!-- raw HTML omitted --> Reddit+clippy</h3>
+<h3 id="reddit-plus-clippy"><span class="section-num">1.3</span> Reddit+clippy</h3>
 <p>剩下的是在纠结定义一个函数传参的时候是传值，参数是 mutable 还是 immutable, 以及其他类似的考虑。</p>
 <p>或许 Effective Rust 和 More Effective Rust 出现之后，我读完就知道什么样的设计才是 best practice. 因为有诸多设计的不确定，所以在完成rspotify 90% 的代码量之后，我在 <a href="https://www.reddit.com/r/rust/comments/7xn9mh/my_first_crate_rspotify_spotify_api_wrapper/">Reddit</a>
 上发贴，邀请社区的同学来 review code 以帮我完善代码。</p>
@@ -1491,14 +1491,14 @@ tracker!</p>
 <a href="https://github.com/rust-lang-nursery/rust-clippy">clippy</a> 这个大杀器， clippy 就代码的编写给出了非常多的建议，比如将函数 <code>Vec&lt;String&gt;</code> 的参数类型修改成
 <code>&amp;[String]</code>, 因为函数并没有使用(consume) 这个参数，所以传引用比传值更合适，类似 的建议不胜枚举。</p>
 <p>最后在 clippy 的建议下， 我几乎将所有的 clippy warning 都消除掉。 邀请别人经常帮你 review code 有点不实际，但是 clippy 确是不会因为帮你审查代码而感到厌烦的，真的是非常强大的工具</p>
-<h2 id="坑"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 坑</h2>
-<h3 id="debugger"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> Debugger</h3>
+<h2 id="坑"><span class="section-num">2</span> 坑</h2>
+<h3 id="debugger"><span class="section-num">2.1</span> Debugger</h3>
 <p>虽说 Rust 也有Debugger&ndash; gdb-rust. gdb 我以前写c 的时候用过，gdb 熟悉程度虽然谈 不上精通，但是也能熟练使用。但是用gdb-rust 调试并不是非常便利，比如在使用 <a href="https://rocket.rs/">Rocket</a> 这个Web框架的时候，就很难使用gdb来调试Web程序。</p>
 <p>虽说 <a href="https://intellij-rust.github.io/">intellij-rust</a> 这个 Intellij Idea 的插件也支 持Debugger, 但是只有配合<a href="https://www.jetbrains.com/clion/">Clion</a>才能使用。因为 只有 Clion 才能调用 gdb, 无奈。所以在开发 rspotify 的时候，我用得都是 <code>println!()</code>调试大法。</p>
-<h3 id="编译器bug"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 编译器Bug</h3>
+<h3 id="编译器bug"><span class="section-num">2.2</span> 编译器Bug</h3>
 <p>战战兢兢地开发着，终于到发布到 <a href="https://crates.io/">crates.io</a> 的大喜日子了，怎知在发布之后一直没办法看到生成的文档，本地不是一切正常么？</p>
 <p>后来在<a href="https://www.reddit.com/r/rust/comments/7yrofg/rspotify_is_published_to_cratesio/">社区</a> 同学的提醒下， 我才发现我踩到了 Rust 编译器的一个bug, 最后我就顺手提交了一个 <a href="https://github.com/rust-lang/rust/issues/48368">issue</a>, 虽说这个问题已经在 <code>nightly</code> 里面修复了。</p>
-<h2 id="结语"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 结语</h2>
+<h2 id="结语"><span class="section-num">3</span> 结语</h2>
 <p>前后两个月的时间，终于发布了 rspotify. 项目不大，但是也是我花费时间，精力去开发的，也得到其他同学的肯定，喔耶 :)</p>
 ]]></content:encoded>
     </item>
@@ -1511,10 +1511,10 @@ tracker!</p>
       <guid>https://ramsayleung.github.io/zh/post/2018/error_handle_in_rust_2/</guid>
       <description>自定义错误和error_chain 库 1 前言 上一篇文章聊到 Rust 的错误处理机制，以及和 Java 的简单比较，现在就来聊一下如何在 Rust 自定义错误，以及引入 er</description>
       <content:encoded><![CDATA[<p>自定义错误和<code>error_chain</code> 库</p>
-<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>上一篇文章聊到 Rust 的错误处理机制，以及和 Java 的简单比较，现在就来聊一下如何在 Rust 自定义错误，以及引入 <code>error_chain</code>这个库来优雅地进行错误处理。</p>
 <p>还有，少不了用 Java 来做对比咯:)</p>
-<h3 id="java-自定义异常"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> Java 自定义异常</h3>
+<h3 id="java-自定义异常"><span class="section-num">1.1</span> Java 自定义异常</h3>
 <p>前文简单提到 Java 的错误和异常但是继承自一个 <code>Throwable</code>的父类，既然异常是继承自异常父类的，我们自定义异常的时候，
 也可以模仿JDK, 继承一个异常类：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyException</span> <span class="kd">extends</span> <span class="n">Exception</span> <span class="o">{</span>
@@ -1567,7 +1567,7 @@ tracker!</p>
 <p><code>MyError</code>这个异常类是 继承于 <code>RuntimeException</code>的，并调用了 <code>RuntimeException</code>的构造方法。</p>
 <p>因为我的项目是 WEB 服务的业务层，要处理大量的逻辑，难免会出现异常.</p>
 <p>比如说可能调用方调用接口 的时候，入参不符合规范，我就抛出一个经过包装的 <code>BadParameterError</code> 异常，对于接 口调用方，这样会比一个单纯的 400 错误要友好，其他的异常也是同理。</p>
-<h3 id="rust-自定义错误"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> Rust 自定义错误</h3>
+<h3 id="rust-自定义错误"><span class="section-num">1.2</span> Rust 自定义错误</h3>
 <p>对于习惯了 OOP 编程的同学来说，Java 的异常是很容易理解，但是回到 Rust 身上，Rust是没有父类一说的，显然，Rust 是没可能套用 Java 的自定义异常的方式的。</p>
 <p>Rust 用的是 <code>trait</code>, <code>trait</code>就有点类似 Java 的 =interface=(只是类似，不是等同!).</p>
 <p>按照 Rust 的规范，Rust 允许开发者定义自己的错误，设计良好的错误应该包含以下的特性：</p>
@@ -1588,7 +1588,7 @@ tracker!</p>
 </li>
 <li>可以很方便地与其他错误结合</li>
 </ol>
-<!-- raw HTML omitted -->
+<!--listend-->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">error</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">fmt</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">num</span>::<span class="n">ParseIntError</span><span class="p">;</span><span class="w">
@@ -1649,12 +1649,12 @@ tracker!</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">The first doubled is 84
 </span></span><span class="line"><span class="cl">Error: invalid first item to double
 </span></span><span class="line"><span class="cl">Error: invalid first item to double
-</span></span></code></pre></div><h3 id="error-chain"><!-- raw HTML omitted -->1.3<!-- raw HTML omitted --> error_chain</h3>
+</span></span></code></pre></div><h3 id="error-chain"><span class="section-num">1.3</span> error_chain</h3>
 <p>虽说 Rust 自定义错误很灵活和方便，但是如果每次定义异常都需要实现 <code>Display</code> 和 <code>Error</code>, 未免过于繁琐，现在来介绍
 <a href="https://github.com/rust-lang-nursery/error-chain">error_chain</a> 这个类库。</p>
 <p><code>error_chain</code> 是由 Rust 项目组的 leader&ndash;<a href="https://brson.github.io/">Brian Anderson</a> 编写的异常处理库，可以让你更舒心<del>简单不粗 暴</del>地定义错误。</p>
 <hr>
-<h4 id="error-chain示例"><!-- raw HTML omitted -->1.3.1<!-- raw HTML omitted --> error_chain示例</h4>
+<h4 id="error-chain示例"><span class="section-num">1.3.1</span> error_chain示例</h4>
 <p>以上面的 <code>DoubleError</code>为例，并改写 error_chain 的官方<a href="https://github.com/rust-lang-nursery/error-chain/blob/master/examples/quickstart.rs">例子</a> 以实现相同的效果，代码如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// `error_chain!` 的递归深度
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#![recursion_limit = </span><span class="s">&#34;1024&#34;</span><span class="cp">]</span><span class="w">
@@ -1704,7 +1704,7 @@ tracker!</p>
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>运行这代码可以得到和上面小节同样的输出。</p>
-<h4 id="error-chain-详解"><!-- raw HTML omitted -->1.3.2<!-- raw HTML omitted --> error_chain 详解</h4>
+<h4 id="error-chain-详解"><span class="section-num">1.3.2</span> error_chain 详解</h4>
 <p>刚刚就先目睹了一下 <code>error_chain</code> 的芳容了，现在是时候来解剖一下 <code>error_chain</code>, 这次就以 <code>error_chain</code>的 <a href="https://github.com/rust-lang-nursery/error-chain/blob/master/examples/quickstart.rs">example</a>来解释</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// Simple and robust error handling with error-chain!
 </span></span></span><span class="line"><span class="cl"><span class="c1">// Use this as a template for new projects.
@@ -1776,9 +1776,9 @@ tracker!</p>
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>可以看出，这个函数的大部份逻辑是进行错误处理，例如返回自定义的 <code>Result</code>和 <code>Error</code>, 然后处理这些错误。上面的处理流程显示了 <code>error_chain</code> 从某个错误继承而来的三样信息：最近出现的错误(即<code>e</code>)，导致错误的调用链，原来错误的堆栈信息 (<code>e.backtrace()</code>)</p>
-<h2 id="小结"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 小结</h2>
+<h2 id="小结"><span class="section-num">2</span> 小结</h2>
 <p>刚刚的例子只是 <code>error_chain</code> 小试了一波牛刀，如果想要了解更多关于 Rust 异常处理 的细节，就需要看看 Rust 的文档咯</p>
-<h2 id="参考"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">3</span> 参考</h2>
 <ul>
 <li><a href="https://rustbyexample.com/error.html">rust by example</a></li>
 <li><a href="https://brson.github.io/2016/11/30/starting-with-error-chain">starting with error chain</a></li>
@@ -1798,14 +1798,14 @@ tracker!</p>
       <guid>https://ramsayleung.github.io/zh/post/2018/error_handle_in_rust_1/</guid>
       <description>拉上Java 来谈谈 Rust的错误处理 1 前言 每个语言都会有异常处理机制（没有异常处理机制的语言估计也没有人会用了），Rust 自然也不例外，所以</description>
       <content:encoded><![CDATA[<p>拉上Java 来谈谈 Rust的错误处理</p>
-<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>每个语言都会有异常处理机制（没有异常处理机制的语言估计也没有人会用了），Rust 自然也不例外，所以今天我就来谈Rust 的异常处理，因为 Rust 的异常处理跟常见的语言 （Java/Python 等）的处理机制差异略大，所以打算拉个上个语言，对比着解释. 没错，这 个光荣的任务就落到了 Java 身上</p>
-<h2 id="java-的异常处理"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Java 的异常处理</h2>
+<h2 id="java-的异常处理"><span class="section-num">2</span> Java 的异常处理</h2>
 <p>在谈 Rust 的异常处理之前，为了把它们之前的差异讲清楚，先来聊一下 Java 的异常处理。</p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/java_exception_hierarchy.png"
          alt="Figure 1: Java exception hierarchy"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->Java exception hierarchy</p>
+            <p><span class="figure-number">Figure 1: </span>Java exception hierarchy</p>
         </figcaption>
 </figure>
 
@@ -1821,13 +1821,13 @@ not try to catch. Most such errors are abnormal conditions.</p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191104104407.png"
          alt="Figure 2: JRE fatal error"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->JRE fatal error</p>
+            <p><span class="figure-number">Figure 2: </span>JRE fatal error</p>
         </figcaption>
 </figure>
 
 <p>我还顺便给 Oracle 报了个<a href="https://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8196769">Bug</a> :)</p>
 <p>至于<code>RuntimeException</code> 就是类似数组越界，空指针这些异常，即无法在程序编译时发现，只有在运行的时候才会出 现的问题，所以叫做运行时异常(<code>RuntimeException</code>).</p>
-<h2 id="checked-exception"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Checked Exception</h2>
+<h2 id="checked-exception"><span class="section-num">3</span> Checked Exception</h2>
 <p>Java的<code>Checked Exception</code>, 也就是Java 要求你必须在函数的类型里面声明或处理它可能抛出的异常。比如，你的函数如果是这样：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">foo</span><span class="o">(</span><span class="n">string</span> <span class="n">filename</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span>
 </span></span><span class="line"><span class="cl"><span class="o">{</span>
@@ -1847,7 +1847,7 @@ not try to catch. Most such errors are abnormal conditions.</p>
 <p>同理，在使用 <code>foo()</code>这个函数 的时候，可能会抛出 <code>IOException</code> 这个异常，由于编译器看到了这个声明，它会严格检 查你对 <code>foo</code>
 函数的用法。</p>
 <p>在我看来，<code>CheckedException</code>是Java 优良的设计之一，正因 为<code>Checked Exception</code>的存在，会更容易编写出正确处理错误的程序，更健壮的程序</p>
-<h2 id="rust-的异常处理"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Rust 的异常处理</h2>
+<h2 id="rust-的异常处理"><span class="section-num">4</span> Rust 的异常处理</h2>
 <p>Rust 是一个注重安全（Safety）的语言，而错误处理也是 Rust关注的要点之一。</p>
 <p>Rust 主要是将错误划分成两种类型，分别是可恢复的错误(recoverable error) 和不可恢复错误 (unrecoverable error).</p>
 <p>出现可恢复的错误的原因多种多样，例如打开文件的时候，文件找不到或者没有读权限等，开发者就应该对这种可能出现的错误进行处理；</p>
@@ -1871,7 +1871,7 @@ not try to catch. Most such errors are abnormal conditions.</p>
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="fm">panic!</span><span class="p">(</span><span class="s">&#34;couldn&#39;t open {:?}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">why</span><span class="p">.</span><span class="n">description</span><span class="p">())</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">};</span><span class="w">
-</span></span></span></code></pre></div><h2 id="java-的异常传递"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> Java 的异常传递</h2>
+</span></span></span></code></pre></div><h2 id="java-的异常传递"><span class="section-num">5</span> Java 的异常传递</h2>
 <p>在程序中，总会有一些错误需要处理，但是却不应该在错误出现的函数进行处理的情况(或者是，你很懒惰，只想应付一下编译器，不想处理出现的异常 :)</p>
 <p>比如你正在编写一个类 库，里面有很多的IO 操作，有IO 操作的地方就有可能出现<code>IOException</code>. 如果出现异常，
 你不应该自己在类库把异常给 <code>try-catch</code>了，如果这样，使用你类库的开发者就没办法知 道程序出现了异常，异常的堆栈也丢了。</p>
@@ -1888,7 +1888,7 @@ not try to catch. Most such errors are abnormal conditions.</p>
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="o">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></div><p>当然，你也可以在添加了额外的信息之后，直接把原来的异常抛出来</p>
-<h2 id="rust-的异常传递"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> Rust 的异常传递</h2>
+<h2 id="rust-的异常传递"><span class="section-num">6</span> Rust 的异常传递</h2>
 <p>刚刚谈了 Java 的异常传递，现在轮到 Rust 的异常传递了，既然Rust 没有 <code>Exception</code>一说，那 Rust 传递的自然也是 <code>Result&lt;T,E&gt;</code>
 这个枚举类型(这里针对的是 可恢复错误，不可恢复错误出现错误的时候，会返回错误并弹出程序，自然不存在异常传递).</p>
 <p>先来看看 Rust 的异常传递的例子：</p>
@@ -1916,7 +1916,7 @@ fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
 错误的时候，返回的是 <code>io::Error</code>. 这里的异常传递是在出现 <code>io::Error</code>的时候，将错误原样返回，不然就是返
 回函数执行成功的结果。</p>
 <p>就异常传递的方式而言，Rust 和 Java 是大同小异：声明可能抛出的异常和成功时返回的结果，然后在遇到错误的时候，直接（或者包装一下）返回错误。</p>
-<h3 id="关键字"><!-- raw HTML omitted -->6.1<!-- raw HTML omitted --> ? 关键字</h3>
+<h3 id="关键字"><span class="section-num">6.1</span> ? 关键字</h3>
 <p>虽说 Rust 的异常处理很清晰，但是每次都要 <code>match</code> 然后返回未免太繁琐了，所以 Rust 提供了一个语法糖来显示繁琐的异常传递：用
 &ldquo;?&rdquo; 关键字进行异常传递：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">io</span><span class="p">;</span><span class="w">
@@ -1930,10 +1930,10 @@ fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nb">Ok</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>同样的功能，但是模板代码却减少了很多 :)</p>
-<h3 id="unwrap-和-expect"><!-- raw HTML omitted -->6.2<!-- raw HTML omitted --> unwrap 和 expect</h3>
+<h3 id="unwrap-和-expect"><span class="section-num">6.2</span> unwrap 和 expect</h3>
 <p>虽说 Rust 的可恢复错误设计得很优雅，但是每次遇到可能出现错误得地方都要显示地进行 处理，不免让人觉得繁琐.</p>
 <p>Rust 也考虑到这种情况了，提供了 <code>unwrap()</code> 和 <code>expect()</code>让你舒心<del>简单粗暴</del>地处理错误：在函数调用成功的时候返回正确的结果，在 出现错误地时候直接 <code>panic!()</code>,并退出程序</p>
-<h4 id="unwrap"><!-- raw HTML omitted -->6.2.1<!-- raw HTML omitted --> unwrap</h4>
+<h4 id="unwrap"><span class="section-num">6.2.1</span> unwrap</h4>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">File</span>::<span class="n">open</span><span class="p">(</span><span class="s">&#34;hello.txt&#34;</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
@@ -1941,7 +1941,7 @@ fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
 <pre tabindex="0"><code class="language-log" data-lang="log">thread &#39;main&#39; panicked at &#39;called `Result::unwrap()` on an `Err` value: Error {
 repr: Os { code: 2, message: &#34;No such file or directory&#34; } }&#39;,
 /stable-dist-rustc/build/src/libcore/result.rs:868
-</code></pre><h4 id="expect"><!-- raw HTML omitted -->6.2.2<!-- raw HTML omitted --> expect</h4>
+</code></pre><h4 id="expect"><span class="section-num">6.2.2</span> expect</h4>
 <p><code>expect()</code>和 <code>unwrap()</code>类似，只不过 <code>expect()</code>可以加上额外的信息：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">fs</span>::<span class="n">File</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -1953,11 +1953,11 @@ repr: Os { code: 2, message: &#34;No such file or directory&#34; } }&#39;,
 2, message: &#34;No such file or directory&#34; } }&#39;,
 /stable-dist-rustc/build/src/libcore/result.rs:868
 </code></pre><p>以上代码来自 <a href="https://doc.rust-lang.org/book/second-edition/ch09-02-recoverable-errors-with-result.html">Rust book</a></p>
-<h2 id="结语"><!-- raw HTML omitted -->7<!-- raw HTML omitted --> 结语</h2>
+<h2 id="结语"><span class="section-num">7</span> 结语</h2>
 <p>以上只是浅谈了 Rust 的错误处理，以及和 Java 的异常处理机制的简单比较，接下来我会 谈谈如何自定义<code>Error</code>以及使用
 <code>erro_chain</code> 这个库来优雅地进行错误处理 :)</p>
 <p>如果想了解更多关于 Rust 异常处理的内容，可以查阅 Rust book <a href="https://doc.rust-lang.org/book/second-edition/ch09-00-error-handling.html">Error handle</a></p>
-<h2 id="参考"><!-- raw HTML omitted -->8<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">8</span> 参考</h2>
 <ul>
 <li><a href="http://tutorials.jenkov.com/exception-handling-strategies/propagating-exceptions.html">propagating exceptions</a></li>
 <li><a href="https://doc.rust-lang.org/book/second-edition/">Rust book</a></li>

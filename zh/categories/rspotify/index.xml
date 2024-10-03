@@ -20,7 +20,7 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2023/rspotify_%E4%B8%80%E4%B8%AA%E7%94%A8%E7%88%B1%E5%8F%91%E7%94%B5%E4%BA%94%E5%B9%B4%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</guid>
       <description>1 前言 一周前看到个新闻，Spotify在其第四季度财报中披露，截至2022年12月31日，它的付费订阅用户数达到了2.05亿，同比增长14%</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>一周前看到个<a href="https://www.theverge.com/2023/1/31/23577499/spotify-q4-2022-earnings-release-subscriber-growth-layoffs">新闻</a>，Spotify在其第四季度财报中披露，截至2022年12月31日，它的付费订阅用户数达到了2.05亿，同比增长14%；
 月活用户4.89亿。Spotify成为第一家订阅用户数突破2亿的音乐流服务。</p>
 <p>而我突然意识到，我那个使用Rust, 为Spotify开发，挂在Sptofiy官网的<a href="https://developer.spotify.com/documentation/web-api/libraries/">library</a>：<a href="https://github.com/ramsayleung/rspotify">RSpotify</a>，已经维护有五年了：</p>
@@ -33,7 +33,7 @@
 </figure>
 
 <p>一件用爱发电的开源项目要坚持维护五年，也是有很多话可以说的。</p>
-<h2 id="起源"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 起源</h2>
+<h2 id="起源"><span class="section-num">2</span> 起源</h2>
 <p>还记得大三暑假时，也就是2017年，当时找好了实习，并且拿到了Return Offer.
 在拿到Offer之后，实习还没有离职，就想学习一门新的编程语言。</p>
 <p>因为之前用的是都是Java，Python之类的带GC的编程语言，就想学习点硬核，偏底层的编程语言。
@@ -53,8 +53,8 @@
 <p>虽说Spotify API是对外开放，但直接使用HttpClient来请求HTTP API有点太祼，所以就希望使用先封装个library，方便后续的Rust应用直接调用，就不需要自己操心Http请求了。</p>
 <p>这就是RSpotify这个库的来源。</p>
 <p>这次，我就只在 <a href="https://www.reddit.com/r/rust/comments/7xn9mh/my_first_crate_rspotify_spotify_api_wrapper/">Reddit</a>和<a href="https://ramsayleung.github.io/post/2018/rspotify/">博客</a> 上分享使用Rust来写library 的经历了。</p>
-<h2 id="演进"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 演进</h2>
-<h3 id="野蛮生长阶段"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 野蛮生长阶段</h3>
+<h2 id="演进"><span class="section-num">3</span> 演进</h2>
+<h3 id="野蛮生长阶段"><span class="section-num">3.1</span> 野蛮生长阶段</h3>
 <p>刚开始写RSpotify的时候，对于如何设计一个易用，友好的library 完全没有头绪，毕竟设计好用的类库需要相当的经验沉淀。</p>
 <p>对于没有设计思路的我而言，当时能想来的解决方案是去Spotify官方列出来的<a href="https://developer.spotify.com/documentation/web-api/libraries/">library</a>看下，哪个语言的library看得懂，star又多，就把这个library 翻译到Rust上。</p>
 <p>就把目光瞄准到Python版本的 <a href="https://github.com/spotipy-dev/spotipy">spotipy</a> 上。</p>
@@ -73,7 +73,7 @@
     <img loading="lazy" src="/ox-hugo/stats_0.10.png"/> </a>
 </figure>
 
-<h3 id="async-阶段"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> async 阶段</h3>
+<h3 id="async-阶段"><span class="section-num">3.2</span> async 阶段</h3>
 <p>时间来到2019年，对于Rust社区来说，<a href="https://www.reddit.com/r/rust/comments/ct7aus/stabilize_async_await_in_rust_1390/">最激动人心</a>的应该是Rust 1.39版本，将正式包含 <code>async/await</code> 特性，自那天起，Rust正式支持异步编程。</p>
 <p>自此之后，Rust社区在做的事情，就是把已有Rust代码疯狂升级到async await，RSpotify虽迟，但也赶上了这波潮流。</p>
 <p>当时RSpotify 请求Spotify的API使用的HTTP库是 <code>reqwest</code>，在 <code>reqwest</code> 支持异步模式之后，开发者 <a href="https://github.com/Rigellute">Alexander</a>就提了一个超大的<a href="https://github.com/ramsayleung/rspotify/pull/81">PR</a>，把所有已有的api全部修改成<code>async</code>, 我就乐见其成，就把这个PR合并了。</p>
@@ -90,7 +90,7 @@
 <p>从此以后，RSpotify就需要同时维护两份几乎相同的代码，每次新增，修改，删除都需要确保同时变更两份代码。
 着实痛苦不堪，但我也没有思考出更优解。</p>
 <p>这时候，后来和我共同维护RSpotify 的开发者 <a href="https://github.com/ramsayleung/rspotify/pull/102">Mario</a> 出现了。</p>
-<h3 id="maybe-async-阶段"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> maybe_async 阶段</h3>
+<h3 id="maybe-async-阶段"><span class="section-num">3.3</span> maybe_async 阶段</h3>
 <p>当时RSpotify最大的问题在于有两份几乎一样，但是使用同步调用和异步调用模式的代码。</p>
 <p>而异步调用的代码，返回参数都是一个 <code>Future&lt;T&gt;</code> ，将真正的响应结果封装在一个 <code>Future</code> 结构里面。</p>
 <p>所以当时Mario 提出的第一个<a href="https://github.com/ramsayleung/rspotify/issues/112">解决思路</a>，是将对异步代码进行封装，使用同步调用的runtime调用异步函数，然后再把响应结果返回回去：</p>
@@ -123,7 +123,7 @@
 默认是异步模式，但可以通过 <code>features = [&quot;is_sync&quot;]</code> 编译选项来切换到同步模式，<code>maybe_async</code> 就会把所有的<code>async/await</code> 关键字给去掉。</p>
 <p>这个方案简单，可读性高，易于扩展，也不需要维护复杂的 macro 代码。</p>
 <p>这也是我们最终采取的方案，重构之后，把 <code>blocking</code> 目录的近万行复制粘贴而来的代码删除掉，就非常爽。</p>
-<h3 id="二次重构-阶段"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> 二次重构 阶段</h3>
+<h3 id="二次重构-阶段"><span class="section-num">3.4</span> 二次重构 阶段</h3>
 <p>前面提到，RSpotify最开始是直接翻译spotipy的代码。
 因为Python是弱类型，而Rust是强类型，直接翻译，难免会有不少代码，写法没有纯正的Rust味道。</p>
 <p>社区的Kestrer同学就在一个<a href="https://github.com/ramsayleung/rspotify/issues/127">issue</a>里面，给RSpotify提了近90条优化建议，指出了RSpotify中设计的各种问题，包括强类型运用不当，使用过多的原始类型，函数出入参设计不够优雅，授权流程设计不够易用等等。</p>
@@ -144,7 +144,7 @@
 </figure>
 
 <p>期间提了大概20多个PR，花了超过一年的时间，才处理完Kestrer 提的所有建议。</p>
-<h3 id="pre-release-阶级"><!-- raw HTML omitted -->3.5<!-- raw HTML omitted --> pre-release 阶级</h3>
+<h3 id="pre-release-阶级"><span class="section-num">3.5</span> pre-release 阶级</h3>
 <p>在开源社区里面，有一个约定俗成的规范：
 当一个library 发布1.0 之后，就代表这个库已经处于稳定状态，不会再出现大量breaking change 的情况了。（py2, py3不在此约束内）</p>
 <p>而经过4年的开发，RSpotify 已经步入一个相对稳定的开发状态，没有太多的breaking change 或重构了，开始为发布正式的1.0release 版本作准备。</p>
@@ -158,8 +158,8 @@
 <li>性能优化，减少不必要的内存分配</li>
 </ol>
 <p>目前版本已经去到了 <code>0.11.6</code>, 功能也相对稳定, 预计不久后就会正式发布1.0版本。</p>
-<h2 id="感悟"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 感悟</h2>
-<h3 id="开源协作"><!-- raw HTML omitted -->4.1<!-- raw HTML omitted --> 开源协作</h3>
+<h2 id="感悟"><span class="section-num">4</span> 感悟</h2>
+<h3 id="开源协作"><span class="section-num">4.1</span> 开源协作</h3>
 <p>截至到2023-02-09，RSpotify一共有1673次commit, 但我和Mario都只贡献了1/3的commit，剩下的commit都是社区的其他开发者提交的。</p>
 <figure><a href="/ox-hugo/1673.png">
     <img loading="lazy" src="/ox-hugo/1673.png"/> </a>
@@ -187,7 +187,7 @@
 </ol>
 <p>开源协作的一个感受就是，在Github讨论问题的时候，可能突然有位大佬也加入群聊。</p>
 <p>比如和<a href="https://github.com/ramsayleung/rspotify/issues/204">Mario讨论</a>, 增加更多更严格cargo clippy 的rule，以便让编译器帮我们发现更多潜在问题时，cargo clippy 的maintainer 也加入讨论，就什么rule 更合适，给出自己的建议。</p>
-<h3 id="收获"><!-- raw HTML omitted -->4.2<!-- raw HTML omitted --> 收获</h3>
+<h3 id="收获"><span class="section-num">4.2</span> 收获</h3>
 <p>我用C++已经混了三年的饭吃了，但还只能看到C++的门槛，没法说入了C++的门。</p>
 <p>同理，虽然距离我学习Rust已经过去6年了，我依然感觉我还不会Rust，都是编译器教我写代码。</p>
 <p>在Review别人代码的过程中，我也学习到非常多「地道」和高级的Rust用法，项目维护的经验.</p>
@@ -207,7 +207,7 @@
 <li><a href="https://ramsayleung.github.io/post/2020/serde_lesson/">The lesson learned from refactoring rspotify</a></li>
 <li><a href="https://ramsayleung.github.io/post/2021/iterate_through_pagination_api/">Let&rsquo;s make everything iterable</a></li>
 </ul>
-<h3 id="关于开源"><!-- raw HTML omitted -->4.3<!-- raw HTML omitted --> 关于开源</h3>
+<h3 id="关于开源"><span class="section-num">4.3</span> 关于开源</h3>
 <p>维护这个项目5年之后，对于「开源」有了些不一样的理解。</p>
 <p>在1970 年代，Richard Stallman发起自由软件运动，旨在推广用户有使用，复制，研究，修改和分发软件的社会运动。
 自由软件运动人士认为自由软件的精神应该贯彻到所有软件。</p>
@@ -230,7 +230,7 @@
 <p>软件和生物一样，是有生命的，需要长期维护的，而不是一个commit把所有代码一把push 到Github就完事了，或者然后过了几年又push一把，更新几百个文件。</p>
 <p>开源是一个技术与管理结合的决定，需要把开发模式都切换到开源社区，决策过程与动机要对社区可见。</p>
 <p>不仅让人能从代码中读懂功能是「什么」，也要从动机讨论中知道「为什么」要这么改。</p>
-<h3 id="些许成果"><!-- raw HTML omitted -->4.4<!-- raw HTML omitted --> 些许成果</h3>
+<h3 id="些许成果"><span class="section-num">4.4</span> 些许成果</h3>
 <p>在Github上，收获了495个star，被1108个仓库及18个package 所依赖，而其中Alexander的 <a href="https://github.com/Rigellute/spotify-tui">spotify-tui</a> 就是我期望做的终端版本的Spotify。</p>
 <p>开源的好处就是，在开发好基础设施之后，自然就会有其他有相同想法的同学，把应用开发出来。</p>
 <figure><a href="/ox-hugo/dependent_packages.png">
@@ -243,11 +243,11 @@
 </figure>
 
 <p>对于有Rust，Spotify，Library等诸多定语的RSpotify来说，目标受众本来就不多，能有现在这样的用户量已远超我最初了预期了。</p>
-<h2 id="总结"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 总结</h2>
+<h2 id="总结"><span class="section-num">5</span> 总结</h2>
 <p>虽然我未曾从这个项目上获得到一分物质上的回报，但在创建这个项目的时候，我可能不会想到，我能维护它长达五年。</p>
 <p>天上的云，飘来又飘走；开源的项目，挖坑又弃坑。</p>
 <p>视线望不到下一个五年，唯有且行且看。</p>
-<h2 id="参考"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">6</span> 参考</h2>
 <ul>
 <li><a href="https://www.theverge.com/2023/1/31/23577499/spotify-q4-2022-earnings-release-subscriber-growth-layoffs">Spotify is first music streaming service to surpass 200M paid subscribers</a></li>
 <li><a href="https://github.com/ramsayleung/rspotify">RSpotify</a></li>
@@ -265,7 +265,7 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2023/%E4%B8%80%E4%B8%AA%E7%94%A8%E7%88%B1%E5%8F%91%E7%94%B5%E4%BA%94%E5%B9%B4%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</guid>
       <description>1 前言 一周前看到个新闻，Spotify在其第四季度财报中披露，截至2022年12月31日，它的付费订阅用户数达到了2.05亿，同比增长14%</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>一周前看到个<a href="https://www.theverge.com/2023/1/31/23577499/spotify-q4-2022-earnings-release-subscriber-growth-layoffs">新闻</a>，Spotify在其第四季度财报中披露，截至2022年12月31日，它的付费订阅用户数达到了2.05亿，同比增长14%；
 月活用户4.89亿。Spotify成为第一家订阅用户数突破2亿的音乐流服务。</p>
 <p>而我突然意识到，我那个使用Rust, 为Spotify开发，挂在Sptofiy官网的<a href="https://developer.spotify.com/documentation/web-api/libraries/">library</a>：<a href="https://github.com/ramsayleung/rspotify">RSpotify</a>，已经维护有五年了：</p>
@@ -278,7 +278,7 @@
 </figure>
 
 <p>一件用爱发电的开源项目要坚持维护五年，也是有很多话可以说的。</p>
-<h2 id="起源"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 起源</h2>
+<h2 id="起源"><span class="section-num">2</span> 起源</h2>
 <p>还记得大三暑假时，也就是2017年，当时找好了实习，并且拿到了Return Offer.
 在拿到Offer之后，实习还没有离职，就想学习一门新的编程语言。</p>
 <p>因为之前用的是都是Java，Python之类的带GC的编程语言，就想学习点硬核，偏底层的编程语言。
@@ -298,8 +298,8 @@
 <p>虽说Spotify API是对外开放，但直接使用HttpClient来请求HTTP API有点太祼，所以就希望使用先封装个library，方便后续的Rust应用直接调用，就不需要自己操心Http请求了。</p>
 <p>这就是RSpotify这个库的来源。</p>
 <p>这次，我就只在 <a href="https://www.reddit.com/r/rust/comments/7xn9mh/my_first_crate_rspotify_spotify_api_wrapper/">Reddit</a>和<a href="https://ramsayleung.github.io/post/2018/rspotify/">博客</a> 上分享使用Rust来写library 的经历了。</p>
-<h2 id="演进"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 演进</h2>
-<h3 id="野蛮生长阶段"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 野蛮生长阶段</h3>
+<h2 id="演进"><span class="section-num">3</span> 演进</h2>
+<h3 id="野蛮生长阶段"><span class="section-num">3.1</span> 野蛮生长阶段</h3>
 <p>刚开始写RSpotify的时候，对于如何设计一个易用，友好的library 完全没有头绪，毕竟设计好用的类库需要相当的经验沉淀。</p>
 <p>对于没有设计思路的我而言，当时能想来的解决方案是去Spotify官方列出来的<a href="https://developer.spotify.com/documentation/web-api/libraries/">library</a>看下，哪个语言的library看得懂，star又多，就把这个library 翻译到Rust上。</p>
 <p>就把目光瞄准到Python版本的 <a href="https://github.com/spotipy-dev/spotipy">spotipy</a> 上。</p>
@@ -318,7 +318,7 @@
     <img loading="lazy" src="/ox-hugo/stats_0.10.png"/> </a>
 </figure>
 
-<h3 id="async-阶段"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> async 阶段</h3>
+<h3 id="async-阶段"><span class="section-num">3.2</span> async 阶段</h3>
 <p>时间来到2019年，对于Rust社区来说，<a href="https://www.reddit.com/r/rust/comments/ct7aus/stabilize_async_await_in_rust_1390/">最激动人心</a>的应该是Rust 1.39版本，将正式包含 <code>async/await</code> 特性，自那天起，Rust正式支持异步编程。</p>
 <p>自此之后，Rust社区在做的事情，就是把已有Rust代码疯狂升级到async await，RSpotify虽迟，但也赶上了这波潮流。</p>
 <p>当时RSpotify 请求Spotify的API使用的HTTP库是 <code>reqwest</code>，在 <code>reqwest</code> 支持异步模式之后，开发者 <a href="https://github.com/Rigellute">Alexander</a>就提了一个超大的<a href="https://github.com/ramsayleung/rspotify/pull/81">PR</a>，把所有已有的api全部修改成<code>async</code>, 我就乐见其成，就把这个PR合并了。</p>
@@ -335,7 +335,7 @@
 <p>从此以后，RSpotify就需要同时维护两份几乎相同的代码，每次新增，修改，删除都需要确保同时变更两份代码。
 着实痛苦不堪，但我也没有思考出更优解。</p>
 <p>这时候，后来和我共同维护RSpotify 的开发者 <a href="https://github.com/ramsayleung/rspotify/pull/102">Mario</a> 出现了。</p>
-<h3 id="maybe-async-阶段"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> maybe_async 阶段</h3>
+<h3 id="maybe-async-阶段"><span class="section-num">3.3</span> maybe_async 阶段</h3>
 <p>当时RSpotify最大的问题在于有两份几乎一样，但是使用同步调用和异步调用模式的代码。</p>
 <p>而异步调用的代码，返回参数都是一个 <code>Future&lt;T&gt;</code> ，将真正的响应结果封装在一个 <code>Future</code> 结构里面。</p>
 <p>所以当时Mario 提出的第一个<a href="https://github.com/ramsayleung/rspotify/issues/112">解决思路</a>，是将对异步代码进行封装，使用同步调用的runtime调用异步函数，然后再把响应结果返回回去：</p>
@@ -368,7 +368,7 @@
 默认是异步模式，但可以通过 <code>features = [&quot;is_sync&quot;]</code> 编译选项来切换到同步模式，<code>maybe_async</code> 就会把所有的<code>async/await</code> 关键字给去掉。</p>
 <p>这个方案简单，可读性高，易于扩展，也不需要维护复杂的 macro 代码。</p>
 <p>这也是我们最终采取的方案，重构之后，把 <code>blocking</code> 目录的近万行复制粘贴而来的代码删除掉，就非常爽。</p>
-<h3 id="二次重构-阶段"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> 二次重构 阶段</h3>
+<h3 id="二次重构-阶段"><span class="section-num">3.4</span> 二次重构 阶段</h3>
 <p>前面提到，RSpotify最开始是直接翻译spotipy的代码。
 因为Python是弱类型，而Rust是强类型，直接翻译，难免会有不少代码，写法没有纯正的Rust味道。</p>
 <p>社区的Kestrer同学就在一个<a href="https://github.com/ramsayleung/rspotify/issues/127">issue</a>里面，给RSpotify提了近90条优化建议，指出了RSpotify中设计的各种问题，包括强类型运用不当，使用过多的原始类型，函数出入参设计不够优雅，授权流程设计不够易用等等。</p>
@@ -389,7 +389,7 @@
 </figure>
 
 <p>期间提了大概20多个PR，花了超过一年的时间，才处理完Kestrer 提的所有建议。</p>
-<h3 id="pre-release-阶级"><!-- raw HTML omitted -->3.5<!-- raw HTML omitted --> pre-release 阶级</h3>
+<h3 id="pre-release-阶级"><span class="section-num">3.5</span> pre-release 阶级</h3>
 <p>在开源社区里面，有一个约定俗成的规范：
 当一个library 发布1.0 之后，就代表这个库已经处于稳定状态，不会再出现大量breaking change 的情况了。（py2, py3不在此约束内）</p>
 <p>而经过4年的开发，RSpotify 已经步入一个相对稳定的开发状态，没有太多的breaking change 或重构了，开始为发布正式的1.0release 版本作准备。</p>
@@ -403,8 +403,8 @@
 <li>性能优化，减少不必要的内存分配</li>
 </ol>
 <p>目前版本已经去到了 <code>0.11.6</code>, 功能也相对稳定, 预计不久后就会正式发布1.0版本。</p>
-<h2 id="感悟"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 感悟</h2>
-<h3 id="开源协作"><!-- raw HTML omitted -->4.1<!-- raw HTML omitted --> 开源协作</h3>
+<h2 id="感悟"><span class="section-num">4</span> 感悟</h2>
+<h3 id="开源协作"><span class="section-num">4.1</span> 开源协作</h3>
 <p>截至到2023-02-09，RSpotify一共有1673次commit, 但我和Mario都只贡献了1/3的commit，剩下的commit都是社区的其他开发者提交的。</p>
 <figure><a href="/ox-hugo/1673.png">
     <img loading="lazy" src="/ox-hugo/1673.png"/> </a>
@@ -432,7 +432,7 @@
 </ol>
 <p>开源协作的一个感受就是，在Github讨论问题的时候，可能突然有位大佬也加入群聊。</p>
 <p>比如和<a href="https://github.com/ramsayleung/rspotify/issues/204">Mario讨论</a>, 增加更多更严格cargo clippy 的rule，以便让编译器帮我们发现更多潜在问题时，cargo clippy 的maintainer 也加入讨论，就什么rule 更合适，给出自己的建议。</p>
-<h3 id="收获"><!-- raw HTML omitted -->4.2<!-- raw HTML omitted --> 收获</h3>
+<h3 id="收获"><span class="section-num">4.2</span> 收获</h3>
 <p>我用C++已经混了三年的饭吃了，但还只能看到C++的门槛，没法说入了C++的门。</p>
 <p>同理，虽然距离我学习Rust已经过去6年了，我依然感觉我还不会Rust，都是编译器教我写代码。</p>
 <p>在Review别人代码的过程中，我也学习到非常多「地道」和高级的Rust用法，项目维护的经验.</p>
@@ -452,7 +452,7 @@
 <li><a href="https://ramsayleung.github.io/post/2020/serde_lesson/">The lesson learned from refactoring rspotify</a></li>
 <li><a href="https://ramsayleung.github.io/post/2021/iterate_through_pagination_api/">Let&rsquo;s make everything iterable</a></li>
 </ul>
-<h3 id="关于开源"><!-- raw HTML omitted -->4.3<!-- raw HTML omitted --> 关于开源</h3>
+<h3 id="关于开源"><span class="section-num">4.3</span> 关于开源</h3>
 <p>维护这个项目5年之后，对于「开源」有了些不一样的理解。</p>
 <p>在1970 年代，Richard Stallman发起自由软件运动，旨在推广用户有使用，复制，研究，修改和分发软件的社会运动。
 自由软件运动人士认为自由软件的精神应该贯彻到所有软件。</p>
@@ -475,7 +475,7 @@
 <p>软件和生物一样，是有生命的，需要长期维护的，而不是一个commit把所有代码一把push 到Github就完事了，或者然后过了几年又push一把，更新几百个文件。</p>
 <p>开源是一个技术与管理结合的决定，需要把开发模式都切换到开源社区，决策过程与动机要对社区可见。</p>
 <p>不仅让人能从代码中读懂功能是「什么」，也要从动机讨论中知道「为什么」要这么改。</p>
-<h3 id="些许成果"><!-- raw HTML omitted -->4.4<!-- raw HTML omitted --> 些许成果</h3>
+<h3 id="些许成果"><span class="section-num">4.4</span> 些许成果</h3>
 <p>在Github上，收获了495个star，被1108个仓库及18个package 所依赖，而其中Alexander的 <a href="https://github.com/Rigellute/spotify-tui">spotify-tui</a> 就是我期望做的终端版本的Spotify。</p>
 <p>开源的好处就是，在开发好基础设施之后，自然就会有其他有相同想法的同学，把应用开发出来。</p>
 <figure><a href="/ox-hugo/dependent_packages.png">
@@ -488,7 +488,7 @@
 </figure>
 
 <p>对于有Rust，Spotify，Library等诸多定语的RSpotify来说，目标受众本来就不多，能有现在这样的用户量已远超我最初了预期了。</p>
-<h2 id="总结"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 总结</h2>
+<h2 id="总结"><span class="section-num">5</span> 总结</h2>
 <p>虽然我未曾从这个项目上获得到一分物质上的回报，但在创建这个项目的时候，我可能不会想到，我能维护它长达五年。</p>
 <p>天上的云，飘来又飘走；开源的项目，挖坑又弃坑。</p>
 <p>视线望不到下一个五年，唯有且行且看。</p>
@@ -496,7 +496,7 @@
     <img loading="lazy" src="/ox-hugo/commitstrip_on_foss.jpeg"/> </a>
 </figure>
 
-<h2 id="参考"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">6</span> 参考</h2>
 <ul>
 <li><a href="https://www.theverge.com/2023/1/31/23577499/spotify-q4-2022-earnings-release-subscriber-growth-layoffs">Spotify is first music streaming service to surpass 200M paid subscribers</a></li>
 <li><a href="https://github.com/ramsayleung/rspotify">RSpotify</a></li>

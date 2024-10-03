@@ -22,17 +22,17 @@
       <description>1 Introduction 1.1 IaC Infrastructure as code(IaC) is the managing and provisioning of infrastructure through code instead of manual processes, for example, clicking button, adding or editing roles in AWS console.
 1.2 AWS CloudFormation AWS CloudFormation is the original IaC tool for AWS, released in 2011, which uses template files to automate and mange the setup of AWS resources.
 1.3 AWS CDK AWS Cloud Development Kit(CDK) is a product provided by AWS that makes it easier for developers to manage their infrastructure with familiar programming languages like TypeScript, Python, Java, etc.</description>
-      <content:encoded><![CDATA[<h2 id="introduction"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Introduction</h2>
-<h3 id="iac"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> IaC</h3>
+      <content:encoded><![CDATA[<h2 id="introduction"><span class="section-num">1</span> Introduction</h2>
+<h3 id="iac"><span class="section-num">1.1</span> IaC</h3>
 <p>Infrastructure as code(IaC) is the managing and provisioning of infrastructure through code instead of manual processes, for example, clicking button, adding or editing roles in AWS console.</p>
-<h3 id="aws-cloudformation"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> AWS CloudFormation</h3>
+<h3 id="aws-cloudformation"><span class="section-num">1.2</span> AWS CloudFormation</h3>
 <p>AWS CloudFormation is the original IaC tool for AWS, released in 2011, which uses template files to automate and mange the setup of AWS resources.</p>
-<h3 id="aws-cdk"><!-- raw HTML omitted -->1.3<!-- raw HTML omitted --> AWS CDK</h3>
+<h3 id="aws-cdk"><span class="section-num">1.3</span> AWS CDK</h3>
 <p>AWS Cloud Development Kit(CDK) is a product provided by AWS that makes it easier for developers to manage their infrastructure with familiar programming languages like TypeScript, Python, Java, etc.</p>
 <p>And, CDK is standing on the shoulder of Cloudformation, providing tools for developers by leveraging Cloudformation.</p>
 <p>A stack is a collection of AWS resources that you can manage as a single unit, like a box.</p>
 <p>For instance, this box could include all the resources required to run an application or Lambda service, such as S3 Buckets (storage), Roles (authorization), Lambda Function (computing), API Gateway (access point), Alarm, Monitoring, etc.</p>
-<h2 id="problem"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Problem</h2>
+<h2 id="problem"><span class="section-num">2</span> Problem</h2>
 <p>I am currently working on a project which requires to set up two stacks, one stack( <code>GlueStack</code> ) for defining a list of AWS Glue tables and the other stack( <code>ServiceStack</code> ) for definition of Lambda service and associated resources.</p>
 <figure>
     <img loading="lazy" src="/ox-hugo/two_stacks.jpg"/> 
@@ -47,7 +47,7 @@
     <img loading="lazy" src="/ox-hugo/s3_bucket_problem.jpg"/> 
 </figure>
 
-<h2 id="solution"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Solution</h2>
+<h2 id="solution"><span class="section-num">3</span> Solution</h2>
 <p>Fortunately, CDK offers a facility named <code>CfnOutput</code> to export a deployed resource, so that the consumer of the resource is able to <code>Import</code> required resource.</p>
 <figure>
     <img loading="lazy" src="/ox-hugo/export.jpg"/> 
@@ -90,7 +90,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>This is the way about how to share value between two stacks.</p>
 <hr>
-<h2 id="loose-couping-solution"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Loose couping solution</h2>
+<h2 id="loose-couping-solution"><span class="section-num">4</span> Loose couping solution</h2>
 <p>Updated on 2023-12-02</p>
 <p>People learn from mistake.</p>
 <p>After applying this practice in my project, I recently learn that it&rsquo;s not good practice to share resource across stack.</p>
@@ -120,7 +120,7 @@
 <p>Therefore, these two stacks are not directly coupled, but they are referencing the same constant variable.</p>
 <p>Then, CloudFormation won&rsquo;t prevent you from updating the <code>S3Bucket</code> as there is not direct relation between these two stacks anymore.</p>
 <p>This is the benefit of loose couping.</p>
-<h2 id="reference"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> Reference</h2>
+<h2 id="reference"><span class="section-num">5</span> Reference</h2>
 <ul>
 <li><a href="https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.CfnOutput.html">API Document: class CfnOutput (construct)</a></li>
 <li><a href="https://docs.aws.amazon.com/cdk/v2/guide/stacks.html">AWS Cloud Development Kit (AWS CDK) v2</a></li>

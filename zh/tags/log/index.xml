@@ -20,12 +20,12 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2017/logging/</guid>
       <description>an introduction about logging</description>
-      <content:encoded><![CDATA[<h2 id="重要性"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 重要性</h2>
+      <content:encoded><![CDATA[<h2 id="重要性"><span class="section-num">1</span> 重要性</h2>
 <p>笔者最近都在负责项目中关于日志的部分，因为跟日志打交道比较多，所以有一些关于日 志感受和技巧想要分享一下。</p>
 <p>笔者认为对于各种程序和应用，日志都是非常重要的，因为程序在部属到服务器之后，开发者是没办法像在本地开发那样可以充分了解程序发生的状况，而使用日志可以让开发者了解运行中的程序的状态，即使出现了错误，或者是系统挂了，也可以从日志中分析原因。</p>
 <p>所以换句话说，日志的重要程度甚至可以称得上是不可或缺。接下来，笔者将会以 Python 中的 <em>logging</em> 模块为例阐述日志。</p>
-<h2 id="关于日志"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 关于日志</h2>
-<h3 id="使用-print-函数输出"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 使用 print 函数输出？</h3>
+<h2 id="关于日志"><span class="section-num">2</span> 关于日志</h2>
+<h3 id="使用-print-函数输出"><span class="section-num">2.1</span> 使用 print 函数输出？</h3>
 <p>日志是为了输出程序的运行状态，那么可否使用 <code>print</code> 函数进行 logging 的工作呢？</p>
 <p>我并不建议把 <code>print()</code> 函数当作日志使用 (当然，如果你一定要这么用，我也拦不住)；不建议使用 <strong>print</strong> 进行logging 原因有：</p>
 <ol>
@@ -35,7 +35,7 @@
 <li>无法根据错误信息的等级进行动态输出，因为 <strong>print</strong> 函数的作用只是输出信息</li>
 </ol>
 <p>可能对于非常简单的小程序，开发者可以使用 print 进行日志输出，但是对于比较大型的程序，系统内置的 logging 类库或许是更好的选择</p>
-<h3 id="日志需要记录的是什么"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 日志需要记录的是什么</h3>
+<h3 id="日志需要记录的是什么"><span class="section-num">2.2</span> 日志需要记录的是什么</h3>
 <p>Python 的日志类库 <code>logging</code> 可以让开发者根据不同场景使用不同的日志等级以输出 不同的日志信息。</p>
 <p>而日志需要记录的最基本的信息又是什么呢？要想回答这个问题，先和我一起回顾一下日志的功能：记录程序的状态，为程序的开发和调试提供便利！</p>
 <p>所谓方便调试，需要记录的必然包括可以帮助更快定位到错误的有用信息：</p>
@@ -47,8 +47,8 @@
 <li>异常的 traceback 信息</li>
 </ol>
 <p>这只是最基本的信息，具体还要根据场景添加其它有用信息；比如对于分布式的程序，肯定还要记录其它节点的名字，IP 等有用信息。</p>
-<h2 id="logging-的正确姿势"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Logging 的正确姿势</h2>
-<h3 id="使用-python-的-logging-模块"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 使用 Python 的 logging 模块</h3>
+<h2 id="logging-的正确姿势"><span class="section-num">3</span> Logging 的正确姿势</h2>
+<h3 id="使用-python-的-logging-模块"><span class="section-num">3.1</span> 使用 Python 的 logging 模块</h3>
 <p>我认为，使用 Python 的标准日志库是比较好的实践，因为标准库已经提供了开箱即用的特性，无需重复造轮子。Python 的 logging 模块也很容易上手，举个小例子：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">logging</span>
 </span></span><span class="line"><span class="cl"><span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
@@ -65,14 +65,14 @@
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">INFO:__main__: Info level message
 </span></span><span class="line"><span class="cl">DEBUG:__main__: Debug level message
 </span></span><span class="line"><span class="cl">WARN:__main__: Warning level message
-</span></span></code></pre></div><h3 id="记录异常信息"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> 记录异常信息</h3>
+</span></span></code></pre></div><h3 id="记录异常信息"><span class="section-num">3.2</span> 记录异常信息</h3>
 <p>日志一个非常重要的作用就是调试，所以记录出现异常的地方是有必要，并且需要记录栈的调用信息。例如：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">try</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;file_not_exist.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;wt&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Failed to write a file&#39;</span><span class="p">,</span><span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></span></code></pre></div><p>通过将 <code>exc_info</code> 设置成 True, 栈的调用信息就会记录到日志里面。而也可以使用 <code>logger.exception(message,*args)</code> 方法，它等同于 <code>logger.error(msg,exc_info=True,*args)</code> 方法。</p>
-<h3 id="使用日志文件轮转控制器--rotating-file-handler"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> 使用日志文件轮转控制器 (rotating file handler)</h3>
+<h3 id="使用日志文件轮转控制器--rotating-file-handler"><span class="section-num">3.3</span> 使用日志文件轮转控制器 (rotating file handler)</h3>
 <p>如果使用日志文件控制器 (FileHandler), 不断地运行程序，就会产生越来越多的日志 信息或者是日志文件。</p>
 <p>为了控制日志文件的数量，可以使用 <code>RotatingFileHandler</code> 自 动新建新的日志文件，并且保留旧的日志文件，当产生一定数量的日志文件之后，就会 自动删除掉最旧的日志文件。例如：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">RotatingFileHandler</span><span class="p">(</span>
@@ -82,7 +82,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">my_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
 </span></span></code></pre></div><p>就是日志文件大小超过20个字节 (当然，真实情况不会那么小的阀值)，就创建一个新的日志文件，把原来的日志文件，例如叫 <em>example.log</em> 重命名为 <em>example.log.1</em>,然后新建的日志文件就会被命名为_example.log_, 一直到产生了6个日志文件，即 <em>example.log.5</em>, 继续记录日志，最开始的第一个日志就会被删除。</p>
-<h3 id="使用日志服务器"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> 使用日志服务器</h3>
+<h3 id="使用日志服务器"><span class="section-num">3.4</span> 使用日志服务器</h3>
 <p>对于那些分布式的应用，或者部署多台服务器上有不同日志的程序而言，逐个服务器或者节点查看日志实在太可怕了. 这个时候，就可以设置一个日志服务器，把重要的日志信息发送到日志服务器，你就在日志服务器上监控各个节点的日志状态了。</p>
 <p><a href="https://docs.python.org/3/howto/logging-cookbook.html">logging-cookbook</a> 的例子：</p>
 <p>客户端或者节点：</p>
@@ -199,7 +199,7 @@
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>
 </span></span></code></pre></div><p>通过给 logger 添加一个SocketHandler 就可以把日志事件发送到服务器端</p>
-<h3 id="使用配置文件"><!-- raw HTML omitted -->3.5<!-- raw HTML omitted --> 使用配置文件</h3>
+<h3 id="使用配置文件"><span class="section-num">3.5</span> 使用配置文件</h3>
 <p>虽然开发者可以使用 Python 代码来配置日志系统，但是这样是很不灵活的，每次修改日志等级还需要去改动代码。</p>
 <p>而使用配置文件无疑是一个更好的选择，例如 json 或者是 yaml 文件，这样就可以在 json/yaml 文件中加载日志配置了。以 <a href="https://docs.djangoproject.com/en/1.9/topics/logging/#configuring-logging">Django</a> 项目的配置文件为例，我改成了 json 格式：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
@@ -266,7 +266,7 @@
 </span></span><span class="line"><span class="cl">	<span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">	<span class="n">logging</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">dictConfig</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 </span></span></code></pre></div><p>使用 json 还有一个好处是标准库已经内置了 json 模块，无需像 yaml 那样需要安装额外的模块，不过我更推崇 yaml, 因为清晰之余，还可以少打很多字 :)</p>
-<h3 id="对于不同的代码-使用不同的日志等级"><!-- raw HTML omitted -->3.6<!-- raw HTML omitted --> 对于不同的代码，使用不同的日志等级</h3>
+<h3 id="对于不同的代码-使用不同的日志等级"><span class="section-num">3.6</span> 对于不同的代码，使用不同的日志等级</h3>
 <p>因为一个项目不同代码要求不一样，也无需把每一个实现细节都记录在日志，只需要根 据不同的实现，使用不同的日志等级，例如使用 <code>Debug</code> 记录系统启动，处理业务逻辑 请求的信息，使用 <code>Error</code>, 记录系统的出错信息，可以结合堆栈分析原因，等等。</p>
 <p>此外，Logger 实例可以被配置成基于名字的树状结构。 每一个部件都定义了一个基础的名字，对应的模块被设置成子节点。而 root logger 没有名字。如图：</p>
 <figure><a href="/ox-hugo/example_logger_tree.png">
@@ -279,7 +279,7 @@
 </figure>
 
 <p>而树状结构可以对应用的不同部分使用不同的日志等级，不同的 handler, 不同的formatter, 以更好地控制日志信息</p>
-<h3 id="使用结构化日志"><!-- raw HTML omitted -->3.7<!-- raw HTML omitted --> 使用结构化日志</h3>
+<h3 id="使用结构化日志"><span class="section-num">3.7</span> 使用结构化日志</h3>
 <p>虽然大部份的日志信息对于人类都是可读的，但是对于程序而言，就很难进行解析了。</p>
 <p>这个时候，为了方便程序进行解析，我建议使用结构化格式的日志，这样就不再需要各种复杂的正则表达式来解析日志了。得益于内置的 json 模块，使用 json 就可以很简单地生成的利于程序解析结构化日志，以 <a href="https://docs.python.org/3/howto/logging-cookbook.html">logging cookbook</a> 中的例子说明：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">json</span>
@@ -301,14 +301,14 @@
 </span></span><span class="line"><span class="cl"><span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;message 1&#39;</span><span class="p">,</span> <span class="n">foo</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">bar</span><span class="o">=</span><span class="s1">&#39;baz&#39;</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span> <span class="n">fnum</span><span class="o">=</span><span class="mf">123.456</span><span class="p">))</span>
 </span></span></code></pre></div><p>日志输出结果如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="err">message</span> <span class="mi">1</span> <span class="err">&gt;&gt;&gt;</span> <span class="p">{</span><span class="nt">&#34;fnum&#34;</span><span class="p">:</span> <span class="mf">123.456</span><span class="p">,</span> <span class="nt">&#34;num&#34;</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nt">&#34;bar&#34;</span><span class="p">:</span> <span class="s2">&#34;baz&#34;</span><span class="p">,</span> <span class="nt">&#34;foo&#34;</span><span class="p">:</span> <span class="s2">&#34;bar&#34;</span><span class="p">}</span>
-</span></span></code></pre></div><h3 id="参考"><!-- raw HTML omitted -->3.8<!-- raw HTML omitted --> 参考</h3>
+</span></span></code></pre></div><h3 id="参考"><span class="section-num">3.8</span> 参考</h3>
 <ul>
 <li><a href="https://logmatic.io/blog/python-logging-with-json-steroids/">https://logmatic.io/blog/python-logging-with-json-steroids/</a></li>
 <li><a href="https://fangpenlin.com/posts/2012/08/26/good-logging-practice-in-python/">https://fangpenlin.com/posts/2012/08/26/good-logging-practice-in-python/</a></li>
 <li><a href="https://docs.python.org/3/howto/logging-cookbook.html">https://docs.python.org/3/howto/logging-cookbook.html</a></li>
 <li><a href="https://pymotw.com/3/logging/index.html">https://pymotw.com/3/logging/index.html</a></li>
 </ul>
-<h3 id="小结"><!-- raw HTML omitted -->3.9<!-- raw HTML omitted --> 小结</h3>
+<h3 id="小结"><span class="section-num">3.9</span> 小结</h3>
 <p>虽然这次的日志阐述是以 Python 的日志模块举例，但是绝大部分的语言都内置或者是有第三方的日志支持，所以我分享的技巧还是可以应用到其他的语言的。</p>
 <p>这些都是我在日常项目中的一点体会，与诸君共赏罢。Enjoy :)</p>
 ]]></content:encoded>

@@ -21,19 +21,19 @@
       <guid>https://ramsayleung.github.io/zh/post/2021/how_to_design_a_reliable_distributed_timer/</guid>
       <description>1 Preface I have been maintained a legacy distributed timer for months for my employer, then some important pay business are leveraging on it, with 1 billion tasks handled every day and 20k tasks added per second at most.
 Even though it&amp;rsquo;s old and full of black magic code, but it also also have insighted and well-designed code. Based on this old, running timer, I summarize and extract as this article, and it wont include any running code(perhaps pseudocode, and a lot of figures, as an adage says: A picture is worth a thousand words).</description>
-      <content:encoded><![CDATA[<h2 id="preface"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Preface</h2>
+      <content:encoded><![CDATA[<h2 id="preface"><span class="section-num">1</span> Preface</h2>
 <p>I have been maintained a legacy distributed timer for months for my employer, then some important pay business are leveraging on it, with 1 billion tasks handled every day and 20k tasks added per second at most.</p>
 <p>Even though it&rsquo;s old and full of black magic code, but it also also have insighted and well-designed code. Based on this old, running timer, I summarize and extract as this article, and it wont include any running code(perhaps pseudocode, and a lot of figures, as an adage says: <em>A picture is worth a thousand words</em>).</p>
 <p>if you are curious about the reason(I personally suggest to watch the TV series <a href="https://www.imdb.com/title/tt2575988/">Silicon Valley</a>, Richard has gave us a good example and answer)</p>
-<h2 id="design"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Design</h2>
-<h3 id="algorithm"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> Algorithm</h3>
+<h2 id="design"><span class="section-num">2</span> Design</h2>
+<h3 id="algorithm"><span class="section-num">2.1</span> Algorithm</h3>
 <p>There are several algorithms in the world to implement timer, such as Red-Black Tree, Min-Heap and timer wheel. The most efficient and used algorithm is timer wheel algorithm, and it&rsquo;s the algorithm we focus on.</p>
 <p>As for timing wheel based timer, it can be modelled as two internal operations: <em>per-tick bookkeeping</em> and <em>expiry processing</em>.</p>
 <ul>
 <li>Per-tick bookkeeping: happens on every &rsquo;tick&rsquo; of the timer clock. If the unit of granularity for setting timers is T units of time (e.g. 1 second), then per-tick bookkeeping will happen every T units of time. It checks whether any outstanding timers have expired, and if so it removes them and invokes expiry processing.</li>
 <li>Expiry processing: is responsible for invoked the user-supplied callback (or other user requested action, depending on your model).</li>
 </ul>
-<h4 id="simple-timing-wheels"><!-- raw HTML omitted -->2.1.1<!-- raw HTML omitted --> Simple Timing Wheels</h4>
+<h4 id="simple-timing-wheels"><span class="section-num">2.1.1</span> Simple Timing Wheels</h4>
 <p>The simple timing wheel keeps a large timing wheel, the below timing wheel has 8 slots, and each slot is holding the task which is going to be expired. Supposing every slot presentes one second(one tick as a second), then the current slot is <code>slot 1</code>, if we want to add a task needed to be triggered 2s later, then this task will be inserted into <code>slot 3</code>.</p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806103302.png"/> 
@@ -43,7 +43,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 <li>per-tick bookkeeping: O(1)</li>
 </ul>
 <p>What happen if we want to add a task needed to be launched 20s later, the answer is we have no way to do so since there are only 8 slots. So if we have a large period of timer task, we have to maintain a large timing wheel with tons of slots, which requires exponential amount of memory.</p>
-<h4 id="hashed-timing-wheel"><!-- raw HTML omitted -->2.1.2<!-- raw HTML omitted --> Hashed Timing Wheel</h4>
+<h4 id="hashed-timing-wheel"><span class="section-num">2.1.2</span> Hashed Timing Wheel</h4>
 <p>Hashed Timing Wheel is an improved simple timing wheel. As we mentioned before, it will consume large resources if timer period is comparatively large. Instead of using one slot per time unit, we could use a form of hashing instead. Construct a circular buffer with a fixed number of slots(such as 8 slots). If current slot is 0, we want store <code>3s later</code> task, we could insert into <code>slot 3</code>, then if we want bookkeep <code>9s-later</code> task, we could insert into <code>slot 1(9 % 8 = 1)</code></p>
 <ul>
 <li>per-tick bookkeeping: O(1) - O(N)</li>
@@ -53,7 +53,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </figure>
 
 <p>It&rsquo;s a tradeoff strategy, We trade space with time.</p>
-<h4 id="hierarchical-timing-wheels"><!-- raw HTML omitted -->2.1.3<!-- raw HTML omitted --> Hierarchical Timing Wheels</h4>
+<h4 id="hierarchical-timing-wheels"><span class="section-num">2.1.3</span> Hierarchical Timing Wheels</h4>
 <p>Since simple timing wheels and hashed timing wheel come with drawback of time efficiency or space efficiency. Back to 1987, after studying a number of different approaches for the efficient management of timers, Varghese and Lauck posted a paper to introduce <a href="http://www.cs.columbia.edu/~nahum/w6998/papers/sosp87-timing-wheels.pdf">Hierarchical Timing Wheels</a></p>
 <p>Just make a long story short, I won&rsquo;t dive deep into hierarchical timing wheels, you could easily understand it by a real life reference: the old water meter</p>
 <figure>
@@ -68,22 +68,22 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 <ul>
 <li>per-tick bookkeeping: O(1)</li>
 </ul>
-<h3 id="per-tick-bookkeeping"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> Per-tick bookkeeping</h3>
+<h3 id="per-tick-bookkeeping"><span class="section-num">2.2</span> Per-tick bookkeeping</h3>
 <p>After introducing timing wheel algorithm, let&rsquo;s go back to the topic about designing a reliable distributed timer, it&rsquo;s essential to decide how to store timer task. Taking implementation complexity and time, space trade off, we choose the Hashed Timing Wheel algorithm.</p>
 <p>There are several internal components developed by my employer, one of them is named <code>TableKV</code>, a high-availability(99.999% ~ 99.9999%) NoSql service. <code>TableKV</code> supports 10m buckets(the terminology is <code>table</code>) at most, every <code>table</code> comes with full ACID properties of transactions support. You could simply replace <code>TableKV</code> with <code>Redis</code> as it provides the similar bucket functionality.</p>
-<h4 id="insert-task-into-slot"><!-- raw HTML omitted -->2.2.1<!-- raw HTML omitted --> Insert task into slot</h4>
+<h4 id="insert-task-into-slot"><span class="section-num">2.2.1</span> Insert task into slot</h4>
 <p>We are going to implement Hashed Timing Wheel algorithm with <code>TableKV</code>, supposing there are 10m buckets, and current time is <code>2021:08:05 11:17:33 +08=(the UNIX timestamp is =1628176653</code>), there is a  timer task which is going to be triggered 10s later with <code>start_time = 1628176653 + 10</code> (or 100000010s later, <code>start_time = 1628176653 + 10 + 100000000</code>), these tasks both will be stored into bucket <code>start_time % 100000000 = 28176663</code></p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806195209.png"/> 
 </figure>
 
-<h4 id="pull-task-out-from-slot"><!-- raw HTML omitted -->2.2.2<!-- raw HTML omitted --> Pull task out from slot</h4>
+<h4 id="pull-task-out-from-slot"><span class="section-num">2.2.2</span> Pull task out from slot</h4>
 <p>As clock tick-tacking to <code>2021:08:05 11:17:43 +08(1628176663)</code>, we need to pull tasks out from slot by calculating the bucket number: <code>current_timestamp(1628176663) % 100000000 = 28176663</code>. After locating the bucket number, we find all tasks in <code>bucket 28176663</code> with <code>start_time &lt;</code> current_timestamp=, then we get all expected expiry tasks.</p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806195227.png"/> 
 </figure>
 
-<h3 id="global-clock-and-lock"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> Global clock and lock</h3>
+<h3 id="global-clock-and-lock"><span class="section-num">2.3</span> Global clock and lock</h3>
 <p>As we mentioned before, when the clock tick-tacks to <strong>current_time</strong>, we fetch all expiry tasks. When our service is running on a distributed system, it&rsquo;s universal that we will have multiple hosts(physical machines or dockers), with multiple <code>current_times</code> on its machine. There is no guarantee that all clocks of multiple hosts synchronized by the same Network Time Server, then all clocks might be subtly different. Which current_time is correct?</p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806105745.png"/> 
@@ -102,7 +102,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 <li>Loop back to step 1 with timestamp B.</li>
 </ol>
 <p>We could encapsulate the role who keep acquiring lock and fetch expiry data as an individual component named <strong>scheduler</strong>.</p>
-<h3 id="expiry-processing"><!-- raw HTML omitted -->2.4<!-- raw HTML omitted --> Expiry processing</h3>
+<h3 id="expiry-processing"><span class="section-num">2.4</span> Expiry processing</h3>
 <p>Expiry processing is responsible for invoked the user-supplied callback or other user requested action. In distributed computing, it&rsquo;s common to execute a procedure by RPC(Remote Procedure Call). In our case, A RPC request is executed when timer task is expiry, from timer service to callback service. Thus, the caller(user) needs to explicitly tell the timer, which service should I execute with what kind of parameters data while the timer task is triggered.</p>
 <p>We could pack and serialize this meta information and parameters data into binary data, and send it to the timer. When pulling data out from slot, the timer could reconstruct Request/Response/Client type and set it with user-defined data, the next step is a piece of cake, just executing it without saying.</p>
 <figure>
@@ -110,7 +110,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </figure>
 
 <p>Perhaps there are many expiry tasks needed to triggered, in order to handle as many tasks as possible, you could create a thread pool, process pool, coroutine pool to execute RPC concurrently.</p>
-<h3 id="decoupling"><!-- raw HTML omitted -->2.5<!-- raw HTML omitted --> Decoupling</h3>
+<h3 id="decoupling"><span class="section-num">2.5</span> Decoupling</h3>
 <p>Supposing the callback service needs tons of operation, it takes a hundred of millisecond. Even though you have created a thread/process/coroutine pool to handle the timer task, it will inevitably hang, resulting in the decrease of throughout.</p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806152334.png"/> 
@@ -127,8 +127,8 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </figure>
 
 <p>Thanks to message queue, we are able to buffer, to retry or to batch work, and to smooth spiky workloads</p>
-<h3 id="high-availability-guarantee"><!-- raw HTML omitted -->2.6<!-- raw HTML omitted --> High availability guarantee</h3>
-<h4 id="missed-expiry-tasks"><!-- raw HTML omitted -->2.6.1<!-- raw HTML omitted --> Missed expiry tasks</h4>
+<h3 id="high-availability-guarantee"><span class="section-num">2.6</span> High availability guarantee</h3>
+<h4 id="missed-expiry-tasks"><span class="section-num">2.6.1</span> Missed expiry tasks</h4>
 <p>A missed expiry of tasks may occur because of the scheduler process being shutdown or being crashed, or because of other unknown problems. One important job is how to locate these missed tasks and re-execute them. Since we are using global `current_timestamp` to fetch expiry data, we could have another scheduler to use `delay_10min_timestamp` to fetch missed expiry data.</p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806202724.png"/> 
@@ -136,14 +136,14 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 
 <p>In order to look for a needle in a haystack, we need to set a range(delay_10min - current time), and then to batch find cross buckets. After finding these missed tasks, the timer publishes them as a message to message queue. For other open source distributed timer projects like Quartz, which provides an instruction to handle missed(misfire) tasks: <a href="http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/tutorial-lesson-04.html">Misfire instructions</a></p>
 <p>If your NoSql component doesn&rsquo;t support find-cross-buckets feature, you could also find every bucket in the range one by one.</p>
-<h4 id="callback-service-error"><!-- raw HTML omitted -->2.6.2<!-- raw HTML omitted --> Callback service error</h4>
+<h4 id="callback-service-error"><span class="section-num">2.6.2</span> Callback service error</h4>
 <p>Since the distributed systems are shared-nothing systems, they communicate via message passing through a network(asynchronously or synchronously), but the network is unreliable. When invoking the user-supplied callback, the RPC request might fail if the network is cut off for a while or the callback service is temporarily down.</p>
 <p>Retries are a technique that helps us deal with transient errors, i.e. errors that are temporary and are likely to disappear soon. Retries help us achieve resiliency by allowing the system to send a request repeatedly until it gets an explicit response(success or fail). By leveraging message queue, you obtain the ability for retrying for free. In the meanwhile, the timer could handle the user-requested retries: It&rsquo;s not the proper time to execute callback service, retry it later.</p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806195302.png"/> 
 </figure>
 
-<h2 id="conclusion"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Conclusion</h2>
+<h2 id="conclusion"><span class="section-num">3</span> Conclusion</h2>
 <p>After a long way, we are finally here. The final full architecture would look like this:</p>
 <p>The whole process:</p>
 <ol>
@@ -162,7 +162,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </figure>
 
 <p>Wish you have fun and profit</p>
-<h2 id="reference"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Reference</h2>
+<h2 id="reference"><span class="section-num">4</span> Reference</h2>
 <ul>
 <li><a href="http://www.cs.columbia.edu/~nahum/w6998/papers/ton97-timing-wheels.pdf">Paper: Hashed and Hierarchical Timing Wheels: Efficient Data Structures for Implementing a Timer Facility</a></li>
 <li><a href="https://blog.acolyer.org/2015/11/23/hashed-and-hierarchical-timing-wheels/">Hashed and Hierarchical Timing Wheels</a></li>
@@ -177,21 +177,21 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
       
       <guid>https://ramsayleung.github.io/zh/post/2021/distributed_system_for_fun_and_profit/</guid>
       <description>1 Distributed Systems for fun and profit source: http://book.mixu.net/distsys/ 2 1. Basic 2.1 Basic concept 本章介绍了分布式系统的基本概念, 例如 scalablity, perfomance, latency, availability 关于 latent, 这里给出了一个很cool的描述: For example, imagine that you are infected with an airbone virus that turns people</description>
-      <content:encoded><![CDATA[<h2 id="distributed-systems-for-fun-and-profit"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Distributed Systems for fun and profit</h2>
+      <content:encoded><![CDATA[<h2 id="distributed-systems-for-fun-and-profit"><span class="section-num">1</span> Distributed Systems for fun and profit</h2>
 <p>source: <a href="http://book.mixu.net/distsys/">http://book.mixu.net/distsys/</a></p>
-<h2 id="1-dot-basic"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 1. Basic</h2>
-<h3 id="basic-concept"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> Basic concept</h3>
+<h2 id="1-dot-basic"><span class="section-num">2</span> 1. Basic</h2>
+<h3 id="basic-concept"><span class="section-num">2.1</span> Basic concept</h3>
 <p>本章介绍了分布式系统的基本概念, 例如 scalablity, perfomance, latency, availability</p>
 <p>关于 <code>latent</code>, 这里给出了一个很cool的描述:</p>
 <blockquote>
 <p>For example, imagine that you are infected with an airbone virus that turns people into zombies. The laten period is the time between when you became infected, and when you turn into a zombie. That&rsquo;s latency: the time during which something that has already happed is concealed from view.</p>
 </blockquote>
 <p>关于 <code>availability</code>, 计算公式是:</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<style>.org-center { margin-left: auto; margin-right: auto; text-align: center; }</style>
+<div class="org-center">
 <p>Availability = uptime / (uptime  + downtime)</p>
-<!-- raw HTML omitted -->
-<h3 id="failt-tolerance"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> Failt tolerance</h3>
+</div>
+<h3 id="failt-tolerance"><span class="section-num">2.2</span> Failt tolerance</h3>
 <p>设计一个可靠的分布式系统, 相当程度上是设计一个fault tolerance 系统, failure 一词 在此章出现了很多次. But without knowing every single aspect of the system, the best we can do is design for fault tolerance.</p>
 <blockquote>
 <p>Fault tolerance: ability of a system to behave in a well-defined manner once faults occur. Fault tolerance boils down to this: define what faults you expect and then design a system or an algorithm that is tolerant of them. You can&rsquo;t tolerate faults you haven&rsquo;t considered.</p>
@@ -211,7 +211,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </ul>
 </li>
 </ol>
-<h3 id="abstraction-and-model"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> Abstraction and model</h3>
+<h3 id="abstraction-and-model"><span class="section-num">2.3</span> Abstraction and model</h3>
 <p>因为真实世界有很多与问题域无关的干扰因素, 为了排队这些干扰, 我们引入了Abstraction和Model的概念.</p>
 <ul>
 <li>
@@ -227,7 +227,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </ul>
 </li>
 </ul>
-<h3 id="partition-and-replicate"><!-- raw HTML omitted -->2.4<!-- raw HTML omitted --> Partition and replicate</h3>
+<h3 id="partition-and-replicate"><span class="section-num">2.4</span> Partition and replicate</h3>
 <p>数据在不同节点之间如何存储是个非常关键的问题, 目前有两种经典的数据存储技术, 分片(partitioning)与冗余(replication):</p>
 <ul>
 <li>
@@ -250,13 +250,13 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </blockquote>
 </li>
 </ul>
-<h2 id="2-dot-up-and-down-the-level-of-abstraction"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 2. Up and down the level of abstraction</h2>
-<h3 id="abstraction"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> Abstraction</h3>
+<h2 id="2-dot-up-and-down-the-level-of-abstraction"><span class="section-num">3</span> 2. Up and down the level of abstraction</h2>
+<h3 id="abstraction"><span class="section-num">3.1</span> Abstraction</h3>
 <p>何谓抽象, 有过编程经验的我们自然不会陌生. 抽象, 即去除真实世界与问题域无关的干扰, 专注于问题本身, 使解决方案可被广泛采用.</p>
 <blockquote>
 <p>Abstractions make the world manaeable: simpler problem statements - free of reality - are much more analytically tractable and provided that we did not ignore anything essential, the solutions are widely acclicable.</p>
 </blockquote>
-<h3 id="a-system-model"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> A system model</h3>
+<h3 id="a-system-model"><span class="section-num">3.2</span> A system model</h3>
 <p>分布式系统的关键属性是分布式, 或者说, 程序运行在分布式环境:</p>
 <ul>
 <li>
@@ -293,7 +293,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </ul>
 </li>
 </ul>
-<h4 id="nodes-in-our-system-model"><!-- raw HTML omitted -->3.2.1<!-- raw HTML omitted --> Nodes in our system model</h4>
+<h4 id="nodes-in-our-system-model"><span class="section-num">3.2.1</span> Nodes in our system model</h4>
 <p>节点是作计算与存储的主机(物理或虚拟主机), 它们有如下属性:</p>
 <ul>
 <li>
@@ -310,20 +310,20 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </blockquote>
 </li>
 </ul>
-<h4 id="communication-links-in-our-system-model"><!-- raw HTML omitted -->3.2.2<!-- raw HTML omitted --> Communication links in our system model</h4>
+<h4 id="communication-links-in-our-system-model"><span class="section-num">3.2.2</span> Communication links in our system model</h4>
 <p>communication links 不知道应该怎么翻译, 通讯链路? 不译也罢</p>
 <p>communication links 用于沟通不同的节点, 允许信息在双向流动. 部分算法假设网络是可靠的: 消息永不丢失并且永不延迟. 虽说这样假设有些许道理, 但是通常我们都是假设网络是不可靠, 因此消息可能丢失或者延迟.</p>
 <p>节点故障 vs 网络分区故障:
 <a href="/ox-hugo/system-of-2.png"><img loading="lazy" src="/ox-hugo/system-of-2.png" alt=""  />
 </a></p>
-<h4 id="timing-ordering-assumptions"><!-- raw HTML omitted -->3.2.3<!-- raw HTML omitted --> Timing/ordering assumptions</h4>
+<h4 id="timing-ordering-assumptions"><span class="section-num">3.2.3</span> Timing/ordering assumptions</h4>
 <p>分布式系统在物理上分布在不同的位置, 这就会无可避免地会带来一个问题, 如果节点之间的距离不同, 那么节点之间的消息将会以不同的时间点, 甚至不同的顺序到达.</p>
 <p>有两个主要的时序模型:</p>
 <ul>
 <li><strong><strong>Synchronous system model</strong></strong>: Process execute in lock-step; there is a known upper bound on message transimission delay; each process has an accurate clock.(这里的 <em>known upper bound</em> 指的是就是传输层的最大等待时间, 超过即由传输层进行重试. 当然, 这样的假设不大现实, 所以这样的模型实际应用比较少)</li>
 <li><strong><strong>Asynchronous system model</strong></strong>: No timing assumptions - e.g. processes execute at indenpendent rates; there is no bound on message transmission delay; useful clocks doesn&rsquo;t exist.</li>
 </ul>
-<h4 id="the-consensus-problem"><!-- raw HTML omitted -->3.2.4<!-- raw HTML omitted --> The consensus problem</h4>
+<h4 id="the-consensus-problem"><span class="section-num">3.2.4</span> The consensus problem</h4>
 <p>共识问题(consensus problem) 是商业分布式系统关注的核心问题之一, 所谓的共识问题, 即若干个计算机或节点就某个值达到共识, 更正式的说法是:</p>
 <ol>
 <li>Agreement: Every corrent process must agree on the same value(不搞多数人的暴政, 只搞全体的暴政)</li>
@@ -331,14 +331,14 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 <li>Termination: All processess eventually reach a decision.(不达到共识, 今天你就出不了这个门)</li>
 <li>Validity: If all corrent processes propose the same value V, then all correct processes decide V.(咱也不能赖皮)</li>
 </ol>
-<h3 id="the-flp-impossibility-result"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> The FLP impossibility result</h3>
+<h3 id="the-flp-impossibility-result"><span class="section-num">3.3</span> The FLP impossibility result</h3>
 <p>FLP 不可能原理(FLP impossibility result, 以作者的首字母命名, Fischer, Lynch and Patterson): 在网络可靠, 但节点失效(即便只有一个)的最小化异步模型系统中, 不可能存在一个可以解决一致性问题的确定性共性算法.</p>
 <blockquote>
 <p>There does not exist a (deterministic) algorithm for the consensus problem in an asynchronous system subject to failures, even if message can never be lost, at most one process may fail, and it can only fail by carshing(stoppping executing).</p>
 </blockquote>
 <p>FLP impossibility result 告诉我们: 不要浪费时间, 去试图为异步分布式系统设计面向任意场景的共识算法(别忙了, 白费力气的).</p>
 <p>FLP impossibility result 定义了一个最坏情况, 在允许节点失效的情况下, 异步系统无法确保共识在有限时间内完成, 包括Paxos, Raft等算法也都存在无法达成共识的极端情况, 只是在工程实践中这种情况出现的概率很小.</p>
-<h3 id="the-cap-theorem"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> The CAP theorem</h3>
+<h3 id="the-cap-theorem"><span class="section-num">3.4</span> The CAP theorem</h3>
 <p>非常有名的CAP 定理, 即无法同时达到C,A,P三个属性, 这三个属性是:</p>
 <ul>
 <li>
@@ -371,7 +371,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </ul>
 </li>
 </ul>
-<h3 id="consistency-model"><!-- raw HTML omitted -->3.5<!-- raw HTML omitted --> Consistency model</h3>
+<h3 id="consistency-model"><span class="section-num">3.5</span> Consistency model</h3>
 <p>何谓一致性模型呢:</p>
 <blockquote>
 <p>Consistency model: a contract between programmer and system, wherein the system guarantees that if the programmer follows some specific rules, the results of operations on the data will be predictable.</p>
@@ -392,21 +392,21 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </ul>
 </li>
 </ul>
-<h4 id="strong-consistency-model"><!-- raw HTML omitted -->3.5.1<!-- raw HTML omitted --> Strong consistency model</h4>
+<h4 id="strong-consistency-model"><span class="section-num">3.5.1</span> Strong consistency model</h4>
 <p>Lineariable consistency 和 Sequential consistency 两个模型很相似, 关键的区别是: Lineraiable consistency 要求操作生效的顺序与操作的实际顺序相等; 而Sequential consistency允许对操作进行重新排序, 只要在每个节点上观察到的顺序保持一致.</p>
 <p>只要实现了强一致性模型, 模型保证将单机程序扩展到分布式集群时, 程序不会出现任何问题(程序本身的bug就另当别论), 而使用其他非一致性模型的扩展程序时, 就可能会出现问题.</p>
-<h4 id="client-centric-consistency-model"><!-- raw HTML omitted -->3.5.2<!-- raw HTML omitted --> Client-centric consistency model</h4>
+<h4 id="client-centric-consistency-model"><span class="section-num">3.5.2</span> Client-centric consistency model</h4>
 <p>以客户为中心的一致性(Client-centric consistency model)模型是指以某种方式涉及客户或会话概念的一致性模型.</p>
 <p>例如, 以客户为中心的一致性模型可以保证客户永远不会看到一个数据项的旧版本. 这通常是通过在客户端库中建立额外的缓存来实现的.</p>
 <p>感觉这种模型见得不是很多.</p>
-<h4 id="eventual-consistency"><!-- raw HTML omitted -->3.5.3<!-- raw HTML omitted --> Eventual consistency</h4>
+<h4 id="eventual-consistency"><span class="section-num">3.5.3</span> Eventual consistency</h4>
 <p>最终一致性(Eventual consistency)模型: 如果你停止更新值, 那么间隔某段时间后, 所有的节点都会看到同样的值. 那么某段时间是多少呢? 如果不能给该值给定个严格下限, 这个模型就和&quot;人最终总会死&quot;模型一样, 用处并不大.</p>
-<h2 id="3-dot-time-and-order"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 3. Time and Order</h2>
+<h2 id="3-dot-time-and-order"><span class="section-num">4</span> 3. Time and Order</h2>
 <p>时序(Time and order)在分布式系统中非常重要, 那么为什么它这么重要呢? 前方提到分布式系统的目标就是可以像在单台机器上解决问题那样, 在多台机器解决同样的问题.</p>
 <p>单台机器运行模型是: 单个程序, 单进程, 单内存空间, 运行在单个CPU上, 而操作系统把多个CPU可能运行多个程序,共享内存的情况给抽象掉, 每个操作就好像人们通过一道门一样, 有预先定义好的前者与后者.</p>
 <p>现在中, 分布式系统运行在多个节点上, 可能同时拥有多个CPU和待运行操作. 如果还想像单台机器那样, 定义一个全序关系(total order), 要不就需要一个精确的时钟, 每个操作一个时间戳, 通过时间戳推算出执行顺序; 要不就需要额外的通信, 指定对应的序号.</p>
 <p>但维护精确的时钟困难且不可靠, 额外的通信成本高.</p>
-<h3 id="total-and-partial-order"><!-- raw HTML omitted -->4.1<!-- raw HTML omitted --> Total and partial order</h3>
+<h3 id="total-and-partial-order"><span class="section-num">4.1</span> Total and partial order</h3>
 <p>全序关系(<a href="https://en.wikipedia.org/wiki/Total_order">total order</a>)和偏序关系(<a href="https://en.wikipedia.org/wiki/Partially_ordered_set#Formal_definition">partial order</a>), 两个数学概念, 作者的解释有点简略, 当初上数学课又没有好好听课, 所以相关的概念不是很理解, 知乎上面有个挺详尽的<a href="https://www.zhihu.com/question/36758436/answer/680927456">解释</a>:</p>
 <blockquote>
 <p>假设A是一个集合 {1,2,3} ；R是集合A上的关系，例如{&lt;1,1&gt;,&lt;2,2&gt;,&lt;3,3&gt;,&lt;1,2&gt;,&lt;1,3&gt;,&lt;2,3&gt;}</p>
@@ -445,7 +445,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 <p>又因为有 &lt;a,b&gt;,&lt;a,c&gt;,&lt;b,c&gt;， 也就是说两两关系都有了，所以满足对于任意的A集合上的 x,y，都有 x &lt;= y，或者 y &lt;= x，二者必居其一，所以说是全序关系.</p>
 </blockquote>
 <p>目前还不是很清楚有什么用处.</p>
-<h3 id="what-s-time"><!-- raw HTML omitted -->4.2<!-- raw HTML omitted --> What&rsquo;s time</h3>
+<h3 id="what-s-time"><span class="section-num">4.2</span> What&rsquo;s time</h3>
 <p>Time is a source of order. 时间可以解析成以下三种形式:</p>
 <ul>
 <li>Order: 当提到时间是序列的来源时, 我们是在说:
@@ -458,14 +458,14 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 <li>Interpretation: 时间戳所代表的时间可以解析成秒, 分, 时, 日等人类可读的标识.</li>
 <li>Duration: 代表真实世界流逝的时间. 计算机世界的算法通常不关系时间的绝对值或人类可读的标识, 但duration 可被用于作某些重要的判断, 例如某个节点是延迟高还是挂了.</li>
 </ul>
-<h3 id="does-time-process-at-the-same-rate-everywhere"><!-- raw HTML omitted -->4.3<!-- raw HTML omitted --> Does time process at the same rate everywhere</h3>
+<h3 id="does-time-process-at-the-same-rate-everywhere"><span class="section-num">4.3</span> Does time process at the same rate everywhere</h3>
 <p>在任何地方, 时间流逝的速度是一样的么? 对于这个问题, 有三个不同的答案(即使是在物理世界, 答案也是, 不一样. 相对论说的):</p>
 <ul>
 <li>&ldquo;Global clock&rdquo;: yes</li>
 <li>&ldquo;Local clock&rdquo;: no, but</li>
 <li>&ldquo;No clock&rdquo;: no</li>
 </ul>
-<h4 id="time-with-a-global-clock-assumption"><!-- raw HTML omitted -->4.3.1<!-- raw HTML omitted --> Time with a &ldquo;Global-clock&rdquo; assumption</h4>
+<h4 id="time-with-a-global-clock-assumption"><span class="section-num">4.3.1</span> Time with a &ldquo;Global-clock&rdquo; assumption</h4>
 <p>全局时钟(Global clock)模型假设有一个完美的全局时钟, 并且所有节点都与这个时钟通信, 且每个节点都精确同步, 且没有时间漂移:</p>
 <figure><a href="/ox-hugo/global-clock.png">
     <img loading="lazy" src="/ox-hugo/global-clock.png"/> </a>
@@ -477,19 +477,19 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 <li>Facebook的<a href="https://en.wikipedia.org/wiki/Apache_Cassandra">Cassandra</a>: 假设时钟是同步的, 因为它使用时间戳来处理写冲突, 以最新的时间为准</li>
 <li>Google的<a href="https://research.google.com/archive/spanner.html">Spanner</a>: 使用<code>TrueTime</code> API, 保证时间同步的条件下, 又消除了时间漂移的最坏情况.</li>
 </ul>
-<h4 id="time-with-a-local-clock-assumption"><!-- raw HTML omitted -->4.3.2<!-- raw HTML omitted --> Time with a &ldquo;Local-clock&rdquo; assumption</h4>
+<h4 id="time-with-a-local-clock-assumption"><span class="section-num">4.3.2</span> Time with a &ldquo;Local-clock&rdquo; assumption</h4>
 <p>每台机器有自己的时钟, 但是没有全局时钟, 这意味着你不能使用时间戳来比较两台不同机器操作的顺序.</p>
 <figure><a href="/ox-hugo/local-clock.png">
     <img loading="lazy" src="/ox-hugo/local-clock.png"/> </a>
 </figure>
 
 <p>此模型更接近于真实世界, 它指定一个偏序关系: 节点内是有序的, 但是无法仅通过时间戳来进行跨节点排序.</p>
-<h4 id="time-with-a-no-clock-assumption"><!-- raw HTML omitted -->4.3.3<!-- raw HTML omitted --> Time with a &ldquo;No-clock&rdquo; assumption</h4>
+<h4 id="time-with-a-no-clock-assumption"><span class="section-num">4.3.3</span> Time with a &ldquo;No-clock&rdquo; assumption</h4>
 <p>顾名思义, 无时钟模型不使用时间来排序, 而是使用另外的方式, 例如逻辑时间.</p>
 <p>这个模型也是偏序的:
 事件在某个节点, 可以只通过计数器来进行排序, 但是跨系统排序需要额外的信息交换</p>
 <p>当时钟不再使用, 跨节点排序的最大精度上限就由通信延迟决定了. 逻辑时间, 最有名的就是<a href="http://lamport.azurewebsites.net/pubs/time-clocks.pdf">Lamport clock</a>, Lamport就是Paxos之父.</p>
-<h3 id="vector-clocks--time-of-causal-order"><!-- raw HTML omitted -->4.4<!-- raw HTML omitted --> Vector clocks(time of causal order)</h3>
+<h3 id="vector-clocks--time-of-causal-order"><span class="section-num">4.4</span> Vector clocks(time of causal order)</h3>
 <p>物理时钟通过计数数和通信来跨分布式系统决定事件顺序, 而 Lamport clock 和 Vector clock是物理时钟的代替品. 使用Lamport clock的时候, 每个进程通过以下规则来维护一个计数器:</p>
 <ul>
 <li>每当一个进程起作用(does work)时, 递增计时器</li>
@@ -518,7 +518,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
     <img loading="lazy" src="/ox-hugo/vector_clock.svg.png"/> </a>
 </figure>
 
-<h3 id="failure-detector--time-for-cutoff"><!-- raw HTML omitted -->4.5<!-- raw HTML omitted --> Failure detector(time for cutoff)</h3>
+<h3 id="failure-detector--time-for-cutoff"><span class="section-num">4.5</span> Failure detector(time for cutoff)</h3>
 <p>假设程序运行在某个节点A上, 它与节点B通信异常了, 怎么判断是网络延迟还是节点B挂了呢? 如果过了相当一段时间后, 我们可以判断节点B挂了, 那么相当一段时间又是多长呢?</p>
 <p><a href="https://www.google.com/search?q=Unreliable%20Failure%20Detectors%20for%20Reliable%20Distributed%20Systems">Chandra</a> 提出了failure detector这个概念来解决这个问题, failure detector包括两个属性, 完整性(completeness)与精确性(acuracy).</p>
 <ul>
@@ -535,7 +535,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </figure>
 
 <p>理想情况下, 我们希望failure detector可以根据网络条件动态调整检测阈值, 以此避免硬编码阈值, 例如TCP的动态超时计算算法那样. Cassandra 使用的是 <a href="https://www.google.com/search?q=The+Phi+accrual+failure+detector">accrual failure detector</a>, 输出结果是一个故障的可疑度(0到1之间值), 而不是简单的 <code>挂/没挂</code>, 以此为应用根据可疑度自行决断, 提供更高的灵活度.</p>
-<h3 id="time-order-and-performance"><!-- raw HTML omitted -->4.6<!-- raw HTML omitted --> Time, order and performance</h3>
+<h3 id="time-order-and-performance"><span class="section-num">4.6</span> Time, order and performance</h3>
 <p>使用全序关系也是可能的, 但是为了协调全局顺序, 会付出高昂的性能代价.</p>
 <p>如果你对时间_顺序_同步性要求没有那么高, 你可以获得相当的性能提升. 那么, 什么时候需要顺序来保证正确性呢? 后面提到 <code>CALM定理</code> 会为你提供答案.</p>
 <p>说到底, 又是取舍的话题, 下面的情景只存在电影中:</p>
@@ -543,7 +543,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
     <img loading="lazy" src="/ox-hugo/i_want_them_all.png"/> </a>
 </figure>
 
-<h2 id="4-dot-replication-preventing-divergence"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 4. Replication: Preventing Divergence</h2>
+<h2 id="4-dot-replication-preventing-divergence"><span class="section-num">5</span> 4. Replication: Preventing Divergence</h2>
 <p>复制(replication)是分布式系统需要考虑的诸多问题中的其中一项, 但是却非常关键, 并与选主(leader election), 失败检测(failure detection), 共识(consensus)和原子广播(atomic broadcast)等问题息息相关.</p>
 <p>现在让我们先来看复制长什么样, 假设有某个数据库, 存储初始状态的数据, 客户端请求修改数据状态:</p>
 <figure><a href="/ox-hugo/replication-both.png">
@@ -558,7 +558,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 <li>(Async) 异步流程开始处理</li>
 </ol>
 <p>由此可见, 复制模式可以划分为同步复制(Synchronous replication)与异步复制(Asynchronous replicatin)</p>
-<h3 id="synchronous-replication"><!-- raw HTML omitted -->5.1<!-- raw HTML omitted --> Synchronous replication</h3>
+<h3 id="synchronous-replication"><span class="section-num">5.1</span> Synchronous replication</h3>
 <p>同步复制模式(也被称为active/eager/push/pessimistic replication):</p>
 <figure><a href="/ox-hugo/replication-sync.png">
     <img loading="lazy" src="/ox-hugo/replication-sync.png"/> </a>
@@ -572,14 +572,14 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </ol>
 <p>可以观察到, 这是一种 N 对 N 的模式: 在返回响应前, 该请求必须被每个节点所确认, 任何一个节点都不允许丢数据, 否则系统就无法成功向所有节点写入数据, 就无法继续提供写入服务,  可能只允许提供只读服务. 此外, 该系统的响应速度取决于最慢那台服务器的响应速度.</p>
 <p>虽说同步模式性能有所欠缺, 但是能提供强持久性保证(strong durability guarantees): 只要向客户端返回成功, 就能保证所有节点写入成功, 要丢失这次的更新数据, 就需要所有节点都丢失.</p>
-<h3 id="asynchronous-replication"><!-- raw HTML omitted -->5.2<!-- raw HTML omitted --> Asynchronous replication</h3>
+<h3 id="asynchronous-replication"><span class="section-num">5.2</span> Asynchronous replication</h3>
 <p>异步模式(也被称为 passive/pull/lazy replication):</p>
 <p><a href="/ox-hugo/replication-async.png"><img loading="lazy" src="/ox-hugo/replication-async.png" alt=""  />
 </a>
 在收到客户端的请求后, Master 节点(S1)立即返回了一个响应, 然后在若干时间后, 执行异步复制: Master 节点以某种模式与其他节点通信, 通知他们更新数据副本. 细节就取决具体的算法.</p>
 <p>这是一个 1 对 N 的模型, 立即返回一个响应, 然后在稍后的某个时间进行复制. 从性能的角度解析, 异步模式可以快速响应, 客户端无需阻塞等待.</p>
 <p>但只能提供弱持久性保证(weak durability guarantees), 只有一个节点持有更新数据, 如果这个节点挂了, 又还没有复制到其他节点, 数据就永久丢失了, 所以给客户端响应成功, 也只能表示, 有概率复制成功.</p>
-<h3 id="an-overview-of-major-replication-approaches"><!-- raw HTML omitted -->5.3<!-- raw HTML omitted --> An overview of major replication approaches</h3>
+<h3 id="an-overview-of-major-replication-approaches"><span class="section-num">5.3</span> An overview of major replication approaches</h3>
 <p>在讨论了两种基本的复制模式：同步复制和异步复制之后，我们来看看主要的复制算法.</p>
 <p>有很多对复制算法进行分类的指标, 作者认为第二个指标是(继同步与异步之后):</p>
 <ul>
@@ -602,7 +602,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 <p>上图中的一致性、延迟、吞吐量、数据丢失和故障转移的特点，实际上可以追溯到两种不同的复制模式：</p>
 <p>同步复制（在响应前等待）和异步复制(立即响应).</p>
 <p>当你等待时，你会得到更差的性能，但有更强的保证.</p>
-<h3 id="primary-backup-replication"><!-- raw HTML omitted -->5.4<!-- raw HTML omitted --> Primary/backup replication</h3>
+<h3 id="primary-backup-replication"><span class="section-num">5.4</span> Primary/backup replication</h3>
 <p>主从复制, 可能是最常用的复制算法, 也是最基本的复制算法. 所有更新操作都是在主机进行, 然后复制数据到备机. 有两种变体:</p>
 <ul>
 <li>synchronous primary/backup replication</li>
@@ -622,7 +622,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </ul>
 <p>客户端认为是提交失败, 但实际备机写入成功; 如果备机升主, 数据就会有问题.</p>
 <p>所以可见, 主/从复制模式提供的一致性保证, 只能说明是&quot;尽力而为&quot;. 为了避免异常导致一致性保证被违反, 我们需要增加多一轮的消息传递, 就来到了段提供协议(2PC)</p>
-<h3 id="two-phase-commit--2pc"><!-- raw HTML omitted -->5.5<!-- raw HTML omitted --> Two phase commit (2PC)</h3>
+<h3 id="two-phase-commit--2pc"><span class="section-num">5.5</span> Two phase commit (2PC)</h3>
 <p>下图说明两阶段提交(2PC)的消息流:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">[ Coordinator ] -&gt; OK to commit?     [ Peers ]
@@ -640,14 +640,14 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 当出现网络分区的时候, 2PC就懵了, 不知所措, 只能等待网络分区合并.</p>
 <p>2PC在性能和容错性之间取得了很好的平衡，这就是为什么它在关系型数据库中一直很受欢迎.</p>
 <p>然而，较新的系统通常使用分区容忍的共识算法(partition tolerant consensus algorithms)，因为这样的算法可以提供从临时网络分区中的自动恢复，以及更优雅地处理节点间延迟的增加.</p>
-<h3 id="partition-tolerant-consensus-algorithms"><!-- raw HTML omitted -->5.6<!-- raw HTML omitted --> Partition tolerant consensus algorithms</h3>
+<h3 id="partition-tolerant-consensus-algorithms"><span class="section-num">5.6</span> Partition tolerant consensus algorithms</h3>
 <p>提起分区容忍的共识算法, 最有名的就是Paxos算法, 但是Lamport大神把他的论文写小说, 让大家苦不堪言, 正因为Paxos出了名的难理解, 所以出现了Raft. 但Goole Chubby的作者Mike Burrow认为:</p>
 <blockquote>
 <p>There is only one consensus protocol, and that&rsquo;s Paxos – all other approaches are just broken versions of Paxos.
 (世界上只有一种共识协议，就是Paxos，其他所有共识算法都是Paxos 的残缺版本)</p>
 </blockquote>
 <p>首先让我们看下分区容忍算法的特点:</p>
-<h4 id="network-partition"><!-- raw HTML omitted -->5.6.1<!-- raw HTML omitted --> Network partition</h4>
+<h4 id="network-partition"><span class="section-num">5.6.1</span> Network partition</h4>
 <p>网络分区是指一个或几个节点的网络链接失效. 节点本身继续保持活跃，它们甚至可以接收来自网络分区一侧的客户端的请求.</p>
 <p>网络分区很棘手的，因为在网络分区期间，不可能区分一个节点是挂了呢还是出现网络分区导致请求不可达. 如果发生了网络分区，但没有节点发生故障，那么系统就被分成两个分区. 如下图:</p>
 <p>2个节点时, 节点故障vs 网络分区:</p>
@@ -661,26 +661,26 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </figure>
 
 <p>分裂成两个网络分区时, 共识算法必须要处理这种对称情况, 只允许一个网络分区保持活跃.</p>
-<h4 id="majority-decisions"><!-- raw HTML omitted -->5.6.2<!-- raw HTML omitted --> Majority decisions</h4>
+<h4 id="majority-decisions"><span class="section-num">5.6.2</span> Majority decisions</h4>
 <p>出现网络分区时, 是怎么保证只有一个分区是活跃的呢? 答案就来自于日常生活: 投票. 只要只要 N 个节点中的 <code>(N/2+1)</code> 投票同意更新, 系统就更新成功, 可以继续运行, 少数派就可以自己独处, 直到分区合并.</p>
 <p>因此, 使用共识算法的系统的节点数都是奇数(3,5或7), 避免出现无法投票成功的情况. 例如，如果节点数为3，那么系统可以容忍一个节点故障；有5个节点，系统容忍两个节点故障.</p>
 <p>除去网络分区, 基于多数人投票的共识算法还可以容忍抖动或故障导致的反对票, 并以此提供系统健壮性.</p>
-<h4 id="roles"><!-- raw HTML omitted -->5.6.3<!-- raw HTML omitted --> Roles</h4>
+<h4 id="roles"><span class="section-num">5.6.3</span> Roles</h4>
 <p>构建一个系统有两种途径：所有节点可以有相同的责任，或者节点可以有单独的、不同的角色.</p>
 <p>而共识算法通常选择为每个节点设置不同的角色, Paxos中的提议者与投票者, 对应Raft中的领导与从众, 也就是领袖与民众. 拥有领袖是一种优势, 可以让系统更有效率.</p>
 <p>角色在系统正常运行过程是固定的, 但这并不意味着领导不会出现意外, 或者可以无限期当领导.</p>
-<h4 id="epochs"><!-- raw HTML omitted -->5.6.4<!-- raw HTML omitted --> Epochs</h4>
+<h4 id="epochs"><span class="section-num">5.6.4</span> Epochs</h4>
 <p>在Paxos和Raft算法, 正常运行的每个一个时间被称为一个纪元(有魔戒的味道了. 在Raft中被称为期限), 在每个纪元期间，只有一个节点是指定的领导者.</p>
 <figure><a href="/ox-hugo/epoch.png">
     <img loading="lazy" src="/ox-hugo/epoch.png"/> </a>
 </figure>
 
 <p>选举成功后，同一个领导者会协调到纪元结束(任期到了就要换人, 不能賴着不走.). 如上图所示（来自Raft的论文），一些选举可能会失败，导致纪元立即结束.</p>
-<h4 id="leader-changes"><!-- raw HTML omitted -->5.6.5<!-- raw HTML omitted --> Leader changes</h4>
+<h4 id="leader-changes"><span class="section-num">5.6.5</span> Leader changes</h4>
 <p>所有节点开始时都是民众；一个节点在开始时被选为领袖. 在正常运行期间，领袖与民众通过心跳包保持通信，民众可以检测领导是否挂了或被分割到另一个网络分区.</p>
 <p>当一个节点检测到领导变得没有反应时（或者在最初的情况下，不存在领导者），它就会切换到一个中间状态（在Raft中称为 &ldquo;候选&rdquo;），在那里它将术语/周期值增加1，启动竞选程序并竞争成为新领导(王侯将相, 宁有种乎).</p>
 <p>为了当选为领导，一个节点必须获得多数票. 分配选票的一种方法是以先来先得的方式分配选票；这样一来，最终会选出一个领导者.</p>
-<h4 id="normal-operation"><!-- raw HTML omitted -->5.6.6<!-- raw HTML omitted --> Normal operation</h4>
+<h4 id="normal-operation"><span class="section-num">5.6.6</span> Normal operation</h4>
 <p>在正常操作中，所有的提议都要经过领导节点.</p>
 <p>当客户端提交一个提案（如更新操作）, 领导会联络所有节点. 如果不存在竞争性的提议, 领导者就会提出该值.
 如果大多数民众接受该值, 那么该值就被认为被接受了. 一旦一个提案被接受, 其值就不能改变, 关于此, Lamport的表述是:</p>
@@ -703,14 +703,14 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </span></span><span class="line"><span class="cl">reported by the followers)
 </span></span><span class="line"><span class="cl">&lt;- Accepted(n, value)
 </span></span></code></pre></div><p>第一轮, 带上最近的提案与值, 就是为了避免在第一轮问询与第二轮更新之间, 接受一个新更新请求, 就工程实践的角度来看, 此处的previous value with the highest proposal number 相当于是一个乐观锁, 避免被更少的值所更新; 假如中间插入的更新请求成功, highest proposal number 就不是第一轮问询持有的值, 更新就会失败, 避免被覆写.</p>
-<h3 id="paxos-raft-zab"><!-- raw HTML omitted -->5.7<!-- raw HTML omitted --> Paxos, Raft, ZAB</h3>
+<h3 id="paxos-raft-zab"><span class="section-num">5.7</span> Paxos, Raft, ZAB</h3>
 <p>有名的分区容忍性共识(Partition tolerant consensus algorithms)算法:</p>
 <ul>
 <li>Paxos: 以希腊的Paxos岛命名, 最重要的分区容忍性共识算法之一(甚至可以把之一去掉), 以难实现难理解著称(但Lamport说Paxos 很简单, 受不了一群人整天问他Paxos算法, 就写了篇 Paxos Make Simple的论文, 人与神的差距), 被用在谷歌的许多系统中, 例如Chubby, BigTable, Spanner等等</li>
 <li>ZAB: the Zookeeper Atomic Broadcast protocol, 被用在Apache Zookeeper中, Zookeeper 可以算是Chubby的开源版本</li>
 <li>Raft: 对Paxos算法的简化和改进, 被认为更易于学习与理解.</li>
 </ul>
-<h3 id="replication-methods-with-strong-consistency"><!-- raw HTML omitted -->5.8<!-- raw HTML omitted --> Replication methods with strong consistency</h3>
+<h3 id="replication-methods-with-strong-consistency"><span class="section-num">5.8</span> Replication methods with strong consistency</h3>
 <p>以下是支持强一致性复制算法的一些特征:</p>
 <ul>
 <li>Primary/Backup
@@ -738,7 +738,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </ul>
 </li>
 </ul>
-<h2 id="5-dot-replication-accepting-diveragence"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> 5. Replication: Accepting Diveragence</h2>
+<h2 id="5-dot-replication-accepting-diveragence"><span class="section-num">6</span> 5. Replication: Accepting Diveragence</h2>
 <p>笔记待续</p>
 ]]></content:encoded>
     </item>

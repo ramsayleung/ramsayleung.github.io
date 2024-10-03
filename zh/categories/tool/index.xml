@@ -20,196 +20,196 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E6%90%9C%E7%B4%A2%E6%B5%81/</guid>
       <description>1 前言 人并非全知全能，工作和生活难免会有各种的疑问，有问题自然可以询问有经验的同事或朋友。 但为了避免一有问题就去问人，给别人造成困扰，更推荐</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
-<p>人并非全知全能，工作和生活难免会有各种的疑问，有问题自然可以询问有经验的同事或朋友。 <!-- raw HTML omitted --></p>
-<p>但为了避免一有问题就去问人，给别人造成困扰，更推荐的就是: 自己先搜索，然后再去问人(Do a search before you ask a question) <!-- raw HTML omitted --></p>
-<p>当然，如果你不想打扰他人，直接问ChatGPT也未尝不可，只是答案的准确性不一定有保证。 <!-- raw HTML omitted --></p>
-<p>如何高效地搜索，缩小搜索的范围，如何快速地检索到答案呢？ <!-- raw HTML omitted --></p>
-<p>那么我来分享一下自己的个人经验： <!-- raw HTML omitted --></p>
-<h2 id="google-search"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Google Search</h2>
-<p>虽然我认为「搜索并不仅限于使用搜索引擎」，但是「搜索引擎」却是搜索并不可少的一部分。 <!-- raw HTML omitted --></p>
-<p>虽然搜索引擎有很多，但是我基本只用 Google；如果没法使用 Google, 那么推荐使用Bing, 反正百度不在我的推荐之列. <!-- raw HTML omitted --></p>
-<p>Google 搜索的界面很简单，只有一个搜索框，用户只需要把想要搜索的内容输入进去并回车即可。 <!-- raw HTML omitted --></p>
-<p>比如搜索：「cpp modules」，返回了 7,320,000条结果。 <!-- raw HTML omitted --></p>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
+<p>人并非全知全能，工作和生活难免会有各种的疑问，有问题自然可以询问有经验的同事或朋友。 <br/></p>
+<p>但为了避免一有问题就去问人，给别人造成困扰，更推荐的就是: 自己先搜索，然后再去问人(Do a search before you ask a question) <br/></p>
+<p>当然，如果你不想打扰他人，直接问ChatGPT也未尝不可，只是答案的准确性不一定有保证。 <br/></p>
+<p>如何高效地搜索，缩小搜索的范围，如何快速地检索到答案呢？ <br/></p>
+<p>那么我来分享一下自己的个人经验： <br/></p>
+<h2 id="google-search"><span class="section-num">2</span> Google Search</h2>
+<p>虽然我认为「搜索并不仅限于使用搜索引擎」，但是「搜索引擎」却是搜索并不可少的一部分。 <br/></p>
+<p>虽然搜索引擎有很多，但是我基本只用 Google；如果没法使用 Google, 那么推荐使用Bing, 反正百度不在我的推荐之列. <br/></p>
+<p>Google 搜索的界面很简单，只有一个搜索框，用户只需要把想要搜索的内容输入进去并回车即可。 <br/></p>
+<p>比如搜索：「cpp modules」，返回了 7,320,000条结果。 <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/google_search_result.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<p>搜索结果太多，我想对搜索内容进行筛选，google 就提供了相当多的搜索指令(search operator) <!-- raw HTML omitted --></p>
-<h3 id="时间"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 时间</h3>
-<p>cpp modules是c++20 才新增的特性，如果我想按时间搜索下相关的内容，可以使用 <code>:before</code>, <code>:after</code> 指令，后面跟着一个日期: <!-- raw HTML omitted --></p>
+ <br/></p>
+<p>搜索结果太多，我想对搜索内容进行筛选，google 就提供了相当多的搜索指令(search operator) <br/></p>
+<h3 id="时间"><span class="section-num">2.1</span> 时间</h3>
+<p>cpp modules是c++20 才新增的特性，如果我想按时间搜索下相关的内容，可以使用 <code>:before</code>, <code>:after</code> 指令，后面跟着一个日期: <br/></p>
 <pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules :before 2020
 </code></pre><p><figure>
     <img loading="lazy" src="/ox-hugo/google_search_before.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<p>可以看到搜索结果变成了185,000条，并且返回的搜索结果都是在 2020 年以前的纪录，这个在查看历史新闻时特别有用，比如看历史合订本。 <!-- raw HTML omitted --></p>
-<h3 id="站点"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 站点</h3>
-<p>如果你只想搜索某个站点，但是这个站点没有提供搜索功能（比如学校或者公司官网），或者搜索质量不够好，那么就可以加上 <code>site:</code> 的关键词, 要求 Google 只返回某个网站的检索结果: <!-- raw HTML omitted --></p>
-<p>比如我想看下 jetbrains家的IDE 对 c++ 20 Modules的支持程度: <!-- raw HTML omitted --></p>
+ <br/></p>
+<p>可以看到搜索结果变成了185,000条，并且返回的搜索结果都是在 2020 年以前的纪录，这个在查看历史新闻时特别有用，比如看历史合订本。 <br/></p>
+<h3 id="站点"><span class="section-num">2.2</span> 站点</h3>
+<p>如果你只想搜索某个站点，但是这个站点没有提供搜索功能（比如学校或者公司官网），或者搜索质量不够好，那么就可以加上 <code>site:</code> 的关键词, 要求 Google 只返回某个网站的检索结果: <br/></p>
+<p>比如我想看下 jetbrains家的IDE 对 c++ 20 Modules的支持程度: <br/></p>
 <pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules site:jetbrains.com
 </code></pre><p><figure>
     <img loading="lazy" src="/ox-hugo/google_search_site.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<p>又或者，我搜索网站的时候，想把某个网站排除掉, 比如使用中文搜索编程相关关键词的时候，经常会被CSDN 的垃圾内容污染，那么就可以使用 <code>-</code>, 来排除掉某些内容. <!-- raw HTML omitted --></p>
+ <br/></p>
+<p>又或者，我搜索网站的时候，想把某个网站排除掉, 比如使用中文搜索编程相关关键词的时候，经常会被CSDN 的垃圾内容污染，那么就可以使用 <code>-</code>, 来排除掉某些内容. <br/></p>
 <pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules -microsoft
 </code></pre><p><figure>
     <img loading="lazy" src="/ox-hugo/google_search_exclude.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<p>原来排名第二的 Miscrosft 就被过滤掉了. <!-- raw HTML omitted --></p>
-<h3 id="社交媒体"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> 社交媒体</h3>
-<p>如果你想在社交媒体上搜索某个关键词，那么可以使用 <code>@</code> 后跟社交媒体的名字来进行搜索，例如 &ldquo;cpp modules @twitter&rdquo; 或者 &ldquo;cpp modules @reddit&rdquo;, 可以把 <code>@</code> 理解成是 <code>:site</code> 指令的简化版本. <!-- raw HTML omitted --></p>
-<p>只是社交媒体(social media)的定义比较含糊, Google没有给出具体的说明，但是比较有名的社交媒体都是支持的. <!-- raw HTML omitted --></p>
+ <br/></p>
+<p>原来排名第二的 Miscrosft 就被过滤掉了. <br/></p>
+<h3 id="社交媒体"><span class="section-num">2.3</span> 社交媒体</h3>
+<p>如果你想在社交媒体上搜索某个关键词，那么可以使用 <code>@</code> 后跟社交媒体的名字来进行搜索，例如 &ldquo;cpp modules @twitter&rdquo; 或者 &ldquo;cpp modules @reddit&rdquo;, 可以把 <code>@</code> 理解成是 <code>:site</code> 指令的简化版本. <br/></p>
+<p>只是社交媒体(social media)的定义比较含糊, Google没有给出具体的说明，但是比较有名的社交媒体都是支持的. <br/></p>
 <pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules @reddit
 </code></pre><p><figure>
     <img loading="lazy" src="/ox-hugo/google_search_reddit.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
+ <br/></p>
 <pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules @zhihu
 </code></pre><p><figure>
     <img loading="lazy" src="/ox-hugo/google_search_zhihu.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<h3 id="文件类型"><!-- raw HTML omitted -->2.4<!-- raw HTML omitted --> 文件类型</h3>
-<p>可以通过 <code>filetype</code> 来指定想要搜索的文件类型，比如想搜索 pdf 相关的内容: <!-- raw HTML omitted --></p>
+ <br/></p>
+<h3 id="文件类型"><span class="section-num">2.4</span> 文件类型</h3>
+<p>可以通过 <code>filetype</code> 来指定想要搜索的文件类型，比如想搜索 pdf 相关的内容: <br/></p>
 <pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules filetype:pdf
 </code></pre><p><figure>
     <img loading="lazy" src="/ox-hugo/google_search_pdf.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<p>这个在知道书名，想要搜索电子书的时候特别有用. <!-- raw HTML omitted --></p>
-<h3 id="关键字匹配"><!-- raw HTML omitted -->2.5<!-- raw HTML omitted --> 关键字匹配</h3>
-<p>Google 支持若干个关键字匹配的指令: <!-- raw HTML omitted --></p>
-<p>双引号: &ldquo;cpp modules&rdquo;, 精确匹配，只匹配包含&quot;cpp modules&quot;的内容 <!-- raw HTML omitted --></p>
+ <br/></p>
+<p>这个在知道书名，想要搜索电子书的时候特别有用. <br/></p>
+<h3 id="关键字匹配"><span class="section-num">2.5</span> 关键字匹配</h3>
+<p>Google 支持若干个关键字匹配的指令: <br/></p>
+<p>双引号: &ldquo;cpp modules&rdquo;, 精确匹配，只匹配包含&quot;cpp modules&quot;的内容 <br/></p>
 <pre tabindex="0"><code class="language-nil" data-lang="nil">&#34;cpp modules&#34;
 </code></pre><p><figure>
     <img loading="lazy" src="/ox-hugo/google_search_precise_match.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<p>搜索结果变成 3530 条纪录了. <!-- raw HTML omitted --></p>
+ <br/></p>
+<p>搜索结果变成 3530 条纪录了. <br/></p>
 <ul>
-<li>星号: &ldquo;* modules&rdquo;, 通配符，所有包含 &ldquo;modules&quot;的内容都会被检索出来。个人觉得用处不大，只会让搜索结果膨胀. <!-- raw HTML omitted --></li>
-<li>OR: &ldquo;cpp or module&rdquo;, 匹配包含 &ldquo;cpp&rdquo; 或者&quot;module&rdquo; 的内容, <code>or</code> 可以使用竖线代替 <code>|</code> 个人觉得用处不大，也只会让搜索结果膨胀 <!-- raw HTML omitted --></li>
-<li>AND: &ldquo;cpp and module&rdquo;, 匹配包含 &ldquo;cpp&rdquo; 与&quot;module&quot; 的内容, <code>and</code> 可以使用与符号代替 <code>&amp;</code> <!-- raw HTML omitted --></li>
+<li>星号: &ldquo;* modules&rdquo;, 通配符，所有包含 &ldquo;modules&quot;的内容都会被检索出来。个人觉得用处不大，只会让搜索结果膨胀. <br/></li>
+<li>OR: &ldquo;cpp or module&rdquo;, 匹配包含 &ldquo;cpp&rdquo; 或者&quot;module&rdquo; 的内容, <code>or</code> 可以使用竖线代替 <code>|</code> 个人觉得用处不大，也只会让搜索结果膨胀 <br/></li>
+<li>AND: &ldquo;cpp and module&rdquo;, 匹配包含 &ldquo;cpp&rdquo; 与&quot;module&quot; 的内容, <code>and</code> 可以使用与符号代替 <code>&amp;</code> <br/></li>
 </ul>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/google_search_and.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<h2 id="custome-search"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Custome Search</h2>
-<p>前面提到「搜索并不仅限于使用搜索引擎」，是因为有很多内容，搜索引擎检索不到。 <!-- raw HTML omitted --></p>
-<p>比如在公司内网的信息，Google 再强大，也不可能会检索得到的，因为不公开。 <!-- raw HTML omitted --></p>
-<p>这个时候就可以借助浏览器的 Custom Search能力（Chrome 叫 Site Search, Firefox叫 Keyword Search）。 <!-- raw HTML omitted --></p>
-<p>举个例子，我的老东家用的是代码搜索工具是 <a href="https://oracle.github.io/opengrok/">OpenGrok</a>, 可以搜索整个事业群的代码，支持多种语言，可以搜索代码的定义，引用，历史记录等。 <!-- raw HTML omitted --></p>
-<p>（下文以同样使用 OpenGrok 部署的开源项目 <code>LibreOffice</code> 的代码为例子） <!-- raw HTML omitted --></p>
-<p>因为在日常开发的时候，遇到陌生的函数名或者枚举定义，就需要看下他们的定义与实现，看下有没有问题： <!-- raw HTML omitted --></p>
-<p>比如想看下 <code>contains</code> 这个函数的实现： <!-- raw HTML omitted --></p>
+ <br/></p>
+<h2 id="custome-search"><span class="section-num">3</span> Custome Search</h2>
+<p>前面提到「搜索并不仅限于使用搜索引擎」，是因为有很多内容，搜索引擎检索不到。 <br/></p>
+<p>比如在公司内网的信息，Google 再强大，也不可能会检索得到的，因为不公开。 <br/></p>
+<p>这个时候就可以借助浏览器的 Custom Search能力（Chrome 叫 Site Search, Firefox叫 Keyword Search）。 <br/></p>
+<p>举个例子，我的老东家用的是代码搜索工具是 <a href="https://oracle.github.io/opengrok/">OpenGrok</a>, 可以搜索整个事业群的代码，支持多种语言，可以搜索代码的定义，引用，历史记录等。 <br/></p>
+<p>（下文以同样使用 OpenGrok 部署的开源项目 <code>LibreOffice</code> 的代码为例子） <br/></p>
+<p>因为在日常开发的时候，遇到陌生的函数名或者枚举定义，就需要看下他们的定义与实现，看下有没有问题： <br/></p>
+<p>比如想看下 <code>contains</code> 这个函数的实现： <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/libre_office_definition.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<p>或者想看下 <code>Intersection</code> 这个函数的引用，看下其他人是怎么用这个函数的，我也顺便抄下。 <!-- raw HTML omitted --></p>
+ <br/></p>
+<p>或者想看下 <code>Intersection</code> 这个函数的引用，看下其他人是怎么用这个函数的，我也顺便抄下。 <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/libre_office_symbol.png"/> 
 </figure>
-  <!-- raw HTML omitted --></p>
-<p>一般的步骤是: <!-- raw HTML omitted --></p>
+  <br/></p>
+<p>一般的步骤是: <br/></p>
 <ol>
-<li>打开或切换到浏览器(Chrome/Firefox) <!-- raw HTML omitted --></li>
-<li>打开内网网站链接, 在例子中就是 <a href="https://opengrok.libreoffice.org">https://opengrok.libreoffice.org</a> <!-- raw HTML omitted --></li>
-<li>点击 <code>Definition</code> 或者 <code>Symbol</code> <!-- raw HTML omitted --></li>
-<li>输入或者粘贴想要查询的内容，比如 <code>contains</code> <!-- raw HTML omitted --></li>
+<li>打开或切换到浏览器(Chrome/Firefox) <br/></li>
+<li>打开内网网站链接, 在例子中就是 <a href="https://opengrok.libreoffice.org">https://opengrok.libreoffice.org</a> <br/></li>
+<li>点击 <code>Definition</code> 或者 <code>Symbol</code> <br/></li>
+<li>输入或者粘贴想要查询的内容，比如 <code>contains</code> <br/></li>
 </ol>
-<p>一套流程下来，大概需要30-40秒，不能说很慢吧，但是起码算不上快。 <!-- raw HTML omitted --></p>
-<p>但是如果使用 Custom Search, 大概可以缩短至 7-8秒, 并且适用于绝对大部分的网站. <!-- raw HTML omitted --></p>
-<p>首先把查询函数引用的url 复制下来, 观察： <!-- raw HTML omitted --></p>
+<p>一套流程下来，大概需要30-40秒，不能说很慢吧，但是起码算不上快。 <br/></p>
+<p>但是如果使用 Custom Search, 大概可以缩短至 7-8秒, 并且适用于绝对大部分的网站. <br/></p>
+<p>首先把查询函数引用的url 复制下来, 观察： <br/></p>
 <pre tabindex="0"><code class="language-log" data-lang="log">https://opengrok.libreoffice.org/search?full=&amp;defs=&amp;refs=Intersection&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=refs&amp;searchall=true&amp;si=refs
-</code></pre><p><code>refs</code> 后面跟着的就是需要查询的内容, 即 <code>Intersection</code>, 将 <code>Intersection</code> 替换成 <code>%s</code> : <!-- raw HTML omitted --></p>
+</code></pre><p><code>refs</code> 后面跟着的就是需要查询的内容, 即 <code>Intersection</code>, 将 <code>Intersection</code> 替换成 <code>%s</code> : <br/></p>
 <pre tabindex="0"><code class="language-log" data-lang="log">https://opengrok.libreoffice.org/search?full=&amp;defs=&amp;refs=%s&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=refs&amp;searchall=true&amp;si=refs
-</code></pre><h3 id="chrome-chromium-site-search"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> Chrome/Chromium Site Search</h3>
-<p>打开Chrome/Chromium -&gt; 点击设置(Setting) -&gt; 点击搜索引擎（Search Engine） -&gt; Manage search engines and site search -&gt; Site search [Add] <!-- raw HTML omitted --></p>
+</code></pre><h3 id="chrome-chromium-site-search"><span class="section-num">3.1</span> Chrome/Chromium Site Search</h3>
+<p>打开Chrome/Chromium -&gt; 点击设置(Setting) -&gt; 点击搜索引擎（Search Engine） -&gt; Manage search engines and site search -&gt; Site search [Add] <br/></p>
 <ul>
-<li>Search Engine: OpenGrok Code Search Find Reference(取个有意义的名字) <!-- raw HTML omitted --></li>
-<li>Keyword: csr <!-- raw HTML omitted --></li>
-<li>URL: <code>https://opengrok.libreoffice.org/search?full=&amp;defs=&amp;refs=%s&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=refs&amp;searchall=true&amp;si=refs</code> <!-- raw HTML omitted --></li>
+<li>Search Engine: OpenGrok Code Search Find Reference(取个有意义的名字) <br/></li>
+<li>Keyword: csr <br/></li>
+<li>URL: <code>https://opengrok.libreoffice.org/search?full=&amp;defs=&amp;refs=%s&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=refs&amp;searchall=true&amp;si=refs</code> <br/></li>
 </ul>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/google_site_search_ref.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<p>然后，在Chrome 的浏览器地址，输入 <code>csr</code>, 空格, 再搜索 <code>Intersection</code>, 回车。就可以直接在Chrome 地址栏里面搜索指定网页的代码. <!-- raw HTML omitted --></p>
+ <br/></p>
+<p>然后，在Chrome 的浏览器地址，输入 <code>csr</code>, 空格, 再搜索 <code>Intersection</code>, 回车。就可以直接在Chrome 地址栏里面搜索指定网页的代码. <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/google_site_search_csr.gif"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<p>而搜索代码定义，URL 如下: <!-- raw HTML omitted --></p>
+ <br/></p>
+<p>而搜索代码定义，URL 如下: <br/></p>
 <pre tabindex="0"><code class="language-log" data-lang="log">https://opengrok.libreoffice.org/search?full=&amp;defs=Intersection&amp;refs=&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=defs&amp;searchall=true&amp;si=defs
-</code></pre><p>只需要将 <code>defs</code> 后面的内容修改成 <code>%s</code>, 再建一个新的site search, 名为 <code>Opengrok Code Search Find Definition</code>, keyword 为 <code>csd</code>, 就可以快速搜索代码定义. <!-- raw HTML omitted --></p>
-<p>如果想要搜索其他网站，比如公司内网: <a href="https://search.xxoa.com/query=Foobar">https://search.xxoa.com/query=Foobar</a>, <!-- raw HTML omitted -->
-只需要把查询内容修改为 %s, 再新建个Site Search 即可。 <!-- raw HTML omitted --></p>
-<p>在老东家，搜索错误码，或者是搜索内网上的文章，我都是这么干的；所以到新东家之后，我也是这么搞的。 <!-- raw HTML omitted --></p>
-<h3 id="firefox"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> Firefox</h3>
-<p>Firefox 也提供类似的功能，叫 Keyword Search, 添加起来甚至更方便: <!-- raw HTML omitted --></p>
+</code></pre><p>只需要将 <code>defs</code> 后面的内容修改成 <code>%s</code>, 再建一个新的site search, 名为 <code>Opengrok Code Search Find Definition</code>, keyword 为 <code>csd</code>, 就可以快速搜索代码定义. <br/></p>
+<p>如果想要搜索其他网站，比如公司内网: <a href="https://search.xxoa.com/query=Foobar">https://search.xxoa.com/query=Foobar</a>, <br/>
+只需要把查询内容修改为 %s, 再新建个Site Search 即可。 <br/></p>
+<p>在老东家，搜索错误码，或者是搜索内网上的文章，我都是这么干的；所以到新东家之后，我也是这么搞的。 <br/></p>
+<h3 id="firefox"><span class="section-num">3.2</span> Firefox</h3>
+<p>Firefox 也提供类似的功能，叫 Keyword Search, 添加起来甚至更方便: <br/></p>
 <ol>
-<li>打开想要搜索的网站 <!-- raw HTML omitted --></li>
-<li>在搜索框点击鼠标右键，然后会看到一个「Add a Keyword for this Search&hellip;」 <!-- raw HTML omitted --></li>
-<li>修改名字与 keyword <!-- raw HTML omitted --></li>
+<li>打开想要搜索的网站 <br/></li>
+<li>在搜索框点击鼠标右键，然后会看到一个「Add a Keyword for this Search&hellip;」 <br/></li>
+<li>修改名字与 keyword <br/></li>
 </ol>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/firefox_add_key_word_search.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
+ <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/firefox_add_key_word_search_bookmark.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<p>然后，在 Firefox 的浏览器地址，输入 <code>csd</code>, 空格, 再搜索 <code>Intersection</code>, 回车。就可以直接在 Firefox 地址栏里面搜索指定网页的代码. <!-- raw HTML omitted --></p>
+ <br/></p>
+<p>然后，在 Firefox 的浏览器地址，输入 <code>csd</code>, 空格, 再搜索 <code>Intersection</code>, 回车。就可以直接在 Firefox 地址栏里面搜索指定网页的代码. <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/firefox_keyword_search.gif"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<p>如果没有右键时没有找到 「Add a Keyword for this Search&hellip;」的选项，也可以使用添加书签的方式，手动添加一个 keyword search: <!-- raw HTML omitted --></p>
+ <br/></p>
+<p>如果没有右键时没有找到 「Add a Keyword for this Search&hellip;」的选项，也可以使用添加书签的方式，手动添加一个 keyword search: <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/firefox_add_bookmark.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<h2 id="alfred-web-search"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Alfred Web Search</h2>
-<p>如果使用的是 Mac OS, 那么通过Alfred 插件的 Web Search功能，甚至可以不用手动切换到浏览器，直接就可以进行搜索，可以把搜索流的耗时进一步缩短到1-3秒。 <!-- raw HTML omitted --></p>
-<p>Alfred -&gt; Preference -&gt; Web Search -&gt; Add custome Search <!-- raw HTML omitted --></p>
+ <br/></p>
+<h2 id="alfred-web-search"><span class="section-num">4</span> Alfred Web Search</h2>
+<p>如果使用的是 Mac OS, 那么通过Alfred 插件的 Web Search功能，甚至可以不用手动切换到浏览器，直接就可以进行搜索，可以把搜索流的耗时进一步缩短到1-3秒。 <br/></p>
+<p>Alfred -&gt; Preference -&gt; Web Search -&gt; Add custome Search <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/alfred_web_seasch.jpg"/> 
 </figure>
-  <!-- raw HTML omitted --></p>
-<p>除了要将 <code>%s</code> 换成 <code>{query}</code> 之外, 其他添加的步骤与 Site Search 一致： <!-- raw HTML omitted --></p>
+  <br/></p>
+<p>除了要将 <code>%s</code> 换成 <code>{query}</code> 之外, 其他添加的步骤与 Site Search 一致： <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/alfred_code_search.gif"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<p>录制 Gif 只花了1.5 秒. <!-- raw HTML omitted --></p>
-<h2 id="总结"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 总结</h2>
-<p>Perl语言之父Larry Wall 有句广为人知的名言：「程序员要有三大美德：急躁，懒惰，自大」。 <!-- raw HTML omitted --></p>
+ <br/></p>
+<p>录制 Gif 只花了1.5 秒. <br/></p>
+<h2 id="总结"><span class="section-num">5</span> 总结</h2>
+<p>Perl语言之父Larry Wall 有句广为人知的名言：「程序员要有三大美德：急躁，懒惰，自大」。 <br/></p>
 <ul>
-<li>急躁意味着不愿意花时间等待缓慢的程序，会想办法优化程序； <!-- raw HTML omitted --></li>
-<li>自大意味着不愿让人指谪，对自身要求强，要写出高质量的代码； <!-- raw HTML omitted --></li>
-<li>懒惰意味着不想花精心做重复无用的事情，会想办法自动化，让电脑帮忙处理。 <!-- raw HTML omitted --></li>
+<li>急躁意味着不愿意花时间等待缓慢的程序，会想办法优化程序； <br/></li>
+<li>自大意味着不愿让人指谪，对自身要求强，要写出高质量的代码； <br/></li>
+<li>懒惰意味着不想花精心做重复无用的事情，会想办法自动化，让电脑帮忙处理。 <br/></li>
 </ul>
 <blockquote>
-<p>&ldquo;We will encourage you to develop the three great virtues of a programmer: laziness, impatience, and hubris.&rdquo; &ndash; LarryWall <!-- raw HTML omitted --></p>
+<p>&ldquo;We will encourage you to develop the three great virtues of a programmer: laziness, impatience, and hubris.&rdquo; &ndash; LarryWall <br/></p>
 </blockquote>
-<p>而我对搜索流的优化，就是在培养「急躁」与「懒惰」的美德。 <!-- raw HTML omitted --></p>
-<h2 id="延伸阅读"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> 延伸阅读</h2>
-<p>我的各种「流」： <!-- raw HTML omitted --></p>
+<p>而我对搜索流的优化，就是在培养「急躁」与「懒惰」的美德。 <br/></p>
+<h2 id="延伸阅读"><span class="section-num">6</span> 延伸阅读</h2>
+<p>我的各种「流」： <br/></p>
 <ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E5%86%99%E4%BD%9C%E6%B5%81/">我的写作流：写作工具与平台分享</a> <!-- raw HTML omitted --></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E7%94%BB%E5%9B%BE%E6%B5%81/">我的画图流：画图工具与技巧分享</a> <!-- raw HTML omitted --></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E5%86%99%E4%BD%9C%E6%B5%81/">我的写作流：写作工具与平台分享</a> <br/></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E7%94%BB%E5%9B%BE%E6%B5%81/">我的画图流：画图工具与技巧分享</a> <br/></li>
 </ul>
-<h2 id="参考"><!-- raw HTML omitted -->7<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">7</span> 参考</h2>
 <ul>
-<li><a href="https://support.mozilla.org/en-US/kb/how-search-from-address-bar">Mozilla Support: How to search IMDB, Wikipedia and more from the address bar</a> <!-- raw HTML omitted --></li>
-<li><a href="https://support.google.com/websearch/answer/2466433">Google Document: Refine web searches</a> <!-- raw HTML omitted --></li>
-<li><a href="https://support.google.com/websearch/answer/35890">Google Document: Do an Advanced Search on Google</a> <!-- raw HTML omitted --></li>
+<li><a href="https://support.mozilla.org/en-US/kb/how-search-from-address-bar">Mozilla Support: How to search IMDB, Wikipedia and more from the address bar</a> <br/></li>
+<li><a href="https://support.google.com/websearch/answer/2466433">Google Document: Refine web searches</a> <br/></li>
+<li><a href="https://support.google.com/websearch/answer/35890">Google Document: Do an Advanced Search on Google</a> <br/></li>
 </ul>
 ]]></content:encoded>
     </item>
@@ -221,39 +221,39 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2023/gmail%E5%9C%B0%E5%9D%80%E7%9A%84%E9%9A%90%E8%97%8F%E6%8A%80%E5%B7%A7/</guid>
       <description>1 前言 分享两个鲜为人知，但是却相当有用的 Gmail 地址技巧。「鲜为人知」并非是标题党，而是引用Gmail 博客原话： I recently discovered some little-known ways to use your Gmail address that can give you greater control</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
-<p>分享两个鲜为人知，但是却相当有用的 Gmail 地址技巧。「鲜为人知」并非是标题党，而是引用Gmail 博客原话： <!-- raw HTML omitted --></p>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
+<p>分享两个鲜为人知，但是却相当有用的 Gmail 地址技巧。「鲜为人知」并非是标题党，而是引用Gmail 博客原话： <br/></p>
 <blockquote>
-<p>I recently discovered some <strong><strong>little-known</strong></strong> ways to use your Gmail address that can give you greater control over your inbox and save you some time and headache. <!-- raw HTML omitted --></p>
+<p>I recently discovered some <strong><strong>little-known</strong></strong> ways to use your Gmail address that can give you greater control over your inbox and save you some time and headache. <br/></p>
 </blockquote>
-<h2 id="技巧"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 技巧</h2>
-<p>假设你的Gmail 地址是 <code>xiaoming@gmail.com</code>: <!-- raw HTML omitted --></p>
-<h3 id="加号"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 加号</h3>
-<p>你可以将在用户名后面增加一个加号 <code>+</code>, 并在加号后面增加任意数量的字符，比如 <code>xiaoming+happy@gmail.com</code>, <code>xiaoming+upset@gmail.com</code>, Gmail 都会把这些地址当作成 <code>xiaoming@gmail.com</code>, 发送到你的地址邮箱中。 <!-- raw HTML omitted --></p>
-<h3 id="点号"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 点号</h3>
-<p>你也可以在地址的任意地方插入任意数量的点号: <code>.</code>, 比如 <code>x.i.a..o.ming@gmail.com</code>, <code>xiao...mi..ng@gmail.com</code>, Gmail 都会把点号忽略掉，解析成 <code>xiaoming@gmail.com</code> <!-- raw HTML omitted --></p>
-<h2 id="用途"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 用途</h2>
-<p>技巧比较简单，寥寥数语就说完了，好像也没有什么大不了，有什么用处么？ <!-- raw HTML omitted --></p>
-<p>这个就要发挥想象力了。 <!-- raw HTML omitted --></p>
-<h3 id="用途一-重复注册用户"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 用途一：重复注册用户</h3>
-<p>这个主要是针对能使用邮箱注册的网站，可能大多数是国外网站。 <!-- raw HTML omitted --></p>
-<p>如果网站的邮箱地址校验正则写得不好，允许加号和点号，不知道Gmail的这两个规则，那么 <code>xiaoming+user1@gmail.com</code>, <code>xiaoming+user2@gmail.com</code>, <code>xi..aoming@gmail.com</code> 就会被认为是三个不同的邮箱地址，就可以重复注册。 <!-- raw HTML omitted --></p>
-<p>在薅羊毛等需要重复注册用户的场景就比较有用了。 <!-- raw HTML omitted --></p>
-<h3 id="用途二-溯源"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> 用途二：溯源</h3>
-<p>个人邮箱难免会收到一些奇怪的邮件，例如：猎头的招聘邮件，钓鱼邮件等等。 <!-- raw HTML omitted --></p>
-<p>收到这些邮件的第一反应肯定是把邮件删掉，之后就会思考，究竟是哪里泄漏了个人邮箱。 <!-- raw HTML omitted --></p>
-<p>而通过 Gmail 加号的技巧，我就可以做到垃圾邮件溯源. <!-- raw HTML omitted --></p>
-<p>首先，在注册每个网站的时候，都给他们加上一个tag, 例如注册Twitter, 那就用 <code>xiaoming+twitter@gmail.com</code>, 如果注册Github, 那就用 <code>xiaoming+github@gmail.com</code>, 依此类推。 <!-- raw HTML omitted --></p>
-<p>只要有垃圾邮件，我就能通过加号的后缀，知道是哪个浓眉大眼的网站把我的信息给泄漏出去了。 <!-- raw HTML omitted --></p>
-<p>比如下面这个垃圾邮件，我就知道它是通过爬虫爬取我Github 公开邮件群发的. <!-- raw HTML omitted --></p>
+<h2 id="技巧"><span class="section-num">2</span> 技巧</h2>
+<p>假设你的Gmail 地址是 <code>xiaoming@gmail.com</code>: <br/></p>
+<h3 id="加号"><span class="section-num">2.1</span> 加号</h3>
+<p>你可以将在用户名后面增加一个加号 <code>+</code>, 并在加号后面增加任意数量的字符，比如 <code>xiaoming+happy@gmail.com</code>, <code>xiaoming+upset@gmail.com</code>, Gmail 都会把这些地址当作成 <code>xiaoming@gmail.com</code>, 发送到你的地址邮箱中。 <br/></p>
+<h3 id="点号"><span class="section-num">2.2</span> 点号</h3>
+<p>你也可以在地址的任意地方插入任意数量的点号: <code>.</code>, 比如 <code>x.i.a..o.ming@gmail.com</code>, <code>xiao...mi..ng@gmail.com</code>, Gmail 都会把点号忽略掉，解析成 <code>xiaoming@gmail.com</code> <br/></p>
+<h2 id="用途"><span class="section-num">3</span> 用途</h2>
+<p>技巧比较简单，寥寥数语就说完了，好像也没有什么大不了，有什么用处么？ <br/></p>
+<p>这个就要发挥想象力了。 <br/></p>
+<h3 id="用途一-重复注册用户"><span class="section-num">3.1</span> 用途一：重复注册用户</h3>
+<p>这个主要是针对能使用邮箱注册的网站，可能大多数是国外网站。 <br/></p>
+<p>如果网站的邮箱地址校验正则写得不好，允许加号和点号，不知道Gmail的这两个规则，那么 <code>xiaoming+user1@gmail.com</code>, <code>xiaoming+user2@gmail.com</code>, <code>xi..aoming@gmail.com</code> 就会被认为是三个不同的邮箱地址，就可以重复注册。 <br/></p>
+<p>在薅羊毛等需要重复注册用户的场景就比较有用了。 <br/></p>
+<h3 id="用途二-溯源"><span class="section-num">3.2</span> 用途二：溯源</h3>
+<p>个人邮箱难免会收到一些奇怪的邮件，例如：猎头的招聘邮件，钓鱼邮件等等。 <br/></p>
+<p>收到这些邮件的第一反应肯定是把邮件删掉，之后就会思考，究竟是哪里泄漏了个人邮箱。 <br/></p>
+<p>而通过 Gmail 加号的技巧，我就可以做到垃圾邮件溯源. <br/></p>
+<p>首先，在注册每个网站的时候，都给他们加上一个tag, 例如注册Twitter, 那就用 <code>xiaoming+twitter@gmail.com</code>, 如果注册Github, 那就用 <code>xiaoming+github@gmail.com</code>, 依此类推。 <br/></p>
+<p>只要有垃圾邮件，我就能通过加号的后缀，知道是哪个浓眉大眼的网站把我的信息给泄漏出去了。 <br/></p>
+<p>比如下面这个垃圾邮件，我就知道它是通过爬虫爬取我Github 公开邮件群发的. <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/gmail_plus_sign_example.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<p>我就可以选择不公开 Github 邮箱，来避免后续收到类似的邮件。 <!-- raw HTML omitted --></p>
-<h2 id="参考"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 参考</h2>
+ <br/></p>
+<p>我就可以选择不公开 Github 邮箱，来避免后续收到类似的邮件。 <br/></p>
+<h2 id="参考"><span class="section-num">4</span> 参考</h2>
 <ul>
-<li><a href="https://gmail.googleblog.com/2008/03/2-hidden-ways-to-get-more-from-your.html">Google Gmail Blog: 2 hidden ways to get more from your Gmail address</a> <!-- raw HTML omitted --></li>
+<li><a href="https://gmail.googleblog.com/2008/03/2-hidden-ways-to-get-more-from-your.html">Google Gmail Blog: 2 hidden ways to get more from your Gmail address</a> <br/></li>
 </ul>
 ]]></content:encoded>
     </item>
@@ -265,104 +265,104 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2023/%E8%8B%B1%E8%AF%AD%E5%90%AC%E5%8A%9B%E5%AD%A6%E4%B9%A0%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/</guid>
       <description>1 前言 学习一门语言和学习手艺，过程差不多，没有太多的捷径可走，除了练习，还是练习。 无论是以前，还是现在，去公司上班，都需要接近一个小时的时间</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
-<p>学习一门语言和学习手艺，过程差不多，没有太多的捷径可走，除了练习，还是练习。 <!-- raw HTML omitted --></p>
-<p>无论是以前，还是现在，去公司上班，都需要接近一个小时的时间通勤。 <!-- raw HTML omitted --></p>
-<p>为了不浪费通勤的一小时，我大多会在路上收听英文播客来练习英语听力。 <!-- raw HTML omitted --></p>
-<h2 id="工具"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 工具</h2>
-<p>以前是坐班车上班，经常是听着听着英语听力就睡着了，毕竟播客的对话有深有浅，听不懂就容易睡着，英语练习就变成班车补觉。 <!-- raw HTML omitted --></p>
-<p>虽然各种英语学习心得都强调多听的重要性，但是架不住着实听不懂，Podcasts App又没有办法展示字幕，你只知道你听不懂这个单词，但是却不知道这个单词究竟是什么？ <!-- raw HTML omitted --></p>
-<p>不会的内容就不会有机会改善。 <!-- raw HTML omitted --></p>
-<p>最近接触到一个很优秀的 Podcasts APP, 名为 Snipd, 可以通过AI自动把播客内容翻译成字幕。 <!-- raw HTML omitted --></p>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
+<p>学习一门语言和学习手艺，过程差不多，没有太多的捷径可走，除了练习，还是练习。 <br/></p>
+<p>无论是以前，还是现在，去公司上班，都需要接近一个小时的时间通勤。 <br/></p>
+<p>为了不浪费通勤的一小时，我大多会在路上收听英文播客来练习英语听力。 <br/></p>
+<h2 id="工具"><span class="section-num">2</span> 工具</h2>
+<p>以前是坐班车上班，经常是听着听着英语听力就睡着了，毕竟播客的对话有深有浅，听不懂就容易睡着，英语练习就变成班车补觉。 <br/></p>
+<p>虽然各种英语学习心得都强调多听的重要性，但是架不住着实听不懂，Podcasts App又没有办法展示字幕，你只知道你听不懂这个单词，但是却不知道这个单词究竟是什么？ <br/></p>
+<p>不会的内容就不会有机会改善。 <br/></p>
+<p>最近接触到一个很优秀的 Podcasts APP, 名为 Snipd, 可以通过AI自动把播客内容翻译成字幕。 <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/snipd_appstore.jpg"/> 
 </figure>
- <!-- raw HTML omitted --></p>
+ <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/snipd_transcript1.jpg"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<p>说来有趣，这个Podcasts 软件的产品初衷并不是为了英语学习，而是类似视频截图，将播客的精彩瞬间和金句分享出来。 <!-- raw HTML omitted --></p>
-<p>但是声音是很难以视觉化的方式来进行分享，转发的，所以他们就直接将当前播放进度前后80秒的内容以字幕形式呈现。 <!-- raw HTML omitted --></p>
-<p>如果想要记录生词，可以直接点击创建「Create snip」，将句子保存下来，相当于保存了生词的上下文。 <!-- raw HTML omitted --></p>
-<p>对于字幕生成，我现在发现，Snipd是采用离线缓存+在线生成的方式的： <!-- raw HTML omitted --></p>
-<p>如果是热门播客，可能就有用户已经提交了生成字幕请求，其他用户直接点开播客就可以直接展示； <!-- raw HTML omitted -->
-对于冷门播客，需要我点击生成字幕，等待个10分钟，他们后台生成完成后会再通知我。 <!-- raw HTML omitted --></p>
+ <br/></p>
+<p>说来有趣，这个Podcasts 软件的产品初衷并不是为了英语学习，而是类似视频截图，将播客的精彩瞬间和金句分享出来。 <br/></p>
+<p>但是声音是很难以视觉化的方式来进行分享，转发的，所以他们就直接将当前播放进度前后80秒的内容以字幕形式呈现。 <br/></p>
+<p>如果想要记录生词，可以直接点击创建「Create snip」，将句子保存下来，相当于保存了生词的上下文。 <br/></p>
+<p>对于字幕生成，我现在发现，Snipd是采用离线缓存+在线生成的方式的： <br/></p>
+<p>如果是热门播客，可能就有用户已经提交了生成字幕请求，其他用户直接点开播客就可以直接展示； <br/>
+对于冷门播客，需要我点击生成字幕，等待个10分钟，他们后台生成完成后会再通知我。 <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/snip1.jpg"/> 
 </figure>
-  <!-- raw HTML omitted --></p>
+  <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/snip2.jpg"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<p>使用这个App还有一个附带的好处：可以收听非常多的海外播客。 <!-- raw HTML omitted --></p>
-<p>因为中国什么都会有特供版本，播客也不例外。 <!-- raw HTML omitted --></p>
-<p>如果使用的是国区的 Apple Id, 那么使用Iphone 自带的Podcasts App, 有非常多优秀的海外播客都无法搜索到（毕竟「收听敌对电台」） <!-- raw HTML omitted --></p>
-<p>而这个Snipd App可以搜索到非常多的海外播客，而大部分的英文播客都是海外播客。 <!-- raw HTML omitted --></p>
-<h2 id="播客"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 播客</h2>
-<p>推荐几个我经常收听的英文播客： <!-- raw HTML omitted --></p>
-<h3 id="healthy-hacker"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> Healthy hacker</h3>
-<p>网站链接：<a href="https://www.healthyhacker.com/">https://www.healthyhacker.com/</a> <!-- raw HTML omitted --></p>
-<p>一个从苹果天才吧电脑维修员工，成长为Github 工程师的小哥Chris Hunt主持的播客，我个人的最爱，主要是分享一些 Chris 自己觉得有趣的东西。 <!-- raw HTML omitted --></p>
-<p>Chris 声音热情洋溢，可惜播客在2019年之后就没有更新了。 <!-- raw HTML omitted --></p>
-<p>从天才吧员工成长为Github 工程师的那一期: <a href="https://www.healthyhacker.com/2014/10/06/growing-as-a-programmer/">《11: Growing as a programmer》</a> <!-- raw HTML omitted --></p>
+ <br/></p>
+<p>使用这个App还有一个附带的好处：可以收听非常多的海外播客。 <br/></p>
+<p>因为中国什么都会有特供版本，播客也不例外。 <br/></p>
+<p>如果使用的是国区的 Apple Id, 那么使用Iphone 自带的Podcasts App, 有非常多优秀的海外播客都无法搜索到（毕竟「收听敌对电台」） <br/></p>
+<p>而这个Snipd App可以搜索到非常多的海外播客，而大部分的英文播客都是海外播客。 <br/></p>
+<h2 id="播客"><span class="section-num">3</span> 播客</h2>
+<p>推荐几个我经常收听的英文播客： <br/></p>
+<h3 id="healthy-hacker"><span class="section-num">3.1</span> Healthy hacker</h3>
+<p>网站链接：<a href="https://www.healthyhacker.com/">https://www.healthyhacker.com/</a> <br/></p>
+<p>一个从苹果天才吧电脑维修员工，成长为Github 工程师的小哥Chris Hunt主持的播客，我个人的最爱，主要是分享一些 Chris 自己觉得有趣的东西。 <br/></p>
+<p>Chris 声音热情洋溢，可惜播客在2019年之后就没有更新了。 <br/></p>
+<p>从天才吧员工成长为Github 工程师的那一期: <a href="https://www.healthyhacker.com/2014/10/06/growing-as-a-programmer/">《11: Growing as a programmer》</a> <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/healthy_hacker.jpg"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<h3 id="the-changelog"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> THE CHANGELOG</h3>
-<p>网站链接：<a href="https://changelog.com/podcast">https://changelog.com/podcast</a> <!-- raw HTML omitted -->
-主要是分享软件工程，极客和行业创新，也有不少大咖上过播客，比如： <!-- raw HTML omitted --></p>
-<p>Ruby On Rail之父 DHH, Sqlite 作者 D. Richard Hipp, Ruby之父，以及K&amp;R 中的K( Brian Kernighan) . <!-- raw HTML omitted --></p>
+ <br/></p>
+<h3 id="the-changelog"><span class="section-num">3.2</span> THE CHANGELOG</h3>
+<p>网站链接：<a href="https://changelog.com/podcast">https://changelog.com/podcast</a> <br/>
+主要是分享软件工程，极客和行业创新，也有不少大咖上过播客，比如： <br/></p>
+<p>Ruby On Rail之父 DHH, Sqlite 作者 D. Richard Hipp, Ruby之父，以及K&amp;R 中的K( Brian Kernighan) . <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/the_changelog.jpg"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<h3 id="daily-easy-english-expression"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> Daily Easy English Expression</h3>
-<p>网站地址: <a href="https://dailyeasyenglish.libsyn.com/">https://dailyeasyenglish.libsyn.com/</a> <!-- raw HTML omitted --></p>
-<p>一个美国老师每期分享的地道英语词句的表达，每期只有几分钟。因为主持人是专业的英语外教，所以语速较慢，难度较低，非常好懂。 <!-- raw HTML omitted --></p>
+ <br/></p>
+<h3 id="daily-easy-english-expression"><span class="section-num">3.3</span> Daily Easy English Expression</h3>
+<p>网站地址: <a href="https://dailyeasyenglish.libsyn.com/">https://dailyeasyenglish.libsyn.com/</a> <br/></p>
+<p>一个美国老师每期分享的地道英语词句的表达，每期只有几分钟。因为主持人是专业的英语外教，所以语速较慢，难度较低，非常好懂。 <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/daily_easy_english_expression.jpg"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<p>我在好几年前就在Youtube关注这个老师的口语教程，叫做 <a href="https://www.youtube.com/watch?v=32T-nyka0dM">Daily English Dictation</a>, 深入浅出，娓娓道来。 <!-- raw HTML omitted --></p>
-<p>B 站上也有搬运Youtube的教程：每日英语听写 <a href="https://www.bilibili.com/video/BV1U7411a7xG/">Daily English Dictation 1-400</a> <!-- raw HTML omitted --></p>
+ <br/></p>
+<p>我在好几年前就在Youtube关注这个老师的口语教程，叫做 <a href="https://www.youtube.com/watch?v=32T-nyka0dM">Daily English Dictation</a>, 深入浅出，娓娓道来。 <br/></p>
+<p>B 站上也有搬运Youtube的教程：每日英语听写 <a href="https://www.bilibili.com/video/BV1U7411a7xG/">Daily English Dictation 1-400</a> <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/daily_english_dictation.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<p>翻开2020年的笔记，当时一天学习一课 Daily English Dictation，我学习到142课然后就放弃了。 <!-- raw HTML omitted --></p>
+ <br/></p>
+<p>翻开2020年的笔记，当时一天学习一课 Daily English Dictation，我学习到142课然后就放弃了。 <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/ddd_practice.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<h3 id="the-hanselminutes-podcast"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> THE HANSELMINUTES PODCAST</h3>
-<p>网站链接：<a href="https://www.hanselminutes.com/">https://www.hanselminutes.com/</a> <!-- raw HTML omitted --></p>
-<p>微软的 Scott Hanselman 主持的播客，类似技术杂谈，在英文技术类播客中也非常有名，他的角色类似个布道师。 <!-- raw HTML omitted --></p>
+ <br/></p>
+<h3 id="the-hanselminutes-podcast"><span class="section-num">3.4</span> THE HANSELMINUTES PODCAST</h3>
+<p>网站链接：<a href="https://www.hanselminutes.com/">https://www.hanselminutes.com/</a> <br/></p>
+<p>微软的 Scott Hanselman 主持的播客，类似技术杂谈，在英文技术类播客中也非常有名，他的角色类似个布道师。 <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/hanselminutes.jpg"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<h3 id="lex-fridman-podcast"><!-- raw HTML omitted -->3.5<!-- raw HTML omitted --> Lex Fridman Podcast</h3>
-<p>网站：<a href="https://www.hanselminutes.com/">https://www.hanselminutes.com/</a> <!-- raw HTML omitted --></p>
-<p>Lex Fridman 是俄裔计算机科学家，在MIT任职，他说话的方式很真诚，口音很好听. 他的访谈对象通常都非常大牌，比如是 Facebook 创始人 Mark Zuckerberg, 特斯拉的Elon Musk, 还有计算机的殿堂大神Donald Knuth等等. <!-- raw HTML omitted --></p>
-<p>只是他的访谈一般都很长，2-3个小时，我一般需要用一周的通勤时间来听完一期节目。 <!-- raw HTML omitted --></p>
+ <br/></p>
+<h3 id="lex-fridman-podcast"><span class="section-num">3.5</span> Lex Fridman Podcast</h3>
+<p>网站：<a href="https://www.hanselminutes.com/">https://www.hanselminutes.com/</a> <br/></p>
+<p>Lex Fridman 是俄裔计算机科学家，在MIT任职，他说话的方式很真诚，口音很好听. 他的访谈对象通常都非常大牌，比如是 Facebook 创始人 Mark Zuckerberg, 特斯拉的Elon Musk, 还有计算机的殿堂大神Donald Knuth等等. <br/></p>
+<p>只是他的访谈一般都很长，2-3个小时，我一般需要用一周的通勤时间来听完一期节目。 <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/lex_fridman.jpg"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<h3 id="bbc-6-minute-english"><!-- raw HTML omitted -->3.6<!-- raw HTML omitted --> BBC 6 Minute English</h3>
-<p>网站: <a href="https://www.bbc.co.uk/learningenglish/english/features/6-minute-english">https://www.bbc.co.uk/learningenglish/english/features/6-minute-english</a> <!-- raw HTML omitted --></p>
-<p>BBC 主持的英语学习播客，顾名思义，每期6分钟，都是纯正的英音，女主持的英音尤其悦耳。 <!-- raw HTML omitted --></p>
-<p>每期都截取一小道报道或者对话，然后学习一些新词，以练带学。 <!-- raw HTML omitted --></p>
+ <br/></p>
+<h3 id="bbc-6-minute-english"><span class="section-num">3.6</span> BBC 6 Minute English</h3>
+<p>网站: <a href="https://www.bbc.co.uk/learningenglish/english/features/6-minute-english">https://www.bbc.co.uk/learningenglish/english/features/6-minute-english</a> <br/></p>
+<p>BBC 主持的英语学习播客，顾名思义，每期6分钟，都是纯正的英音，女主持的英音尤其悦耳。 <br/></p>
+<p>每期都截取一小道报道或者对话，然后学习一些新词，以练带学。 <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/6_minute_english.jpg"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<h2 id="总结"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 总结</h2>
-<p>突然意识到，收听播客和小时候通过收音机收听各种电台节目，如「评书讲古」似乎是异曲同工。 <!-- raw HTML omitted --></p>
-<p>虽然媒介在改变，但是对好内容的需求却是一直不变的。 <!-- raw HTML omitted --></p>
+ <br/></p>
+<h2 id="总结"><span class="section-num">4</span> 总结</h2>
+<p>突然意识到，收听播客和小时候通过收音机收听各种电台节目，如「评书讲古」似乎是异曲同工。 <br/></p>
+<p>虽然媒介在改变，但是对好内容的需求却是一直不变的。 <br/></p>
 ]]></content:encoded>
     </item>
     
@@ -373,18 +373,18 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2023/openai-translator/</guid>
       <description>1 前言 因为ChatGPT 的爆红，最近基于在 ChatGPT 的工具如雨后春笋般冒出来，在 Twitter 上，基本每周都可以看到开发者发布基于 ChatGPT 的新应用（这些人不用上班的么</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>因为ChatGPT 的爆红，最近基于在 ChatGPT 的工具如雨后春笋般冒出来，在 Twitter 上，基本每周都可以看到开发者发布基于 ChatGPT  的新应用（这些人不用上班的么？）。</p>
 <p>而使用过好多的 ChatGPT 应用后，最惊艳的是 <a href="https://github.com/yetone">@yetone</a> 开发的是 <a href="https://github.com/yetone/openai-translator">openai-translator</a> 这款应用，支持「翻译」，「润色」，「总结」三种功能。</p>
-<h3 id="开发历程"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> 开发历程</h3>
+<h3 id="开发历程"><span class="section-num">1.1</span> 开发历程</h3>
 <p>因为在Twitter 上关注了 <a href="https://twitter.com/yetone">@yetone</a>, 所以能从推文看到@yetone 的开发历程：</p>
 <p>最开始 yetone 是为 <a href="https://bobtranslate.com/guide/#%E5%AE%89%E8%A3%85">Bob</a> 开发了基于 ChatGPT-api 的 <a href="https://github.com/yetone/bob-plugin-openai-translator">openai-translator</a> 插件，广受Bob用户的好评。后面yetone 码力全开，又乘胜追击，为 Bob 开发了基于ChatGPT-api 的润色和语法纠错 <a href="https://github.com/yetone/bob-plugin-openai-polisher">openai-polisher</a> 插件，完美替代了 Grammarly.</p>
 <p>因为这两个插件的出色表现，很多非Bob 用户和 Mac 用户也希望可以尝鲜，因此 yetone 就徇众要求, 「糊」(yetone的原话)了一个浏览器插件，这就是 <a href="https://github.com/yetone/openai-translator">openai-translator</a> ，而后就一发不可收拾了。</p>
 <p>因其出色的表现，在Github 和 Hacker News 上爆火了。</p>
 <p>然后 yetone 又将openai-translator 浏览器插件进行打包，做成跨平台的桌面端应用。</p>
-<h2 id="效果"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 效果</h2>
+<h2 id="效果"><span class="section-num">2</span> 效果</h2>
 <p>测试文章来自Github Blog：<a href="https://github.blog/2023-03-09-raising-the-bar-for-software-security-github-2fa-begins-march-13/">Raising the bar for software security: GitHub 2FA begins</a></p>
-<h3 id="翻译--translate"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 翻译(translate)</h3>
+<h3 id="翻译--translate"><span class="section-num">2.1</span> 翻译(translate)</h3>
 <p>翻译的用户体验，对比我之前一直在使用的沙拉划词(<a href="https://github.com/crimx/ext-saladict">ext-saladict</a>):</p>
 <p>沙拉划词:</p>
 <figure>
@@ -409,7 +409,7 @@
 <blockquote>
 <p>我们希望在2FA中注册您的GitHub帐户尽可能简单，使用可靠和安全的方法，以便您始终可以访问您的帐户(没有其他人可以!)。为了准备这个节目，我们一直在忙着提高这种体验。以下是其中的一些亮点</p>
 </blockquote>
-<!-- raw HTML omitted -->
+<!--quoteend-->
 <blockquote>
 <p>我们希望使用可靠且安全的方法在2FA中注册您的GitHub帐户尽可能容易，因此您始终可以访问您的帐户（而且没有其他人可以！）。为了准备该计划，我们一直在忙于增强这种体验。以下是一些亮点：</p>
 </blockquote>
@@ -429,7 +429,7 @@
 <blockquote>
 <p>我们希望让您的GitHub账户启用双重身份验证变得尽可能简单，使用可靠和安全的方法，以便您始终可以访问自己的账户（而别人则不能！）。为了准备这个计划，我们一直在不断改进用户体验。以下是其中的亮点：</p>
 </blockquote>
-<h3 id="润色--polish"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 润色(polish)</h3>
+<h3 id="润色--polish"><span class="section-num">2.2</span> 润色(polish)</h3>
 <p>语法纠错及词句润色的效果：</p>
 <p>测试文章片段：</p>
 <blockquote>
@@ -460,7 +460,7 @@
     <img loading="lazy" src="/ox-hugo/polished_result_diff.png"/> 
 </figure>
 
-<h3 id="总结--summarize"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> 总结(summarize)</h3>
+<h3 id="总结--summarize"><span class="section-num">2.3</span> 总结(summarize)</h3>
 <p>这个应该是openai-translator 特有的功能，可针对长文给出总结与概要：</p>
 <figure>
     <img loading="lazy" src="/ox-hugo/summarizing.gif"/> 
@@ -478,7 +478,7 @@
 <p>Those selected for enrollment will be notified via email and a banner on GitHub.com, with 45 days to configure 2FA before being required to enable it upon accessing the site. A snooze period of up to one week is available after the deadline has passed.</p>
 <p>Anyone can enroll in 2FA by following a few easy steps provided by GitHub.</p>
 </blockquote>
-<h2 id="使用方式"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 使用方式</h2>
+<h2 id="使用方式"><span class="section-num">3</span> 使用方式</h2>
 <p>所谓 action is louder than words, 不看广告看疗效。</p>
 <p>评价一个产品好不好用，只有用过才知道。体验openai-translator 最简单快捷的方式就是使用浏览器插件，免于安装桌面应用。</p>
 <p>而你所需要的只是一个chatgpt 账号+ 一个浏览器插件：</p>
@@ -503,11 +503,11 @@
     <img loading="lazy" src="/ox-hugo/taste_it.gif"/> 
 </figure>
 
-<h2 id="总结"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 总结</h2>
+<h2 id="总结"><span class="section-num">4</span> 总结</h2>
 <p>ChatGPT 向我们展示了 GPT 模型的伟大之处。但模型虽强，阳春白雪，终究是离普通用户太远。</p>
 <p>是无数个像yetone 这样的开发者，用产品展示给用户看，GPT 模型是如何的伟大。</p>
 <p>向 yetone 致敬。</p>
-<h2 id="参考"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">5</span> 参考</h2>
 <ul>
 <li><a href="https://github.com/yetone/bob-plugin-openai-polisher">bob-plugin-openai-polisher</a></li>
 <li><a href="https://github.com/yetone/bob-plugin-openai-translator">bob-plugin-openai-translator</a></li>
@@ -524,16 +524,16 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E7%94%BB%E5%9B%BE%E6%B5%81/</guid>
       <description>1 前言 古人云：「一图胜千言」。 一幅合适的图片可以清晰地向读者表达我们的意图，又因为我们人脑的作用机制，阅读一张图片所耗费的脑力要远少于一段文</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>古人云：「一图胜千言」。
 一幅合适的图片可以清晰地向读者表达我们的意图，又因为我们人脑的作用机制，阅读一张图片所耗费的脑力要远少于一段文字，故而我们对图片更加深刻。</p>
 <p>古人又云，「工欲善其事，必先利其器」，那么我就来分享一下我使用得顺手的画图工具与画图技巧。</p>
-<h2 id="excalidraw"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> excalidraw</h2>
+<h2 id="excalidraw"><span class="section-num">2</span> excalidraw</h2>
 <p><a href="https://excalidraw.com/">excalidraw</a> 是我最常用的画图工具，是一款开源的手绘画风的画板工具，图形风格是简洁而精美，一经使用，便爱不释手。</p>
 <p>非常适合构建原型或阐述想法</p>
 <p>我见证它在Github上的star数从10k涨至现在的40k，表明众多用户对它的喜爱。</p>
 <p>excalidraw提供了基本的图形，如矩形，图形，菱形，文本，箭头等，稍经组合，就可以绘制很精美，简洁的图画。</p>
-<h3 id="涂鸦之作"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 涂鸦之作</h3>
+<h3 id="涂鸦之作"><span class="section-num">2.1</span> 涂鸦之作</h3>
 <p>Hadoop 词频计算:</p>
 <figure><a href="/ox-hugo/word_freq_count.png">
     <img loading="lazy" src="/ox-hugo/word_freq_count.png"/> </a>
@@ -560,7 +560,7 @@
     <img loading="lazy" src="/ox-hugo/%e4%ba%ba%e5%8f%a3%e4%b8%8e%e5%80%ba%e5%8a%a1%e9%a3%8e%e9%99%a93.png"/> </a>
 </figure>
 
-<h3 id="素材库"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 素材库</h3>
+<h3 id="素材库"><span class="section-num">2.2</span> 素材库</h3>
 <p>如果基本的图形无法满足诉求的话，excalidraw 还提供了在线<a href="https://libraries.excalidraw.com/?theme=light&amp;sort=default">library</a>，供设计师把他们的图形，图标分享给其他用户。例如系统架构图，AWS组件图，UML图，手绘人物图等等，应有尽有，不一而足。</p>
 <p>素材库:</p>
 <figure><a href="/ox-hugo/library.png">
@@ -568,11 +568,11 @@
 </figure>
 
 <p>(商户系统的头像就是引用自 library)</p>
-<h3 id="在线协作"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> 在线协作</h3>
+<h3 id="在线协作"><span class="section-num">2.3</span> 在线协作</h3>
 <p>excalidraw 还支持端对端加密的在线协作，只需要将一个链接发送给协议方，就能实现画图在线协作：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">https://excalidraw.com/#room=91bd46ae3aa84dff9d20,pfLqgEoY1c2ioq8LmGwsFA
 </span></span></code></pre></div><p>在远程会议，需要多方画图协作沟通的时候非常有用。</p>
-<h3 id="技巧分享"><!-- raw HTML omitted -->2.4<!-- raw HTML omitted --> 技巧分享</h3>
+<h3 id="技巧分享"><span class="section-num">2.4</span> 技巧分享</h3>
 <p>excalidraw 画曲线的技巧</p>
 <ol>
 <li>按住Control/Command, 然后双击线条，进入曲线编辑模式</li>
@@ -596,7 +596,7 @@
 </figure>
 
 <p>目前excalidraw 美中不足的一点就是，不支持手绘风格的非拉丁文字体，如中文，日文字体等，很早之前就有<a href="https://github.com/excalidraw/excalidraw/pull/5604">issue</a>在谈论了，目前还没有什么进展。</p>
-<h2 id="graphviz"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> graphviz</h2>
+<h2 id="graphviz"><span class="section-num">3</span> graphviz</h2>
 <p>我主要是用graphviz 来绘制复杂的关系图，timeline图。
 它系出名门，出自大名鼎鼎的的AT&amp;T实验室，类似微软出的「Visio」，但两者有个本质的差别。</p>
 <p>就是「Visio」是手动的，需要绘图者指定点线之间的布局，而graphviz 是自动布局的，只要将告知graphviz点与线的关系，graphviz 就能实现「自动布局」。</p>
@@ -625,10 +625,10 @@
 </figure>
 
 <p>更多更复杂的示例，可见官方的<a href="http://www.graphviz.org/gallery/">gallery</a></p>
-<h3 id="快速入门"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 快速入门</h3>
+<h3 id="快速入门"><span class="section-num">3.1</span> 快速入门</h3>
 <p>graphviz 使用所谓的「dot 语言(language)」这种标记语言来描述图形，然后再由命令行生成图片。</p>
 <p>程序员们可以把这个理解成，从源码编译到可执行文件。</p>
-<h4 id="有向图--digraph--与无向图--graph"><!-- raw HTML omitted -->3.1.1<!-- raw HTML omitted --> 有向图 (digraph)与无向图 (graph)</h4>
+<h4 id="有向图--digraph--与无向图--graph"><span class="section-num">3.1.1</span> 有向图 (digraph)与无向图 (graph)</h4>
 <p>dot语言支持两种图形，分别是有向图 (digraph)与无向图(graph).</p>
 <p>定义一个无向图</p>
 <pre tabindex="0"><code class="language-dot" data-lang="dot">graph mygraph {
@@ -651,10 +651,10 @@
 </figure>
 
 <p>命名规范与C家族的编程语言类似：图形关系定义在花括号<code>{}</code> 中；每条语句以 <code>;</code> 结尾; <code>//</code> 表示单行注释, <code>/**/</code>表示多行注释</p>
-<h4 id="节点--node"><!-- raw HTML omitted -->3.1.2<!-- raw HTML omitted --> 节点(node)</h4>
+<h4 id="节点--node"><span class="section-num">3.1.2</span> 节点(node)</h4>
 <p><code>mydigraph</code> 是图形名，<code>1</code>, <code>2</code> 是节点名(node), 两个节点构成一条边(edge)。在图的定义中，相同的名称就代表同一个节点。</p>
 <p>当dot 编译器遇到一个新的名称，就认为是新的节点</p>
-<h4 id="属性--property"><!-- raw HTML omitted -->3.1.3<!-- raw HTML omitted --> 属性(property)</h4>
+<h4 id="属性--property"><span class="section-num">3.1.3</span> 属性(property)</h4>
 <p>属性可以设置在节点和边上，通过「方括号 <code>[]</code>」来定义属性，属性之间用英文逗号分隔。</p>
 <p>属性的定义采用如下的格式：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">属性名 = 属性值
@@ -665,7 +665,7 @@
 <li>style: 样式</li>
 <li>shape: 形状</li>
 </ul>
-<!-- raw HTML omitted -->
+<!--listend-->
 <pre tabindex="0"><code class="language-dot" data-lang="dot">strict graph {
 // 设置节点属性
 1 [shape=box];
@@ -688,7 +688,7 @@
 <li>fontcolor:字体颜色（【不】影响节点和连线）</li>
 <li>center:是否居中绘制</li>
 </ul>
-<!-- raw HTML omitted -->
+<!--listend-->
 <pre tabindex="0"><code class="language-dot" data-lang="dot">digraph graph_attr
 {
 graph[bgcolor=&#34;yellow&#34; label=&#34;标题&#34; fontsize=24 fontcolor=&#34;green&#34;];
@@ -701,7 +701,7 @@ graph[bgcolor=&#34;yellow&#34; label=&#34;标题&#34; fontsize=24 fontcolor=&#34
 </figure>
 
 <p>更多的属性可见官网：<a href="http://www.graphviz.org/doc/info/attrs.html">Attributes</a></p>
-<h4 id="子图--subgraph"><!-- raw HTML omitted -->3.1.4<!-- raw HTML omitted --> 子图(subgraph)</h4>
+<h4 id="子图--subgraph"><span class="section-num">3.1.4</span> 子图(subgraph)</h4>
 <p>subgraph 的作用主要有 3 个：</p>
 <ul>
 <li>表示图的结构，对节点和边进行分组</li>
@@ -729,7 +729,7 @@ e;
     </figure>
 </li>
 </ul>
-<h4 id="图布局--layout"><!-- raw HTML omitted -->3.1.5<!-- raw HTML omitted --> 图布局(layout)</h4>
+<h4 id="图布局--layout"><span class="section-num">3.1.5</span> 图布局(layout)</h4>
 <p>默认情况下图是从上到下布局的(rankdir <code>&quot;TB&quot;)，通过设置 rankdir</code>&ldquo;LR&rdquo; 可以让图从左到右布局。</p>
 <p>默认布局(From top to bottom)</p>
 <pre tabindex="0"><code class="language-dot" data-lang="dot">digraph {
@@ -750,7 +750,7 @@ a -&gt; b -&gt; c;
 </figure>
 
 <p>该属性只针对图(graph)生效.</p>
-<h4 id="示例"><!-- raw HTML omitted -->3.1.6<!-- raw HTML omitted --> 示例</h4>
+<h4 id="示例"><span class="section-num">3.1.6</span> 示例</h4>
 <p>再回头看下，「土地财政时间线」这图的源代码：</p>
 <pre tabindex="0"><code class="language-dot" data-lang="dot">digraph 土地财政时间线 {
 size=&#34;7,8&#34;;
@@ -807,7 +807,7 @@ node [fontsize=20, shape = box];
 &#34;涨价去库存&#34; -&gt; &#34;房价起飞&#34;;
 &#34;房价&#34; -&gt; &#34;房价起飞&#34;[label =&#34;逐年上涨&#34;];
 }
-</code></pre><h4 id="编辑器支持"><!-- raw HTML omitted -->3.1.7<!-- raw HTML omitted --> 编辑器支持</h4>
+</code></pre><h4 id="编辑器支持"><span class="section-num">3.1.7</span> 编辑器支持</h4>
 <p>如果是Emacs 用户，可以使用<a href="https://github.com/ppareit/graphviz-dot-mode">graphviz-dot-mode</a> 来编辑并预览生成的图片，效果如下：</p>
 <figure><a href="/ox-hugo/graphviz-dot-mode.png">
     <img loading="lazy" src="/ox-hugo/graphviz-dot-mode.png"/> </a>
@@ -820,12 +820,12 @@ node [fontsize=20, shape = box];
     <img loading="lazy" src="/ox-hugo/graph_snippet.gif"/> </a>
 </figure>
 
-<h2 id="plantuml"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> plantuml</h2>
+<h2 id="plantuml"><span class="section-num">4</span> plantuml</h2>
 <p>身为程序员，免不了撰写各种设计方案，绘制各种序列图，类图，活动图，状态机图等等各种UML图。</p>
 <p>而<a href="https://plantuml.com/">plantuml</a> 就是这样一个绘图组件，支持绘制各种程序开发需要用到的图。</p>
 <p>plantuml 依赖的底层组件就有前文提到的graphviz，所以plantuml的语法也类似graphviz, 通过自定义的标记语言，来描述不同图形之间的关系，「自动布局」并绘制。</p>
 <p>学过UML规范的同学应该都知道这些图应该怎么画，我就拿几个常见的图来举个例子。</p>
-<h3 id="时序图"><!-- raw HTML omitted -->4.1<!-- raw HTML omitted --> 时序图</h3>
+<h3 id="时序图"><span class="section-num">4.1</span> 时序图</h3>
 <p>plantuml 提供不同的组件供时序图使用。不同的组件有不同的形状，默认情况下，组件的声明顺序就是他们的展示顺序。</p>
 <p>使用<code>-&gt;</code> 来表示在两个组件/参与者(participant) 之间传递消息，<code>&lt;--</code> 表示回包信息。</p>
 <pre tabindex="0"><code class="language-plantuml" data-lang="plantuml">@startuml
@@ -851,7 +851,7 @@ Foo &lt;-- Foo7: Response from queue
 </figure>
 
 <p>时序图的更多用法可见官网文档：<a href="https://plantuml.com/sequence-diagram">Sequence-Diagram</a></p>
-<h3 id="活动图"><!-- raw HTML omitted -->4.2<!-- raw HTML omitted --> 活动图</h3>
+<h3 id="活动图"><span class="section-num">4.2</span> 活动图</h3>
 <pre tabindex="0"><code class="language-plantuml" data-lang="plantuml">@startuml
 start
 repeat
@@ -871,13 +871,13 @@ stop
     <img loading="lazy" src="/ox-hugo/activity-digram.png"/> 
 </figure>
 
-<h3 id="编辑器"><!-- raw HTML omitted -->4.3<!-- raw HTML omitted --> 编辑器</h3>
+<h3 id="编辑器"><span class="section-num">4.3</span> 编辑器</h3>
 <p>如果需要实时预览，个人推荐Vscode + <a href="https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml">plantuml插件</a>来绘制plantuml 图，所见即所得，实时预览，并提供代码补全：</p>
 <figure><a href="/ox-hugo/auto_update_demo.gif">
     <img loading="lazy" src="/ox-hugo/auto_update_demo.gif"/> </a>
 </figure>
 
-<h2 id="matplotlib"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> matplotlib</h2>
+<h2 id="matplotlib"><span class="section-num">5</span> matplotlib</h2>
 <p>这就是个绘图库了，主要是用来绘制各种图表，比如折线图，饼图，直方图等，通常是配合数据分析使用，还支持xkcd 风格。</p>
 <p>之前在上MIT 6.00网课的时候，John Guttag教授出了一个概率统计题，一个醉汉每次向四个方向中任意一个方向走一步，500步后，醉汉是离原点越来越近呢，还是越来越远？</p>
 <p>下面是Python代码实现，模拟醉汉行为：</p>
@@ -982,7 +982,7 @@ stop
     <img loading="lazy" src="/ox-hugo/simulation_random_walk_trail1.png"/> </a>
 </figure>
 
-<h3 id="再话org-mode"><!-- raw HTML omitted -->5.1<!-- raw HTML omitted --> 再话org-mode</h3>
+<h3 id="再话org-mode"><span class="section-num">5.1</span> 再话org-mode</h3>
 <p>在<a href="https://mp.weixin.qq.com/s/mid3TpmXJMM7xWm5rfl7qg">《我的写作流》</a>里面，我有提到过，我使用Emacs + org-mode 来编写文章，对比markdown 或者其他的标记语言，<code>org-mode</code> 有一个巨大的优势，就是<code>org-mode</code> 借助内置的<a href="https://orgmode.org/worg/org-contrib/babel/"><code>org-babel</code></a> 组件，可以直接运行代码。</p>
 <p>在markdown 里面，下面的代码块的用处仅仅是语法高亮：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl"><span class="s">```python
@@ -996,7 +996,7 @@ stop
 <p>根本不需要手动编译，生成图片，然后再把图片以markdown格式手动插入: <code>![图片](链接)</code> 。</p>
 <p>上面的概率统计模拟图也是这样生成出来的，写好Python 代码，然后按下 <code>C-c C-c</code></p>
 <p>一切都浑然天成。</p>
-<h2 id="那些年-我使用过的绘图工具"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> 那些年，我使用过的绘图工具</h2>
+<h2 id="那些年-我使用过的绘图工具"><span class="section-num">6</span> 那些年，我使用过的绘图工具</h2>
 <p>都是曾经使用过，现在也基本弃用的工具：</p>
 <ul>
 <li>Word：最开始时也不知道什么画图工具，就使用Word 来画图。</li>
@@ -1006,12 +1006,12 @@ stop
 </ul>
 <p>图表与文章一样，都是资产。</p>
 <p>对于这样的重要资产，我还是倾向于「本地化」+ 「文本化」+ 「版本管理」+ 「云同步」的方案，保证图表既易于修改，又无丢失风险。</p>
-<h2 id="结语"><!-- raw HTML omitted -->7<!-- raw HTML omitted --> 结语</h2>
+<h2 id="结语"><span class="section-num">7</span> 结语</h2>
 <p>金庸笔下的「独孤求败」的用剑之道：「四十岁后，不滞于物，草木竹石均可为剑。自此精修，渐进于无剑胜有剑之境」</p>
 <p>excalidraw, graphviz 也好， plantuml, org-mode 也罢，只是「器」，都只是用来表达想法与智慧的工具。</p>
 <p>所谓「飞花摘叶皆可伤人，草木竹石均可为剑」，真正的大牛，即使不使用画图工具，寥寥数语就会把一个复杂的概念解释得清楚明了。</p>
 <p>厚积而薄发，选择合适的「剑」很重要，但「内功」的修炼同样重要。</p>
-<h2 id="参考"><!-- raw HTML omitted -->8<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">8</span> 参考</h2>
 <ul>
 <li><a href="https://graphviz.org/documentation/">Graphviz Documentation</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/21993254">Graphviz 入门指南</a></li>
@@ -1028,13 +1028,13 @@ stop
       <guid>https://ramsayleung.github.io/zh/post/2017/share_shell_script/</guid>
       <description>share of my shell script snippet</description>
       <content:encoded><![CDATA[<p>分享一下平时工作生活中编写的一些脚本片段(一直更新). 适用于 OS X 和 Linux</p>
-<h2 id="准备工作"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 准备工作</h2>
+<h2 id="准备工作"><span class="section-num">1</span> 准备工作</h2>
 <p>因为我比较多的脚本都是基于 <code>percol</code> 这个神器，所以需要先安装 <code>percol</code>, 如果 不了解 <code>percol</code> 的话，可以翻看一下我之前的文章 <a href="https://ramsayleung.github.io/post/2017/percol/">Linux/Unix Shell 二三事之神器percol</a> .</p>
 <p>我一般将写好的函数 source 命令添加到 Shell. 例如脚本函数都在一个叫<code>tool_function.sh</code> 的文件里面，而我使用 Zsh, 则只需要在 <code>.zshrc</code> 添加一句语句：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">source</span> /path/to/tool_function.sh
 </span></span></code></pre></div><p>如果使用 Bash, 添加到 <code>.bashrc</code> 即可。</p>
-<h2 id="有趣的脚本"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 有趣的脚本</h2>
-<h3 id="ssh-免密码登录"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> SSH 免密码登录</h3>
+<h2 id="有趣的脚本"><span class="section-num">2</span> 有趣的脚本</h2>
+<h3 id="ssh-免密码登录"><span class="section-num">2.1</span> SSH 免密码登录</h3>
 <p>SSH 基本就是登录远程服务器的标配了，只是每次登录服务器都要输入密码，未免太麻烦了(好吧，我拥有懒惰这个美德)，所以我决定配置 SSH 的免密码登录。代码如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="k">function</span> config_ssh_login_key<span class="o">(){</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="nv">$#</span> -lt <span class="m">3</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
@@ -1078,7 +1078,7 @@ stop
 </span></span></code></pre></div><p>当然，如果你按照我的前面提到的做法，用 source 命令引入脚本，你可以直接在命令行输入：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">config_ssh_login_key -u root -h your-server-ip
 </span></span></code></pre></div><p>如果端口未指定，默认端口为 22</p>
-<h3 id="生成若干位密钥"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 生成若干位密钥</h3>
+<h3 id="生成若干位密钥"><span class="section-num">2.2</span> 生成若干位密钥</h3>
 <p>生成若干位的密钥是常见的需求，得益于 Linux/Unix 命令行强大的过滤器，所以只需把命令整理成脚本即可：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># generate key</span>
 </span></span><span class="line"><span class="cl"><span class="k">function</span> gkey<span class="o">(){</span>
@@ -1097,7 +1097,7 @@ stop
 </span></span></code></pre></div><p>用法：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">gkey <span class="m">45</span>
 </span></span></code></pre></div><p>即生成一个45位字符的随机密钥，如果没有指定长度的话，默认是 32 位。因为 OS X和 Linux 的 <code>tr</code> 使用有差异，所以要处理一下</p>
-<h3 id="复制命令行输出"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> 复制命令行输出</h3>
+<h3 id="复制命令行输出"><span class="section-num">2.3</span> 复制命令行输出</h3>
 <p>有时可能需要复制某个命令的输出，一般的做法都是运行某个命令，用鼠标选中，然后复制。例如在生成密钥之后，需要复制到项目的配置文件。但是每次都要用鼠标，效率实在不高。这个功能其实可以脚本实现：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nv">OS_NAME</span><span class="o">=</span><span class="k">$(</span>uname<span class="k">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">function</span> pclip<span class="o">()</span> <span class="o">{</span>
@@ -1121,7 +1121,7 @@ stop
 <p>在 Linux 运行这脚本需要先安装 xsel 或者是 xclip 命令。结合生成密钥的命令使用：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">gkey -28<span class="p">|</span>pclip
 </span></span></code></pre></div><p>这样，生成的密钥就被复制到系统上了。</p>
-<h3 id="复制当前目录"><!-- raw HTML omitted -->2.4<!-- raw HTML omitted --> 复制当前目录</h3>
+<h3 id="复制当前目录"><span class="section-num">2.4</span> 复制当前目录</h3>
 <p>有时候，我需要复制当前目录下某个文件的路径，但是无论是文件管理器，还是在Shell 中都要用鼠标选中然后复制指定文件的路径，效率不高且很不方便。所以我通过结合 percol 和上面提高的 pclip 函数改进了做法：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="k">function</span> pwdf<span class="o">()</span>
 </span></span><span class="line"><span class="cl"><span class="o">{</span>
@@ -1136,8 +1136,8 @@ stop
 </figure>
 
 <hr>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted -->&lt;2017-05-22 Mon&gt; <!-- raw HTML omitted --><!-- raw HTML omitted --> Update</p>
-<h3 id="判断-unix-系统的版本"><!-- raw HTML omitted -->2.5<!-- raw HTML omitted --> 判断 Unix 系统的版本</h3>
+<p><span class="timestamp-wrapper"><span class="timestamp">&lt;2017-05-22 Mon&gt; </span></span> Update</p>
+<h3 id="判断-unix-系统的版本"><span class="section-num">2.5</span> 判断 Unix 系统的版本</h3>
 <p>因为我经常需要在不同的 Unix 机器之间切换，例如工作用的 Mac OS X, 另外一台笔记本上的 Fedora, 还有一台工作站上的 Arch Linux, 以及各种发行版本的 VPS 等，在不同的发行版本或者系统之间切换，我希望我常用的工具也可以很轻易地移植到不同的发行版本上。</p>
 <p>但是不同的发行版本使用不同的包安装管理器，例如 OS X 上的 <code>brew</code>, Fedora 的 <code>dnf</code>, Centos 的 <code>yum</code>, Ubuntu 上的 <code>apt-get</code> 等等。如果可以通过使用脚本来实现根据不同的发行版本使用不同的包安装管理器安装软件，这样就省心很多。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># GetOSVersion</span>
@@ -1192,7 +1192,7 @@ stop
 </span></span><span class="line"><span class="cl">    <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">export</span> os_VENDOR
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h3 id="根据不同的发行版本安装软件"><!-- raw HTML omitted -->2.6<!-- raw HTML omitted --> 根据不同的发行版本安装软件</h3>
+</span></span></code></pre></div><h3 id="根据不同的发行版本安装软件"><span class="section-num">2.6</span> 根据不同的发行版本安装软件</h3>
 <p>刚刚上面的脚本是为了准确判断出所有的 *nix 系统的，但是方便起见，也可以直接使用<code>uname</code> 命令</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>uname<span class="k">)</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;Darwin&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">    <span class="c1"># Do something under Mac OS X platform</span>
@@ -1348,13 +1348,13 @@ stop
 </span></span><span class="line"><span class="cl">    <span class="c1"># Do something under 64 bits Windows NT platform</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;this is 64-bit windows&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span></code></pre></div><h3 id="加密目录"><!-- raw HTML omitted -->2.7<!-- raw HTML omitted --> 加密目录</h3>
+</span></span></code></pre></div><h3 id="加密目录"><span class="section-num">2.7</span> 加密目录</h3>
 <p>每个人都会有需要只属于自己的东西，保护这些东西最好的办法就是对其进行加密：</p>
-<h4 id="加密"><!-- raw HTML omitted -->2.7.1<!-- raw HTML omitted --> 加密</h4>
+<h4 id="加密"><span class="section-num">2.7.1</span> 加密</h4>
 <p>使用 <code>tar</code> 和 <code>openssl</code> 对目录进行加密，先使用 <code>tar</code> 归档当前文件，然后使用
 <code>aes256</code> 算法进行加密：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">tar -czf - * <span class="p">|</span> openssl enc -e -aes256 -out encrypted.tar.gz
-</span></span></code></pre></div><h4 id="解密"><!-- raw HTML omitted -->2.7.2<!-- raw HTML omitted --> 解密</h4>
+</span></span></code></pre></div><h4 id="解密"><span class="section-num">2.7.2</span> 解密</h4>
 <p>把加密后的归档文件解密到当前命令：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">openssl enc -d -aes256 -in encrypted.tar.gz<span class="p">|</span> tar xz -C <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
 </span></span></code></pre></div>]]></content:encoded>
@@ -1368,13 +1368,13 @@ stop
       <guid>https://ramsayleung.github.io/zh/post/2017/about_tool_about_tweak/</guid>
       <description>An discussion about tool and tweak</description>
       <content:encoded><![CDATA[<p>笔者最近一直在思考，关于工具，关于折腾，关于其中的付出与收获</p>
-<h2 id="乐趣"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 乐趣</h2>
-<h3 id="linux"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> Linux</h3>
+<h2 id="乐趣"><span class="section-num">1</span> 乐趣</h2>
+<h3 id="linux"><span class="section-num">1.1</span> Linux</h3>
 <p>回顾笔者大学，从大一开始就是一个不停折腾的过程，在其他的同学还在用Windows玩游戏的时候，笔者已经把系统换成Linux了.</p>
 <p>记得最开始装的第一个发行版本是 <a href="https://www.kali.org/">Kali Linux</a>一个黑客和安全专家使用的发行版本，上面有不计其数的渗透工具；毕竟每一个学 计算机的孩子心中都是有个 hacker dream的嘛，笔者也不例外:)。</p>
 <p>只是笔者最开始并没有能力去使用Kali Linux; 甚至连基本的命令都完全不了解；笔者相当沮丧，因为 hacker并不是想象中的那么容易的. 笔者后来就把自己的系统重装，装了个<a href="https://www.ubuntu.com/global"> Ubuntu</a>, 买 了一本《鸟哥的Linux私房菜》，一边学，一边用，就这样进了Linux的坑了。</p>
 <p>《鸟哥的私房菜》大概看了两年，翻过好几次了，后来也看了《服务器篇》，前后共看了近十本Linux的书籍吧，整个大学大概在自己电脑上前后装了10种的发行版本吧</p>
-<h3 id="vim-emacs"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> Vim/Emacs</h3>
+<h3 id="vim-emacs"><span class="section-num">1.2</span> Vim/Emacs</h3>
 <p>《鸟哥Linux私房菜》一书中，鸟哥强推Vim, 其他的Linux论坛也对 Vim 推崇备至，笔者 很自然就随大流去学习Vim了，开始的时候，真的非常不习惯，编辑个文本还要分那么多 的模式，真的是反人类，连个单词都不能输入.</p>
 <p>后来，好不容易输完数据之后，又不知道怎么保存 (Ctrl-S? 想多了), 然后直接关闭，重新打开又有什么提示说是否恢复数据。 觉得为何有这样异类难用的编辑器, 真不知道为什么那么多人推崇。</p>
 <p>但当笔者坚持这种煎熬半个月以后，就发现其他的编辑器都非常低效，没错，就是非常低效，又要鼠标， 又要键盘，不断地切换，效率实在太低了。</p>
@@ -1390,36 +1390,36 @@ stop
 </ul>
 <p>而至于选择神之编辑器还是编辑器之神，那就是信仰的抉择了。笔者选择了在 Emacs 里面使用 Vim 的编
 辑模式 Evil :)</p>
-<h3 id="misc"><!-- raw HTML omitted -->1.3<!-- raw HTML omitted --> Misc</h3>
+<h3 id="misc"><span class="section-num">1.3</span> Misc</h3>
 <p>除了折腾编辑器之外，笔者还折腾了各种的命令行，Shell 脚本，还有 Firefox, Chrome浏览器。当初那些 Windows 用户一直说 Linux 的桌面丑，笔者就去了折腾各种 的桌面环境 (window manager)这种折腾可不是 Windows 上面的切换壁纸哦，后来把桌 面折腾得非常炫，以至同学看到笔者的电脑就说我装了黑苹果，然而事实并非如此。</p>
 <p>如果你也好奇那些炫酷的 Linux/Unix 桌面，可以查看 <a href="https://reddit.com/r/unixporn">https://reddit.com/r/unixporn</a> 上面有各种 Linuxer/Unixer 分享的炫酷桌面</p>
-<h2 id="投入产出比"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 投入产出比</h2>
-<h3 id="值得否"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 值得否？</h3>
+<h2 id="投入产出比"><span class="section-num">2</span> 投入产出比</h2>
+<h3 id="值得否"><span class="section-num">2.1</span> 值得否？</h3>
 <p>笔者的大学基本都是在学习并折腾各种的工具或者技术，并且乐在其中.</p>
 <p>但是有一天当笔 者又在跟朋友推荐 Vim/Emacs, 或许是笔者喋喋不休实在太多次了，朋友回了笔者一句 &quot; notepad++, sublime text 不一样可以写代码，你为什么还要花那么多时间去折腾这些东西呢，你写脚本都可以直接用IDE,为什么还要自己折腾呢，把时间花到其他地方不更好么？&quot;.</p>
 <p>笔者难以反驳，笔者之前一直是玩得很开心，从未曾考虑过这个问题，所以那个时候开始询问自己，这是否值得，自己是否要把时间用到其他地方？</p>
 <p>在之后的一段 时间，笔者都难掩沮丧，因为觉得自己浪费了很多的时间来完成一些无用功！</p>
-<h3 id="长期投资"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 长期投资</h3>
+<h3 id="长期投资"><span class="section-num">2.2</span> 长期投资</h3>
 <p>但是最终笔者还是解答了自己的疑问! 笔者之前付出是绝对值得的，先不说笔者在其中获得的乐趣，乐趣是无价的嘛 :)</p>
 <p>笔者在折腾的过程中也学到很多新的东西: 为了用好我配置的 Emacs, 笔者使用 Emacs 写了很多不同的脚本，这种感觉就好像，侠士为了展示手中利刃之威力，苦练武艺; 而在折腾 Emacs lisp 的过程中，也学习很多函数式编程的思想，甚至掌握了一门新的语言 &ndash; elisp, 虽说它的语法很奇怪。</p>
 <p>其实笔者的付出是长期投资，学会了 Vim 的 moral edit, 也可以在其他 IDE使用嘛，这并不矛盾的，无鼠标操作是非常高效的，也是所谓的 modern editor 无法比拟的。</p>
 <p>最重要的是，在折腾过程中所培养的解决困难的动手能力，也是可以受益终生的，笔者知道如何去google，如何去查找文档，如何去提问; 而且在不停的折腾过程中，你对某样技术的理解是单纯的理论学习无法比拟的；</p>
 <p>在大学的操作系统课，笔者基本是没听老师讲解课程的，因为老师讲的，笔者基本都知道，甚至实践过。</p>
-<h2 id="工具集"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 工具集</h2>
+<h2 id="工具集"><span class="section-num">3</span> 工具集</h2>
 <p>在经历大学的折腾后，笔者现在很多的工具集都基本确定下来了；这些也是对笔者而言，
 最高效的工具集</p>
-<h3 id="编辑器"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 编辑器</h3>
+<h3 id="编辑器"><span class="section-num">3.1</span> 编辑器</h3>
 <ul>
 <li>Emacs 神之编辑器，主力编辑器 <a href="https://github.com/samrayleung/emacs.d">个人配置</a></li>
 <li>Vim 编辑器之神，一般在服务器改改配置的时候用</li>
 </ul>
-<h3 id="浏览器"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> 浏览器</h3>
+<h3 id="浏览器"><span class="section-num">3.2</span> 浏览器</h3>
 <ul>
 <li>Chrome 不常用，特定情况下使用</li>
 <li>Firefox 日常浏览器，笔者也折腾过非常久，所以即使 Chrome 很强，笔者只为
 Firefox 倾心</li>
 </ul>
-<h3 id="firefox扩展"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> FireFox扩展</h3>
+<h3 id="firefox扩展"><span class="section-num">3.3</span> FireFox扩展</h3>
 <p>因为 FireFox 对插件的限制相对宽松，所以社区开发出了非常多非常强的插件，笔者就
 列举一下自己使用的扩展集吧</p>
 <ul>
@@ -1440,24 +1440,24 @@ Firefox 倾心</li>
 <li>Xpath checker -直接获取Dom节点的Xpath,配合Lxml解析网页非常高效</li>
 <li>Firebug -神器，但是已经停止开发了。</li>
 </ul>
-<h3 id="桌面"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> 桌面</h3>
+<h3 id="桌面"><span class="section-num">3.4</span> 桌面</h3>
 <p>i3wm, 在折腾过炫酷的 KDE, Gnome, xfce, 而笔者最后选择的是 i3这个平铺桌面，可
 以实现无鼠标操作，非常轻量。</p>
-<h3 id="命令行"><!-- raw HTML omitted -->3.5<!-- raw HTML omitted --> 命令行</h3>
-<h4 id="shell"><!-- raw HTML omitted -->3.5.1<!-- raw HTML omitted --> Shell</h4>
+<h3 id="命令行"><span class="section-num">3.5</span> 命令行</h3>
+<h4 id="shell"><span class="section-num">3.5.1</span> Shell</h4>
 <ul>
 <li>zsh -配合oh-my-zsh,可以非常高效，但是使用频率不高</li>
 <li>Eshell -与Emacs集成，是笔者的主力Shell,不过某些Eshell不支持的操作，只好在
 zsh完成</li>
 </ul>
-<h4 id="过滤器"><!-- raw HTML omitted -->3.5.2<!-- raw HTML omitted --> 过滤器</h4>
+<h4 id="过滤器"><span class="section-num">3.5.2</span> 过滤器</h4>
 <ul>
 <li><a href="https://github.com/ggreer/the_silver_searcher">ag</a>   grep的加强版，速度快</li>
 <li><a href="https://github.com/BurntSushi/ripgrep">ripgrep </a>最快的命令搜索工具</li>
 <li><a href="https://github.com/mooz/percol">percol</a> 过滤文本，神器</li>
 <li><a href="https://github.com/clvv/fasd">fasd</a> 目录跳转，文件查找，高效</li>
 </ul>
-<h4 id="misc"><!-- raw HTML omitted -->3.5.3<!-- raw HTML omitted --> misc</h4>
+<h4 id="misc"><span class="section-num">3.5.3</span> misc</h4>
 <ul>
 <li><a href="https://github.com/jakubroztocil/httpie">httpie</a> http客户端，发送http请求</li>
 <li>htop top的改进版，信息更详细</li>
@@ -1466,13 +1466,13 @@ zsh完成</li>
 <li>git Linus又一神作</li>
 </ul>
 <p>其它就是常用的内置命令了</p>
-<h3 id="影音"><!-- raw HTML omitted -->3.6<!-- raw HTML omitted --> 影音</h3>
+<h3 id="影音"><span class="section-num">3.6</span> 影音</h3>
 <ul>
 <li>VLC Linux最好用的播放器</li>
 <li>网易云音乐 国产良心音乐软件</li>
 <li><a href="https://github.com/darknessomi/musicbox">musicbox</a> 网易云音乐的社区命令行版本</li>
 </ul>
-<h3 id="其它"><!-- raw HTML omitted -->3.7<!-- raw HTML omitted --> 其它</h3>
+<h3 id="其它"><span class="section-num">3.7</span> 其它</h3>
 <ul>
 <li>Fcitx -中文输入</li>
 <li>VirtualBox -开源虚拟机</li>
@@ -1483,7 +1483,7 @@ zsh完成</li>
 </ul>
 <p>使用最频繁的就是 I3+Firefox+Emacs,实现无鼠标操作，因为使用鼠标太慢了，效率太
 低。笔者也不是一个疯子，所以只会用Emacs 做力所能及的事情，煮咖啡就算了。</p>
-<h2 id="结语"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 结语</h2>
+<h2 id="结语"><span class="section-num">4</span> 结语</h2>
 <p>如果让笔者的大学重来一遍，估计笔者还是会这样折腾，因为自己动手的感觉还是很美好，充满成就感，这也是玩游戏所不能给予我的感觉，毕竟 <strong>hacker</strong> 不是想出来的嘛，是做出来的。</p>
 <hr>
 <p>更新 2017-4-21</p>

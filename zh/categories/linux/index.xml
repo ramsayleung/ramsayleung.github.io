@@ -20,17 +20,17 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2023/linux%E4%B8%8B%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E8%87%AA%E5%8A%A8%E5%85%B3%E6%9C%BA/</guid>
       <description>1 问题 最近整理了桌上乱糟糟的线，把原来使用aux 线连接的蓝牙音响换成通过蓝牙连接。 然后就发现一个问题，只要音响没有发出声音超过30分钟，蓝牙</description>
-      <content:encoded><![CDATA[<h2 id="问题"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 问题</h2>
-<p>最近整理了桌上乱糟糟的线，把原来使用aux 线连接的蓝牙音响换成通过蓝牙连接。 <!-- raw HTML omitted --></p>
-<p>然后就发现一个问题，只要音响没有发出声音超过30分钟，蓝牙音响就会断开连接，并且自动关机，即使蓝牙音响连接着电源。 <!-- raw HTML omitted --></p>
-<p>一番搜索之后，就在知乎上发现了这个问题：<a href="https://www.zhihu.com/question/41682642">求问如何避免蓝牙音箱自动关机？</a> <!-- raw HTML omitted --></p>
-<p>但里面提到的解决方案，大多只适用于特定平台，例如Windows 或者Macos, 没有提到 Linux 上的解决方案。 <!-- raw HTML omitted --></p>
-<p>每过半个小时手动打开蓝牙音响再连接的方式，实在是太蠢了。 <!-- raw HTML omitted --></p>
-<h2 id="灵感"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 灵感</h2>
-<p>但是知乎问题里面的部分回答给了我灵感，让我们想起国内某些APP 为了保活，避免被系统kill 掉，在后台播放无声音频的操作。 <!-- raw HTML omitted --></p>
-<p>我可以以低音量循环播放一段音频，以实现保活的作用： <!-- raw HTML omitted --></p>
+      <content:encoded><![CDATA[<h2 id="问题"><span class="section-num">1</span> 问题</h2>
+<p>最近整理了桌上乱糟糟的线，把原来使用aux 线连接的蓝牙音响换成通过蓝牙连接。 <br/></p>
+<p>然后就发现一个问题，只要音响没有发出声音超过30分钟，蓝牙音响就会断开连接，并且自动关机，即使蓝牙音响连接着电源。 <br/></p>
+<p>一番搜索之后，就在知乎上发现了这个问题：<a href="https://www.zhihu.com/question/41682642">求问如何避免蓝牙音箱自动关机？</a> <br/></p>
+<p>但里面提到的解决方案，大多只适用于特定平台，例如Windows 或者Macos, 没有提到 Linux 上的解决方案。 <br/></p>
+<p>每过半个小时手动打开蓝牙音响再连接的方式，实在是太蠢了。 <br/></p>
+<h2 id="灵感"><span class="section-num">2</span> 灵感</h2>
+<p>但是知乎问题里面的部分回答给了我灵感，让我们想起国内某些APP 为了保活，避免被系统kill 掉，在后台播放无声音频的操作。 <br/></p>
+<p>我可以以低音量循环播放一段音频，以实现保活的作用： <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mpg123 -f <span class="m">1000</span> ~/music/listen_to_the_sea.mp3 --loop -1
-</span></span></code></pre></div><p>mpg123 是mp3 播放命令行， <code>-f 1000</code> 参数的含义是：100%的音量是32768, 1000 约等于是1000/32768 = 3% 的音量， <code>-loop -1</code> 就是指无限循环播放。 <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>mpg123 是mp3 播放命令行， <code>-f 1000</code> 参数的含义是：100%的音量是32768, 1000 约等于是1000/32768 = 3% 的音量， <code>-loop -1</code> 就是指无限循环播放。 <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">man mpg123
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">...
@@ -40,35 +40,35 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">--loop <span class="nb">times</span>
 </span></span><span class="line"><span class="cl"><span class="k">for</span> looping track<span class="o">(</span>s<span class="o">)</span> a certain number of times, &lt; <span class="m">0</span> means infinite loop <span class="o">(</span>not with --random!<span class="o">)</span>.
-</span></span></code></pre></div><h2 id="优化"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 优化</h2>
-<p>这样就实现了一个可用的版本，只是还要依赖一个 mp3 文件，肯定还有优化的空间。 <!-- raw HTML omitted --></p>
-<p>一番调研之后发现， <code>play/sox</code> 命令可以播放指定频率和时长的声音，可以播放20 hz以下的声音，这个频率下的声音人耳是听不到的： <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><h2 id="优化"><span class="section-num">3</span> 优化</h2>
+<p>这样就实现了一个可用的版本，只是还要依赖一个 mp3 文件，肯定还有优化的空间。 <br/></p>
+<p>一番调研之后发现， <code>play/sox</code> 命令可以播放指定频率和时长的声音，可以播放20 hz以下的声音，这个频率下的声音人耳是听不到的： <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">play -q -n synth <span class="m">10</span> sin <span class="m">20</span>
 </span></span></code></pre></div><ul>
-<li><code>-q</code>: 不显示播放进度条 <!-- raw HTML omitted --></li>
-<li><code>-n synth 10</code> 播放10秒的音频 <!-- raw HTML omitted --></li>
-<li><code>sin 20</code> 频率为20 hz(如果听到了，可以设置成更低) <!-- raw HTML omitted --></li>
+<li><code>-q</code>: 不显示播放进度条 <br/></li>
+<li><code>-n synth 10</code> 播放10秒的音频 <br/></li>
+<li><code>sin 20</code> 频率为20 hz(如果听到了，可以设置成更低) <br/></li>
 </ul>
-<p>执行命令之后，可以使用 <code>pavucontrol</code> 命令查看声音输出，应该是类似这样的效果： <!-- raw HTML omitted --></p>
+<p>执行命令之后，可以使用 <code>pavucontrol</code> 命令查看声音输出，应该是类似这样的效果： <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/sox_pavucontrol.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<h2 id="定时执行"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 定时执行</h2>
-<p>一直开着个terminal 窗口运行命令有点麻烦，这种重复性的工作，就可以交给 crontab, 让它每分钟执行一次，每次播放10秒。 <!-- raw HTML omitted --></p>
+ <br/></p>
+<h2 id="定时执行"><span class="section-num">4</span> 定时执行</h2>
+<p>一直开着个terminal 窗口运行命令有点麻烦，这种重复性的工作，就可以交给 crontab, 让它每分钟执行一次，每次播放10秒。 <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">* * * * * play -q -n synth <span class="m">10</span> sin <span class="m">20</span>
-</span></span></code></pre></div><p>但实际运行，发现声音不能如预期那样播放。一番搜索之后，发现 <a href="https://askubuntu.com/questions/832072/can-i-use-cron-to-chime-at-top-of-hour-like-a-grandfather-clock">StackExchange</a> 上有个答案提到需要 export 个环境变量，所以最好创建个脚本 <code>play_beep.sh</code>: <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>但实际运行，发现声音不能如预期那样播放。一番搜索之后，发现 <a href="https://askubuntu.com/questions/832072/can-i-use-cron-to-chime-at-top-of-hour-like-a-grandfather-clock">StackExchange</a> 上有个答案提到需要 export 个环境变量，所以最好创建个脚本 <code>play_beep.sh</code>: <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">export</span> <span class="nv">XDG_RUNTIME_DIR</span><span class="o">=</span>/run/user/1000
 </span></span><span class="line"><span class="cl">play -q -n synth <span class="m">10</span> sin <span class="m">10</span>
 </span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="k">$(</span>date<span class="k">)</span> <span class="c1"># 打印日期，主要是为了方便排查</span>
-</span></span></code></pre></div><p>然后再安装一个 crontab 任务: <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>然后再安装一个 crontab 任务: <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">* * * * * /usr/bin/sh /home/ramsay/code/shell/play_beep.sh &gt;&gt; /tmp/beep.log 2&gt;<span class="p">&amp;</span><span class="m">1</span>
-</span></span></code></pre></div><p>经过验证，一天都没有断开过蓝牙，自动关机了。 <!-- raw HTML omitted --></p>
-<h2 id="参考"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 参考</h2>
+</span></span></code></pre></div><p>经过验证，一天都没有断开过蓝牙，自动关机了。 <br/></p>
+<h2 id="参考"><span class="section-num">5</span> 参考</h2>
 <ul>
-<li><a href="https://www.zhihu.com/question/41682642">求问如何避免蓝牙音箱自动关机？</a> <!-- raw HTML omitted --></li>
-<li><a href="https://askubuntu.com/questions/832072/can-i-use-cron-to-chime-at-top-of-hour-like-a-grandfather-clock/832266#832266">Can I use cron to chime at top of hour like a grandfather clock?</a> <!-- raw HTML omitted --></li>
+<li><a href="https://www.zhihu.com/question/41682642">求问如何避免蓝牙音箱自动关机？</a> <br/></li>
+<li><a href="https://askubuntu.com/questions/832072/can-i-use-cron-to-chime-at-top-of-hour-like-a-grandfather-clock/832266#832266">Can I use cron to chime at top of hour like a grandfather clock?</a> <br/></li>
 </ul>
 ]]></content:encoded>
     </item>
@@ -100,13 +100,13 @@ at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:422)
 at sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:250)
 at org.apache.tomcat.util.net.NioEndpoint$Acceptor.run(NioEndpoint.java:825)
 at java.lang.Thread.run(Thread.java:745)
-</code></pre><h2 id="linux-文件句柄限制"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Linux 文件句柄限制</h2>
+</code></pre><h2 id="linux-文件句柄限制"><span class="section-num">1</span> Linux 文件句柄限制</h2>
 <p>报错看起来像是进程打开文件句柄的个数达到了linux的限制。而这种限制是分为系统层面的和用户层面的</p>
-<h3 id="系统层面"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> 系统层面</h3>
+<h3 id="系统层面"><span class="section-num">1.1</span> 系统层面</h3>
 <p>系统层面的在：/proc/sys/fs/file-max里设置</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat /proc/sys/fs/file-max
 </span></span><span class="line"><span class="cl"><span class="m">2442976</span>
-</span></span></code></pre></div><h3 id="用户层面"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> 用户层面</h3>
+</span></span></code></pre></div><h3 id="用户层面"><span class="section-num">1.2</span> 用户层面</h3>
 <p>用户层面的限制在：/etc/security/limits.conf里设定。通过<code>ulimit -a</code> 查看系统允许单个进程打开的最大文件数：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nb">ulimit</span> -a
 </span></span><span class="line"><span class="cl">core file size          <span class="o">(</span>blocks, -c<span class="o">)</span> <span class="m">0</span>
@@ -126,7 +126,7 @@ at java.lang.Thread.run(Thread.java:745)
 </span></span><span class="line"><span class="cl">virtual memory          <span class="o">(</span>kbytes, -v<span class="o">)</span> unlimited
 </span></span><span class="line"><span class="cl">file locks                      <span class="o">(</span>-x<span class="o">)</span> unlimited
 </span></span></code></pre></div><p>单个进程可以打开的最大文件数是 65536</p>
-<h2 id="lsof-显示大量open-file"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> lsof 显示大量open file</h2>
+<h2 id="lsof-显示大量open-file"><span class="section-num">2</span> lsof 显示大量open file</h2>
 <p>按照Tomcat 给出的报错信息，登录87 这台服务器检查打开的文件数，发现打开的文件超过70000:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">lsof <span class="p">|</span>wc -l
 </span></span><span class="line"><span class="cl"><span class="m">75924</span>
@@ -144,7 +144,7 @@ at java.lang.Thread.run(Thread.java:745)
 </span></span><span class="line"><span class="cl"><span class="m">12</span> <span class="m">22178</span>
 </span></span></code></pre></div><p>发现 <code>25204</code> 这个进程打开了大量的文件，已经超过了单个进程的最大文件数限制。而这个进程就是部署的java 应用对应的进程。打开的文件句柄数量已经超过Linux 限制，
 Tomcat 无法创建新的socket 连接。</p>
-<h2 id="can-t-identify-protocol"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> can&rsquo;t identify protocol</h2>
+<h2 id="can-t-identify-protocol"><span class="section-num">3</span> can&rsquo;t identify protocol</h2>
 <p>用 lsof 查看 java 应用打开的文件的时候，发现有非常多奇怪的输出：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">java    <span class="m">25204</span> nemo *516u  sock                0,6       0t0 <span class="m">215137625</span> can<span class="s1">&#39;t identify protocol
 </span></span></span><span class="line"><span class="cl"><span class="s1">java    25204 nemo *517u  sock                0,6       0t0 215137626 can&#39;</span>t identify protocol
@@ -168,7 +168,7 @@ Tomcat 无法创建新的socket 连接。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">lsof -p 25204<span class="p">|</span>grep <span class="s2">&#34;can&#39;t identify protocol&#34;</span><span class="p">|</span>wc -l
 </span></span><span class="line"><span class="cl"><span class="m">64214</span>
 </span></span></code></pre></div><p>也就是大部份打开的文件都是属于 <code>cant' identify  protocol</code> 的文件。</p>
-<h2 id="问题定位"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 问题定位</h2>
+<h2 id="问题定位"><span class="section-num">4</span> 问题定位</h2>
 <p>Google 搜索之后发现，这个 <code>cant' identify protocol</code> 的东东出现的原因是因为 这些
 sockets 处于 <code>CLOSED</code> 的状态，但是却没有真正close 掉，正处于 <code>half-close</code> 状态。因此，如果使用 <code>netstat</code> 来查看socket 状态，是不会显示这些 <code>half-close</code>的 socket 的：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">netstat  -nat <span class="p">|</span>wc -l
@@ -194,7 +194,7 @@ sockets 处于 <code>CLOSED</code> 的状态，但是却没有真正close 掉，
 </span></span><span class="line"><span class="cl">RAW: inuse <span class="m">0</span>
 </span></span><span class="line"><span class="cl">FRAG: inuse <span class="m">0</span> memory <span class="m">0</span>
 </span></span></code></pre></div><p>很多的 socket 处于 <code>alloc</code>, 只有少量的 socket 处于 <code>inuse</code>. 可以确认是 java 应用出现了 socket fd 的泄漏。 但是为什么会有那么多的socket 泄漏呢？</p>
-<h2 id="大胆假设"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 大胆假设</h2>
+<h2 id="大胆假设"><span class="section-num">5</span> 大胆假设</h2>
 <p>现在可以确定的是 java应用出现了问题，导致了socket 泄漏，让 Tomcat 无法建立新连接，最终宕机。既然导致问题出现的是 java 应用，那么就应该去检查应用日志。</p>
 <pre tabindex="0"><code class="language-log" data-lang="log">2018-04-09 17:41:31,491 - [ERROR] - from com.alibaba.druid.pool.DruidDataSource in Druid-ConnectionPool-CreateScheduler--4-thread-214
 create connection error, url: jdbc:mysql://test-server-host:3306/db_name?readOnlyPropagatesToServer=false&amp;rewriteBatchedStatements=true&amp;failOverReadOnly=false&amp;socketTimeout=6000&amp;connectTimeout=20000&amp;zeroDateTimeBehavior=convertToNull&amp;allowMultiQueries=true&amp;characterEncoding=utf-8&amp;autoReconnect=true
@@ -439,7 +439,7 @@ at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3466)
 </code></pre><p>数据还没有读完， Connection 就丢了。为什么会 lost connection 呢，可能数据库出问题，也可能是网络出了问题。</p>
 <p>我还能从数据库读到数据，说明数据库没问题的，兼之这个异常只是偶尔出现，所以可能就是网络出问题了。</p>
 <p>如此说来，是否可能是因为测试环境网络不稳定，连接池无法和 Mysql 保持连接，在丢掉 Connection 之后，连接池重新发起连接，但是因为网络不稳定又丢掉了Connection, 不断循环这个过程，导致建立的 socket 连接越 来越多，但是建立的 socket 很快就被Close 掉了，内核又没有把这些 Close 掉的 socket 资源回收掉，因此打开的 socket 文件越来越多，最后导致 Tomcat 因为打开的文件过多无法建立新的 socket 连接。</p>
-<h2 id="小心求证"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> 小心求证</h2>
+<h2 id="小心求证"><span class="section-num">6</span> 小心求证</h2>
 <p>如果连接池真的不断尝试连接Mysql 的话，必定会建立很多的连接，而Mysql 是会将这些记录保存下来的，检查Mysql 的变量：</p>
 <figure>
     <img loading="lazy" src="https://imgur.com/gAxepYH.png"/> 
@@ -461,13 +461,13 @@ at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3466)
 </li>
 </ul>
 <p>也就是说，当时共有20000 多的连接请求，但是真正被 Mysql accpet 并且服务的只有 28 个连接。看来的确是因为连接池的连接导致 socket 泄漏</p>
-<h3 id="更新"><!-- raw HTML omitted -->6.1<!-- raw HTML omitted --> 更新</h3>
+<h3 id="更新"><span class="section-num">6.1</span> 更新</h3>
 <p>和运维同学沟通之后，发现丢连接的原因不是网络不稳定，而是测试集群都是虚拟机，内存 用光，导致无法建立新的连接，内核释放一部分资源之后又可以建立连接了。内存用完，我能怎么办，我也很无奈。</p>
-<h2 id="解决方法"><!-- raw HTML omitted -->7<!-- raw HTML omitted --> 解决方法</h2>
+<h2 id="解决方法"><span class="section-num">7</span> 解决方法</h2>
 <p>虽说基本确定了 socket 泄漏的源头，但是对于内核为什么无法回收已经关闭 socket 的原因依然不明确。</p>
 <p>最令人百思不得其解的是，部署了应用的测试服务器有两台，另外一 台服务器也有同样的连接池问题，但是却没有出现 socket 泄漏问题， 出现泄漏的只有 87 这台机器。真的令人费解. 所以最后解决方法就是撤下 87 服务器的应用，换一台服务器来部署。</p>
 <p>新的服务器部署应用之后虽说也有同样的数据库连接池异常，但是却没有出现 socket 泄漏，初步定位是 87这台机器的内核环境存在问题。</p>
-<h2 id="参考"><!-- raw HTML omitted -->8<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">8</span> 参考</h2>
 <ul>
 <li><a href="http://mdba.cn/2015/03/10/tcp-socket%E6%96%87%E4%BB%B6%E5%8F%A5%E6%9F%84%E6%B3%84%E6%BC%8F/">tcp-socket文件句柄泄漏/</a></li>
 <li><a href="https://idea.popcount.org/2012-12-09-lsof-cant-identify-protocol/">lsof-cant-identify-protocol/</a></li>
@@ -485,13 +485,13 @@ at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3466)
       <content:encoded><![CDATA[<p>不久前，Apple 的文件系统 (Apple File System) 新推出，然后各方便一起挤身向前对APFS &ldquo;评头品足&rdquo;,我是不了解 APFS ,所以也没有什么发言权嘛，不过话分两头；</p>
 <p>对Linux的文件系统，我还是有了解过的，所以可以聊聊Linux 的文件系统；与Windows 和Apple 两家商业公司不同，Linux 是开源的，因此，只要你有足够的时间和能力，你就可以自己写一个文件系统，这个也是Linux 文件系统众多的主要原因。</p>
 <p>那么有众多的Linux 文件系统，它们的差异,优缺点又是什么呢？</p>
-<h2 id="file-system"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> File System</h2>
+<h2 id="file-system"><span class="section-num">1</span> File System</h2>
 <p>在开始 &ldquo;大话&rdquo; 各种文件系统的时候，我先想谈谈什么是文件系统。</p>
 <p>一般用户平时都会有上百G 的数据，那么多的数据，应该怎么保存呢？</p>
 <p>不知道怎么回答，可以先类比一下，想象一下你有很多书，你会怎么放置你的书籍呢？直接丢在客厅中间？或者是按书内容分类 放到书架上？如果分类的话，是按怎么划分呢？你买回来的书架一次可以放置多少书籍呢？怎么才能更快地找到你要找的书呢？</p>
 <p>其实文件系统处理，检索文件和你放置，查找书籍是类似的！此外,在Windows 下常见到的格式化，其实就是在不同的文件系统之间切换，那么为什么数据会丢失呢？</p>
 <p>你可以类比成你家里装修，想换新的书架，但是如果不把原来书架上的书籍搬出准备装修的屋子，装修时肯定会损坏书籍嘛！</p>
-<h2 id="journaling"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Journaling</h2>
+<h2 id="journaling"><span class="section-num">2</span> Journaling</h2>
 <p>在比较文件系统之前，先聊聊文件系统中的日志 (Journaling), 而有些文件系统是有日志功能的，而有些是没有日志功能的；</p>
 <p>为了了解它们之间的差异，就需要先了解一下什么是日志。日志的出现本质而言都是为了更好地保存数据。</p>
 <p>假设你正在向磁盘里写入文件，突然间断电了，但是你的文件是没有完成写入磁盘的，而你的电脑是不知道是否已经完成写入，所以下次重新来电启动电脑的时候，是没有“人”告知电脑是否要重新写数据的？这样数据就丢失了。</p>
@@ -503,56 +503,56 @@ at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3466)
 </figure>
 
 <p>因为写入日志需要额外的工作，所以需要额外的资源，但是这样的消耗是相当值得地。</p>
-<h2 id="comparison"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Comparison</h2>
+<h2 id="comparison"><span class="section-num">3</span> Comparison</h2>
 <p>下面对比一下 各种文件系统的特性</p>
 <figure>
     <img loading="lazy" src="/ox-hugo/comparison_file_system.png"
          alt="Figure 1: 图来自archwiki"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->图来自archwiki</p>
+            <p><span class="figure-number">Figure 1: </span>图来自archwiki</p>
         </figcaption>
 </figure>
 
 <p>如果你想了解你的Linux 内核所支持的文件系统，你可以</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">cat /proc/filesystems
 </span></span></code></pre></div><p>现在就来比较一下各种常见的Linux文件系统</p>
-<h3 id="ext"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> Ext</h3>
+<h3 id="ext"><span class="section-num">3.1</span> Ext</h3>
 <p>Ext 是指&quot;Extended file system(扩展文件系统)&quot;,应该算是Linux 文件系统里面的老大爷了，它是从经典的 Minix 的文件系统衍生过来的，为Linux 专门设计的，但是它缺乏很多重要的特性，比如上面提到的日志功能，所以大部份的Linux 发行版本都是不支持 Ext 了</p>
-<h3 id="ext2"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> Ext2</h3>
+<h3 id="ext2"><span class="section-num">3.2</span> Ext2</h3>
 <p>Ext2 也是不支持日志的，但是它是第一个支持扩展文件属性和2T 容量的Linux 文件系统，但是正由于Ext2 不支持日志功能，它可以更少地写磁盘，所以它适合像USB 这种闪存，但是Ext2 无法被Windows 识别的，所以它的闪存功能更多地被FAT32和exFAT所代替，换言之，Ext2 用的也不多</p>
-<h3 id="ext3"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> Ext3</h3>
+<h3 id="ext3"><span class="section-num">3.3</span> Ext3</h3>
 <p>Ext3 就是Ext2 带有日志功能的扩展，并且Ext3 也向后兼容Ext2,所以你在Ext2 和Ext3 之间切换也是不需要重新格式化滴，但是最常用的还不是Ext3,而是Ext4 :)</p>
-<h3 id="ext4"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> Ext4</h3>
+<h3 id="ext4"><span class="section-num">3.4</span> Ext4</h3>
 <p>Ext4 也是向后兼容 Ext3 和Ext2 的，所以你是可以在Ext4,Ext3,Ext2 之间切换而无需格式化文件系统。</p>
 <p>Ext4 包含很多新的特性，例如支持存储更大的文件，支持延迟分配以 改进对闪存的支持，还能有效地减少文件的碎片化，提高利用效率。</p>
 <p>显而易见，Ext4 是最先进的 Ext 系列的文件系统，也是大部分Linux 发行版本的默认文件系统</p>
-<h3 id="zfs"><!-- raw HTML omitted -->3.5<!-- raw HTML omitted --> ZFS</h3>
+<h3 id="zfs"><span class="section-num">3.5</span> ZFS</h3>
 <p>ZFS 最初是给Sun 的Solaris 设计的，Sun 被收购后，现在是属于Oracle 的，ZFS 支持 大量非常先进的特性，比如说 快照 (snapshot),动态存储 (dynamic disk striping), 驱动池等 (drive pool);</p>
 <p>此外ZFS 文件的每个文件都是有校验和的，所以通过检查校验和，就能确定文件的完整性。但是，虽说ZFS 非常强大，却因为ZFS license 的缘故， ZFS 无法添加到 Linux 内核的。如果你非常想要尝试ZFS 的话，你可以自行添加对Linux 发行版本上面添加ZFS 的支持</p>
-<h3 id="brtfs"><!-- raw HTML omitted -->3.6<!-- raw HTML omitted --> BrtFS</h3>
+<h3 id="brtfs"><span class="section-num">3.6</span> BrtFS</h3>
 <p>Brtfs 是由Oracle 设计的一个支持写时复制 (copy on write) 的现代文件系统;</p>
 <p>而Btrfs 的意思是 B 树文件系统 (B-Tree File System),它支持大量非常先进的特性，例如 动态inode 分配，数据校验和，有效的增量备份，驱动池，最大支持 2^64 byte 容量即16 Eib 大的文件。</p>
 <p>BtrFS 是被设计成取代Ext 系列的文件系统的，只不过因为现在的BtrFS 还没有足够成熟，所以还没有大公司在生产环境使用 BtrFS,但是BtrFS 的未来可期</p>
-<h3 id="jfs"><!-- raw HTML omitted -->3.7<!-- raw HTML omitted --> JFS</h3>
+<h3 id="jfs"><span class="section-num">3.7</span> JFS</h3>
 <p>JFS 是IBM 为IBM 自家的AIX 操作系统设计的日志文件系统 (Journaled File System), 后来迁移到了Linux 系统上 (HP-UX 也有一个叫做JFS 的文件系统).</p>
 <p>在AIX 系统上是存在过两代的JFS文件系统的，分别是 JFS1和JFS2,而Linux 上就只有JFS2了(Linux 上的JFS都是指JFS2)。</p>
 <p>JFS 无论在处理大文件还是小文件都有非常不错的表现，并且CPU 占用也是比较低的；JFS 也是支持非常多的特性的，例如 B+ 树，动态Inode 分配，并发IO等。</p>
 <p>JFS 也是一个设计优秀的文件系统并且支持大部分的Linux 发行版本，但是因为它最初是为AIX 设计，所以在处于生产环境上的Linux服务器的测试就不如Ext :(.</p>
-<h3 id="reiserfs"><!-- raw HTML omitted -->3.8<!-- raw HTML omitted --> ReiserFS</h3>
+<h3 id="reiserfs"><span class="section-num">3.8</span> ReiserFS</h3>
 <p>ReiserFs 是第一个被引进Linux 标准内核的日志文件系统(在内核版本为2.4.1的时候引进),也是Linux 文件系统的一次飞跃，那时的ReiserFS 包含了很多Ext 没有的新特性。</p>
 <p>虽说 ReiserFS 在Linux 有一个非常华丽的开头，但是后来ReiserFS 的开发就陷入了停滞，因为ReiserFS 的核心开发者Hans Reiser(ReiserFS 名字的来由)因为谋杀妻子而被收监 :(。</p>
 <p>而后来的ReiserFS 也没有出现在主要的Linux 内核版本里面，虽说ReiserFS是非常好的文件系统，但是它前景如何，我们也只能拭目以待了</p>
-<h3 id="xfs"><!-- raw HTML omitted -->3.9<!-- raw HTML omitted --> XFS</h3>
+<h3 id="xfs"><span class="section-num">3.9</span> XFS</h3>
 <p>XFS 最初是Silicon Graphics 为SGI IRX 操作系统设计的64位高性能文件系统，在2001 年迁移到了Linux.</p>
 <p>得益于XFS 基于 allocation groups 的设计，XFS 拥有非常优秀的并行IO 能力，并支持延迟分配 (delayed allocation) 以改进文件碎片化，在某种程度上，XFS 和Ext 有一定的相似；</p>
 <p>此外，虽说XFS 是高性能的文件系统，但是那只是针对大文件而言的，对于小文件XFS 就有点力所不能及 (当然，这是相对而言).</p>
 <p>所以如果是需要 经常处理大文件的服务器，XFS 会是一个很好的选择</p>
-<h2 id="小结"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 小结</h2>
+<h2 id="小结"><span class="section-num">4</span> 小结</h2>
 <p>如果将Linux 的文件系统进行分类的话，还可以分成 FUSE (Filesystem in Userspace,
 让用户在没有权限的情况下，创建自己的文件系统), Stackable file System (先进的多层次统一文件系统), Read-only file systems (只读文件系统), Clustered file systems
 (集群文件系统)等等。</p>
 <p>Linux 的文件系统还有很多，每一种都有自己的特点；但是如果你想问：&ldquo;Linux 最好的文件系统是什么？&quot;;这个问题就跟 &ldquo;最好的Linux 发行版本是什么？&rdquo;, &ldquo;最好的文本编辑器是什么？&rdquo; 一样，是没有标准答案，一千个人都有一千个哈姆雷特了，你的哈姆雷特是什么样子，只有你自己清楚。</p>
 <p>不同的文件系统对应不同的场景，只有针对特定场景的最优解决方案！如果还不知道怎么选择，那就选择Ext4 吧，无法做出选 择时，默认的就是最好 :)</p>
-<h2 id="参考"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">5</span> 参考</h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/File_system">https://en.wikipedia.org/wiki/File_system</a></li>
 <li><a href="https://btrfs.wiki.kernel.org/index.php/Main_Page">https://btrfs.wiki.kernel.org/index.php/Main_Page</a></li>
@@ -574,13 +574,13 @@ at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3466)
       <guid>https://ramsayleung.github.io/zh/post/2017/about_tool_about_tweak/</guid>
       <description>An discussion about tool and tweak</description>
       <content:encoded><![CDATA[<p>笔者最近一直在思考，关于工具，关于折腾，关于其中的付出与收获</p>
-<h2 id="乐趣"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 乐趣</h2>
-<h3 id="linux"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> Linux</h3>
+<h2 id="乐趣"><span class="section-num">1</span> 乐趣</h2>
+<h3 id="linux"><span class="section-num">1.1</span> Linux</h3>
 <p>回顾笔者大学，从大一开始就是一个不停折腾的过程，在其他的同学还在用Windows玩游戏的时候，笔者已经把系统换成Linux了.</p>
 <p>记得最开始装的第一个发行版本是 <a href="https://www.kali.org/">Kali Linux</a>一个黑客和安全专家使用的发行版本，上面有不计其数的渗透工具；毕竟每一个学 计算机的孩子心中都是有个 hacker dream的嘛，笔者也不例外:)。</p>
 <p>只是笔者最开始并没有能力去使用Kali Linux; 甚至连基本的命令都完全不了解；笔者相当沮丧，因为 hacker并不是想象中的那么容易的. 笔者后来就把自己的系统重装，装了个<a href="https://www.ubuntu.com/global"> Ubuntu</a>, 买 了一本《鸟哥的Linux私房菜》，一边学，一边用，就这样进了Linux的坑了。</p>
 <p>《鸟哥的私房菜》大概看了两年，翻过好几次了，后来也看了《服务器篇》，前后共看了近十本Linux的书籍吧，整个大学大概在自己电脑上前后装了10种的发行版本吧</p>
-<h3 id="vim-emacs"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> Vim/Emacs</h3>
+<h3 id="vim-emacs"><span class="section-num">1.2</span> Vim/Emacs</h3>
 <p>《鸟哥Linux私房菜》一书中，鸟哥强推Vim, 其他的Linux论坛也对 Vim 推崇备至，笔者 很自然就随大流去学习Vim了，开始的时候，真的非常不习惯，编辑个文本还要分那么多 的模式，真的是反人类，连个单词都不能输入.</p>
 <p>后来，好不容易输完数据之后，又不知道怎么保存 (Ctrl-S? 想多了), 然后直接关闭，重新打开又有什么提示说是否恢复数据。 觉得为何有这样异类难用的编辑器, 真不知道为什么那么多人推崇。</p>
 <p>但当笔者坚持这种煎熬半个月以后，就发现其他的编辑器都非常低效，没错，就是非常低效，又要鼠标， 又要键盘，不断地切换，效率实在太低了。</p>
@@ -596,36 +596,36 @@ at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3466)
 </ul>
 <p>而至于选择神之编辑器还是编辑器之神，那就是信仰的抉择了。笔者选择了在 Emacs 里面使用 Vim 的编
 辑模式 Evil :)</p>
-<h3 id="misc"><!-- raw HTML omitted -->1.3<!-- raw HTML omitted --> Misc</h3>
+<h3 id="misc"><span class="section-num">1.3</span> Misc</h3>
 <p>除了折腾编辑器之外，笔者还折腾了各种的命令行，Shell 脚本，还有 Firefox, Chrome浏览器。当初那些 Windows 用户一直说 Linux 的桌面丑，笔者就去了折腾各种 的桌面环境 (window manager)这种折腾可不是 Windows 上面的切换壁纸哦，后来把桌 面折腾得非常炫，以至同学看到笔者的电脑就说我装了黑苹果，然而事实并非如此。</p>
 <p>如果你也好奇那些炫酷的 Linux/Unix 桌面，可以查看 <a href="https://reddit.com/r/unixporn">https://reddit.com/r/unixporn</a> 上面有各种 Linuxer/Unixer 分享的炫酷桌面</p>
-<h2 id="投入产出比"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 投入产出比</h2>
-<h3 id="值得否"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 值得否？</h3>
+<h2 id="投入产出比"><span class="section-num">2</span> 投入产出比</h2>
+<h3 id="值得否"><span class="section-num">2.1</span> 值得否？</h3>
 <p>笔者的大学基本都是在学习并折腾各种的工具或者技术，并且乐在其中.</p>
 <p>但是有一天当笔 者又在跟朋友推荐 Vim/Emacs, 或许是笔者喋喋不休实在太多次了，朋友回了笔者一句 &quot; notepad++, sublime text 不一样可以写代码，你为什么还要花那么多时间去折腾这些东西呢，你写脚本都可以直接用IDE,为什么还要自己折腾呢，把时间花到其他地方不更好么？&quot;.</p>
 <p>笔者难以反驳，笔者之前一直是玩得很开心，从未曾考虑过这个问题，所以那个时候开始询问自己，这是否值得，自己是否要把时间用到其他地方？</p>
 <p>在之后的一段 时间，笔者都难掩沮丧，因为觉得自己浪费了很多的时间来完成一些无用功！</p>
-<h3 id="长期投资"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 长期投资</h3>
+<h3 id="长期投资"><span class="section-num">2.2</span> 长期投资</h3>
 <p>但是最终笔者还是解答了自己的疑问! 笔者之前付出是绝对值得的，先不说笔者在其中获得的乐趣，乐趣是无价的嘛 :)</p>
 <p>笔者在折腾的过程中也学到很多新的东西: 为了用好我配置的 Emacs, 笔者使用 Emacs 写了很多不同的脚本，这种感觉就好像，侠士为了展示手中利刃之威力，苦练武艺; 而在折腾 Emacs lisp 的过程中，也学习很多函数式编程的思想，甚至掌握了一门新的语言 &ndash; elisp, 虽说它的语法很奇怪。</p>
 <p>其实笔者的付出是长期投资，学会了 Vim 的 moral edit, 也可以在其他 IDE使用嘛，这并不矛盾的，无鼠标操作是非常高效的，也是所谓的 modern editor 无法比拟的。</p>
 <p>最重要的是，在折腾过程中所培养的解决困难的动手能力，也是可以受益终生的，笔者知道如何去google，如何去查找文档，如何去提问; 而且在不停的折腾过程中，你对某样技术的理解是单纯的理论学习无法比拟的；</p>
 <p>在大学的操作系统课，笔者基本是没听老师讲解课程的，因为老师讲的，笔者基本都知道，甚至实践过。</p>
-<h2 id="工具集"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 工具集</h2>
+<h2 id="工具集"><span class="section-num">3</span> 工具集</h2>
 <p>在经历大学的折腾后，笔者现在很多的工具集都基本确定下来了；这些也是对笔者而言，
 最高效的工具集</p>
-<h3 id="编辑器"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 编辑器</h3>
+<h3 id="编辑器"><span class="section-num">3.1</span> 编辑器</h3>
 <ul>
 <li>Emacs 神之编辑器，主力编辑器 <a href="https://github.com/samrayleung/emacs.d">个人配置</a></li>
 <li>Vim 编辑器之神，一般在服务器改改配置的时候用</li>
 </ul>
-<h3 id="浏览器"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> 浏览器</h3>
+<h3 id="浏览器"><span class="section-num">3.2</span> 浏览器</h3>
 <ul>
 <li>Chrome 不常用，特定情况下使用</li>
 <li>Firefox 日常浏览器，笔者也折腾过非常久，所以即使 Chrome 很强，笔者只为
 Firefox 倾心</li>
 </ul>
-<h3 id="firefox扩展"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> FireFox扩展</h3>
+<h3 id="firefox扩展"><span class="section-num">3.3</span> FireFox扩展</h3>
 <p>因为 FireFox 对插件的限制相对宽松，所以社区开发出了非常多非常强的插件，笔者就
 列举一下自己使用的扩展集吧</p>
 <ul>
@@ -646,24 +646,24 @@ Firefox 倾心</li>
 <li>Xpath checker -直接获取Dom节点的Xpath,配合Lxml解析网页非常高效</li>
 <li>Firebug -神器，但是已经停止开发了。</li>
 </ul>
-<h3 id="桌面"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> 桌面</h3>
+<h3 id="桌面"><span class="section-num">3.4</span> 桌面</h3>
 <p>i3wm, 在折腾过炫酷的 KDE, Gnome, xfce, 而笔者最后选择的是 i3这个平铺桌面，可
 以实现无鼠标操作，非常轻量。</p>
-<h3 id="命令行"><!-- raw HTML omitted -->3.5<!-- raw HTML omitted --> 命令行</h3>
-<h4 id="shell"><!-- raw HTML omitted -->3.5.1<!-- raw HTML omitted --> Shell</h4>
+<h3 id="命令行"><span class="section-num">3.5</span> 命令行</h3>
+<h4 id="shell"><span class="section-num">3.5.1</span> Shell</h4>
 <ul>
 <li>zsh -配合oh-my-zsh,可以非常高效，但是使用频率不高</li>
 <li>Eshell -与Emacs集成，是笔者的主力Shell,不过某些Eshell不支持的操作，只好在
 zsh完成</li>
 </ul>
-<h4 id="过滤器"><!-- raw HTML omitted -->3.5.2<!-- raw HTML omitted --> 过滤器</h4>
+<h4 id="过滤器"><span class="section-num">3.5.2</span> 过滤器</h4>
 <ul>
 <li><a href="https://github.com/ggreer/the_silver_searcher">ag</a>   grep的加强版，速度快</li>
 <li><a href="https://github.com/BurntSushi/ripgrep">ripgrep </a>最快的命令搜索工具</li>
 <li><a href="https://github.com/mooz/percol">percol</a> 过滤文本，神器</li>
 <li><a href="https://github.com/clvv/fasd">fasd</a> 目录跳转，文件查找，高效</li>
 </ul>
-<h4 id="misc"><!-- raw HTML omitted -->3.5.3<!-- raw HTML omitted --> misc</h4>
+<h4 id="misc"><span class="section-num">3.5.3</span> misc</h4>
 <ul>
 <li><a href="https://github.com/jakubroztocil/httpie">httpie</a> http客户端，发送http请求</li>
 <li>htop top的改进版，信息更详细</li>
@@ -672,13 +672,13 @@ zsh完成</li>
 <li>git Linus又一神作</li>
 </ul>
 <p>其它就是常用的内置命令了</p>
-<h3 id="影音"><!-- raw HTML omitted -->3.6<!-- raw HTML omitted --> 影音</h3>
+<h3 id="影音"><span class="section-num">3.6</span> 影音</h3>
 <ul>
 <li>VLC Linux最好用的播放器</li>
 <li>网易云音乐 国产良心音乐软件</li>
 <li><a href="https://github.com/darknessomi/musicbox">musicbox</a> 网易云音乐的社区命令行版本</li>
 </ul>
-<h3 id="其它"><!-- raw HTML omitted -->3.7<!-- raw HTML omitted --> 其它</h3>
+<h3 id="其它"><span class="section-num">3.7</span> 其它</h3>
 <ul>
 <li>Fcitx -中文输入</li>
 <li>VirtualBox -开源虚拟机</li>
@@ -689,7 +689,7 @@ zsh完成</li>
 </ul>
 <p>使用最频繁的就是 I3+Firefox+Emacs,实现无鼠标操作，因为使用鼠标太慢了，效率太
 低。笔者也不是一个疯子，所以只会用Emacs 做力所能及的事情，煮咖啡就算了。</p>
-<h2 id="结语"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 结语</h2>
+<h2 id="结语"><span class="section-num">4</span> 结语</h2>
 <p>如果让笔者的大学重来一遍，估计笔者还是会这样折腾，因为自己动手的感觉还是很美好，充满成就感，这也是玩游戏所不能给予我的感觉，毕竟 <strong>hacker</strong> 不是想出来的嘛，是做出来的。</p>
 <hr>
 <p>更新 2017-4-21</p>
@@ -713,8 +713,8 @@ zsh完成</li>
 </blockquote>
 <p>今天我想聊聊 <strong>grep</strong> 这个命令；据说，有Unix/Linux 的地方就会有 <strong>grep</strong>, 这个可能是安装得最广泛的命令之一；那么 <strong>grep</strong> 是用来干什么的呢？</p>
 <p>grep 其实是用来在文件中搜索特定内容或者模式的工具(配合正则表达式“食用”，味道更佳 :))现在就来一起看看<strong>grep</strong> 的用法</p>
-<h2 id="基本用法"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 基本用法</h2>
-<h3 id="基础用法"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> 基础用法</h3>
+<h2 id="基本用法"><span class="section-num">1</span> 基本用法</h2>
+<h3 id="基础用法"><span class="section-num">1.1</span> 基础用法</h3>
 <p>现在假设有一个简单的文本文件(双城记开头)tinytale.txt,内容如下</p>
 <blockquote>
 <p>it was the best of times it was the worst of times
@@ -727,7 +727,7 @@ IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grep darkness /tmp/tinytale.txt
 </span></span></code></pre></div><p>输出如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">it was the season of light it was the season of darkness
-</span></span></code></pre></div><h3 id="结合正则表达式"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> 结合正则表达式</h3>
+</span></span></code></pre></div><h3 id="结合正则表达式"><span class="section-num">1.2</span> 结合正则表达式</h3>
 <p>默认情况下， <strong>grep</strong> 是开启正则表达式的模式的，所以你可以直接在文件搜索中使用
 正则表达式。现在在文件中搜索以字母 <strong>e</strong> 开头后接三个字符，然后以 <strong>h</strong> 结尾的单词：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grep <span class="s2">&#34;e...h&#34;</span> /tmp/tinytale.txt
@@ -736,14 +736,14 @@ IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">it was the epoch of belief it was the epoch of incredulity
 </span></span></code></pre></div></blockquote>
 <p>可以看到，正则表达式匹配了 <strong>epoch</strong> 这个单词。正则表达式的威力无与伦比的，把 <strong>grep</strong>和正则表达式结合起来可以更好地发挥 <strong>grep</strong> 这个工具的潜力；而本文主要是介绍 <strong>grep</strong>, 更多有关正则表达式的用法不细讲了</p>
-<h3 id="统计出现的次数"><!-- raw HTML omitted -->1.3<!-- raw HTML omitted --> 统计出现的次数</h3>
+<h3 id="统计出现的次数"><span class="section-num">1.3</span> 统计出现的次数</h3>
 <p>有时，如果你需要统计某种模式或者某个单词出现的个数，你会发现 <strong>grep</strong> 非常有用；</p>
 <p>要实现该功能，只需给 <strong>grep</strong> 添加 <strong>-c</strong> 参数；例如统计单词 <strong>the</strong> 出现的个数：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grep -c the /tmp/tinytale.txt
 </span></span></code></pre></div><p>结果输出如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">4
 </span></span></code></pre></div><p>文本中包含4个 <strong>the</strong></p>
-<h3 id="忽略大小写"><!-- raw HTML omitted -->1.4<!-- raw HTML omitted --> 忽略大小写</h3>
+<h3 id="忽略大小写"><span class="section-num">1.4</span> 忽略大小写</h3>
 <p>前面提到， <strong>grep</strong> 默认是使用正则表达式来搜索文件的，所以 <strong>grep</strong> 是区分大小写的；</p>
 <p>如果你想修改 <strong>grep</strong> 的默认行为来忽略大小写，你可以添加 <strong>-i</strong> 参数</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grep -i the /tmp/tinytale.txt
@@ -755,7 +755,7 @@ IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE</p>
 </span></span><span class="line"><span class="cl">IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE
 </span></span></code></pre></div><p>可以发现 <strong>THE</strong> 也是可以被 grep 搜索到的；但是如果没有添加 <strong>-i</strong> ,你只会看到4行输出。</p>
 <p>当然你可以在正则表达式里面添加忽略大小写的模式，只是直接添加 <strong>-i</strong> 会简单很多。</p>
-<h2 id="搜索多个文件"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 搜索多个文件</h2>
+<h2 id="搜索多个文件"><span class="section-num">2</span> 搜索多个文件</h2>
 <p>上面搜索的都只是单个文件，而 grep 可以让你同时搜索多个文件；现在就来看看怎么搜索多个文件吧。</p>
 <p>下面两种写法结果都是一样的，但是我个人推崇第一种，因为可以输入更少一些内容 :)</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grep belief /tmp/<span class="o">{</span>tinytale.txt,tale.txt<span class="o">}</span>
@@ -772,7 +772,7 @@ IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE</p>
 <p>如果你也像我这样，不想输入那么多的内容，你可以使用正则表达式匹配所有的文本文件，如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grep belief /tmp/*.txt
 </span></span></code></pre></div><p>输出结果也会跟上面一致 (假设你 <strong><em>tmp</em></strong> 目录下只有两个文本文件); 我告诉<strong>grep</strong> 搜索**/tmp** 下所有的 <strong>.txt</strong> 文件。</p>
-<h3 id="递归搜索"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 递归搜索</h3>
+<h3 id="递归搜索"><span class="section-num">2.1</span> 递归搜索</h3>
 <p>你也可以使用 <strong>grep</strong> 递归搜索目录；你只需在指定目录后，添加 <strong>-R</strong> , <strong>grep</strong> 就会
 递归搜索指定目录的所有子目录。我已经把当前目录切换到 <strong>/tmp</strong>:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grep -R <span class="s2">&#34;belief&#34;</span> .
@@ -788,7 +788,7 @@ IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE</p>
 不需要搜索的文件，例如有一个 <strong>foo.xml</strong> 的文件，里面也可能会有 <strong>belief</strong> 这个单词，
 但是你就是不想搜索这个文件，或者全部的 <strong>.xml</strong> 文件，你可以这么玩：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grep -R --exclude<span class="o">=</span><span class="s2">&#34;*.xml&#34;</span> <span class="s2">&#34;belief&#34;</span> .
-</span></span></code></pre></div><h2 id="在标准输入搜索"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 在标准输入搜索</h2>
+</span></span></code></pre></div><h2 id="在标准输入搜索"><span class="section-num">3</span> 在标准输入搜索</h2>
 <p><strong>grep</strong> 也是过滤器，所以 <strong>grep</strong> 自然而然具有处理标准输入输出的能力了；处理其他命令的输出结果也是 <strong>grep</strong> 非常常用的场景之一。假设你现在的 <strong>vim</strong> 突然卡顿，挂了:),你想要 <strong>kill</strong> 掉 <strong>vim</strong> 的进程，你可以：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ps -e<span class="p">|</span>grep vim
 </span></span></code></pre></div><p>结果输出如下：</p>
@@ -796,7 +796,7 @@ IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE</p>
 </code></pre><p>其中第一条记录就是你想要搜索的进程了，你运行 <strong>kill 21939</strong> 就可以杀掉 vim 的进程了；因为我系统的是图型化界面的 vim, 所以是 gvim.</p>
 <hr>
 <p>正如我之前的文章提到的那样，单纯的过滤器的用处似乎不大，但是如果结合起来就会威力无穷至于，如何结合，就需要慢慢探索了。</p>
-<h2 id="反向搜索"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 反向搜索</h2>
+<h2 id="反向搜索"><span class="section-num">4</span> 反向搜索</h2>
 <p>现在执行的搜索都是匹配搜索，即将匹配的内容显示出来，而 <strong>grep</strong> 还有反向搜索的功能 (invert Searches)就是将不包含有指定模式的内容显示出来。</p>
 <p>该功能在用来修改有很多注释的配置文件时特别有用；例如常用的服务器软件 <strong>nginx</strong>  的配置文件是默认是含有很多注释的，如下</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cfg" data-lang="cfg"><span class="line"><span class="cl"><span class="c1">#user www-data;</span>
@@ -1011,7 +1011,7 @@ IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE</p>
 </span></span><span class="line"><span class="cl"><span class="na">}</span>
 </span></span><span class="line"><span class="cl"><span class="na">}</span>
 </span></span></code></pre></div><p><strong>egrep</strong> 是 <strong>grep</strong> 的扩展，你也可以通过 <strong>-E</strong> 使用扩展功能。就这样，你就可以得到一份很“干净”的配置文件了。</p>
-<h2 id="小结"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 小结</h2>
+<h2 id="小结"><span class="section-num">5</span> 小结</h2>
 <p>在以前 <strong>grep</strong> 是 <strong>hacker</strong> 工具箱里面审查源代码必不可少的工具之一，但是随着技术的发展，似乎对比其他同类型的工具， <strong>grep</strong> 的性能已经难尽人意，特别是对比 <strong>ag</strong> 这个搜索神器；</p>
 <p>虽说很多人都已经转移到了 <strong>ag</strong> 阵营，但是因为 <strong>grep</strong> 被广泛预装到各类的Linux/Unix 机器，所以 <strong>grep</strong> 还是使用得很广泛滴。</p>
 <p>更多 <strong>grep</strong> 的用法就需要查询手册了：</p>
@@ -1032,12 +1032,12 @@ IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE</p>
 </blockquote>
 <p>如果你有使用过git,那么你一定不会对diff 陌生，因为对你源文件和修改后的文件进行比较的就是 <strong>diff</strong> 这个大名鼎鼎的家伙了。</p>
 <p>多年以来， <strong>diff</strong> 都一直是非常重要的工具，上古大神 都是使用 <strong>diff</strong> 和 <strong>patch</strong> 对程序进行差分和打补丁滴(现在有git了，但是diff同样发挥着重要作用)</p>
-<h2 id="语法"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 语法</h2>
+<h2 id="语法"><span class="section-num">1</span> 语法</h2>
 <p>diff 的语法如下</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">diff <span class="o">[</span>OPTION<span class="o">]</span>.... file1 file2
 </span></span></code></pre></div><p><em>OPTION</em> 指不同的选项参数，file1,file2 是文本文件的名字，如果比较的两个文件相同 diff 将不输出任何东西。如果两个文件有差异，diff 会显示一系列的指示，让你可以把第一个文件修改为与第二个文件一致</p>
-<h2 id="例子"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 例子</h2>
-<h3 id="用法一"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 用法一</h3>
+<h2 id="例子"><span class="section-num">2</span> 例子</h2>
+<h3 id="用法一"><span class="section-num">2.1</span> 用法一</h3>
 <p>现在有两个文件，分别保存着不同的地址。
 address1 包含：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">guangdong
@@ -1058,7 +1058,7 @@ address1 包含：</p>
 </span></span><span class="line"><span class="cl">&gt; beijin
 </span></span></code></pre></div><p>似乎有点难以理解，输出结果描述了什么呢？其实diff 是在指导如何修改不同的文件使之一致 <strong>&lt;</strong> 后接的是文件1中与文件2不同的部分， <strong>&gt;</strong> 后接的是文件2中与文件1不同的部分</p>
 <p>diff 的输出使用3个不同的单字符指导：a(append,追加),c(change,修改),d(delete,删除). 在上面的例子，只是看到一个 <em>c</em>,意味着，如果想把 <em>address1</em> 修改成 <em>address2</em> 只需将 <em>address1</em> 的第三行修改成 <em>address2</em> 的第三行</p>
-<h3 id="用法2"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 用法2</h3>
+<h3 id="用法2"><span class="section-num">2.2</span> 用法2</h3>
 <p>现在把 <em>address2</em> 的最后一行删除，看看运行 <em>diff</em> 结果如何：
 address1 包含：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">guangdong
@@ -1074,7 +1074,7 @@ address1 包含：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">4d3
 </span></span><span class="line"><span class="cl">&lt; chengdu
 </span></span></code></pre></div><p>在该例子中，为了将 <em>address1</em> 变成 <em>address2</em> 只需删除 <em>address1</em> 的第四行</p>
-<h3 id="用法3"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> 用法3</h3>
+<h3 id="用法3"><span class="section-num">2.3</span> 用法3</h3>
 <p>现在把 <em>address1</em> 的最后一行删除，看看运行 <em>diff</em> 结果如何：
 address1 包含：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">guangdong
@@ -1090,13 +1090,13 @@ address1 包含：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">3a4
 </span></span><span class="line"><span class="cl">&gt; chengdu
 </span></span></code></pre></div><p>想将第一个文件转换成第二个文件，只需在第一个文件追加第二个文件的第四行(即在第一个文件的第 <strong>3</strong> 行之后追加第二个文件的第 <strong>4</strong> 行)</p>
-<h2 id="diff-选项"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> diff 选项</h2>
+<h2 id="diff-选项"><span class="section-num">3</span> diff 选项</h2>
 <p>因为diff 是一个相当强大也是一个相当复杂的命令，所以我没办法将所有的用法一一道
 尽所以笔者将比较常用的选项列举出来</p>
 <ul>
 <li><strong>-b</strong>:忽略制表符(不忽略所有的空白符，指忽略空白符数量的差异),例如下面的两行是相同的</li>
 </ul>
-<!-- raw HTML omitted -->
+<!--listend-->
 <pre tabindex="0"><code class="language-nil" data-lang="nil">a    a
 a a
 </code></pre><ul>
@@ -1119,17 +1119,17 @@ a a
       
       <guid>https://ramsayleung.github.io/zh/post/2017/install_archlinux/</guid>
       <description>An description about how to install arch linux in an old machine</description>
-      <content:encoded><![CDATA[<h2 id="枯树"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 枯树</h2>
+      <content:encoded><![CDATA[<h2 id="枯树"><span class="section-num">1</span> 枯树</h2>
 <p>周末回了一趟家，没带自己的笔记本，在家闲来无事，无意中看到墙角的电脑，已经尘封已久反正无事，何不玩玩这台老古董呢？于是把电脑拿去修理店把坏了的硬件修好。</p>
 <p>离开店的时候，老板说：“你的系统有问题，我看到你自己也有Ghost,就不帮搞这系统了， 你自己都能解决的，推荐你还是用XP吧，这电脑配置低，还是XP好用”。我忍不住回头对老板一笑 :)</p>
-<h2 id="春至"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 春至</h2>
+<h2 id="春至"><span class="section-num">2</span> 春至</h2>
 <p>像我这种Linuxer,这么可能再装回XP呢，最初装Win7,也是考虑到老爹的技术 hold 不住 Linux, 现在手机那么发达，他就不需要电脑了，所以，此时不装Linux,更待何时呢？</p>
-<h2 id="arch-linux"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Arch Linux</h2>
+<h2 id="arch-linux"><span class="section-num">3</span> Arch Linux</h2>
 <p>我没有选择 Xubuntu 这种适合老机器的 Ubuntu 衍生发行版本，因为我不喜欢Ubuntu, 所以我最后选择的是 Arch linux,官网说最低配置只需500MB内存，800MB的 硬盘存储空间，正适合家里的老家伙</p>
-<h3 id="安装过程"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 安装过程</h3>
-<h4 id="下载镜像"><!-- raw HTML omitted -->3.1.1<!-- raw HTML omitted --> 下载镜像</h4>
+<h3 id="安装过程"><span class="section-num">3.1</span> 安装过程</h3>
+<h4 id="下载镜像"><span class="section-num">3.1.1</span> 下载镜像</h4>
 <p><a href="https://www.archlinux.org/download/">Download Link</a> ,在网易的镜像下载ISO, 然后用dd刻录到U盘，Windows 可以选择 <a href="http://sourceforge.net/projects/usbwriter">USBwriter</a></p>
-<h4 id="分区"><!-- raw HTML omitted -->3.1.2<!-- raw HTML omitted --> 分区</h4>
+<h4 id="分区"><span class="section-num">3.1.2</span> 分区</h4>
 <p>使用fdisk, 我的硬盘是/dev/sda,如果还有一块硬盘，那应该就是/dev/sdb</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">fdisk /dev/sda
 </span></span></code></pre></div><ul>
@@ -1140,7 +1140,7 @@ a a
 </ul>
 <p>分区结束以后，输入 <code>w</code> 完成分区 (我分了三个分区 /dev/sda1 -&gt; swap
 /dev/sda2 -&gt; / /dev/sda3 -&gt; /home)</p>
-<h4 id="格式化分区"><!-- raw HTML omitted -->3.1.3<!-- raw HTML omitted --> 格式化分区</h4>
+<h4 id="格式化分区"><span class="section-num">3.1.3</span> 格式化分区</h4>
 <p>格式化 sda2 sda3为ext4格式：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mkfs.ext4 /dev/sda2
 </span></span><span class="line"><span class="cl">mkfs.ext4 /dev/sda3
@@ -1148,20 +1148,20 @@ a a
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mkswap /dev/sda1
 </span></span></code></pre></div><p>激活swap</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">swapon /dev/sda1
-</span></span></code></pre></div><h4 id="挂载"><!-- raw HTML omitted -->3.1.4<!-- raw HTML omitted --> 挂载</h4>
+</span></span></code></pre></div><h4 id="挂载"><span class="section-num">3.1.4</span> 挂载</h4>
 <p>将sda2挂载到/mnt,其实就是让sda2分区做系统的根分区，/mnt/home同理</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mount /dev/sda2 /mnt
 </span></span><span class="line"><span class="cl">mount /dev/sda3 /mnt/home
-</span></span></code></pre></div><h4 id="更新pacman源"><!-- raw HTML omitted -->3.1.5<!-- raw HTML omitted --> 更新pacman源</h4>
+</span></span></code></pre></div><h4 id="更新pacman源"><span class="section-num">3.1.5</span> 更新pacman源</h4>
 <p>网易的源不错，编辑 <code>/etc/pacman.d/mirrorlist</code> 添加 <code>Server = http://mirrors.163.com/archlinux/$repo/os/$arch</code></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">vim /etc/pacman.d/mirrorlist
 </span></span></code></pre></div><p>然后添加；添加完之后，更新一下</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pacman -Syy
-</span></span></code></pre></div><h4 id="安装基本系统"><!-- raw HTML omitted -->3.1.6<!-- raw HTML omitted --> 安装基本系统</h4>
+</span></span></code></pre></div><h4 id="安装基本系统"><span class="section-num">3.1.6</span> 安装基本系统</h4>
 <p>安装基本系统到 /mnt,即sda2分区</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pacstrap /mnt base base-devel
 </span></span></code></pre></div><p>需要安装的都安装吧，然后走开煮一杯咖啡，慢慢品尝</p>
-<h4 id="生成fstab"><!-- raw HTML omitted -->3.1.7<!-- raw HTML omitted --> 生成fstab</h4>
+<h4 id="生成fstab"><span class="section-num">3.1.7</span> 生成fstab</h4>
 <p>fstab 的作用：</p>
 <blockquote>
 <p>The fstab(5) file can be used to define how disk partitions, various other block devices, or remote filesystems should be mounted into the filesystem</p>
@@ -1169,17 +1169,17 @@ a a
 <p>生成fstab,并且查看是否正确生成fstab</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">genfstab -U -p /mnt &gt;&gt; /mnt/etc/fstab
 </span></span><span class="line"><span class="cl">cat /mnt/etc/fstab
-</span></span></code></pre></div><h4 id="配置系统"><!-- raw HTML omitted -->3.1.8<!-- raw HTML omitted --> 配置系统</h4>
+</span></span></code></pre></div><h4 id="配置系统"><span class="section-num">3.1.8</span> 配置系统</h4>
 <p>切换到新的系统，然后你会发现命令行提示符发生了改变</p>
 <pre tabindex="0"><code class="language-nil" data-lang="nil">arch-chroot /mnt
-</code></pre><!-- raw HTML omitted -->
+</code></pre><!--list-separator-->
 <ol>
 <li>
 <p>设置地区</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 </span></span></code></pre></div></li>
 </ol>
-<!-- raw HTML omitted -->
+<!--list-separator-->
 <ol start="2">
 <li>
 <p>设置语言</p>
@@ -1192,21 +1192,21 @@ a a
 </span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
 </span></span></code></pre></div></li>
 </ol>
-<!-- raw HTML omitted -->
+<!--list-separator-->
 <ol start="3">
 <li>
 <p>设置主机名</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">echo</span> samray-arch &gt; /etc/hostname
 </span></span></code></pre></div></li>
 </ol>
-<!-- raw HTML omitted -->
+<!--list-separator-->
 <ol start="4">
 <li>
 <p>设置密码</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">passwd
 </span></span></code></pre></div></li>
 </ol>
-<!-- raw HTML omitted -->
+<!--list-separator-->
 <ol start="5">
 <li>
 <p>配置网络</p>
@@ -1214,7 +1214,7 @@ a a
 </span></span><span class="line"><span class="cl">systemctl <span class="nb">enable</span> dhcpcd.service
 </span></span></code></pre></div></li>
 </ol>
-<!-- raw HTML omitted -->
+<!--list-separator-->
 <ol start="6">
 <li>
 <p>安装GRUB</p>
@@ -1224,16 +1224,16 @@ a a
 </span></span><span class="line"><span class="cl">grub-mkconfig -o /boot/grub/grub.cfg
 </span></span></code></pre></div></li>
 </ol>
-<h4 id="收尾工作"><!-- raw HTML omitted -->3.1.9<!-- raw HTML omitted --> 收尾工作</h4>
+<h4 id="收尾工作"><span class="section-num">3.1.9</span> 收尾工作</h4>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">exit</span>
 </span></span><span class="line"><span class="cl">umount /mnt/home
 </span></span><span class="line"><span class="cl">umount /mnt
 </span></span><span class="line"><span class="cl">reboot
 </span></span></code></pre></div><p>这样Arch linux 就装好了，不过你重启会发现，你的系统是没有图形化界面的</p>
-<h3 id="安装桌面环境"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> 安装桌面环境</h3>
-<h4 id="安装x服务"><!-- raw HTML omitted -->3.2.1<!-- raw HTML omitted --> 安装x服务</h4>
+<h3 id="安装桌面环境"><span class="section-num">3.2</span> 安装桌面环境</h3>
+<h4 id="安装x服务"><span class="section-num">3.2.1</span> 安装x服务</h4>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pacman -S xorg-server xorg-server-utils xorg-xinit
-</span></span></code></pre></div><h4 id="安装显卡驱动"><!-- raw HTML omitted -->3.2.2<!-- raw HTML omitted --> 安装显卡驱动</h4>
+</span></span></code></pre></div><h4 id="安装显卡驱动"><span class="section-num">3.2.2</span> 安装显卡驱动</h4>
 <p>查找自己的显卡类型</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ispci <span class="p">|</span>grep VGA
 </span></span></code></pre></div><p>然后搜索匹配自己显卡的驱动</p>
@@ -1254,7 +1254,7 @@ a a
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">startxfce4
 </span></span></code></pre></div><p>基本就大功告成了，因为我的台式电脑是bios, 所以不用折腾uefi, 还有无线网络。</p>
 <p><strong>Action is louder than words</strong>,还是多动手才行，我都装了三次才成功，内核空指针和段错误都遇到了 :）</p>
-<h3 id="参考"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> 参考</h3>
+<h3 id="参考"><span class="section-num">3.3</span> 参考</h3>
 <p><a href="https://wiki.archlinux.org/index.php/installation_guide">https://wiki.archlinux.org/index.php/installation_guide</a></p>
 ]]></content:encoded>
     </item>
@@ -1269,19 +1269,19 @@ a a
       <content:encoded><![CDATA[<blockquote>
 <p>cat - concatenate files and print on the standard output</p>
 </blockquote>
-<h2 id="过滤器"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 过滤器</h2>
+<h2 id="过滤器"><span class="section-num">1</span> 过滤器</h2>
 <p>何谓过滤器呢，例如cat,grep,wl 之类的命令就是过滤器了。这样的命令
 读取数据，对数据执行一些操作，然后写入结果。更准确地说，过滤器就是任何能够从标准
 输入读取 <strong>文本</strong> 数据，并向标准输出写入 <strong>文本</strong> 数据的命令。又因为Unix 的 <strong>KISS</strong>
 设计理念，所以每个程序都被设计成能够出色完成一项特定任务的工具。又因为重定向和
 管道的存在，使得可以将这些工具组合起来，发挥无穷威力</p>
-<h2 id="cat"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> cat</h2>
+<h2 id="cat"><span class="section-num">2</span> cat</h2>
 <p>在shell 里面运行cat,你会被要求输入文本数据，当你输入一行数据以后，然后按下回
 车你输入的数据就会显示在屏幕，当你按下 ^D(&lt;ctrl&gt;+d),发送eof 信号给shell,退出
 cat。cat 做的事就是把你输入的字符，复制到标准输出 (一般情况是指你的屏幕).看到
 这里有人或许会质疑，这东西有什么用呢？似乎什么都作不了。不，它的用处很大呢，
 且容笔者细细禀来</p>
-<h3 id="场景1"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 场景1</h3>
+<h3 id="场景1"><span class="section-num">2.1</span> 场景1</h3>
 <p>假如你要新建一个文本文件，里面只是很少的文本，你会怎么做呢？一般情况下，都是用
 vim/emacs 新建一个文本文件，然后输入几行文字，然后保存退出。这是一般的做法，
 看到这里，很自然有人会发问，难道有更优雅的解决方法？有，不用打开文本编辑器写入文本
@@ -1290,7 +1290,7 @@ vim/emacs 新建一个文本文件，然后输入几行文字，然后保存退�
 </span></span></code></pre></div><p>输入数据，然后 ^D(&lt;ctrl&gt;+d) 保存。你就新建了一个文本了。当然，如果你已经有一个 <strong>data</strong> 文件
 ,就会被代替，当然，你也可以也在原来文本末尾添加的方法：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &gt;&gt; data
-</span></span></code></pre></div><h3 id="场景2"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 场景2</h3>
+</span></span></code></pre></div><h3 id="场景2"><span class="section-num">2.2</span> 场景2</h3>
 <p>如果你有一个短文件，你想查看一下，同样，你可以使用cat</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &lt; data
 </span></span></code></pre></div><p>当然，你也可以省略 <strong>&lt;</strong> 这个重定向符号：</p>
@@ -1298,17 +1298,17 @@ vim/emacs 新建一个文本文件，然后输入几行文字，然后保存退�
 </span></span></code></pre></div><p>抑或是，你想显示某个大文件的最后一部分，你也可以如上操作。或许你会觉得，这个功能
 很多命令也有，最典型的就是 <strong>tail</strong>. 但是如果 <strong>cat</strong> 可以很完美地很其他过滤器结合
 充当整套管道线工具流的起始端，这个以后慢慢再阐述</p>
-<h3 id="场景3"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> 场景3</h3>
+<h3 id="场景3"><span class="section-num">2.3</span> 场景3</h3>
 <p>如果你想复制文本文件，你首先会想起什么命令？ <strong>cp</strong>,很自然嘛，我也不例外，但是cat
 也可以实现同样的功能，很意外吧：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &lt; file &gt; newfile
 </span></span></code></pre></div><p>即把 <strong>file</strong> 复制到标准输出，然后再把 <strong>file</strong> 当作标准输入复制到 <strong>newfile</strong>.hacking!</p>
-<h3 id="场景4"><!-- raw HTML omitted -->2.4<!-- raw HTML omitted --> 场景4</h3>
+<h3 id="场景4"><span class="section-num">2.4</span> 场景4</h3>
 <p>如果你想把多个文本文件的组合到一个文件，你会怎么做？用编辑器打开所有的文件
 然后 select,cut,paste,save.我也会很自然地想到这个方法，但是是否存在着更
 优雅的解决方案呢？当然：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat file1 file2 file3 &gt;newfile
-</span></span></code></pre></div><h2 id="总结"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 总结</h2>
+</span></span></code></pre></div><h2 id="总结"><span class="section-num">3</span> 总结</h2>
 <p>上面已经介绍了挺多cat 的使用场景了，你觉得cat 表现滴怎么样呢？相信你的感觉是
 还行，但是并没有，我吹嘘的那么令人惊艳。因为这只是cat 最基本的功能，它最大的
 用法还没有完全展现出来，笔者先举一例，以后再慢慢详叙：</p>
@@ -1359,7 +1359,7 @@ tail - output the last part of files</p>
 </blockquote>
 <p>当拥有的数据太多的时候，使用cat 来展示数据的话，数据量过大，屏幕就只能显示最后一部分的数据了。</p>
 <p>所以如果你想选取部分的数据的话，cat 就不是一个好选择了。有两个命令可以满足你的要求，分别是 <strong>head</strong> 和 <strong>tail</strong>.顾名思义，head 选取数据的开头部分tail 是选取数据的结尾部分</p>
-<h2 id="用法"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 用法</h2>
+<h2 id="用法"><span class="section-num">1</span> 用法</h2>
 <p>当把 <strong>head</strong> <strong>tail</strong> 当作过滤器来使用的时候，用法很简单</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ head data
 </span></span><span class="line"><span class="cl">$ tail data
@@ -1367,16 +1367,16 @@ tail - output the last part of files</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ head <span class="o">[</span>-n line<span class="o">]</span> data
 </span></span><span class="line"><span class="cl">$ tail <span class="o">[</span>-n line<span class="o">]</span> data
 </span></span></code></pre></div><p>其中 line 是希望选取的数据行的数量</p>
-<h2 id="惊艳点"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 惊艳点</h2>
+<h2 id="惊艳点"><span class="section-num">2</span> 惊艳点</h2>
 <p>你可能觉得 <strong>head</strong> <strong>tail</strong> 两个命令很简单，似乎用处不大。</p>
 <p>是的，就笔者一直所介绍的那样，单个unix命令只是完成一个特定的工作，但是当它们组合起来的时候，就很威力无穷了</p>
-<h3 id="场景1"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 场景1</h3>
+<h3 id="场景1"><span class="section-num">2.1</span> 场景1</h3>
 <p>假如你要生成一串密钥来加密你的某个文件，这是很常见的需求，你会怎么办，用python 或者 java 写一个随机数函数来实现么？无需，你用简单的过滤器加Linux/Unix</p>
 <p>内置的设备(dev):</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ cat /dev/urandom <span class="p">|</span> tr -cd <span class="s2">&#34;[[:alnum:]]&#34;</span> <span class="p">|</span>head -c 32<span class="p">;</span><span class="nb">echo</span>
 </span></span></code></pre></div><p>在Unix/Linux 的机器下，运行上面的命令就可以生成一个包含数字和字母的32个字符长的密钥了。</p>
 <p>/dev/urandom 是一个可以通过收集硬件驱动的环境噪音来产生伪随机数特殊的文件，tr 是转换和删除字符的命令；更多详细的东西，以后笔者会慢慢介绍滴</p>
-<h3 id="场景2"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 场景2</h3>
+<h3 id="场景2"><span class="section-num">2.2</span> 场景2</h3>
 <p>在日常的开发或者运行环境中，日志是必不可少滴，但是日志是不断产生新的数据的,所以有时候就会出现用编辑器打开日志的时候，就会出现，编辑器不断提醒你文件已经发生了变化，是否重新加载，但是如果只是用cat,tail 来查看日志，日志又是保持在
 打开的那个状态，新产生的日志数据是没办法浏览到，果真如此？</p>
 <p>其实不然, tail 可以在查看日志的时候，保持日志一直在更新。关键就在 <strong>-f</strong> 选项</p>
@@ -1387,7 +1387,7 @@ tail - output the last part of files</p>
 </span></span></code></pre></div><p>然后打开一个新的Shell, 运行：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">cat &gt;&gt; something.log
 </span></span></code></pre></div><p>使用 <strong>&gt;&gt;</strong> 追加数据，就可以模拟日志生成的过程了</p>
-<h2 id="总结"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 总结</h2>
+<h2 id="总结"><span class="section-num">3</span> 总结</h2>
 <p>要掌握更多的用法还是要查看文档滴：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">man head
 </span></span></code></pre></div><p>Enjoy Shell :)</p>
@@ -1402,7 +1402,7 @@ tail - output the last part of files</p>
       <guid>https://ramsayleung.github.io/zh/post/2017/percol/</guid>
       <description>An introduction about percol</description>
       <content:encoded><![CDATA[<p><a href="https://github.com/mooz/percol">Percol</a> 是Emacs 的一个非常优秀package:js2-mode作者mooz 的又一力作得益于Unix Shell的管道和重定向设计理念，percol 所有的输入输出变得可交互 percol 给我一种很熟悉的感觉，就是 Eamcs 中helm 增量补全 (incremental completion)的感觉，真的可以10倍提高工作效率。</p>
-<h2 id="例子"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 例子</h2>
+<h2 id="例子"><span class="section-num">1</span> 例子</h2>
 <p>假如你要用git 切换分支，但是分支很多，你不能记住你要切换的分支的名字。那么有percol 你可以：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ git checkout <span class="k">$(</span>git branch<span class="p">|</span>percol<span class="k">)</span>
 </span></span></code></pre></div><p>那样，你就可以，选择要切换的分支了</p>
@@ -1441,7 +1441,7 @@ tail - output the last part of files</p>
 </span></span><span class="line"><span class="cl">    zle -N percol_select_history
 </span></span><span class="line"><span class="cl">    bindkey <span class="s1">&#39;^R&#39;</span> percol_select_history
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span></code></pre></div><h3 id="运行截图"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> 运行截图</h3>
+</span></span></code></pre></div><h3 id="运行截图"><span class="section-num">1.1</span> 运行截图</h3>
 <p><a href="/ox-hugo/percol1.png"><img loading="lazy" src="/ox-hugo/percol1.png" alt=""  />
 </a>
 有时候，我需要复制当前目录下，某个文件的路径，但是无论是文件管理器，还是shell都要用鼠标来复制指定文件的路径，效率不高且很不方便。在 <a href="http://blog.binchen.org/posts/how-to-use-git-effectively.html">陈斌</a> 代码的启发下，我自己写了一个函数来复制当前文件夹某个特定目录的路径，很方便地解决了问题：</p>

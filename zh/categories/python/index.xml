@@ -22,8 +22,8 @@
       <description>python 与嵌入式关系数据库 sqlite3的邂逅 SQLite 是一个非常优秀的嵌入式数据库，非常轻量，可以与 Mysql, PostgreSQL 这样的 大型数据库互补使用. 而 Python 标准库中的 sqlite3 模块实</description>
       <content:encoded><![CDATA[<p>python 与嵌入式关系数据库 sqlite3的邂逅</p>
 <p><code>SQLite</code> 是一个非常优秀的嵌入式数据库，非常轻量，可以与 Mysql, PostgreSQL 这样的 大型数据库互补使用. 而 Python 标准库中的 <code>sqlite3</code> 模块实现了兼容 SQLite 的 <a href="https://www.python.org/dev/peps/pep-0249/">Python DB-API 2.0</a>接口, 因此我们可以很方 便地使用 <code>sqlite3</code> 模块来操作 <code>SQLite</code></p>
-<h2 id="入门"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 入门</h2>
-<h3 id="创建数据库"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> 创建数据库</h3>
+<h2 id="入门"><span class="section-num">1</span> 入门</h2>
+<h3 id="创建数据库"><span class="section-num">1.1</span> 创建数据库</h3>
 <p><code>SQLite</code> 数据库是存储在文件系统的单个文件上的，所以如果数据库文件不存在，那么在第一次访问这个数据库，就会创建相应的数据库文件。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sqlite3</span>
@@ -40,7 +40,7 @@
 <p>你在执行该代码之前查看一下当前目录的话，如果不存在 <code>sqlite3_demo.db</code> 的话，那么跑完这段代码，你应该会看到 <code>sqlite3_demo.db</code>
 文件的.</p>
 <p>这段代码本身是没有做多少事，我只是用它来阐述一下 <code>SQLite</code> 的原理</p>
-<h3 id="创建表"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> 创建表</h3>
+<h3 id="创建表"><span class="section-num">1.2</span> 创建表</h3>
 <p>那么，现在，让我们用 <code>SQLite</code> 来做点数据库的本份工作。先创建一张表，接下来的操作都会围绕着这张表进行。</p>
 <p><code>user.sql</code>:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="k">role</span><span class="p">(</span><span class="w">
@@ -86,7 +86,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="s2">	insert into user (id,name,phone_number,birthday,role)
 </span></span></span><span class="line"><span class="cl"><span class="s2">	values (3,&#39;Trump&#39;,13254768,&#39;2017-11-12&#39;,&#39;teacher&#39;);
 </span></span></span><span class="line"><span class="cl"><span class="s2">			   &#34;&#34;&#34;</span><span class="p">)</span>
-</span></span></code></pre></div><h3 id="检索数据"><!-- raw HTML omitted -->1.3<!-- raw HTML omitted --> 检索数据</h3>
+</span></span></code></pre></div><h3 id="检索数据"><span class="section-num">1.3</span> 检索数据</h3>
 <p>如果想要使用检索存储在 <code>user</code> 表中的数据，那么就需要从数据库连接对象 <code>Connection</code> 中创建一个 <code>Cursor</code>对象。</p>
 <p>而<code>Cursor</code> 对象负责与数据库进行交互并获取 数据</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sqlite3</span>
@@ -128,7 +128,7 @@
 </span></span><span class="line"><span class="cl">	    <span class="nb">id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">phone_number</span><span class="p">,</span> <span class="n">birthday</span><span class="p">))</span>
 </span></span></code></pre></div><p>使用 <code>fetchmany()</code> 函数需要注意的是，当你指定的数量超过了符合条件的全部记录的数量的时候，<code>fetchmany()</code>只会返回全部记录的数量。</p>
 <p>例如上面的代码里面，我想要 <code>fetchmany()</code> 返回10条记录，但是我的数据库只有2条符合条件的数据，而 <code>fetchmany()</code> 之后返回两条记录</p>
-<h3 id="row-对象"><!-- raw HTML omitted -->1.4<!-- raw HTML omitted --> Row 对象</h3>
+<h3 id="row-对象"><span class="section-num">1.4</span> Row 对象</h3>
 <p>在先前的内容内，我已经提到，数据库返回的数据行都是以 <code>tuple</code>的形式返回的，所以 程序调用者必须知道查询语句字段的顺序，然后在<code>tuple</code>取出记录的时候把字段名和变量名一一对应上，例如
 <code>name, description = cursor.fetchone()</code>.</p>
 <p>查询语句中字段不多的时候或许还能记住，但是如果字段值多了起来，就很容易出现问题.</p>
@@ -157,7 +157,7 @@ with sqlite3.connect(db_filename) as conn:
 	    row[&#39;id&#39;], row[&#39;name&#39;], row[&#39;phone_number&#39;], row[&#39;birthday&#39;]))
 </code></pre><p>通过指定 <code>Connection</code> 对象的 <code>row_factory</code> 属性就可以控制查询结果集返回的对象。</p>
 <p>在上面的代码，我们使用了 <code>Row</code> 对象而不是 <code>tuple</code> 来获取数据，而程序的执行结果都是相同，但是程序的健壮性就得到了提高。</p>
-<h3 id="在查询中使用变量"><!-- raw HTML omitted -->1.5<!-- raw HTML omitted --> 在查询中使用变量</h3>
+<h3 id="在查询中使用变量"><span class="section-num">1.5</span> 在查询中使用变量</h3>
 <p>我们上面的代码里面的查询语句都是硬编码的，不利于扩展。如果你希望可以使用更灵活的查询语句，你可能会去用字符串拼接查询语句。</p>
 <p>但是这样的做法是不被提倡的，因为很容易出现安全问题，比如说 SQL 注入. 比较提倡的方式是在执行 <code>execute()</code> 函数的时候进行 变量替换，使用变量替换可以避免SQL注入攻击，因为那些不被信任的代码没办法被解析。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sqlite3</span>
@@ -176,7 +176,7 @@ with sqlite3.connect(db_filename) as conn:
 </span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:2d}</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> </span><span class="si">{:&lt;10}</span><span class="s1"> [</span><span class="si">{:&lt;8}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">	    <span class="n">row</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;phone_number&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;birthday&#39;</span><span class="p">]))</span>
 </span></span></code></pre></div><p>如上面的代码所示，使用 <code>:role_name</code> 占位符来表示 <code>role_name</code>变量, 然后在执行 SQL 语句的时候把 <code>role_name</code>的值传到 SQL 语句里面去。</p>
-<h3 id="批量插入"><!-- raw HTML omitted -->1.6<!-- raw HTML omitted --> 批量插入</h3>
+<h3 id="批量插入"><span class="section-num">1.6</span> 批量插入</h3>
 <p>我们之前提到的插入都是使用 <code>execute()</code> 函数逐条插入的，但是 <code>sqlite3</code> 也是支持批 量插入的, 使用 <code>executemany()</code>函数就可以实现一次插入批量的数据，而函数的底层也 是对插入多条数据的循环进行了优化的，这些就无需调用者操心了。</p>
 <p>user.csv</p>
 <pre tabindex="0"><code class="language-csv" data-lang="csv">birthday,name,id,phone_number
@@ -200,7 +200,7 @@ with sqlite3.connect(db_filename) as conn:
 </span></span></code></pre></div><p>我们从 csv 文件中批量导入数据，而Python 的标准库也内置了 CSV 的解析器，使用 <code>DictReader</code> 就是将 csv 文件解析成
 <code>{'id':22,'birthday':'2018-11-30','name':'Torres','phone_number':98564311}</code>的形式
 然后配合上面提到的命名变量，把所有数据插入到数据库。</p>
-<h2 id="进阶"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 进阶</h2>
+<h2 id="进阶"><span class="section-num">2</span> 进阶</h2>
 <p>自定义数据库列类型 <code>SQLite</code> 的数据列原生支持整型(integer), 浮点数(floating point), 文本类型 (text), 并且由 <code>sqlite3</code> 转换成 Python内置的数据类型。</p>
 <p>例如：数据库的整型可以转 换成Python 的 <code>int</code> 或者是 <code>long</code>, 具体取决于值的大小；文本类型默认会转换成 <code>str</code>
 类型，除非我们修改了 <code>Connection</code> 对象的 <code>text_factory</code> 属性。</p>
@@ -290,9 +290,9 @@ with sqlite3.connect(db_filename) as conn:
 把字符串转换成Python 对象。</p>
 <p>这就基本实现了自定义的数据类型。不过我们自己实现的这种自定义数据类型是有局限的，我们只能把整个 Python 对象当作字符串来查询，而没办法针对 Python 对象的属性进行查询，如果你感兴趣的话，你可以看看 Python ORM
 框架是怎么实现这些功能的。</p>
-<h3 id="事务"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 事务</h3>
+<h3 id="事务"><span class="section-num">2.1</span> 事务</h3>
 <p>谈及关系型数据库，必不可少的一定是事务。对于事务的见解，网上的资料都已经浩如烟海 了，那么，就要我们直接来说一下 <code>SQLite</code> 事务的使用</p>
-<h4 id="commit"><!-- raw HTML omitted -->2.1.1<!-- raw HTML omitted --> commit</h4>
+<h4 id="commit"><span class="section-num">2.1.1</span> commit</h4>
 <p>对数据库的修改操作，无论是新增(insert) 还是更新 (update), 都需要调用 <code>commit()</code> 来保存。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sqlite3</span>
 </span></span><span class="line"><span class="cl">
@@ -333,7 +333,7 @@ with sqlite3.connect(db_filename) as conn:
 </span></span></code></pre></div><p><code>commit()</code> 函数的调用结果可以被使用若干个数据库连接的程序查询到，在第一个数据库连接插入了一行新的数据，另外两个数据库连接尝试读取到新插入的数据。</p>
 <p>当 <code>show_role()</code> 函数在 <code>conn1</code> 提交事务之前被调用，返回结果就取决于调用 <code>show_role()</code> 是哪个数据连接了。</p>
 <p>因为是通过 <code>conn1</code>来修改数据库，所以它可以看到修改后的数据，但是 <code>conn2</code>看不到。在提交事务之后(<code>commit()</code>) ,通过其他的数据库连接 (conn3)也可以看到修改结果了</p>
-<h4 id="rollback"><!-- raw HTML omitted -->2.1.2<!-- raw HTML omitted --> rollback</h4>
+<h4 id="rollback"><span class="section-num">2.1.2</span> rollback</h4>
 <p>未提交的修改可以通过调用<code>rollback()</code> 函数全部丢弃。通常 <code>commit()</code> 和 <code>rollback()</code> 函数都是在 <code>try-except</code> 语句块的不同地方被调用的，例如错误异常触发, 事务回滚(rollback)</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sqlite3</span>
 </span></span><span class="line"><span class="cl">
@@ -373,7 +373,7 @@ with sqlite3.connect(db_filename) as conn:
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">After rollback:&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">show_role</span><span class="p">(</span><span class="n">conn1</span><span class="p">)</span>
 </span></span></code></pre></div><p>在调用 <code>rollback()</code> 函数回滚事务之后，对数据库的修改都丢弃了。</p>
-<h3 id="内存型数据库"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 内存型数据库</h3>
+<h3 id="内存型数据库"><span class="section-num">2.2</span> 内存型数据库</h3>
 <p>正如我们先前提到的，<code>SQLite</code> 是文件型数据库，它通过文件系统来管理数据库。但是 <code>SQLite</code> 也可以把整个数据库放到内存中去。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sqlite3</span>
 </span></span><span class="line"><span class="cl">
@@ -410,7 +410,7 @@ with sqlite3.connect(db_filename) as conn:
 <p>需要注意的是，每一个 <code>connect()</code> 函数都会打开新建一个数据库实例，所以在一个数据库连接上的修改是不会影响其它的连接的。</p>
 <p>而 <code>iterdump()</code> 函数会返回一个迭代器，输出一系列对数据库修改的 SQL.</p>
 <p>最后需要注意的是，使用内存型的数据库是有风险的，要切记这一点。</p>
-<h3 id="在sql-使用-python-函数"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> 在SQL 使用 Python 函数</h3>
+<h3 id="在sql-使用-python-函数"><span class="section-num">2.3</span> 在SQL 使用 Python 函数</h3>
 <p><code>SQLite</code> 支持在查询的时候使用注册了的 Python函数的，这个特性就使我们在可以获取到 查询结果之前先对数据进行加工，或者调用Python 函数实现那些 纯SQL 力所不能及的功能</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">codecs</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sqlite3</span>
@@ -461,10 +461,10 @@ with sqlite3.connect(db_filename) as conn:
 </span></span><span class="line"><span class="cl">    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
 </span></span></code></pre></div><p>通过 <code>create_function()</code> 注册了两个可供 SQL 使用的函数，而 <code>create_function()</code>
 的参数分别是定义函数的名字，函数传递的参数的个数，以及源函数</p>
-<h2 id="总结"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 总结</h2>
+<h2 id="总结"><span class="section-num">3</span> 总结</h2>
 <p>虽说 <code>SQLite</code> 只是一个嵌入式的轻量数据库，但是麻雀虽小，五脏俱全嘛。</p>
 <p>内置的 <code>sqlite3</code> 库为Python 和 <code>SQLite</code> 的沟通构建了一个便捷的桥梁，但是这个桥梁只是个木桥，如果你希望使用斜拉索跨海大桥的话，你就需要去了解 <a href="http://www.sqlalchemy.org/">sqlalchemy</a>, 那是一个功能完善的 ORM 框架 :)</p>
-<h2 id="参考"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">4</span> 参考</h2>
 <ul>
 <li><a href="http://www.sqlalchemy.org/">sqlalchemy</a></li>
 <li><a href="http://www.sqlite.org/">sqlite</a></li>
@@ -482,7 +482,7 @@ with sqlite3.connect(db_filename) as conn:
       <guid>https://ramsayleung.github.io/zh/post/2017/jd_spider/</guid>
       <description>An spider to crawl jindong item and comments</description>
       <content:encoded><![CDATA[<p>我最近编写了两只京东商品和评论的分布式爬虫来进行数据分析，现在就来分享一下。</p>
-<h2 id="爬取策略"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 爬取策略</h2>
+<h2 id="爬取策略"><span class="section-num">1</span> 爬取策略</h2>
 <p>众所周知，爬虫比较难爬取的就是动态生成的网页，因为需要解析 JS, 其中比较典型的例子就是淘宝，天猫，京东，QQ 空间等。</p>
 <p>所以在我爬取京东网站的时候，首先需要确定的就是爬取策略。因为我想要爬取的是商品的信息以及相应的评论，并没有爬取特定的商品的需求。所以在分析京东的网页的 url 的时候, 决定使用类似全站爬取的策略。 分析如图：</p>
 <figure><a href="/ox-hugo/jd_analyze.png">
@@ -496,7 +496,7 @@ with sqlite3.connect(db_filename) as conn:
 </span></span><span class="line"><span class="cl">		<span class="s2">&#34;bg&#34;</span><span class="p">,</span> <span class="s2">&#34;channel&#34;</span><span class="p">,</span> <span class="s2">&#34;jipiao&#34;</span><span class="p">,</span> <span class="s2">&#34;hotel&#34;</span><span class="p">,</span> <span class="s2">&#34;trip&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">		<span class="s2">&#34;ish&#34;</span><span class="p">,</span> <span class="s2">&#34;book&#34;</span><span class="p">,</span> <span class="s2">&#34;e&#34;</span><span class="p">,</span> <span class="s2">&#34;health&#34;</span><span class="p">,</span> <span class="s2">&#34;baby&#34;</span><span class="p">,</span> <span class="s2">&#34;toy&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">		<span class="s2">&#34;nong&#34;</span><span class="p">,</span> <span class="s2">&#34;jiu&#34;</span><span class="p">,</span> <span class="s2">&#34;fresh&#34;</span><span class="p">,</span> <span class="s2">&#34;china&#34;</span><span class="p">,</span> <span class="s2">&#34;che&#34;</span><span class="p">,</span> <span class="s2">&#34;list&#34;</span><span class="p">]</span>
-</span></span></code></pre></div><h2 id="提取数据"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 提取数据</h2>
+</span></span></code></pre></div><h2 id="提取数据"><span class="section-num">2</span> 提取数据</h2>
 <p>在确定了爬取策略之后，爬虫就可以不断地进行工作了。那么爬虫怎么知道什么时候才是商品信息的页面呢？再来分析一下京东的商品页面：</p>
 <figure><a href="/ox-hugo/jd_item_analyze.png">
     <img loading="lazy" src="/ox-hugo/jd_item_analyze.png"/> </a>
@@ -511,18 +511,18 @@ with sqlite3.connect(db_filename) as conn:
 <p>不得不说，URL 实在是太长了。</p>
 <p>根据经验，大部分的参数应该都是没什么用的，应该可以去掉的，所以在浏览器就一个个参数去掉，然后试试请求是否成功，如果成功，说明此参数无关重要，最后简化成： <code>http://p.3.cn/prices/mgets?pduid={}&amp;skuIds=J_{}</code> sku_id 即商品页面的 URL中包含的数字，而 pduid 则是一随机整数而已，用
 <code>random.randint(1, 100000000)</code> 函数解决。</p>
-<h2 id="商品评论"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 商品评论</h2>
+<h2 id="商品评论"><span class="section-num">3</span> 商品评论</h2>
 <p>商品的评论也是以 sku-id 为参数通过异步的方式进行请求的，构造请求的方法跟价格类 似，也不需过多赘述。</p>
 <p>只是想要吐嘈一下的是，京东的评论是只能一页页向后翻的，不能跳转。还有一点就是，即使某样商品有 10+w 条评论，最多也只是返回 100页的数据。
 略坑</p>
-<h2 id="反爬虫策略"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 反爬虫策略</h2>
+<h2 id="反爬虫策略"><span class="section-num">4</span> 反爬虫策略</h2>
 <p>商品的爬取策略以及提取策略都确定了，一只爬虫就基本成型了。但是一般比较大型的网站都有反爬虫措施的。所以道高一尺，魔高一丈，爬虫也要有对应的反反爬虫策略</p>
-<h3 id="禁用-cookie"><!-- raw HTML omitted -->4.1<!-- raw HTML omitted --> 禁用 cookie</h3>
+<h3 id="禁用-cookie"><span class="section-num">4.1</span> 禁用 cookie</h3>
 <p>通过禁用 cookie, 服务器就无法根据 cookie 判断出爬虫是否访问过网站</p>
-<h3 id="轮转-user-agent"><!-- raw HTML omitted -->4.2<!-- raw HTML omitted --> 轮转 user-agent</h3>
+<h3 id="轮转-user-agent"><span class="section-num">4.2</span> 轮转 user-agent</h3>
 <p>一般的爬虫都会使用浏览器的 user-agent 来模拟浏览器以欺骗服务器 (当然，如果你是一只什么 user-agent都不用耿直的小爬虫，我也无话可说).</p>
 <p>为了提高突破反爬虫策略的成功率，可以定义多个 user-agent, 然后每次请求都随机选择 user-agent。</p>
-<h3 id="伪装成搜索引擎"><!-- raw HTML omitted -->4.3<!-- raw HTML omitted --> 伪装成搜索引擎</h3>
+<h3 id="伪装成搜索引擎"><span class="section-num">4.3</span> 伪装成搜索引擎</h3>
 <p>要说最著名的爬虫是谁？肯定是搜索引擎，它本质上也是爬虫，而且是非常强大的爬虫。</p>
 <p>而且这些爬虫可以光明正大地去爬取各式网站，相信各式网站也很乐意被它爬。</p>
 <p>那么， 现在可以通过修改 user-agent 伪装成搜索引擎，然后再结合上面的轮转 user-agent,</p>
@@ -534,20 +534,20 @@ with sqlite3.connect(db_filename) as conn:
 &#39;Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)&#39;,
 &#39;Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)&#39;,
 &#39;ia_archiver (+http://www.alexa.com/site/help/webmasters; crawler@alexa.com)&#39;,
-</code></pre><h3 id="代理-ip"><!-- raw HTML omitted -->4.4<!-- raw HTML omitted --> 代理 IP</h3>
+</code></pre><h3 id="代理-ip"><span class="section-num">4.4</span> 代理 IP</h3>
 <p>虽说可以伪装成搜索引擎，但是因为 http 请求是建立在三次握手之上的，爬虫的 IP 还是会被记录下来的，如果同一个 IP 访问得太频繁，那基本就可以确定是一只爬虫了，然后就把它的 IP 封掉，温和一点的就会叫你输入验证码，不然就返回 403.</p>
 <p>对待这种情况，就需要使用代理 IP 了。</p>
 <p>只是代理 IP 都有不同程度的延迟，并且免费的 IP 大多不能用，所以这是不得而为之了</p>
-<h2 id="扩展成分布式爬虫"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 扩展成分布式爬虫</h2>
+<h2 id="扩展成分布式爬虫"><span class="section-num">5</span> 扩展成分布式爬虫</h2>
 <p>一台机器的爬虫可能爬取一个网站可能需要 100 天，而且带宽也到达瓶颈了，那么是否可以提高爬取效率呢？</p>
 <p>那就用 100台机器，1天应该就能爬取完 (当然，现实并非如此美好).</p>
 <p>这个就涉及到分布式的爬虫的问题。而不同的分布式爬虫有不同的实现方法，而我选择了 scrapy 和 redis 整合的 <a href="https://github.com/rolando/scrapy-redis">scrapy-redis</a> 来实现分布式，URL 的去重以及调度都有了相应的实现了，也无需额外的操心</p>
-<h2 id="爬虫监控"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> 爬虫监控</h2>
+<h2 id="爬虫监控"><span class="section-num">6</span> 爬虫监控</h2>
 <p>既然爬虫从单机变成了分布式，新的问题随之而来：如何监控分布式爬虫呢？在单机的时候，最简单的监控 &ndash; 直接将爬虫的日志信息输出到终端即可。</p>
 <p>但是对于分布式爬虫，这样的做法显然不现实。我最终选择使用 <a href="https://graphiteapp.org">graphite</a> 这个监控工具。</p>
-<h3 id="scrapy-graphite"><!-- raw HTML omitted -->6.1<!-- raw HTML omitted --> scrapy-graphite</h3>
+<h3 id="scrapy-graphite"><span class="section-num">6.1</span> scrapy-graphite</h3>
 <p>参考 Github上 <a href="https://github.com/gnemoug/distribute_crawler">distributed_crawler</a> 的代码，将单机版本的 <a href="https://github.com/noplay/scrapy-graphite">scrapy-graphite</a> 扩展成基于分布式的 graphite 监控程序，并且实现对 python3 的支持。</p>
-<h3 id="docker"><!-- raw HTML omitted -->6.2<!-- raw HTML omitted --> docker</h3>
+<h3 id="docker"><span class="section-num">6.2</span> docker</h3>
 <p>但是 graphite 只是支持 python2, 并且安装过程很麻烦，我在折腾大半天后都无法安装成功，实在有点沮丧。最后想起了伟大的 docker, 并且直接找到已经打包好的image. 数行命令即解决所有的安装问题，不得不说：docker, 你值得拥有。运行截图：</p>
 <figure><a href="/ox-hugo/jd_comment_graphite1.png">
     <img loading="lazy" src="/ox-hugo/jd_comment_graphite1.png"/> </a>
@@ -557,34 +557,34 @@ with sqlite3.connect(db_filename) as conn:
     <img loading="lazy" src="/ox-hugo/jd_comment_graphite2.png"/> </a>
 </figure>
 
-<h2 id="爬虫拆分"><!-- raw HTML omitted -->7<!-- raw HTML omitted --> 爬虫拆分</h2>
+<h2 id="爬虫拆分"><span class="section-num">7</span> 爬虫拆分</h2>
 <p>本来爬取商品信息的爬虫和爬取评论的爬虫都是同一只爬虫，但是后来发现，再不使用代理 IP 的情况下，爬取到 150000 条商品信息的时候，需要输入验证码。</p>
 <p>但是爬取商品评论的爬虫并不存在被反爬策略限制的情况。所以我将爬虫拆分成两只爬虫，即使无法爬取商品信息的时候，还可以爬取商品的评论信息。</p>
-<h2 id="小结"><!-- raw HTML omitted -->8<!-- raw HTML omitted --> 小结</h2>
+<h2 id="小结"><span class="section-num">8</span> 小结</h2>
 <p>在爬取一天之后，爬虫成果：</p>
-<h3 id="评论"><!-- raw HTML omitted -->8.1<!-- raw HTML omitted --> 评论</h3>
+<h3 id="评论"><span class="section-num">8.1</span> 评论</h3>
 <figure><a href="/ox-hugo/jd_comment.png">
     <img loading="lazy" src="/ox-hugo/jd_comment.png"/> </a>
 </figure>
 
-<h3 id="评论总结"><!-- raw HTML omitted -->8.2<!-- raw HTML omitted --> 评论总结</h3>
+<h3 id="评论总结"><span class="section-num">8.2</span> 评论总结</h3>
 <figure><a href="/ox-hugo/jd_comment_summary.png">
     <img loading="lazy" src="/ox-hugo/jd_comment_summary.png"/> </a>
 </figure>
 
-<h3 id="商品信息"><!-- raw HTML omitted -->8.3<!-- raw HTML omitted --> 商品信息</h3>
+<h3 id="商品信息"><span class="section-num">8.3</span> 商品信息</h3>
 <figure><a href="/ox-hugo/jd_parameters.png">
     <img loading="lazy" src="/ox-hugo/jd_parameters.png"/> </a>
 </figure>
 
 <p>商品信息加上评论数约 150+w.</p>
-<h2 id="参考及致谢"><!-- raw HTML omitted -->9<!-- raw HTML omitted --> 参考及致谢</h2>
+<h2 id="参考及致谢"><span class="section-num">9</span> 参考及致谢</h2>
 <ul>
 <li><a href="https://github.com/noplay/scrapy-graphite">https://github.com/noplay/scrapy-graphite</a></li>
 <li><a href="https://github.com/gnemoug/distribute_crawler">https://github.com/gnemoug/distribute_crawler</a></li>
 <li><a href="https://github.com/hopsoft/docker-graphite-statsd">https://github.com/hopsoft/docker-graphite-statsd</a></li>
 </ul>
-<h2 id="项目源码"><!-- raw HTML omitted -->10<!-- raw HTML omitted --> 项目源码</h2>
+<h2 id="项目源码"><span class="section-num">10</span> 项目源码</h2>
 <p><a href="https://github.com/samrayleung/jd_spider">https://github.com/samrayleung/jd_spider</a></p>
 ]]></content:encoded>
     </item>
@@ -596,12 +596,12 @@ with sqlite3.connect(db_filename) as conn:
       
       <guid>https://ramsayleung.github.io/zh/post/2017/logging/</guid>
       <description>an introduction about logging</description>
-      <content:encoded><![CDATA[<h2 id="重要性"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 重要性</h2>
+      <content:encoded><![CDATA[<h2 id="重要性"><span class="section-num">1</span> 重要性</h2>
 <p>笔者最近都在负责项目中关于日志的部分，因为跟日志打交道比较多，所以有一些关于日 志感受和技巧想要分享一下。</p>
 <p>笔者认为对于各种程序和应用，日志都是非常重要的，因为程序在部属到服务器之后，开发者是没办法像在本地开发那样可以充分了解程序发生的状况，而使用日志可以让开发者了解运行中的程序的状态，即使出现了错误，或者是系统挂了，也可以从日志中分析原因。</p>
 <p>所以换句话说，日志的重要程度甚至可以称得上是不可或缺。接下来，笔者将会以 Python 中的 <em>logging</em> 模块为例阐述日志。</p>
-<h2 id="关于日志"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 关于日志</h2>
-<h3 id="使用-print-函数输出"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 使用 print 函数输出？</h3>
+<h2 id="关于日志"><span class="section-num">2</span> 关于日志</h2>
+<h3 id="使用-print-函数输出"><span class="section-num">2.1</span> 使用 print 函数输出？</h3>
 <p>日志是为了输出程序的运行状态，那么可否使用 <code>print</code> 函数进行 logging 的工作呢？</p>
 <p>我并不建议把 <code>print()</code> 函数当作日志使用 (当然，如果你一定要这么用，我也拦不住)；不建议使用 <strong>print</strong> 进行logging 原因有：</p>
 <ol>
@@ -611,7 +611,7 @@ with sqlite3.connect(db_filename) as conn:
 <li>无法根据错误信息的等级进行动态输出，因为 <strong>print</strong> 函数的作用只是输出信息</li>
 </ol>
 <p>可能对于非常简单的小程序，开发者可以使用 print 进行日志输出，但是对于比较大型的程序，系统内置的 logging 类库或许是更好的选择</p>
-<h3 id="日志需要记录的是什么"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 日志需要记录的是什么</h3>
+<h3 id="日志需要记录的是什么"><span class="section-num">2.2</span> 日志需要记录的是什么</h3>
 <p>Python 的日志类库 <code>logging</code> 可以让开发者根据不同场景使用不同的日志等级以输出 不同的日志信息。</p>
 <p>而日志需要记录的最基本的信息又是什么呢？要想回答这个问题，先和我一起回顾一下日志的功能：记录程序的状态，为程序的开发和调试提供便利！</p>
 <p>所谓方便调试，需要记录的必然包括可以帮助更快定位到错误的有用信息：</p>
@@ -623,8 +623,8 @@ with sqlite3.connect(db_filename) as conn:
 <li>异常的 traceback 信息</li>
 </ol>
 <p>这只是最基本的信息，具体还要根据场景添加其它有用信息；比如对于分布式的程序，肯定还要记录其它节点的名字，IP 等有用信息。</p>
-<h2 id="logging-的正确姿势"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Logging 的正确姿势</h2>
-<h3 id="使用-python-的-logging-模块"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 使用 Python 的 logging 模块</h3>
+<h2 id="logging-的正确姿势"><span class="section-num">3</span> Logging 的正确姿势</h2>
+<h3 id="使用-python-的-logging-模块"><span class="section-num">3.1</span> 使用 Python 的 logging 模块</h3>
 <p>我认为，使用 Python 的标准日志库是比较好的实践，因为标准库已经提供了开箱即用的特性，无需重复造轮子。Python 的 logging 模块也很容易上手，举个小例子：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">logging</span>
 </span></span><span class="line"><span class="cl"><span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
@@ -641,14 +641,14 @@ with sqlite3.connect(db_filename) as conn:
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">INFO:__main__: Info level message
 </span></span><span class="line"><span class="cl">DEBUG:__main__: Debug level message
 </span></span><span class="line"><span class="cl">WARN:__main__: Warning level message
-</span></span></code></pre></div><h3 id="记录异常信息"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> 记录异常信息</h3>
+</span></span></code></pre></div><h3 id="记录异常信息"><span class="section-num">3.2</span> 记录异常信息</h3>
 <p>日志一个非常重要的作用就是调试，所以记录出现异常的地方是有必要，并且需要记录栈的调用信息。例如：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">try</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;file_not_exist.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;wt&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Failed to write a file&#39;</span><span class="p">,</span><span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></span></code></pre></div><p>通过将 <code>exc_info</code> 设置成 True, 栈的调用信息就会记录到日志里面。而也可以使用 <code>logger.exception(message,*args)</code> 方法，它等同于 <code>logger.error(msg,exc_info=True,*args)</code> 方法。</p>
-<h3 id="使用日志文件轮转控制器--rotating-file-handler"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> 使用日志文件轮转控制器 (rotating file handler)</h3>
+<h3 id="使用日志文件轮转控制器--rotating-file-handler"><span class="section-num">3.3</span> 使用日志文件轮转控制器 (rotating file handler)</h3>
 <p>如果使用日志文件控制器 (FileHandler), 不断地运行程序，就会产生越来越多的日志 信息或者是日志文件。</p>
 <p>为了控制日志文件的数量，可以使用 <code>RotatingFileHandler</code> 自 动新建新的日志文件，并且保留旧的日志文件，当产生一定数量的日志文件之后，就会 自动删除掉最旧的日志文件。例如：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">RotatingFileHandler</span><span class="p">(</span>
@@ -658,7 +658,7 @@ with sqlite3.connect(db_filename) as conn:
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">my_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
 </span></span></code></pre></div><p>就是日志文件大小超过20个字节 (当然，真实情况不会那么小的阀值)，就创建一个新的日志文件，把原来的日志文件，例如叫 <em>example.log</em> 重命名为 <em>example.log.1</em>,然后新建的日志文件就会被命名为_example.log_, 一直到产生了6个日志文件，即 <em>example.log.5</em>, 继续记录日志，最开始的第一个日志就会被删除。</p>
-<h3 id="使用日志服务器"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> 使用日志服务器</h3>
+<h3 id="使用日志服务器"><span class="section-num">3.4</span> 使用日志服务器</h3>
 <p>对于那些分布式的应用，或者部署多台服务器上有不同日志的程序而言，逐个服务器或者节点查看日志实在太可怕了. 这个时候，就可以设置一个日志服务器，把重要的日志信息发送到日志服务器，你就在日志服务器上监控各个节点的日志状态了。</p>
 <p><a href="https://docs.python.org/3/howto/logging-cookbook.html">logging-cookbook</a> 的例子：</p>
 <p>客户端或者节点：</p>
@@ -775,7 +775,7 @@ with sqlite3.connect(db_filename) as conn:
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>
 </span></span></code></pre></div><p>通过给 logger 添加一个SocketHandler 就可以把日志事件发送到服务器端</p>
-<h3 id="使用配置文件"><!-- raw HTML omitted -->3.5<!-- raw HTML omitted --> 使用配置文件</h3>
+<h3 id="使用配置文件"><span class="section-num">3.5</span> 使用配置文件</h3>
 <p>虽然开发者可以使用 Python 代码来配置日志系统，但是这样是很不灵活的，每次修改日志等级还需要去改动代码。</p>
 <p>而使用配置文件无疑是一个更好的选择，例如 json 或者是 yaml 文件，这样就可以在 json/yaml 文件中加载日志配置了。以 <a href="https://docs.djangoproject.com/en/1.9/topics/logging/#configuring-logging">Django</a> 项目的配置文件为例，我改成了 json 格式：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
@@ -842,7 +842,7 @@ with sqlite3.connect(db_filename) as conn:
 </span></span><span class="line"><span class="cl">	<span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">	<span class="n">logging</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">dictConfig</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 </span></span></code></pre></div><p>使用 json 还有一个好处是标准库已经内置了 json 模块，无需像 yaml 那样需要安装额外的模块，不过我更推崇 yaml, 因为清晰之余，还可以少打很多字 :)</p>
-<h3 id="对于不同的代码-使用不同的日志等级"><!-- raw HTML omitted -->3.6<!-- raw HTML omitted --> 对于不同的代码，使用不同的日志等级</h3>
+<h3 id="对于不同的代码-使用不同的日志等级"><span class="section-num">3.6</span> 对于不同的代码，使用不同的日志等级</h3>
 <p>因为一个项目不同代码要求不一样，也无需把每一个实现细节都记录在日志，只需要根 据不同的实现，使用不同的日志等级，例如使用 <code>Debug</code> 记录系统启动，处理业务逻辑 请求的信息，使用 <code>Error</code>, 记录系统的出错信息，可以结合堆栈分析原因，等等。</p>
 <p>此外，Logger 实例可以被配置成基于名字的树状结构。 每一个部件都定义了一个基础的名字，对应的模块被设置成子节点。而 root logger 没有名字。如图：</p>
 <figure><a href="/ox-hugo/example_logger_tree.png">
@@ -855,7 +855,7 @@ with sqlite3.connect(db_filename) as conn:
 </figure>
 
 <p>而树状结构可以对应用的不同部分使用不同的日志等级，不同的 handler, 不同的formatter, 以更好地控制日志信息</p>
-<h3 id="使用结构化日志"><!-- raw HTML omitted -->3.7<!-- raw HTML omitted --> 使用结构化日志</h3>
+<h3 id="使用结构化日志"><span class="section-num">3.7</span> 使用结构化日志</h3>
 <p>虽然大部份的日志信息对于人类都是可读的，但是对于程序而言，就很难进行解析了。</p>
 <p>这个时候，为了方便程序进行解析，我建议使用结构化格式的日志，这样就不再需要各种复杂的正则表达式来解析日志了。得益于内置的 json 模块，使用 json 就可以很简单地生成的利于程序解析结构化日志，以 <a href="https://docs.python.org/3/howto/logging-cookbook.html">logging cookbook</a> 中的例子说明：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">json</span>
@@ -877,14 +877,14 @@ with sqlite3.connect(db_filename) as conn:
 </span></span><span class="line"><span class="cl"><span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;message 1&#39;</span><span class="p">,</span> <span class="n">foo</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">bar</span><span class="o">=</span><span class="s1">&#39;baz&#39;</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span> <span class="n">fnum</span><span class="o">=</span><span class="mf">123.456</span><span class="p">))</span>
 </span></span></code></pre></div><p>日志输出结果如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="err">message</span> <span class="mi">1</span> <span class="err">&gt;&gt;&gt;</span> <span class="p">{</span><span class="nt">&#34;fnum&#34;</span><span class="p">:</span> <span class="mf">123.456</span><span class="p">,</span> <span class="nt">&#34;num&#34;</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nt">&#34;bar&#34;</span><span class="p">:</span> <span class="s2">&#34;baz&#34;</span><span class="p">,</span> <span class="nt">&#34;foo&#34;</span><span class="p">:</span> <span class="s2">&#34;bar&#34;</span><span class="p">}</span>
-</span></span></code></pre></div><h3 id="参考"><!-- raw HTML omitted -->3.8<!-- raw HTML omitted --> 参考</h3>
+</span></span></code></pre></div><h3 id="参考"><span class="section-num">3.8</span> 参考</h3>
 <ul>
 <li><a href="https://logmatic.io/blog/python-logging-with-json-steroids/">https://logmatic.io/blog/python-logging-with-json-steroids/</a></li>
 <li><a href="https://fangpenlin.com/posts/2012/08/26/good-logging-practice-in-python/">https://fangpenlin.com/posts/2012/08/26/good-logging-practice-in-python/</a></li>
 <li><a href="https://docs.python.org/3/howto/logging-cookbook.html">https://docs.python.org/3/howto/logging-cookbook.html</a></li>
 <li><a href="https://pymotw.com/3/logging/index.html">https://pymotw.com/3/logging/index.html</a></li>
 </ul>
-<h3 id="小结"><!-- raw HTML omitted -->3.9<!-- raw HTML omitted --> 小结</h3>
+<h3 id="小结"><span class="section-num">3.9</span> 小结</h3>
 <p>虽然这次的日志阐述是以 Python 的日志模块举例，但是绝大部分的语言都内置或者是有第三方的日志支持，所以我分享的技巧还是可以应用到其他的语言的。</p>
 <p>这些都是我在日常项目中的一点体会，与诸君共赏罢。Enjoy :)</p>
 ]]></content:encoded>
@@ -899,7 +899,7 @@ with sqlite3.connect(db_filename) as conn:
       <description>An flask project</description>
       <content:encoded><![CDATA[<p><a href="http://flask.pocoo.org/">flask</a> 是一个轻量级的python 框架(官网称为微型框架),很容易上手，之前因为笔者跟朋友开发小程序的时候使用过 flask,过后就遗忘了。</p>
 <p>为了重拾flask, 笔者决定写点小东西，之前开发小程序，不如现在再玩玩公众号开发</p>
-<h2 id="验证服务器"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 验证服务器</h2>
+<h2 id="验证服务器"><span class="section-num">1</span> 验证服务器</h2>
 <p>开发公众号之前，要先验证服务器的有效性，官网有详细的说明：<a href="https://mp.weixin.qq.com/wiki/8/f9a0b8382e0b77d87b3bcc1ce6fbc104.html">公众开发平台文档</a></p>
 <table>
 <thead>
@@ -964,14 +964,14 @@ with sqlite3.connect(db_filename) as conn:
 </span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">FuncFlag</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">FuncFlag</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="n">xml</span><span class="o">&gt;</span><span class="s2">&#34;</span>
 </span></span></code></pre></div><p>这样服务器就校验成功了，就可以编写相关的业务逻辑了</p>
-<h2 id="歌词查询"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 歌词查询</h2>
+<h2 id="歌词查询"><span class="section-num">2</span> 歌词查询</h2>
 <p>笔者自己平时是打开音乐播放器，戴上耳机，就开始播放音乐；所以经常出现笔者听到某首歌曲觉得旋律非常熟悉，但是就无法想起歌名的情况，这种感觉实在不好，所以笔者觉得可以编写一个通过歌词查询歌曲，并返回所有歌词的功能。</p>
 <p>思路大概是编写爬虫，通过歌词进行查询，然后对返回的html 页面进行检索和信息提取。剩下的事就是爬虫和解析页面了，笔者是使用<a href="http://www.xiami.com/">虾米</a> 进行歌词查询的，使用 request 发送 http 请求，使用 lxml进行解析，其他就不一一细表了</p>
-<h2 id="单词查询"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 单词查询</h2>
+<h2 id="单词查询"><span class="section-num">3</span> 单词查询</h2>
 <p>有时候，笔者在微信需要查询单词，但是又不想退出微信，所以就打算用公众号来查单词其实很简单，就是服务获取用户发给微信公众号的数据，再去请求有道之类词典的api,再把结果返回给服务器，服务器转发给用户</p>
-<h2 id="电影查询"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 电影查询</h2>
+<h2 id="电影查询"><span class="section-num">4</span> 电影查询</h2>
 <p>有时无聊想去看电影，但是不知道看什么电影，因为选择太多，质量参差不齐的片太多了所以笔者会先去豆瓣看一下新上影的电影，看一下评分，然后再决定看什么电影。所以，笔者可以把这个功能搬到公众号来。如何实现呢？还是爬虫</p>
-<h2 id="总结"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 总结</h2>
+<h2 id="总结"><span class="section-num">5</span> 总结</h2>
 <p>感觉这次开发公众号，笔者就是用 flask 编写 restful api, 然后做的其他事情就是编写爬虫。</p>
 <p><a href="https://github.com/samrayleung/SamrayJustForFun">项目github地址</a></p>
 ]]></content:encoded>

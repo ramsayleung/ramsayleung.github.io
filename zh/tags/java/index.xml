@@ -20,13 +20,13 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2020/java%E5%AE%9E%E7%8E%B0%E5%B0%BE%E9%80%92%E5%BD%92%E4%BC%98%E5%8C%96/</guid>
       <description>1 前言 尾调用消除(tail call elimination, TCE)是函数式编程的重要概念, 有时也被称为尾调用优化(tail call optimization, TCO), 作用是将尾递归函数转化成循环, 避免创建许</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>尾调用消除(tail call elimination, TCE)是函数式编程的重要概念, 有时也被称为尾调用优化(tail call optimization, TCO),
 作用是将尾递归函数转化成循环, 避免创建许多栈帧, 减少开销.</p>
 <p>遗憾的是, Java不支持TCE, 所以本文主要是介绍, 如何使用java8特性, 基于堆来实现尾递归优化.</p>
 <hr>
 <p>一个有趣的事，这篇文章是我在阿里ATA上发的最后一篇文章。发在内网的第二天，也就是我的last day，有位P8的同事在钉钉上夸我文章写得好，只回复了一句，还未来得及多交流几句，我的离职流程就走完，钉钉被强制下线了，甚至没看到这位同事的回复。</p>
-<h2 id="尾调用与尾递归"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 尾调用与尾递归</h2>
+<h2 id="尾调用与尾递归"><span class="section-num">2</span> 尾调用与尾递归</h2>
 <p>想要了解尾递归优化, 首先要了解下什么是尾调用.</p>
 <p>尾调用的概念非常简单,
 一言以蔽之, 指函数的最后一步是调用另一个函数. 以斐波那契数列为例:</p>
@@ -117,7 +117,7 @@ StackOverflowError</strong>.</p>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nv">fact</span> <span class="mi">1000000</span><span class="p">)</span><span class="o">,</span>  <span class="c1">;;; 返回一个很大很大的数, 使用的空间与(fact 3)相当</span>
 </span></span></code></pre></div><p>遗憾的是, Java并不支持尾递归优化.</p>
-<h2 id="基于堆的尾递归"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 基于堆的尾递归</h2>
+<h2 id="基于堆的尾递归"><span class="section-num">3</span> 基于堆的尾递归</h2>
 <p>尾递归优化的一大用处是维持常数级空间, 保证不会爆栈.</p>
 <p>既然爆栈的原因是栈空间不足, 又无法扩大栈的空间,
 那么只能把函数存在其他地方, 比如堆(heap). 使用堆来抽象递归,
@@ -271,7 +271,7 @@ StackOverflowError</strong>.</p>
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="o">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h2 id="总结"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 总结</h2>
+</span></span></code></pre></div><h2 id="总结"><span class="section-num">4</span> 总结</h2>
 <p>至此, 我们通过java8的lambda, <code>Supplier</code>接口实现了基于堆的尾递归优化,
 虽说没有优化成常数空间, 但终归解决了递归过深时, 栈空间不足导致
 <code>StackOverflowError</code>的问题.</p>
@@ -282,7 +282,7 @@ rely on counting stack frames between jdk library code and calling
 code to figure out who&rsquo;s calling them.</p>
 </blockquote>
 <p>后续java版本也暂无支持尾递归优化的计划, 无奈摊手.jpg</p>
-<h2 id="参考"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">5</span> 参考</h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Tail_call">https://en.wikipedia.org/wiki/Tail_call</a></li>
 <li><a href="https://book.douban.com/subject/26981273/">Functional Programming in Java</a></li>
@@ -299,14 +299,14 @@ code to figure out who&rsquo;s calling them.</p>
       
       <guid>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E6%96%B0%E7%B1%BB%E5%9E%8B%E5%AE%B9%E5%99%A8/</guid>
       <description>1 前言 JDK 提供了各种功能强大的工具类, 宛如装备齐全的军火库, 而容器就是其中一项内置的利器, 提供了包括诸多常用的数据结构, 下图对 JDK 已有容器进行了</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>JDK 提供了各种功能强大的工具类, 宛如装备齐全的军火库,
 而容器就是其中一项内置的利器, 提供了包括诸多常用的数据结构, 下图对 JDK
 已有容器进行了概括:</p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191122171101.png"
          alt="Figure 1: JDK 容器"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->JDK 容器</p>
+            <p><span class="figure-number">Figure 1: </span>JDK 容器</p>
         </figcaption>
 </figure>
 
@@ -316,7 +316,7 @@ JDK 依然欠缺, 而 Guava 恰如其分地填补了这些空缺, 开发了 JDK
 <p>此外, 虽然引入了新的容器类, 但 Guava 实现了
 JDK 的 <code>Collection</code> 接口, 保证 Guava 的容器类能够与 JDK
 的容器类”和谐共处”, 避免不必要的”纷争”.</p>
-<h2 id="multiset"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Multiset</h2>
+<h2 id="multiset"><span class="section-num">2</span> Multiset</h2>
 <p>假设你是个书店的老板, 你想统计下书店里不同书籍的存货量,
 你可能写下这样的实现:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">counts</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;();</span>
@@ -364,7 +364,7 @@ value 都加起来?</p>
 </ul>
 </li>
 </ul>
-<h3 id="multiset-的例子"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> Multiset 的例子</h3>
+<h3 id="multiset-的例子"><span class="section-num">2.1</span> Multiset 的例子</h3>
 <p>粗略介绍完 <code>Multiset</code> 之后, 现在就让我们用它重新实现原来的需求:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Test</span>
 </span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testMultiset</span><span class="o">()</span> <span class="o">{</span>
@@ -383,7 +383,7 @@ value 都加起来?</p>
 </span></span><span class="line"><span class="cl">    <span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">bookstore</span><span class="o">.</span><span class="na">count</span><span class="o">(</span><span class="n">POTTER</span><span class="o">));</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></div><p><code>multisets</code> 完美满足了我们的需求.</p>
-<h3 id="multiset-并不是一个-map"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> Multiset 并不是一个 Map</h3>
+<h3 id="multiset-并不是一个-map"><span class="section-num">2.2</span> Multiset 并不是一个 Map</h3>
 <p>需要注意的是, <code>Multiset</code> 虽然与<code>Map&lt;E, Integer&gt;</code>类似, 但 <code>Multiset</code>
 并不是一个<code>Map&lt;E, Integer&gt;</code>, 请不要混淆它们两个.</p>
 <p>最大的差别是, <code>Multiset</code> 实现了 <code>Collection</code> 接口, 完全遵守 <code>Collection</code>
@@ -406,7 +406,7 @@ value 都加起来?</p>
 <li><code>multiset.count(elem)</code>: 如果元素 <code>elem</code> 不存在, 那么返回值总是 0. 而
 <code>Map</code> 对于不存在的元素, 返回的是 <code>null</code> .</li>
 </ol>
-<h3 id="multiset-实现"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> Multiset 实现</h3>
+<h3 id="multiset-实现"><span class="section-num">2.3</span> Multiset 实现</h3>
 <p>鉴于 <code>Multiset</code> 只是个接口, Guava 提供许多的接口实现, 大致可以与 Java
 中的容器对应上:</p>
 <table>
@@ -445,7 +445,7 @@ value 都加起来?</p>
 </tr>
 </tbody>
 </table>
-<h2 id="multimap"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Multimap</h2>
+<h2 id="multimap"><span class="section-num">3</span> Multimap</h2>
 <p>又来假设, 你是个班主任, 刚刚考完试, 你想记录下班里所有同学的成绩,
 你可能写下这样的实现:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl">
@@ -473,7 +473,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 <ul>
 <li>一个 <code>key</code> 对应一个 <code>value</code> , 同样的 <code>key</code> 可以存在多个:</li>
 </ul>
-<!-- raw HTML omitted -->
+<!--listend-->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">a -&gt; 1
 </span></span><span class="line"><span class="cl">a -&gt; 2
 </span></span><span class="line"><span class="cl">a -&gt; 4
@@ -482,7 +482,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </span></span></code></pre></div><ul>
 <li>或者一个 <code>key</code> 对应一个列表的 <code>value</code> :</li>
 </ul>
-<!-- raw HTML omitted -->
+<!--listend-->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">a -&gt; [1, 2, 4]
 </span></span><span class="line"><span class="cl">b -&gt; [3]
 </span></span><span class="line"><span class="cl">c -&gt; [5]
@@ -494,7 +494,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 <p>一般来说, 我们不会直接使用 <code>Multimap</code> 接口, 使用的是它的子接口; <code>Multimap</code>
 接口提供了两个子接口: <code>ListMultimap</code> 和 <code>SetMultimap</code> , 大致类似于
 <code>Map&lt;K, List&lt;V&gt;&gt;</code>和 <code>Map&lt;K, Set&lt;V&gt;&gt;</code>.</p>
-<h3 id="multimap-的例子"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> Multimap 的例子</h3>
+<h3 id="multimap-的例子"><span class="section-num">3.1</span> Multimap 的例子</h3>
 <p>现在让我们用 <code>Multimap</code> 重新实现一次学生不同科目的成绩单:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">String</span> <span class="n">alan</span> <span class="o">=</span> <span class="s">&#34;Alan&#34;</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl"><span class="n">String</span> <span class="n">turing</span> <span class="o">=</span> <span class="s">&#34;Turing&#34;</span><span class="o">;</span>
@@ -511,21 +511,21 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </span></span><span class="line"><span class="cl"><span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">alanScores</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
 </span></span><span class="line"><span class="cl"><span class="n">alanScores</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
 </span></span><span class="line"><span class="cl"><span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">studentScoresMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">alan</span><span class="o">).</span><span class="na">size</span><span class="o">());</span>
-</span></span></code></pre></div><h4 id="构造"><!-- raw HTML omitted -->3.1.1<!-- raw HTML omitted --> 构造</h4>
+</span></span></code></pre></div><h4 id="构造"><span class="section-num">3.1.1</span> 构造</h4>
 <p>细心的同学可能会发现, 上面创建 <code>ListMultimap</code>
 的方式不是直接调用实现类的<code>.create()</code>函数, 而是使用 <code>MultimapBuilder</code> .</p>
 <p>并不是 <code>Multimap</code> 的实现没有提供<code>.create()</code>方法, 是通过
 <code>MultimapBuilder</code> 创建 <code>Multimap</code> 实现会更加便利一点,
 使用<code>hashKeys()</code>函数创建的就是一个 <code>HashMap</code> ,
 使用<code>treeKeys()</code>函数创建的就是一个 <code>TreeMap</code> .</p>
-<h4 id="修改"><!-- raw HTML omitted -->3.1.2<!-- raw HTML omitted --> 修改</h4>
+<h4 id="修改"><span class="section-num">3.1.2</span> 修改</h4>
 <p><code>Multimap.get(key)</code>返回的就是特定 <code>key</code> 关联的集合, 对于一个
 <code>ListMultimap</code> , 返回的就是一个 <code>List</code> ; 对于一个 <code>SetMultimap</code> ,
 返回的就是一个 <code>Set</code> .</p>
 <p>实际返回的是集合的引用, 所以对这个返回集合的操作,
 将直接反馈在 <code>Multimap</code> 实例上. 如上面的例子所示, 把学生 <code>alan</code>
 返回列表的数据清空, 在 <code>ListMultimap</code> 的数据也相应地被清空了.</p>
-<h3 id="视图"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> 视图</h3>
+<h3 id="视图"><span class="section-num">3.2</span> 视图</h3>
 <p>所谓的视图(Views), 我理解就是看待事物的方式和角度,
 称为视图(或者视角&rsquo;perspective&rsquo;).</p>
 <p><code>Multimap</code> 提供了若干个有用的视图:</p>
@@ -540,7 +540,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 <code>asMap().get(key)</code> 实现这样的效果</p>
 </li>
 </ol>
-<!-- raw HTML omitted -->
+<!--listend-->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">studentScoresMap</span><span class="o">.</span><span class="na">asMap</span><span class="o">().</span><span class="na">remove</span><span class="o">(</span><span class="n">alan</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 抛出 UnsupportedOperationException 异常
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">studentScoresMap</span><span class="o">.</span><span class="na">asMap</span><span class="o">().</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;key&#34;</span><span class="o">,</span> <span class="n">Lists</span><span class="o">.</span><span class="na">newArrayList</span><span class="o">());</span>
@@ -565,7 +565,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 对应的 value 集合串联起来, 如前文的 <code>studentScoresMap.values()</code>
 返回的就是: <code>[95, 88, 100]</code></li>
 </ul>
-<h3 id="multimap-也不是一个-map"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> Multimap 也不是一个 Map</h3>
+<h3 id="multimap-也不是一个-map"><span class="section-num">3.3</span> Multimap 也不是一个 Map</h3>
 <p>严格来说, 即使 <code>Multimap</code> 名字中带有 map, 甚至 <code>map</code> 可能用来实现
 <code>Multimap</code> , 但一个 <code>Multimap&lt;K,V&gt;</code> 终究不是一个
 <code>Map&lt;K, Collection&lt;V&gt;&gt;</code>. 它们之间的差异包括:</p>
@@ -582,7 +582,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 <li><code>Multimap.size()</code> 返回的是所有记录的总数的, 即把所有的 value
 的数量累加起来, 而 <code>Map&lt;K, Colleciton&lt;V&gt;&gt;</code> 返回的就是 key 对应的数量.</li>
 </ol>
-<h3 id="实现"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> 实现</h3>
+<h3 id="实现"><span class="section-num">3.4</span> 实现</h3>
 <p><code>Multimap</code> 提供了若干个不同类型的实现, 你可以使用对应的实现来取代原来
 <code>Map&lt;K, Collection&lt;V&gt;&gt;</code> 的地方:</p>
 <table>
@@ -636,7 +636,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 有好几个实现出于性能的考虑, 实现了自定义的 hash 表.</p>
 <p><code>Multimap</code> 还支持自定义 value 的集合形式, 如 List 形式或者 Set 形式, 详情可见
 <a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/Multimaps.html#newMultimap-java.util.Map-com.google.common.base.Supplier-"><code>Multimaps.newMultimap(Map, Supplier&lt;Collection&gt;)</code></a></p>
-<h2 id="bimap"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> BiMap</h2>
+<h2 id="bimap"><span class="section-num">4</span> BiMap</h2>
 <p>继续假设, 你是个班主任, 你有个学生名字与学号的名单,
 你有时会通过名字查询对应学号, 有时又会根据学号反查询学生名字, 通常来说,
 你会这么实现这个名单:</p>
@@ -660,7 +660,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 并插入一对新的 key-value, 可以使用
 <a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/BiMap.html#forcePut-java.lang.Object-java.lang.Object-"><code>Bimap.forcePut(key,value)</code></a></li>
 </ol>
-<h3 id="bimap-例子"><!-- raw HTML omitted -->4.1<!-- raw HTML omitted --> BiMap 例子</h3>
+<h3 id="bimap-例子"><span class="section-num">4.1</span> BiMap 例子</h3>
 <p>让我们用 BiMap 来重新实现学生名字和学号的名单:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">BiMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">userId</span> <span class="o">=</span> <span class="n">HashBiMap</span><span class="o">.</span><span class="na">create</span><span class="o">();</span>
 </span></span><span class="line"><span class="cl"><span class="n">userId</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;Linus&#34;</span><span class="o">,</span> <span class="s">&#34;0001&#34;</span><span class="o">);</span>
@@ -669,7 +669,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">String</span> <span class="n">idForUser</span> <span class="o">=</span> <span class="n">userId</span><span class="o">.</span><span class="na">inverse</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="s">&#34;0001&#34;</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 抛出异常: java.lang.IllegalArgumentException: value already present: 0001
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">userId</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;RMS&#34;</span><span class="o">,</span> <span class="s">&#34;0001&#34;</span><span class="o">);</span>
-</span></span></code></pre></div><h3 id="bimap-实现"><!-- raw HTML omitted -->4.2<!-- raw HTML omitted --> BiMap 实现</h3>
+</span></span></code></pre></div><h3 id="bimap-实现"><span class="section-num">4.2</span> BiMap 实现</h3>
 <table>
 <thead>
 <tr>
@@ -701,7 +701,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </tr>
 </tbody>
 </table>
-<h2 id="table"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> Table</h2>
+<h2 id="table"><span class="section-num">5</span> Table</h2>
 <p>假设还是个班主任, 现在你需要制作一个包含学号, 姓名与成绩的名单,
 然后可以通过姓名或者学号进搜索, 你会怎么实现呢? 什么? 用 excel?
 你好幽默啊!</p>
@@ -731,7 +731,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 如果我是班主任, 我就辞职了, 给我个 excel 不行么?</p>
 <p>excel 是没有的了, 但是 Guava 提供了一个类 excel 的多 key 存储/搜索的容器: <code>Table</code>,
 它支持以行和列维度搜索.</p>
-<h3 id="table-例子"><!-- raw HTML omitted -->5.1<!-- raw HTML omitted --> Table 例子</h3>
+<h3 id="table-例子"><span class="section-num">5.1</span> Table 例子</h3>
 <p>让我们用 <code>Table</code> 重新实现一次可根据姓名与学号进行搜索的成绩单:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 从左到右各列分别是: 学号, 姓名, 成绩
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Table</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">idNameScoreTranscript</span> <span class="o">=</span> <span class="n">HashBasedTable</span><span class="o">.</span><span class="na">create</span><span class="o">();</span>
@@ -756,18 +756,18 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/guava_table_row.png"
          alt="Figure 2: row: 以第一个 key 来搜索"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->row: 以第一个 key 来搜索</p>
+            <p><span class="figure-number">Figure 2: </span>row: 以第一个 key 来搜索</p>
         </figcaption>
 </figure>
 
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/guava_table_column.png"
          alt="Figure 3: column: 以第二个 key 来搜索"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->column: 以第二个 key 来搜索</p>
+            <p><span class="figure-number">Figure 3: </span>column: 以第二个 key 来搜索</p>
         </figcaption>
 </figure>
 
-<h3 id="table-视图"><!-- raw HTML omitted -->5.2<!-- raw HTML omitted --> Table 视图</h3>
+<h3 id="table-视图"><span class="section-num">5.2</span> Table 视图</h3>
 <p>一往常, <code>Table</code> 也提供了若干个视图:</p>
 <ol>
 <li><code>rowMap()</code>, 把 <code>Table&lt;R, C, V&gt;</code> 看作一个 <code>Map&lt;R, Map&lt;C, V&gt;&gt;</code>, 同样的,
@@ -780,7 +780,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 与 <code>Map.Entry</code> 十分类似, 只不过它有两个 key, 形式是 <code>(r,c)=v</code>, 而
 <code>Map.Entry</code> 是 <code>key = value</code>.</li>
 </ol>
-<h3 id="table-实现"><!-- raw HTML omitted -->5.3<!-- raw HTML omitted --> Table 实现</h3>
+<h3 id="table-实现"><span class="section-num">5.3</span> Table 实现</h3>
 <p>Table 依旧提供了若干个实现, 列表如下:</p>
 <table>
 <thead>
@@ -808,7 +808,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </tr>
 </tbody>
 </table>
-<h2 id="classtoinstancemap"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> ClassToInstanceMap</h2>
+<h2 id="classtoinstancemap"><span class="section-num">6</span> ClassToInstanceMap</h2>
 <p>目前, 我们介绍过的 Map, 无论是原生 Jdk 的 Map, 抑或是 Guava 的 Map,
 <code>key</code> 都是同一个类型的.</p>
 <p>这是因为 Map 的签名是 <code>Map&lt;K,V&gt;</code>, 实例的时候, 只能实例成某具体一个类型的参数. 所谓凡事都有例外, 有没有支持 <code>key</code>
@@ -819,7 +819,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 通过传入不同类型的 <code>Class</code> 对象, 实现类型不同的 =key=(如果你要说,
 即使传入不同类型的 Class 对象, 它只有一个 Class, 没有实现多个不同类型的
 key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</p>
-<h3 id="classtoinstancemap-例子"><!-- raw HTML omitted -->6.1<!-- raw HTML omitted --> ClassToInstanceMap 例子</h3>
+<h3 id="classtoinstancemap-例子"><span class="section-num">6.1</span> ClassToInstanceMap 例子</h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">ClassToInstanceMap</span><span class="o">&lt;</span><span class="n">Number</span><span class="o">&gt;</span> <span class="n">numberDefault</span> <span class="o">=</span> <span class="n">MutableClassToInstanceMap</span><span class="o">.</span><span class="na">create</span><span class="o">();</span>
 </span></span><span class="line"><span class="cl"><span class="n">numberDefault</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">Integer</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="n">numberDefault</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="mi">20L</span><span class="o">);</span>
@@ -837,7 +837,7 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 <p>如果传入的是 <code>String,</code> 不符合声明, 编译就报错了.</p>
 <p><strong>需要注意的是, 和 <code>Map&lt;Class, Object&gt;</code> 一样, 一个 <code>ClassToInstanceMap</code> 可以包含着是原始类型的 <code>value</code>,
 而原始类型与它对应的包装类型并不是同一种类型, 不要混淆了哦</strong></p>
-<h3 id="classtoinstancemap-实现"><!-- raw HTML omitted -->6.2<!-- raw HTML omitted --> ClassToInstanceMap 实现</h3>
+<h3 id="classtoinstancemap-实现"><span class="section-num">6.2</span> ClassToInstanceMap 实现</h3>
 <p><code>ClassToInstanceMap</code> 提供了两个实现:</p>
 <table>
 <thead>
@@ -857,7 +857,7 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 </tr>
 </tbody>
 </table>
-<h2 id="rangeset"><!-- raw HTML omitted -->7<!-- raw HTML omitted --> RangeSet</h2>
+<h2 id="rangeset"><span class="section-num">7</span> RangeSet</h2>
 <p>目前为止, 我们介绍过的新类型容器都是常见的 Map/Set/Table,
 现在我们就来介绍一个表示区间的容器: <code>RangeSet</code>. 一个 <code>RangeSet</code>,
 表示一个包含无连接的, 不为空的区间的集合, 例如包含一个整数区间的
@@ -866,7 +866,7 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 任何有交集的区间都会被合并, 为空的区间就会被忽略, 例如将区间 <code>[3,5]</code>
 加入到已有的 <code>RangeSet</code> <code>{[2,4]}</code>, 就会被合并成 <code>{[2,5]}</code>,
 这个也符合我们日常的生活经验.</p>
-<h3 id="rangeset-例子"><!-- raw HTML omitted -->7.1<!-- raw HTML omitted --> RangeSet 例子</h3>
+<h3 id="rangeset-例子"><span class="section-num">7.1</span> RangeSet 例子</h3>
 <p>让我们现在来看一下 <code>RangeSet</code> 的两个例子, 一个是整数的 <code>RangeSet</code></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">RangeSet</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">rangeSet</span> <span class="o">=</span> <span class="n">TreeRangeSet</span><span class="o">.</span><span class="na">create</span><span class="o">();</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// {[2,4]}
@@ -925,7 +925,7 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 <code>RangeSet</code>: <code>{[2019-10-10,2019-10-20), (2019-10-30, 2019-12-30)}</code>,
 <code>span</code> 函数返回的区间就是 <code>{[2019-10-10, 2019-12-30)}</code>.</li>
 </ul>
-<h3 id="rangeset-视图"><!-- raw HTML omitted -->7.2<!-- raw HTML omitted --> RangeSet 视图</h3>
+<h3 id="rangeset-视图"><span class="section-num">7.2</span> RangeSet 视图</h3>
 <p>依照惯例, <code>RangeSet</code> 也提供了若干个视图:</p>
 <ul>
 <li><code>complement()</code>: 返回某个 <code>RangeSet</code> 的补集, 返回结果也是个 <code>RangeSet</code>,
@@ -945,7 +945,7 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 <code>{[2019-10-10,2019-10-20), (2019-10-30, 2019-12-30)}</code>, 返回结果就是:
 <code>Set({[2019-10-10,2019-10-20), (2019-10-30, 2019-12-30)})</code></li>
 </ul>
-<h3 id="rangeset-实现"><!-- raw HTML omitted -->7.3<!-- raw HTML omitted --> RangeSet 实现</h3>
+<h3 id="rangeset-实现"><span class="section-num">7.3</span> RangeSet 实现</h3>
 <p><code>RangeSet</code> 提供了两个实现:</p>
 <table>
 <thead>
@@ -965,12 +965,12 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 </tr>
 </tbody>
 </table>
-<h2 id="rangemap"><!-- raw HTML omitted -->8<!-- raw HTML omitted --> RangeMap</h2>
+<h2 id="rangemap"><span class="section-num">8</span> RangeMap</h2>
 <p>既然能以区间集作为容器, 那么能否把区间当作 Map 的 <code>key</code> 呢?
 答案是当然可以, Guava 就提供了一个这样的容器: <a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/RangeMap.html"><code>RangeMap</code></a>.</p>
 <p>需要注意的是, 不像 <code>RangeSet</code> 那样, 相邻或者相交的区间不能连接起来的,
 即使毗邻的区间映射的是同一个 <code>value</code>.</p>
-<h2 id="rangemap-例子"><!-- raw HTML omitted -->9<!-- raw HTML omitted --> RangeMap 例子</h2>
+<h2 id="rangemap-例子"><span class="section-num">9</span> RangeMap 例子</h2>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">RangeMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">rangeMap</span> <span class="o">=</span> <span class="n">TreeRangeMap</span><span class="o">.</span><span class="na">create</span><span class="o">();</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// {[1,10] =&gt; &#34;foo&#34;}
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">rangeMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">Range</span><span class="o">.</span><span class="na">closed</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">10</span><span class="o">),</span> <span class="s">&#34;foo&#34;</span><span class="o">);</span>
@@ -991,7 +991,7 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 </span></span><span class="line"><span class="cl"><span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="s">&#34;foo&#34;</span><span class="o">,</span> <span class="n">subRangeMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">12</span><span class="o">));</span>
 </span></span></code></pre></div><p><code>RangeMap</code> 提供的查询函数不多, 满打满算也只有 <code>get(K)</code> 和 <code>span</code>
 这两个函数.</p>
-<h3 id="rangemap-视图"><!-- raw HTML omitted -->9.1<!-- raw HTML omitted --> RangeMap 视图</h3>
+<h3 id="rangemap-视图"><span class="section-num">9.1</span> RangeMap 视图</h3>
 <p><code>RangeMap</code> 提供的视图也不多, 只有两个:</p>
 <ul>
 <li><code>asMapOfRanges()</code>, 把 <code>RangeMap</code> 看作一个 <code>Map&lt;Range&lt;K&gt;, V&gt;</code>,
@@ -1002,7 +1002,7 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 <code>[12,15]</code>, 返回结果就是 <code>{[12, 15]} =&gt; &quot;foo&quot;</code>; 如果取子区间<code>[4,12]</code>,
 返回结果就是: <code>{[4,5) =&gt; bar, (11, 12] =&gt; foo}</code></li>
 </ul>
-<h3 id="rangemap-实现"><!-- raw HTML omitted -->9.2<!-- raw HTML omitted --> RangeMap 实现</h3>
+<h3 id="rangemap-实现"><span class="section-num">9.2</span> RangeMap 实现</h3>
 <p>RangeMap 提供了两个实现:</p>
 <table>
 <thead>
@@ -1026,7 +1026,7 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 </tr>
 </tbody>
 </table>
-<h2 id="总结"><!-- raw HTML omitted -->10<!-- raw HTML omitted --> 总结</h2>
+<h2 id="总结"><span class="section-num">10</span> 总结</h2>
 <p>介绍完新类型的容器之后, 希望大家对这些新类型容器熟悉起来, 应对需求来也能得心应手 :)</p>
 ]]></content:encoded>
     </item>
@@ -1038,10 +1038,10 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
       
       <guid>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AE%B9%E5%99%A8/</guid>
       <description>1 前言 先此声明, 个人倾向于将Collection翻译成容器, 将Set翻译成集合. 已经许久没有更新Guava研读系列的文章, 今天要介绍的是Gu</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>先此声明, 个人倾向于将<code>Collection</code>翻译成容器, 将<code>Set</code>翻译成集合.</p>
 <p>已经许久没有更新Guava研读系列的文章, 今天要介绍的是Guava的不可变容器.</p>
-<h2 id="关于不可变对象"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 关于不可变对象</h2>
+<h2 id="关于不可变对象"><span class="section-num">2</span> 关于不可变对象</h2>
 <p>不可变的对象有许多的优点, 如下:</p>
 <ol>
 <li>线程安全, 可以在多线程之间使用也不用担心有竞争条件的风险</li>
@@ -1072,7 +1072,7 @@ Guava提供了许多简单易用的, 实现了标准库<code>Collection</code>�
 <p>此外, 在之前的文章中, 我阐述过Guava对于空指针的态度是尽量不要使用空指针,
 Guava的类库对于空指针都是快速失败的, Guava的不可变容器也是不例外的,
 是拒绝接受空指针的.</p>
-<h2 id="代码实例"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 代码实例</h2>
+<h2 id="代码实例"><span class="section-num">3</span> 代码实例</h2>
 <p>前面详细介绍了不可变容器, 现在是时候来看一下Guava不可变容器的代码例子:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">ImmutableSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">COLOR_NAMES</span> <span class="o">=</span> <span class="n">ImmutableSet</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
 </span></span><span class="line"><span class="cl">								       <span class="s">&#34;red&#34;</span><span class="o">,</span>
@@ -1144,9 +1144,9 @@ Collections方法不能提供真正的不可变容器,
 </span></span><span class="line"><span class="cl">    <span class="n">Object</span><span class="o">[]</span> <span class="n">array</span> <span class="o">=</span> <span class="n">elements</span><span class="o">.</span><span class="na">toArray</span><span class="o">();</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">construct</span><span class="o">(</span><span class="n">array</span><span class="o">.</span><span class="na">length</span><span class="o">,</span> <span class="n">array</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h2 id="具体细节"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 具体细节</h2>
+</span></span></code></pre></div><h2 id="具体细节"><span class="section-num">4</span> 具体细节</h2>
 <p>下面我们来讨论一下各种不可变容器的具体使用细节.</p>
-<h3 id="构造不可变容器"><!-- raw HTML omitted -->4.1<!-- raw HTML omitted --> 构造不可变容器</h3>
+<h3 id="构造不可变容器"><span class="section-num">4.1</span> 构造不可变容器</h3>
 <p>关于如何构造一个不可变容器, Guava提供的手段是多种多样的:</p>
 <ol>
 <li>使用<code>copyOf</code>静态方法, 例如<code>ImmutableSet.copyOf(set)</code>,
@@ -1156,7 +1156,7 @@ Collections方法不能提供真正的不可变容器,
 前文已经介绍过, 在此就不赘言</li>
 <li>使用<code>Builder</code>构造不可变容器, 例如:</li>
 </ol>
-<!-- raw HTML omitted -->
+<!--listend-->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">ImmutableSet</span><span class="o">&lt;</span><span class="n">Color</span><span class="o">&gt;</span> <span class="n">GOOGLE_COLORS</span> <span class="o">=</span>
 </span></span><span class="line"><span class="cl">    <span class="n">ImmutableSet</span><span class="o">.&lt;</span><span class="n">Color</span><span class="o">&gt;</span><span class="n">builder</span><span class="o">()</span>
 </span></span><span class="line"><span class="cl">    <span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">WEBSAFE_COLORS</span><span class="o">)</span>
@@ -1169,7 +1169,7 @@ Collections方法不能提供真正的不可变容器,
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">final</span> <span class="n">ImmutableSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">alphaTable</span> <span class="o">=</span> <span class="n">ImmutableSet</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">&#34;a&#34;</span><span class="o">,</span> <span class="s">&#34;b&#34;</span><span class="o">,</span> <span class="s">&#34;c&#34;</span><span class="o">,</span> <span class="s">&#34;a&#34;</span><span class="o">,</span> <span class="s">&#34;d&#34;</span><span class="o">,</span> <span class="s">&#34;b&#34;</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="n">alphaTable</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 结果为 a b c d
-</span></span></span></code></pre></div><h3 id="aslist-函数"><!-- raw HTML omitted -->4.2<!-- raw HTML omitted --> <code>asList</code>函数</h3>
+</span></span></span></code></pre></div><h3 id="aslist-函数"><span class="section-num">4.2</span> <code>asList</code>函数</h3>
 <p>所有的不可变容器都提供了一个<code>asList</code>方法来返回一个不可变列表<code>ImmutableList</code>,
 所以即使你把数据存在一个不可变有序集合<code>ImmutableSortedSet</code>,
 你也可以通过下标索引获取最小的元素或者第n小的元素, 如:</p>
@@ -1178,7 +1178,7 @@ Collections方法不能提供真正的不可变容器,
 </span></span><span class="line"><span class="cl">    <span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">6</span><span class="o">).</span><span class="na">build</span><span class="o">();</span>
 </span></span><span class="line"><span class="cl"><span class="n">numberSet</span><span class="o">.</span><span class="na">asList</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
 </span></span><span class="line"><span class="cl">    <span class="err">#</span> <span class="err">结果为</span><span class="mi">1</span>
-</span></span></code></pre></div><h3 id="智能的-copyof-函数"><!-- raw HTML omitted -->4.3<!-- raw HTML omitted --> 智能的<code>copyOf</code>函数</h3>
+</span></span></code></pre></div><h3 id="智能的-copyof-函数"><span class="section-num">4.3</span> 智能的<code>copyOf</code>函数</h3>
 <p>前文提到,
 不可变容器都提供了一个<code>copyOf</code>方法用于从另外一个容器构造出一个不可变容器.
 值得指出的是不可变容器的<code>copyOf</code>方法在不需要拷贝数据的时候就会尽量避免拷贝数据,
@@ -1199,7 +1199,7 @@ Collections方法不能提供真正的不可变容器,
 并不是所有的不可变容器之间的转换都能实现<code>O(1)</code>时间复杂度,
 例如<code>ImmutableSet.copyOf(ImmutableList)</code>就只能逐个元素拷贝,
 时间复杂度退化到<code>O(n)</code>.</p>
-<h2 id="jdk容器与guava不可变容器"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> JDK容器与Guava不可变容器</h2>
+<h2 id="jdk容器与guava不可变容器"><span class="section-num">5</span> JDK容器与Guava不可变容器</h2>
 <p>对于JDK提供的标准容器, Guava提供了相应的不可变容器实现,
 对于Guava自家的容器, Guava也提供了对应的不可变容器, 具体实现对比如下:</p>
 <table>
@@ -1283,11 +1283,11 @@ Collections方法不能提供真正的不可变容器,
 </tr>
 </tbody>
 </table>
-<h2 id="总结"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> 总结</h2>
+<h2 id="总结"><span class="section-num">6</span> 总结</h2>
 <p>因为不可变容器不会在运行时改变他们的内部状态, 所以他们是线程安全和无副作用的.</p>
 <p>因为这些属性, 不可变容器在多线程环境就会变得特别有用, 可以安全地传递数据. 总而言之,
 生活和工作或许可以多拥抱变化, 对于代码, 最好还是多保持不变地好.</p>
-<h2 id="参考"><!-- raw HTML omitted -->7<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">7</span> 参考</h2>
 <ul>
 <li><a href="https://github.com/google/guava/wiki/ImmutableCollectionsExplained">Immutable
 Collections</a></li>
@@ -1302,7 +1302,7 @@ Collections</a></li>
       
       <guid>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BC%98%E9%9B%85%E6%A0%A1%E9%AA%8C%E6%95%B0%E6%8D%AE/</guid>
       <description>1 前言 根据防御式编程的要求, 在日常的开发中, 总少不了对函数的各种入参做校验, 以便保证函数能按照预期的流程执行下去. 比如各种费率的值就没可能是</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>根据防御式编程的要求, 在日常的开发中, 总少不了对函数的各种入参做校验,
 以便保证函数能按照预期的流程执行下去.</p>
 <p>比如各种费率的值就没可能是负数, 如果费率出现负数, 所以数据有问题,
@@ -1311,13 +1311,13 @@ Collections</a></li>
 <p>Guava 提供了一系列的静态方法用于校验函数和类的构造器是否符合预期,
 并称其为前置条件(preconditions). 如果前置条件校验失败,
 就会抛出一个指定的异常.</p>
-<h2 id="前置函数特征"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 前置函数特征</h2>
+<h2 id="前置函数特征"><span class="section-num">2</span> 前置函数特征</h2>
 <p>目前的前置校验方法有如下特征: 须需要, 下面例子中的<code>checkArgument</code>函数可以替换成任何一个前置条件校验函数</p>
 <ol>
 <li>这些前置方法一般接受一个布尔表达式作为入参，并判断表达是否为<code>true</code>,
 格式如:</li>
 </ol>
-<!-- raw HTML omitted -->
+<!--listend-->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Preconditions</span><span class="o">.</span><span class="na">checkArgument</span><span class="o">(</span><span class="n">a</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">)</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 如果表达式为false, 抛出IllegalArgumentException
 </span></span></span></code></pre></div><ol start="2">
@@ -1325,7 +1325,7 @@ Collections</a></li>
 前置方法可以接受一个额外的<code>Object</code>作为入参, 在抛出异常的时候,
 把<code>Object.toString()</code>作为异常信息, 如:</li>
 </ol>
-<!-- raw HTML omitted -->
+<!--listend-->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">enum</span> <span class="n">ErrorDetail</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="n">SC_NOT_FOUND</span><span class="o">(</span><span class="s">&#34;404&#34;</span><span class="o">,</span> <span class="s">&#34;Resource could not be fount&#34;</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">// 省略部分内容
@@ -1347,12 +1347,12 @@ Collections</a></li>
 只不过出于兼容性和性能的考虑, 只支持使用<code>%s</code>指示符格式化字符串,
 不支持其他类型. 如:</li>
 </ol>
-<!-- raw HTML omitted -->
+<!--listend-->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">i</span><span class="o">=-</span><span class="mi">1</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl"><span class="n">checkArgument</span><span class="o">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">,</span> <span class="s">&#34;Argument was %s but expected nonnegative&#34;</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 结果如下:
 </span></span></span><span class="line"><span class="cl"><span class="c1">// java.lang.IllegalArgumentException: Argument was -1 but expected nonnegative
-</span></span></span></code></pre></div><h2 id="前置条件函数介绍"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 前置条件函数介绍</h2>
+</span></span></span></code></pre></div><h2 id="前置条件函数介绍"><span class="section-num">3</span> 前置条件函数介绍</h2>
 <p>须注意的是, 下面介绍的<code>checkArgument</code>, <code>checkArgument</code>,
 <code>checkState</code>函数都有三个对应的重载函数，分别对应前文所述的三种特征,
 下文不会三种函数都介绍, 只介绍标准格式的前置条件函数.
@@ -1360,7 +1360,7 @@ Collections</a></li>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkArgument</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkArgument</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">,</span> <span class="nd">@Nullable</span> <span class="n">Object</span> <span class="n">errorMessage</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkArgument</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">,</span><span class="nd">@Nullable</span> <span class="n">String</span> <span class="n">errorMessageTemplate</span><span class="o">,</span><span class="nd">@Nullable</span> <span class="n">Object</span><span class="o">...</span> <span class="n">errorMessageArgs</span><span class="o">)</span>
-</span></span></code></pre></div><h3 id="checkargument"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> checkArgument</h3>
+</span></span></code></pre></div><h3 id="checkargument"><span class="section-num">3.1</span> checkArgument</h3>
 <p>函数的签名如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkArgument</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">);</span>
 </span></span></code></pre></div><p>入参是一个布尔表达式, 函数校验这个表达式是否为<code>true</code>, 如果为<code>false</code>,
@@ -1369,7 +1369,7 @@ Collections</a></li>
 </span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testCheckArgument</span><span class="o">()</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="n">Preconditions</span><span class="o">.</span><span class="na">checkArgument</span><span class="o">(</span><span class="mi">1</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h3 id="checknotnull"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> checkNotNull</h3>
+</span></span></code></pre></div><h3 id="checknotnull"><span class="section-num">3.2</span> checkNotNull</h3>
 <p>这是个泛型函数, 函数签名如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">checkNotNull</span><span class="o">(</span><span class="n">T</span> <span class="n">reference</span><span class="o">);</span>
 </span></span></code></pre></div><p>入参是个任意类型的对象, 函数校验这个对象是否为<code>null</code>, 如果为空,
@@ -1378,7 +1378,7 @@ Collections</a></li>
 例子如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">PreconditionTest</span> <span class="n">caller</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PreconditionTest</span><span class="o">();</span>
 </span></span><span class="line"><span class="cl"><span class="n">caller</span><span class="o">.</span><span class="na">setErrorDetail</span><span class="o">(</span><span class="n">Preconditions</span><span class="o">.</span><span class="na">checkNotNull</span><span class="o">(</span><span class="n">ErrorDetail</span><span class="o">.</span><span class="na">SC_INTERNAL_SERVER_ERROR</span><span class="o">));</span>
-</span></span></code></pre></div><h3 id="checkstate"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> checkState</h3>
+</span></span></code></pre></div><h3 id="checkstate"><span class="section-num">3.3</span> checkState</h3>
 <p>函数签名如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkState</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">);</span>
 </span></span></code></pre></div><p>看着这个函数, 我个人感觉很奇怪:
@@ -1397,7 +1397,7 @@ Collections</a></li>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></div><p>此外, 因为这两个函数相当类似, 就不展示相应例子了.</p>
-<h3 id="checkelementindex"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> checkElementIndex</h3>
+<h3 id="checkelementindex"><span class="section-num">3.4</span> checkElementIndex</h3>
 <p>函数签名如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">checkElementIndex</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">,</span> <span class="kt">int</span> <span class="n">size</span><span class="o">);</span>
 </span></span></code></pre></div><p>这个函数用于判断指定数组, 列表, 字符串的下标是否越界, <code>index</code>是下标,
@@ -1412,7 +1412,7 @@ Collections</a></li>
 </span></span><span class="line"><span class="cl"><span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">Preconditions</span><span class="o">.</span><span class="na">checkElementIndex</span><span class="o">(</span><span class="s">&#34;test&#34;</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">-</span> <span class="mi">1</span><span class="o">,</span> <span class="s">&#34;test&#34;</span><span class="o">.</span><span class="na">length</span><span class="o">()));</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 运行结果:
 </span></span></span><span class="line"><span class="cl"><span class="c1">// 通过
-</span></span></span></code></pre></div><h2 id="checkpositionindex"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> checkPositionIndex</h2>
+</span></span></span></code></pre></div><h2 id="checkpositionindex"><span class="section-num">4</span> checkPositionIndex</h2>
 <p>函数的签名如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">checkPositionIndex</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">,</span> <span class="kt">int</span> <span class="n">size</span><span class="o">);</span>
 </span></span></code></pre></div><p>这个函数和<code>checkElementIndex</code>非常类似, 连Guava wiki的说明也基本一致(只有一个单词不同).</p>
@@ -1425,7 +1425,7 @@ Collections</a></li>
 </span></span><span class="line"><span class="cl"><span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">Preconditions</span><span class="o">.</span><span class="na">checkPositionIndex</span><span class="o">(</span><span class="s">&#34;test&#34;</span><span class="o">.</span><span class="na">length</span><span class="o">(),</span> <span class="s">&#34;test&#34;</span><span class="o">.</span><span class="na">length</span><span class="o">()));</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 运行结果:
 </span></span></span><span class="line"><span class="cl"><span class="c1">// 通过
-</span></span></span></code></pre></div><h3 id="checkpositionindexes"><!-- raw HTML omitted -->4.1<!-- raw HTML omitted --> checkPositionIndexes</h3>
+</span></span></span></code></pre></div><h3 id="checkpositionindexes"><span class="section-num">4.1</span> checkPositionIndexes</h3>
 <p>函数的签名如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkPositionIndexes</span><span class="o">(</span><span class="kt">int</span> <span class="n">start</span><span class="o">,</span> <span class="kt">int</span> <span class="n">end</span><span class="o">,</span> <span class="kt">int</span> <span class="n">size</span><span class="o">);</span>
 </span></span></code></pre></div><p>这个函数是用于判断<code>[start,end]</code>这个范围是否是个有效范围, 即<code>[start, end]</code> 是否在<code>[0, size]</code> 范围内(如果<code>[start, end]</code>
@@ -1437,7 +1437,7 @@ Collections</a></li>
 </span></span><span class="line"><span class="cl"><span class="n">Preconditions</span><span class="o">.</span><span class="na">checkPositionIndexes</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 运行结果:
 </span></span></span><span class="line"><span class="cl"><span class="c1">// 校验通过
-</span></span></span></code></pre></div><h2 id="前置条件在实际项目的应用"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 前置条件在实际项目的应用</h2>
+</span></span></span></code></pre></div><h2 id="前置条件在实际项目的应用"><span class="section-num">5</span> 前置条件在实际项目的应用</h2>
 <p>前置条件在检验条件不成交的时候抛的异常类型虽说是合情合理(比如,
 <code>checkArgument</code>函数抛出<code>IllegalArgumentException</code>),</p>
 <p>但是对于业务系统来说, 你抛出个<code>IllegalArgumentException</code>或者<code>NullPointerException</code>, 接口调用方对于这个异常摸不着头脑, 虽说只是正常的数据问题,
@@ -1488,7 +1488,7 @@ Collections</a></li>
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 调用例子:
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">AssertUtils</span><span class="o">.</span><span class="na">checkArgument</span><span class="o">(</span><span class="n">merchantEntity</span><span class="o">.</span><span class="na">exist</span><span class="o">(),</span> <span class="n">ErrDetailEnum</span><span class="o">.</span><span class="na">DATA_NOT_EXIT</span><span class="o">,</span> <span class="s">&#34;商户不存在&#34;</span><span class="o">);</span>
-</span></span></code></pre></div><h2 id="guava-precondition-vs-apache-common-validate"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> Guava Precondition vs Apache Common Validate</h2>
+</span></span></code></pre></div><h2 id="guava-precondition-vs-apache-common-validate"><span class="section-num">6</span> Guava Precondition vs Apache Common Validate</h2>
 <p>自古文无第一, 武无第二, 文人之间的口水战总是少不了的.</p>
 <p>没想到这不是国人的专利, 原来国外也有文人相轻的风气: Guava wiki
 在介绍完preconditions之后, 还踩了一波竞品Apache Common Validate,
@@ -1501,10 +1501,10 @@ Guava wiki 还提了两点最佳实践(best practice):</p>
 <li>使用前置条件校验的时候, 尽量提供有用的错误信息,
 这样可以更快地定位问题.</li>
 </ol>
-<h2 id="总结"><!-- raw HTML omitted -->7<!-- raw HTML omitted --> 总结</h2>
+<h2 id="总结"><span class="section-num">7</span> 总结</h2>
 <p>代码大全一书有一章是关于防御式编程的, 用于提高程序的健壮性, 主要思想是子程序应该不因传入错误数据而被破坏，要保护程序免遭非法输入数据的破坏.</p>
 <p>而Guava的preconditions 就是实现防御式编程的有力工具呢. oh yeah!</p>
-<h2 id="参考"><!-- raw HTML omitted -->8<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">8</span> 参考</h2>
 <ul>
 <li><a href="https://github.com/google/guava/wiki/PreconditionsExplained">PreconditionsExplained</a></li>
 </ul>
@@ -1518,7 +1518,7 @@ Guava wiki 还提了两点最佳实践(best practice):</p>
       
       <guid>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BD%BF%E7%94%A8%E5%92%8C%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E7%A9%BA%E6%8C%87%E9%92%88/</guid>
       <description>1 前言 To be, or not to be, that is the question: 先来看看奆佬们关于空指针的看法: Null sucks - Doug Lea(JCP,Java并发编程实战作者, Java巨佬) I call it my billion-dollar mistake. - Sir C.</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <blockquote>
 <p>To be, or not to be, that is the question:</p>
 </blockquote>
@@ -1532,14 +1532,14 @@ Guava wiki 还提了两点最佳实践(best practice):</p>
 <p>如接近95%的集合类都不支持使用<code>null</code>作为集合元素.
 像Google这样的大公司明确不建议使用<code>null</code>自然是有其原由的, 不会无的放矢.
 那具体原因是什么呢？待下文为你细细道来;</p>
-<h2 id="空指针的问题"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 空指针的问题</h2>
-<h3 id="空指针语意隐晦不明"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 空指针语意隐晦不明</h3>
+<h2 id="空指针的问题"><span class="section-num">2</span> 空指针的问题</h2>
+<h3 id="空指针语意隐晦不明"><span class="section-num">2.1</span> 空指针语意隐晦不明</h3>
 <p><code>null</code>的语意并不了然明确, 即当一个函数返回<code>null</code>, 我们并不知道<code>null</code>的意思是指返回结果理应为空? 还是指函数没有达到预期结果, 返回<code>null</code>表示失败?</p>
 <p>举个常见的例子, 当调用<code>Map.get(key)</code>获取key对应的value的时候, 返回结果为<code>null</code>; <code>null</code>是指找不到这个key对应的value?
 还是说这个key对应的value本身就是<code>null</code>, 原来是通过<code>Map.put(key,value)</code>赋值的呢? <code>null</code>甚至可以是代表其他东西!</p>
 <p>老实说, 当我们获得一个<code>null</code>, 我们并不清楚它究竟指的是啥,
 除非有对应的javadoc 进行了说明.</p>
-<h3 id="空指针-暗藏杀机"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 空指针”暗藏杀机”</h3>
+<h3 id="空指针-暗藏杀机"><span class="section-num">2.2</span> 空指针”暗藏杀机”</h3>
 <p><code>null</code>除了语意不明外, 还非常容易在不经意间挖坑坑人. 例如有下面的代码:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span> <span class="n">String</span> <span class="nf">testNull</span><span class="o">(</span><span class="n">String</span> <span class="n">input</span><span class="o">)</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">(</span><span class="n">random</span><span class="o">.</span><span class="na">nextInt</span><span class="o">()</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
@@ -1562,7 +1562,7 @@ Guava wiki 还提了两点最佳实践(best practice):</p>
 或者源码非常复杂, 一下子理不清思路, 防御式编程落实不到,
 就会忽略了<code>null</code>, 运行时就有可能抛出<code>NullPointException</code>, 导致程序crash.
 这种情况真的防不胜防.</p>
-<h2 id="guava对于空指针的态度"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Guava对于空指针的态度</h2>
+<h2 id="guava对于空指针的态度"><span class="section-num">3</span> Guava对于空指针的态度</h2>
 <p>因为上文提到或者隐藏但没提到的种种问题,
 Guava的诸多类库在设计时就不支持<code>null</code>.</p>
 <p>如果检测到<code>null</code>的存在, Guava的类库就会快速失败(fail fast),一般的处理策略是抛出异常.
@@ -1571,7 +1571,7 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p>
 <p>此外, Guava秉承既然不能消灭<code>null</code>, 那就把<code>null</code>建设得更好用的理念,
 除了提供了一些工具可以让开发者避免使用<code>null</code>,
 还提供了可以让开发者更易于使用<code>null</code>的工具.</p>
-<h2 id="optional"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Optional</h2>
+<h2 id="optional"><span class="section-num">4</span> Optional</h2>
 <p>在很多情况下, 程序员使用<code>null</code>是为了表示有些值可能存在或者不存在.
 我们又可以用熟悉的<code>Map.get(key)</code>函数来举例,
 如果规定<code>null</code>不能作为<code>value</code>值使用(但事实并非如此),
@@ -1579,7 +1579,7 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p>
 <p>为了应对这种使用<code>null</code>的情况, Guava团队参考其他语言(例如Scala)应对<code>null</code>的实践, 开发了<code>Optional&lt;T&gt;</code>类.
 <code>Optional</code>类表示那些可能为空的值, 一个<code>Optional</code>类要不包含一个非空的<code>T</code>类型的对象引用(这种情况下,
 我们称引用对象是存在的-&ldquo;present&rdquo;), 要不什么东西都不包含(这种情况被, 我们说引用对象是不存在的-&ldquo;absent&rdquo;), 除此之外, <code>Optional</code>不存在其他情况, 更没有可能是<code>null</code>.</p>
-<h3 id="java8的optional"><!-- raw HTML omitted -->4.1<!-- raw HTML omitted --> Java8的Optional</h3>
+<h3 id="java8的optional"><span class="section-num">4.1</span> Java8的Optional</h3>
 <p>鉴于我对<code>Optional</code>类的兴趣,
 我用下面这条命令找了一个Guava库<code>Optional</code>开发的最初提交历史:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">find guava/ -name <span class="s2">&#34;Optional.java&#34;</span> -print <span class="p">|</span> xargs -I <span class="s1">&#39;{}&#39;</span> git log --pretty<span class="o">=</span>tformat:%cd-%aN-%s --date<span class="o">=</span>iso <span class="p">|</span>tail -n2
@@ -1598,13 +1598,13 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p>
 既然JDK的<code>Optional</code>已成为正统,
 那么下面我就不再介绍Guava的<code>Optional=(Guava的wiki本来是有较大篇幅介绍自家的=Optional</code>,
 个人感觉已经意义不大), 转而介绍JDK的<code>Optional=(下文通称为=Optional</code>).</p>
-<h3 id="optional构造方式"><!-- raw HTML omitted -->4.2<!-- raw HTML omitted --> Optional构造方式</h3>
+<h3 id="optional构造方式"><span class="section-num">4.2</span> Optional构造方式</h3>
 <p>在使用<code>Optional</code>之前, 首先需要了解如果构造<code>Optional</code>对象,
 方式有如下几种:</p>
-<h4 id="声明一个空的-optional-对象"><!-- raw HTML omitted -->4.2.1<!-- raw HTML omitted --> 声明一个空的<code>Optional</code>对象</h4>
+<h4 id="声明一个空的-optional-对象"><span class="section-num">4.2.1</span> 声明一个空的<code>Optional</code>对象</h4>
 <p>可以通过静态工厂方法<code>Optional.empty</code>, 创建一个空的<code>Optional</code>对象:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Optional</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">optional</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">empty</span><span class="o">();</span>
-</span></span></code></pre></div><h4 id="根据一个非空值创建optional"><!-- raw HTML omitted -->4.2.2<!-- raw HTML omitted --> 根据一个非空值创建Optional</h4>
+</span></span></code></pre></div><h4 id="根据一个非空值创建optional"><span class="section-num">4.2.2</span> 根据一个非空值创建Optional</h4>
 <p>还可以使用静态工厂方法<code>Optional.of</code>,
 依据一个非空值创建一个<code>Optional</code>对象:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Optional</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">optional</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">objectT</span><span class="o">);</span>
@@ -1621,13 +1621,13 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p>
 </span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">of</span><span class="o">(</span><span class="n">T</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="k">new</span> <span class="n">Optional</span><span class="o">&lt;&gt;(</span><span class="n">value</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h4 id="可接受null的optional"><!-- raw HTML omitted -->4.2.3<!-- raw HTML omitted --> 可接受null的Optional</h4>
+</span></span></code></pre></div><h4 id="可接受null的optional"><span class="section-num">4.2.3</span> 可接受null的Optional</h4>
 <p>最后, 使用静态工厂方法<code>Optional.ofNullable</code>,
 我们可以创建一个允许<code>null</code>的<code>Optional</code>的对象:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Optional</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">optional</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">ofNullable</span><span class="o">(</span><span class="n">objectT</span><span class="o">);</span>
 </span></span></code></pre></div><p>如果<code>objectT</code>为<code>null</code>, 那么得到的<code>Optional</code>对象就是个空对象.</p>
-<h3 id="optional的消费方式"><!-- raw HTML omitted -->4.3<!-- raw HTML omitted --> Optional的消费方式</h3>
-<h4 id="optional与stream的邂逅"><!-- raw HTML omitted -->4.3.1<!-- raw HTML omitted --> Optional与Stream的邂逅</h4>
+<h3 id="optional的消费方式"><span class="section-num">4.3</span> Optional的消费方式</h3>
+<h4 id="optional与stream的邂逅"><span class="section-num">4.3.1</span> Optional与Stream的邂逅</h4>
 <p>既然<code>Optional</code>在Oracle的文档中被定性为一个容器(container),</p>
 <p>那么对于一个容器,
 我们关注的点无非是这个容器如何<strong>存*(对于<code>Optional</code>来说是构造)和如何</strong>取*这两件事而已(也就是消费).
@@ -1657,7 +1657,7 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p>
 </span></span><span class="line"><span class="cl">	<span class="o">.</span><span class="na">flatMap</span><span class="o">(</span><span class="n">Car</span><span class="o">::</span><span class="n">getInsurance</span><span class="o">)</span>
 </span></span><span class="line"><span class="cl">	<span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">Insurance</span><span class="o">::</span><span class="n">getName</span><span class="o">)</span>
 </span></span><span class="line"><span class="cl">	<span class="o">.</span><span class="na">orElse</span><span class="o">(</span><span class="s">&#34;Unknown&#34;</span><span class="o">);</span>
-</span></span></code></pre></div><h4 id="默认行为及解引用optional对象"><!-- raw HTML omitted -->4.3.2<!-- raw HTML omitted --> 默认行为及解引用Optional对象</h4>
+</span></span></code></pre></div><h4 id="默认行为及解引用optional对象"><span class="section-num">4.3.2</span> 默认行为及解引用Optional对象</h4>
 <p>除了使用<code>Stream</code>来消费<code>Optional</code>对象,
 还可以使用解引用读取<code>Optional</code>实例中的变量值以及定义默认行为,
 具体函数说明如下:</p>
@@ -1679,7 +1679,7 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p>
 <li><code>ifPresent(Consumer&lt;? super T&gt;)</code>和<code>orElseGet</code>函数类似,
 可以在变量存在的时候执行传入的函数, 否则就不进行任何操作.</li>
 </ol>
-<h4 id="optional-实战示例"><!-- raw HTML omitted -->4.3.3<!-- raw HTML omitted --> Optional 实战示例</h4>
+<h4 id="optional-实战示例"><span class="section-num">4.3.3</span> Optional 实战示例</h4>
 <p>在啰啰嗦嗦介绍了一系列<code>Optional</code>的概念之后,
 是时候来看一下<code>Option</code>的实例了. 现存的Java
 API几乎都是通过返回一个null的方式表示所需的值的缺失,
@@ -1697,7 +1697,7 @@ API几乎都是通过返回一个null的方式表示所需的值的缺失,
 </span></span><span class="line"><span class="cl"><span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;foo&#34;</span><span class="o">,</span> <span class="s">&#34;bar&#34;</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="n">String</span> <span class="n">value</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">ofNullable</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&#34;foo&#34;</span><span class="o">)).</span><span class="na">map</span><span class="o">(</span><span class="n">Object</span><span class="o">::</span><span class="n">toString</span><span class="o">).</span><span class="na">orElse</span><span class="o">(</span><span class="s">&#34;helloworld&#34;</span><span class="o">);</span>
 </span></span></code></pre></div><p>这样, 每次使用<code>value</code>都不会再有<code>NullPointException</code>的忧虑.</p>
-<h2 id="结语"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 结语</h2>
+<h2 id="结语"><span class="section-num">5</span> 结语</h2>
 <p>本文最开始只是想阐述Guava类库使用空指针和避免使用空指针的设计理念,
 只是因为Guava大部分类库都是不支持<code>null</code>,
 因此使用Guava自家的<code>Optional</code>类来代替<code>null</code>的大部分应用场景,
@@ -1705,7 +1705,7 @@ API几乎都是通过返回一个null的方式表示所需的值的缺失,
 <p>所以本文大部份的内容也变成对JDK的<code>Optional</code>的探讨.
 相信下篇文章会有所改观, 总不可能Guava所有的工具类, 都有JDK对应的竞品,
 如果真是这样的话, JDK应该改名为GDK :)</p>
-<h2 id="参考"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">6</span> 参考</h2>
 <ul>
 <li><a href="https://github.com/google/guava/wiki/UsingAndAvoidingNullExplained">Using and avoiding</a></li>
 <li><a href="https://book.douban.com/subject/25912747/">Java8 in Action</a></li>
@@ -1722,14 +1722,14 @@ API几乎都是通过返回一个null的方式表示所需的值的缺失,
       <guid>https://ramsayleung.github.io/zh/post/2019/%E4%B8%80%E6%9D%A1%E7%BB%8F%E5%85%B8%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BC%95%E5%8F%91%E7%9A%84%E6%80%9D%E8%80%83/</guid>
       <description>浅谈Java公平锁与内存模型 1 前言 春天来了，春招还会远么? 又到了春招的季节，随之而来的是各种的面试题。今天就看到组内大佬面试实习生的一道Ja</description>
       <content:encoded><![CDATA[<p>浅谈Java公平锁与内存模型</p>
-<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>春天来了，春招还会远么? 又到了春招的季节，随之而来的是各种的面试题。今天就看到组内大佬面试实习生的一道Java题目:</p>
 <blockquote>
 <p>编写一个程序，开启 3 个线程A,B,C，这三个线程的输出分别为
 A、B、C，每个线程将自己的 输出在屏幕上打印 10
 遍，要求输出的结果必须按顺序显示。如：ABCABCABC&hellip;.</p>
 </blockquote>
-<h2 id="经过"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 经过</h2>
+<h2 id="经过"><span class="section-num">2</span> 经过</h2>
 <p>出于好奇的心态，我花了点时间来尝试解决这个问题, 主要的难点是让线程顺序地如何顺序地输出，线程之间如何交换。</p>
 <p>很快就按着思路写出了一个版本，用Lock 来控制线程的顺序，A,B,C线程依次启动，因为A线程先启动，所以A线程会最先拿到锁，B,C阻塞；但是A输出完字符串，释放锁，B 线程获得锁，C,A线程阻塞; 依此循环:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">Test</span><span class="o">(){</span>
@@ -1772,7 +1772,7 @@ A、B、C，每个线程将自己的 输出在屏幕上打印 10
 </span></span></code></pre></div><p>为什么A 会是30, B会是31, 不是有(index.intvalue&lt;30) 的条件判断么,
 为什么还会出现这样的数据？灵异事件? <img loading="lazy" src="https://imgur.com/fhurKt5.png" alt=""  />
 </p>
-<h2 id="解惑"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 解惑</h2>
+<h2 id="解惑"><span class="section-num">3</span> 解惑</h2>
 <p>灵异事件自然是不存在的，仔细分析了一番代码之后，发现了问题：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="k">while</span> <span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">intValue</span><span class="o">()</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="o">)</span> <span class="o">{</span>  <span class="c1">// 1
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">lock</span><span class="o">.</span><span class="na">lock</span><span class="o">();</span> <span class="c1">// 2
@@ -1823,7 +1823,7 @@ A、B、C，每个线程将自己的 输出在屏幕上打印 10
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></div><p>只是当时并不清楚Double Checked的作用，究竟解决了什么问题？</p>
 <p>只是知道不加这条语句就会造成初始化多个示例，的确是需要<strong>知其然知其所以然</strong>.</p>
-<h2 id="公平锁问题"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 公平锁问题</h2>
+<h2 id="公平锁问题"><span class="section-num">4</span> 公平锁问题</h2>
 <p>前文说到，</p>
 <blockquote>
 <p>这个程序是用Lock 来控制线程的顺序，A,B,C线程依次启动，因为A线程先启动，所以A线程会最先拿到锁，B,C阻塞；</p>
@@ -1853,7 +1853,7 @@ A、B、C，每个线程将自己的 输出在屏幕上打印 10
 </span></span></code></pre></div><p>只有符合条件的线程才能进行操作，否则就是线程自旋.(但是加锁+自旋实现起来，效率不会太高效!)</p>
 </li>
 </ul>
-<h2 id="小结"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 小结</h2>
+<h2 id="小结"><span class="section-num">5</span> 小结</h2>
 <p>写一条面试题的答案都写得是问题多多的，不禁令人沮丧，说明自己对Java的并发模型理解还有很大的提高。
 不过在排查问题的过程中，通过实践有体感地理解了Java的内存模型，发现Java内存模型并不是那么地曲高和寡，在日常的开发中也是很常见的.</p>
 <p>费了一番工夫排查之后，终究是有新的收获的</p>
@@ -1868,20 +1868,20 @@ A、B、C，每个线程将自己的 输出在屏幕上打印 10
       <guid>https://ramsayleung.github.io/zh/post/2019/%E5%A6%82%E4%BD%95%E5%88%B7pojo%E7%B1%BB%E7%9A%84%E5%8F%98%E6%9B%B4%E8%A1%8C%E8%A6%86%E7%9B%96%E7%8E%87/</guid>
       <description>刷POJO类的变更行覆盖率 1 反射大法好 1.1 背景 众所周知，蚂蚁对代码质量要求很高，质量红线其中一项指标就是变更行覆盖率。如果你的变更行覆盖率没有</description>
       <content:encoded><![CDATA[<p>刷POJO类的变更行覆盖率</p>
-<h2 id="反射大法好"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 反射大法好</h2>
-<h3 id="背景"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> 背景</h3>
+<h2 id="反射大法好"><span class="section-num">1</span> 反射大法好</h2>
+<h3 id="背景"><span class="section-num">1.1</span> 背景</h3>
 <p>众所周知，蚂蚁对代码质量要求很高，质量红线其中一项指标就是变更行覆盖率。如果你的变更行覆盖率没有达到80%，测试同学是不会允许你上测试环境的（如果对此有所不满，测试同学就会过来捶你)。
 为了提高代码质量，这项要求倒是无可厚非，变更的代码逻辑需要充分的测试；但是如果我新增了一堆的POJO类，只是为了逻辑模型，变更行也会变得非常可观。为了覆盖这些POJO类的变更，你免不了会测试一堆的Getter/Setter
 方法：</p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191104102036.png"
          alt="Figure 1: getter/setter"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->getter/setter</p>
+            <p><span class="figure-number">Figure 1: </span>getter/setter</p>
         </figcaption>
 </figure>
 
 <p>(红色是指没有覆盖到的变更行)</p>
-<h3 id="反射"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> 反射</h3>
+<h3 id="反射"><span class="section-num">1.2</span> 反射</h3>
 <p>如果为了变更行覆盖了，我要写上一堆的Getter/Setter 方法测试用例，测试用例也只是单纯调用一下方法，未免过于痛苦，能否偷个懒，解决覆盖率问题，也不需手写这些没啥用的测试用例.</p>
 <p>但是一时间没有想到解决方法，我就一边写这些没啥用的用例，一边思考，突然发现了规律：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="n">SomeType</span> <span class="nf">getXxxx</span><span class="o">(){}</span>
@@ -1939,7 +1939,7 @@ A、B、C，每个线程将自己的 输出在屏幕上打印 10
 19/03/14 10:46:32 WARN util.ModelUtils: (,N,20190314104632257,-,,,-,-,-,)[调用方法, method: MerchantBusiModel.getLegalPerson]
 19/03/14 10:46:32 WARN util.ModelUtils: (,N,20190314104632257,-,,,-,-,-,)[调用方法, method: MerchantBusiModel.getPrincipalCertType]
 省略一大片类似的输出，省点篇幅
-</code></pre><h3 id="org-dot-reflections-dot-reflections"><!-- raw HTML omitted -->1.3<!-- raw HTML omitted --> org.reflections.Reflections</h3>
+</code></pre><h3 id="org-dot-reflections-dot-reflections"><span class="section-num">1.3</span> org.reflections.Reflections</h3>
 <p>通过反射，就很完美地解决了POJO类的变更行覆盖率问题了，反正POJO类都是Getter/Setter 方法，我的反射方法能把它们全覆盖上啦 (๑&gt;◡&lt;๑) .</p>
 <p>很快，我就遇到了另外的一个问题:
 像<code>MerchantBusiModel</code>这样的Model类有十几二十个，难道每个Model我都需要写一个<code>XxxModelTest</code>的测试类么？也实在是太痛苦了，也太不优雅了(其实是我懒)，能不能自动把所有的Model类扫出来，然后循环执行每个Model的Getter/Setter方法呢？</p>
@@ -2027,7 +2027,7 @@ A、B、C，每个线程将自己的 输出在屏幕上打印 10
 </span></span><span class="line"><span class="cl">	<span class="o">}</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h3 id="总结"><!-- raw HTML omitted -->1.4<!-- raw HTML omitted --> 总结</h3>
+</span></span></code></pre></div><h3 id="总结"><span class="section-num">1.4</span> 总结</h3>
 <ol>
 <li>Reflections 包是真的强，有空要去看一下源码</li>
 <li>懒惰是程序员的第一生产力, 这话真不是我编的，是Perl 语言之父 Larry
@@ -2047,13 +2047,13 @@ Wall 说的</li>
       <guid>https://ramsayleung.github.io/zh/post/2018/maven%E5%B0%8F%E8%AE%B0/</guid>
       <description>Maven 在工作中的经验以及《Maven 实战》读后感 1 前言 蚂蚁金服的伯岩大大曾经说 Java 生态都太重量级，连Maven 都是怪兽级的构建工具，需要整整一本书</description>
       <content:encoded><![CDATA[<p>Maven 在工作中的经验以及《Maven 实战》读后感</p>
-<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>蚂蚁金服的伯岩大大曾经说 <a href="http://blog.fnil.net/index.php/archives/70/">Java 生态都太重量级，连Maven 都是怪兽级的构建工具，需要整整一本书来讲解</a>. 平心而论，Maven 的确如此, 但是无论是怪兽级，还是迪迦级的工具，只要能把事情做好了就是好工具, 而 Maven 恰恰就是这样的工具</p>
-<h2 id="配置文件"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 配置文件</h2>
-<h3 id="pom-dot-xml"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> pom.xml</h3>
+<h2 id="配置文件"><span class="section-num">2</span> 配置文件</h2>
+<h3 id="pom-dot-xml"><span class="section-num">2.1</span> pom.xml</h3>
 <p>就好像 Unix 平台的 Make 对应的 <code>MakeFile</code>，Cmake对应的 <code>CmakeFile.txt</code>, Maven 项目的核心是 <code>pom.xml</code>, POM(Project Object Model,项目对象模型)定义了项目的基本信息，用于描述项目如何构建，声明项目依赖等等，可以 pom.xml 是 Maven 一切实践的基础</p>
-<h2 id="依赖管理"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 依赖管理</h2>
-<h3 id="坐标"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> 坐标</h3>
+<h2 id="依赖管理"><span class="section-num">3</span> 依赖管理</h2>
+<h3 id="坐标"><span class="section-num">3.1</span> 坐标</h3>
 <p>Maven 仓库中有成千上万个构件（jar，war 等文件），Maven 如何精确地找到用户所需的构件呢，用的就是坐标。说起坐标，可能第一反映是平面几何中的 x，y坐标，通过 x，y坐标来唯一确认平面中的一个点，而Maven 的坐标就是用来唯一标识一个构件。</p>
 <p>Maven 通过坐标为构件引入了秩序，任何一个构件都需要明确定义自己的坐标，而坐标是由以下元素组成：<code>groupId</code>, <code>artifactId</code>, <code>version</code>, <code>packaging</code>, <code>classifier</code>, <code>scope</code>, <code>exclusions</code>等。一个典型的Maven 坐标：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;dependency&gt;</span>
@@ -2071,7 +2071,7 @@ Wall 说的</li>
 <li>exclusions: 用来排除依赖</li>
 <li>scope: 定义了依赖范围，例如 <code>junit</code> 常见的scope 就是<code>&lt;scope&gt;test&lt;/scope&gt;</code>, 表示这个依赖只对测试生效</li>
 </ul>
-<h3 id="依赖范围"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> 依赖范围</h3>
+<h3 id="依赖范围"><span class="section-num">3.2</span> 依赖范围</h3>
 <p>上文提到，JUnit 依赖的测试范围是test，测试范围用元素scope 表示。首先需要知道，Maven 在编译项目主代码的时候需要使用一套classpath，上例在编译项目主代码的时候就会用到<code>spring-beans</code>，该文件以依赖的方式呗引入到classpath 中。</p>
 <p>其次，Maven 在执行测试时候会使用另外一套 classpath。如上文提到的 JUnit 就是以依赖的方式引入到测试使用的 classpath，需注意的是这里的依赖范围是<code>test</code>. 最后，项目在运行的时候，又会使用另外一套的 classpath，上例的<code>spring-beans</code>就是在该classpath里，而JUnit 则不需要。</p>
 <p>简而言之，依赖范围就是用来控制依赖与这是那种 classpath (编译classpath, 测试 classpath, 运行 classpath 的关系，Maven 有以下几种依赖范围:</p>
@@ -2083,7 +2083,7 @@ Wall 说的</li>
 <li>import: 导入依赖范围，该依赖范围不会对三种 classpath 产生实际的影响</li>
 <li>system: 系统依赖方位。与 provided 依赖范围完全一致, 即只对编译和测试的classpath有效，对运行时的 classpath 无效. 但是，使用system 范围的依赖必须通过systemPath 元素显式地指定依赖文件的路径 如：</li>
 </ul>
-<!-- raw HTML omitted -->
+<!--listend-->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;dependency&gt;</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&lt;groupId&gt;</span>javax.sql<span class="nt">&lt;/groupId&gt;</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&lt;artifactId&gt;</span>jdbc-stdext<span class="nt">&lt;/artifactId&gt;</span>
@@ -2141,7 +2141,7 @@ Wall 说的</li>
 </tr>
 </tbody>
 </table>
-<h2 id="仓库"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 仓库</h2>
+<h2 id="仓库"><span class="section-num">4</span> 仓库</h2>
 <p>上文提及了依赖管理，通过声明的方式指定所需的构件，那么是从哪里获取所需的构件的呢？答案是 Maven 仓库，Maven 仓库可以分为两类: 本地仓库和远程仓库。</p>
 <p>当 Maven 需要根据坐标寻找构件的时候，它首先会查找本地仓库，如果本地仓库存在该构件，则直接使用，如果本地不存在该构件，或者需要查看是否有更新的构件版本，Maven 聚会去远程仓库查找，发现需要的构件之后，下载到本地仓库在使用.</p>
 <p>如果本地和远程仓库都没有所需要的构件，那么 Maven 就会报错。如果需要细化远程仓库的类型，还可以分成中央仓库，私服和其他公共库。</p>
@@ -2152,11 +2152,11 @@ Wall 说的</li>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191104112131.png"
          alt="Figure 1: repo"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->repo</p>
+            <p><span class="figure-number">Figure 1: </span>repo</p>
         </figcaption>
 </figure>
 
-<h3 id="snapshot"><!-- raw HTML omitted -->4.1<!-- raw HTML omitted --> SNAPSHOT</h3>
+<h3 id="snapshot"><span class="section-num">4.1</span> SNAPSHOT</h3>
 <p>在Maven 的世界中，任何一个项目或者构件都必须有自己的版本，版本可能是 <code>1.0.0</code>, <code>1.0-alpha-4,2.1-SNAPSHOT</code> 或者 <code>2.1-20181028-11</code>, 其中 <code>1.0.0</code>, <code>1.0-alpha-4</code> 是稳定的发布版本，而 <code>2.1-SNAPSHOT</code> 或者 <code>2.1-20181028-11</code> 是稳定的快照版本。</p>
 <p>Maven 为什么要区分快照版本和发布版本呢？难道1.0.0 不能解决么？为什么需要2.0-SNAPSHOT。</p>
 <p>我对此 <code>SNAPSHOT</code> 这个特性印象非常深刻，在蚂蚁金服的新人培训中，其中就有一项是大家协作完成一个 Mini Alipay，一个 Mini Alipay 分成三个应用<code>bkonebusiness</code>, <code>bkoneuser</code>, <code>bkoneacccount</code>，以SOA 的架构进行拆分，应用之间相互依赖。</p>
@@ -2167,25 +2167,25 @@ Wall 说的</li>
 <p>这是，<code>bkonebusiness</code>对于 <code>bkoneuser</code>的依赖，只要构建<code>bkonebusiness</code>，Maven就会自动从仓库中检查 <code>bkoneuser</code>的罪行构建，发现有更新便进行下载。</p>
 <p>基于快照版本，<code>bkonebusiness</code> 可以完全不用考虑 <code>bkoneuser</code> 的构建，因为它总是拉取最新版本的 <code>bkoneuser</code>,这个是 Maven 的快照机制进行保证。</p>
 <p>如果到了 release，就要及时将 <code>1.0.1-SNAPSHOT</code>, 否则 <code>bkonebusiness</code> 在构建发布版本的时候可能拉取到最新的有问题的版本.</p>
-<h3 id="仓库搜索服务"><!-- raw HTML omitted -->4.2<!-- raw HTML omitted --> 仓库搜索服务</h3>
+<h3 id="仓库搜索服务"><span class="section-num">4.2</span> 仓库搜索服务</h3>
 <p>在公司开发的时候有私服，但是在开发自己项目的时候，我一般到 <a href="https://repository.sonatype.org/">SnoaType Nexus</a> 找对应的构件</p>
-<h2 id="插件与生命周期"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 插件与生命周期</h2>
-<h3 id="何为生命周期"><!-- raw HTML omitted -->5.1<!-- raw HTML omitted --> 何为生命周期</h3>
+<h2 id="插件与生命周期"><span class="section-num">5</span> 插件与生命周期</h2>
+<h3 id="何为生命周期"><span class="section-num">5.1</span> 何为生命周期</h3>
 <p>在有关 Maven 的日常使用中，命令行的输入往往就对应了生命周期，如 <code>mvn package</code> 就表示执行默认的生命周期阶段 <code>package</code>.</p>
 <p>Maven 的生命周期是抽象的，其实际行为都由插件来完成，如<code>package</code> 阶段的任务就会有<code>maven-jar-plugin</code> 完成。</p>
 <p>Maven的生命周期就是为了对所有的构建过程进行抽象和统一，包括项目的清理，初始化，编译，测试，打包，集成测试，验证，部署等几乎所有的构建步骤。</p>
 <p>需要注意的是 <strong>Maven 的生命周期是抽象的，这意味着生命周期本身不作任何实际的工作，实际的任务(如编译源代码)都交由插件来完成. 每个步骤都可以绑定一个或者多个插件行为，而且Maven 为大多数构建步骤编写并绑定了默认的插件</strong></p>
 <p>例如：针对编码的插件有 <code>maven-compiler-plugin</code>,针对测试的插件有<code>maven-surefire-plugin</code> 等，用户几乎不会察觉插件的存在</p>
-<h3 id="三套生命周期"><!-- raw HTML omitted -->5.2<!-- raw HTML omitted --> 三套生命周期</h3>
+<h3 id="三套生命周期"><span class="section-num">5.2</span> 三套生命周期</h3>
 <p>Maven 有用三套相互独立的生命周期，它们分别是<code>clean</code>, <code>default</code> , <code>site</code>. <code>clean</code> 生命周期的目的是清理项目，<code>default</code> 生命周期的目的是构件项目，而 <code>site</code> 生命周期的目的是建立项目站点</p>
-<h4 id="clean-生命周期"><!-- raw HTML omitted -->5.2.1<!-- raw HTML omitted --> clean 生命周期</h4>
+<h4 id="clean-生命周期"><span class="section-num">5.2.1</span> clean 生命周期</h4>
 <p>clean 生命周期主要是清理项目，它包含三个阶段:</p>
 <ol>
 <li>pre-clean: 执行一些清理前需要完成的工作</li>
 <li>clean 清理上一次构造生成的文件</li>
 <li>post-clean 执行一些清理后需要完成的工作</li>
 </ol>
-<h4 id="default-生命周期"><!-- raw HTML omitted -->5.2.2<!-- raw HTML omitted --> default 生命周期</h4>
+<h4 id="default-生命周期"><span class="section-num">5.2.2</span> default 生命周期</h4>
 <p>default 生命周期奠定了真正构件时所需要执行的所有步骤，它是所有生命周期最核心的部分，其包含的阶段如下：</p>
 <ul>
 <li>validate</li>
@@ -2212,7 +2212,7 @@ Wall 说的</li>
 <li>install 将包安装到Maven 本地仓库，供本地其他Maven 项目使用</li>
 <li>deploy 将最终的包复制到远程仓库，共其他开发人员和Maven 项目使用</li>
 </ul>
-<h4 id="site-生命周期"><!-- raw HTML omitted -->5.2.3<!-- raw HTML omitted --> site 生命周期</h4>
+<h4 id="site-生命周期"><span class="section-num">5.2.3</span> site 生命周期</h4>
 <p>site 生命周期的目的是建立和发布项目站点，生命周期包含如下阶段</p>
 <ul>
 <li>pre-site 执行一些在生成项目站点前需要完成的工作</li>
@@ -2220,7 +2220,7 @@ Wall 说的</li>
 <li>post-site 执行一些在生成项目站点之后需要完成的工作</li>
 <li>site-deploy 将生成的项目站点发布到服务器上</li>
 </ul>
-<h4 id="命令行和生命周期"><!-- raw HTML omitted -->5.2.4<!-- raw HTML omitted --> 命令行和生命周期</h4>
+<h4 id="命令行和生命周期"><span class="section-num">5.2.4</span> 命令行和生命周期</h4>
 <p>从命令行执行Maven 任务的最主要方式就是调用 Maven的生命周期阶段。需要注意的是，各个生命周期是相互独立的，而一个生命周期的阶段是有前后依赖关系的。</p>
 <p>下面以一些常见的Maven 命令为例，解释其执行的生命周期阶段:</p>
 <ul>
@@ -2228,12 +2228,12 @@ Wall 说的</li>
 <li>mvn test: 该命令调用default 生命周期的test 阶段。实际执行的阶段是 default 生命周期的 validate, initialize, 直到 test 的所有阶段。这也解释了为什么在测试的时候，项目的代码能够自动得以编译</li>
 <li>mvn clean install: 该命令调用 clean 生命周期的clean 阶段和default 生命周期的 install 阶段。实际执行的阶段为 clean 生命周期的 pre-clean, clean 阶段，以及default 生命周期的从validate 到 install 的所有阶段。该命令结合了两个生命周期，在执行真正的项目构建之前清理项目是一个很好的实践</li>
 </ul>
-<h2 id="继承"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> 继承</h2>
+<h2 id="继承"><span class="section-num">6</span> 继承</h2>
 <p>如bkoneuser 的项目结构所示:</p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191104112215.png"
          alt="Figure 2: bkoneuser 的项目结构"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->bkoneuser 的项目结构</p>
+            <p><span class="figure-number">Figure 2: </span>bkoneuser 的项目结构</p>
         </figcaption>
 </figure>
 
@@ -2241,7 +2241,7 @@ Wall 说的</li>
 <p>如果每个子模块都维护一份大致相同的依赖，那么就有10几份相同的依赖，这还会随着子模块的增多而变得庞大。</p>
 <p>如果我们工程师的嗅觉, 会发现有很多的重复依赖，面对重复应该怎么办？通过抽象来减少重复代码和配置，而 Maven 提供的抽象机制就是继承(还有聚合，只是个人觉得不如继承常用).</p>
 <p>在 OOP 中，工程师可以建立一种类的父子结构，然后在父类中声明一些字段供子类继承，这样就可以做到“一处声明，多处使用”, 类似地，我们需要创建 POM 的父子结构，然后在父POM 中声明一些供子 POM 继承，以实现“一处声明，多处使用”</p>
-<h3 id="配置示例"><!-- raw HTML omitted -->6.1<!-- raw HTML omitted --> 配置示例</h3>
+<h3 id="配置示例"><span class="section-num">6.1</span> 配置示例</h3>
 <p>parent 的配置如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;groupId&gt;</span>com.minialipay<span class="nt">&lt;/groupId&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="nt">&lt;artifactId&gt;</span>bkgponeuser-parent<span class="nt">&lt;/artifactId&gt;</span>
@@ -2266,7 +2266,7 @@ Wall 说的</li>
 </span></span><span class="line"><span class="cl"><span class="nt">&lt;/modules&gt;</span>
 </span></span></code></pre></div><p>需要主要的关键点是parent 的 <code>packaging</code> 值必须是 <code>pom</code>, 而不是默认的 <code>jar</code>, 否则则无法进行构件.</p>
 <p>而 <code>modules</code> 元素则是实现继承最核心的配置，通过在打包方式为 pom 的Maven 项目中声明任意数量的 <code>module</code> 来实现模块的继承, 每个 <code>module</code>的值都是一个当前POM 的相对目录，比如 <code>app/core/service</code> 就是说子模块的POM在 parent 目录的下的 <code>app/core/service</code>目录</p>
-<h3 id="子模块配置示例"><!-- raw HTML omitted -->6.2<!-- raw HTML omitted --> 子模块配置示例</h3>
+<h3 id="子模块配置示例"><span class="section-num">6.2</span> 子模块配置示例</h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;parent&gt;</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&lt;groupId&gt;</span>com.minialipay<span class="nt">&lt;/groupId&gt;</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&lt;artifactId&gt;</span>bkgponeuser-parent<span class="nt">&lt;/artifactId&gt;</span>
@@ -2279,7 +2279,7 @@ Wall 说的</li>
 </span></span><span class="line"><span class="cl"><span class="nt">&lt;packaging&gt;</span>jar<span class="nt">&lt;/packaging&gt;</span>
 </span></span></code></pre></div><p>上述pom 中使用 <code>parent</code> 元素来声明父模块，<code>parent</code> 下元素groupid， artifactId 和 version 指定了父模块的坐标，这三个元素是必须。</p>
 <p>元素 <code>relativePath</code> 表示父模块POM的相对路径, <code>../../../pom.xml</code> 指父POM的位置在三级父目录上</p>
-<h3 id="可继承的pom-元素"><!-- raw HTML omitted -->6.3<!-- raw HTML omitted --> 可继承的POM 元素</h3>
+<h3 id="可继承的pom-元素"><span class="section-num">6.3</span> 可继承的POM 元素</h3>
 <p>可继承元素列表及简短说明:</p>
 <ul>
 <li>groupId: 项目Id, 坐标的核心元素</li>
@@ -2302,7 +2302,7 @@ Wall 说的</li>
 <li>build: 包括项目的源码目录配置，输出目录配置，插件配置，插件管理配置等</li>
 <li>reporting: 包括项目的报告输出目录配置，报告插件配置等</li>
 </ul>
-<h3 id="dependencymanagement-依赖管理"><!-- raw HTML omitted -->6.4<!-- raw HTML omitted --> dependencyManagement 依赖管理</h3>
+<h3 id="dependencymanagement-依赖管理"><span class="section-num">6.4</span> dependencyManagement 依赖管理</h3>
 <p>可继承列表包含了 <code>dependencies</code> 元素，说明是会被继承的，这是我们就会很容易想到将这一特性应用到 <code>bkoneuser-parent</code> 中。子模块同时依赖 <code>spring-beans</code>,=spring-context=,=fastjson= 等, 因此可以将这些依赖配置放到父模块 <code>bkoneuser-parent</code> 中，子模块就能移除这些依赖，简化配置.</p>
 <p>这种做法可行，但是存在问题，我们可以确定现有的子模块都是需要 <code>spring-beans</code>, <code>spring-context</code> 这几个模块的，但是我们无法确定将来添加的子模块就一定需要这四个依赖.</p>
 <p>假设将来项目中要加入一个<code>app/biz/product</code>, 但是这个模块不需要 <code>spring-beans</code>, <code>spring-context</code>, 只需要 <code>fastjson</code>, 那么继承 <code>bkoneuser</code> 就会引入不需要的依赖，这样是非常不利于项目维护的！</p>
@@ -2336,15 +2336,15 @@ Wall 说的</li>
 </span></span><span class="line"><span class="cl"><span class="nt">&lt;/dependencies&gt;</span>
 </span></span></code></pre></div><p>子模块的<code>fastjson</code> 依赖只配置了 <code>groupId</code> 和 <code>artifactId</code>, 省去了 <code>version</code> , 而 <code>junit</code> 依赖 不仅省去了<code>version</code>, 连<code>scope</code> 都省去了。</p>
 <p>《Maven 实战》作者强烈推荐使用这种方式，其主要原因在与在父POM 中使用 <code>dependencyManagement</code> 声明依赖能够统一规范依赖的版本，当依赖版本在父POM中声明之后，子模块在使用依赖的时候就无须声明版本，也就不会发生多个子模块使用依赖版本不一致的情况</p>
-<h2 id="依赖冲突"><!-- raw HTML omitted -->7<!-- raw HTML omitted --> 依赖冲突</h2>
+<h2 id="依赖冲突"><span class="section-num">7</span> 依赖冲突</h2>
 <p>在Java 项目中，随着项目代码量的增长，各种问题就会接踵而至，jar 包冲突就是其中一个最常见的问题. jar 冲突常见的异常: <code>NoSuchMethodError</code>, <code>NoClassDefFoundError</code></p>
-<h3 id="成因"><!-- raw HTML omitted -->7.1<!-- raw HTML omitted --> 成因</h3>
+<h3 id="成因"><span class="section-num">7.1</span> 成因</h3>
 <p>当Maven根据pom文件作依赖分析, 发现通过直接依赖或者间接依赖, 有多个相同<code>groupId</code>, <code>artifactId</code>, 不同 <code>version</code> 的依赖时, 它会根据两点原则来筛选出唯一的一个依赖, 并最终把相应的jar包放到 classpath下:</p>
 <ol>
 <li>依赖路径长度: 比如应用的pom里直接依赖了A, 而A又依赖了B, 那么B对于应用来说, 就是间接依赖, 它的依赖路径长度就是2. 长度越短, 优先级越高. 当出现不同版本的依赖时, maven优先选择依赖路径短的依赖.</li>
 <li>依赖声明顺序: 当依赖路径长度相同时, POM 里谁的声明在上面, Maven 就选择谁.</li>
 </ol>
-<!-- raw HTML omitted -->
+<!--listend-->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">A</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">B</span> <span class="n">b</span> <span class="o">=</span><span class="k">new</span> <span class="n">B</span><span class="o">();</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">func_a</span><span class="o">(){</span>
@@ -2398,7 +2398,7 @@ Wall 说的</li>
 <p>这时, 应用程序的主POM里间接依赖了 <code>c-1.1.jar</code> 包, 但是这个jar里的C类中已经把 <code>func_c()</code> 删除了.</p>
 <p>这样由于B类使用的 <code>c-1.0.jar</code> 对于应用程序来说, 是间接依赖, 依赖路径长度是2 (A -&gt; B -&gt; C), 比应用程序主pom中间接依赖的 <code>c-1.1.jar</code> 路径(D-&gt;C)长, 最后就会被maven排掉了 (也就是应用程序的 classpath 下, 最终会保留 <code>c-1.1.jar</code>).</p>
 <p>最后执行main函数时, 就会报 <code>NoSuchMethodError</code>, 也就是找不到C类中 <code>func_c()</code> 方法.</p>
-<h3 id="解决方案"><!-- raw HTML omitted -->7.2<!-- raw HTML omitted --> 解决方案</h3>
+<h3 id="解决方案"><span class="section-num">7.2</span> 解决方案</h3>
 <p>强制Maven 使用<code>c-1.0.jar</code>, 也就是将<code>c-1.1.jar</code>排除掉:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;dependencies&gt;</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&lt;dependency&gt;</span>
@@ -2415,7 +2415,7 @@ Wall 说的</li>
 </span></span><span class="line"><span class="cl"><span class="nt">&lt;/dependencies&gt;</span>
 </span></span></code></pre></div><p>在 <code>d.1.0.jar</code> 的依赖排除 <code>c.1.1.jar</code> 的时候，不需要指定版本, 因为这个时候<code>d.1.0.jar</code> 的依赖的版本一定是 <code>c.1.1.jar</code>. 需要注意的是，如果 <code>d</code> 使用了<code>c.1.1.jar</code> 的 <code>func_c1()</code>，排掉 <code>c.1.1.jar</code> 是会报错的，因为满足了B类的 <code>func_c()</code> 就无法满足 D 类的 <code>func_c1()</code>, 这个就是著名的“菱形依赖问题”(diamond dependency problem)。</p>
 <p>不得不说，入职的时候，遇上了各种jar 包冲突的问题，排包都排出心得. 在此推荐个排包神器, Intellij Idea 的插件：<a href="https://plugins.jetbrains.com/plugin/7179-maven-helper">maven helper</a>, 比手动<code>-verbose:class</code> + <code>mvn dependency:tree</code>排包方便多了</p>
-<h2 id="总结"><!-- raw HTML omitted -->8<!-- raw HTML omitted --> 总结</h2>
+<h2 id="总结"><span class="section-num">8</span> 总结</h2>
 <p>的确，写到这里，必须再次承认 Maven 是怪兽级的 构建工具，但是同样无可否认的是，它出色的构建和依赖管理功能。写go 语言的时候，我多希望有个 Maven 可以用呢 ╥﹏╥&hellip;</p>
 ]]></content:encoded>
     </item>
@@ -2428,10 +2428,10 @@ Wall 说的</li>
       <guid>https://ramsayleung.github.io/zh/post/2018/error_handle_in_rust_2/</guid>
       <description>自定义错误和error_chain 库 1 前言 上一篇文章聊到 Rust 的错误处理机制，以及和 Java 的简单比较，现在就来聊一下如何在 Rust 自定义错误，以及引入 er</description>
       <content:encoded><![CDATA[<p>自定义错误和<code>error_chain</code> 库</p>
-<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>上一篇文章聊到 Rust 的错误处理机制，以及和 Java 的简单比较，现在就来聊一下如何在 Rust 自定义错误，以及引入 <code>error_chain</code>这个库来优雅地进行错误处理。</p>
 <p>还有，少不了用 Java 来做对比咯:)</p>
-<h3 id="java-自定义异常"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> Java 自定义异常</h3>
+<h3 id="java-自定义异常"><span class="section-num">1.1</span> Java 自定义异常</h3>
 <p>前文简单提到 Java 的错误和异常但是继承自一个 <code>Throwable</code>的父类，既然异常是继承自异常父类的，我们自定义异常的时候，
 也可以模仿JDK, 继承一个异常类：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyException</span> <span class="kd">extends</span> <span class="n">Exception</span> <span class="o">{</span>
@@ -2484,7 +2484,7 @@ Wall 说的</li>
 <p><code>MyError</code>这个异常类是 继承于 <code>RuntimeException</code>的，并调用了 <code>RuntimeException</code>的构造方法。</p>
 <p>因为我的项目是 WEB 服务的业务层，要处理大量的逻辑，难免会出现异常.</p>
 <p>比如说可能调用方调用接口 的时候，入参不符合规范，我就抛出一个经过包装的 <code>BadParameterError</code> 异常，对于接 口调用方，这样会比一个单纯的 400 错误要友好，其他的异常也是同理。</p>
-<h3 id="rust-自定义错误"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> Rust 自定义错误</h3>
+<h3 id="rust-自定义错误"><span class="section-num">1.2</span> Rust 自定义错误</h3>
 <p>对于习惯了 OOP 编程的同学来说，Java 的异常是很容易理解，但是回到 Rust 身上，Rust是没有父类一说的，显然，Rust 是没可能套用 Java 的自定义异常的方式的。</p>
 <p>Rust 用的是 <code>trait</code>, <code>trait</code>就有点类似 Java 的 =interface=(只是类似，不是等同!).</p>
 <p>按照 Rust 的规范，Rust 允许开发者定义自己的错误，设计良好的错误应该包含以下的特性：</p>
@@ -2505,7 +2505,7 @@ Wall 说的</li>
 </li>
 <li>可以很方便地与其他错误结合</li>
 </ol>
-<!-- raw HTML omitted -->
+<!--listend-->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">error</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">fmt</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">num</span>::<span class="n">ParseIntError</span><span class="p">;</span><span class="w">
@@ -2566,12 +2566,12 @@ Wall 说的</li>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">The first doubled is 84
 </span></span><span class="line"><span class="cl">Error: invalid first item to double
 </span></span><span class="line"><span class="cl">Error: invalid first item to double
-</span></span></code></pre></div><h3 id="error-chain"><!-- raw HTML omitted -->1.3<!-- raw HTML omitted --> error_chain</h3>
+</span></span></code></pre></div><h3 id="error-chain"><span class="section-num">1.3</span> error_chain</h3>
 <p>虽说 Rust 自定义错误很灵活和方便，但是如果每次定义异常都需要实现 <code>Display</code> 和 <code>Error</code>, 未免过于繁琐，现在来介绍
 <a href="https://github.com/rust-lang-nursery/error-chain">error_chain</a> 这个类库。</p>
 <p><code>error_chain</code> 是由 Rust 项目组的 leader&ndash;<a href="https://brson.github.io/">Brian Anderson</a> 编写的异常处理库，可以让你更舒心<del>简单不粗 暴</del>地定义错误。</p>
 <hr>
-<h4 id="error-chain示例"><!-- raw HTML omitted -->1.3.1<!-- raw HTML omitted --> error_chain示例</h4>
+<h4 id="error-chain示例"><span class="section-num">1.3.1</span> error_chain示例</h4>
 <p>以上面的 <code>DoubleError</code>为例，并改写 error_chain 的官方<a href="https://github.com/rust-lang-nursery/error-chain/blob/master/examples/quickstart.rs">例子</a> 以实现相同的效果，代码如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// `error_chain!` 的递归深度
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#![recursion_limit = </span><span class="s">&#34;1024&#34;</span><span class="cp">]</span><span class="w">
@@ -2621,7 +2621,7 @@ Wall 说的</li>
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>运行这代码可以得到和上面小节同样的输出。</p>
-<h4 id="error-chain-详解"><!-- raw HTML omitted -->1.3.2<!-- raw HTML omitted --> error_chain 详解</h4>
+<h4 id="error-chain-详解"><span class="section-num">1.3.2</span> error_chain 详解</h4>
 <p>刚刚就先目睹了一下 <code>error_chain</code> 的芳容了，现在是时候来解剖一下 <code>error_chain</code>, 这次就以 <code>error_chain</code>的 <a href="https://github.com/rust-lang-nursery/error-chain/blob/master/examples/quickstart.rs">example</a>来解释</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// Simple and robust error handling with error-chain!
 </span></span></span><span class="line"><span class="cl"><span class="c1">// Use this as a template for new projects.
@@ -2693,9 +2693,9 @@ Wall 说的</li>
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>可以看出，这个函数的大部份逻辑是进行错误处理，例如返回自定义的 <code>Result</code>和 <code>Error</code>, 然后处理这些错误。上面的处理流程显示了 <code>error_chain</code> 从某个错误继承而来的三样信息：最近出现的错误(即<code>e</code>)，导致错误的调用链，原来错误的堆栈信息 (<code>e.backtrace()</code>)</p>
-<h2 id="小结"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 小结</h2>
+<h2 id="小结"><span class="section-num">2</span> 小结</h2>
 <p>刚刚的例子只是 <code>error_chain</code> 小试了一波牛刀，如果想要了解更多关于 Rust 异常处理 的细节，就需要看看 Rust 的文档咯</p>
-<h2 id="参考"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">3</span> 参考</h2>
 <ul>
 <li><a href="https://rustbyexample.com/error.html">rust by example</a></li>
 <li><a href="https://brson.github.io/2016/11/30/starting-with-error-chain">starting with error chain</a></li>
@@ -2715,14 +2715,14 @@ Wall 说的</li>
       <guid>https://ramsayleung.github.io/zh/post/2018/error_handle_in_rust_1/</guid>
       <description>拉上Java 来谈谈 Rust的错误处理 1 前言 每个语言都会有异常处理机制（没有异常处理机制的语言估计也没有人会用了），Rust 自然也不例外，所以</description>
       <content:encoded><![CDATA[<p>拉上Java 来谈谈 Rust的错误处理</p>
-<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>每个语言都会有异常处理机制（没有异常处理机制的语言估计也没有人会用了），Rust 自然也不例外，所以今天我就来谈Rust 的异常处理，因为 Rust 的异常处理跟常见的语言 （Java/Python 等）的处理机制差异略大，所以打算拉个上个语言，对比着解释. 没错，这 个光荣的任务就落到了 Java 身上</p>
-<h2 id="java-的异常处理"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Java 的异常处理</h2>
+<h2 id="java-的异常处理"><span class="section-num">2</span> Java 的异常处理</h2>
 <p>在谈 Rust 的异常处理之前，为了把它们之前的差异讲清楚，先来聊一下 Java 的异常处理。</p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/java_exception_hierarchy.png"
          alt="Figure 1: Java exception hierarchy"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->Java exception hierarchy</p>
+            <p><span class="figure-number">Figure 1: </span>Java exception hierarchy</p>
         </figcaption>
 </figure>
 
@@ -2738,13 +2738,13 @@ not try to catch. Most such errors are abnormal conditions.</p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191104104407.png"
          alt="Figure 2: JRE fatal error"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->JRE fatal error</p>
+            <p><span class="figure-number">Figure 2: </span>JRE fatal error</p>
         </figcaption>
 </figure>
 
 <p>我还顺便给 Oracle 报了个<a href="https://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8196769">Bug</a> :)</p>
 <p>至于<code>RuntimeException</code> 就是类似数组越界，空指针这些异常，即无法在程序编译时发现，只有在运行的时候才会出 现的问题，所以叫做运行时异常(<code>RuntimeException</code>).</p>
-<h2 id="checked-exception"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Checked Exception</h2>
+<h2 id="checked-exception"><span class="section-num">3</span> Checked Exception</h2>
 <p>Java的<code>Checked Exception</code>, 也就是Java 要求你必须在函数的类型里面声明或处理它可能抛出的异常。比如，你的函数如果是这样：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">foo</span><span class="o">(</span><span class="n">string</span> <span class="n">filename</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span>
 </span></span><span class="line"><span class="cl"><span class="o">{</span>
@@ -2764,7 +2764,7 @@ not try to catch. Most such errors are abnormal conditions.</p>
 <p>同理，在使用 <code>foo()</code>这个函数 的时候，可能会抛出 <code>IOException</code> 这个异常，由于编译器看到了这个声明，它会严格检 查你对 <code>foo</code>
 函数的用法。</p>
 <p>在我看来，<code>CheckedException</code>是Java 优良的设计之一，正因 为<code>Checked Exception</code>的存在，会更容易编写出正确处理错误的程序，更健壮的程序</p>
-<h2 id="rust-的异常处理"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Rust 的异常处理</h2>
+<h2 id="rust-的异常处理"><span class="section-num">4</span> Rust 的异常处理</h2>
 <p>Rust 是一个注重安全（Safety）的语言，而错误处理也是 Rust关注的要点之一。</p>
 <p>Rust 主要是将错误划分成两种类型，分别是可恢复的错误(recoverable error) 和不可恢复错误 (unrecoverable error).</p>
 <p>出现可恢复的错误的原因多种多样，例如打开文件的时候，文件找不到或者没有读权限等，开发者就应该对这种可能出现的错误进行处理；</p>
@@ -2788,7 +2788,7 @@ not try to catch. Most such errors are abnormal conditions.</p>
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="fm">panic!</span><span class="p">(</span><span class="s">&#34;couldn&#39;t open {:?}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">why</span><span class="p">.</span><span class="n">description</span><span class="p">())</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">};</span><span class="w">
-</span></span></span></code></pre></div><h2 id="java-的异常传递"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> Java 的异常传递</h2>
+</span></span></span></code></pre></div><h2 id="java-的异常传递"><span class="section-num">5</span> Java 的异常传递</h2>
 <p>在程序中，总会有一些错误需要处理，但是却不应该在错误出现的函数进行处理的情况(或者是，你很懒惰，只想应付一下编译器，不想处理出现的异常 :)</p>
 <p>比如你正在编写一个类 库，里面有很多的IO 操作，有IO 操作的地方就有可能出现<code>IOException</code>. 如果出现异常，
 你不应该自己在类库把异常给 <code>try-catch</code>了，如果这样，使用你类库的开发者就没办法知 道程序出现了异常，异常的堆栈也丢了。</p>
@@ -2805,7 +2805,7 @@ not try to catch. Most such errors are abnormal conditions.</p>
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="o">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></div><p>当然，你也可以在添加了额外的信息之后，直接把原来的异常抛出来</p>
-<h2 id="rust-的异常传递"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> Rust 的异常传递</h2>
+<h2 id="rust-的异常传递"><span class="section-num">6</span> Rust 的异常传递</h2>
 <p>刚刚谈了 Java 的异常传递，现在轮到 Rust 的异常传递了，既然Rust 没有 <code>Exception</code>一说，那 Rust 传递的自然也是 <code>Result&lt;T,E&gt;</code>
 这个枚举类型(这里针对的是 可恢复错误，不可恢复错误出现错误的时候，会返回错误并弹出程序，自然不存在异常传递).</p>
 <p>先来看看 Rust 的异常传递的例子：</p>
@@ -2833,7 +2833,7 @@ fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
 错误的时候，返回的是 <code>io::Error</code>. 这里的异常传递是在出现 <code>io::Error</code>的时候，将错误原样返回，不然就是返
 回函数执行成功的结果。</p>
 <p>就异常传递的方式而言，Rust 和 Java 是大同小异：声明可能抛出的异常和成功时返回的结果，然后在遇到错误的时候，直接（或者包装一下）返回错误。</p>
-<h3 id="关键字"><!-- raw HTML omitted -->6.1<!-- raw HTML omitted --> ? 关键字</h3>
+<h3 id="关键字"><span class="section-num">6.1</span> ? 关键字</h3>
 <p>虽说 Rust 的异常处理很清晰，但是每次都要 <code>match</code> 然后返回未免太繁琐了，所以 Rust 提供了一个语法糖来显示繁琐的异常传递：用
 &ldquo;?&rdquo; 关键字进行异常传递：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">io</span><span class="p">;</span><span class="w">
@@ -2847,10 +2847,10 @@ fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nb">Ok</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>同样的功能，但是模板代码却减少了很多 :)</p>
-<h3 id="unwrap-和-expect"><!-- raw HTML omitted -->6.2<!-- raw HTML omitted --> unwrap 和 expect</h3>
+<h3 id="unwrap-和-expect"><span class="section-num">6.2</span> unwrap 和 expect</h3>
 <p>虽说 Rust 的可恢复错误设计得很优雅，但是每次遇到可能出现错误得地方都要显示地进行 处理，不免让人觉得繁琐.</p>
 <p>Rust 也考虑到这种情况了，提供了 <code>unwrap()</code> 和 <code>expect()</code>让你舒心<del>简单粗暴</del>地处理错误：在函数调用成功的时候返回正确的结果，在 出现错误地时候直接 <code>panic!()</code>,并退出程序</p>
-<h4 id="unwrap"><!-- raw HTML omitted -->6.2.1<!-- raw HTML omitted --> unwrap</h4>
+<h4 id="unwrap"><span class="section-num">6.2.1</span> unwrap</h4>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">File</span>::<span class="n">open</span><span class="p">(</span><span class="s">&#34;hello.txt&#34;</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
@@ -2858,7 +2858,7 @@ fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
 <pre tabindex="0"><code class="language-log" data-lang="log">thread &#39;main&#39; panicked at &#39;called `Result::unwrap()` on an `Err` value: Error {
 repr: Os { code: 2, message: &#34;No such file or directory&#34; } }&#39;,
 /stable-dist-rustc/build/src/libcore/result.rs:868
-</code></pre><h4 id="expect"><!-- raw HTML omitted -->6.2.2<!-- raw HTML omitted --> expect</h4>
+</code></pre><h4 id="expect"><span class="section-num">6.2.2</span> expect</h4>
 <p><code>expect()</code>和 <code>unwrap()</code>类似，只不过 <code>expect()</code>可以加上额外的信息：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">fs</span>::<span class="n">File</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -2870,11 +2870,11 @@ repr: Os { code: 2, message: &#34;No such file or directory&#34; } }&#39;,
 2, message: &#34;No such file or directory&#34; } }&#39;,
 /stable-dist-rustc/build/src/libcore/result.rs:868
 </code></pre><p>以上代码来自 <a href="https://doc.rust-lang.org/book/second-edition/ch09-02-recoverable-errors-with-result.html">Rust book</a></p>
-<h2 id="结语"><!-- raw HTML omitted -->7<!-- raw HTML omitted --> 结语</h2>
+<h2 id="结语"><span class="section-num">7</span> 结语</h2>
 <p>以上只是浅谈了 Rust 的错误处理，以及和 Java 的异常处理机制的简单比较，接下来我会 谈谈如何自定义<code>Error</code>以及使用
 <code>erro_chain</code> 这个库来优雅地进行错误处理 :)</p>
 <p>如果想了解更多关于 Rust 异常处理的内容，可以查阅 Rust book <a href="https://doc.rust-lang.org/book/second-edition/ch09-00-error-handling.html">Error handle</a></p>
-<h2 id="参考"><!-- raw HTML omitted -->8<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">8</span> 参考</h2>
 <ul>
 <li><a href="http://tutorials.jenkov.com/exception-handling-strategies/propagating-exceptions.html">propagating exceptions</a></li>
 <li><a href="https://doc.rust-lang.org/book/second-edition/">Rust book</a></li>

@@ -52,7 +52,7 @@
 <figure>
     <img loading="lazy" src="http://i.imgur.com/g1Oz9JY.png"
          alt="Figure 1: 补全结果总是显示在同一个窗口"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->补全结果总是显示在同一个窗口</p>
+            <p><span class="figure-number">Figure 1: </span>补全结果总是显示在同一个窗口</p>
         </figcaption>
 </figure>
 

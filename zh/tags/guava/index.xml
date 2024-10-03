@@ -20,14 +20,14 @@
       
       <guid>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E6%96%B0%E7%B1%BB%E5%9E%8B%E5%AE%B9%E5%99%A8/</guid>
       <description>1 前言 JDK 提供了各种功能强大的工具类, 宛如装备齐全的军火库, 而容器就是其中一项内置的利器, 提供了包括诸多常用的数据结构, 下图对 JDK 已有容器进行了</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>JDK 提供了各种功能强大的工具类, 宛如装备齐全的军火库,
 而容器就是其中一项内置的利器, 提供了包括诸多常用的数据结构, 下图对 JDK
 已有容器进行了概括:</p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191122171101.png"
          alt="Figure 1: JDK 容器"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->JDK 容器</p>
+            <p><span class="figure-number">Figure 1: </span>JDK 容器</p>
         </figcaption>
 </figure>
 
@@ -37,7 +37,7 @@ JDK 依然欠缺, 而 Guava 恰如其分地填补了这些空缺, 开发了 JDK
 <p>此外, 虽然引入了新的容器类, 但 Guava 实现了
 JDK 的 <code>Collection</code> 接口, 保证 Guava 的容器类能够与 JDK
 的容器类”和谐共处”, 避免不必要的”纷争”.</p>
-<h2 id="multiset"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Multiset</h2>
+<h2 id="multiset"><span class="section-num">2</span> Multiset</h2>
 <p>假设你是个书店的老板, 你想统计下书店里不同书籍的存货量,
 你可能写下这样的实现:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">counts</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;();</span>
@@ -85,7 +85,7 @@ value 都加起来?</p>
 </ul>
 </li>
 </ul>
-<h3 id="multiset-的例子"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> Multiset 的例子</h3>
+<h3 id="multiset-的例子"><span class="section-num">2.1</span> Multiset 的例子</h3>
 <p>粗略介绍完 <code>Multiset</code> 之后, 现在就让我们用它重新实现原来的需求:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Test</span>
 </span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testMultiset</span><span class="o">()</span> <span class="o">{</span>
@@ -104,7 +104,7 @@ value 都加起来?</p>
 </span></span><span class="line"><span class="cl">    <span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">bookstore</span><span class="o">.</span><span class="na">count</span><span class="o">(</span><span class="n">POTTER</span><span class="o">));</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></div><p><code>multisets</code> 完美满足了我们的需求.</p>
-<h3 id="multiset-并不是一个-map"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> Multiset 并不是一个 Map</h3>
+<h3 id="multiset-并不是一个-map"><span class="section-num">2.2</span> Multiset 并不是一个 Map</h3>
 <p>需要注意的是, <code>Multiset</code> 虽然与<code>Map&lt;E, Integer&gt;</code>类似, 但 <code>Multiset</code>
 并不是一个<code>Map&lt;E, Integer&gt;</code>, 请不要混淆它们两个.</p>
 <p>最大的差别是, <code>Multiset</code> 实现了 <code>Collection</code> 接口, 完全遵守 <code>Collection</code>
@@ -127,7 +127,7 @@ value 都加起来?</p>
 <li><code>multiset.count(elem)</code>: 如果元素 <code>elem</code> 不存在, 那么返回值总是 0. 而
 <code>Map</code> 对于不存在的元素, 返回的是 <code>null</code> .</li>
 </ol>
-<h3 id="multiset-实现"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> Multiset 实现</h3>
+<h3 id="multiset-实现"><span class="section-num">2.3</span> Multiset 实现</h3>
 <p>鉴于 <code>Multiset</code> 只是个接口, Guava 提供许多的接口实现, 大致可以与 Java
 中的容器对应上:</p>
 <table>
@@ -166,7 +166,7 @@ value 都加起来?</p>
 </tr>
 </tbody>
 </table>
-<h2 id="multimap"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Multimap</h2>
+<h2 id="multimap"><span class="section-num">3</span> Multimap</h2>
 <p>又来假设, 你是个班主任, 刚刚考完试, 你想记录下班里所有同学的成绩,
 你可能写下这样的实现:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl">
@@ -194,7 +194,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 <ul>
 <li>一个 <code>key</code> 对应一个 <code>value</code> , 同样的 <code>key</code> 可以存在多个:</li>
 </ul>
-<!-- raw HTML omitted -->
+<!--listend-->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">a -&gt; 1
 </span></span><span class="line"><span class="cl">a -&gt; 2
 </span></span><span class="line"><span class="cl">a -&gt; 4
@@ -203,7 +203,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </span></span></code></pre></div><ul>
 <li>或者一个 <code>key</code> 对应一个列表的 <code>value</code> :</li>
 </ul>
-<!-- raw HTML omitted -->
+<!--listend-->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">a -&gt; [1, 2, 4]
 </span></span><span class="line"><span class="cl">b -&gt; [3]
 </span></span><span class="line"><span class="cl">c -&gt; [5]
@@ -215,7 +215,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 <p>一般来说, 我们不会直接使用 <code>Multimap</code> 接口, 使用的是它的子接口; <code>Multimap</code>
 接口提供了两个子接口: <code>ListMultimap</code> 和 <code>SetMultimap</code> , 大致类似于
 <code>Map&lt;K, List&lt;V&gt;&gt;</code>和 <code>Map&lt;K, Set&lt;V&gt;&gt;</code>.</p>
-<h3 id="multimap-的例子"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> Multimap 的例子</h3>
+<h3 id="multimap-的例子"><span class="section-num">3.1</span> Multimap 的例子</h3>
 <p>现在让我们用 <code>Multimap</code> 重新实现一次学生不同科目的成绩单:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">String</span> <span class="n">alan</span> <span class="o">=</span> <span class="s">&#34;Alan&#34;</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl"><span class="n">String</span> <span class="n">turing</span> <span class="o">=</span> <span class="s">&#34;Turing&#34;</span><span class="o">;</span>
@@ -232,21 +232,21 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </span></span><span class="line"><span class="cl"><span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">alanScores</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
 </span></span><span class="line"><span class="cl"><span class="n">alanScores</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
 </span></span><span class="line"><span class="cl"><span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">studentScoresMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">alan</span><span class="o">).</span><span class="na">size</span><span class="o">());</span>
-</span></span></code></pre></div><h4 id="构造"><!-- raw HTML omitted -->3.1.1<!-- raw HTML omitted --> 构造</h4>
+</span></span></code></pre></div><h4 id="构造"><span class="section-num">3.1.1</span> 构造</h4>
 <p>细心的同学可能会发现, 上面创建 <code>ListMultimap</code>
 的方式不是直接调用实现类的<code>.create()</code>函数, 而是使用 <code>MultimapBuilder</code> .</p>
 <p>并不是 <code>Multimap</code> 的实现没有提供<code>.create()</code>方法, 是通过
 <code>MultimapBuilder</code> 创建 <code>Multimap</code> 实现会更加便利一点,
 使用<code>hashKeys()</code>函数创建的就是一个 <code>HashMap</code> ,
 使用<code>treeKeys()</code>函数创建的就是一个 <code>TreeMap</code> .</p>
-<h4 id="修改"><!-- raw HTML omitted -->3.1.2<!-- raw HTML omitted --> 修改</h4>
+<h4 id="修改"><span class="section-num">3.1.2</span> 修改</h4>
 <p><code>Multimap.get(key)</code>返回的就是特定 <code>key</code> 关联的集合, 对于一个
 <code>ListMultimap</code> , 返回的就是一个 <code>List</code> ; 对于一个 <code>SetMultimap</code> ,
 返回的就是一个 <code>Set</code> .</p>
 <p>实际返回的是集合的引用, 所以对这个返回集合的操作,
 将直接反馈在 <code>Multimap</code> 实例上. 如上面的例子所示, 把学生 <code>alan</code>
 返回列表的数据清空, 在 <code>ListMultimap</code> 的数据也相应地被清空了.</p>
-<h3 id="视图"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> 视图</h3>
+<h3 id="视图"><span class="section-num">3.2</span> 视图</h3>
 <p>所谓的视图(Views), 我理解就是看待事物的方式和角度,
 称为视图(或者视角&rsquo;perspective&rsquo;).</p>
 <p><code>Multimap</code> 提供了若干个有用的视图:</p>
@@ -261,7 +261,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 <code>asMap().get(key)</code> 实现这样的效果</p>
 </li>
 </ol>
-<!-- raw HTML omitted -->
+<!--listend-->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">studentScoresMap</span><span class="o">.</span><span class="na">asMap</span><span class="o">().</span><span class="na">remove</span><span class="o">(</span><span class="n">alan</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 抛出 UnsupportedOperationException 异常
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">studentScoresMap</span><span class="o">.</span><span class="na">asMap</span><span class="o">().</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;key&#34;</span><span class="o">,</span> <span class="n">Lists</span><span class="o">.</span><span class="na">newArrayList</span><span class="o">());</span>
@@ -286,7 +286,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 对应的 value 集合串联起来, 如前文的 <code>studentScoresMap.values()</code>
 返回的就是: <code>[95, 88, 100]</code></li>
 </ul>
-<h3 id="multimap-也不是一个-map"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> Multimap 也不是一个 Map</h3>
+<h3 id="multimap-也不是一个-map"><span class="section-num">3.3</span> Multimap 也不是一个 Map</h3>
 <p>严格来说, 即使 <code>Multimap</code> 名字中带有 map, 甚至 <code>map</code> 可能用来实现
 <code>Multimap</code> , 但一个 <code>Multimap&lt;K,V&gt;</code> 终究不是一个
 <code>Map&lt;K, Collection&lt;V&gt;&gt;</code>. 它们之间的差异包括:</p>
@@ -303,7 +303,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 <li><code>Multimap.size()</code> 返回的是所有记录的总数的, 即把所有的 value
 的数量累加起来, 而 <code>Map&lt;K, Colleciton&lt;V&gt;&gt;</code> 返回的就是 key 对应的数量.</li>
 </ol>
-<h3 id="实现"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> 实现</h3>
+<h3 id="实现"><span class="section-num">3.4</span> 实现</h3>
 <p><code>Multimap</code> 提供了若干个不同类型的实现, 你可以使用对应的实现来取代原来
 <code>Map&lt;K, Collection&lt;V&gt;&gt;</code> 的地方:</p>
 <table>
@@ -357,7 +357,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 有好几个实现出于性能的考虑, 实现了自定义的 hash 表.</p>
 <p><code>Multimap</code> 还支持自定义 value 的集合形式, 如 List 形式或者 Set 形式, 详情可见
 <a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/Multimaps.html#newMultimap-java.util.Map-com.google.common.base.Supplier-"><code>Multimaps.newMultimap(Map, Supplier&lt;Collection&gt;)</code></a></p>
-<h2 id="bimap"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> BiMap</h2>
+<h2 id="bimap"><span class="section-num">4</span> BiMap</h2>
 <p>继续假设, 你是个班主任, 你有个学生名字与学号的名单,
 你有时会通过名字查询对应学号, 有时又会根据学号反查询学生名字, 通常来说,
 你会这么实现这个名单:</p>
@@ -381,7 +381,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 并插入一对新的 key-value, 可以使用
 <a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/BiMap.html#forcePut-java.lang.Object-java.lang.Object-"><code>Bimap.forcePut(key,value)</code></a></li>
 </ol>
-<h3 id="bimap-例子"><!-- raw HTML omitted -->4.1<!-- raw HTML omitted --> BiMap 例子</h3>
+<h3 id="bimap-例子"><span class="section-num">4.1</span> BiMap 例子</h3>
 <p>让我们用 BiMap 来重新实现学生名字和学号的名单:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">BiMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">userId</span> <span class="o">=</span> <span class="n">HashBiMap</span><span class="o">.</span><span class="na">create</span><span class="o">();</span>
 </span></span><span class="line"><span class="cl"><span class="n">userId</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;Linus&#34;</span><span class="o">,</span> <span class="s">&#34;0001&#34;</span><span class="o">);</span>
@@ -390,7 +390,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">String</span> <span class="n">idForUser</span> <span class="o">=</span> <span class="n">userId</span><span class="o">.</span><span class="na">inverse</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="s">&#34;0001&#34;</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 抛出异常: java.lang.IllegalArgumentException: value already present: 0001
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">userId</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;RMS&#34;</span><span class="o">,</span> <span class="s">&#34;0001&#34;</span><span class="o">);</span>
-</span></span></code></pre></div><h3 id="bimap-实现"><!-- raw HTML omitted -->4.2<!-- raw HTML omitted --> BiMap 实现</h3>
+</span></span></code></pre></div><h3 id="bimap-实现"><span class="section-num">4.2</span> BiMap 实现</h3>
 <table>
 <thead>
 <tr>
@@ -422,7 +422,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </tr>
 </tbody>
 </table>
-<h2 id="table"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> Table</h2>
+<h2 id="table"><span class="section-num">5</span> Table</h2>
 <p>假设还是个班主任, 现在你需要制作一个包含学号, 姓名与成绩的名单,
 然后可以通过姓名或者学号进搜索, 你会怎么实现呢? 什么? 用 excel?
 你好幽默啊!</p>
@@ -452,7 +452,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 如果我是班主任, 我就辞职了, 给我个 excel 不行么?</p>
 <p>excel 是没有的了, 但是 Guava 提供了一个类 excel 的多 key 存储/搜索的容器: <code>Table</code>,
 它支持以行和列维度搜索.</p>
-<h3 id="table-例子"><!-- raw HTML omitted -->5.1<!-- raw HTML omitted --> Table 例子</h3>
+<h3 id="table-例子"><span class="section-num">5.1</span> Table 例子</h3>
 <p>让我们用 <code>Table</code> 重新实现一次可根据姓名与学号进行搜索的成绩单:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 从左到右各列分别是: 学号, 姓名, 成绩
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Table</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">idNameScoreTranscript</span> <span class="o">=</span> <span class="n">HashBasedTable</span><span class="o">.</span><span class="na">create</span><span class="o">();</span>
@@ -477,18 +477,18 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/guava_table_row.png"
          alt="Figure 2: row: 以第一个 key 来搜索"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->row: 以第一个 key 来搜索</p>
+            <p><span class="figure-number">Figure 2: </span>row: 以第一个 key 来搜索</p>
         </figcaption>
 </figure>
 
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/guava_table_column.png"
          alt="Figure 3: column: 以第二个 key 来搜索"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 3: <!-- raw HTML omitted -->column: 以第二个 key 来搜索</p>
+            <p><span class="figure-number">Figure 3: </span>column: 以第二个 key 来搜索</p>
         </figcaption>
 </figure>
 
-<h3 id="table-视图"><!-- raw HTML omitted -->5.2<!-- raw HTML omitted --> Table 视图</h3>
+<h3 id="table-视图"><span class="section-num">5.2</span> Table 视图</h3>
 <p>一往常, <code>Table</code> 也提供了若干个视图:</p>
 <ol>
 <li><code>rowMap()</code>, 把 <code>Table&lt;R, C, V&gt;</code> 看作一个 <code>Map&lt;R, Map&lt;C, V&gt;&gt;</code>, 同样的,
@@ -501,7 +501,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 与 <code>Map.Entry</code> 十分类似, 只不过它有两个 key, 形式是 <code>(r,c)=v</code>, 而
 <code>Map.Entry</code> 是 <code>key = value</code>.</li>
 </ol>
-<h3 id="table-实现"><!-- raw HTML omitted -->5.3<!-- raw HTML omitted --> Table 实现</h3>
+<h3 id="table-实现"><span class="section-num">5.3</span> Table 实现</h3>
 <p>Table 依旧提供了若干个实现, 列表如下:</p>
 <table>
 <thead>
@@ -529,7 +529,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </tr>
 </tbody>
 </table>
-<h2 id="classtoinstancemap"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> ClassToInstanceMap</h2>
+<h2 id="classtoinstancemap"><span class="section-num">6</span> ClassToInstanceMap</h2>
 <p>目前, 我们介绍过的 Map, 无论是原生 Jdk 的 Map, 抑或是 Guava 的 Map,
 <code>key</code> 都是同一个类型的.</p>
 <p>这是因为 Map 的签名是 <code>Map&lt;K,V&gt;</code>, 实例的时候, 只能实例成某具体一个类型的参数. 所谓凡事都有例外, 有没有支持 <code>key</code>
@@ -540,7 +540,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 通过传入不同类型的 <code>Class</code> 对象, 实现类型不同的 =key=(如果你要说,
 即使传入不同类型的 Class 对象, 它只有一个 Class, 没有实现多个不同类型的
 key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</p>
-<h3 id="classtoinstancemap-例子"><!-- raw HTML omitted -->6.1<!-- raw HTML omitted --> ClassToInstanceMap 例子</h3>
+<h3 id="classtoinstancemap-例子"><span class="section-num">6.1</span> ClassToInstanceMap 例子</h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">ClassToInstanceMap</span><span class="o">&lt;</span><span class="n">Number</span><span class="o">&gt;</span> <span class="n">numberDefault</span> <span class="o">=</span> <span class="n">MutableClassToInstanceMap</span><span class="o">.</span><span class="na">create</span><span class="o">();</span>
 </span></span><span class="line"><span class="cl"><span class="n">numberDefault</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">Integer</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="n">numberDefault</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="mi">20L</span><span class="o">);</span>
@@ -558,7 +558,7 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 <p>如果传入的是 <code>String,</code> 不符合声明, 编译就报错了.</p>
 <p><strong>需要注意的是, 和 <code>Map&lt;Class, Object&gt;</code> 一样, 一个 <code>ClassToInstanceMap</code> 可以包含着是原始类型的 <code>value</code>,
 而原始类型与它对应的包装类型并不是同一种类型, 不要混淆了哦</strong></p>
-<h3 id="classtoinstancemap-实现"><!-- raw HTML omitted -->6.2<!-- raw HTML omitted --> ClassToInstanceMap 实现</h3>
+<h3 id="classtoinstancemap-实现"><span class="section-num">6.2</span> ClassToInstanceMap 实现</h3>
 <p><code>ClassToInstanceMap</code> 提供了两个实现:</p>
 <table>
 <thead>
@@ -578,7 +578,7 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 </tr>
 </tbody>
 </table>
-<h2 id="rangeset"><!-- raw HTML omitted -->7<!-- raw HTML omitted --> RangeSet</h2>
+<h2 id="rangeset"><span class="section-num">7</span> RangeSet</h2>
 <p>目前为止, 我们介绍过的新类型容器都是常见的 Map/Set/Table,
 现在我们就来介绍一个表示区间的容器: <code>RangeSet</code>. 一个 <code>RangeSet</code>,
 表示一个包含无连接的, 不为空的区间的集合, 例如包含一个整数区间的
@@ -587,7 +587,7 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 任何有交集的区间都会被合并, 为空的区间就会被忽略, 例如将区间 <code>[3,5]</code>
 加入到已有的 <code>RangeSet</code> <code>{[2,4]}</code>, 就会被合并成 <code>{[2,5]}</code>,
 这个也符合我们日常的生活经验.</p>
-<h3 id="rangeset-例子"><!-- raw HTML omitted -->7.1<!-- raw HTML omitted --> RangeSet 例子</h3>
+<h3 id="rangeset-例子"><span class="section-num">7.1</span> RangeSet 例子</h3>
 <p>让我们现在来看一下 <code>RangeSet</code> 的两个例子, 一个是整数的 <code>RangeSet</code></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">RangeSet</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">rangeSet</span> <span class="o">=</span> <span class="n">TreeRangeSet</span><span class="o">.</span><span class="na">create</span><span class="o">();</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// {[2,4]}
@@ -646,7 +646,7 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 <code>RangeSet</code>: <code>{[2019-10-10,2019-10-20), (2019-10-30, 2019-12-30)}</code>,
 <code>span</code> 函数返回的区间就是 <code>{[2019-10-10, 2019-12-30)}</code>.</li>
 </ul>
-<h3 id="rangeset-视图"><!-- raw HTML omitted -->7.2<!-- raw HTML omitted --> RangeSet 视图</h3>
+<h3 id="rangeset-视图"><span class="section-num">7.2</span> RangeSet 视图</h3>
 <p>依照惯例, <code>RangeSet</code> 也提供了若干个视图:</p>
 <ul>
 <li><code>complement()</code>: 返回某个 <code>RangeSet</code> 的补集, 返回结果也是个 <code>RangeSet</code>,
@@ -666,7 +666,7 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 <code>{[2019-10-10,2019-10-20), (2019-10-30, 2019-12-30)}</code>, 返回结果就是:
 <code>Set({[2019-10-10,2019-10-20), (2019-10-30, 2019-12-30)})</code></li>
 </ul>
-<h3 id="rangeset-实现"><!-- raw HTML omitted -->7.3<!-- raw HTML omitted --> RangeSet 实现</h3>
+<h3 id="rangeset-实现"><span class="section-num">7.3</span> RangeSet 实现</h3>
 <p><code>RangeSet</code> 提供了两个实现:</p>
 <table>
 <thead>
@@ -686,12 +686,12 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 </tr>
 </tbody>
 </table>
-<h2 id="rangemap"><!-- raw HTML omitted -->8<!-- raw HTML omitted --> RangeMap</h2>
+<h2 id="rangemap"><span class="section-num">8</span> RangeMap</h2>
 <p>既然能以区间集作为容器, 那么能否把区间当作 Map 的 <code>key</code> 呢?
 答案是当然可以, Guava 就提供了一个这样的容器: <a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/RangeMap.html"><code>RangeMap</code></a>.</p>
 <p>需要注意的是, 不像 <code>RangeSet</code> 那样, 相邻或者相交的区间不能连接起来的,
 即使毗邻的区间映射的是同一个 <code>value</code>.</p>
-<h2 id="rangemap-例子"><!-- raw HTML omitted -->9<!-- raw HTML omitted --> RangeMap 例子</h2>
+<h2 id="rangemap-例子"><span class="section-num">9</span> RangeMap 例子</h2>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">RangeMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">rangeMap</span> <span class="o">=</span> <span class="n">TreeRangeMap</span><span class="o">.</span><span class="na">create</span><span class="o">();</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// {[1,10] =&gt; &#34;foo&#34;}
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">rangeMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">Range</span><span class="o">.</span><span class="na">closed</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">10</span><span class="o">),</span> <span class="s">&#34;foo&#34;</span><span class="o">);</span>
@@ -712,7 +712,7 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 </span></span><span class="line"><span class="cl"><span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="s">&#34;foo&#34;</span><span class="o">,</span> <span class="n">subRangeMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">12</span><span class="o">));</span>
 </span></span></code></pre></div><p><code>RangeMap</code> 提供的查询函数不多, 满打满算也只有 <code>get(K)</code> 和 <code>span</code>
 这两个函数.</p>
-<h3 id="rangemap-视图"><!-- raw HTML omitted -->9.1<!-- raw HTML omitted --> RangeMap 视图</h3>
+<h3 id="rangemap-视图"><span class="section-num">9.1</span> RangeMap 视图</h3>
 <p><code>RangeMap</code> 提供的视图也不多, 只有两个:</p>
 <ul>
 <li><code>asMapOfRanges()</code>, 把 <code>RangeMap</code> 看作一个 <code>Map&lt;Range&lt;K&gt;, V&gt;</code>,
@@ -723,7 +723,7 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 <code>[12,15]</code>, 返回结果就是 <code>{[12, 15]} =&gt; &quot;foo&quot;</code>; 如果取子区间<code>[4,12]</code>,
 返回结果就是: <code>{[4,5) =&gt; bar, (11, 12] =&gt; foo}</code></li>
 </ul>
-<h3 id="rangemap-实现"><!-- raw HTML omitted -->9.2<!-- raw HTML omitted --> RangeMap 实现</h3>
+<h3 id="rangemap-实现"><span class="section-num">9.2</span> RangeMap 实现</h3>
 <p>RangeMap 提供了两个实现:</p>
 <table>
 <thead>
@@ -747,7 +747,7 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 </tr>
 </tbody>
 </table>
-<h2 id="总结"><!-- raw HTML omitted -->10<!-- raw HTML omitted --> 总结</h2>
+<h2 id="总结"><span class="section-num">10</span> 总结</h2>
 <p>介绍完新类型的容器之后, 希望大家对这些新类型容器熟悉起来, 应对需求来也能得心应手 :)</p>
 ]]></content:encoded>
     </item>
@@ -759,10 +759,10 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
       
       <guid>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AE%B9%E5%99%A8/</guid>
       <description>1 前言 先此声明, 个人倾向于将Collection翻译成容器, 将Set翻译成集合. 已经许久没有更新Guava研读系列的文章, 今天要介绍的是Gu</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>先此声明, 个人倾向于将<code>Collection</code>翻译成容器, 将<code>Set</code>翻译成集合.</p>
 <p>已经许久没有更新Guava研读系列的文章, 今天要介绍的是Guava的不可变容器.</p>
-<h2 id="关于不可变对象"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 关于不可变对象</h2>
+<h2 id="关于不可变对象"><span class="section-num">2</span> 关于不可变对象</h2>
 <p>不可变的对象有许多的优点, 如下:</p>
 <ol>
 <li>线程安全, 可以在多线程之间使用也不用担心有竞争条件的风险</li>
@@ -793,7 +793,7 @@ Guava提供了许多简单易用的, 实现了标准库<code>Collection</code>�
 <p>此外, 在之前的文章中, 我阐述过Guava对于空指针的态度是尽量不要使用空指针,
 Guava的类库对于空指针都是快速失败的, Guava的不可变容器也是不例外的,
 是拒绝接受空指针的.</p>
-<h2 id="代码实例"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 代码实例</h2>
+<h2 id="代码实例"><span class="section-num">3</span> 代码实例</h2>
 <p>前面详细介绍了不可变容器, 现在是时候来看一下Guava不可变容器的代码例子:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">ImmutableSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">COLOR_NAMES</span> <span class="o">=</span> <span class="n">ImmutableSet</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
 </span></span><span class="line"><span class="cl">								       <span class="s">&#34;red&#34;</span><span class="o">,</span>
@@ -865,9 +865,9 @@ Collections方法不能提供真正的不可变容器,
 </span></span><span class="line"><span class="cl">    <span class="n">Object</span><span class="o">[]</span> <span class="n">array</span> <span class="o">=</span> <span class="n">elements</span><span class="o">.</span><span class="na">toArray</span><span class="o">();</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">construct</span><span class="o">(</span><span class="n">array</span><span class="o">.</span><span class="na">length</span><span class="o">,</span> <span class="n">array</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h2 id="具体细节"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> 具体细节</h2>
+</span></span></code></pre></div><h2 id="具体细节"><span class="section-num">4</span> 具体细节</h2>
 <p>下面我们来讨论一下各种不可变容器的具体使用细节.</p>
-<h3 id="构造不可变容器"><!-- raw HTML omitted -->4.1<!-- raw HTML omitted --> 构造不可变容器</h3>
+<h3 id="构造不可变容器"><span class="section-num">4.1</span> 构造不可变容器</h3>
 <p>关于如何构造一个不可变容器, Guava提供的手段是多种多样的:</p>
 <ol>
 <li>使用<code>copyOf</code>静态方法, 例如<code>ImmutableSet.copyOf(set)</code>,
@@ -877,7 +877,7 @@ Collections方法不能提供真正的不可变容器,
 前文已经介绍过, 在此就不赘言</li>
 <li>使用<code>Builder</code>构造不可变容器, 例如:</li>
 </ol>
-<!-- raw HTML omitted -->
+<!--listend-->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">ImmutableSet</span><span class="o">&lt;</span><span class="n">Color</span><span class="o">&gt;</span> <span class="n">GOOGLE_COLORS</span> <span class="o">=</span>
 </span></span><span class="line"><span class="cl">    <span class="n">ImmutableSet</span><span class="o">.&lt;</span><span class="n">Color</span><span class="o">&gt;</span><span class="n">builder</span><span class="o">()</span>
 </span></span><span class="line"><span class="cl">    <span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">WEBSAFE_COLORS</span><span class="o">)</span>
@@ -890,7 +890,7 @@ Collections方法不能提供真正的不可变容器,
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">final</span> <span class="n">ImmutableSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">alphaTable</span> <span class="o">=</span> <span class="n">ImmutableSet</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">&#34;a&#34;</span><span class="o">,</span> <span class="s">&#34;b&#34;</span><span class="o">,</span> <span class="s">&#34;c&#34;</span><span class="o">,</span> <span class="s">&#34;a&#34;</span><span class="o">,</span> <span class="s">&#34;d&#34;</span><span class="o">,</span> <span class="s">&#34;b&#34;</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="n">alphaTable</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 结果为 a b c d
-</span></span></span></code></pre></div><h3 id="aslist-函数"><!-- raw HTML omitted -->4.2<!-- raw HTML omitted --> <code>asList</code>函数</h3>
+</span></span></span></code></pre></div><h3 id="aslist-函数"><span class="section-num">4.2</span> <code>asList</code>函数</h3>
 <p>所有的不可变容器都提供了一个<code>asList</code>方法来返回一个不可变列表<code>ImmutableList</code>,
 所以即使你把数据存在一个不可变有序集合<code>ImmutableSortedSet</code>,
 你也可以通过下标索引获取最小的元素或者第n小的元素, 如:</p>
@@ -899,7 +899,7 @@ Collections方法不能提供真正的不可变容器,
 </span></span><span class="line"><span class="cl">    <span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">6</span><span class="o">).</span><span class="na">build</span><span class="o">();</span>
 </span></span><span class="line"><span class="cl"><span class="n">numberSet</span><span class="o">.</span><span class="na">asList</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
 </span></span><span class="line"><span class="cl">    <span class="err">#</span> <span class="err">结果为</span><span class="mi">1</span>
-</span></span></code></pre></div><h3 id="智能的-copyof-函数"><!-- raw HTML omitted -->4.3<!-- raw HTML omitted --> 智能的<code>copyOf</code>函数</h3>
+</span></span></code></pre></div><h3 id="智能的-copyof-函数"><span class="section-num">4.3</span> 智能的<code>copyOf</code>函数</h3>
 <p>前文提到,
 不可变容器都提供了一个<code>copyOf</code>方法用于从另外一个容器构造出一个不可变容器.
 值得指出的是不可变容器的<code>copyOf</code>方法在不需要拷贝数据的时候就会尽量避免拷贝数据,
@@ -920,7 +920,7 @@ Collections方法不能提供真正的不可变容器,
 并不是所有的不可变容器之间的转换都能实现<code>O(1)</code>时间复杂度,
 例如<code>ImmutableSet.copyOf(ImmutableList)</code>就只能逐个元素拷贝,
 时间复杂度退化到<code>O(n)</code>.</p>
-<h2 id="jdk容器与guava不可变容器"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> JDK容器与Guava不可变容器</h2>
+<h2 id="jdk容器与guava不可变容器"><span class="section-num">5</span> JDK容器与Guava不可变容器</h2>
 <p>对于JDK提供的标准容器, Guava提供了相应的不可变容器实现,
 对于Guava自家的容器, Guava也提供了对应的不可变容器, 具体实现对比如下:</p>
 <table>
@@ -1004,11 +1004,11 @@ Collections方法不能提供真正的不可变容器,
 </tr>
 </tbody>
 </table>
-<h2 id="总结"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> 总结</h2>
+<h2 id="总结"><span class="section-num">6</span> 总结</h2>
 <p>因为不可变容器不会在运行时改变他们的内部状态, 所以他们是线程安全和无副作用的.</p>
 <p>因为这些属性, 不可变容器在多线程环境就会变得特别有用, 可以安全地传递数据. 总而言之,
 生活和工作或许可以多拥抱变化, 对于代码, 最好还是多保持不变地好.</p>
-<h2 id="参考"><!-- raw HTML omitted -->7<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">7</span> 参考</h2>
 <ul>
 <li><a href="https://github.com/google/guava/wiki/ImmutableCollectionsExplained">Immutable
 Collections</a></li>
@@ -1023,7 +1023,7 @@ Collections</a></li>
       
       <guid>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BC%98%E9%9B%85%E6%A0%A1%E9%AA%8C%E6%95%B0%E6%8D%AE/</guid>
       <description>1 前言 根据防御式编程的要求, 在日常的开发中, 总少不了对函数的各种入参做校验, 以便保证函数能按照预期的流程执行下去. 比如各种费率的值就没可能是</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>根据防御式编程的要求, 在日常的开发中, 总少不了对函数的各种入参做校验,
 以便保证函数能按照预期的流程执行下去.</p>
 <p>比如各种费率的值就没可能是负数, 如果费率出现负数, 所以数据有问题,
@@ -1032,13 +1032,13 @@ Collections</a></li>
 <p>Guava 提供了一系列的静态方法用于校验函数和类的构造器是否符合预期,
 并称其为前置条件(preconditions). 如果前置条件校验失败,
 就会抛出一个指定的异常.</p>
-<h2 id="前置函数特征"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 前置函数特征</h2>
+<h2 id="前置函数特征"><span class="section-num">2</span> 前置函数特征</h2>
 <p>目前的前置校验方法有如下特征: 须需要, 下面例子中的<code>checkArgument</code>函数可以替换成任何一个前置条件校验函数</p>
 <ol>
 <li>这些前置方法一般接受一个布尔表达式作为入参，并判断表达是否为<code>true</code>,
 格式如:</li>
 </ol>
-<!-- raw HTML omitted -->
+<!--listend-->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Preconditions</span><span class="o">.</span><span class="na">checkArgument</span><span class="o">(</span><span class="n">a</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">)</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 如果表达式为false, 抛出IllegalArgumentException
 </span></span></span></code></pre></div><ol start="2">
@@ -1046,7 +1046,7 @@ Collections</a></li>
 前置方法可以接受一个额外的<code>Object</code>作为入参, 在抛出异常的时候,
 把<code>Object.toString()</code>作为异常信息, 如:</li>
 </ol>
-<!-- raw HTML omitted -->
+<!--listend-->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">enum</span> <span class="n">ErrorDetail</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="n">SC_NOT_FOUND</span><span class="o">(</span><span class="s">&#34;404&#34;</span><span class="o">,</span> <span class="s">&#34;Resource could not be fount&#34;</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">// 省略部分内容
@@ -1068,12 +1068,12 @@ Collections</a></li>
 只不过出于兼容性和性能的考虑, 只支持使用<code>%s</code>指示符格式化字符串,
 不支持其他类型. 如:</li>
 </ol>
-<!-- raw HTML omitted -->
+<!--listend-->
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">i</span><span class="o">=-</span><span class="mi">1</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl"><span class="n">checkArgument</span><span class="o">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">,</span> <span class="s">&#34;Argument was %s but expected nonnegative&#34;</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 结果如下:
 </span></span></span><span class="line"><span class="cl"><span class="c1">// java.lang.IllegalArgumentException: Argument was -1 but expected nonnegative
-</span></span></span></code></pre></div><h2 id="前置条件函数介绍"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 前置条件函数介绍</h2>
+</span></span></span></code></pre></div><h2 id="前置条件函数介绍"><span class="section-num">3</span> 前置条件函数介绍</h2>
 <p>须注意的是, 下面介绍的<code>checkArgument</code>, <code>checkArgument</code>,
 <code>checkState</code>函数都有三个对应的重载函数，分别对应前文所述的三种特征,
 下文不会三种函数都介绍, 只介绍标准格式的前置条件函数.
@@ -1081,7 +1081,7 @@ Collections</a></li>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkArgument</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkArgument</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">,</span> <span class="nd">@Nullable</span> <span class="n">Object</span> <span class="n">errorMessage</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkArgument</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">,</span><span class="nd">@Nullable</span> <span class="n">String</span> <span class="n">errorMessageTemplate</span><span class="o">,</span><span class="nd">@Nullable</span> <span class="n">Object</span><span class="o">...</span> <span class="n">errorMessageArgs</span><span class="o">)</span>
-</span></span></code></pre></div><h3 id="checkargument"><!-- raw HTML omitted -->3.1<!-- raw HTML omitted --> checkArgument</h3>
+</span></span></code></pre></div><h3 id="checkargument"><span class="section-num">3.1</span> checkArgument</h3>
 <p>函数的签名如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkArgument</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">);</span>
 </span></span></code></pre></div><p>入参是一个布尔表达式, 函数校验这个表达式是否为<code>true</code>, 如果为<code>false</code>,
@@ -1090,7 +1090,7 @@ Collections</a></li>
 </span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testCheckArgument</span><span class="o">()</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="n">Preconditions</span><span class="o">.</span><span class="na">checkArgument</span><span class="o">(</span><span class="mi">1</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h3 id="checknotnull"><!-- raw HTML omitted -->3.2<!-- raw HTML omitted --> checkNotNull</h3>
+</span></span></code></pre></div><h3 id="checknotnull"><span class="section-num">3.2</span> checkNotNull</h3>
 <p>这是个泛型函数, 函数签名如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">checkNotNull</span><span class="o">(</span><span class="n">T</span> <span class="n">reference</span><span class="o">);</span>
 </span></span></code></pre></div><p>入参是个任意类型的对象, 函数校验这个对象是否为<code>null</code>, 如果为空,
@@ -1099,7 +1099,7 @@ Collections</a></li>
 例子如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">PreconditionTest</span> <span class="n">caller</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PreconditionTest</span><span class="o">();</span>
 </span></span><span class="line"><span class="cl"><span class="n">caller</span><span class="o">.</span><span class="na">setErrorDetail</span><span class="o">(</span><span class="n">Preconditions</span><span class="o">.</span><span class="na">checkNotNull</span><span class="o">(</span><span class="n">ErrorDetail</span><span class="o">.</span><span class="na">SC_INTERNAL_SERVER_ERROR</span><span class="o">));</span>
-</span></span></code></pre></div><h3 id="checkstate"><!-- raw HTML omitted -->3.3<!-- raw HTML omitted --> checkState</h3>
+</span></span></code></pre></div><h3 id="checkstate"><span class="section-num">3.3</span> checkState</h3>
 <p>函数签名如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkState</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">);</span>
 </span></span></code></pre></div><p>看着这个函数, 我个人感觉很奇怪:
@@ -1118,7 +1118,7 @@ Collections</a></li>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></div><p>此外, 因为这两个函数相当类似, 就不展示相应例子了.</p>
-<h3 id="checkelementindex"><!-- raw HTML omitted -->3.4<!-- raw HTML omitted --> checkElementIndex</h3>
+<h3 id="checkelementindex"><span class="section-num">3.4</span> checkElementIndex</h3>
 <p>函数签名如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">checkElementIndex</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">,</span> <span class="kt">int</span> <span class="n">size</span><span class="o">);</span>
 </span></span></code></pre></div><p>这个函数用于判断指定数组, 列表, 字符串的下标是否越界, <code>index</code>是下标,
@@ -1133,7 +1133,7 @@ Collections</a></li>
 </span></span><span class="line"><span class="cl"><span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">Preconditions</span><span class="o">.</span><span class="na">checkElementIndex</span><span class="o">(</span><span class="s">&#34;test&#34;</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">-</span> <span class="mi">1</span><span class="o">,</span> <span class="s">&#34;test&#34;</span><span class="o">.</span><span class="na">length</span><span class="o">()));</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 运行结果:
 </span></span></span><span class="line"><span class="cl"><span class="c1">// 通过
-</span></span></span></code></pre></div><h2 id="checkpositionindex"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> checkPositionIndex</h2>
+</span></span></span></code></pre></div><h2 id="checkpositionindex"><span class="section-num">4</span> checkPositionIndex</h2>
 <p>函数的签名如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">checkPositionIndex</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">,</span> <span class="kt">int</span> <span class="n">size</span><span class="o">);</span>
 </span></span></code></pre></div><p>这个函数和<code>checkElementIndex</code>非常类似, 连Guava wiki的说明也基本一致(只有一个单词不同).</p>
@@ -1146,7 +1146,7 @@ Collections</a></li>
 </span></span><span class="line"><span class="cl"><span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">Preconditions</span><span class="o">.</span><span class="na">checkPositionIndex</span><span class="o">(</span><span class="s">&#34;test&#34;</span><span class="o">.</span><span class="na">length</span><span class="o">(),</span> <span class="s">&#34;test&#34;</span><span class="o">.</span><span class="na">length</span><span class="o">()));</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 运行结果:
 </span></span></span><span class="line"><span class="cl"><span class="c1">// 通过
-</span></span></span></code></pre></div><h3 id="checkpositionindexes"><!-- raw HTML omitted -->4.1<!-- raw HTML omitted --> checkPositionIndexes</h3>
+</span></span></span></code></pre></div><h3 id="checkpositionindexes"><span class="section-num">4.1</span> checkPositionIndexes</h3>
 <p>函数的签名如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkPositionIndexes</span><span class="o">(</span><span class="kt">int</span> <span class="n">start</span><span class="o">,</span> <span class="kt">int</span> <span class="n">end</span><span class="o">,</span> <span class="kt">int</span> <span class="n">size</span><span class="o">);</span>
 </span></span></code></pre></div><p>这个函数是用于判断<code>[start,end]</code>这个范围是否是个有效范围, 即<code>[start, end]</code> 是否在<code>[0, size]</code> 范围内(如果<code>[start, end]</code>
@@ -1158,7 +1158,7 @@ Collections</a></li>
 </span></span><span class="line"><span class="cl"><span class="n">Preconditions</span><span class="o">.</span><span class="na">checkPositionIndexes</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 运行结果:
 </span></span></span><span class="line"><span class="cl"><span class="c1">// 校验通过
-</span></span></span></code></pre></div><h2 id="前置条件在实际项目的应用"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 前置条件在实际项目的应用</h2>
+</span></span></span></code></pre></div><h2 id="前置条件在实际项目的应用"><span class="section-num">5</span> 前置条件在实际项目的应用</h2>
 <p>前置条件在检验条件不成交的时候抛的异常类型虽说是合情合理(比如,
 <code>checkArgument</code>函数抛出<code>IllegalArgumentException</code>),</p>
 <p>但是对于业务系统来说, 你抛出个<code>IllegalArgumentException</code>或者<code>NullPointerException</code>, 接口调用方对于这个异常摸不着头脑, 虽说只是正常的数据问题,
@@ -1209,7 +1209,7 @@ Collections</a></li>
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 调用例子:
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">AssertUtils</span><span class="o">.</span><span class="na">checkArgument</span><span class="o">(</span><span class="n">merchantEntity</span><span class="o">.</span><span class="na">exist</span><span class="o">(),</span> <span class="n">ErrDetailEnum</span><span class="o">.</span><span class="na">DATA_NOT_EXIT</span><span class="o">,</span> <span class="s">&#34;商户不存在&#34;</span><span class="o">);</span>
-</span></span></code></pre></div><h2 id="guava-precondition-vs-apache-common-validate"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> Guava Precondition vs Apache Common Validate</h2>
+</span></span></code></pre></div><h2 id="guava-precondition-vs-apache-common-validate"><span class="section-num">6</span> Guava Precondition vs Apache Common Validate</h2>
 <p>自古文无第一, 武无第二, 文人之间的口水战总是少不了的.</p>
 <p>没想到这不是国人的专利, 原来国外也有文人相轻的风气: Guava wiki
 在介绍完preconditions之后, 还踩了一波竞品Apache Common Validate,
@@ -1222,10 +1222,10 @@ Guava wiki 还提了两点最佳实践(best practice):</p>
 <li>使用前置条件校验的时候, 尽量提供有用的错误信息,
 这样可以更快地定位问题.</li>
 </ol>
-<h2 id="总结"><!-- raw HTML omitted -->7<!-- raw HTML omitted --> 总结</h2>
+<h2 id="总结"><span class="section-num">7</span> 总结</h2>
 <p>代码大全一书有一章是关于防御式编程的, 用于提高程序的健壮性, 主要思想是子程序应该不因传入错误数据而被破坏，要保护程序免遭非法输入数据的破坏.</p>
 <p>而Guava的preconditions 就是实现防御式编程的有力工具呢. oh yeah!</p>
-<h2 id="参考"><!-- raw HTML omitted -->8<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">8</span> 参考</h2>
 <ul>
 <li><a href="https://github.com/google/guava/wiki/PreconditionsExplained">PreconditionsExplained</a></li>
 </ul>
@@ -1239,7 +1239,7 @@ Guava wiki 还提了两点最佳实践(best practice):</p>
       
       <guid>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BD%BF%E7%94%A8%E5%92%8C%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E7%A9%BA%E6%8C%87%E9%92%88/</guid>
       <description>1 前言 To be, or not to be, that is the question: 先来看看奆佬们关于空指针的看法: Null sucks - Doug Lea(JCP,Java并发编程实战作者, Java巨佬) I call it my billion-dollar mistake. - Sir C.</description>
-      <content:encoded><![CDATA[<h2 id="前言"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 前言</h2>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <blockquote>
 <p>To be, or not to be, that is the question:</p>
 </blockquote>
@@ -1253,14 +1253,14 @@ Guava wiki 还提了两点最佳实践(best practice):</p>
 <p>如接近95%的集合类都不支持使用<code>null</code>作为集合元素.
 像Google这样的大公司明确不建议使用<code>null</code>自然是有其原由的, 不会无的放矢.
 那具体原因是什么呢？待下文为你细细道来;</p>
-<h2 id="空指针的问题"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 空指针的问题</h2>
-<h3 id="空指针语意隐晦不明"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> 空指针语意隐晦不明</h3>
+<h2 id="空指针的问题"><span class="section-num">2</span> 空指针的问题</h2>
+<h3 id="空指针语意隐晦不明"><span class="section-num">2.1</span> 空指针语意隐晦不明</h3>
 <p><code>null</code>的语意并不了然明确, 即当一个函数返回<code>null</code>, 我们并不知道<code>null</code>的意思是指返回结果理应为空? 还是指函数没有达到预期结果, 返回<code>null</code>表示失败?</p>
 <p>举个常见的例子, 当调用<code>Map.get(key)</code>获取key对应的value的时候, 返回结果为<code>null</code>; <code>null</code>是指找不到这个key对应的value?
 还是说这个key对应的value本身就是<code>null</code>, 原来是通过<code>Map.put(key,value)</code>赋值的呢? <code>null</code>甚至可以是代表其他东西!</p>
 <p>老实说, 当我们获得一个<code>null</code>, 我们并不清楚它究竟指的是啥,
 除非有对应的javadoc 进行了说明.</p>
-<h3 id="空指针-暗藏杀机"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> 空指针”暗藏杀机”</h3>
+<h3 id="空指针-暗藏杀机"><span class="section-num">2.2</span> 空指针”暗藏杀机”</h3>
 <p><code>null</code>除了语意不明外, 还非常容易在不经意间挖坑坑人. 例如有下面的代码:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span> <span class="n">String</span> <span class="nf">testNull</span><span class="o">(</span><span class="n">String</span> <span class="n">input</span><span class="o">)</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">(</span><span class="n">random</span><span class="o">.</span><span class="na">nextInt</span><span class="o">()</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
@@ -1283,7 +1283,7 @@ Guava wiki 还提了两点最佳实践(best practice):</p>
 或者源码非常复杂, 一下子理不清思路, 防御式编程落实不到,
 就会忽略了<code>null</code>, 运行时就有可能抛出<code>NullPointException</code>, 导致程序crash.
 这种情况真的防不胜防.</p>
-<h2 id="guava对于空指针的态度"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Guava对于空指针的态度</h2>
+<h2 id="guava对于空指针的态度"><span class="section-num">3</span> Guava对于空指针的态度</h2>
 <p>因为上文提到或者隐藏但没提到的种种问题,
 Guava的诸多类库在设计时就不支持<code>null</code>.</p>
 <p>如果检测到<code>null</code>的存在, Guava的类库就会快速失败(fail fast),一般的处理策略是抛出异常.
@@ -1292,7 +1292,7 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p>
 <p>此外, Guava秉承既然不能消灭<code>null</code>, 那就把<code>null</code>建设得更好用的理念,
 除了提供了一些工具可以让开发者避免使用<code>null</code>,
 还提供了可以让开发者更易于使用<code>null</code>的工具.</p>
-<h2 id="optional"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Optional</h2>
+<h2 id="optional"><span class="section-num">4</span> Optional</h2>
 <p>在很多情况下, 程序员使用<code>null</code>是为了表示有些值可能存在或者不存在.
 我们又可以用熟悉的<code>Map.get(key)</code>函数来举例,
 如果规定<code>null</code>不能作为<code>value</code>值使用(但事实并非如此),
@@ -1300,7 +1300,7 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p>
 <p>为了应对这种使用<code>null</code>的情况, Guava团队参考其他语言(例如Scala)应对<code>null</code>的实践, 开发了<code>Optional&lt;T&gt;</code>类.
 <code>Optional</code>类表示那些可能为空的值, 一个<code>Optional</code>类要不包含一个非空的<code>T</code>类型的对象引用(这种情况下,
 我们称引用对象是存在的-&ldquo;present&rdquo;), 要不什么东西都不包含(这种情况被, 我们说引用对象是不存在的-&ldquo;absent&rdquo;), 除此之外, <code>Optional</code>不存在其他情况, 更没有可能是<code>null</code>.</p>
-<h3 id="java8的optional"><!-- raw HTML omitted -->4.1<!-- raw HTML omitted --> Java8的Optional</h3>
+<h3 id="java8的optional"><span class="section-num">4.1</span> Java8的Optional</h3>
 <p>鉴于我对<code>Optional</code>类的兴趣,
 我用下面这条命令找了一个Guava库<code>Optional</code>开发的最初提交历史:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">find guava/ -name <span class="s2">&#34;Optional.java&#34;</span> -print <span class="p">|</span> xargs -I <span class="s1">&#39;{}&#39;</span> git log --pretty<span class="o">=</span>tformat:%cd-%aN-%s --date<span class="o">=</span>iso <span class="p">|</span>tail -n2
@@ -1319,13 +1319,13 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p>
 既然JDK的<code>Optional</code>已成为正统,
 那么下面我就不再介绍Guava的<code>Optional=(Guava的wiki本来是有较大篇幅介绍自家的=Optional</code>,
 个人感觉已经意义不大), 转而介绍JDK的<code>Optional=(下文通称为=Optional</code>).</p>
-<h3 id="optional构造方式"><!-- raw HTML omitted -->4.2<!-- raw HTML omitted --> Optional构造方式</h3>
+<h3 id="optional构造方式"><span class="section-num">4.2</span> Optional构造方式</h3>
 <p>在使用<code>Optional</code>之前, 首先需要了解如果构造<code>Optional</code>对象,
 方式有如下几种:</p>
-<h4 id="声明一个空的-optional-对象"><!-- raw HTML omitted -->4.2.1<!-- raw HTML omitted --> 声明一个空的<code>Optional</code>对象</h4>
+<h4 id="声明一个空的-optional-对象"><span class="section-num">4.2.1</span> 声明一个空的<code>Optional</code>对象</h4>
 <p>可以通过静态工厂方法<code>Optional.empty</code>, 创建一个空的<code>Optional</code>对象:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Optional</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">optional</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">empty</span><span class="o">();</span>
-</span></span></code></pre></div><h4 id="根据一个非空值创建optional"><!-- raw HTML omitted -->4.2.2<!-- raw HTML omitted --> 根据一个非空值创建Optional</h4>
+</span></span></code></pre></div><h4 id="根据一个非空值创建optional"><span class="section-num">4.2.2</span> 根据一个非空值创建Optional</h4>
 <p>还可以使用静态工厂方法<code>Optional.of</code>,
 依据一个非空值创建一个<code>Optional</code>对象:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Optional</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">optional</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">objectT</span><span class="o">);</span>
@@ -1342,13 +1342,13 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p>
 </span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">of</span><span class="o">(</span><span class="n">T</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="k">new</span> <span class="n">Optional</span><span class="o">&lt;&gt;(</span><span class="n">value</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h4 id="可接受null的optional"><!-- raw HTML omitted -->4.2.3<!-- raw HTML omitted --> 可接受null的Optional</h4>
+</span></span></code></pre></div><h4 id="可接受null的optional"><span class="section-num">4.2.3</span> 可接受null的Optional</h4>
 <p>最后, 使用静态工厂方法<code>Optional.ofNullable</code>,
 我们可以创建一个允许<code>null</code>的<code>Optional</code>的对象:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Optional</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">optional</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">ofNullable</span><span class="o">(</span><span class="n">objectT</span><span class="o">);</span>
 </span></span></code></pre></div><p>如果<code>objectT</code>为<code>null</code>, 那么得到的<code>Optional</code>对象就是个空对象.</p>
-<h3 id="optional的消费方式"><!-- raw HTML omitted -->4.3<!-- raw HTML omitted --> Optional的消费方式</h3>
-<h4 id="optional与stream的邂逅"><!-- raw HTML omitted -->4.3.1<!-- raw HTML omitted --> Optional与Stream的邂逅</h4>
+<h3 id="optional的消费方式"><span class="section-num">4.3</span> Optional的消费方式</h3>
+<h4 id="optional与stream的邂逅"><span class="section-num">4.3.1</span> Optional与Stream的邂逅</h4>
 <p>既然<code>Optional</code>在Oracle的文档中被定性为一个容器(container),</p>
 <p>那么对于一个容器,
 我们关注的点无非是这个容器如何<strong>存*(对于<code>Optional</code>来说是构造)和如何</strong>取*这两件事而已(也就是消费).
@@ -1378,7 +1378,7 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p>
 </span></span><span class="line"><span class="cl">	<span class="o">.</span><span class="na">flatMap</span><span class="o">(</span><span class="n">Car</span><span class="o">::</span><span class="n">getInsurance</span><span class="o">)</span>
 </span></span><span class="line"><span class="cl">	<span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">Insurance</span><span class="o">::</span><span class="n">getName</span><span class="o">)</span>
 </span></span><span class="line"><span class="cl">	<span class="o">.</span><span class="na">orElse</span><span class="o">(</span><span class="s">&#34;Unknown&#34;</span><span class="o">);</span>
-</span></span></code></pre></div><h4 id="默认行为及解引用optional对象"><!-- raw HTML omitted -->4.3.2<!-- raw HTML omitted --> 默认行为及解引用Optional对象</h4>
+</span></span></code></pre></div><h4 id="默认行为及解引用optional对象"><span class="section-num">4.3.2</span> 默认行为及解引用Optional对象</h4>
 <p>除了使用<code>Stream</code>来消费<code>Optional</code>对象,
 还可以使用解引用读取<code>Optional</code>实例中的变量值以及定义默认行为,
 具体函数说明如下:</p>
@@ -1400,7 +1400,7 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p>
 <li><code>ifPresent(Consumer&lt;? super T&gt;)</code>和<code>orElseGet</code>函数类似,
 可以在变量存在的时候执行传入的函数, 否则就不进行任何操作.</li>
 </ol>
-<h4 id="optional-实战示例"><!-- raw HTML omitted -->4.3.3<!-- raw HTML omitted --> Optional 实战示例</h4>
+<h4 id="optional-实战示例"><span class="section-num">4.3.3</span> Optional 实战示例</h4>
 <p>在啰啰嗦嗦介绍了一系列<code>Optional</code>的概念之后,
 是时候来看一下<code>Option</code>的实例了. 现存的Java
 API几乎都是通过返回一个null的方式表示所需的值的缺失,
@@ -1418,7 +1418,7 @@ API几乎都是通过返回一个null的方式表示所需的值的缺失,
 </span></span><span class="line"><span class="cl"><span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;foo&#34;</span><span class="o">,</span> <span class="s">&#34;bar&#34;</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="n">String</span> <span class="n">value</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">ofNullable</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&#34;foo&#34;</span><span class="o">)).</span><span class="na">map</span><span class="o">(</span><span class="n">Object</span><span class="o">::</span><span class="n">toString</span><span class="o">).</span><span class="na">orElse</span><span class="o">(</span><span class="s">&#34;helloworld&#34;</span><span class="o">);</span>
 </span></span></code></pre></div><p>这样, 每次使用<code>value</code>都不会再有<code>NullPointException</code>的忧虑.</p>
-<h2 id="结语"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> 结语</h2>
+<h2 id="结语"><span class="section-num">5</span> 结语</h2>
 <p>本文最开始只是想阐述Guava类库使用空指针和避免使用空指针的设计理念,
 只是因为Guava大部分类库都是不支持<code>null</code>,
 因此使用Guava自家的<code>Optional</code>类来代替<code>null</code>的大部分应用场景,
@@ -1426,7 +1426,7 @@ API几乎都是通过返回一个null的方式表示所需的值的缺失,
 <p>所以本文大部份的内容也变成对JDK的<code>Optional</code>的探讨.
 相信下篇文章会有所改观, 总不可能Guava所有的工具类, 都有JDK对应的竞品,
 如果真是这样的话, JDK应该改名为GDK :)</p>
-<h2 id="参考"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> 参考</h2>
+<h2 id="参考"><span class="section-num">6</span> 参考</h2>
 <ul>
 <li><a href="https://github.com/google/guava/wiki/UsingAndAvoidingNullExplained">Using and avoiding</a></li>
 <li><a href="https://book.douban.com/subject/25912747/">Java8 in Action</a></li>

@@ -22,26 +22,26 @@
       <description>1 Definition In computer science, a topological sort or topological ordering of a directed graph is a linear ordering of its vertices such that for every directed edge uv from vertex u to vertx v, u comes before v in the ordering.
 It sounds pretty academic, but I am sure you are using topological sort unconsciously every single day.
 2 Application Many real world situations can be modeled as a graph with directed edges where some events must occur before others.</description>
-      <content:encoded><![CDATA[<h2 id="definition"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Definition</h2>
+      <content:encoded><![CDATA[<h2 id="definition"><span class="section-num">1</span> Definition</h2>
 <p>In computer science, a topological sort or topological ordering of a directed graph is a linear ordering of its vertices such that for every directed edge <code>uv</code> from vertex <code>u</code> to vertx <code>v</code>, <code>u</code> comes before <code>v</code> in the ordering.</p>
 <p>It sounds pretty academic, but I am sure you are using topological sort unconsciously every single day.</p>
-<h2 id="application"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Application</h2>
+<h2 id="application"><span class="section-num">2</span> Application</h2>
 <p>Many real world situations can be modeled as a graph with directed edges where some events must occur before others. Then a topological sort gives an order in which to perform these events, for instance:</p>
-<h3 id="college-class-prerequisites"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> College class prerequisites</h3>
+<h3 id="college-class-prerequisites"><span class="section-num">2.1</span> College class prerequisites</h3>
 <p>You must take course <code>b</code> first if you want to take course <code>a</code>. For example, in your alma mater, the student must complete <code>PHYS:1511(College Physics)</code> or <code>PHYS:1611(Introductory Physics I)</code> before taking <code>College Physics II</code>.</p>
 <p>The courses can be represented by vertices, and there is an edge from <code>College Physics</code> to <code>College Physics II</code> since <code>PHYS:1511</code> must be finished before <code>College Physics II</code> can be enrolled.</p>
 <figure><a href="/ox-hugo/course_prerequsites.png">
     <img loading="lazy" src="/ox-hugo/course_prerequsites.png"/> </a>
 </figure>
 
-<h3 id="job-scheduling"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> Job scheduling</h3>
+<h3 id="job-scheduling"><span class="section-num">2.2</span> Job scheduling</h3>
 <p>scheduling a sequence of jobs or tasks based on their dependencies. The jobs are represented by vertices, and there is an edge from <code>x</code> to <code>y</code> if job <code>x</code> must be completed before job <code>y</code> can be started.</p>
 <figure><a href="/ox-hugo/job_scheduling.png">
     <img loading="lazy" src="/ox-hugo/job_scheduling.png"/> </a>
 </figure>
 
 <p>In the context of a CI/CD pipeline, the relationships between jobs can be represented by directed graph(specifically speaking, by directed acyclic graph). For example, in a CI pipeline, <code>build</code> job should be finished before start <code>test</code> job and <code>lint</code> job.</p>
-<h3 id="program-build-dependencies"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> Program build dependencies</h3>
+<h3 id="program-build-dependencies"><span class="section-num">2.3</span> Program build dependencies</h3>
 <p>You want to figure out in which order you should compile all the program&rsquo;s dependencies so that you will never try and compile a dependency for which you haven&rsquo;t first built all of its dependencies.</p>
 <p>A typical example is <code>GNU Make</code>: you specific your targets in a <code>makefile</code>, <code>Make</code> will parse <code>makefile</code>, and figure out which target should be built firstly. Supposing you have a <code>makefile</code> like this:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="line"><span class="cl"><span class="c"># Makefile for analysis report
@@ -59,7 +59,7 @@ It sounds pretty academic, but I am sure you are using topological sort unconsci
     <img loading="lazy" src="/ox-hugo/build_dependencies.png"/> </a>
 </figure>
 
-<h2 id="directed-acyclic-graph"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Directed Acyclic Graph</h2>
+<h2 id="directed-acyclic-graph"><span class="section-num">3</span> Directed Acyclic Graph</h2>
 <p>Back to the definition, we say that a topological ordering of a directed graph is a linear ordering of its vertices, but not all directed graphs have a topological ordering.</p>
 <p>A topological ordering is possible if and only if the graph has no directed cycles, that is, if it&rsquo;s a directed acyclic graph(DAG).</p>
 <p>Let us see some examples:</p>
@@ -73,7 +73,7 @@ It sounds pretty academic, but I am sure you are using topological sort unconsci
 </figure>
 
 <p>The directed graph problem has no solution, this is the reason why directed cycle is forbidden</p>
-<h2 id="kahn-s-algorithm"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Kahn&rsquo;s Algorithm</h2>
+<h2 id="kahn-s-algorithm"><span class="section-num">4</span> Kahn&rsquo;s Algorithm</h2>
 <p>There are several <a href="https://en.wikipedia.org/wiki/Topological_sorting#Algorithms">algorithms</a> for topological sorting, Kahn&rsquo;s algorithm is one of them, based on breadth first search.</p>
 <p>The intuition behind Kahn&rsquo;s algorithm is pretty straightforward:</p>
 <p><strong><strong>To repeatedly remove nodes without any dependencies from the graph and add them to the topological ordering</strong></strong></p>
@@ -145,14 +145,14 @@ It sounds pretty academic, but I am sure you are using topological sort unconsci
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">{};</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h2 id="bonus"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> Bonus</h2>
+</span></span></code></pre></div><h2 id="bonus"><span class="section-num">5</span> Bonus</h2>
 <p>When a pregnant woman takes calcium pills, she must make sure also that her diet is rich in vitamin D, since this vitamin makes the absorption of calcium possible.</p>
 <p>After reading the demonstration of topological ordering, you (and I) too should take a certain vitamin, metaphorically speaking, to help you absorb. The vitamin D I pick for you (and myself) is two leetcode problems, which involve with the most typical use case of topological ordering &ndash; college class prerequisites:</p>
 <ul>
 <li><a href="https://leetcode.com/problems/course-schedule/">Course Schedule</a></li>
 <li><a href="https://leetcode.com/problems/course-schedule-ii/">Course Schedule II</a></li>
 </ul>
-<h2 id="reference"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> Reference</h2>
+<h2 id="reference"><span class="section-num">6</span> Reference</h2>
 <ul>
 <li><a href="https://www.youtube.com/watch?v=cIBFEhD77b4">Topological Sort | Kahn&rsquo;s Algorithm | Graph Theory</a></li>
 <li><a href="https://docs.gitlab.com/ee/ci/directed_acyclic_graph/">Directed Acyclic Graph</a></li>

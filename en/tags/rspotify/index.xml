@@ -24,10 +24,10 @@
 In order to know what this PR brought to us, we have to go back to the orignal story, the paginated results in Spotify&amp;rsquo;s Rest API.
 2 Orignal Story Taking the artist_albums as example, it gets Spotify catalog information about an artist&amp;rsquo;s albums.</description>
       <content:encoded><![CDATA[<p>Iterate through pagination in the Rest API</p>
-<h2 id="preface"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Preface</h2>
+<h2 id="preface"><span class="section-num">1</span> Preface</h2>
 <p>About 4 months ago, <a href="https://github.com/icewind1991">icewind1991</a> created an exciting <a href="https://github.com/ramsayleung/rspotify/pull/166">PR</a> that adding <code>Stream/Iterator</code> based versions of methods with paginated results, which makes enpoints in <a href="https://github.com/ramsayleung/rspotify">Rspotify</a> more much ergonomic to use, and <a href="https://github.com/marioortizmanero">Mario</a> completed this PR.</p>
 <p>In order to know what this PR brought to us, we have to go back to the orignal story, the paginated results in Spotify&rsquo;s Rest API.</p>
-<h2 id="orignal-story"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Orignal Story</h2>
+<h2 id="orignal-story"><span class="section-num">2</span> Orignal Story</h2>
 <p>Taking the <code>artist_albums</code> as example, it gets Spotify catalog information about an artist&rsquo;s albums.</p>
 <p>The HTTP response body for this endpoint contains an array of simplified <a href="https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedalbumobject">album object </a>wrapped in a <a href="https://developer.spotify.com/documentation/web-api/reference/#object-pagingobject">paging object</a> and use <code>limit</code> field to control the number of album objects to return and <code>offset</code> field to set the index of the first album to return.</p>
 <p>So designed endpoint in <code>Rspotify</code> looks like this:</p>
@@ -71,7 +71,7 @@ you would to get the data of the next page, you have to parse a URL:</p>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210429172938.png"/> 
 </figure>
 
-<h2 id="iterator-story"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Iterator Story</h2>
+<h2 id="iterator-story"><span class="section-num">3</span> Iterator Story</h2>
 <p>Since we have the basic knowledge about the background, let&rsquo;s jump to the iterator version of pagination endpoints.</p>
 <p>First of all, the iterator pattern allows us to perform some tasks on a sequence of items in turn. An iterator is responsible for the logic of itreating over each item and determining when the sequence has finished.</p>
 <p>If you want to know about about <code>Iterator</code>, Jon Gjengset has covered a brilliant <a href="https://www.youtube.com/watch?v=yozQ9C69pNs">tutorial</a> to demonstrate <code>Iterators</code> in Rust.</p>
@@ -135,7 +135,7 @@ you would to get the data of the next page, you have to parse a URL:</p>
 current full version code is
 <a href="https://github.com/ramsayleung/rspotify/blob/master/src/pagination/iter.rs">here</a>,
 check it if you are interested in :)</p>
-<h2 id="stream-story"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Stream Story</h2>
+<h2 id="stream-story"><span class="section-num">4</span> Stream Story</h2>
 <p>Are we done? Not yet. Let&rsquo;s move our eyes to stream story.</p>
 <p>The stream story is mostly similar with iterator story, except that
 iterator is synchronous, stream is asynchronous.</p>
@@ -180,7 +180,7 @@ to the <code>Iterator</code> trait.</p>
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="appendix"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> Appendix</h2>
+</span></span></span></code></pre></div><h2 id="appendix"><span class="section-num">5</span> Appendix</h2>
 <p>Whew! It took more than I expected. Since iterators is the Rust features inspired by functional programming language ideas, which contributes to Rust&rsquo;s capability to clearly express high-level ideas at low-level performance.</p>
 <p>It&rsquo;s good to leverage iterators wherever possible, now we can be thrilled to say that all endpoints don&rsquo;t need to manuallly loop over anymore, they are all iterable and rusty.</p>
 <p>Thanks Mario and icewind1991 again for their works :)</p>
@@ -198,13 +198,13 @@ to the <code>Iterator</code> trait.</p>
 I am partly focusing on polishing the data model, based on the issue created by Koxiaet.
 Since rspotify is API client for Spotify, it has to handle the request and response from Spotify HTTP API.</description>
       <content:encoded><![CDATA[<p>The lesson learned from refactoring rspotify</p>
-<h2 id="preface"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Preface</h2>
+<h2 id="preface"><span class="section-num">1</span> Preface</h2>
 <p>Recently, I and <a href="https://github.com/marioortizmanero">Mario</a> are working on refactoring <a href="https://github.com/ramsayleung/rspotify"><code>rspotify</code></a>, trying to improve performance, documentation, error-handling, data model and reduce compile time, to make it easier to use. (For those who has never heard about <code>rspotify</code>, it is a Spotify HTTP SDK implemented in Rust).</p>
 <p>I am partly focusing on polishing the data model, based on the <a href="https://github.com/ramsayleung/rspotify/issues/127">issue</a> created by <a href="https://github.com/Koxiaet">Koxiaet</a>.</p>
 <p>Since <code>rspotify</code> is API client for Spotify, it has to handle the request and response from Spotify HTTP API.</p>
 <p>Generally speaking, the data model is something about how to structure the response data, and used <a href="http://serde.rs/"><code>Serde</code></a> to parse JSON response from HTTP API to Rust <code>struct</code>, and I have learnt a lot Serde tricks from refactoring.</p>
-<h2 id="serde-lesson"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Serde Lesson</h2>
-<h3 id="deserialize-json-map-to-vec-based-on-its-value-dot"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> Deserialize JSON map to Vec based on its value.</h3>
+<h2 id="serde-lesson"><span class="section-num">2</span> Serde Lesson</h2>
+<h3 id="deserialize-json-map-to-vec-based-on-its-value-dot"><span class="section-num">2.1</span> Deserialize JSON map to Vec based on its value.</h3>
 <p>An actions object which contains a <code>disallows</code> object, allows to update the user interface based on which playback actions are available within the current context.</p>
 <p>The response JSON data from HTTP API:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
@@ -264,7 +264,7 @@ Since rspotify is API client for Spotify, it has to handle the request and respo
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>The types should be familiar if you&rsquo;ve used <code>Serde</code> before.</p>
 <p>If you&rsquo;re not used to Rust then the function signature will likely look a little strange. What it&rsquo;s trying to tell is that d will be something that implements <code>Serde</code>&rsquo;s <code>Deserializer</code> trait, and that any references to memory will live for the <code>'de</code> lifetime.</p>
-<h3 id="deserialize-unix-milliseconds-timestamp-to-datetime"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> Deserialize Unix milliseconds timestamp to Datetime</h3>
+<h3 id="deserialize-unix-milliseconds-timestamp-to-datetime"><span class="section-num">2.2</span> Deserialize Unix milliseconds timestamp to Datetime</h3>
 <p>A currently playing object which contains information about currently playing item, and the <code>timestamp</code> field is an integer, representing the Unix millisecond timestamp when data was fetched.</p>
 <p>The response JSON data from HTTP API:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
@@ -362,7 +362,7 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>The <code>to_millisecond_timestamp</code> function is similar to <code>from_millisecond_timestamp</code>, but it&rsquo;s eaiser to implement, check
 <a href="https://github.com/ramsayleung/rspotify/pull/157/files#">this PR</a> for more detail.</p>
-<h3 id="deserialize-milliseconds-to-duration"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> Deserialize milliseconds to Duration</h3>
+<h3 id="deserialize-milliseconds-to-duration"><span class="section-num">2.3</span> Deserialize milliseconds to Duration</h3>
 <p>The simplified episode object contains the simplified episode information, and the <code>duration_ms</code> field is an integer, which represents the episode length in milliseconds.</p>
 <p>The response JSON data from HTTP API:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
@@ -422,7 +422,7 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">d</span><span class="p">.</span><span class="n">deserialize_u64</span><span class="p">(</span><span class="n">DurationVisitor</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>Now, the life is easier than before.</p>
-<h3 id="deserialize-milliseconds-to-option"><!-- raw HTML omitted -->2.4<!-- raw HTML omitted --> Deserialize milliseconds to Option</h3>
+<h3 id="deserialize-milliseconds-to-option"><span class="section-num">2.4</span> Deserialize milliseconds to Option</h3>
 <p>Let&rsquo;s go back to <code>CurrentlyPlayingContext</code> model, since we have replaced millisecond (represents as <code>u32</code>) with <code>Duration</code>, it makes sense to replace all millisecond fields to <code>Duration</code>.</p>
 <p>But hold on, it seems <code>progress_ms</code> field is a bit different.</p>
 <p>The <code>progress_ms</code> field is either not present or a millisecond, the <code>u32</code> handles the milliseconds, as its value might not be present in the response, it&rsquo;s an <code>Option&lt;u32&gt;</code>, so it won&rsquo;t work with <code>from_duration_ms</code>.</p>
@@ -430,7 +430,7 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 <blockquote>
 <p>Hint that the <code>Deserialize</code> type is expecting an optional value.</p>
 </blockquote>
-<!-- raw HTML omitted -->
+<!--quoteend-->
 <blockquote>
 <p>This allows deserializers that encode an optional value as a nullable value to convert the null value into <code>None</code> and a regular value into <code>Some(value)</code>.</p>
 </blockquote>
@@ -483,7 +483,7 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>The <code>visit_none</code> method return <code>Ok(None)</code> so the <code>progress</code> value in the struct will be None, and the <code>visit_some</code> delegates the parsing logic to <code>DurationVisitor</code> via the <code>deserialize_u64</code> call, so deserializing <code>Some(u64)</code> works like the <code>u64</code>.</p>
-<h3 id="deserialize-enum-from-number"><!-- raw HTML omitted -->2.5<!-- raw HTML omitted --> Deserialize enum from number</h3>
+<h3 id="deserialize-enum-from-number"><span class="section-num">2.5</span> Deserialize enum from number</h3>
 <p>An <code>AudioAnalysisSection</code> model contains a <code>mode</code> field, which indicates the modality(major or minor) of a track, the type of scle from which its melodic content is derived. This field will contain a 0 for <code>minor</code>, a 1 for <code>major</code>, or a -1 for no result.</p>
 <p>The response JSON data from HTTP API:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
@@ -570,7 +570,7 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="move-into-module"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Move into module</h2>
+</span></span></span></code></pre></div><h2 id="move-into-module"><span class="section-num">3</span> Move into module</h2>
 <p>Update:</p>
 <p>2021-01-15</p>
 <ul>
@@ -578,10 +578,10 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 <li><code>from(to)_duration_ms</code> have been moved into its module <code>duration_ms</code> and rename them to <code>deserialize</code> &amp; <code>serialize</code></li>
 <li><code>from(to)_option_duration_ms</code> have been moved into its module <code>option_duration_ms</code> and rename them to <code>deserialize</code> &amp; <code>serialize</code></li>
 </ul>
-<h2 id="summary"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Summary</h2>
+<h2 id="summary"><span class="section-num">4</span> Summary</h2>
 <p>To be honest, it&rsquo;s the first time I have needed some customized works, which took me some time to understand how does <code>Serde</code> works. Finally, all investments paid off, it works great now.</p>
 <p>Serde is such an awesome deserialize/serialize framework which I have learnt a lot of from and still have a lot of to learn from.</p>
-<h2 id="reference"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> Reference</h2>
+<h2 id="reference"><span class="section-num">5</span> Reference</h2>
 <ul>
 <li><a href="https://chrismcg.com/2019/04/30/deserializing-optional-datetimes-with-serde/">Deserializing optional datetimes with serde</a></li>
 <li><a href="https://github.com/ramsayleung/rspotify/pull/157">PR: Keep polishing the models</a></li>
@@ -600,10 +600,10 @@ construction. And it turns out that there is a way to construct <code>DateTime</
       <description>1 Preface Today, I am exited to introduce you the v0.9 release I have been continued to work on it for the past few weeks that adds async/await support now!
 2 The road to async/await What is rspotify: &amp;gt; For those who has never heared about rspotify before, rspotify is a Spotify web Api wrapper implemented in Rust.
 With async/await&amp;rsquo;s forthcoming stabilization and reqwest adds async/await support now, I think it&amp;rsquo;s time to let rspotify leverage power from async/await.</description>
-      <content:encoded><![CDATA[<h2 id="preface"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Preface</h2>
+      <content:encoded><![CDATA[<h2 id="preface"><span class="section-num">1</span> Preface</h2>
 <p>Today, I am exited to introduce you the <a href="https://github.com/ramsayleung/rspotify/releases/tag/v0.9">v0.9</a> release I have been continued to work on it for the past few weeks that
 adds <code>async/await</code> support now!</p>
-<h2 id="the-road-to-async-await"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> The road to async/await</h2>
+<h2 id="the-road-to-async-await"><span class="section-num">2</span> The road to async/await</h2>
 <p>What is rspotify: &gt; For those who has never heared about rspotify
 before, <a href="https://github.com/ramsayleung/rspotify">rspotify</a> is a
 Spotify web Api wrapper implemented in Rust.</p>
@@ -625,7 +625,7 @@ send HTTP request and handle response asynchronously.</p>
 version, but also keep the old blocking endpoint functions with a new
 additional feature <code>blocking</code>, then other developers could choose API to
 their taste.</p>
-<h2 id="overview"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Overview</h2>
+<h2 id="overview"><span class="section-num">3</span> Overview</h2>
 <p><code>album</code> example:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">rspotify</span>::<span class="n">client</span>::<span class="n">Spotify</span><span class="p">;</span><span class="w">
@@ -665,7 +665,7 @@ the import path:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">rspotify</span>::<span class="n">client</span>::<span class="n">Spotify</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">rspotify</span>::<span class="n">oauth2</span>::<span class="n">SpotifyClientCredentials</span><span class="p">;</span><span class="w">
 </span></span></span></code></pre></div><p>the <code>spotify</code> module is unnecessary and inelegant, so I just remove it.</p>
-<h2 id="conclusion"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Conclusion</h2>
+<h2 id="conclusion"><span class="section-num">4</span> Conclusion</h2>
 <p><a href="https://github.com/ramsayleung/rspotify/releases/tag/v0.9">rspotify v0.9</a> is now available! There is <a href="https://docs.rs/crate/rspotify/">documentation</a>, <a href="https://github.com/ramsayleung/rspotify/tree/master/examples">examples</a> and an <a href="https://github.com/ramsayleung/rspotify/issues/new">issue</a>
 tracker!</p>
 <p>Please provide any feedback, as I would love to improve this library any way I can! Thanks <a href="https://github.com/Rigellute">@Alexander</a> so much for actively participate in the refactor work for support

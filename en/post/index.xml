@@ -20,49 +20,49 @@
       
       <guid>https://ramsayleung.github.io/en/post/2024/git_blame_with_following/</guid>
       <description>Developers usually use git blame in GUI tools like GitHub Blame or using GitLens blame in VSCode: Even though GUI tools is intuitive, but the Git CLI has much more powerful tooling for finding something closer to the real story behind your code. There are many scenarios that CLI is valuable, the first is ignoring the whitespace changes. For example, if you formatted your C++ codebase with clang-format or Javascript codebase with prettier, you haven&amp;rsquo;t actually changed the codebase, but you&amp;rsquo;re the owner of tons of lines of code.</description>
-      <content:encoded><![CDATA[<p>Developers usually use <code>git blame</code> in GUI tools like GitHub Blame <!-- raw HTML omitted --></p>
+      <content:encoded><![CDATA[<p>Developers usually use <code>git blame</code> in GUI tools like GitHub Blame <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/github_blame.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<p>or using GitLens blame in VSCode: <!-- raw HTML omitted --></p>
+ <br/></p>
+<p>or using GitLens blame in VSCode: <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/git_blame_git_lens_vscode.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<p>Even though GUI tools is intuitive, but the Git CLI has much more powerful tooling for finding something closer to the real story behind your code. <!-- raw HTML omitted --></p>
-<p>There are many scenarios that CLI is valuable, the first is ignoring the whitespace changes. <!-- raw HTML omitted --></p>
-<p>For example, if you formatted your C++ codebase with <code>clang-format</code> or Javascript codebase with <code>prettier</code>, you haven&rsquo;t actually changed the codebase, but you&rsquo;re the owner of tons of lines of code. <!-- raw HTML omitted --></p>
-<p>The <code>git blame -w</code> option will ignore these type of whitespace changes. <!-- raw HTML omitted --></p>
-<p>The other great option is <code>-C</code> which will look for code movement between files in a commit. <!-- raw HTML omitted --></p>
-<p>For example, if you refactor a function from one file to another, the normal <code>git</code> blame will simply show you as the author in the new file, but the <code>-C</code> option will follow that movement and show the last person who actually change those lines of code. <!-- raw HTML omitted --></p>
-<p><code>-C</code> is extremely helpful when I need to find out the original author of some lines of code after file renames or refactors, to know more about the background and context behind this code <!-- raw HTML omitted --></p>
-<p>According to the <code>git blame</code> doc, you could pass <code>-C</code> up to three times to ask Git try even harder: <!-- raw HTML omitted --></p>
+ <br/></p>
+<p>Even though GUI tools is intuitive, but the Git CLI has much more powerful tooling for finding something closer to the real story behind your code. <br/></p>
+<p>There are many scenarios that CLI is valuable, the first is ignoring the whitespace changes. <br/></p>
+<p>For example, if you formatted your C++ codebase with <code>clang-format</code> or Javascript codebase with <code>prettier</code>, you haven&rsquo;t actually changed the codebase, but you&rsquo;re the owner of tons of lines of code. <br/></p>
+<p>The <code>git blame -w</code> option will ignore these type of whitespace changes. <br/></p>
+<p>The other great option is <code>-C</code> which will look for code movement between files in a commit. <br/></p>
+<p>For example, if you refactor a function from one file to another, the normal <code>git</code> blame will simply show you as the author in the new file, but the <code>-C</code> option will follow that movement and show the last person who actually change those lines of code. <br/></p>
+<p><code>-C</code> is extremely helpful when I need to find out the original author of some lines of code after file renames or refactors, to know more about the background and context behind this code <br/></p>
+<p>According to the <code>git blame</code> doc, you could pass <code>-C</code> up to three times to ask Git try even harder: <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">-C<span class="o">[</span>&lt;num&gt;<span class="o">]</span>
 </span></span><span class="line"><span class="cl">           In addition to -M, detect lines moved or copied from other files that were modified in the same commit.
 </span></span><span class="line"><span class="cl">           This is useful when you reorganize your program and move code around across files.
 </span></span><span class="line"><span class="cl">           When this option is given twice, the <span class="nb">command</span> additionally looks <span class="k">for</span> copies from other files in the commit that creates the file.
 </span></span><span class="line"><span class="cl">           When this option is given three times, the <span class="nb">command</span> additionally looks <span class="k">for</span> copies from other files in any commit.
-</span></span></code></pre></div><p>(it&rsquo;s a bit of odd design) <!-- raw HTML omitted --></p>
-<p>Let&rsquo;s take <a href="https://github.com/rails/rails/blob/main/activemodel/lib/active_model/access.rb">the access.rb file of ActiveModel module in Rails framework</a> for example: <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>(it&rsquo;s a bit of odd design) <br/></p>
+<p>Let&rsquo;s take <a href="https://github.com/rails/rails/blob/main/activemodel/lib/active_model/access.rb">the access.rb file of ActiveModel module in Rails framework</a> for example: <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git blame activemodel/lib/active_model/access.rb
 </span></span></code></pre></div><p><figure>
     <img loading="lazy" src="/ox-hugo/normal_git_blame.png"
          alt="Figure 1: Vanilla git blame"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->Vanilla git blame</p>
+            <p><span class="figure-number">Figure 1: </span>Vanilla git blame</p>
         </figcaption>
 </figure>
- <!-- raw HTML omitted --></p>
-<p>Ok, it looks like Jonathan Hefner wrote all of this code it appears, let&rsquo;s look at the same code with <code>git blame -w -C -C -C activemodel/lib/active_model/access.rb</code> <!-- raw HTML omitted --></p>
+ <br/></p>
+<p>Ok, it looks like Jonathan Hefner wrote all of this code it appears, let&rsquo;s look at the same code with <code>git blame -w -C -C -C activemodel/lib/active_model/access.rb</code> <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/git_blame_-w_-C_-C_-C.png"
          alt="Figure 2: git blame -w -C -C -C"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 2: <!-- raw HTML omitted -->git blame -w -C -C -C</p>
+            <p><span class="figure-number">Figure 2: </span>git blame -w -C -C -C</p>
         </figcaption>
 </figure>
- <!-- raw HTML omitted --></p>
-<p>Now we can see that Git has followed this code from file to file over the course of multiple renames, it turns out Jonathan Hefner is the most recent file renamer, Guillermo Iguaran is the original author. <!-- raw HTML omitted --></p>
-<p>If we want to know the history about this file, it&rsquo;s much better to ask Guillermo rather than Jonathan, which is beyond what the GUI blame or normal Git blame tool reveals <!-- raw HTML omitted --></p>
+ <br/></p>
+<p>Now we can see that Git has followed this code from file to file over the course of multiple renames, it turns out Jonathan Hefner is the most recent file renamer, Guillermo Iguaran is the original author. <br/></p>
+<p>If we want to know the history about this file, it&rsquo;s much better to ask Guillermo rather than Jonathan, which is beyond what the GUI blame or normal Git blame tool reveals <br/></p>
 ]]></content:encoded>
     </item>
     
@@ -73,10 +73,10 @@
       
       <guid>https://ramsayleung.github.io/en/post/2024/git_conditional_configs/</guid>
       <description>Every Git user will have probably been asked to set up their Git at the first time: git config --global user.name &amp;#34;Ramsay Leung&amp;#34; git config --global user.email ramsayleung@gmail.com The above command will simply add the user.name and user.email value into your ~/.gitconfig file &amp;gt; cat ~/.gitconfig [user] name = Ramsay Leung email = ramsayleung@gmail.com [core] quotepath = false [init] defaultBranch = master You could also specify --local argument to writes the config values to .</description>
-      <content:encoded><![CDATA[<p>Every Git user will have probably been asked to set up their Git at the first time: <!-- raw HTML omitted --></p>
+      <content:encoded><![CDATA[<p>Every Git user will have probably been asked to set up their Git at the first time: <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">git config --global user.name <span class="s2">&#34;Ramsay Leung&#34;</span>
 </span></span><span class="line"><span class="cl">git config --global user.email ramsayleung@gmail.com
-</span></span></code></pre></div><p>The above command will simply add the <code>user.name</code> and <code>user.email</code> value into your <code>~/.gitconfig</code> file <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>The above command will simply add the <code>user.name</code> and <code>user.email</code> value into your <code>~/.gitconfig</code> file <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">&gt; cat ~/.gitconfig
 </span></span><span class="line"><span class="cl"><span class="o">[</span>user<span class="o">]</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">name</span> <span class="o">=</span> Ramsay Leung
@@ -85,29 +85,29 @@
 </span></span><span class="line"><span class="cl">    <span class="nv">quotepath</span> <span class="o">=</span> <span class="nb">false</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>init<span class="o">]</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">defaultBranch</span> <span class="o">=</span> master
-</span></span></code></pre></div><p>You could also specify <code>--local</code> argument to writes the config values to <code>.git/config</code> in whatever project you&rsquo;re currently in. <!-- raw HTML omitted --></p>
-<p>If you need to simultaneously contribute to your work and open source project on the same laptop, with different Git config values, e.g.(company email address for work-specific projects, personal email address for open source project), what should you do? <!-- raw HTML omitted --></p>
-<p>You could definitely set up work-specific config as global config, then set up personal config with <code>--local</code> for every personal project separately. It works, but tedious and easy to mess-up. <!-- raw HTML omitted --></p>
-<p>Fortunately, starting from Git version 2.13, Git supports conditional configuration includes, you are capable of setting up different configs for different repositories. <!-- raw HTML omitted --></p>
-<p>If you add the following config to your global config file: <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>You could also specify <code>--local</code> argument to writes the config values to <code>.git/config</code> in whatever project you&rsquo;re currently in. <br/></p>
+<p>If you need to simultaneously contribute to your work and open source project on the same laptop, with different Git config values, e.g.(company email address for work-specific projects, personal email address for open source project), what should you do? <br/></p>
+<p>You could definitely set up work-specific config as global config, then set up personal config with <code>--local</code> for every personal project separately. It works, but tedious and easy to mess-up. <br/></p>
+<p>Fortunately, starting from Git version 2.13, Git supports conditional configuration includes, you are capable of setting up different configs for different repositories. <br/></p>
+<p>If you add the following config to your global config file: <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl"><span class="p">[</span><span class="nx">includeIf</span> <span class="s2">&#34;gitdir:~/projects/oss/&#34;</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">path</span> <span class="p">=</span> <span class="err">~/</span><span class="p">.</span><span class="nx">gitconfig-oss</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="p">[</span><span class="nx">includeIf</span> <span class="s2">&#34;gitdir:~/projects/work/&#34;</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">path</span> <span class="p">=</span> <span class="err">~/</span><span class="p">.</span><span class="nx">gitconfig-work</span>
-</span></span></code></pre></div><p>Then Git will look in the <code>~/.gitconfig-oss</code> files for values only if the project you are currently working on matches <code>~/projects/oss/</code>. <!-- raw HTML omitted --></p>
-<p><strong><strong>Caution</strong></strong>: If you forget to specify the &ldquo;/&rdquo; at the end of the git dir, e.g. &ldquo;~/projects/oss&rdquo;, Conditional Config won&rsquo;t work! <!-- raw HTML omitted --></p>
-<p>Therefore, you could have a &ldquo;work&rdquo; directory and work-specific config here and an &ldquo;oss&rdquo; directory with values for your open source projects, etc. <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>Then Git will look in the <code>~/.gitconfig-oss</code> files for values only if the project you are currently working on matches <code>~/projects/oss/</code>. <br/></p>
+<p><strong><strong>Caution</strong></strong>: If you forget to specify the &ldquo;/&rdquo; at the end of the git dir, e.g. &ldquo;~/projects/oss&rdquo;, Conditional Config won&rsquo;t work! <br/></p>
+<p>Therefore, you could have a &ldquo;work&rdquo; directory and work-specific config here and an &ldquo;oss&rdquo; directory with values for your open source projects, etc. <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/conditional_config.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
-<p>Git also supports other filters more than <code>gitdir</code>, you could specify a branch name as an include filter with <code>onbranch</code> <!-- raw HTML omitted --></p>
+ <br/></p>
+<p>Git also supports other filters more than <code>gitdir</code>, you could specify a branch name as an include filter with <code>onbranch</code> <br/></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl">  <span class="err">;</span> <span class="nx">include</span> <span class="nx">only</span> <span class="nx">if</span> <span class="nx">we</span> <span class="nx">are</span> <span class="nx">in</span> <span class="nx">a</span> <span class="nx">worktree</span> <span class="nx">where</span> <span class="nx">foo-branch</span> <span class="nx">is</span>
 </span></span><span class="line"><span class="cl"><span class="err">;</span> <span class="nx">currently</span> <span class="nx">checked</span> <span class="nx">out</span>
 </span></span><span class="line"><span class="cl"><span class="p">[</span><span class="nx">includeIf</span> <span class="s2">&#34;onbranch:foo-branch&#34;</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">        <span class="nx">path</span> <span class="p">=</span> <span class="nx">foo</span><span class="p">.</span><span class="nx">inc</span>
-</span></span></code></pre></div><p>Check out <a href="https://git-scm.com/docs/git-config?ref=blog.gitbutler.com#_includes">the Git docs</a> for more details <!-- raw HTML omitted --></p>
+</span></span></code></pre></div><p>Check out <a href="https://git-scm.com/docs/git-config?ref=blog.gitbutler.com#_includes">the Git docs</a> for more details <br/></p>
 ]]></content:encoded>
     </item>
     
@@ -118,21 +118,21 @@
       
       <guid>https://ramsayleung.github.io/en/post/2024/github_summary/</guid>
       <description>1 Goodbye 2023 As I farewelled to 2023, a year marked by numerous changes and personal evolution, I find myself recollecting the multitude of experiences that unfolded. My 2023 journey was nothing short of fascinating and exciting, prompting me to revisit the year from various angles. After seeing hoards of posts in social media generated by Github Contributions Chart, I thought I could also build an APP to summarize my Github contribution for every year for friends to have fun.</description>
-      <content:encoded><![CDATA[<h2 id="goodbye-2023"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Goodbye 2023</h2>
-<p>As I farewelled to 2023, a year marked by numerous changes and personal evolution, I find myself recollecting the multitude of experiences that unfolded. <!-- raw HTML omitted --></p>
-<p>My 2023 journey was nothing short of fascinating and exciting, prompting me to revisit the year from various angles. <!-- raw HTML omitted --></p>
-<p>After seeing hoards of posts in social media generated by <a href="https://github.com/sallar/github-contributions-chart">Github Contributions Chart</a>, I thought I could also build an APP to summarize my Github contribution for every year for friends to have fun. <!-- raw HTML omitted --></p>
-<p>I spent my entire 4-days-new-year vocation to build this app named: <a href="https://github-summary.vercel.app/">Github Summary</a>. <!-- raw HTML omitted --></p>
-<p>This project led me through a series of first-time experiences: first time to try Tailwind Css framework, first time to use and deploy project on Vercel, first time to build project on nextjs, first time to develop a public project on React(yes, I&rsquo;ve tried to learn React for hundreds of times, but never get a chance to use it in real project), etc. <!-- raw HTML omitted --></p>
-<h2 id="happy-2024"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Happy 2024</h2>
-<p>While I hoped I could have completed this project by the close of 2023 to share summaries with friends, life&rsquo;s timeline had other plans. <!-- raw HTML omitted --></p>
-<p>Now, as we step into 2024, I am thrilled to publish the GitHub Summary. <!-- raw HTML omitted --></p>
-<p>It&rsquo;s never too late to showcase creative work, and this project is poised to generate insightful summaries not just for the past year but for the adventures that await in 2024. <!-- raw HTML omitted --></p>
-<p>Wishing everyone a Happy New Year! Feel free to explore <a href="https://github-summary.vercel.app/">GitHub Summary</a>: <a href="https://github-summary.vercel.app/">https://github-summary.vercel.app/</a> <!-- raw HTML omitted --></p>
+      <content:encoded><![CDATA[<h2 id="goodbye-2023"><span class="section-num">1</span> Goodbye 2023</h2>
+<p>As I farewelled to 2023, a year marked by numerous changes and personal evolution, I find myself recollecting the multitude of experiences that unfolded. <br/></p>
+<p>My 2023 journey was nothing short of fascinating and exciting, prompting me to revisit the year from various angles. <br/></p>
+<p>After seeing hoards of posts in social media generated by <a href="https://github.com/sallar/github-contributions-chart">Github Contributions Chart</a>, I thought I could also build an APP to summarize my Github contribution for every year for friends to have fun. <br/></p>
+<p>I spent my entire 4-days-new-year vocation to build this app named: <a href="https://github-summary.vercel.app/">Github Summary</a>. <br/></p>
+<p>This project led me through a series of first-time experiences: first time to try Tailwind Css framework, first time to use and deploy project on Vercel, first time to build project on nextjs, first time to develop a public project on React(yes, I&rsquo;ve tried to learn React for hundreds of times, but never get a chance to use it in real project), etc. <br/></p>
+<h2 id="happy-2024"><span class="section-num">2</span> Happy 2024</h2>
+<p>While I hoped I could have completed this project by the close of 2023 to share summaries with friends, life&rsquo;s timeline had other plans. <br/></p>
+<p>Now, as we step into 2024, I am thrilled to publish the GitHub Summary. <br/></p>
+<p>It&rsquo;s never too late to showcase creative work, and this project is poised to generate insightful summaries not just for the past year but for the adventures that await in 2024. <br/></p>
+<p>Wishing everyone a Happy New Year! Feel free to explore <a href="https://github-summary.vercel.app/">GitHub Summary</a>: <a href="https://github-summary.vercel.app/">https://github-summary.vercel.app/</a> <br/></p>
 <p><figure>
     <img loading="lazy" src="/ox-hugo/github_summary.png"/> 
 </figure>
- <!-- raw HTML omitted --></p>
+ <br/></p>
 ]]></content:encoded>
     </item>
     
@@ -145,17 +145,17 @@
       <description>1 Introduction 1.1 IaC Infrastructure as code(IaC) is the managing and provisioning of infrastructure through code instead of manual processes, for example, clicking button, adding or editing roles in AWS console.
 1.2 AWS CloudFormation AWS CloudFormation is the original IaC tool for AWS, released in 2011, which uses template files to automate and mange the setup of AWS resources.
 1.3 AWS CDK AWS Cloud Development Kit(CDK) is a product provided by AWS that makes it easier for developers to manage their infrastructure with familiar programming languages like TypeScript, Python, Java, etc.</description>
-      <content:encoded><![CDATA[<h2 id="introduction"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Introduction</h2>
-<h3 id="iac"><!-- raw HTML omitted -->1.1<!-- raw HTML omitted --> IaC</h3>
+      <content:encoded><![CDATA[<h2 id="introduction"><span class="section-num">1</span> Introduction</h2>
+<h3 id="iac"><span class="section-num">1.1</span> IaC</h3>
 <p>Infrastructure as code(IaC) is the managing and provisioning of infrastructure through code instead of manual processes, for example, clicking button, adding or editing roles in AWS console.</p>
-<h3 id="aws-cloudformation"><!-- raw HTML omitted -->1.2<!-- raw HTML omitted --> AWS CloudFormation</h3>
+<h3 id="aws-cloudformation"><span class="section-num">1.2</span> AWS CloudFormation</h3>
 <p>AWS CloudFormation is the original IaC tool for AWS, released in 2011, which uses template files to automate and mange the setup of AWS resources.</p>
-<h3 id="aws-cdk"><!-- raw HTML omitted -->1.3<!-- raw HTML omitted --> AWS CDK</h3>
+<h3 id="aws-cdk"><span class="section-num">1.3</span> AWS CDK</h3>
 <p>AWS Cloud Development Kit(CDK) is a product provided by AWS that makes it easier for developers to manage their infrastructure with familiar programming languages like TypeScript, Python, Java, etc.</p>
 <p>And, CDK is standing on the shoulder of Cloudformation, providing tools for developers by leveraging Cloudformation.</p>
 <p>A stack is a collection of AWS resources that you can manage as a single unit, like a box.</p>
 <p>For instance, this box could include all the resources required to run an application or Lambda service, such as S3 Buckets (storage), Roles (authorization), Lambda Function (computing), API Gateway (access point), Alarm, Monitoring, etc.</p>
-<h2 id="problem"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Problem</h2>
+<h2 id="problem"><span class="section-num">2</span> Problem</h2>
 <p>I am currently working on a project which requires to set up two stacks, one stack( <code>GlueStack</code> ) for defining a list of AWS Glue tables and the other stack( <code>ServiceStack</code> ) for definition of Lambda service and associated resources.</p>
 <figure>
     <img loading="lazy" src="/ox-hugo/two_stacks.jpg"/> 
@@ -170,7 +170,7 @@
     <img loading="lazy" src="/ox-hugo/s3_bucket_problem.jpg"/> 
 </figure>
 
-<h2 id="solution"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Solution</h2>
+<h2 id="solution"><span class="section-num">3</span> Solution</h2>
 <p>Fortunately, CDK offers a facility named <code>CfnOutput</code> to export a deployed resource, so that the consumer of the resource is able to <code>Import</code> required resource.</p>
 <figure>
     <img loading="lazy" src="/ox-hugo/export.jpg"/> 
@@ -213,7 +213,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>This is the way about how to share value between two stacks.</p>
 <hr>
-<h2 id="loose-couping-solution"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Loose couping solution</h2>
+<h2 id="loose-couping-solution"><span class="section-num">4</span> Loose couping solution</h2>
 <p>Updated on 2023-12-02</p>
 <p>People learn from mistake.</p>
 <p>After applying this practice in my project, I recently learn that it&rsquo;s not good practice to share resource across stack.</p>
@@ -243,7 +243,7 @@
 <p>Therefore, these two stacks are not directly coupled, but they are referencing the same constant variable.</p>
 <p>Then, CloudFormation won&rsquo;t prevent you from updating the <code>S3Bucket</code> as there is not direct relation between these two stacks anymore.</p>
 <p>This is the benefit of loose couping.</p>
-<h2 id="reference"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> Reference</h2>
+<h2 id="reference"><span class="section-num">5</span> Reference</h2>
 <ul>
 <li><a href="https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.CfnOutput.html">API Document: class CfnOutput (construct)</a></li>
 <li><a href="https://docs.aws.amazon.com/cdk/v2/guide/stacks.html">AWS Cloud Development Kit (AWS CDK) v2</a></li>
@@ -268,26 +268,26 @@
       <description>1 Definition In computer science, a topological sort or topological ordering of a directed graph is a linear ordering of its vertices such that for every directed edge uv from vertex u to vertx v, u comes before v in the ordering.
 It sounds pretty academic, but I am sure you are using topological sort unconsciously every single day.
 2 Application Many real world situations can be modeled as a graph with directed edges where some events must occur before others.</description>
-      <content:encoded><![CDATA[<h2 id="definition"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Definition</h2>
+      <content:encoded><![CDATA[<h2 id="definition"><span class="section-num">1</span> Definition</h2>
 <p>In computer science, a topological sort or topological ordering of a directed graph is a linear ordering of its vertices such that for every directed edge <code>uv</code> from vertex <code>u</code> to vertx <code>v</code>, <code>u</code> comes before <code>v</code> in the ordering.</p>
 <p>It sounds pretty academic, but I am sure you are using topological sort unconsciously every single day.</p>
-<h2 id="application"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Application</h2>
+<h2 id="application"><span class="section-num">2</span> Application</h2>
 <p>Many real world situations can be modeled as a graph with directed edges where some events must occur before others. Then a topological sort gives an order in which to perform these events, for instance:</p>
-<h3 id="college-class-prerequisites"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> College class prerequisites</h3>
+<h3 id="college-class-prerequisites"><span class="section-num">2.1</span> College class prerequisites</h3>
 <p>You must take course <code>b</code> first if you want to take course <code>a</code>. For example, in your alma mater, the student must complete <code>PHYS:1511(College Physics)</code> or <code>PHYS:1611(Introductory Physics I)</code> before taking <code>College Physics II</code>.</p>
 <p>The courses can be represented by vertices, and there is an edge from <code>College Physics</code> to <code>College Physics II</code> since <code>PHYS:1511</code> must be finished before <code>College Physics II</code> can be enrolled.</p>
 <figure><a href="/ox-hugo/course_prerequsites.png">
     <img loading="lazy" src="/ox-hugo/course_prerequsites.png"/> </a>
 </figure>
 
-<h3 id="job-scheduling"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> Job scheduling</h3>
+<h3 id="job-scheduling"><span class="section-num">2.2</span> Job scheduling</h3>
 <p>scheduling a sequence of jobs or tasks based on their dependencies. The jobs are represented by vertices, and there is an edge from <code>x</code> to <code>y</code> if job <code>x</code> must be completed before job <code>y</code> can be started.</p>
 <figure><a href="/ox-hugo/job_scheduling.png">
     <img loading="lazy" src="/ox-hugo/job_scheduling.png"/> </a>
 </figure>
 
 <p>In the context of a CI/CD pipeline, the relationships between jobs can be represented by directed graph(specifically speaking, by directed acyclic graph). For example, in a CI pipeline, <code>build</code> job should be finished before start <code>test</code> job and <code>lint</code> job.</p>
-<h3 id="program-build-dependencies"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> Program build dependencies</h3>
+<h3 id="program-build-dependencies"><span class="section-num">2.3</span> Program build dependencies</h3>
 <p>You want to figure out in which order you should compile all the program&rsquo;s dependencies so that you will never try and compile a dependency for which you haven&rsquo;t first built all of its dependencies.</p>
 <p>A typical example is <code>GNU Make</code>: you specific your targets in a <code>makefile</code>, <code>Make</code> will parse <code>makefile</code>, and figure out which target should be built firstly. Supposing you have a <code>makefile</code> like this:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="line"><span class="cl"><span class="c"># Makefile for analysis report
@@ -305,7 +305,7 @@ It sounds pretty academic, but I am sure you are using topological sort unconsci
     <img loading="lazy" src="/ox-hugo/build_dependencies.png"/> </a>
 </figure>
 
-<h2 id="directed-acyclic-graph"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Directed Acyclic Graph</h2>
+<h2 id="directed-acyclic-graph"><span class="section-num">3</span> Directed Acyclic Graph</h2>
 <p>Back to the definition, we say that a topological ordering of a directed graph is a linear ordering of its vertices, but not all directed graphs have a topological ordering.</p>
 <p>A topological ordering is possible if and only if the graph has no directed cycles, that is, if it&rsquo;s a directed acyclic graph(DAG).</p>
 <p>Let us see some examples:</p>
@@ -319,7 +319,7 @@ It sounds pretty academic, but I am sure you are using topological sort unconsci
 </figure>
 
 <p>The directed graph problem has no solution, this is the reason why directed cycle is forbidden</p>
-<h2 id="kahn-s-algorithm"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Kahn&rsquo;s Algorithm</h2>
+<h2 id="kahn-s-algorithm"><span class="section-num">4</span> Kahn&rsquo;s Algorithm</h2>
 <p>There are several <a href="https://en.wikipedia.org/wiki/Topological_sorting#Algorithms">algorithms</a> for topological sorting, Kahn&rsquo;s algorithm is one of them, based on breadth first search.</p>
 <p>The intuition behind Kahn&rsquo;s algorithm is pretty straightforward:</p>
 <p><strong><strong>To repeatedly remove nodes without any dependencies from the graph and add them to the topological ordering</strong></strong></p>
@@ -391,14 +391,14 @@ It sounds pretty academic, but I am sure you are using topological sort unconsci
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">{};</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h2 id="bonus"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> Bonus</h2>
+</span></span></code></pre></div><h2 id="bonus"><span class="section-num">5</span> Bonus</h2>
 <p>When a pregnant woman takes calcium pills, she must make sure also that her diet is rich in vitamin D, since this vitamin makes the absorption of calcium possible.</p>
 <p>After reading the demonstration of topological ordering, you (and I) too should take a certain vitamin, metaphorically speaking, to help you absorb. The vitamin D I pick for you (and myself) is two leetcode problems, which involve with the most typical use case of topological ordering &ndash; college class prerequisites:</p>
 <ul>
 <li><a href="https://leetcode.com/problems/course-schedule/">Course Schedule</a></li>
 <li><a href="https://leetcode.com/problems/course-schedule-ii/">Course Schedule II</a></li>
 </ul>
-<h2 id="reference"><!-- raw HTML omitted -->6<!-- raw HTML omitted --> Reference</h2>
+<h2 id="reference"><span class="section-num">6</span> Reference</h2>
 <ul>
 <li><a href="https://www.youtube.com/watch?v=cIBFEhD77b4">Topological Sort | Kahn&rsquo;s Algorithm | Graph Theory</a></li>
 <li><a href="https://docs.gitlab.com/ee/ci/directed_acyclic_graph/">Directed Acyclic Graph</a></li>
@@ -416,19 +416,19 @@ It sounds pretty academic, but I am sure you are using topological sort unconsci
       <guid>https://ramsayleung.github.io/en/post/2021/how_to_design_a_reliable_distributed_timer/</guid>
       <description>1 Preface I have been maintained a legacy distributed timer for months for my employer, then some important pay business are leveraging on it, with 1 billion tasks handled every day and 20k tasks added per second at most.
 Even though it&amp;rsquo;s old and full of black magic code, but it also also have insighted and well-designed code. Based on this old, running timer, I summarize and extract as this article, and it wont include any running code(perhaps pseudocode, and a lot of figures, as an adage says: A picture is worth a thousand words).</description>
-      <content:encoded><![CDATA[<h2 id="preface"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Preface</h2>
+      <content:encoded><![CDATA[<h2 id="preface"><span class="section-num">1</span> Preface</h2>
 <p>I have been maintained a legacy distributed timer for months for my employer, then some important pay business are leveraging on it, with 1 billion tasks handled every day and 20k tasks added per second at most.</p>
 <p>Even though it&rsquo;s old and full of black magic code, but it also also have insighted and well-designed code. Based on this old, running timer, I summarize and extract as this article, and it wont include any running code(perhaps pseudocode, and a lot of figures, as an adage says: <em>A picture is worth a thousand words</em>).</p>
 <p>if you are curious about the reason(I personally suggest to watch the TV series <a href="https://www.imdb.com/title/tt2575988/">Silicon Valley</a>, Richard has gave us a good example and answer)</p>
-<h2 id="design"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Design</h2>
-<h3 id="algorithm"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> Algorithm</h3>
+<h2 id="design"><span class="section-num">2</span> Design</h2>
+<h3 id="algorithm"><span class="section-num">2.1</span> Algorithm</h3>
 <p>There are several algorithms in the world to implement timer, such as Red-Black Tree, Min-Heap and timer wheel. The most efficient and used algorithm is timer wheel algorithm, and it&rsquo;s the algorithm we focus on.</p>
 <p>As for timing wheel based timer, it can be modelled as two internal operations: <em>per-tick bookkeeping</em> and <em>expiry processing</em>.</p>
 <ul>
 <li>Per-tick bookkeeping: happens on every &rsquo;tick&rsquo; of the timer clock. If the unit of granularity for setting timers is T units of time (e.g. 1 second), then per-tick bookkeeping will happen every T units of time. It checks whether any outstanding timers have expired, and if so it removes them and invokes expiry processing.</li>
 <li>Expiry processing: is responsible for invoked the user-supplied callback (or other user requested action, depending on your model).</li>
 </ul>
-<h4 id="simple-timing-wheels"><!-- raw HTML omitted -->2.1.1<!-- raw HTML omitted --> Simple Timing Wheels</h4>
+<h4 id="simple-timing-wheels"><span class="section-num">2.1.1</span> Simple Timing Wheels</h4>
 <p>The simple timing wheel keeps a large timing wheel, the below timing wheel has 8 slots, and each slot is holding the task which is going to be expired. Supposing every slot presentes one second(one tick as a second), then the current slot is <code>slot 1</code>, if we want to add a task needed to be triggered 2s later, then this task will be inserted into <code>slot 3</code>.</p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806103302.png"/> 
@@ -438,7 +438,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 <li>per-tick bookkeeping: O(1)</li>
 </ul>
 <p>What happen if we want to add a task needed to be launched 20s later, the answer is we have no way to do so since there are only 8 slots. So if we have a large period of timer task, we have to maintain a large timing wheel with tons of slots, which requires exponential amount of memory.</p>
-<h4 id="hashed-timing-wheel"><!-- raw HTML omitted -->2.1.2<!-- raw HTML omitted --> Hashed Timing Wheel</h4>
+<h4 id="hashed-timing-wheel"><span class="section-num">2.1.2</span> Hashed Timing Wheel</h4>
 <p>Hashed Timing Wheel is an improved simple timing wheel. As we mentioned before, it will consume large resources if timer period is comparatively large. Instead of using one slot per time unit, we could use a form of hashing instead. Construct a circular buffer with a fixed number of slots(such as 8 slots). If current slot is 0, we want store <code>3s later</code> task, we could insert into <code>slot 3</code>, then if we want bookkeep <code>9s-later</code> task, we could insert into <code>slot 1(9 % 8 = 1)</code></p>
 <ul>
 <li>per-tick bookkeeping: O(1) - O(N)</li>
@@ -448,7 +448,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </figure>
 
 <p>It&rsquo;s a tradeoff strategy, We trade space with time.</p>
-<h4 id="hierarchical-timing-wheels"><!-- raw HTML omitted -->2.1.3<!-- raw HTML omitted --> Hierarchical Timing Wheels</h4>
+<h4 id="hierarchical-timing-wheels"><span class="section-num">2.1.3</span> Hierarchical Timing Wheels</h4>
 <p>Since simple timing wheels and hashed timing wheel come with drawback of time efficiency or space efficiency. Back to 1987, after studying a number of different approaches for the efficient management of timers, Varghese and Lauck posted a paper to introduce <a href="http://www.cs.columbia.edu/~nahum/w6998/papers/sosp87-timing-wheels.pdf">Hierarchical Timing Wheels</a></p>
 <p>Just make a long story short, I won&rsquo;t dive deep into hierarchical timing wheels, you could easily understand it by a real life reference: the old water meter</p>
 <figure>
@@ -463,22 +463,22 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 <ul>
 <li>per-tick bookkeeping: O(1)</li>
 </ul>
-<h3 id="per-tick-bookkeeping"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> Per-tick bookkeeping</h3>
+<h3 id="per-tick-bookkeeping"><span class="section-num">2.2</span> Per-tick bookkeeping</h3>
 <p>After introducing timing wheel algorithm, let&rsquo;s go back to the topic about designing a reliable distributed timer, it&rsquo;s essential to decide how to store timer task. Taking implementation complexity and time, space trade off, we choose the Hashed Timing Wheel algorithm.</p>
 <p>There are several internal components developed by my employer, one of them is named <code>TableKV</code>, a high-availability(99.999% ~ 99.9999%) NoSql service. <code>TableKV</code> supports 10m buckets(the terminology is <code>table</code>) at most, every <code>table</code> comes with full ACID properties of transactions support. You could simply replace <code>TableKV</code> with <code>Redis</code> as it provides the similar bucket functionality.</p>
-<h4 id="insert-task-into-slot"><!-- raw HTML omitted -->2.2.1<!-- raw HTML omitted --> Insert task into slot</h4>
+<h4 id="insert-task-into-slot"><span class="section-num">2.2.1</span> Insert task into slot</h4>
 <p>We are going to implement Hashed Timing Wheel algorithm with <code>TableKV</code>, supposing there are 10m buckets, and current time is <code>2021:08:05 11:17:33 +08=(the UNIX timestamp is =1628176653</code>), there is a  timer task which is going to be triggered 10s later with <code>start_time = 1628176653 + 10</code> (or 100000010s later, <code>start_time = 1628176653 + 10 + 100000000</code>), these tasks both will be stored into bucket <code>start_time % 100000000 = 28176663</code></p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806195209.png"/> 
 </figure>
 
-<h4 id="pull-task-out-from-slot"><!-- raw HTML omitted -->2.2.2<!-- raw HTML omitted --> Pull task out from slot</h4>
+<h4 id="pull-task-out-from-slot"><span class="section-num">2.2.2</span> Pull task out from slot</h4>
 <p>As clock tick-tacking to <code>2021:08:05 11:17:43 +08(1628176663)</code>, we need to pull tasks out from slot by calculating the bucket number: <code>current_timestamp(1628176663) % 100000000 = 28176663</code>. After locating the bucket number, we find all tasks in <code>bucket 28176663</code> with <code>start_time &lt;</code> current_timestamp=, then we get all expected expiry tasks.</p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806195227.png"/> 
 </figure>
 
-<h3 id="global-clock-and-lock"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> Global clock and lock</h3>
+<h3 id="global-clock-and-lock"><span class="section-num">2.3</span> Global clock and lock</h3>
 <p>As we mentioned before, when the clock tick-tacks to <strong>current_time</strong>, we fetch all expiry tasks. When our service is running on a distributed system, it&rsquo;s universal that we will have multiple hosts(physical machines or dockers), with multiple <code>current_times</code> on its machine. There is no guarantee that all clocks of multiple hosts synchronized by the same Network Time Server, then all clocks might be subtly different. Which current_time is correct?</p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806105745.png"/> 
@@ -497,7 +497,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 <li>Loop back to step 1 with timestamp B.</li>
 </ol>
 <p>We could encapsulate the role who keep acquiring lock and fetch expiry data as an individual component named <strong>scheduler</strong>.</p>
-<h3 id="expiry-processing"><!-- raw HTML omitted -->2.4<!-- raw HTML omitted --> Expiry processing</h3>
+<h3 id="expiry-processing"><span class="section-num">2.4</span> Expiry processing</h3>
 <p>Expiry processing is responsible for invoked the user-supplied callback or other user requested action. In distributed computing, it&rsquo;s common to execute a procedure by RPC(Remote Procedure Call). In our case, A RPC request is executed when timer task is expiry, from timer service to callback service. Thus, the caller(user) needs to explicitly tell the timer, which service should I execute with what kind of parameters data while the timer task is triggered.</p>
 <p>We could pack and serialize this meta information and parameters data into binary data, and send it to the timer. When pulling data out from slot, the timer could reconstruct Request/Response/Client type and set it with user-defined data, the next step is a piece of cake, just executing it without saying.</p>
 <figure>
@@ -505,7 +505,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </figure>
 
 <p>Perhaps there are many expiry tasks needed to triggered, in order to handle as many tasks as possible, you could create a thread pool, process pool, coroutine pool to execute RPC concurrently.</p>
-<h3 id="decoupling"><!-- raw HTML omitted -->2.5<!-- raw HTML omitted --> Decoupling</h3>
+<h3 id="decoupling"><span class="section-num">2.5</span> Decoupling</h3>
 <p>Supposing the callback service needs tons of operation, it takes a hundred of millisecond. Even though you have created a thread/process/coroutine pool to handle the timer task, it will inevitably hang, resulting in the decrease of throughout.</p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806152334.png"/> 
@@ -522,8 +522,8 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </figure>
 
 <p>Thanks to message queue, we are able to buffer, to retry or to batch work, and to smooth spiky workloads</p>
-<h3 id="high-availability-guarantee"><!-- raw HTML omitted -->2.6<!-- raw HTML omitted --> High availability guarantee</h3>
-<h4 id="missed-expiry-tasks"><!-- raw HTML omitted -->2.6.1<!-- raw HTML omitted --> Missed expiry tasks</h4>
+<h3 id="high-availability-guarantee"><span class="section-num">2.6</span> High availability guarantee</h3>
+<h4 id="missed-expiry-tasks"><span class="section-num">2.6.1</span> Missed expiry tasks</h4>
 <p>A missed expiry of tasks may occur because of the scheduler process being shutdown or being crashed, or because of other unknown problems. One important job is how to locate these missed tasks and re-execute them. Since we are using global `current_timestamp` to fetch expiry data, we could have another scheduler to use `delay_10min_timestamp` to fetch missed expiry data.</p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806202724.png"/> 
@@ -531,14 +531,14 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 
 <p>In order to look for a needle in a haystack, we need to set a range(delay_10min - current time), and then to batch find cross buckets. After finding these missed tasks, the timer publishes them as a message to message queue. For other open source distributed timer projects like Quartz, which provides an instruction to handle missed(misfire) tasks: <a href="http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/tutorial-lesson-04.html">Misfire instructions</a></p>
 <p>If your NoSql component doesn&rsquo;t support find-cross-buckets feature, you could also find every bucket in the range one by one.</p>
-<h4 id="callback-service-error"><!-- raw HTML omitted -->2.6.2<!-- raw HTML omitted --> Callback service error</h4>
+<h4 id="callback-service-error"><span class="section-num">2.6.2</span> Callback service error</h4>
 <p>Since the distributed systems are shared-nothing systems, they communicate via message passing through a network(asynchronously or synchronously), but the network is unreliable. When invoking the user-supplied callback, the RPC request might fail if the network is cut off for a while or the callback service is temporarily down.</p>
 <p>Retries are a technique that helps us deal with transient errors, i.e. errors that are temporary and are likely to disappear soon. Retries help us achieve resiliency by allowing the system to send a request repeatedly until it gets an explicit response(success or fail). By leveraging message queue, you obtain the ability for retrying for free. In the meanwhile, the timer could handle the user-requested retries: It&rsquo;s not the proper time to execute callback service, retry it later.</p>
 <figure>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806195302.png"/> 
 </figure>
 
-<h2 id="conclusion"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Conclusion</h2>
+<h2 id="conclusion"><span class="section-num">3</span> Conclusion</h2>
 <p>After a long way, we are finally here. The final full architecture would look like this:</p>
 <p>The whole process:</p>
 <ol>
@@ -557,7 +557,7 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </figure>
 
 <p>Wish you have fun and profit</p>
-<h2 id="reference"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Reference</h2>
+<h2 id="reference"><span class="section-num">4</span> Reference</h2>
 <ul>
 <li><a href="http://www.cs.columbia.edu/~nahum/w6998/papers/ton97-timing-wheels.pdf">Paper: Hashed and Hierarchical Timing Wheels: Efficient Data Structures for Implementing a Timer Facility</a></li>
 <li><a href="https://blog.acolyer.org/2015/11/23/hashed-and-hierarchical-timing-wheels/">Hashed and Hierarchical Timing Wheels</a></li>
@@ -576,10 +576,10 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 In order to know what this PR brought to us, we have to go back to the orignal story, the paginated results in Spotify&amp;rsquo;s Rest API.
 2 Orignal Story Taking the artist_albums as example, it gets Spotify catalog information about an artist&amp;rsquo;s albums.</description>
       <content:encoded><![CDATA[<p>Iterate through pagination in the Rest API</p>
-<h2 id="preface"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Preface</h2>
+<h2 id="preface"><span class="section-num">1</span> Preface</h2>
 <p>About 4 months ago, <a href="https://github.com/icewind1991">icewind1991</a> created an exciting <a href="https://github.com/ramsayleung/rspotify/pull/166">PR</a> that adding <code>Stream/Iterator</code> based versions of methods with paginated results, which makes enpoints in <a href="https://github.com/ramsayleung/rspotify">Rspotify</a> more much ergonomic to use, and <a href="https://github.com/marioortizmanero">Mario</a> completed this PR.</p>
 <p>In order to know what this PR brought to us, we have to go back to the orignal story, the paginated results in Spotify&rsquo;s Rest API.</p>
-<h2 id="orignal-story"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Orignal Story</h2>
+<h2 id="orignal-story"><span class="section-num">2</span> Orignal Story</h2>
 <p>Taking the <code>artist_albums</code> as example, it gets Spotify catalog information about an artist&rsquo;s albums.</p>
 <p>The HTTP response body for this endpoint contains an array of simplified <a href="https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedalbumobject">album object </a>wrapped in a <a href="https://developer.spotify.com/documentation/web-api/reference/#object-pagingobject">paging object</a> and use <code>limit</code> field to control the number of album objects to return and <code>offset</code> field to set the index of the first album to return.</p>
 <p>So designed endpoint in <code>Rspotify</code> looks like this:</p>
@@ -623,7 +623,7 @@ you would to get the data of the next page, you have to parse a URL:</p>
     <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210429172938.png"/> 
 </figure>
 
-<h2 id="iterator-story"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Iterator Story</h2>
+<h2 id="iterator-story"><span class="section-num">3</span> Iterator Story</h2>
 <p>Since we have the basic knowledge about the background, let&rsquo;s jump to the iterator version of pagination endpoints.</p>
 <p>First of all, the iterator pattern allows us to perform some tasks on a sequence of items in turn. An iterator is responsible for the logic of itreating over each item and determining when the sequence has finished.</p>
 <p>If you want to know about about <code>Iterator</code>, Jon Gjengset has covered a brilliant <a href="https://www.youtube.com/watch?v=yozQ9C69pNs">tutorial</a> to demonstrate <code>Iterators</code> in Rust.</p>
@@ -687,7 +687,7 @@ you would to get the data of the next page, you have to parse a URL:</p>
 current full version code is
 <a href="https://github.com/ramsayleung/rspotify/blob/master/src/pagination/iter.rs">here</a>,
 check it if you are interested in :)</p>
-<h2 id="stream-story"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Stream Story</h2>
+<h2 id="stream-story"><span class="section-num">4</span> Stream Story</h2>
 <p>Are we done? Not yet. Let&rsquo;s move our eyes to stream story.</p>
 <p>The stream story is mostly similar with iterator story, except that
 iterator is synchronous, stream is asynchronous.</p>
@@ -732,7 +732,7 @@ to the <code>Iterator</code> trait.</p>
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="appendix"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> Appendix</h2>
+</span></span></span></code></pre></div><h2 id="appendix"><span class="section-num">5</span> Appendix</h2>
 <p>Whew! It took more than I expected. Since iterators is the Rust features inspired by functional programming language ideas, which contributes to Rust&rsquo;s capability to clearly express high-level ideas at low-level performance.</p>
 <p>It&rsquo;s good to leverage iterators wherever possible, now we can be thrilled to say that all endpoints don&rsquo;t need to manuallly loop over anymore, they are all iterable and rusty.</p>
 <p>Thanks Mario and icewind1991 again for their works :)</p>
@@ -750,13 +750,13 @@ to the <code>Iterator</code> trait.</p>
 I am partly focusing on polishing the data model, based on the issue created by Koxiaet.
 Since rspotify is API client for Spotify, it has to handle the request and response from Spotify HTTP API.</description>
       <content:encoded><![CDATA[<p>The lesson learned from refactoring rspotify</p>
-<h2 id="preface"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Preface</h2>
+<h2 id="preface"><span class="section-num">1</span> Preface</h2>
 <p>Recently, I and <a href="https://github.com/marioortizmanero">Mario</a> are working on refactoring <a href="https://github.com/ramsayleung/rspotify"><code>rspotify</code></a>, trying to improve performance, documentation, error-handling, data model and reduce compile time, to make it easier to use. (For those who has never heard about <code>rspotify</code>, it is a Spotify HTTP SDK implemented in Rust).</p>
 <p>I am partly focusing on polishing the data model, based on the <a href="https://github.com/ramsayleung/rspotify/issues/127">issue</a> created by <a href="https://github.com/Koxiaet">Koxiaet</a>.</p>
 <p>Since <code>rspotify</code> is API client for Spotify, it has to handle the request and response from Spotify HTTP API.</p>
 <p>Generally speaking, the data model is something about how to structure the response data, and used <a href="http://serde.rs/"><code>Serde</code></a> to parse JSON response from HTTP API to Rust <code>struct</code>, and I have learnt a lot Serde tricks from refactoring.</p>
-<h2 id="serde-lesson"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> Serde Lesson</h2>
-<h3 id="deserialize-json-map-to-vec-based-on-its-value-dot"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> Deserialize JSON map to Vec based on its value.</h3>
+<h2 id="serde-lesson"><span class="section-num">2</span> Serde Lesson</h2>
+<h3 id="deserialize-json-map-to-vec-based-on-its-value-dot"><span class="section-num">2.1</span> Deserialize JSON map to Vec based on its value.</h3>
 <p>An actions object which contains a <code>disallows</code> object, allows to update the user interface based on which playback actions are available within the current context.</p>
 <p>The response JSON data from HTTP API:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
@@ -816,7 +816,7 @@ Since rspotify is API client for Spotify, it has to handle the request and respo
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>The types should be familiar if you&rsquo;ve used <code>Serde</code> before.</p>
 <p>If you&rsquo;re not used to Rust then the function signature will likely look a little strange. What it&rsquo;s trying to tell is that d will be something that implements <code>Serde</code>&rsquo;s <code>Deserializer</code> trait, and that any references to memory will live for the <code>'de</code> lifetime.</p>
-<h3 id="deserialize-unix-milliseconds-timestamp-to-datetime"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> Deserialize Unix milliseconds timestamp to Datetime</h3>
+<h3 id="deserialize-unix-milliseconds-timestamp-to-datetime"><span class="section-num">2.2</span> Deserialize Unix milliseconds timestamp to Datetime</h3>
 <p>A currently playing object which contains information about currently playing item, and the <code>timestamp</code> field is an integer, representing the Unix millisecond timestamp when data was fetched.</p>
 <p>The response JSON data from HTTP API:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
@@ -914,7 +914,7 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>The <code>to_millisecond_timestamp</code> function is similar to <code>from_millisecond_timestamp</code>, but it&rsquo;s eaiser to implement, check
 <a href="https://github.com/ramsayleung/rspotify/pull/157/files#">this PR</a> for more detail.</p>
-<h3 id="deserialize-milliseconds-to-duration"><!-- raw HTML omitted -->2.3<!-- raw HTML omitted --> Deserialize milliseconds to Duration</h3>
+<h3 id="deserialize-milliseconds-to-duration"><span class="section-num">2.3</span> Deserialize milliseconds to Duration</h3>
 <p>The simplified episode object contains the simplified episode information, and the <code>duration_ms</code> field is an integer, which represents the episode length in milliseconds.</p>
 <p>The response JSON data from HTTP API:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
@@ -974,7 +974,7 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">d</span><span class="p">.</span><span class="n">deserialize_u64</span><span class="p">(</span><span class="n">DurationVisitor</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>Now, the life is easier than before.</p>
-<h3 id="deserialize-milliseconds-to-option"><!-- raw HTML omitted -->2.4<!-- raw HTML omitted --> Deserialize milliseconds to Option</h3>
+<h3 id="deserialize-milliseconds-to-option"><span class="section-num">2.4</span> Deserialize milliseconds to Option</h3>
 <p>Let&rsquo;s go back to <code>CurrentlyPlayingContext</code> model, since we have replaced millisecond (represents as <code>u32</code>) with <code>Duration</code>, it makes sense to replace all millisecond fields to <code>Duration</code>.</p>
 <p>But hold on, it seems <code>progress_ms</code> field is a bit different.</p>
 <p>The <code>progress_ms</code> field is either not present or a millisecond, the <code>u32</code> handles the milliseconds, as its value might not be present in the response, it&rsquo;s an <code>Option&lt;u32&gt;</code>, so it won&rsquo;t work with <code>from_duration_ms</code>.</p>
@@ -982,7 +982,7 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 <blockquote>
 <p>Hint that the <code>Deserialize</code> type is expecting an optional value.</p>
 </blockquote>
-<!-- raw HTML omitted -->
+<!--quoteend-->
 <blockquote>
 <p>This allows deserializers that encode an optional value as a nullable value to convert the null value into <code>None</code> and a regular value into <code>Some(value)</code>.</p>
 </blockquote>
@@ -1035,7 +1035,7 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>The <code>visit_none</code> method return <code>Ok(None)</code> so the <code>progress</code> value in the struct will be None, and the <code>visit_some</code> delegates the parsing logic to <code>DurationVisitor</code> via the <code>deserialize_u64</code> call, so deserializing <code>Some(u64)</code> works like the <code>u64</code>.</p>
-<h3 id="deserialize-enum-from-number"><!-- raw HTML omitted -->2.5<!-- raw HTML omitted --> Deserialize enum from number</h3>
+<h3 id="deserialize-enum-from-number"><span class="section-num">2.5</span> Deserialize enum from number</h3>
 <p>An <code>AudioAnalysisSection</code> model contains a <code>mode</code> field, which indicates the modality(major or minor) of a track, the type of scle from which its melodic content is derived. This field will contain a 0 for <code>minor</code>, a 1 for <code>major</code>, or a -1 for no result.</p>
 <p>The response JSON data from HTTP API:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
@@ -1122,7 +1122,7 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="move-into-module"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Move into module</h2>
+</span></span></span></code></pre></div><h2 id="move-into-module"><span class="section-num">3</span> Move into module</h2>
 <p>Update:</p>
 <p>2021-01-15</p>
 <ul>
@@ -1130,10 +1130,10 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 <li><code>from(to)_duration_ms</code> have been moved into its module <code>duration_ms</code> and rename them to <code>deserialize</code> &amp; <code>serialize</code></li>
 <li><code>from(to)_option_duration_ms</code> have been moved into its module <code>option_duration_ms</code> and rename them to <code>deserialize</code> &amp; <code>serialize</code></li>
 </ul>
-<h2 id="summary"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Summary</h2>
+<h2 id="summary"><span class="section-num">4</span> Summary</h2>
 <p>To be honest, it&rsquo;s the first time I have needed some customized works, which took me some time to understand how does <code>Serde</code> works. Finally, all investments paid off, it works great now.</p>
 <p>Serde is such an awesome deserialize/serialize framework which I have learnt a lot of from and still have a lot of to learn from.</p>
-<h2 id="reference"><!-- raw HTML omitted -->5<!-- raw HTML omitted --> Reference</h2>
+<h2 id="reference"><span class="section-num">5</span> Reference</h2>
 <ul>
 <li><a href="https://chrismcg.com/2019/04/30/deserializing-optional-datetimes-with-serde/">Deserializing optional datetimes with serde</a></li>
 <li><a href="https://github.com/ramsayleung/rspotify/pull/157">PR: Keep polishing the models</a></li>
@@ -1152,10 +1152,10 @@ construction. And it turns out that there is a way to construct <code>DateTime</
       <description>1 Preface Today, I am exited to introduce you the v0.9 release I have been continued to work on it for the past few weeks that adds async/await support now!
 2 The road to async/await What is rspotify: &amp;gt; For those who has never heared about rspotify before, rspotify is a Spotify web Api wrapper implemented in Rust.
 With async/await&amp;rsquo;s forthcoming stabilization and reqwest adds async/await support now, I think it&amp;rsquo;s time to let rspotify leverage power from async/await.</description>
-      <content:encoded><![CDATA[<h2 id="preface"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Preface</h2>
+      <content:encoded><![CDATA[<h2 id="preface"><span class="section-num">1</span> Preface</h2>
 <p>Today, I am exited to introduce you the <a href="https://github.com/ramsayleung/rspotify/releases/tag/v0.9">v0.9</a> release I have been continued to work on it for the past few weeks that
 adds <code>async/await</code> support now!</p>
-<h2 id="the-road-to-async-await"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> The road to async/await</h2>
+<h2 id="the-road-to-async-await"><span class="section-num">2</span> The road to async/await</h2>
 <p>What is rspotify: &gt; For those who has never heared about rspotify
 before, <a href="https://github.com/ramsayleung/rspotify">rspotify</a> is a
 Spotify web Api wrapper implemented in Rust.</p>
@@ -1177,7 +1177,7 @@ send HTTP request and handle response asynchronously.</p>
 version, but also keep the old blocking endpoint functions with a new
 additional feature <code>blocking</code>, then other developers could choose API to
 their taste.</p>
-<h2 id="overview"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> Overview</h2>
+<h2 id="overview"><span class="section-num">3</span> Overview</h2>
 <p><code>album</code> example:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">rspotify</span>::<span class="n">client</span>::<span class="n">Spotify</span><span class="p">;</span><span class="w">
@@ -1217,7 +1217,7 @@ the import path:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">rspotify</span>::<span class="n">client</span>::<span class="n">Spotify</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">rspotify</span>::<span class="n">oauth2</span>::<span class="n">SpotifyClientCredentials</span><span class="p">;</span><span class="w">
 </span></span></span></code></pre></div><p>the <code>spotify</code> module is unnecessary and inelegant, so I just remove it.</p>
-<h2 id="conclusion"><!-- raw HTML omitted -->4<!-- raw HTML omitted --> Conclusion</h2>
+<h2 id="conclusion"><span class="section-num">4</span> Conclusion</h2>
 <p><a href="https://github.com/ramsayleung/rspotify/releases/tag/v0.9">rspotify v0.9</a> is now available! There is <a href="https://docs.rs/crate/rspotify/">documentation</a>, <a href="https://github.com/ramsayleung/rspotify/tree/master/examples">examples</a> and an <a href="https://github.com/ramsayleung/rspotify/issues/new">issue</a>
 tracker!</p>
 <p>Please provide any feedback, as I would love to improve this library any way I can! Thanks <a href="https://github.com/Rigellute">@Alexander</a> so much for actively participate in the refactor work for support

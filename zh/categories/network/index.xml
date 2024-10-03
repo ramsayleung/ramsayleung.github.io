@@ -21,16 +21,16 @@
       <guid>https://ramsayleung.github.io/zh/post/2017/port_scanner/</guid>
       <description>An introduction about port scan</description>
       <content:encoded><![CDATA[<p>近两日，闲来无事，就写了些端口扫描器，重温TCP/IP协议栈的部分原理。</p>
-<h2 id="端口扫描器"><!-- raw HTML omitted -->1<!-- raw HTML omitted --> 端口扫描器</h2>
+<h2 id="端口扫描器"><span class="section-num">1</span> 端口扫描器</h2>
 <p>所谓的端口扫描器，其实是用来检测目标服务器有哪些端口开放所使用的工具，一般是管理员用来进行安全加固，检测是否有无意开放的端口；或者是恶意攻击的人员在进行攻击前的准备工作。</p>
 <p>所以综述上下，端口扫描器是用来确定目标机器 (本地机器或者远程机器)的特定服务的可用性</p>
-<h2 id="端口扫描原理"><!-- raw HTML omitted -->2<!-- raw HTML omitted --> 端口扫描原理</h2>
+<h2 id="端口扫描原理"><span class="section-num">2</span> 端口扫描原理</h2>
 <p>上面提到过，端口扫描器是用来确定目标机器的服务的可用性的；那么具体是怎么确定的呢？如果还没有答案的话，可以换个角度来思考这个问题。</p>
 <p>假如你想确定邻居家的妹子是否在家，你会怎么办？这不简单么，问一下不就清楚了么？对阿，对于服务器的端口也可以适用这样的方法嘛。端口扫描的原理都是“问一下”，只是问的方法不一样而已，就好像你是决定直接过去敲邻居门，还是打电话过去一样，殊途同归，方法是没有对错的之分，差异只是方法的优劣。</p>
-<h3 id="tcp连接扫描"><!-- raw HTML omitted -->2.1<!-- raw HTML omitted --> TCP连接扫描</h3>
+<h3 id="tcp连接扫描"><span class="section-num">2.1</span> TCP连接扫描</h3>
 <p>这是最简单的一种方法，一般被称为连接扫描，即利用 <code>socket</code> 对目标机器进行连接尝试，如果能够成功建立三次握手连接，那就说明你用 <code>socket</code> 连接的端口是开放的；然后你就可以断开连接，扫描下一个目标端口了 (如果不断开连接，这就是一种 DDOS攻击了).</p>
 <p>只不过TCP连接扫描不是很常用，不仅是因为容易被发现，而且你的IP地址也可能会被目标地址记录下来的(对于攻击者来说，隐藏身份是很重要的)</p>
-<h4 id="代码解析"><!-- raw HTML omitted -->2.1.1<!-- raw HTML omitted --> 代码解析：</h4>
+<h4 id="代码解析"><span class="section-num">2.1.1</span> 代码解析：</h4>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">scan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">args</span>
 </span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
@@ -43,9 +43,9 @@
 </span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="kc">False</span>
 </span></span></code></pre></div><p>因为原理很简单，所以核心代码也是很简洁的，只是建立 <code>socket</code> 然后进行连接，如果连接不上，就很大几率说明端口是关闭的 (并不是绝对的，例如socket超时的异常可能就是因为网络异常，不一定是目标机器的缘故)</p>
-<h3 id="syn扫描"><!-- raw HTML omitted -->2.2<!-- raw HTML omitted --> SYN扫描</h3>
+<h3 id="syn扫描"><span class="section-num">2.2</span> SYN扫描</h3>
 <p>再回顾一下TCP的三次握手：</p>
-<h4 id="tcp三次握手"><!-- raw HTML omitted -->2.2.1<!-- raw HTML omitted --> TCP三次握手</h4>
+<h4 id="tcp三次握手"><span class="section-num">2.2.1</span> TCP三次握手</h4>
 <ol>
 <li>TCP建立连接时，首先客户端和服务器处于close状态。</li>
 <li>然后客户端发送SYN同步位，此时客户端处于SYN-SEND状态，服务器处于lISTEN状态，当服务器收到SYN以后，向客户端发送同步位SYN和确认码ACK，然后服务器变为SYN-RCVD，客户端收到服务器发来的SYN和ACK 后，客户端的状态变成ESTABLISHED(已建立连接)，</li>
@@ -55,12 +55,12 @@
 <figure>
     <img loading="lazy" src="https://sites.google.com/a/javainterview.net/question/_/rsrc/1425457816649/misc/tcp-ip/3-way-handshake-Intro-to-transport-layer-The-internetworking-Part2.gif"
          alt="Figure 1: 图来源于Google"/> <figcaption>
-            <p><!-- raw HTML omitted -->Figure 1: <!-- raw HTML omitted -->图来源于Google</p>
+            <p><span class="figure-number">Figure 1: </span>图来源于Google</p>
         </figcaption>
 </figure>
 
-<h4 id="syn扫描原理"><!-- raw HTML omitted -->2.2.2<!-- raw HTML omitted --> SYN扫描原理</h4>
-<!-- raw HTML omitted -->
+<h4 id="syn扫描原理"><span class="section-num">2.2.2</span> SYN扫描原理</h4>
+<!--list-separator-->
 <ol>
 <li>
 <p>SYN+ACK</p>
@@ -72,7 +72,7 @@
 <p>图来自 <a href="http://resources.infosecinstitute.com/port-scanning-using-scapy/">http://resources.infosecinstitute.com/port-scanning-using-scapy/</a></p>
 </li>
 </ol>
-<!-- raw HTML omitted -->
+<!--list-separator-->
 <ol start="2">
 <li>
 <p>RST</p>
@@ -84,7 +84,7 @@
 <p>图来自 <a href="http://resources.infosecinstitute.com/port-scanning-using-scapy/">http://resources.infosecinstitute.com/port-scanning-using-scapy/</a></p>
 </li>
 </ol>
-<!-- raw HTML omitted -->
+<!--list-separator-->
 <ol start="3">
 <li>
 <p>Filtered</p>
@@ -94,7 +94,7 @@
 <p>更多信息就要查询<a href="https://www.iana.org/assignments/icmp-parameters/icmp-parameters.xhtml">ICMP的官方文档</a> 了</p>
 </li>
 </ol>
-<h4 id="代码解释"><!-- raw HTML omitted -->2.2.3<!-- raw HTML omitted --> 代码解释</h4>
+<h4 id="代码解释"><span class="section-num">2.2.3</span> 代码解释</h4>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">scan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span> <span class="o">=</span> <span class="n">args</span>
 </span></span><span class="line"><span class="cl">    <span class="n">src_port</span> <span class="o">=</span> <span class="n">RandShort</span><span class="p">()</span>
@@ -125,7 +125,7 @@
 </span></span></code></pre></div><p>核心代码很简单，就是发送建立连接的握手请求，然后根据不同的返回结果判断不同的状态。</p>
 <p>如果端口确定是开放，那就发送 <code>R</code> flag给目标机器结束握手 (如果不结束握手的话，那就是DDOS,这也是DDOS最常用的手段); 因为这次不是使用操作系统原生的 <code>socket</code>, 而是自行构造发送 IP数据包，所以需要使用一个很强大的构造 操作各种数据包的工具 &ndash; <a href="https://github.com/phaethon/scapy">scapy</a></p>
 <p>(顺便说一下，如果在Windows下安装 scapy,需要非常多的步骤，如果是Unix/Linux,只需几行命令:) )</p>
-<h2 id="后话"><!-- raw HTML omitted -->3<!-- raw HTML omitted --> 后话</h2>
+<h2 id="后话"><span class="section-num">3</span> 后话</h2>
 <p>简单的扫描器就已经完成了，加上多线程的功能提高性能。</p>
 <p>很想吐嘈一下，真的对Python 的多线程恨铁不成钢，只好换成多进程；也给 Python2 Python3 API的改变折腾得够呛，不禁让笔者怀念起Java:(</p>
 <p>其实正如笔者开头所言的，你确定隔壁家妹子是否在家的方法有很多，你扫描端口的方法也有很多：例如 XMAS scan(TCP圣诞树扫描), FIN scan,Null scan, ACK scan, Window scan, UDP scan等。</p>
