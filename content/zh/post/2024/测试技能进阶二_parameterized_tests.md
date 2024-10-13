@@ -1,7 +1,7 @@
 +++
 title = "测试技能进阶(二): Parameterized Tests"
-date = 2024-10-12T00:35:00-07:00
-lastmod = 2024-10-13T11:55:54-07:00
+date = 2024-10-13T09:35:00-07:00
+lastmod = 2024-10-13T11:58:38-07:00
 tags = ["testing", "rust", "python"]
 categories = ["testing", "rust", "python"]
 draft = false
