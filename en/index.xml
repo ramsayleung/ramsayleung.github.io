@@ -495,6 +495,7 @@ RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
       var postObj = new Map();
       postObj.set("title", "TIL: Git Blame with Following");
       postObj.set("link", "/en/post/2024/git_blame_with_following/");
+      postObj.set("wordCount",  425 );
       var wordCount =  425 ;
       var data = postsByDate.get(date);
       if (data === undefined) {
@@ -514,6 +515,7 @@ RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
       var postObj = new Map();
       postObj.set("title", "TIL: Git Conditional Configs");
       postObj.set("link", "/en/post/2024/git_conditional_configs/");
+      postObj.set("wordCount",  307 );
       var wordCount =  307 ;
       var data = postsByDate.get(date);
       if (data === undefined) {
@@ -533,6 +535,7 @@ RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
       var postObj = new Map();
       postObj.set("title", "Rewind your Github summary");
       postObj.set("link", "/en/post/2024/github_summary/");
+      postObj.set("wordCount",  241 );
       var wordCount =  241 ;
       var data = postsByDate.get(date);
       if (data === undefined) {
@@ -552,6 +555,7 @@ RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
       var postObj = new Map();
       postObj.set("title", "How to share resource between CDK stacks");
       postObj.set("link", "/en/post/2023/how_to_share_resource_between_cdk_stacks/");
+      postObj.set("wordCount",  683 );
       var wordCount =  683 ;
       var data = postsByDate.get(date);
       if (data === undefined) {
@@ -571,6 +575,7 @@ RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
       var postObj = new Map();
       postObj.set("title", "Topological Sort");
       postObj.set("link", "/en/post/2022/topological_sorting/");
+      postObj.set("wordCount",  874 );
       var wordCount =  874 ;
       var data = postsByDate.get(date);
       if (data === undefined) {
@@ -590,6 +595,7 @@ RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
       var postObj = new Map();
       postObj.set("title", "How To Design A Reliable Distributed Timer");
       postObj.set("link", "/en/post/2021/how_to_design_a_reliable_distributed_timer/");
+      postObj.set("wordCount",  1845 );
       var wordCount =  1845 ;
       var data = postsByDate.get(date);
       if (data === undefined) {
@@ -609,6 +615,7 @@ RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
       var postObj = new Map();
       postObj.set("title", "Let's make everything iterable");
       postObj.set("link", "/en/post/2021/iterate_through_pagination_api/");
+      postObj.set("wordCount",  1004 );
       var wordCount =  1004 ;
       var data = postsByDate.get(date);
       if (data === undefined) {
@@ -628,6 +635,7 @@ RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
       var postObj = new Map();
       postObj.set("title", "Serde Tricks");
       postObj.set("link", "/en/post/2020/serde_lesson/");
+      postObj.set("wordCount",  2007 );
       var wordCount =  2007 ;
       var data = postsByDate.get(date);
       if (data === undefined) {
@@ -647,6 +655,7 @@ RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
       var postObj = new Map();
       postObj.set("title", "rspotify has come to async/await");
       postObj.set("link", "/en/post/2020/async_await_for_rspotify/");
+      postObj.set("wordCount",  432 );
       var wordCount =  432 ;
       var data = postsByDate.get(date);
       if (data === undefined) {
@@ -737,7 +746,6 @@ RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
           enterable: true,
           formatter: function (params) {
 	          const thousandWordsText = "EN" === "EN" ? 'k words': '千字';
-	          const thousandWords = (params.data[1]/1000.0).toFixed(1);
               const date = params.data[0];
               const posts = postsByDate.get(date).get("posts");
               var content = `${date}`;
@@ -745,6 +753,7 @@ RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
                   content += "<br>";
                   var link = post.get("link");
                   var title = post.get("title");
+	              const thousandWords = (post.get("wordCount")/1000.0).toFixed(1);
                   content += `<a href="${link}" target="_blank">${title} | ${thousandWords}${thousandWordsText}</a>`
               }
               return content;
