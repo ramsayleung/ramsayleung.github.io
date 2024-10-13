@@ -148,6 +148,151 @@
     </item>
     
     <item>
+      <title>测试技能进阶(二): Parameterized Tests</title>
+      <link>https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/</link>
+      <pubDate>Sat, 12 Oct 2024 00:35:00 -0700</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/</guid>
+      <description>1 前言 测试技巧具有普适性，大多是与语言无关的，只是不同语言的生态可能对测试技术的支持各不一样， 比如Python和Java，基本什么库都有，而</description>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
+<p>测试技巧具有普适性，大多是与语言无关的，只是不同语言的生态可能对测试技术的支持各不一样， <br/>
+比如Python和Java，基本什么库都有，而像C++，有顺手的单元测试和Mock库能用就很不错了。 <br/></p>
+<p>因为Python比较适合写POC(proof of concept), 而我日常工作的语言是Java+Rust，所以我会穿插着引用这三种语言。 <br/></p>
+<h2 id="parameterized-test"><span class="section-num">2</span> Parameterized Test</h2>
+<p>在介绍 Parameterized Test 之前，让我们先来看个简单的计算价格与折扣的函数（实际的生产代码肯定会更复杂，但是背后的思路是相通的）： <br/></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount_percentage</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="n">discount_percentage</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+</span></span></code></pre></div><p>针对这个函数，我们可能会编写多个 test case, 比如价格是 100, 给10%的折扣; 价格是200, 给20%的折扣; 价格是50, 给0的折扣；还有异常case，比如价格为负数的时候，或者折扣为负数的时候. <br/></p>
+<h3 id="单个-test-case"><span class="section-num">2.1</span> 单个 test case</h3>
+<p>对于这么多的 case, 一个简单粗暴的方式就是把所有的 case 都写在一个 test case 里： <br/></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytest</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_calculate_discount</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># happy path</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="mi">90</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="o">==</span> <span class="mi">160</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">50</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># unhappy path</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># assert calculate_discount(-2, 10)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># assert calculate_discount(10, -2)</span>
+</span></span></code></pre></div><p>但是这样的做法一般是不推荐的，Best Practice是一个 test case 只测一种情况，因为如果一个 test case 包含多个测试条件，如果 test case fail 了，那么不看源码或者堆栈，一般还看不出是什么 case 失败了，不好排查。 <br/></p>
+<h3 id="多个-test-case"><span class="section-num">2.2</span> 多个 test case</h3>
+<p>推荐做法就是每个测试条件定个单独的 test case。 <br/></p>
+<p>另外我们通过test case发现上面的代码没有处理异常情况，我们现在要优化下我们的代码，增加异常处理逻辑(这个就是TDD所推崇的开发哲学, test case 先行，通过test case发现问题，让test case fail掉，然后修正业务逻辑，test case再运行通过). <br/></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytest</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount_percentage</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">price</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Price must be greater than zero: </span><span class="si">{</span><span class="n">price</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">discount_percentage</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Discount_percentage must be greater than zero: </span><span class="si">{</span><span class="n">discount_percentage</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="n">discount_percentage</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TestClassCalculateDiscount</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># happy path</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">test_calculate_discount_with_10_discount_percentage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="mi">90</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">test_calculate_discount_with_20_discount_percentage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="o">==</span> <span class="mi">160</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">test_calculate_discount_with_0_discount_percentage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">50</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># unhappy path</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">test_calculate_discount_with_negative_price</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">test_calculate_discount_with_negative_discount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</span></span></code></pre></div><p>代码的确是整洁易读了，但话虽如此，我们要多写了很多的 test case. <br/></p>
+<p>如果 <code>calculate_discount</code> 变得更复杂，我们要写的 test case 肯定是更多更复杂，总不能都 copy-paste test case吧。 <br/></p>
+<h3 id="parameterized-test"><span class="section-num">2.3</span> Parameterized Test</h3>
+<p>话题就回到 Parameterized Test 了, 它就是用来解决这个问题的，它可以让你用不同的测试数据集会运行相同的测试逻辑. <br/>
+还是以上面的代码为例子，你会发现 <code>test_calculate_discount_with_10_discount_percentage</code> 和 <code>test_calculate_discount_with_20_discount_percentage</code> 的测试逻辑是完全一样的，但只是数据集不同，所以我们就可以使用 Parameterized Test 来优化： <br/></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytest</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TestClassCalculateDiscount</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Parameterized test for valid cases (happy path)</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@pytest.mark.parametrize</span><span class="p">(</span><span class="s2">&#34;price, discount, expected&#34;</span><span class="p">,</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">90</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">160</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">test_calculate_discount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Parameterized test for invalid cases (unhappy path)</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@pytest.mark.parametrize</span><span class="p">(</span><span class="s2">&#34;price, discount&#34;</span><span class="p">,</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>   <span class="c1"># Invalid price</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>    <span class="c1"># Invalid discount percentage</span>
+</span></span><span class="line"><span class="cl">    <span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">test_calculate_discount_invalid_cases</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">)</span>
+</span></span></code></pre></div><p>其实就是把测试逻辑和数据进行了分离，后面需要测试新的数据集，只需要向数据集里面添加数据即可。 <br/></p>
+<p>由此可见，使用 Parameterized Test 有几个显而易见的好处： <br/></p>
+<p>首先是减少代码冗余，不需要类似的代码 copy-paste 很多次；其次是方便提到测试覆盖率，这个在上面的例子可能不明显，我们可以再修改一下 <code>calculate_discount</code> 函数，增加两个分支： <br/></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount_percentage</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">price</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Price must be greater than zero: </span><span class="si">{</span><span class="n">price</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">discount_percentage</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Discount_percentage must be greater than zero: </span><span class="si">{</span><span class="n">discount_percentage</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">price</span> <span class="o">&gt;</span> <span class="mi">50000</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="p">(</span><span class="n">discount_percentage</span> <span class="o">*</span> <span class="mf">1.15</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">price</span> <span class="o">&gt;</span> <span class="mi">100000</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="p">(</span><span class="n">discount_percentage</span> <span class="o">*</span> <span class="mf">1.18</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="n">discount_percentage</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+</span></span></code></pre></div><p>价格超过50000, 在已有折扣基础上，再额外给折扣的15%作为折扣；价格超过100000，在已有折扣的基础上，再额外给折扣的18%作为折扣. 如果要覆盖这两个新的分支，只需要在数据集上添加大于50000 和大于100000的数据集，就可以直接覆盖到了. <br/></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@pytest.mark.parametrize</span><span class="p">(</span><span class="s2">&#34;price, discount, expected&#34;</span><span class="p">,</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">90</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">160</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="mi">50001</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">44250.885</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="mi">100001</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">88500.885</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_calculate_discount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected</span>
+</span></span></code></pre></div><p>然后测试这段代码的时候，我又发现一个新的问题，这里的价格变成浮点数后，没有作小数点后几位的取整。 <br/></p>
+<p>（对于这样简单的函数，也能不断地通过写 test case 发现新问题，这无疑就是 test case 最大的价值所在了） <br/></p>
+<p>使用 Parameterized Test 还可以提高测试代码的可读性和可维护性，这部分内容还是显而易见的，就不展开了。 <br/></p>
+<h3 id="junit"><span class="section-num">2.4</span> Junit</h3>
+<p>在Java的测试生态中，Junit是毫无疑问的龙头大哥，而在Junit5 ，Junit也引入了对 Parameterized Test 的支持，通过 <code>@ParameterizedTest</code> 这个枚举就可以将某个 test case 标注成 Parameterized Test, 通过 <code>@ValueSource</code> 传入待测试数据集： <br/></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Numbers</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">isOdd</span><span class="o">(</span><span class="kt">int</span> <span class="n">number</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@ParameterizedTest</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@ValueSource</span><span class="o">(</span><span class="n">ints</span> <span class="o">=</span> <span class="o">{</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="o">-</span><span class="mi">3</span><span class="o">,</span> <span class="mi">15</span><span class="o">,</span> <span class="n">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">})</span> <span class="c1">// six numbers
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">isOdd_ShouldReturnTrueForOddNumbers</span><span class="o">(</span><span class="kt">int</span> <span class="n">number</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">assertTrue</span><span class="o">(</span><span class="n">Numbers</span><span class="o">.</span><span class="na">isOdd</span><span class="o">(</span><span class="n">number</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>这只是最基本的用法，Junit还支持通过函数，枚举，CSV格式甚至文件来传入待测试数据集，可谓是包罗万有，具体的用法可以参考这篇文章：<a href="https://www.baeldung.com/parameterized-tests-junit-5">Guide to JUnit 5 Parameterized Tests</a> 和 <a href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests">Junit官方文档</a> <br/></p>
+<h3 id="rstest-and-test-case"><span class="section-num">2.5</span> rstest &amp; test_case</h3>
+<p>Rust 也有对Parameterized Test支持的库，一个就是 <a href="https://github.com/la10736/rstest"><code>rstest</code></a>, 另外一个就是 <a href="https://github.com/frondeus/test-case"><code>test_case</code></a>，两者都对 Parameterized Test 有较好的支持，在公司的代码库中，两者我都见过有项目在使用，而我在工作中使用的是 <code>rstest</code>, 因为它的功能更加强大，维护者也更加活跃. <br/></p>
+<h2 id="总结"><span class="section-num">3</span> 总结</h2>
+<p>在了解 Parameterized Test 之前，我的每个CR基本都有 test case 覆盖，但是坐我旁边 Principle Engineer 巨佬 review 我代码的时候，总会说我的 test case 太 verbose 和 heavy, 我在想test case多还不好嘛，我的 code coverage 都超过80%了. <br/></p>
+<p>然而他的意思是，不是说我的 test case 没有覆盖到代码，我100行的变更，附上200行的 test case 也没有问题，只不过我的test case大多只是数据不一样，测试逻辑基本相同，能否抽象下，减少下code redundancy, 然后就强烈建议我去看下 <code>Parameterized Test</code> 以及 <code>Property Based Test</code>. <br/></p>
+<p>大佬的确一针见血，我的 test case 大多是复制已有的 test case, 修改下函数名，再加加减减改下数据集。 <br/></p>
+<p>经他指点，在了解 <code>Parameterized Test</code> 之后，我的确再也没有复制 test case，每次CR的test case也更精简了，CR也更容易通过了. <br/></p>
+<p>而他提到的 <code>Property Based Test</code> 则是一项更强大的测试技术，下回再分解了。 <br/></p>
+<h2 id="参考"><span class="section-num">4</span> 参考</h2>
+<ul>
+<li><a href="https://www.baeldung.com/parameterized-tests-junit-5">Guide to JUnit 5 Parameterized Tests</a> <br/></li>
+<li><a href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests">Junit: Parameterized Tests</a> <br/></li>
+<li><a href="https://docs.pytest.org/en/stable/example/parametrize.html">Parametrizing tests</a> <br/></li>
+<li><a href="https://github.com/la10736/rstest">rstest</a> <br/></li>
+<li><a href="https://github.com/frondeus/test-case">test_case</a> <br/></li>
+</ul>
+]]></content:encoded>
+    </item>
+    
+    <item>
       <title>悼念我家的狗</title>
       <link>https://ramsayleung.github.io/zh/post/2024/%E6%82%BC%E5%BF%B5%E6%88%91%E5%AE%B6%E7%9A%84%E7%8B%97/</link>
       <pubDate>Wed, 02 Oct 2024 11:54:00 -0700</pubDate>
@@ -925,203 +1070,6 @@ Your browser does not support the video tag.</video></p>
 <ol>
 <li id="fn:1">
 <p><a href="https://layoffs.fyi">https://layoffs.fyi</a>  <br/>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>100 Days of SwiftUI</title>
-      <link>https://ramsayleung.github.io/zh/post/2024/100_days_of_swiftui/</link>
-      <pubDate>Tue, 09 Apr 2024 19:04:00 -0700</pubDate>
-      
-      <guid>https://ramsayleung.github.io/zh/post/2024/100_days_of_swiftui/</guid>
-      <description>1 缘起 我花了半年多的时间，在闲暇时间，学习了苹果的Swift语言和SwiftUI框架，想体验下IOS开发，再看下有没有机会通过写软件来做点副</description>
-      <content:encoded><![CDATA[<h2 id="缘起"><span class="section-num">1</span> 缘起</h2>
-<p>我花了半年多的时间，在闲暇时间，学习了苹果的Swift语言和SwiftUI框架，想体验下IOS开发，再看下有没有机会通过写软件来做点副业。 <br/></p>
-<p>先花了大概3个月时间，通过阅读 <a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/guidedtour/">The Swift Programming Language</a> 这本官方电子书<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>来学习Swift这门语言，又花了接近4个月的时候来学习 <a href="https://www.hackingwithswift.com/100/swiftui">100 Days of SwiftUI</a> 这门课程<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>，每天花费1到2小时来学习一课，总共100课，所以顾名思义叫 100 Days of SwiftUI, 课程非常新且好，讲师功力深厚，课讲得深入浅出，娓娓道来。 <br/></p>
-<p>每完成一课，就在Twitter上发一条推文，今天刚好把第100天的推文发了. <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/tweet_day_100.png"/> 
-</figure>
- <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/tweet_day_99.png"/> 
-</figure>
- <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/tweet_day_96.png"/> 
-</figure>
- <br/></p>
-<p>今天是结课之日，我通过了结课的考试，总分100分，考了91分，喜提课程证书一枚. <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/100_days_of_swiftui_certificate.jpg"/> 
-</figure>
- <br/></p>
-<p>在整个课程中，我写了19个IOS App(虽说大部分是功能简单的App), 源码也基本放在<a href="https://github.com/ramsayleung?tab=repositories&amp;q=&amp;type=&amp;language=swift&amp;sort="> GitHub</a> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>上了，不过所有的App都没有上架App Store，因为我还没有给苹果交税(99美刀的开发者注册费). <br/></p>
-<p>经过这100节课和19个APP的训练，我自觉已经掌握了使用Swift和SwiftUI的基础开发技能，算是个入门的IOS开发了, 现在我可以说自己是前端，后端，数据开发，IOS开发都搞过的全栈(<del>干</del>)工程师了（不是） <br/></p>
-<p>但是在苹果对SwiftUI开发思路做出改变之前，我SwiftUI之旅可能就先到此为止了，原因下文再谈 <br/></p>
-<h2 id="swift-初体验"><span class="section-num">2</span> Swift 初体验</h2>
-<p>Swift 是由LLVM之父 <a href="https://en.wikipedia.org/wiki/Chris_Lattner">Chris Lattner</a> <sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>在2010开始开发，在2014年的WWDC苹果开发者大会正式推出的一门编程语言。 <br/></p>
-<p>按照官方的说法，Swift从 Objective-C, Rust, Haskell, Ruby, Python, C#身上都有不同程度的借鉴和学习。 <br/></p>
-<p>因为我对上面提到的语言多少有涉猎，所以学习Swift起来基本没有什么困难, <code>Optional</code>, <code>Error Handling</code>, <code>Result</code>, <code>Generic</code>, <code>Enumerations</code>, <code>Protocol</code> 这些概念都和Rust的大同小异。 <br/></p>
-<p>又是由LLVM之父来操刀，所以语言本身也设计得很优雅. <br/></p>
-<p>让我眼前一亮的可能是借鉴自 <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/extension-methods">C# Extension Methods</a> <sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>的 <code>extension</code> 功能 , 可以对已有的 class, enum 或者是 protocol 类型增加新的函数，也就是在不修改源码的情况下，扩展已有的功能. <br/></p>
-<p>例如，以下的代码就可以扩展内置的 <code>Double</code> 类型, 实现以米为单位，进行千米, 厘米，毫米，公尺的转换: <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="kd">extension</span> <span class="nc">Double</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nv">km</span><span class="p">:</span> <span class="nb">Double</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">self</span> <span class="o">*</span> <span class="mf">1_000.0</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nv">m</span><span class="p">:</span> <span class="nb">Double</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">self</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nv">cm</span><span class="p">:</span> <span class="nb">Double</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">self</span> <span class="o">/</span> <span class="mf">100.0</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nv">mm</span><span class="p">:</span> <span class="nb">Double</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">self</span> <span class="o">/</span> <span class="mf">1_000.0</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nv">ft</span><span class="p">:</span> <span class="nb">Double</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">self</span> <span class="o">/</span> <span class="mf">3.28084</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nv">oneInch</span> <span class="p">=</span> <span class="mf">25.4</span><span class="p">.</span><span class="n">mm</span>
-</span></span><span class="line"><span class="cl"><span class="bp">print</span><span class="p">(</span><span class="s">&#34;One inch is </span><span class="si">\(</span><span class="n">oneInch</span><span class="si">)</span><span class="s"> meters&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="c1">// Prints &#34;One inch is 0.0254 meters&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nv">threeFeet</span> <span class="p">=</span> <span class="mf">3.</span><span class="n">ft</span>
-</span></span><span class="line"><span class="cl"><span class="bp">print</span><span class="p">(</span><span class="s">&#34;Three feet is </span><span class="si">\(</span><span class="n">threeFeet</span><span class="si">)</span><span class="s"> meters&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="c1">// Prints &#34;Three feet is 0.914399970739201 meters&#34;</span>
-</span></span></code></pre></div><p>总体而言, Swift是一门吸收了众多PL理论的现代编程语言, 官方说支持Linux，Windows，MacOS等多个平台，不过我估计大多是在MacOS上用来写IOS和Mac应用 <br/></p>
-<h2 id="swiftui"><span class="section-num">3</span> SwiftUI</h2>
-<p>SwiftUI 使用的声明式语法，让开发者写页面布局和效果变得简洁清晰, 例如通过 <code>VStack</code>, <code>HStack</code>, <code>ZStack</code> 就可以实现X轴，Y轴，和Z轴方向的布局 <br/></p>
-<p>例如下面这个就是通过 <code>ZStack</code> 几行代码实现的叠加效果: <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nv">colors</span><span class="p">:</span> <span class="p">[</span><span class="n">Color</span><span class="p">]</span> <span class="p">=</span>
-</span></span><span class="line"><span class="cl">    <span class="p">[.</span><span class="n">red</span><span class="p">,</span> <span class="p">.</span><span class="n">orange</span><span class="p">,</span> <span class="p">.</span><span class="n">yellow</span><span class="p">,</span> <span class="p">.</span><span class="n">green</span><span class="p">,</span> <span class="p">.</span><span class="n">blue</span><span class="p">,</span> <span class="p">.</span><span class="n">purple</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="n">View</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ZStack</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">ForEach</span><span class="p">(</span><span class="mf">0.</span><span class="p">.&lt;</span><span class="n">colors</span><span class="p">.</span><span class="bp">count</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">Rectangle</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">                <span class="p">.</span><span class="n">fill</span><span class="p">(</span><span class="n">colors</span><span class="p">[</span><span class="nv">$0</span><span class="p">])</span>
-</span></span><span class="line"><span class="cl">                <span class="p">.</span><span class="n">frame</span><span class="p">(</span><span class="n">width</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">                <span class="p">.</span><span class="n">offset</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">CGFloat</span><span class="p">(</span><span class="nv">$0</span><span class="p">)</span> <span class="o">*</span> <span class="mf">10.0</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                        <span class="n">y</span><span class="p">:</span> <span class="n">CGFloat</span><span class="p">(</span><span class="nv">$0</span><span class="p">)</span> <span class="o">*</span> <span class="mf">10.0</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p><figure>
-    <img loading="lazy" src="/ox-hugo/zstack_rectangle.png"/> 
-</figure>
- <br/></p>
-<p>除了声明式语法之外，SwiftUI让人赏心悦目的就是动画。好的动画在App里面绝对能起到画龙点睛的作用，而SwiftUI的内置动画已经非常强大了，下面就是使用内置动画实现的动画效果: <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="kd">struct</span> <span class="nc">ContentView</span><span class="p">:</span> <span class="n">View</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="p">@</span><span class="n">State</span> <span class="kd">private</span> <span class="kd">var</span> <span class="nv">dragAmount</span> <span class="p">=</span> <span class="n">CGSize</span><span class="p">.</span><span class="n">zero</span>
-</span></span><span class="line"><span class="cl">    <span class="p">@</span><span class="n">State</span> <span class="kd">private</span> <span class="kd">var</span> <span class="nv">enable</span> <span class="p">=</span> <span class="kc">false</span>
-</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nv">letters</span> <span class="p">=</span> <span class="s">&#34;Hello, World&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="n">View</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">HStack</span><span class="p">(</span><span class="n">spacing</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">ForEach</span><span class="p">(</span><span class="mf">0.</span><span class="p">.&lt;</span><span class="n">letters</span><span class="p">.</span><span class="bp">count</span><span class="p">,</span> <span class="n">id</span><span class="p">:</span> <span class="err">\</span><span class="p">.</span><span class="kc">self</span><span class="p">)</span> <span class="p">{</span> <span class="n">index</span> <span class="k">in</span>
-</span></span><span class="line"><span class="cl">                <span class="n">Text</span><span class="p">(</span><span class="nb">String</span><span class="p">(</span><span class="n">letters</span><span class="p">[</span><span class="n">letters</span><span class="p">.</span><span class="n">index</span><span class="p">(</span><span class="n">letters</span><span class="p">.</span><span class="n">startIndex</span><span class="p">,</span> <span class="n">offsetBy</span><span class="p">:</span> <span class="n">index</span><span class="p">)]))</span>
-</span></span><span class="line"><span class="cl">                    <span class="p">.</span><span class="n">padding</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">                    <span class="p">.</span><span class="n">font</span><span class="p">(.</span><span class="n">title</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">                    <span class="p">.</span><span class="n">background</span><span class="p">(</span><span class="n">enable</span> <span class="p">?</span> <span class="p">.</span><span class="n">green</span> <span class="p">:</span> <span class="p">.</span><span class="n">blue</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">                    <span class="p">.</span><span class="n">offset</span><span class="p">(</span><span class="n">dragAmount</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">                    <span class="p">.</span><span class="n">animation</span><span class="p">(.</span><span class="n">linear</span><span class="p">.</span><span class="n">delay</span><span class="p">(</span><span class="nb">Double</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">/</span> <span class="mi">20</span><span class="p">),</span> <span class="n">value</span><span class="p">:</span> <span class="n">dragAmount</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}.</span><span class="n">gesture</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">            <span class="n">DragGesture</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">                <span class="p">.</span><span class="n">onChanged</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                    <span class="n">dragAmount</span> <span class="p">=</span> <span class="nv">$0</span><span class="p">.</span><span class="n">translation</span>
-</span></span><span class="line"><span class="cl">                <span class="p">}</span>
-</span></span><span class="line"><span class="cl">                <span class="p">.</span><span class="n">onEnded</span> <span class="p">{</span> <span class="kc">_</span> <span class="k">in</span>
-</span></span><span class="line"><span class="cl">                    <span class="n">dragAmount</span> <span class="p">=</span> <span class="n">CGSize</span><span class="p">.</span><span class="n">zero</span>
-</span></span><span class="line"><span class="cl">                    <span class="n">enable</span><span class="p">.</span><span class="n">toggle</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">                <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p><figure>
-    <img loading="lazy" src="/ox-hugo/drag_animation.gif"/> 
-</figure>
- <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl">  <span class="kd">struct</span> <span class="nc">HeartBeatView</span><span class="p">:</span> <span class="n">View</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="p">@</span><span class="n">State</span> <span class="kd">private</span> <span class="kd">var</span> <span class="nv">animationAmount</span> <span class="p">=</span> <span class="mf">1.0</span>
-</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="n">View</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Button</span><span class="p">(</span><span class="s">&#34;SOS&#34;</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">.</span><span class="n">padding</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">.</span><span class="n">background</span><span class="p">(.</span><span class="n">red</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">.</span><span class="n">foregroundColor</span><span class="p">(.</span><span class="n">white</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">.</span><span class="n">clipShape</span><span class="p">(</span><span class="n">Circle</span><span class="p">())</span>
-</span></span><span class="line"><span class="cl">        <span class="p">.</span><span class="n">overlay</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">            <span class="n">Circle</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">                <span class="p">.</span><span class="n">stroke</span><span class="p">(.</span><span class="n">red</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">                <span class="p">.</span><span class="n">scaleEffect</span><span class="p">(</span><span class="n">animationAmount</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">                <span class="p">.</span><span class="n">opacity</span><span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">animationAmount</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">                <span class="p">.</span><span class="n">animation</span><span class="p">(.</span><span class="n">easeOut</span><span class="p">(</span><span class="n">duration</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">                    <span class="p">.</span><span class="n">repeatForever</span><span class="p">(</span><span class="n">autoreverses</span><span class="p">:</span> <span class="kc">false</span><span class="p">),</span> <span class="n">value</span><span class="p">:</span> <span class="n">animationAmount</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">.</span><span class="n">onAppear</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">animationAmount</span> <span class="p">=</span> <span class="mi">2</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p><figure>
-    <img loading="lazy" src="/ox-hugo/hearbeat.gif"/> 
-</figure>
- <br/></p>
-<p>而Xcode 15新增的预览功能也很好用，可以让开发者不需要启动iPhone模拟器就能预览页面效果，节省了非常多的等待时间。 <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/xcode_preview.png"/> 
-</figure>
- <br/></p>
-<h2 id="问题"><span class="section-num">4</span> 问题</h2>
-<p>听起来好像很美好: IDE新功能好用，编程语言优雅, UI框架简洁好用; 但是苹果的开发思路却有问题： 苹果开发的SwiftUI不向后兼容老版本的IOS。 <br/></p>
-<p>SwiftUI大部分功能都是只支持IOS16及以后的版本，而苹果新出来的数据持久框架 <code>SwiftData</code> 甚至只支持IOS17, <br/>
-更离谱的是，SwiftUI的 BugFix 也只支持高版本IOS, 这就意味着用户不升级IOS版本，甚至SwiftUI的bug开发者都没法修复。 <br/></p>
-<p>我自己的手机也只更新到IOS16，所以我时常会遇到我自己写的App没法运行到我自己手机上的情况。 <br/></p>
-<p>不支持旧版本的IOS就让一大批的开发者和公司都没有动力去使用SwiftUI: <br/></p>
-<p>对于开发新应用的开发者而言，只支持IOS17就意味着会流失一大群使用IOS16及以下版本的用户， <br/>
-而对于拥有存量用户的公司而言，更没有动力去使用SwiftUI，用了之后，旧版本IOS的用户可能直接无法打开应用。 <br/></p>
-<p>因此SwiftUI就陷入了一个尴尬的境地，东西做得好，但是不会有人用; <br/></p>
-<p>没有人自然就不用有人分享，宣传这门技术，自然就导致相关的学习资料非常匮乏, 进一步加深了初学者的学习难度; <br/></p>
-<p>开发遇到问题连懂的人都不用，官方文档写了又约等于没有写, 直接劝退初学者，恶性循环。 <br/></p>
-<p>又因为接受SwiftUI的开发者还不多，苹果版本迭代起来更加肆无忌惮，新版本又引入一堆的Breaking change，导致开发者更新版本非常痛苦. <br/></p>
-<p>另外一个问题就是SwiftUI与苹果现有框架整合得不够好，如 <code>CoreImage</code> 框架，顾名思义是用来作图片处理. <br/></p>
-<p>但之前是使用Objective-C写的，通过SwiftUI来调用，就会变成相当恶心，需要把Swift的数据结构传换成Objective-C来处理, 如： <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">applyProcess</span><span class="p">(){</span>
-</span></span><span class="line"><span class="cl">    <span class="k">guard</span> <span class="kd">let</span> <span class="nv">outputImage</span> <span class="p">=</span> <span class="n">currentFilter</span><span class="p">.</span><span class="n">outputImage</span> <span class="k">else</span> <span class="p">{</span><span class="k">return</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="k">guard</span> <span class="kd">let</span> <span class="nv">cgImage</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="n">createCGImage</span><span class="p">(</span><span class="n">outputImage</span><span class="p">,</span> <span class="n">from</span><span class="p">:</span> <span class="n">outputImage</span><span class="p">.</span><span class="n">extent</span><span class="p">)</span> <span class="k">else</span><span class="p">{</span><span class="k">return</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nv">uiImage</span> <span class="p">=</span> <span class="n">UIImage</span><span class="p">(</span><span class="n">cgImage</span><span class="p">:</span> <span class="n">cgImage</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">processedImage</span> <span class="p">=</span> <span class="n">Image</span><span class="p">(</span><span class="n">uiImage</span><span class="p">:</span> <span class="n">uiImage</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">loadImage</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Task</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">guard</span> <span class="kd">let</span> <span class="nv">imageData</span> <span class="p">=</span> <span class="k">try</span> <span class="n">await</span> <span class="n">selectedItem</span><span class="p">?.</span><span class="n">loadTransferable</span><span class="p">(</span><span class="n">type</span><span class="p">:</span> <span class="n">Data</span><span class="p">.</span><span class="kc">self</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span><span class="k">return</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="k">guard</span> <span class="kd">let</span> <span class="nv">inputImage</span> <span class="p">=</span> <span class="n">UIImage</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">imageData</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span><span class="k">return</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="kd">let</span> <span class="nv">beginImage</span> <span class="p">=</span> <span class="n">CIImage</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">inputImage</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">currentFilter</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">beginImage</span><span class="p">,</span> <span class="n">forKey</span><span class="p">:</span> <span class="n">kCIInputImageKey</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">applyProcess</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>把 <code>CoreImage</code> 框架的 <code>CIImage</code> 转成 <code>CoreGraphics</code> 框架的 <code>CGImage</code>, 然后再把 <code>CGImage</code> 转换成 <code>UIKit</code> 框架 <code>UIImage</code>, 然后再转换回SwiftUI 内置的 <code>Image</code> 类型, 可谓是相当麻烦了. <br/></p>
-<p>但是对比SwiftUI只支持高版本的问题，Objective-C和Swift的互操作问题也只能算是恶心，但是起码有解决方法，对于前者，开发者是完全没法自行解决. <br/></p>
-<h2 id="总结"><span class="section-num">5</span> 总结</h2>
-<p>过了一把野生IOS开发的瘾，但是除非是苹果愿意让SwiftUI支持低版本的IOS， <br/>
-不然我是没有太大意愿继续使用SwiftUI来开发IOS了，受众比较有限了。 <br/></p>
-<p>想要支持低版本的IOS，就只能走UIKit和Objective-C这条历史老路，我对此着实是望而生畏，有空还是学习点其他有趣的东西。 <br/></p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p><a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/guidedtour/">https://docs.swift.org/swift-book/documentation/the-swift-programming-language/guidedtour/</a> <br/>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p><a href="https://www.hackingwithswift.com/100/swiftui">https://www.hackingwithswift.com/100/swiftui</a> <br/>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:3">
-<p><a href="https://github.com/ramsayleung?tab=repositories&amp;q=&amp;type=&amp;language=swift&amp;sort">https://github.com/ramsayleung?tab=repositories&amp;q=&amp;type=&amp;language=swift&amp;sort</a>= <br/>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:4">
-<p><a href="https://en.wikipedia.org/wiki/Chris_Lattner">https://en.wikipedia.org/wiki/Chris_Lattner</a>  <br/>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:5">
-<p><a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/extension-methods">https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/extension-methods</a>  <br/>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>

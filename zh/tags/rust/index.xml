@@ -12,7 +12,152 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Wed, 18 Sep 2024 22:46:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 12 Oct 2024 00:35:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>测试技能进阶(二): Parameterized Tests</title>
+      <link>https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/</link>
+      <pubDate>Sat, 12 Oct 2024 00:35:00 -0700</pubDate>
+      
+      <guid>https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/</guid>
+      <description>1 前言 测试技巧具有普适性，大多是与语言无关的，只是不同语言的生态可能对测试技术的支持各不一样， 比如Python和Java，基本什么库都有，而</description>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
+<p>测试技巧具有普适性，大多是与语言无关的，只是不同语言的生态可能对测试技术的支持各不一样， <br/>
+比如Python和Java，基本什么库都有，而像C++，有顺手的单元测试和Mock库能用就很不错了。 <br/></p>
+<p>因为Python比较适合写POC(proof of concept), 而我日常工作的语言是Java+Rust，所以我会穿插着引用这三种语言。 <br/></p>
+<h2 id="parameterized-test"><span class="section-num">2</span> Parameterized Test</h2>
+<p>在介绍 Parameterized Test 之前，让我们先来看个简单的计算价格与折扣的函数（实际的生产代码肯定会更复杂，但是背后的思路是相通的）： <br/></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount_percentage</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="n">discount_percentage</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+</span></span></code></pre></div><p>针对这个函数，我们可能会编写多个 test case, 比如价格是 100, 给10%的折扣; 价格是200, 给20%的折扣; 价格是50, 给0的折扣；还有异常case，比如价格为负数的时候，或者折扣为负数的时候. <br/></p>
+<h3 id="单个-test-case"><span class="section-num">2.1</span> 单个 test case</h3>
+<p>对于这么多的 case, 一个简单粗暴的方式就是把所有的 case 都写在一个 test case 里： <br/></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytest</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_calculate_discount</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># happy path</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="mi">90</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="o">==</span> <span class="mi">160</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">50</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># unhappy path</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># assert calculate_discount(-2, 10)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># assert calculate_discount(10, -2)</span>
+</span></span></code></pre></div><p>但是这样的做法一般是不推荐的，Best Practice是一个 test case 只测一种情况，因为如果一个 test case 包含多个测试条件，如果 test case fail 了，那么不看源码或者堆栈，一般还看不出是什么 case 失败了，不好排查。 <br/></p>
+<h3 id="多个-test-case"><span class="section-num">2.2</span> 多个 test case</h3>
+<p>推荐做法就是每个测试条件定个单独的 test case。 <br/></p>
+<p>另外我们通过test case发现上面的代码没有处理异常情况，我们现在要优化下我们的代码，增加异常处理逻辑(这个就是TDD所推崇的开发哲学, test case 先行，通过test case发现问题，让test case fail掉，然后修正业务逻辑，test case再运行通过). <br/></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytest</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount_percentage</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">price</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Price must be greater than zero: </span><span class="si">{</span><span class="n">price</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">discount_percentage</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Discount_percentage must be greater than zero: </span><span class="si">{</span><span class="n">discount_percentage</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="n">discount_percentage</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TestClassCalculateDiscount</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># happy path</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">test_calculate_discount_with_10_discount_percentage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="mi">90</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">test_calculate_discount_with_20_discount_percentage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="o">==</span> <span class="mi">160</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">test_calculate_discount_with_0_discount_percentage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">50</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># unhappy path</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">test_calculate_discount_with_negative_price</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">test_calculate_discount_with_negative_discount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</span></span></code></pre></div><p>代码的确是整洁易读了，但话虽如此，我们要多写了很多的 test case. <br/></p>
+<p>如果 <code>calculate_discount</code> 变得更复杂，我们要写的 test case 肯定是更多更复杂，总不能都 copy-paste test case吧。 <br/></p>
+<h3 id="parameterized-test"><span class="section-num">2.3</span> Parameterized Test</h3>
+<p>话题就回到 Parameterized Test 了, 它就是用来解决这个问题的，它可以让你用不同的测试数据集会运行相同的测试逻辑. <br/>
+还是以上面的代码为例子，你会发现 <code>test_calculate_discount_with_10_discount_percentage</code> 和 <code>test_calculate_discount_with_20_discount_percentage</code> 的测试逻辑是完全一样的，但只是数据集不同，所以我们就可以使用 Parameterized Test 来优化： <br/></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytest</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TestClassCalculateDiscount</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Parameterized test for valid cases (happy path)</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@pytest.mark.parametrize</span><span class="p">(</span><span class="s2">&#34;price, discount, expected&#34;</span><span class="p">,</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">90</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">160</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">test_calculate_discount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Parameterized test for invalid cases (unhappy path)</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@pytest.mark.parametrize</span><span class="p">(</span><span class="s2">&#34;price, discount&#34;</span><span class="p">,</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>   <span class="c1"># Invalid price</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>    <span class="c1"># Invalid discount percentage</span>
+</span></span><span class="line"><span class="cl">    <span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">test_calculate_discount_invalid_cases</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">)</span>
+</span></span></code></pre></div><p>其实就是把测试逻辑和数据进行了分离，后面需要测试新的数据集，只需要向数据集里面添加数据即可。 <br/></p>
+<p>由此可见，使用 Parameterized Test 有几个显而易见的好处： <br/></p>
+<p>首先是减少代码冗余，不需要类似的代码 copy-paste 很多次；其次是方便提到测试覆盖率，这个在上面的例子可能不明显，我们可以再修改一下 <code>calculate_discount</code> 函数，增加两个分支： <br/></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount_percentage</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">price</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Price must be greater than zero: </span><span class="si">{</span><span class="n">price</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">discount_percentage</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Discount_percentage must be greater than zero: </span><span class="si">{</span><span class="n">discount_percentage</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">price</span> <span class="o">&gt;</span> <span class="mi">50000</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="p">(</span><span class="n">discount_percentage</span> <span class="o">*</span> <span class="mf">1.15</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">price</span> <span class="o">&gt;</span> <span class="mi">100000</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="p">(</span><span class="n">discount_percentage</span> <span class="o">*</span> <span class="mf">1.18</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="n">discount_percentage</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+</span></span></code></pre></div><p>价格超过50000, 在已有折扣基础上，再额外给折扣的15%作为折扣；价格超过100000，在已有折扣的基础上，再额外给折扣的18%作为折扣. 如果要覆盖这两个新的分支，只需要在数据集上添加大于50000 和大于100000的数据集，就可以直接覆盖到了. <br/></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@pytest.mark.parametrize</span><span class="p">(</span><span class="s2">&#34;price, discount, expected&#34;</span><span class="p">,</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">90</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">160</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="mi">50001</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">44250.885</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="mi">100001</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">88500.885</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_calculate_discount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected</span>
+</span></span></code></pre></div><p>然后测试这段代码的时候，我又发现一个新的问题，这里的价格变成浮点数后，没有作小数点后几位的取整。 <br/></p>
+<p>（对于这样简单的函数，也能不断地通过写 test case 发现新问题，这无疑就是 test case 最大的价值所在了） <br/></p>
+<p>使用 Parameterized Test 还可以提高测试代码的可读性和可维护性，这部分内容还是显而易见的，就不展开了。 <br/></p>
+<h3 id="junit"><span class="section-num">2.4</span> Junit</h3>
+<p>在Java的测试生态中，Junit是毫无疑问的龙头大哥，而在Junit5 ，Junit也引入了对 Parameterized Test 的支持，通过 <code>@ParameterizedTest</code> 这个枚举就可以将某个 test case 标注成 Parameterized Test, 通过 <code>@ValueSource</code> 传入待测试数据集： <br/></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Numbers</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">isOdd</span><span class="o">(</span><span class="kt">int</span> <span class="n">number</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@ParameterizedTest</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@ValueSource</span><span class="o">(</span><span class="n">ints</span> <span class="o">=</span> <span class="o">{</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="o">-</span><span class="mi">3</span><span class="o">,</span> <span class="mi">15</span><span class="o">,</span> <span class="n">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">})</span> <span class="c1">// six numbers
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">isOdd_ShouldReturnTrueForOddNumbers</span><span class="o">(</span><span class="kt">int</span> <span class="n">number</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">assertTrue</span><span class="o">(</span><span class="n">Numbers</span><span class="o">.</span><span class="na">isOdd</span><span class="o">(</span><span class="n">number</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>这只是最基本的用法，Junit还支持通过函数，枚举，CSV格式甚至文件来传入待测试数据集，可谓是包罗万有，具体的用法可以参考这篇文章：<a href="https://www.baeldung.com/parameterized-tests-junit-5">Guide to JUnit 5 Parameterized Tests</a> 和 <a href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests">Junit官方文档</a> <br/></p>
+<h3 id="rstest-and-test-case"><span class="section-num">2.5</span> rstest &amp; test_case</h3>
+<p>Rust 也有对Parameterized Test支持的库，一个就是 <a href="https://github.com/la10736/rstest"><code>rstest</code></a>, 另外一个就是 <a href="https://github.com/frondeus/test-case"><code>test_case</code></a>，两者都对 Parameterized Test 有较好的支持，在公司的代码库中，两者我都见过有项目在使用，而我在工作中使用的是 <code>rstest</code>, 因为它的功能更加强大，维护者也更加活跃. <br/></p>
+<h2 id="总结"><span class="section-num">3</span> 总结</h2>
+<p>在了解 Parameterized Test 之前，我的每个CR基本都有 test case 覆盖，但是坐我旁边 Principle Engineer 巨佬 review 我代码的时候，总会说我的 test case 太 verbose 和 heavy, 我在想test case多还不好嘛，我的 code coverage 都超过80%了. <br/></p>
+<p>然而他的意思是，不是说我的 test case 没有覆盖到代码，我100行的变更，附上200行的 test case 也没有问题，只不过我的test case大多只是数据不一样，测试逻辑基本相同，能否抽象下，减少下code redundancy, 然后就强烈建议我去看下 <code>Parameterized Test</code> 以及 <code>Property Based Test</code>. <br/></p>
+<p>大佬的确一针见血，我的 test case 大多是复制已有的 test case, 修改下函数名，再加加减减改下数据集。 <br/></p>
+<p>经他指点，在了解 <code>Parameterized Test</code> 之后，我的确再也没有复制 test case，每次CR的test case也更精简了，CR也更容易通过了. <br/></p>
+<p>而他提到的 <code>Property Based Test</code> 则是一项更强大的测试技术，下回再分解了。 <br/></p>
+<h2 id="参考"><span class="section-num">4</span> 参考</h2>
+<ul>
+<li><a href="https://www.baeldung.com/parameterized-tests-junit-5">Guide to JUnit 5 Parameterized Tests</a> <br/></li>
+<li><a href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests">Junit: Parameterized Tests</a> <br/></li>
+<li><a href="https://docs.pytest.org/en/stable/example/parametrize.html">Parametrizing tests</a> <br/></li>
+<li><a href="https://github.com/la10736/rstest">rstest</a> <br/></li>
+<li><a href="https://github.com/frondeus/test-case">test_case</a> <br/></li>
+</ul>
+]]></content:encoded>
+    </item>
+    
     <item>
       <title>使用Rust的Iterator优雅解决FizzBuzz问题</title>
       <link>https://ramsayleung.github.io/zh/post/2024/%E4%BD%BF%E7%94%A8rust%E7%9A%84iterator%E8%A7%A3%E5%86%B3fizzbuzz%E9%97%AE%E9%A2%98/</link>
@@ -1786,182 +1931,6 @@ tracker!</p>
 <li><a href="https://vincent.is/handling-errors-in-rust/">handling errors in rust</a></li>
 <li><a href="https://docs.rs/error-chain">error chain</a></li>
 <li><a href="https://doc.rust-lang.org/book/second-edition/ch09-00-error-handling.html">error handle</a></li>
-</ul>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>Rust的错误处理(一)</title>
-      <link>https://ramsayleung.github.io/zh/post/2018/error_handle_in_rust_1/</link>
-      <pubDate>Mon, 05 Feb 2018 20:35:00 +0800</pubDate>
-      
-      <guid>https://ramsayleung.github.io/zh/post/2018/error_handle_in_rust_1/</guid>
-      <description>拉上Java 来谈谈 Rust的错误处理 1 前言 每个语言都会有异常处理机制（没有异常处理机制的语言估计也没有人会用了），Rust 自然也不例外，所以</description>
-      <content:encoded><![CDATA[<p>拉上Java 来谈谈 Rust的错误处理</p>
-<h2 id="前言"><span class="section-num">1</span> 前言</h2>
-<p>每个语言都会有异常处理机制（没有异常处理机制的语言估计也没有人会用了），Rust 自然也不例外，所以今天我就来谈Rust 的异常处理，因为 Rust 的异常处理跟常见的语言 （Java/Python 等）的处理机制差异略大，所以打算拉个上个语言，对比着解释. 没错，这 个光荣的任务就落到了 Java 身上</p>
-<h2 id="java-的异常处理"><span class="section-num">2</span> Java 的异常处理</h2>
-<p>在谈 Rust 的异常处理之前，为了把它们之前的差异讲清楚，先来聊一下 Java 的异常处理。</p>
-<figure>
-    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/java_exception_hierarchy.png"
-         alt="Figure 1: Java exception hierarchy"/> <figcaption>
-            <p><span class="figure-number">Figure 1: </span>Java exception hierarchy</p>
-        </figcaption>
-</figure>
-
-<p>如上面的简易图所示， Java 的异常都是继承于 <code>Throwable</code> 这个分类的，而异常又是分 成不同的类型： <code>Error</code>, <code>Exception</code>;
-<code>Exception</code> 又分成 <code>Checked Exception</code> 和 <code>RuntimeException</code>.</p>
-<p><code>Error</code> 一般都是了出现严重的问题，按照JDK 注释的说法，都是不应该 <code>try-catch</code>的：</p>
-<blockquote>
-<p>An {() Error} is a subclass of {() Throwable}
-that indicates serious problems that a reasonable application should
-not try to catch. Most such errors are abnormal conditions.</p>
-</blockquote>
-<p>比如虚拟机挂了，或者JRE 出了问题就可能是 <code>Error</code>，前几天我就遇到一个JRE 的 Bug, 整个项目都挂 了：</p>
-<figure>
-    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191104104407.png"
-         alt="Figure 2: JRE fatal error"/> <figcaption>
-            <p><span class="figure-number">Figure 2: </span>JRE fatal error</p>
-        </figcaption>
-</figure>
-
-<p>我还顺便给 Oracle 报了个<a href="https://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8196769">Bug</a> :)</p>
-<p>至于<code>RuntimeException</code> 就是类似数组越界，空指针这些异常，即无法在程序编译时发现，只有在运行的时候才会出 现的问题，所以叫做运行时异常(<code>RuntimeException</code>).</p>
-<h2 id="checked-exception"><span class="section-num">3</span> Checked Exception</h2>
-<p>Java的<code>Checked Exception</code>, 也就是Java 要求你必须在函数的类型里面声明或处理它可能抛出的异常。比如，你的函数如果是这样：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">foo</span><span class="o">(</span><span class="n">string</span> <span class="n">filename</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span>
-</span></span><span class="line"><span class="cl"><span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">filename</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">BufferedReader</span> <span class="n">br</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">FileReader</span><span class="o">(</span><span class="n">file</span><span class="o">));</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">String</span> <span class="n">st</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="o">((</span><span class="n">st</span> <span class="o">=</span> <span class="n">br</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
-</span></span><span class="line"><span class="cl">	<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">st</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>Java 要求你必须在函数头部写上 <code>throws IOException</code> 或者是必须用 <code>try-catch</code>处理这个异常，因为<code>readline()</code> 的方法签名是：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">String</span> <span class="nf">readLine</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">ignoreLF</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>所以编译器要求必须要处理这个异常，否则它就不能编译。</p>
-<p>同理，在使用 <code>foo()</code>这个函数 的时候，可能会抛出 <code>IOException</code> 这个异常，由于编译器看到了这个声明，它会严格检 查你对 <code>foo</code>
-函数的用法。</p>
-<p>在我看来，<code>CheckedException</code>是Java 优良的设计之一，正因 为<code>Checked Exception</code>的存在，会更容易编写出正确处理错误的程序，更健壮的程序</p>
-<h2 id="rust-的异常处理"><span class="section-num">4</span> Rust 的异常处理</h2>
-<p>Rust 是一个注重安全（Safety）的语言，而错误处理也是 Rust关注的要点之一。</p>
-<p>Rust 主要是将错误划分成两种类型，分别是可恢复的错误(recoverable error) 和不可恢复错误 (unrecoverable error).</p>
-<p>出现可恢复的错误的原因多种多样，例如打开文件的时候，文件找不到或者没有读权限等，开发者就应该对这种可能出现的错误进行处理；</p>
-<p>而不可恢复的错误就可能是Bug 引起的，比如数组越界等。而其他常见的语言一般是没有没有区分 <code>recoverable error</code>和 <code>unrecoverable error</code>的. 比如 Python, 用的就是 <code>Exception</code>.</p>
-<p>而Rust 是没有 <code>Exception</code>, Rust 用 <code>Result&lt;T, E&gt;</code> 表示可恢复错误， 用 <code>panic!()</code> 来表示出现错误，并且中断程序的执行并退出(不可恢复错误)。</p>
-<p><code>Result</code> 是Rust 标准库的枚举：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">enum</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nb">Ok</span><span class="p">(</span><span class="n">T</span><span class="p">),</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nb">Err</span><span class="p">(</span><span class="n">E</span><span class="p">),</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p><code>T</code>和<code>E</code>都是泛型，<code>T</code>表示程序执行正常的时候的返回值，那<code>E</code>自然是程序出错时的返回 值。以标准库的打开文件的函数为例， <code>std::io::File</code> 的 <code>open()</code> 函数的签名如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">open</span><span class="o">&lt;</span><span class="n">P</span>: <span class="nb">AsRef</span><span class="o">&lt;</span><span class="n">Path</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">path</span>: <span class="nc">P</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">io</span>::<span class="nb">Result</span><span class="o">&lt;</span><span class="n">File</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">OpenOptions</span>::<span class="n">new</span><span class="p">().</span><span class="n">read</span><span class="p">(</span><span class="kc">true</span><span class="p">).</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">.</span><span class="n">as_ref</span><span class="p">())</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>忽略这个方法的参数，只看返回值类型：<code>io::Result&lt;File&gt;</code>, 又因为有 <code>type Result&lt;T&gt;</code> Result&lt;T, Error&gt;;=</p>
-<p>这个 <code>typedef</code> 语句，所以返回值的完整版本时<code>io::Result&lt;File,io::Error&gt;</code>, 即调用 <code>open</code> 这个函数的时候，可能出现错误，出现错误时候返回一个 <code>io::Error</code>, 如果调用<code>open</code>没有问题的话，就会返回一个 <code>File</code> 的结构体，所以这个就类似 Java 的<code>CheckedException</code>,</p>
-<p>只要声明了函数可能出现问题，在调用函数的时候就必须处理可能出现的错误，不然编译器就不会让你通过(Rust 的编译器就像位父亲那样对开发者耳提面命), 例如：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">match</span><span class="w"> </span><span class="n">File</span>::<span class="n">open</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">.</span><span class="n">cache_path</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nb">Ok</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;{:?}&#34;</span><span class="p">,</span><span class="n">file</span><span class="p">),</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nb">Err</span><span class="p">(</span><span class="n">why</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="fm">panic!</span><span class="p">(</span><span class="s">&#34;couldn&#39;t open {:?}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">why</span><span class="p">.</span><span class="n">description</span><span class="p">())</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">};</span><span class="w">
-</span></span></span></code></pre></div><h2 id="java-的异常传递"><span class="section-num">5</span> Java 的异常传递</h2>
-<p>在程序中，总会有一些错误需要处理，但是却不应该在错误出现的函数进行处理的情况(或者是，你很懒惰，只想应付一下编译器，不想处理出现的异常 :)</p>
-<p>比如你正在编写一个类 库，里面有很多的IO 操作，有IO 操作的地方就有可能出现<code>IOException</code>. 如果出现异常，
-你不应该自己在类库把异常给 <code>try-catch</code>了，如果这样，使用你类库的开发者就没办法知 道程序出现了异常，异常的堆栈也丢了。</p>
-<p>比较合理的做法是，把<code>IOException</code>捕捉了，然后对 <code>IOException</code> 做一层包装，然后再抛给类库的调用者，例如：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">doSomething</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">WrappingException</span><span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="o">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">doSomethingThatCanThrowException</span><span class="o">();</span>
-</span></span><span class="line"><span class="cl">    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SomeException</span> <span class="n">e</span><span class="o">){</span>
-</span></span><span class="line"><span class="cl">	<span class="n">e</span><span class="o">.</span><span class="na">addContextInformation</span><span class="o">(</span><span class="s">&#34;there is something happen in doSomething() function, `Some Exception` is raised, balabala&#34;</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">//throw e;  //throw e, or wrap it  see next line.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">throw</span> <span class="k">new</span> <span class="n">WrappingException</span><span class="o">(</span><span class="n">e</span><span class="o">,</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">Some</span> <span class="n">Exception</span><span class="o">,</span> <span class="n">balabala</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">//clean up close open resources etc.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="o">}</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>当然，你也可以在添加了额外的信息之后，直接把原来的异常抛出来</p>
-<h2 id="rust-的异常传递"><span class="section-num">6</span> Rust 的异常传递</h2>
-<p>刚刚谈了 Java 的异常传递，现在轮到 Rust 的异常传递了，既然Rust 没有 <code>Exception</code>一说，那 Rust 传递的自然也是 <code>Result&lt;T,E&gt;</code>
-这个枚举类型(这里针对的是 可恢复错误，不可恢复错误出现错误的时候，会返回错误并弹出程序，自然不存在异常传递).</p>
-<p>先来看看 Rust 的异常传递的例子：</p>
-<pre tabindex="0"><code class="language-nil" data-lang="nil">use std::io;
-use std::io::Read;
-use std::fs::File;
-
-fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
-    let f = File::open(&#34;hello.txt&#34;);
-
-    let mut f = match f {
-	Ok(file) =&gt; file,
-	Err(e) =&gt; return Err(e),
-    };
-
-    let mut s = String::new();
-
-    match f.read_to_string(&amp;mut s) {
-	Ok(_) =&gt; Ok(s),
-	Err(e) =&gt; Err(e),
-    }
-}
-</code></pre><p>例子来自 Rust Book</p>
-<p>先来看看函数的返回值 <code>Result&lt;String,io::Error&gt;</code>, 也就是说， <code>read_username_from_file</code> 正确执行的时候返回是 <code>String</code>,
-错误的时候，返回的是 <code>io::Error</code>. 这里的异常传递是在出现 <code>io::Error</code>的时候，将错误原样返回，不然就是返
-回函数执行成功的结果。</p>
-<p>就异常传递的方式而言，Rust 和 Java 是大同小异：声明可能抛出的异常和成功时返回的结果，然后在遇到错误的时候，直接（或者包装一下）返回错误。</p>
-<h3 id="关键字"><span class="section-num">6.1</span> ? 关键字</h3>
-<p>虽说 Rust 的异常处理很清晰，但是每次都要 <code>match</code> 然后返回未免太繁琐了，所以 Rust 提供了一个语法糖来显示繁琐的异常传递：用
-&ldquo;?&rdquo; 关键字进行异常传递：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">io</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">io</span>::<span class="n">Read</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">fs</span>::<span class="n">File</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">read_username_from_file</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="n">io</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">File</span>::<span class="n">open</span><span class="p">(</span><span class="s">&#34;hello.txt&#34;</span><span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">new</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">f</span><span class="p">.</span><span class="n">read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nb">Ok</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>同样的功能，但是模板代码却减少了很多 :)</p>
-<h3 id="unwrap-和-expect"><span class="section-num">6.2</span> unwrap 和 expect</h3>
-<p>虽说 Rust 的可恢复错误设计得很优雅，但是每次遇到可能出现错误得地方都要显示地进行 处理，不免让人觉得繁琐.</p>
-<p>Rust 也考虑到这种情况了，提供了 <code>unwrap()</code> 和 <code>expect()</code>让你舒心<del>简单粗暴</del>地处理错误：在函数调用成功的时候返回正确的结果，在 出现错误地时候直接 <code>panic!()</code>,并退出程序</p>
-<h4 id="unwrap"><span class="section-num">6.2.1</span> unwrap</h4>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">File</span>::<span class="n">open</span><span class="p">(</span><span class="s">&#34;hello.txt&#34;</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>打开 <code>hello.txt</code>这个文件，能打开就返回文件 <code>f</code>,不能打开就 <code>panic!()</code> 然后退出程序。</p>
-<pre tabindex="0"><code class="language-log" data-lang="log">thread &#39;main&#39; panicked at &#39;called `Result::unwrap()` on an `Err` value: Error {
-repr: Os { code: 2, message: &#34;No such file or directory&#34; } }&#39;,
-/stable-dist-rustc/build/src/libcore/result.rs:868
-</code></pre><h4 id="expect"><span class="section-num">6.2.2</span> expect</h4>
-<p><code>expect()</code>和 <code>unwrap()</code>类似，只不过 <code>expect()</code>可以加上额外的信息：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">fs</span>::<span class="n">File</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">File</span>::<span class="n">open</span><span class="p">(</span><span class="s">&#34;hello.txt&#34;</span><span class="p">).</span><span class="n">expect</span><span class="p">(</span><span class="s">&#34;Failed to open hello.txt&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>出现错误的时候，除了显示应有的错误信息之外，还会显示你自定义的错误信息：</p>
-<pre tabindex="0"><code class="language-log" data-lang="log">thread &#39;main&#39; panicked at &#39;Failed to open hello.txt: Error { repr: Os { code:
-2, message: &#34;No such file or directory&#34; } }&#39;,
-/stable-dist-rustc/build/src/libcore/result.rs:868
-</code></pre><p>以上代码来自 <a href="https://doc.rust-lang.org/book/second-edition/ch09-02-recoverable-errors-with-result.html">Rust book</a></p>
-<h2 id="结语"><span class="section-num">7</span> 结语</h2>
-<p>以上只是浅谈了 Rust 的错误处理，以及和 Java 的异常处理机制的简单比较，接下来我会 谈谈如何自定义<code>Error</code>以及使用
-<code>erro_chain</code> 这个库来优雅地进行错误处理 :)</p>
-<p>如果想了解更多关于 Rust 异常处理的内容，可以查阅 Rust book <a href="https://doc.rust-lang.org/book/second-edition/ch09-00-error-handling.html">Error handle</a></p>
-<h2 id="参考"><span class="section-num">8</span> 参考</h2>
-<ul>
-<li><a href="http://tutorials.jenkov.com/exception-handling-strategies/propagating-exceptions.html">propagating exceptions</a></li>
-<li><a href="https://doc.rust-lang.org/book/second-edition/">Rust book</a></li>
-<li><a href="https://doc.rust-lang.org/stable/std/io/type.Result.html">IO Result</a></li>
 </ul>
 ]]></content:encoded>
     </item>
