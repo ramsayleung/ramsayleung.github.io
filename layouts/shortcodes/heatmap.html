@@ -75,6 +75,7 @@
       var postObj = new Map();
       postObj.set("title", {{ .Title }});
       postObj.set("link", {{ .RelPermalink }});
+      postObj.set("wordCount", {{ .WordCount }});
       var wordCount = {{ .WordCount }};
       var data = postsByDate.get(date);
       if (data === undefined) {
@@ -168,7 +169,6 @@
           enterable: true,
           formatter: function (params) {
 	          const thousandWordsText = {{ default "EN" (.Get "language")}} === "EN" ? 'k words': '千字';
-	          const thousandWords = (params.data[1]/1000.0).toFixed(1);
               const date = params.data[0];
               const posts = postsByDate.get(date).get("posts");
               var content = `${date}`;
@@ -176,6 +176,7 @@
                   content += "<br>";
                   var link = post.get("link");
                   var title = post.get("title");
+	              const thousandWords = (post.get("wordCount")/1000.0).toFixed(1);
                   content += `<a href="${link}" target="_blank">${title} | ${thousandWords}${thousandWordsText}</a>`
               }
               return content;
