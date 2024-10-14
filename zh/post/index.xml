@@ -12,8 +12,883 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sun, 13 Oct 2024 11:58:38 -0700</lastBuildDate>
+    <lastBuildDate>Mon, 14 Oct 2024 14:41:38 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>测试技能进阶(三): Property Based Testing</title>
+      <link>https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%89_property_based_testing/</link>
+      <pubDate>Mon, 14 Oct 2024 09:37:00 -0700</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%89_property_based_testing/</guid>
+      <description>1 前言 1.1 test case的局限 想要更好地理解什么是 Property based testing, 就来先看下已有 test case 的局限，再来观察它解决了什么问题。 用之前《测试技能进阶(二): Parameterized Test</description>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
+<h3 id="test-case的局限"><span class="section-num">1.1</span> test case的局限</h3>
+<p>想要更好地理解什么是 Property based testing, 就来先看下已有 test case 的局限，再来观察它解决了什么问题。 <br/></p>
+<p>用之前<a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/">《测试技能进阶(二): Parameterized Tests》</a>中计算折扣的函数为例： <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount_percentage</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">price</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Price must be greater than zero: </span><span class="si">{</span><span class="n">price</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">discount_percentage</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Discount_percentage must be greater than zero: </span><span class="si">{</span><span class="n">discount_percentage</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">price</span> <span class="o">&gt;</span> <span class="mi">50000</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="p">(</span><span class="n">discount_percentage</span> <span class="o">*</span> <span class="mf">1.15</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">price</span> <span class="o">&gt;</span> <span class="mi">100000</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="p">(</span><span class="n">discount_percentage</span> <span class="o">*</span> <span class="mf">1.18</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="n">discount_percentage</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>即使我们使用了 Parameterized Test, 把测试逻辑和测试数据集作了分离，但是还是有两个缺点： <br/></p>
+<ol>
+<li>我们的测试数据集还是要手工构造，即使现在不需要写新的 test case, 手工构造数据集还是很麻烦 <br/></li>
+<li>第二个问题更严重，就是我们的构建的数据集可能不是完备的，如果数据集没有办法覆盖所有的条件分支，那我们仍然可能发现不了代码中的Bug <br/></li>
+</ol>
+<h2 id="property-based-testing"><span class="section-num">2</span> Property Based Testing</h2>
+<p>而 Property Based Testing 就是想解决这个问题，它希望可以结合人脑对特定问题域的理解和机器的运算能力，使用更少的时间来生成更优的测试case. <br/></p>
+<p>Property Based Testing 这个概念是由 Haskell 项目 <a href="https://en.wikipedia.org/wiki/QuickCheck">QuickCheck</a> 在1999年引入的，它的理念是，程序员应该只定义某个测试case, 参数需要满足的标准(specification), 然后程序就会自动生成大量满足这个标准的随机数，用这些随机数来测试这个 test case。 <br/></p>
+<p>而因为测试数据是随机生成的，所以你意料之内的数据，或者意料之外的数据都会被用来测试， <br/>
+既省去了费时费力构造不同数据作数据集来测试的烦恼，又能保证数据集的完备性, 经常可以帮助你发现意想不到的bug. <br/></p>
+<p>这就是声明式定义的一种，你只需要声明你想干什么(用什么样的数据测试什么函数)，而非命令式定义（你需要定义你要怎么做）. <br/></p>
+<p>人力应该是很珍贵，而机器的计算资源却是很便宜，应该让机器代替人去做生成数据的事。 <br/></p>
+<p>举例来说, 以上面的 <code>calculate_discount</code> 函数为例，如果我们告诉程序, <code>price</code> 和 <code>discount_percentage</code> 应该是整数（specification）, 那么 Quickcheck 就会生成各种整数, 从 Integer.Min 到 Integer.Max 不等，用来测试我们的程序. <br/></p>
+<p>如果还是觉得这个概念比较抽象，可以来看下具体的例子： <br/></p>
+<h2 id="hypothesis"><span class="section-num">3</span> Hypothesis</h2>
+<p>Python Property Based Testing的测试框架叫 <a href="https://hypothesis.works/">Hypothesis</a>(假想)，这个项目名字也是起得非常有水平，结合Property Based Testing的哲学，可谓信雅达. <br/></p>
+<p>假设我们现在要实现一个简单的数据压缩的算法： <a href="https://en.wikipedia.org/wiki/Run-length_encoding">Run-length Encoding</a>(RLE)，通常用于压缩包含连续重复数据的序列, 这种编码方法特别适用于那些有大量重复字符或值的数据. <br/></p>
+<p>它的基本原理是： <br/></p>
+<ol>
+<li>统计连续重复的数据元素的数量。 <br/></li>
+<li>用一个计数值和数据值的组合来替代这些重复的数据。 <br/></li>
+</ol>
+<p>比如字符串: <code>AABBBCCCC</code>, RLE 编码后: <code>2A3B4C</code>. <code>2A</code> 表示两个连续的 <code>A</code>, <code>3B</code> 表示三个连续的 <code>B</code>, <code>4C</code> 表示四个连续的 <code>C</code> 。 <br/></p>
+<p>Python实现如下: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="n">input_string</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">prev</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">character</span> <span class="ow">in</span> <span class="n">input_string</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">character</span> <span class="o">!=</span> <span class="n">prev</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">prev</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">entry</span> <span class="o">=</span> <span class="p">(</span><span class="n">prev</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            <span class="n">prev</span> <span class="o">=</span> <span class="n">character</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">entry</span> <span class="o">=</span> <span class="p">(</span><span class="n">character</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">lst</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">q</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">character</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">q</span> <span class="o">+=</span> <span class="n">character</span> <span class="o">*</span> <span class="n">count</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">q</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果我们的代码实现没有问题的话，对于任意的字符串，编码后的字符串，解码后的结果应该和原来的字符串一致的，这个就是我们的测试逻辑: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">hypothesis</span> <span class="kn">import</span> <span class="n">given</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">hypothesis.strategies</span> <span class="kn">import</span> <span class="n">text</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@given</span><span class="p">(</span><span class="n">text</span><span class="p">())</span> <span class="c1"># 入参的标准是：任意的字符串，hypothesis 框架就会自动生成随机数，并调用test_decode_inverts_encode</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_decode_inverts_encode</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">decode</span><span class="p">(</span><span class="n">encode</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">==</span> <span class="n">s</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用 <code>pytest</code> 运行上面的用例，结果如下: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; pytest property_based_testing.py
+</span></span><span class="line"><span class="cl"><span class="o">===================================</span> <span class="nb">test</span> session <span class="nv">starts</span> <span class="o">====================================</span>
+</span></span><span class="line"><span class="cl">platform darwin -- Python 3.12.6, pytest-8.3.3, pluggy-1.5.0
+</span></span><span class="line"><span class="cl">rootdir: /Users/ramsayleung/code/python/test_technique
+</span></span><span class="line"><span class="cl">plugins: hypothesis-6.115.0
+</span></span><span class="line"><span class="cl">collected <span class="m">1</span> item                                                                           
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">property_based_testing.py F                                                          <span class="o">[</span>100%<span class="o">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">=========================================</span> <span class="nv">FAILURES</span> <span class="o">=========================================</span>
+</span></span><span class="line"><span class="cl">________________________________ test_decode_inverts_encode ________________________________
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@given<span class="o">(</span>text<span class="o">())</span>
+</span></span><span class="line"><span class="cl">&gt;   def test_decode_inverts_encode<span class="o">(</span>s<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">property_based_testing.py:29: 
+</span></span><span class="line"><span class="cl">_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+</span></span><span class="line"><span class="cl">property_based_testing.py:30: in test_decode_inverts_encode
+</span></span><span class="line"><span class="cl">assert decode<span class="o">(</span>encode<span class="o">(</span>s<span class="o">))</span> <span class="o">==</span> s
+</span></span><span class="line"><span class="cl">_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">input_string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">def encode<span class="o">(</span>input_string<span class="o">)</span>:
+</span></span><span class="line"><span class="cl"><span class="nv">count</span> <span class="o">=</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="nv">prev</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">lst</span> <span class="o">=</span> <span class="o">[]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> character in input_string:
+</span></span><span class="line"><span class="cl">                 <span class="k">if</span> character !<span class="o">=</span> prev:
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> prev:
+</span></span><span class="line"><span class="cl">                       <span class="nv">entry</span> <span class="o">=</span> <span class="o">(</span>prev, count<span class="o">)</span>
+</span></span><span class="line"><span class="cl">                       lst.append<span class="o">(</span>entry<span class="o">)</span>
+</span></span><span class="line"><span class="cl">                       <span class="nv">count</span> <span class="o">=</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">                       <span class="nv">prev</span> <span class="o">=</span> character
+</span></span><span class="line"><span class="cl">                       <span class="k">else</span>:
+</span></span><span class="line"><span class="cl">                       <span class="nv">count</span> <span class="o">+=</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">                       &gt;       <span class="nv">entry</span> <span class="o">=</span> <span class="o">(</span>character, count<span class="o">)</span>
+</span></span><span class="line"><span class="cl">                       E       UnboundLocalError: cannot access <span class="nb">local</span> variable <span class="s1">&#39;character&#39;</span> where it is not associated with a value
+</span></span><span class="line"><span class="cl">                       E       Falsifying example: test_decode_inverts_encode<span class="o">(</span>
+</span></span><span class="line"><span class="cl">                           E           <span class="nv">s</span><span class="o">=</span><span class="s1">&#39;&#39;</span>,
+</span></span><span class="line"><span class="cl">                           E       <span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                       property_based_testing.py:17: <span class="nv">UnboundLocalError</span>
+</span></span><span class="line"><span class="cl">                       <span class="o">=================================</span> short <span class="nb">test</span> summary <span class="nv">info</span> <span class="o">==================================</span>
+</span></span><span class="line"><span class="cl">                       FAILED property_based_testing.py::test_decode_inverts_encode - UnboundLocalError: cannot access <span class="nb">local</span> variable <span class="s1">&#39;character&#39;</span> where it is not associated ...
+</span></span><span class="line"><span class="cl">                       <span class="o">====================================</span> <span class="m">1</span> failed in 0.14s <span class="o">=====================================</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到，当 <code>input_string =''</code> 是空字符串的时候， <code>encode</code> 函数抛出异常了，说 <code>character</code> 变量未定义。原来是 <code>encode</code> 函数没有对空字符串这个 corner case 作处理，那么就加个判断条件，修复一下: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="n">input_string</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">input_string</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">prev</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">character</span> <span class="ow">in</span> <span class="n">input_string</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">character</span> <span class="o">!=</span> <span class="n">prev</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">prev</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">entry</span> <span class="o">=</span> <span class="p">(</span><span class="n">prev</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            <span class="n">prev</span> <span class="o">=</span> <span class="n">character</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">entry</span> <span class="o">=</span> <span class="p">(</span><span class="n">character</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">lst</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>既然我们知道空字符串是个特殊的 case, 因为 hypothesis 生成的都是任意的随机数，不一定每次都会测到空字符串，那我们就自己指定一个 case: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">hypothesis</span> <span class="kn">import</span> <span class="n">example</span><span class="p">,</span> <span class="n">given</span><span class="p">,</span> <span class="n">strategies</span> <span class="k">as</span> <span class="n">st</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@given</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@example</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">)</span> <span class="c1"># 手工指定空字符串这个 corner case </span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_decode_inverts_encode</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">decode</span><span class="p">(</span><span class="n">encode</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">==</span> <span class="n">s</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>pytest</code> 重新运行，测试就通过了。但是，对 <code>hypothesis</code> 框架还没有建立信心的你我就不确定，它是否真的生成很多随机来运行这个 test case 呢？ <br/></p>
+<p>有两个方法可以验证： <br/></p>
+<p>方法一：最简单粗暴的方式，把 <code>s</code> 变量给打印出来，毕竟眼见为实: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@given</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@example</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_decode_inverts_encode</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">decode</span><span class="p">(</span><span class="n">encode</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">==</span> <span class="n">s</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后通过 <code>pytest -s</code> 参数要求 <code>pytest</code> 将写入到 <code>stdout</code> 的内容给打印出来 <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; pytest property_based_testing.py -s
+</span></span><span class="line"><span class="cl"><span class="o">=======================================</span> <span class="nb">test</span> session <span class="nv">starts</span> <span class="o">=======================================</span>
+</span></span><span class="line"><span class="cl">platform darwin -- Python 3.12.6, pytest-8.3.3, pluggy-1.5.0
+</span></span><span class="line"><span class="cl">rootdir: /Users/ramsayleung/code/python/test_technique
+</span></span><span class="line"><span class="cl">plugins: hypothesis-6.115.0
+</span></span><span class="line"><span class="cl">collected <span class="m">1</span> item                                                                                  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">property_based_testing.py 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">O
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">¶
+</span></span><span class="line"><span class="cl"><span class="se">\å</span>񢄏«
+</span></span><span class="line"><span class="cl">𥛗Îbó
+</span></span><span class="line"><span class="cl">𜆮å
+</span></span><span class="line"><span class="cl">񰘰9
+</span></span><span class="line"><span class="cl">gah󭾔𛧁
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">i򼯜+ó»򮩸b񝕨
+</span></span><span class="line"><span class="cl">S!ÕTå<span class="p">&amp;</span>𰵩í¤ýäó÷F
+</span></span><span class="line"><span class="cl">øôyµ
+</span></span><span class="line"><span class="cl">Äª
+</span></span><span class="line"><span class="cl">sLz$ï
+</span></span><span class="line"><span class="cl">_𠵈
+</span></span><span class="line"><span class="cl">Ü
+</span></span><span class="line"><span class="cl">A
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">R󃝷<span class="o">{</span>©¾
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   ìõ
+</span></span><span class="line"><span class="cl">   æ􂐛BÝ1*􅄢ëóg𮎈¼ ?𩓁
+</span></span><span class="line"><span class="cl">   Òör @PP􎾂ö񳱊ûÁ½¬HÈ6#
+</span></span><span class="line"><span class="cl">   a𣽗¶󿅌𧑁x~󗜬韹ûð󴯮#Z󅖫<span class="se">\©</span>𳖅ûf&gt;
+</span></span><span class="line"><span class="cl">   i
+</span></span><span class="line"><span class="cl">   ....
+</span></span><span class="line"><span class="cl">   <span class="o">========================================</span> <span class="m">1</span> passed in 0.15s <span class="o">========================================</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这一堆都是什么字符呢, 都乱码了。 <br/></p>
+<p>毕竟我们告诉 <code>hypothesis</code> 框架的是，我们参数接受的标准是任意的字符串， <code>hypothesis</code> 就非常尽职地帮我们生成了各种字符串，这个测试数据集可比我们自己手工构建的范围大得多，这就是 property based testing 的优势所在. <br/></p>
+<p>第二种方法是使用 <code>hypothesis</code> 框架提供的命令行参数 =&ndash;hypothesis-show-statistics=，用于打印统计信息: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; pytest property_based_testing.py --hypothesis-show-statistics
+</span></span><span class="line"><span class="cl"><span class="o">=======================================</span> <span class="nb">test</span> session <span class="nv">starts</span> <span class="o">=======================================</span>
+</span></span><span class="line"><span class="cl">platform darwin -- Python 3.12.6, pytest-8.3.3, pluggy-1.5.0
+</span></span><span class="line"><span class="cl">rootdir: /Users/ramsayleung/code/python/test_technique
+</span></span><span class="line"><span class="cl">plugins: hypothesis-6.115.0
+</span></span><span class="line"><span class="cl">collected <span class="m">1</span> item                                                                                  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">property_based_testing.py .                                                                 <span class="o">[</span>100%<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">======================================</span> Hypothesis <span class="nv">Statistics</span> <span class="o">======================================</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">property_based_testing.py::test_decode_inverts_encode:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">- during generate phase <span class="o">(</span>0.03 seconds<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">- Typical runtimes: &lt; 1ms, of which &lt; 1ms in data generation
+</span></span><span class="line"><span class="cl">- <span class="m">100</span> passing examples, <span class="m">0</span> failing examples, <span class="m">0</span> invalid examples
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">- Stopped because settings.max_examples<span class="o">=</span><span class="nv">100</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">========================================</span> <span class="m">1</span> passed in 0.05s <span class="o">========================================</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上面运行了 100 条数据，如果你觉得还想跑更多，可以通过 <code>settings</code> 装饰器指定更多: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@settings</span><span class="p">(</span><span class="n">max_examples</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="quickcheck-and-proptest"><span class="section-num">4</span> Quickcheck &amp; Proptest</h2>
+<p>而在Rust生态，就有两个 Property Based Testing 的库，一个是由Rust社区知名开发者，<a href="https://github.com/BurntSushi/ripgrep">ripgrep</a>和 regex 库作者移植自 Haskell Quickcheck 库的 <a href="https://github.com/BurntSushi/quickcheck">quickcheck</a> (名字也一并移植了), 另外一个是思路继承自 Python Hypothesis 的 <a href="https://github.com/proptest-rs/proptest">Proptest</a>(这位直接用property based testing技术来命名了，不得不说，命名真的是门艺术) <br/></p>
+<p>两者的社区接受度都相差无几(star, 使用者数量), 而在公司内部，我也发现 quickcheck 和 proptest 都有人用，坐我旁边的Principle Engineer 用的是 proptest, 而另外一个现在和我共事的同事，她的之前团队用的就是 quickcheck，看到都势均力敌嘛。 <br/></p>
+<p>翻开 quickcheck 和 proptest 的API 文档之后，我发现我更喜欢 quickcheck 的接口风格，虽说它的活跃度更低一些，我最后还是选择了使用 quickcheck. <br/></p>
+<p>下面就来介绍一下我在Rust上使用 quickcheck 的心得: <br/></p>
+<p>假设我们现在有一个可以反转列表的函数 <code>reverse</code>: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">reverse</span><span class="o">&lt;</span><span class="n">T</span>: <span class="nb">Clone</span><span class="o">&gt;</span><span class="p">(</span><span class="n">xs</span>: <span class="kp">&amp;</span><span class="p">[</span><span class="n">T</span><span class="p">])</span><span class="w"> </span>-&gt; <span class="nb">Vec</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">rev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">rev</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">clone</span><span class="p">())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">rev</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于任意类型的列表，反转之后现反转的结果，肯定是和原结果一样的，那么我们就可以开始声明我们的标准(specification), 那就是任意的列表，可以是字符串列表，整型列表或者是其他的结构体列表: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[cfg(test)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">mod</span> <span class="nn">tests</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="n">quickcheck_macros</span>::<span class="n">quickcheck</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="k">crate</span>::<span class="n">reverse</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[quickcheck]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">double_reversal_is_identity_isize</span><span class="p">(</span><span class="n">xs</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">isize</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span> <span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">xs</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">reverse</span><span class="p">(</span><span class="o">&amp;</span><span class="n">reverse</span><span class="p">(</span><span class="o">&amp;</span><span class="n">xs</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[quickcheck]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">double_reversal_is_identity_string</span><span class="p">(</span><span class="n">xs</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span> <span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">xs</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">reverse</span><span class="p">(</span><span class="o">&amp;</span><span class="n">reverse</span><span class="p">(</span><span class="o">&amp;</span><span class="n">xs</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Rust 的unit test 是不支持带参数的，=#[quickcheck]= 这个宏就会自动将 <code>double_reversal_is_identity_isize</code> 转换成 property based test case, 而得益于Rust的类型系统, <code>quickcheck</code> 就能推断出入参就是我们声明的标准 <code>Vec&lt;isze&gt;</code>, 任意 <code>isize</code> 类型的数组. <br/></p>
+<h3 id="struct-with-quickcheck"><span class="section-num">4.1</span> Struct with quickcheck</h3>
+<p>如果上面的例子觉得过于简单的话，现在就让我们看个复杂一点的例子, 一个简单的图书管理系统，支持会员，借书，还书功能： <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">chrono</span>::<span class="p">{</span><span class="n">Duration</span><span class="p">,</span><span class="w"> </span><span class="n">NaiveDate</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">collections</span>::<span class="n">HashMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cp">#[derive(Debug, Clone, PartialEq)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">struct</span> <span class="nc">Book</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">isbn</span>: <span class="nb">String</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">title</span>: <span class="nb">String</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">author</span>: <span class="nb">String</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">publication_year</span>: <span class="kt">u16</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cp">#[derive(Debug, Clone, PartialEq)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">struct</span> <span class="nc">Member</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">id</span>: <span class="kt">u32</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">name</span>: <span class="nb">String</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">email</span>: <span class="nb">String</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cp">#[derive(Debug, Clone)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">struct</span> <span class="nc">Loan</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">book_isbn</span>: <span class="nb">String</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">member_id</span>: <span class="kt">u32</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">due_date</span>: <span class="nc">NaiveDate</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cp">#[derive(Debug, Clone)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">struct</span> <span class="nc">Library</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">books</span>: <span class="nc">HashMap</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="n">Book</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">members</span>: <span class="nc">HashMap</span><span class="o">&lt;</span><span class="kt">u32</span><span class="p">,</span><span class="w"> </span><span class="n">Member</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">loans</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="n">Loan</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">current_date</span>: <span class="nc">NaiveDate</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">impl</span><span class="w"> </span><span class="n">Library</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">current_date</span>: <span class="nc">NaiveDate</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Library</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">books</span>: <span class="nc">HashMap</span>::<span class="n">new</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">members</span>: <span class="nc">HashMap</span>::<span class="n">new</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">loans</span>: <span class="nb">Vec</span>::<span class="n">new</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">current_date</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">add_book</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">book</span>: <span class="nc">Book</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">books</span><span class="p">.</span><span class="n">contains_key</span><span class="p">(</span><span class="o">&amp;</span><span class="n">book</span><span class="p">.</span><span class="n">isbn</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nb">Err</span><span class="p">(</span><span class="s">&#34;Book with this ISBN already exists&#34;</span><span class="p">.</span><span class="n">to_string</span><span class="p">())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">books</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">book</span><span class="p">.</span><span class="n">isbn</span><span class="p">.</span><span class="n">clone</span><span class="p">(),</span><span class="w"> </span><span class="n">book</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nb">Ok</span><span class="p">(())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">add_member</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">member</span>: <span class="nc">Member</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">members</span><span class="p">.</span><span class="n">contains_key</span><span class="p">(</span><span class="o">&amp;</span><span class="n">member</span><span class="p">.</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nb">Err</span><span class="p">(</span><span class="s">&#34;Member with this ID already exists&#34;</span><span class="p">.</span><span class="n">to_string</span><span class="p">())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">members</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">member</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">member</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nb">Ok</span><span class="p">(())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">loan_book</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">book_isbn</span>: <span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="n">member_id</span>: <span class="kt">u32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="o">!</span><span class="bp">self</span><span class="p">.</span><span class="n">books</span><span class="p">.</span><span class="n">contains_key</span><span class="p">(</span><span class="n">book_isbn</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nb">Err</span><span class="p">(</span><span class="s">&#34;Book not found&#34;</span><span class="p">.</span><span class="n">to_string</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="o">!</span><span class="bp">self</span><span class="p">.</span><span class="n">members</span><span class="p">.</span><span class="n">contains_key</span><span class="p">(</span><span class="o">&amp;</span><span class="n">member_id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nb">Err</span><span class="p">(</span><span class="s">&#34;Member not found&#34;</span><span class="p">.</span><span class="n">to_string</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">loans</span><span class="p">.</span><span class="n">iter</span><span class="p">().</span><span class="n">any</span><span class="p">(</span><span class="o">|</span><span class="n">loan</span><span class="o">|</span><span class="w"> </span><span class="n">loan</span><span class="p">.</span><span class="n">book_isbn</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">book_isbn</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nb">Err</span><span class="p">(</span><span class="s">&#34;Book is already on loan&#34;</span><span class="p">.</span><span class="n">to_string</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">due_date</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">current_date</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Duration</span>::<span class="n">days</span><span class="p">(</span><span class="mi">14</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">loans</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">Loan</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">book_isbn</span>: <span class="nc">book_isbn</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">member_id</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">due_date</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nb">Ok</span><span class="p">(())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">return_book</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">book_isbn</span>: <span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">index</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="n">loans</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="n">iter</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="n">position</span><span class="p">(</span><span class="o">|</span><span class="n">loan</span><span class="o">|</span><span class="w"> </span><span class="n">loan</span><span class="p">.</span><span class="n">book_isbn</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">book_isbn</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">loans</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">index</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nb">Ok</span><span class="p">(())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nb">Err</span><span class="p">(</span><span class="s">&#34;Book is not currently on loan&#34;</span><span class="p">.</span><span class="n">to_string</span><span class="p">())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过上面的简单代码，就实现了新增图书，新增会员，借书，和还书功能。现在就让我们来结合 <code>quickcheck</code> 的 <code>Arbitrary</code> 接口，实现生成任意的图书和会员，以便用于测试: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">quickcheck</span>::<span class="p">{</span><span class="n">Arbitrary</span><span class="p">,</span><span class="w"> </span><span class="n">Gen</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">impl</span><span class="w"> </span><span class="n">Arbitrary</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Book</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">arbitrary</span><span class="p">(</span><span class="n">g</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">Gen</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Book</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// isbn必须以`ISBN` 开头，后接任意的大于等于0，小于uint32.max_value
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="c1">// 的整型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="n">isbn</span>: <span class="nc">format</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;ISBN-{}&#34;</span><span class="p">,</span><span class="w"> </span><span class="kt">u32</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">)),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">title</span>: <span class="nb">String</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">),</span><span class="w"> </span><span class="c1">// 任意的字符串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="n">author</span>: <span class="nb">String</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">),</span><span class="w"> </span><span class="c1">// 任意的字符串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="n">publication_year</span>: <span class="o">*</span><span class="n">g</span><span class="p">.</span><span class="n">choose</span><span class="p">(</span><span class="o">&amp;</span><span class="p">[</span><span class="mi">2014_</span><span class="k">u16</span><span class="p">,</span><span class="w"> </span><span class="mi">2022_</span><span class="k">u16</span><span class="p">,</span><span class="w"> </span><span class="mi">2025_</span><span class="k">u16</span><span class="p">]).</span><span class="n">unwrap</span><span class="p">(),</span><span class="w"> </span><span class="c1">// 2014,2022或2025年出版的书
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">impl</span><span class="w"> </span><span class="n">Arbitrary</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Member</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">arbitrary</span><span class="p">(</span><span class="n">g</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">Gen</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Member</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">id</span>: <span class="kt">u32</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">),</span><span class="w"> </span><span class="c1">// 任意大于0，小于uint32.max_value的整型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="n">name</span>: <span class="nb">String</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">),</span><span class="w"> </span><span class="c1">// 任意字符串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="c1">// 任意字符开头, 以@example.com 结尾的字符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="n">email</span>: <span class="nc">format</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;{}@example.com&#34;</span><span class="p">,</span><span class="w"> </span><span class="nb">String</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">)),</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>现在就让我们来看下借助 quickcheck 编写的 test case, 注意参数为 <code>Book</code> 和 <code>Member</code> 类型的 case, quickcheck 就会以我们上面定义的标准，自动给我们生成符合规定的 <code>Book</code> 和 <code>Member</code> 参数. <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[cfg(test)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">mod</span> <span class="nn">tests</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="n">chrono</span>::<span class="n">NaiveDate</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="n">quickcheck_macros</span>::<span class="n">quickcheck</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="k">crate</span>::<span class="n">book</span>::<span class="n">Member</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="k">super</span>::<span class="p">{</span><span class="n">Book</span><span class="p">,</span><span class="w"> </span><span class="n">Library</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[quickcheck]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">adding_book_increases_book_count</span><span class="p">(</span><span class="n">book</span>: <span class="nc">Book</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span> <span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">library</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Library</span>::<span class="n">new</span><span class="p">(</span><span class="n">NaiveDate</span>::<span class="n">from_ymd_opt</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">).</span><span class="n">unwrap</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">initial_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">library</span><span class="p">.</span><span class="n">books</span><span class="p">.</span><span class="n">len</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">library</span><span class="p">.</span><span class="n">add_book</span><span class="p">(</span><span class="n">book</span><span class="p">.</span><span class="n">clone</span><span class="p">()).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">library</span><span class="p">.</span><span class="n">books</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">initial_count</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">library</span><span class="p">.</span><span class="n">books</span><span class="p">.</span><span class="n">contains_key</span><span class="p">(</span><span class="o">&amp;</span><span class="n">book</span><span class="p">.</span><span class="n">isbn</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[quickcheck]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">cannot_loan_nonexistent_book</span><span class="p">(</span><span class="n">book_isbn</span>: <span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="n">member_id</span>: <span class="kt">u32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span> <span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">library</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Library</span>::<span class="n">new</span><span class="p">(</span><span class="n">NaiveDate</span>::<span class="n">from_ymd_opt</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">).</span><span class="n">unwrap</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">library</span><span class="p">.</span><span class="n">loan_book</span><span class="p">(</span><span class="o">&amp;</span><span class="n">book_isbn</span><span class="p">,</span><span class="w"> </span><span class="n">member_id</span><span class="p">).</span><span class="n">is_err</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[quickcheck]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">can_return_loaned_book</span><span class="p">(</span><span class="n">book</span>: <span class="nc">Book</span><span class="p">,</span><span class="w"> </span><span class="n">member</span>: <span class="nc">Member</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span> <span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">library</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Library</span>::<span class="n">new</span><span class="p">(</span><span class="n">NaiveDate</span>::<span class="n">from_ymd_opt</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">).</span><span class="n">unwrap</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">library</span><span class="p">.</span><span class="n">add_book</span><span class="p">(</span><span class="n">book</span><span class="p">.</span><span class="n">clone</span><span class="p">()).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">library</span><span class="p">.</span><span class="n">add_member</span><span class="p">(</span><span class="n">member</span><span class="p">.</span><span class="n">clone</span><span class="p">()).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">library</span><span class="p">.</span><span class="n">loan_book</span><span class="p">(</span><span class="o">&amp;</span><span class="n">book</span><span class="p">.</span><span class="n">isbn</span><span class="p">,</span><span class="w"> </span><span class="n">member</span><span class="p">.</span><span class="n">id</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">library</span><span class="p">.</span><span class="n">return_book</span><span class="p">(</span><span class="o">&amp;</span><span class="n">book</span><span class="p">.</span><span class="n">isbn</span><span class="p">).</span><span class="n">is_ok</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过 <code>quickcheck</code> 我们就可以只专注测试逻辑，可以假定测试数据集是完备的了。可能看到 <code>Book</code> 和 <code>Member</code>, 你会觉得 quickcheck 并没有做太多事情，你手工也可以构造。 <br/></p>
+<p>但是我在的实际工作中，我就需要构造一个超过23个成员变量的 struct, 大部分还是 optional, 然后需要将这个 struct 写入到 parquet 文件，然后再测试读取逻辑。 <br/>
+不同成员变量的值可取的范围实在太多了，再叠加上 optional 的可能性，构造数据的代码写得相当恶心. <br/></p>
+<p>所以有了 quickcheck 之后，我只需要为这个 struct 实现 <code>Arbitrary</code> 接口，剩下的就由 <code>quickcheck</code> 替我生成，所以我直接和PE大佬说: <br/></p>
+<blockquote>
+<p>property test saves me life, now I couldn&rsquo;t live without it. <br/></p>
+</blockquote>
+<h2 id="总结"><span class="section-num">5</span> 总结</h2>
+<p>本来想抒发感想写点结语，但是看到 Hypothesis 作者写的 <a href="https://hypothesis.readthedocs.io/en/latest/manifesto.html">The purpose of Hypothesis</a> 来说明他开发的 Hypothesis 的动机，他的文章甚至用来给这个《测试技能进阶》系列总结都相当妥当。 <br/></p>
+<p>我就试翻译下他文章的部分段落, 更推荐阅读原文，可谓是用心良苦，字字珠玑: <br/></p>
+<blockquote>
+<p>请容我狂妄一下，Hypothesis 的目标是希望可以让这个世界迈进到一个全新，由高质量软件打造的新世代。 <br/></p>
+<p>正如人们所说，软件正在吞噬整个世界。但软件本身却很烂，它充满bug，又不安全，还经常被设计得很烂，这样的软件可谓是万恶之源. <br/></p>
+<p>而软件测试的状况甚至更糟糕，虽然大家都认同应该对代码进行测试，但是你能问心无愧地说，你经手过的代码都有被充分测试么？ <br/></p>
+<p>问题在于，实在是太难写出好的测试了， <br/>
+<strong><strong>你写测试用例的时候，通常持有和你写代码时一样的假设与误区，你写的测试用例自然无法发现你当初埋下的bug</strong></strong> (精辟) <br/></p>
+<p>与此同时，有各种各样让测试变成更好的工具却基本无人使用，最初的 Quickcheck 是1999年推出的，但是大多数开发者甚至从未听说过它，更别提使用了（开山始祖的Quickcheck在GitHub只有700多个Star，就知道作者所言不虚）。 <br/>
+虽然其他语言有些半成品的实现，但是大部分都不值得一试。 <br/></p>
+<p>而 Hypothesis 的目标正是正本清源，把先进的测试技术传递给大众，并提供一个高质量的实现，让人们可以接纳它。 <br/></p>
+<p>希望可以集百家之所长，附以个人微薄之力，让软件测试变得更好。 <br/></p>
+</blockquote>
+<p>系列文章: <br/></p>
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%80_%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E8%AE%A4%E7%9F%A5/">测试技能进阶(一): 软件质量认知</a> <br/></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/">测试技能进阶(二): Parameterized Tests</a> <br/></li>
+</ul>
+<h2 id="参考"><span class="section-num">6</span> 参考</h2>
+<ul>
+<li><a href="https://hackage.haskell.org/package/QuickCheck">Haskell Quickcheck</a> <br/></li>
+<li><a href="https://hypothesis.works/">Hypothesis</a> <br/></li>
+<li><a href="https://github.com/proptest-rs/proptest">Proptest</a> <br/></li>
+<li><a href="https://github.com/BurntSushi/quickcheck">Rust quickcheck</a> <br/></li>
+</ul>
+]]></content:encoded>
+    </item>
     <item>
       <title>测试技能进阶(二): Parameterized Tests</title>
       <link>https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/</link>
@@ -1240,152 +2115,6 @@ Your browser does not support the video tag.</video></p>
 </figure>
  <br/></p>
 <p>吃到家乡的味道了。 <br/></p>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>寒冬怎么过</title>
-      <link>https://ramsayleung.github.io/zh/post/2024/%E5%AF%92%E5%86%AC%E6%80%8E%E4%B9%88%E8%BF%87/</link>
-      <pubDate>Sun, 21 Apr 2024 18:30:00 -0700</pubDate>
-      <guid>https://ramsayleung.github.io/zh/post/2024/%E5%AF%92%E5%86%AC%E6%80%8E%E4%B9%88%E8%BF%87/</guid>
-      <description>1 前言 一个人的命运啊，当然要靠自我奋斗，但是也要考虑到历史的进程。—— 长者 在22年开始，经济下行的阴云就一直笼罩在每个人头上，无论国内国外，</description>
-      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
-<blockquote>
-<p>一个人的命运啊，当然要靠自我奋斗，但是也要考虑到历史的进程。—— 长者 <br/></p>
-</blockquote>
-<p>在22年开始，经济下行的阴云就一直笼罩在每个人头上，无论国内国外，耳边听到的都是毕业，layoff的故事，并且裁员现在也还在<a href="https://layoffs.fyi/">持续进行中</a> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> <br/></p>
-<p>与光景好的时候，各种跳槽拿大包的蒸蒸日上的氛围相比，着实是云泥之别。 <br/></p>
-<p>最近这段时间, 我自己也因为各种遭遇，稍显消沉。 <br/></p>
-<p>所以就写了这篇文章，既为渡己，也为宽慰有同样遭遇和心情的朋友。 <br/></p>
-<h2 id="我所经历的寒冬"><span class="section-num">2</span> 我所经历的寒冬</h2>
-<p>从2022年到2024年 <br/></p>
-<h3 id="微信"><span class="section-num">2.1</span> 微信</h3>
-<p>我自己个人职场遭遇比较坎坷，22年以前的经历在之前的文章《<a href="https://ramsayleung.github.io/zh/post/2023/%E8%BF%99%E4%BA%9B%E5%B9%B4%E8%B5%B0%E8%BF%87%E7%9A%84%E8%B7%AF_%E4%BB%8E%E5%B9%BF%E5%B7%9E%E5%88%B0%E6%B8%A9%E5%93%A5%E5%8D%8E/">这些年走过的路：从广州到温哥华</a>》写过， <br/>
-就不多赘述，就只说下自己经历过的寒冬和最近的种种遭遇。 <br/></p>
-<p>我在2020年加入了微信支付的委托代扣，当时的委托代扣还和付款码，收银台合称「基础支付」， <br/>
-虽然交易量不及付款码和收银台，但是也是属于同一个量级的。 <br/></p>
-<p>在2022年初的时候，当时整个腾讯里面都是铺天盖地的「降本增效」的「谣言」，要过冬。 <br/></p>
-<p>因为每年都说要过冬，所以我一直以为是在做预期管理，又是不想发太多年终奖，就没有太当一回事。 <br/></p>
-<p>到后来，腾讯的内部论坛开始逐渐出现各种「毕业论文」(被毕业同事们写的离别感言)，然后毕业论文越来越多，有铺天盖地之势。 <br/></p>
-<p>我开始意识到，大规模的裁员真的在发生，有些业务线直接被砍，比如腾讯体育； <br/>
-有些是整个业务线被砍成一个中心，比如腾讯新闻（具体细节记不清了）。 <br/></p>
-<p>因为微信事业群人本来就不多，而且我们业务很核心，组里人也不多，算上老板也才只有10个人，所以我一直觉得这一刀不会砍得我们头上。 <br/></p>
-<p>腾讯午餐+午休大概有2个小时，我之前一般是在这段时间去健身房锻炼， <br/>
-然后运动完再去吃饭，回来工位的时候，同事一般都趴在座位或午休床上休息。 <br/></p>
-<p>某天，我如往常般吃完饭回工位，却看到旁边位置的两位同事没有如往常般休息， <br/>
-而是在窃窃私语。可能是今天有啥事情，不想大声说话影响其他同事休息吧，我并不在意。 <br/></p>
-<p>只是后面连续好几天，我都没有发现旁边的同事来上班，我就问另外一位同事，这位同事是休假了么？好像没有听到他提起。 <br/></p>
-<p>同事稍显惊讶，你不知道么？他被毕业了。 <br/></p>
-<p>我当时真的被这个消息惊呆了，着实没有想到裁员这样的事发生了，并切实在旁边的同事身上。 <br/></p>
-<p>我后面了解到，无论是什么组，都有10%的毕业指标，第一次感受到寒冬的凛冽。 <br/></p>
-<h3 id="aws"><span class="section-num">2.2</span> AWS</h3>
-<p>在各种机缘巧合之下，我在2022年年中拿到了AWS Canada的 Offer, 招聘的组是在AWS上面做CDN, 因为办签证等各种事情，我一直是等到2023年初才能入职。 <br/></p>
-<p>但是，在2023年初，AWS也开始向国内大厂学习，开始了裁员潮，很不幸的是，我的offer也受到影响，岗位被撤回了。 <br/></p>
-<p>但幸运的是，我只是岗位被撤回了，Offer没有被撤回，然后就被搬到一个为AWS 服务做碳排放工具的组。 <br/></p>
-<p>这个组完全没有营收，各种事情在我看来都非常离谱，具体的离谱事我在《<a href="https://ramsayleung.github.io/zh/post/2024/%E7%99%BB%E9%99%86%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B8%80%E5%B9%B4%E7%9A%84%E4%BD%93%E4%BC%9A/">登陆加拿大一年后的体会</a>》也介绍过了. <br/></p>
-<p>鉴于我以往的经历，我觉得这样的组在当前环境非常危险，说不定哪天组就没有了或者我人也没了，所以我就决定内部转组。 <br/>
-（4个月过后再看，这个组的确快要没了） <br/></p>
-<p>我还特意和转组的manager聊他们的营收和2024年的目标，最后挑了一个在大力招人，营收很可观的，在AWS上做Kafka的组。 <br/></p>
-<p>在当前环境下，如果有很多HeadCount招人，起码能说明是个很被重视的组。 <br/></p>
-<p>然而，在我加入这个组1个半月后，有一天，我们的总监突然出现在团队的会议上，说有个组织变动的决定要宣布，你们组全部人都合并到S3去。 <br/></p>
-<p>会议室上，大家面面相觑，这又是哪一出，Kafka和S3是同一个东西嘛？ <br/></p>
-<p>决定就是决定，并没有商量的余地。 <br/></p>
-<p>经过一个月时间的交接，我们手上所有的东西都交接给其他团队， <br/>
-我就这样成为了S3的一员，我又开创了一年经历3个团队的新纪录（如果算上入职前的招聘团队，那就是4个团队了） <br/></p>
-<p>我可以自我安慰道，总不会连S3都要裁吧，S3起码是个暂时安全的好去处，我也不需要向其他人解释我在做什么业务，S3是什么了。 <br/></p>
-<p>只是相处下来，人nice, 技术又好，管理风格又放权透明的Kafka组 manager 也因为种种原因最后决定不加入 S3, 让我惋惜了好久，好不容易遇上个好 manager, 只叹缘分不够. <br/></p>
-<h2 id="凛冬将至"><span class="section-num">3</span> 凛冬将至</h2>
-<h3 id="寒冬的征兆"><span class="section-num">3.1</span> 寒冬的征兆</h3>
-<p>作为经历了各种寒冬毕业潮的「老毕业员」了，我可以分享下自己的个人经验，来说下寒冬来临的征兆。 <br/></p>
-<h4 id="停止招聘"><span class="section-num">3.1.1</span> 停止招聘</h4>
-<p>公司停止招聘是一个非常重要的信号，这个意味着业务要停止扩张，起码对前景不看好。 <br/></p>
-<p>这个直观的数据，可以直接从官网或者各种的招聘网站看到。 <br/></p>
-<h4 id="谣言纷纷"><span class="section-num">3.1.2</span> 谣言纷纷</h4>
-<p>各种小道消息，谣言开始疯传。 <br/></p>
-<p>谣言着实是遥遥领先的预言，大部分都会成真。 <br/></p>
-<p>因为很多的小道消息，就是HR和财务团队放出来的，给员工提前做预期管理。 <br/></p>
-<p>真的要裁你，约谈的时候，你就不至于毫无心理准备，HR团队就免去了很多的麻烦，和你说「内网或者脉脉上面早就有人提起过了」。 <br/></p>
-<h4 id="领导离职"><span class="section-num">3.1.3</span> 领导离职</h4>
-<p>各种中层领导，GM或者总监开始突然离职, 这个时候就要开始注意了。 <br/></p>
-<p>因为他们的位置比你高，知道的消息比你多，可能是收到暗示，先行跑路， <br/></p>
-<p>或者是领导离职，底下员工就更容易拿捏了，毕竟能出头的人都没了。 <br/></p>
-<h3 id="引-雷-位"><span class="section-num">3.2</span> 引「雷」位</h3>
-<p>要预测什么位置容易被雷，首先要理解企业裁员背后的逻辑: <br/></p>
-<h4 id="业务裁撤"><span class="section-num">3.2.1</span> 业务裁撤</h4>
-<p>环境好的时候，多养些不赚钱的创新业务，好向投资人讲故事，拉升股价，对企业而已，是无伤大雅。 <br/></p>
-<p>但是在寒冬来临的时候，企业要做的就是所谓的「降本增效」。 <br/></p>
-<p>企业裁员是为了缩减成本，提高利润率，所以如果你所在的业务不赚钱，那么你就很危险了。 <br/></p>
-<p>很多时候，并不是要把你这个人给裁掉，而是说这个业务要舍弃了，对应的岗位没有了，在这个岗位上的人被顺便抹掉了。 <br/></p>
-<p>所以如果你所在的业务不赚钱，就要早做准备。 <br/></p>
-<p>总是有程序员说，要写让人看不懂的代码，这样就有job security, 不会被裁。 <br/></p>
-<p>有不少朋友是把段子当真，但当真的要裁撤业务线的时候，你的领导，你领导的领导都可能被裁掉，谁又会去看你的代码呢。 <br/></p>
-<h4 id="摊大饼"><span class="section-num">3.2.2</span> 摊大饼</h4>
-<p>还有另外一种裁员方式就是「摊大饼」，就是搞指标摊派，比如每个组要裁10%的人。 <br/></p>
-<p>HR可能就会给每个组的人拉数据，比照薪资，绩效，工作年限等因素，然后就拉出一串清单给 manager, 如果 manager 没有强烈反对的话，一般就是名单上的人了。 <br/></p>
-<p>manager 大概率就顺水推舟了，毕竟一个人出去了，另外一个人就要进去，谁都不愿作这个恶人。 <br/></p>
-<p>如果你在同一级别待了比较久，那么你就比较危险，一个是会被认为没有快速晋升，潜力不足； <br/>
-另外一个在同一级别待久了，薪资在同一级别就显得很高，对公司而言，性价比就下降了。 <br/></p>
-<p>所以升职比加薪重要，只加薪不升职就比较危险。 <br/></p>
-<p>如果绩效不好，那么就很容易被顺便雷了，道理就不言自明了。 <br/></p>
-<p>工作年限短的，也容易被雷，因为对业务熟悉程度不够，裁了对业务影响也不大；另外年限短，赔偿也少。 <br/></p>
-<h2 id="过冬准备"><span class="section-num">4</span> 过冬准备</h2>
-<h3 id="锻炼身体"><span class="section-num">4.1</span> 锻炼身体</h3>
-<p>身体是一切的本钱，没有一个好的身体，其他一切都是空谈。 <br/></p>
-<p>所以要好好运动，健康生活。 <br/></p>
-<p>运动还可以产生足够的多巴胺，可以让你感觉心情愉悦，降低焦虑感。 <br/></p>
-<p>穿上鞋子，出去跑个步吧。 <br/></p>
-<h3 id="持续学习"><span class="section-num">4.2</span> 持续学习</h3>
-<blockquote>
-<p>沉舟侧畔千帆过 枯树前头万木春 <br/></p>
-</blockquote>
-<p>总有人问，在现在这个环境下，学习是否还有用？ <br/></p>
-<p>在我看来，学习无论在什么时候，都非常有用，所以要持续学习，终身学习。 <br/></p>
-<p>机会只会留给有准备的人，如果在市场下行的时候不做好准备，那么市场上调的时候，又怎么能抓住机会，拿到好的 Offer 呢。 <br/></p>
-<p>所以在寒冬时候学习，既是一个「无本抄底，低位建仓」的机会，也是一个降低焦虑感的手段。 <br/></p>
-<p>如果你一直担心被裁员，那么只要你持续地在学习，持续地在刷题，那么被裁员了，也有信心可以再找一个新工作。 <br/></p>
-<p>总不成天天在摸鱼打混，离职就能找到新工作吧。 <br/></p>
-<p>你的信心是来源于你的行动的。 <br/></p>
-<h3 id="去杠杆-减少债务"><span class="section-num">4.3</span> 去杠杆, 减少债务</h3>
-<p>对于裁员焦虑的很大一部分原因是担心失去工作后，失去收入来源。 <br/></p>
-<p>每个人的账务状况和收入状况都不一样，没有办法给出具体的建议。 <br/></p>
-<p>但是思路和企业是一样的，是「降本增效」。 <br/></p>
-<p>减少不必要的开销，降低债务水平，例如手上有余钱的可以考虑提前还房贷，而不是再去投资。 <br/></p>
-<p>你投资的收益还不一定能跑赢房贷利率。 <br/></p>
-<p>有应急资金，手中有粮，心中不慌。 <br/></p>
-<p>因为各种毕业潮，导致「独立开发」或者「副业」的概念在程序员间兴起，大家都希望有自己的小生意，希望有稳定的「睡后收入」。 <br/></p>
-<p>希望肯定是这样希望，但是不要在失业焦虑和急功近利的情况下去开展副业，因为那样很容易受挫后变成沮丧，进而变成更加消极。 <br/></p>
-<p>先把主业给干好，有余力的时候，再多思考下，再看下是否有机会，不要因小失大。 <br/></p>
-<p>不要用战术上的冒进去掩盖战略上的懒惰。 <br/></p>
-<h3 id="no-loyalty"><span class="section-num">4.4</span> No Loyalty</h3>
-<p>摆正心态。 <br/></p>
-<p>对于企业而言，裁员只是他们的经营手段之一。 <br/></p>
-<p>不需要为被裁员而去愤恨，抱怨一家公司, 毕竟「交绝无恶声，去臣无怨词」 <br/></p>
-<p>也无需去拟人化一家公司，公司并不是人，而是由各种各样的人组成的一个集体。 <br/></p>
-<p>不要抱有“我为你付出了这么久，加班这么多，你怎么可以这样对我，没有功劳也有苦劳阿” <br/></p>
-<p>只要把补偿给到位，就不要和公司有太多无谓的纠缠。 <br/></p>
-<p>同样，也不要对公司有所谓的 loyalty 的想法，只要尽好员工的职责，对得起公司的发的薪水，有足够的责任心就够了。 <br/></p>
-<p>如果以后有好的职业发展机会，应该从自身发展的角度来考虑问题。 <br/></p>
-<p>毕竟公司裁你没有考虑你是否刚结婚还是在还房贷，你离开公司自然也不需要考虑会对公司有什么影响。 <br/></p>
-<p>换位思考，fair enough. <br/></p>
-<h3 id="be-happy"><span class="section-num">4.5</span> Be Happy</h3>
-<p>因为最近到报税季，需要处理跨国税务的问题，公司给指派了一位 Deloitte 的会计师，上周在咨询完税务问题之后，就和会计师在会议软件上聊起天来。 <br/></p>
-<p>看名字，听声音，还有不时爽朗的笑声，我以为会计师是位白人的小姐姐。 <br/></p>
-<p>没想到聊下来才知道，原因这位声音年轻的小姐姐，年龄已经和我母亲相仿，女儿都已经大学毕业了。 <br/></p>
-<p>这位大姐姐就和分享了她的背景，北美和亚洲各地多年的工作经历，我顺便聊起自己的经历，最近我面临各种 re-org, 还有我知道的各种tech company 的 layoff, 以及我的其他见闻。 <br/></p>
-<p>大姐姐也对此也表示认同，并且分享了她的见解，并安慰起我来，后面还提起她的女儿也和在同一家公司工作，不过在西雅图。 <br/></p>
-<p>就这样我们不知不觉地聊了大概45分钟左右，最后挂断之前，大姐姐和我说： <br/></p>
-<blockquote>
-<p>Just be happy and control what you can control. <br/></p>
-</blockquote>
-<p>如果感觉消沉，多和朋友或家人聊天。 <br/></p>
-<p>也把她的话赠给大家, <strong>Be Happy</strong> <br/></p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p><a href="https://layoffs.fyi">https://layoffs.fyi</a>  <br/>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>
 ]]></content:encoded>
     </item>
   </channel>

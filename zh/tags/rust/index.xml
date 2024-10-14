@@ -12,8 +12,883 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sun, 13 Oct 2024 11:58:38 -0700</lastBuildDate>
+    <lastBuildDate>Mon, 14 Oct 2024 14:41:38 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>测试技能进阶(三): Property Based Testing</title>
+      <link>https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%89_property_based_testing/</link>
+      <pubDate>Mon, 14 Oct 2024 09:37:00 -0700</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%89_property_based_testing/</guid>
+      <description>1 前言 1.1 test case的局限 想要更好地理解什么是 Property based testing, 就来先看下已有 test case 的局限，再来观察它解决了什么问题。 用之前《测试技能进阶(二): Parameterized Test</description>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
+<h3 id="test-case的局限"><span class="section-num">1.1</span> test case的局限</h3>
+<p>想要更好地理解什么是 Property based testing, 就来先看下已有 test case 的局限，再来观察它解决了什么问题。 <br/></p>
+<p>用之前<a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/">《测试技能进阶(二): Parameterized Tests》</a>中计算折扣的函数为例： <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount_percentage</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">price</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Price must be greater than zero: </span><span class="si">{</span><span class="n">price</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">discount_percentage</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Discount_percentage must be greater than zero: </span><span class="si">{</span><span class="n">discount_percentage</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">price</span> <span class="o">&gt;</span> <span class="mi">50000</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="p">(</span><span class="n">discount_percentage</span> <span class="o">*</span> <span class="mf">1.15</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">price</span> <span class="o">&gt;</span> <span class="mi">100000</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="p">(</span><span class="n">discount_percentage</span> <span class="o">*</span> <span class="mf">1.18</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="n">discount_percentage</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>即使我们使用了 Parameterized Test, 把测试逻辑和测试数据集作了分离，但是还是有两个缺点： <br/></p>
+<ol>
+<li>我们的测试数据集还是要手工构造，即使现在不需要写新的 test case, 手工构造数据集还是很麻烦 <br/></li>
+<li>第二个问题更严重，就是我们的构建的数据集可能不是完备的，如果数据集没有办法覆盖所有的条件分支，那我们仍然可能发现不了代码中的Bug <br/></li>
+</ol>
+<h2 id="property-based-testing"><span class="section-num">2</span> Property Based Testing</h2>
+<p>而 Property Based Testing 就是想解决这个问题，它希望可以结合人脑对特定问题域的理解和机器的运算能力，使用更少的时间来生成更优的测试case. <br/></p>
+<p>Property Based Testing 这个概念是由 Haskell 项目 <a href="https://en.wikipedia.org/wiki/QuickCheck">QuickCheck</a> 在1999年引入的，它的理念是，程序员应该只定义某个测试case, 参数需要满足的标准(specification), 然后程序就会自动生成大量满足这个标准的随机数，用这些随机数来测试这个 test case。 <br/></p>
+<p>而因为测试数据是随机生成的，所以你意料之内的数据，或者意料之外的数据都会被用来测试， <br/>
+既省去了费时费力构造不同数据作数据集来测试的烦恼，又能保证数据集的完备性, 经常可以帮助你发现意想不到的bug. <br/></p>
+<p>这就是声明式定义的一种，你只需要声明你想干什么(用什么样的数据测试什么函数)，而非命令式定义（你需要定义你要怎么做）. <br/></p>
+<p>人力应该是很珍贵，而机器的计算资源却是很便宜，应该让机器代替人去做生成数据的事。 <br/></p>
+<p>举例来说, 以上面的 <code>calculate_discount</code> 函数为例，如果我们告诉程序, <code>price</code> 和 <code>discount_percentage</code> 应该是整数（specification）, 那么 Quickcheck 就会生成各种整数, 从 Integer.Min 到 Integer.Max 不等，用来测试我们的程序. <br/></p>
+<p>如果还是觉得这个概念比较抽象，可以来看下具体的例子： <br/></p>
+<h2 id="hypothesis"><span class="section-num">3</span> Hypothesis</h2>
+<p>Python Property Based Testing的测试框架叫 <a href="https://hypothesis.works/">Hypothesis</a>(假想)，这个项目名字也是起得非常有水平，结合Property Based Testing的哲学，可谓信雅达. <br/></p>
+<p>假设我们现在要实现一个简单的数据压缩的算法： <a href="https://en.wikipedia.org/wiki/Run-length_encoding">Run-length Encoding</a>(RLE)，通常用于压缩包含连续重复数据的序列, 这种编码方法特别适用于那些有大量重复字符或值的数据. <br/></p>
+<p>它的基本原理是： <br/></p>
+<ol>
+<li>统计连续重复的数据元素的数量。 <br/></li>
+<li>用一个计数值和数据值的组合来替代这些重复的数据。 <br/></li>
+</ol>
+<p>比如字符串: <code>AABBBCCCC</code>, RLE 编码后: <code>2A3B4C</code>. <code>2A</code> 表示两个连续的 <code>A</code>, <code>3B</code> 表示三个连续的 <code>B</code>, <code>4C</code> 表示四个连续的 <code>C</code> 。 <br/></p>
+<p>Python实现如下: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="n">input_string</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">prev</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">character</span> <span class="ow">in</span> <span class="n">input_string</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">character</span> <span class="o">!=</span> <span class="n">prev</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">prev</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">entry</span> <span class="o">=</span> <span class="p">(</span><span class="n">prev</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            <span class="n">prev</span> <span class="o">=</span> <span class="n">character</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">entry</span> <span class="o">=</span> <span class="p">(</span><span class="n">character</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">lst</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">q</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">character</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">q</span> <span class="o">+=</span> <span class="n">character</span> <span class="o">*</span> <span class="n">count</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">q</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果我们的代码实现没有问题的话，对于任意的字符串，编码后的字符串，解码后的结果应该和原来的字符串一致的，这个就是我们的测试逻辑: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">hypothesis</span> <span class="kn">import</span> <span class="n">given</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">hypothesis.strategies</span> <span class="kn">import</span> <span class="n">text</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@given</span><span class="p">(</span><span class="n">text</span><span class="p">())</span> <span class="c1"># 入参的标准是：任意的字符串，hypothesis 框架就会自动生成随机数，并调用test_decode_inverts_encode</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_decode_inverts_encode</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">decode</span><span class="p">(</span><span class="n">encode</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">==</span> <span class="n">s</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用 <code>pytest</code> 运行上面的用例，结果如下: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; pytest property_based_testing.py
+</span></span><span class="line"><span class="cl"><span class="o">===================================</span> <span class="nb">test</span> session <span class="nv">starts</span> <span class="o">====================================</span>
+</span></span><span class="line"><span class="cl">platform darwin -- Python 3.12.6, pytest-8.3.3, pluggy-1.5.0
+</span></span><span class="line"><span class="cl">rootdir: /Users/ramsayleung/code/python/test_technique
+</span></span><span class="line"><span class="cl">plugins: hypothesis-6.115.0
+</span></span><span class="line"><span class="cl">collected <span class="m">1</span> item                                                                           
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">property_based_testing.py F                                                          <span class="o">[</span>100%<span class="o">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">=========================================</span> <span class="nv">FAILURES</span> <span class="o">=========================================</span>
+</span></span><span class="line"><span class="cl">________________________________ test_decode_inverts_encode ________________________________
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@given<span class="o">(</span>text<span class="o">())</span>
+</span></span><span class="line"><span class="cl">&gt;   def test_decode_inverts_encode<span class="o">(</span>s<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">property_based_testing.py:29: 
+</span></span><span class="line"><span class="cl">_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+</span></span><span class="line"><span class="cl">property_based_testing.py:30: in test_decode_inverts_encode
+</span></span><span class="line"><span class="cl">assert decode<span class="o">(</span>encode<span class="o">(</span>s<span class="o">))</span> <span class="o">==</span> s
+</span></span><span class="line"><span class="cl">_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">input_string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">def encode<span class="o">(</span>input_string<span class="o">)</span>:
+</span></span><span class="line"><span class="cl"><span class="nv">count</span> <span class="o">=</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="nv">prev</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">lst</span> <span class="o">=</span> <span class="o">[]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> character in input_string:
+</span></span><span class="line"><span class="cl">                 <span class="k">if</span> character !<span class="o">=</span> prev:
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> prev:
+</span></span><span class="line"><span class="cl">                       <span class="nv">entry</span> <span class="o">=</span> <span class="o">(</span>prev, count<span class="o">)</span>
+</span></span><span class="line"><span class="cl">                       lst.append<span class="o">(</span>entry<span class="o">)</span>
+</span></span><span class="line"><span class="cl">                       <span class="nv">count</span> <span class="o">=</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">                       <span class="nv">prev</span> <span class="o">=</span> character
+</span></span><span class="line"><span class="cl">                       <span class="k">else</span>:
+</span></span><span class="line"><span class="cl">                       <span class="nv">count</span> <span class="o">+=</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">                       &gt;       <span class="nv">entry</span> <span class="o">=</span> <span class="o">(</span>character, count<span class="o">)</span>
+</span></span><span class="line"><span class="cl">                       E       UnboundLocalError: cannot access <span class="nb">local</span> variable <span class="s1">&#39;character&#39;</span> where it is not associated with a value
+</span></span><span class="line"><span class="cl">                       E       Falsifying example: test_decode_inverts_encode<span class="o">(</span>
+</span></span><span class="line"><span class="cl">                           E           <span class="nv">s</span><span class="o">=</span><span class="s1">&#39;&#39;</span>,
+</span></span><span class="line"><span class="cl">                           E       <span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                       property_based_testing.py:17: <span class="nv">UnboundLocalError</span>
+</span></span><span class="line"><span class="cl">                       <span class="o">=================================</span> short <span class="nb">test</span> summary <span class="nv">info</span> <span class="o">==================================</span>
+</span></span><span class="line"><span class="cl">                       FAILED property_based_testing.py::test_decode_inverts_encode - UnboundLocalError: cannot access <span class="nb">local</span> variable <span class="s1">&#39;character&#39;</span> where it is not associated ...
+</span></span><span class="line"><span class="cl">                       <span class="o">====================================</span> <span class="m">1</span> failed in 0.14s <span class="o">=====================================</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到，当 <code>input_string =''</code> 是空字符串的时候， <code>encode</code> 函数抛出异常了，说 <code>character</code> 变量未定义。原来是 <code>encode</code> 函数没有对空字符串这个 corner case 作处理，那么就加个判断条件，修复一下: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="n">input_string</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">input_string</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">prev</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">character</span> <span class="ow">in</span> <span class="n">input_string</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">character</span> <span class="o">!=</span> <span class="n">prev</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">prev</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">entry</span> <span class="o">=</span> <span class="p">(</span><span class="n">prev</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            <span class="n">prev</span> <span class="o">=</span> <span class="n">character</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">entry</span> <span class="o">=</span> <span class="p">(</span><span class="n">character</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">lst</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>既然我们知道空字符串是个特殊的 case, 因为 hypothesis 生成的都是任意的随机数，不一定每次都会测到空字符串，那我们就自己指定一个 case: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">hypothesis</span> <span class="kn">import</span> <span class="n">example</span><span class="p">,</span> <span class="n">given</span><span class="p">,</span> <span class="n">strategies</span> <span class="k">as</span> <span class="n">st</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@given</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@example</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">)</span> <span class="c1"># 手工指定空字符串这个 corner case </span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_decode_inverts_encode</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">decode</span><span class="p">(</span><span class="n">encode</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">==</span> <span class="n">s</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>pytest</code> 重新运行，测试就通过了。但是，对 <code>hypothesis</code> 框架还没有建立信心的你我就不确定，它是否真的生成很多随机来运行这个 test case 呢？ <br/></p>
+<p>有两个方法可以验证： <br/></p>
+<p>方法一：最简单粗暴的方式，把 <code>s</code> 变量给打印出来，毕竟眼见为实: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@given</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@example</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_decode_inverts_encode</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">decode</span><span class="p">(</span><span class="n">encode</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">==</span> <span class="n">s</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后通过 <code>pytest -s</code> 参数要求 <code>pytest</code> 将写入到 <code>stdout</code> 的内容给打印出来 <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; pytest property_based_testing.py -s
+</span></span><span class="line"><span class="cl"><span class="o">=======================================</span> <span class="nb">test</span> session <span class="nv">starts</span> <span class="o">=======================================</span>
+</span></span><span class="line"><span class="cl">platform darwin -- Python 3.12.6, pytest-8.3.3, pluggy-1.5.0
+</span></span><span class="line"><span class="cl">rootdir: /Users/ramsayleung/code/python/test_technique
+</span></span><span class="line"><span class="cl">plugins: hypothesis-6.115.0
+</span></span><span class="line"><span class="cl">collected <span class="m">1</span> item                                                                                  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">property_based_testing.py 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">O
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">¶
+</span></span><span class="line"><span class="cl"><span class="se">\å</span>񢄏«
+</span></span><span class="line"><span class="cl">𥛗Îbó
+</span></span><span class="line"><span class="cl">𜆮å
+</span></span><span class="line"><span class="cl">񰘰9
+</span></span><span class="line"><span class="cl">gah󭾔𛧁
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">i򼯜+ó»򮩸b񝕨
+</span></span><span class="line"><span class="cl">S!ÕTå<span class="p">&amp;</span>𰵩í¤ýäó÷F
+</span></span><span class="line"><span class="cl">øôyµ
+</span></span><span class="line"><span class="cl">Äª
+</span></span><span class="line"><span class="cl">sLz$ï
+</span></span><span class="line"><span class="cl">_𠵈
+</span></span><span class="line"><span class="cl">Ü
+</span></span><span class="line"><span class="cl">A
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">R󃝷<span class="o">{</span>©¾
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   ìõ
+</span></span><span class="line"><span class="cl">   æ􂐛BÝ1*􅄢ëóg𮎈¼ ?𩓁
+</span></span><span class="line"><span class="cl">   Òör @PP􎾂ö񳱊ûÁ½¬HÈ6#
+</span></span><span class="line"><span class="cl">   a𣽗¶󿅌𧑁x~󗜬韹ûð󴯮#Z󅖫<span class="se">\©</span>𳖅ûf&gt;
+</span></span><span class="line"><span class="cl">   i
+</span></span><span class="line"><span class="cl">   ....
+</span></span><span class="line"><span class="cl">   <span class="o">========================================</span> <span class="m">1</span> passed in 0.15s <span class="o">========================================</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这一堆都是什么字符呢, 都乱码了。 <br/></p>
+<p>毕竟我们告诉 <code>hypothesis</code> 框架的是，我们参数接受的标准是任意的字符串， <code>hypothesis</code> 就非常尽职地帮我们生成了各种字符串，这个测试数据集可比我们自己手工构建的范围大得多，这就是 property based testing 的优势所在. <br/></p>
+<p>第二种方法是使用 <code>hypothesis</code> 框架提供的命令行参数 =&ndash;hypothesis-show-statistics=，用于打印统计信息: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; pytest property_based_testing.py --hypothesis-show-statistics
+</span></span><span class="line"><span class="cl"><span class="o">=======================================</span> <span class="nb">test</span> session <span class="nv">starts</span> <span class="o">=======================================</span>
+</span></span><span class="line"><span class="cl">platform darwin -- Python 3.12.6, pytest-8.3.3, pluggy-1.5.0
+</span></span><span class="line"><span class="cl">rootdir: /Users/ramsayleung/code/python/test_technique
+</span></span><span class="line"><span class="cl">plugins: hypothesis-6.115.0
+</span></span><span class="line"><span class="cl">collected <span class="m">1</span> item                                                                                  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">property_based_testing.py .                                                                 <span class="o">[</span>100%<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">======================================</span> Hypothesis <span class="nv">Statistics</span> <span class="o">======================================</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">property_based_testing.py::test_decode_inverts_encode:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">- during generate phase <span class="o">(</span>0.03 seconds<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">- Typical runtimes: &lt; 1ms, of which &lt; 1ms in data generation
+</span></span><span class="line"><span class="cl">- <span class="m">100</span> passing examples, <span class="m">0</span> failing examples, <span class="m">0</span> invalid examples
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">- Stopped because settings.max_examples<span class="o">=</span><span class="nv">100</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">========================================</span> <span class="m">1</span> passed in 0.05s <span class="o">========================================</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上面运行了 100 条数据，如果你觉得还想跑更多，可以通过 <code>settings</code> 装饰器指定更多: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@settings</span><span class="p">(</span><span class="n">max_examples</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="quickcheck-and-proptest"><span class="section-num">4</span> Quickcheck &amp; Proptest</h2>
+<p>而在Rust生态，就有两个 Property Based Testing 的库，一个是由Rust社区知名开发者，<a href="https://github.com/BurntSushi/ripgrep">ripgrep</a>和 regex 库作者移植自 Haskell Quickcheck 库的 <a href="https://github.com/BurntSushi/quickcheck">quickcheck</a> (名字也一并移植了), 另外一个是思路继承自 Python Hypothesis 的 <a href="https://github.com/proptest-rs/proptest">Proptest</a>(这位直接用property based testing技术来命名了，不得不说，命名真的是门艺术) <br/></p>
+<p>两者的社区接受度都相差无几(star, 使用者数量), 而在公司内部，我也发现 quickcheck 和 proptest 都有人用，坐我旁边的Principle Engineer 用的是 proptest, 而另外一个现在和我共事的同事，她的之前团队用的就是 quickcheck，看到都势均力敌嘛。 <br/></p>
+<p>翻开 quickcheck 和 proptest 的API 文档之后，我发现我更喜欢 quickcheck 的接口风格，虽说它的活跃度更低一些，我最后还是选择了使用 quickcheck. <br/></p>
+<p>下面就来介绍一下我在Rust上使用 quickcheck 的心得: <br/></p>
+<p>假设我们现在有一个可以反转列表的函数 <code>reverse</code>: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">reverse</span><span class="o">&lt;</span><span class="n">T</span>: <span class="nb">Clone</span><span class="o">&gt;</span><span class="p">(</span><span class="n">xs</span>: <span class="kp">&amp;</span><span class="p">[</span><span class="n">T</span><span class="p">])</span><span class="w"> </span>-&gt; <span class="nb">Vec</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">rev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">rev</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">clone</span><span class="p">())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">rev</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于任意类型的列表，反转之后现反转的结果，肯定是和原结果一样的，那么我们就可以开始声明我们的标准(specification), 那就是任意的列表，可以是字符串列表，整型列表或者是其他的结构体列表: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[cfg(test)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">mod</span> <span class="nn">tests</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="n">quickcheck_macros</span>::<span class="n">quickcheck</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="k">crate</span>::<span class="n">reverse</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[quickcheck]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">double_reversal_is_identity_isize</span><span class="p">(</span><span class="n">xs</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">isize</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span> <span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">xs</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">reverse</span><span class="p">(</span><span class="o">&amp;</span><span class="n">reverse</span><span class="p">(</span><span class="o">&amp;</span><span class="n">xs</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[quickcheck]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">double_reversal_is_identity_string</span><span class="p">(</span><span class="n">xs</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span> <span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">xs</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">reverse</span><span class="p">(</span><span class="o">&amp;</span><span class="n">reverse</span><span class="p">(</span><span class="o">&amp;</span><span class="n">xs</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Rust 的unit test 是不支持带参数的，=#[quickcheck]= 这个宏就会自动将 <code>double_reversal_is_identity_isize</code> 转换成 property based test case, 而得益于Rust的类型系统, <code>quickcheck</code> 就能推断出入参就是我们声明的标准 <code>Vec&lt;isze&gt;</code>, 任意 <code>isize</code> 类型的数组. <br/></p>
+<h3 id="struct-with-quickcheck"><span class="section-num">4.1</span> Struct with quickcheck</h3>
+<p>如果上面的例子觉得过于简单的话，现在就让我们看个复杂一点的例子, 一个简单的图书管理系统，支持会员，借书，还书功能： <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">chrono</span>::<span class="p">{</span><span class="n">Duration</span><span class="p">,</span><span class="w"> </span><span class="n">NaiveDate</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">collections</span>::<span class="n">HashMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cp">#[derive(Debug, Clone, PartialEq)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">struct</span> <span class="nc">Book</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">isbn</span>: <span class="nb">String</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">title</span>: <span class="nb">String</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">author</span>: <span class="nb">String</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">publication_year</span>: <span class="kt">u16</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cp">#[derive(Debug, Clone, PartialEq)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">struct</span> <span class="nc">Member</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">id</span>: <span class="kt">u32</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">name</span>: <span class="nb">String</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">email</span>: <span class="nb">String</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cp">#[derive(Debug, Clone)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">struct</span> <span class="nc">Loan</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">book_isbn</span>: <span class="nb">String</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">member_id</span>: <span class="kt">u32</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">due_date</span>: <span class="nc">NaiveDate</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cp">#[derive(Debug, Clone)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">struct</span> <span class="nc">Library</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">books</span>: <span class="nc">HashMap</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="n">Book</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">members</span>: <span class="nc">HashMap</span><span class="o">&lt;</span><span class="kt">u32</span><span class="p">,</span><span class="w"> </span><span class="n">Member</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">loans</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="n">Loan</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">current_date</span>: <span class="nc">NaiveDate</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">impl</span><span class="w"> </span><span class="n">Library</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">current_date</span>: <span class="nc">NaiveDate</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Library</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">books</span>: <span class="nc">HashMap</span>::<span class="n">new</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">members</span>: <span class="nc">HashMap</span>::<span class="n">new</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">loans</span>: <span class="nb">Vec</span>::<span class="n">new</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">current_date</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">add_book</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">book</span>: <span class="nc">Book</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">books</span><span class="p">.</span><span class="n">contains_key</span><span class="p">(</span><span class="o">&amp;</span><span class="n">book</span><span class="p">.</span><span class="n">isbn</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nb">Err</span><span class="p">(</span><span class="s">&#34;Book with this ISBN already exists&#34;</span><span class="p">.</span><span class="n">to_string</span><span class="p">())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">books</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">book</span><span class="p">.</span><span class="n">isbn</span><span class="p">.</span><span class="n">clone</span><span class="p">(),</span><span class="w"> </span><span class="n">book</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nb">Ok</span><span class="p">(())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">add_member</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">member</span>: <span class="nc">Member</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">members</span><span class="p">.</span><span class="n">contains_key</span><span class="p">(</span><span class="o">&amp;</span><span class="n">member</span><span class="p">.</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nb">Err</span><span class="p">(</span><span class="s">&#34;Member with this ID already exists&#34;</span><span class="p">.</span><span class="n">to_string</span><span class="p">())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">members</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">member</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">member</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nb">Ok</span><span class="p">(())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">loan_book</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">book_isbn</span>: <span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="n">member_id</span>: <span class="kt">u32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="o">!</span><span class="bp">self</span><span class="p">.</span><span class="n">books</span><span class="p">.</span><span class="n">contains_key</span><span class="p">(</span><span class="n">book_isbn</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nb">Err</span><span class="p">(</span><span class="s">&#34;Book not found&#34;</span><span class="p">.</span><span class="n">to_string</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="o">!</span><span class="bp">self</span><span class="p">.</span><span class="n">members</span><span class="p">.</span><span class="n">contains_key</span><span class="p">(</span><span class="o">&amp;</span><span class="n">member_id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nb">Err</span><span class="p">(</span><span class="s">&#34;Member not found&#34;</span><span class="p">.</span><span class="n">to_string</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">loans</span><span class="p">.</span><span class="n">iter</span><span class="p">().</span><span class="n">any</span><span class="p">(</span><span class="o">|</span><span class="n">loan</span><span class="o">|</span><span class="w"> </span><span class="n">loan</span><span class="p">.</span><span class="n">book_isbn</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">book_isbn</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nb">Err</span><span class="p">(</span><span class="s">&#34;Book is already on loan&#34;</span><span class="p">.</span><span class="n">to_string</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">due_date</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">current_date</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Duration</span>::<span class="n">days</span><span class="p">(</span><span class="mi">14</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">loans</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">Loan</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">book_isbn</span>: <span class="nc">book_isbn</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">member_id</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">due_date</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nb">Ok</span><span class="p">(())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">return_book</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">book_isbn</span>: <span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">index</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="n">loans</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="n">iter</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="n">position</span><span class="p">(</span><span class="o">|</span><span class="n">loan</span><span class="o">|</span><span class="w"> </span><span class="n">loan</span><span class="p">.</span><span class="n">book_isbn</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">book_isbn</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">loans</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">index</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nb">Ok</span><span class="p">(())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nb">Err</span><span class="p">(</span><span class="s">&#34;Book is not currently on loan&#34;</span><span class="p">.</span><span class="n">to_string</span><span class="p">())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过上面的简单代码，就实现了新增图书，新增会员，借书，和还书功能。现在就让我们来结合 <code>quickcheck</code> 的 <code>Arbitrary</code> 接口，实现生成任意的图书和会员，以便用于测试: <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">quickcheck</span>::<span class="p">{</span><span class="n">Arbitrary</span><span class="p">,</span><span class="w"> </span><span class="n">Gen</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">impl</span><span class="w"> </span><span class="n">Arbitrary</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Book</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">arbitrary</span><span class="p">(</span><span class="n">g</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">Gen</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Book</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// isbn必须以`ISBN` 开头，后接任意的大于等于0，小于uint32.max_value
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="c1">// 的整型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="n">isbn</span>: <span class="nc">format</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;ISBN-{}&#34;</span><span class="p">,</span><span class="w"> </span><span class="kt">u32</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">)),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">title</span>: <span class="nb">String</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">),</span><span class="w"> </span><span class="c1">// 任意的字符串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="n">author</span>: <span class="nb">String</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">),</span><span class="w"> </span><span class="c1">// 任意的字符串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="n">publication_year</span>: <span class="o">*</span><span class="n">g</span><span class="p">.</span><span class="n">choose</span><span class="p">(</span><span class="o">&amp;</span><span class="p">[</span><span class="mi">2014_</span><span class="k">u16</span><span class="p">,</span><span class="w"> </span><span class="mi">2022_</span><span class="k">u16</span><span class="p">,</span><span class="w"> </span><span class="mi">2025_</span><span class="k">u16</span><span class="p">]).</span><span class="n">unwrap</span><span class="p">(),</span><span class="w"> </span><span class="c1">// 2014,2022或2025年出版的书
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">impl</span><span class="w"> </span><span class="n">Arbitrary</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Member</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">arbitrary</span><span class="p">(</span><span class="n">g</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">Gen</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Member</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">id</span>: <span class="kt">u32</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">),</span><span class="w"> </span><span class="c1">// 任意大于0，小于uint32.max_value的整型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="n">name</span>: <span class="nb">String</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">),</span><span class="w"> </span><span class="c1">// 任意字符串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="c1">// 任意字符开头, 以@example.com 结尾的字符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="n">email</span>: <span class="nc">format</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;{}@example.com&#34;</span><span class="p">,</span><span class="w"> </span><span class="nb">String</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">)),</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>现在就让我们来看下借助 quickcheck 编写的 test case, 注意参数为 <code>Book</code> 和 <code>Member</code> 类型的 case, quickcheck 就会以我们上面定义的标准，自动给我们生成符合规定的 <code>Book</code> 和 <code>Member</code> 参数. <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[cfg(test)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">mod</span> <span class="nn">tests</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="n">chrono</span>::<span class="n">NaiveDate</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="n">quickcheck_macros</span>::<span class="n">quickcheck</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="k">crate</span>::<span class="n">book</span>::<span class="n">Member</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="k">super</span>::<span class="p">{</span><span class="n">Book</span><span class="p">,</span><span class="w"> </span><span class="n">Library</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[quickcheck]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">adding_book_increases_book_count</span><span class="p">(</span><span class="n">book</span>: <span class="nc">Book</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span> <span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">library</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Library</span>::<span class="n">new</span><span class="p">(</span><span class="n">NaiveDate</span>::<span class="n">from_ymd_opt</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">).</span><span class="n">unwrap</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">initial_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">library</span><span class="p">.</span><span class="n">books</span><span class="p">.</span><span class="n">len</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">library</span><span class="p">.</span><span class="n">add_book</span><span class="p">(</span><span class="n">book</span><span class="p">.</span><span class="n">clone</span><span class="p">()).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">library</span><span class="p">.</span><span class="n">books</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">initial_count</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">library</span><span class="p">.</span><span class="n">books</span><span class="p">.</span><span class="n">contains_key</span><span class="p">(</span><span class="o">&amp;</span><span class="n">book</span><span class="p">.</span><span class="n">isbn</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[quickcheck]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">cannot_loan_nonexistent_book</span><span class="p">(</span><span class="n">book_isbn</span>: <span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="n">member_id</span>: <span class="kt">u32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span> <span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">library</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Library</span>::<span class="n">new</span><span class="p">(</span><span class="n">NaiveDate</span>::<span class="n">from_ymd_opt</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">).</span><span class="n">unwrap</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">library</span><span class="p">.</span><span class="n">loan_book</span><span class="p">(</span><span class="o">&amp;</span><span class="n">book_isbn</span><span class="p">,</span><span class="w"> </span><span class="n">member_id</span><span class="p">).</span><span class="n">is_err</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[quickcheck]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">can_return_loaned_book</span><span class="p">(</span><span class="n">book</span>: <span class="nc">Book</span><span class="p">,</span><span class="w"> </span><span class="n">member</span>: <span class="nc">Member</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span> <span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">library</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Library</span>::<span class="n">new</span><span class="p">(</span><span class="n">NaiveDate</span>::<span class="n">from_ymd_opt</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">).</span><span class="n">unwrap</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">library</span><span class="p">.</span><span class="n">add_book</span><span class="p">(</span><span class="n">book</span><span class="p">.</span><span class="n">clone</span><span class="p">()).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">library</span><span class="p">.</span><span class="n">add_member</span><span class="p">(</span><span class="n">member</span><span class="p">.</span><span class="n">clone</span><span class="p">()).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">library</span><span class="p">.</span><span class="n">loan_book</span><span class="p">(</span><span class="o">&amp;</span><span class="n">book</span><span class="p">.</span><span class="n">isbn</span><span class="p">,</span><span class="w"> </span><span class="n">member</span><span class="p">.</span><span class="n">id</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">library</span><span class="p">.</span><span class="n">return_book</span><span class="p">(</span><span class="o">&amp;</span><span class="n">book</span><span class="p">.</span><span class="n">isbn</span><span class="p">).</span><span class="n">is_ok</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过 <code>quickcheck</code> 我们就可以只专注测试逻辑，可以假定测试数据集是完备的了。可能看到 <code>Book</code> 和 <code>Member</code>, 你会觉得 quickcheck 并没有做太多事情，你手工也可以构造。 <br/></p>
+<p>但是我在的实际工作中，我就需要构造一个超过23个成员变量的 struct, 大部分还是 optional, 然后需要将这个 struct 写入到 parquet 文件，然后再测试读取逻辑。 <br/>
+不同成员变量的值可取的范围实在太多了，再叠加上 optional 的可能性，构造数据的代码写得相当恶心. <br/></p>
+<p>所以有了 quickcheck 之后，我只需要为这个 struct 实现 <code>Arbitrary</code> 接口，剩下的就由 <code>quickcheck</code> 替我生成，所以我直接和PE大佬说: <br/></p>
+<blockquote>
+<p>property test saves me life, now I couldn&rsquo;t live without it. <br/></p>
+</blockquote>
+<h2 id="总结"><span class="section-num">5</span> 总结</h2>
+<p>本来想抒发感想写点结语，但是看到 Hypothesis 作者写的 <a href="https://hypothesis.readthedocs.io/en/latest/manifesto.html">The purpose of Hypothesis</a> 来说明他开发的 Hypothesis 的动机，他的文章甚至用来给这个《测试技能进阶》系列总结都相当妥当。 <br/></p>
+<p>我就试翻译下他文章的部分段落, 更推荐阅读原文，可谓是用心良苦，字字珠玑: <br/></p>
+<blockquote>
+<p>请容我狂妄一下，Hypothesis 的目标是希望可以让这个世界迈进到一个全新，由高质量软件打造的新世代。 <br/></p>
+<p>正如人们所说，软件正在吞噬整个世界。但软件本身却很烂，它充满bug，又不安全，还经常被设计得很烂，这样的软件可谓是万恶之源. <br/></p>
+<p>而软件测试的状况甚至更糟糕，虽然大家都认同应该对代码进行测试，但是你能问心无愧地说，你经手过的代码都有被充分测试么？ <br/></p>
+<p>问题在于，实在是太难写出好的测试了， <br/>
+<strong><strong>你写测试用例的时候，通常持有和你写代码时一样的假设与误区，你写的测试用例自然无法发现你当初埋下的bug</strong></strong> (精辟) <br/></p>
+<p>与此同时，有各种各样让测试变成更好的工具却基本无人使用，最初的 Quickcheck 是1999年推出的，但是大多数开发者甚至从未听说过它，更别提使用了（开山始祖的Quickcheck在GitHub只有700多个Star，就知道作者所言不虚）。 <br/>
+虽然其他语言有些半成品的实现，但是大部分都不值得一试。 <br/></p>
+<p>而 Hypothesis 的目标正是正本清源，把先进的测试技术传递给大众，并提供一个高质量的实现，让人们可以接纳它。 <br/></p>
+<p>希望可以集百家之所长，附以个人微薄之力，让软件测试变得更好。 <br/></p>
+</blockquote>
+<p>系列文章: <br/></p>
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%80_%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E8%AE%A4%E7%9F%A5/">测试技能进阶(一): 软件质量认知</a> <br/></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/">测试技能进阶(二): Parameterized Tests</a> <br/></li>
+</ul>
+<h2 id="参考"><span class="section-num">6</span> 参考</h2>
+<ul>
+<li><a href="https://hackage.haskell.org/package/QuickCheck">Haskell Quickcheck</a> <br/></li>
+<li><a href="https://hypothesis.works/">Hypothesis</a> <br/></li>
+<li><a href="https://github.com/proptest-rs/proptest">Proptest</a> <br/></li>
+<li><a href="https://github.com/BurntSushi/quickcheck">Rust quickcheck</a> <br/></li>
+</ul>
+]]></content:encoded>
+    </item>
     <item>
       <title>测试技能进阶(二): Parameterized Tests</title>
       <link>https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/</link>
@@ -2759,551 +3634,6 @@ tracker!</p>
 <p>后来在<a href="https://www.reddit.com/r/rust/comments/7yrofg/rspotify_is_published_to_cratesio/">社区</a> 同学的提醒下， 我才发现我踩到了 Rust 编译器的一个bug, 最后我就顺手提交了一个 <a href="https://github.com/rust-lang/rust/issues/48368">issue</a>, 虽说这个问题已经在 <code>nightly</code> 里面修复了。</p>
 <h2 id="结语"><span class="section-num">3</span> 结语</h2>
 <p>前后两个月的时间，终于发布了 rspotify. 项目不大，但是也是我花费时间，精力去开发的，也得到其他同学的肯定，喔耶 :)</p>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>Rust的错误处理(二)</title>
-      <link>https://ramsayleung.github.io/zh/post/2018/error_handle_in_rust_2/</link>
-      <pubDate>Thu, 08 Feb 2018 22:01:00 +0800</pubDate>
-      <guid>https://ramsayleung.github.io/zh/post/2018/error_handle_in_rust_2/</guid>
-      <description>自定义错误和error_chain 库 1 前言 上一篇文章聊到 Rust 的错误处理机制，以及和 Java 的简单比较，现在就来聊一下如何在 Rust 自定义错误，以及引入 er</description>
-      <content:encoded><![CDATA[<p>自定义错误和<code>error_chain</code> 库</p>
-<h2 id="前言"><span class="section-num">1</span> 前言</h2>
-<p>上一篇文章聊到 Rust 的错误处理机制，以及和 Java 的简单比较，现在就来聊一下如何在 Rust 自定义错误，以及引入 <code>error_chain</code>这个库来优雅地进行错误处理。</p>
-<p>还有，少不了用 Java 来做对比咯:)</p>
-<h3 id="java-自定义异常"><span class="section-num">1.1</span> Java 自定义异常</h3>
-<p>前文简单提到 Java 的错误和异常但是继承自一个 <code>Throwable</code>的父类，既然异常是继承自异常父类的，我们自定义异常的时候，
-也可以模仿JDK, 继承一个异常类：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyException</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">MyException</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="kd">super</span><span class="p">(</span><span class="n">message</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>这样就定义了属于自己的异常. 只需要继承 <code>Exception</code>,然后调用父类的构造方法。</p>
-<p>不过 对于那些复杂的项目，这样的例子未免过于简单。现在就来看一个我项目的中的一个异常类：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="n">public</span><span class="w"> </span><span class="kr">final</span><span class="w"> </span><span class="n">class</span><span class="w"> </span><span class="n">MyError</span><span class="w"> </span><span class="n">extends</span><span class="w"> </span><span class="n">RuntimeException</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="sd">/**
-</span></span></span><span class="line"><span class="cl"><span class="sd">     *
-</span></span></span><span class="line"><span class="cl"><span class="sd">     */</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">private</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kr">final</span><span class="w"> </span><span class="n">long</span><span class="w"> </span><span class="n">serialVersionUID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="n">L</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">private</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">boolean</span><span class="w"> </span><span class="n">isFillStack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">private</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">httpStatusCode</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">private</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">code</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">private</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="n">message</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">private</span><span class="w"> </span><span class="n">MyError</span><span class="p">(</span><span class="n">int</span><span class="w"> </span><span class="n">httpStatusCode</span><span class="p">,</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">code</span><span class="p">,</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">super</span><span class="p">(</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">null</span><span class="p">,</span><span class="w"> </span><span class="n">isFillStack</span><span class="p">,</span><span class="w"> </span><span class="n">isFillStack</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">this</span><span class="p">.</span><span class="n">httpStatusCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">httpStatusCode</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">this</span><span class="p">.</span><span class="n">code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">code</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">this</span><span class="p">.</span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">public</span><span class="w"> </span><span class="n">MyError</span><span class="p">(</span><span class="n">MyErrorCode</span><span class="w"> </span><span class="n">myErrorCode</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="n">messageArgs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">this</span><span class="p">(</span><span class="n">myErrorCode</span><span class="p">.</span><span class="n">getHttpStatusCode</span><span class="p">(),</span><span class="w"> </span><span class="n">myErrorCode</span><span class="p">.</span><span class="n">getErrorCode</span><span class="p">(),</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	     </span><span class="n">MessageFormat</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">myErrorCode</span><span class="p">.</span><span class="n">getMessagePattern</span><span class="p">(),</span><span class="w"> </span><span class="n">messageArgs</span><span class="p">));</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">MyError</span><span class="w"> </span><span class="n">throwError</span><span class="p">(</span><span class="n">MyErrorCode</span><span class="w"> </span><span class="n">myErrorCode</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">..</span><span class="p">.</span><span class="w"> </span><span class="n">messageArgs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">throw</span><span class="w"> </span><span class="n">new</span><span class="w"> </span><span class="n">MyError</span><span class="p">(</span><span class="n">myErrorCode</span><span class="p">,</span><span class="w"> </span><span class="n">messageArgs</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">MyError</span><span class="w"> </span><span class="n">internalServerError</span><span class="p">(</span><span class="nb">String</span><span class="w"> </span><span class="n">logId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">throw</span><span class="w"> </span><span class="n">new</span><span class="w"> </span><span class="n">MyError</span><span class="p">(</span><span class="n">MyErrorCode</span><span class="p">.</span><span class="no">INTERNAL_SERVER_ERROR</span><span class="p">,</span><span class="w"> </span><span class="n">logId</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">MyError</span><span class="w"> </span><span class="n">DataError</span><span class="p">(</span><span class="nb">String</span><span class="w"> </span><span class="n">logId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">throw</span><span class="w"> </span><span class="n">new</span><span class="w"> </span><span class="n">MyError</span><span class="p">(</span><span class="n">MyErrorCode</span><span class="p">.</span><span class="no">DATA_ERROR</span><span class="p">,</span><span class="w"> </span><span class="n">logId</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">MyError</span><span class="w"> </span><span class="n">BadParameterError</span><span class="p">(</span><span class="nb">String</span><span class="w"> </span><span class="n">logId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">throw</span><span class="w"> </span><span class="n">new</span><span class="w"> </span><span class="n">MyError</span><span class="p">(</span><span class="n">MyErrorCode</span><span class="p">.</span><span class="no">BAD_PARAMETER_ERROR</span><span class="p">,</span><span class="w"> </span><span class="n">logId</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>这是我去掉了多余方法和变量的简化版，但是也足以一叶知秋了。</p>
-<p><code>MyError</code>这个异常类是 继承于 <code>RuntimeException</code>的，并调用了 <code>RuntimeException</code>的构造方法。</p>
-<p>因为我的项目是 WEB 服务的业务层，要处理大量的逻辑，难免会出现异常.</p>
-<p>比如说可能调用方调用接口 的时候，入参不符合规范，我就抛出一个经过包装的 <code>BadParameterError</code> 异常，对于接 口调用方，这样会比一个单纯的 400 错误要友好，其他的异常也是同理。</p>
-<h3 id="rust-自定义错误"><span class="section-num">1.2</span> Rust 自定义错误</h3>
-<p>对于习惯了 OOP 编程的同学来说，Java 的异常是很容易理解，但是回到 Rust 身上，Rust是没有父类一说的，显然，Rust 是没可能套用 Java 的自定义异常的方式的。</p>
-<p>Rust 用的是 <code>trait</code>, <code>trait</code>就有点类似 Java 的 =interface=(只是类似，不是等同!).</p>
-<p>按照 Rust 的规范，Rust 允许开发者定义自己的错误，设计良好的错误应该包含以下的特性：</p>
-<ol>
-<li>使用相同的类型(type)来表示不同的错误</li>
-<li>错误中包含对用户友好的提示(我也在上面提到的)</li>
-<li>能便捷地与其他类型比较，例如：
-<ul>
-<li>Good: <code>Err(EmptyVec)</code></li>
-<li>Bad: <code>Err(&quot;Please use a vector with at least one element&quot;.to_owned())</code></li>
-</ul>
-</li>
-<li>包含与错误相关的信息，例如：
-<ul>
-<li>Good: <code>Err(BadChar(c, position))</code></li>
-<li>Bad: <code>Err(&quot;+ cannot be used here&quot;.to_owned())</code></li>
-</ul>
-</li>
-<li>可以很方便地与其他错误结合</li>
-</ol>
-<!--listend-->
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">error</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">fmt</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">num</span>::<span class="n">ParseIntError</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">type</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span>::<span class="n">result</span>::<span class="nb">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">DoubleError</span><span class="o">&gt;</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cp">#[derive(Debug, Clone)]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 自定义错误类型。
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">struct</span> <span class="nc">DoubleError</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 不同的错误需要展示的信息也不一样，这个就要视情况而定，因为 DoubleError 没有定义额外的字段来保存错误信息
-</span></span></span><span class="line"><span class="cl"><span class="c1">// 所以就现在就简单打印错误信息
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">impl</span><span class="w"> </span><span class="n">fmt</span>::<span class="n">Display</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">DoubleError</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">f</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">fmt</span>::<span class="n">Formatter</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">fmt</span>::<span class="nb">Result</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="fm">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;invalid first item to double&#34;</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 实现 error::Error 这个 trait, 对DoubleError 进行包装
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">impl</span><span class="w"> </span><span class="n">error</span>::<span class="n">Error</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">DoubleError</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">description</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="kt">str</span> <span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;invalid first item to double&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">cause</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Option</span><span class="o">&lt;&amp;</span><span class="n">error</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="c1">// Generic error, underlying cause isn&#39;t tracked.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="nb">None</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">double_first</span><span class="p">(</span><span class="n">vec</span>: <span class="nb">Vec</span><span class="o">&lt;&amp;</span><span class="kt">str</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">vec</span><span class="p">.</span><span class="n">first</span><span class="p">()</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Change the error to our new type.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="p">.</span><span class="n">ok_or</span><span class="p">(</span><span class="n">DoubleError</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="n">and_then</span><span class="p">(</span><span class="o">|</span><span class="n">s</span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="p">()</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">		  </span><span class="c1">// Update to the new error type here also.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">		  </span><span class="p">.</span><span class="n">map_err</span><span class="p">(</span><span class="o">|</span><span class="n">_</span><span class="o">|</span><span class="w"> </span><span class="n">DoubleError</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">		  </span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">i</span><span class="o">|</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">i</span><span class="p">))</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">print</span><span class="p">(</span><span class="n">result</span>: <span class="nb">Result</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">match</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nb">Ok</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">  </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;The first doubled is </span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nb">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;Error: </span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">),</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">numbers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&#34;42&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;93&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;18&#34;</span><span class="p">];</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">empty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[];</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">strings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&#34;tofu&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;93&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;18&#34;</span><span class="p">];</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">print</span><span class="p">(</span><span class="n">double_first</span><span class="p">(</span><span class="n">numbers</span><span class="p">));</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">print</span><span class="p">(</span><span class="n">double_first</span><span class="p">(</span><span class="n">empty</span><span class="p">));</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">print</span><span class="p">(</span><span class="n">double_first</span><span class="p">(</span><span class="n">strings</span><span class="p">));</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>这段代码的运行结果如下：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">The first doubled is 84
-</span></span><span class="line"><span class="cl">Error: invalid first item to double
-</span></span><span class="line"><span class="cl">Error: invalid first item to double
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="error-chain"><span class="section-num">1.3</span> error_chain</h3>
-<p>虽说 Rust 自定义错误很灵活和方便，但是如果每次定义异常都需要实现 <code>Display</code> 和 <code>Error</code>, 未免过于繁琐，现在来介绍
-<a href="https://github.com/rust-lang-nursery/error-chain">error_chain</a> 这个类库。</p>
-<p><code>error_chain</code> 是由 Rust 项目组的 leader&ndash;<a href="https://brson.github.io/">Brian Anderson</a> 编写的异常处理库，可以让你更舒心<del>简单不粗 暴</del>地定义错误。</p>
-<hr>
-<h4 id="error-chain示例"><span class="section-num">1.3.1</span> error_chain示例</h4>
-<p>以上面的 <code>DoubleError</code>为例，并改写 error_chain 的官方<a href="https://github.com/rust-lang-nursery/error-chain/blob/master/examples/quickstart.rs">例子</a> 以实现相同的效果，代码如下：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// `error_chain!` 的递归深度
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#![recursion_limit = </span><span class="s">&#34;1024&#34;</span><span class="cp">]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">//引出 error_chain 和相应的宏
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#[macro_use]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">extern</span><span class="w"> </span><span class="k">crate</span><span class="w"> </span><span class="n">error_chain</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">//将跟错误有关的内容放入 errors module, 其他需要用到这个错误module 的模块就通过
-</span></span></span><span class="line"><span class="cl"><span class="c1">// use errors::* 来引入所有内容
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">mod</span> <span class="nn">errors</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Create the Error, ErrorKind, ResultExt, and Result types
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="fm">error_chain!</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">errors</span><span class="p">{</span><span class="n">Double</span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="n">description</span><span class="p">(</span><span class="s">&#34;invalid first item to double&#34;</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="n">display</span><span class="p">(</span><span class="s">&#34;invalid first item to double&#34;</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">errors</span>::<span class="o">*</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">type</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>::<span class="n">std</span>::<span class="n">result</span>::<span class="nb">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">ErrorKind</span><span class="o">&gt;</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">numbers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&#34;42&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;93&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;18&#34;</span><span class="p">];</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">empty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[];</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">strings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="s">&#34;tofu&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;93&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;18&#34;</span><span class="p">];</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">print</span><span class="p">(</span><span class="n">double_first</span><span class="p">(</span><span class="n">numbers</span><span class="p">));</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">print</span><span class="p">(</span><span class="n">double_first</span><span class="p">(</span><span class="n">empty</span><span class="p">));</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">print</span><span class="p">(</span><span class="n">double_first</span><span class="p">(</span><span class="n">strings</span><span class="p">));</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">double_first</span><span class="p">(</span><span class="n">vec</span>: <span class="nb">Vec</span><span class="o">&lt;&amp;</span><span class="kt">str</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">vec</span><span class="p">.</span><span class="n">first</span><span class="p">()</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Change the error to our new type.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="p">.</span><span class="n">ok_or</span><span class="p">(</span><span class="n">ErrorKind</span>::<span class="n">Double</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="n">and_then</span><span class="p">(</span><span class="o">|</span><span class="n">s</span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="p">()</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">		  </span><span class="c1">// Update to the new error type here also.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">		  </span><span class="p">.</span><span class="n">map_err</span><span class="p">(</span><span class="o">|</span><span class="n">_</span><span class="o">|</span><span class="w"> </span><span class="n">ErrorKind</span>::<span class="n">Double</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">		  </span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">i</span><span class="o">|</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">i</span><span class="p">))</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">print</span><span class="p">(</span><span class="n">result</span>: <span class="nb">Result</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">match</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nb">Ok</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;The first doubled is </span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nb">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;Error: </span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">),</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>运行这代码可以得到和上面小节同样的输出。</p>
-<h4 id="error-chain-详解"><span class="section-num">1.3.2</span> error_chain 详解</h4>
-<p>刚刚就先目睹了一下 <code>error_chain</code> 的芳容了，现在是时候来解剖一下 <code>error_chain</code>, 这次就以 <code>error_chain</code>的 <a href="https://github.com/rust-lang-nursery/error-chain/blob/master/examples/quickstart.rs">example</a>来解释</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// Simple and robust error handling with error-chain!
-</span></span></span><span class="line"><span class="cl"><span class="c1">// Use this as a template for new projects.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// `error_chain!` can recurse deeply
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#![recursion_limit = </span><span class="s">&#34;1024&#34;</span><span class="cp">]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// Import the macro. Don&#39;t forget to add `error-chain` in your
-</span></span></span><span class="line"><span class="cl"><span class="c1">// `Cargo.toml`!
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#[macro_use]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">extern</span><span class="w"> </span><span class="k">crate</span><span class="w"> </span><span class="n">error_chain</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// We&#39;ll put our errors in an `errors` module, and other modules in
-</span></span></span><span class="line"><span class="cl"><span class="c1">// this crate will `use errors::*;` to get access to everything
-</span></span></span><span class="line"><span class="cl"><span class="c1">// `error_chain!` creates.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">mod</span> <span class="nn">errors</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Create the Error, ErrorKind, ResultExt, and Result types
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="fm">error_chain!</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">errors</span>::<span class="o">*</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Err</span><span class="p">(</span><span class="k">ref</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;error: </span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">for</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">iter</span><span class="p">().</span><span class="n">skip</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;caused by: </span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="c1">// The backtrace is not always generated. Try to run this example
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="c1">// with `RUST_BACKTRACE=1`.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="k">if</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">backtrace</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">backtrace</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;backtrace: </span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">backtrace</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span>::<span class="n">std</span>::<span class="n">process</span>::<span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// Most functions will return the `Result` type, imported from the
-</span></span></span><span class="line"><span class="cl"><span class="c1">// `errors` module. It is a typedef of the standard `Result` type
-</span></span></span><span class="line"><span class="cl"><span class="c1">// for which the error type is always our own `Error`.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">fn</span> <span class="nf">run</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">fs</span>::<span class="n">File</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// This operation will fail
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">File</span>::<span class="n">open</span><span class="p">(</span><span class="s">&#34;contacts&#34;</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="n">chain_err</span><span class="p">(</span><span class="o">||</span><span class="w"> </span><span class="s">&#34;unable to open contacts file&#34;</span><span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nb">Ok</span><span class="p">(())</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>重要的信息例子已经作了注释，现在就来看看用法。首先来看看 main 函数</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Err</span><span class="p">(</span><span class="k">ref</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;error: </span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">for</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">iter</span><span class="p">().</span><span class="n">skip</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;caused by: </span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="c1">// The backtrace is not always generated. Try to run this example
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="c1">// with `RUST_BACKTRACE=1`.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="k">if</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">backtrace</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">backtrace</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;backtrace: </span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">backtrace</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span>::<span class="n">std</span>::<span class="n">process</span>::<span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>可以看出，这个函数的大部份逻辑是进行错误处理，例如返回自定义的 <code>Result</code>和 <code>Error</code>, 然后处理这些错误。上面的处理流程显示了 <code>error_chain</code> 从某个错误继承而来的三样信息：最近出现的错误(即<code>e</code>)，导致错误的调用链，原来错误的堆栈信息 (<code>e.backtrace()</code>)</p>
-<h2 id="小结"><span class="section-num">2</span> 小结</h2>
-<p>刚刚的例子只是 <code>error_chain</code> 小试了一波牛刀，如果想要了解更多关于 Rust 异常处理 的细节，就需要看看 Rust 的文档咯</p>
-<h2 id="参考"><span class="section-num">3</span> 参考</h2>
-<ul>
-<li><a href="https://rustbyexample.com/error.html">rust by example</a></li>
-<li><a href="https://brson.github.io/2016/11/30/starting-with-error-chain">starting with error chain</a></li>
-<li><a href="http://siciarz.net/24-days-rust-error_chain/">24-days-rust-error_chain/</a></li>
-<li><a href="https://vincent.is/handling-errors-in-rust/">handling errors in rust</a></li>
-<li><a href="https://docs.rs/error-chain">error chain</a></li>
-<li><a href="https://doc.rust-lang.org/book/second-edition/ch09-00-error-handling.html">error handle</a></li>
-</ul>
 ]]></content:encoded>
     </item>
   </channel>
