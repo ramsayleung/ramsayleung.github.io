@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Mon, 14 Oct 2024 14:57:47 -0700</lastBuildDate>
+    <lastBuildDate>Mon, 14 Oct 2024 15:28:08 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/categories/rust/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>测试技能进阶(三): Property Based Testing</title>
@@ -496,7 +496,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>对于任意类型的列表，反转之后现反转的结果，肯定是和原结果一样的，那么我们就可以开始声明我们的标准(specification), 那就是任意的列表，可以是字符串列表，整型列表或者是其他的结构体列表:</p>
+</div><p>对于任意类型的列表，反转之后再反转的结果，肯定是和原结果一样的，那么我们就可以开始声明我们的标准(specification), 那就是任意的列表，可以是字符串列表，整型列表或者是其他的结构体列表:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
