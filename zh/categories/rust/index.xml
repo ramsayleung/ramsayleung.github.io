@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Mon, 14 Oct 2024 14:41:38 -0700</lastBuildDate>
+    <lastBuildDate>Mon, 14 Oct 2024 14:57:47 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/categories/rust/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>测试技能进阶(三): Property Based Testing</title>
@@ -22,8 +22,8 @@
       <description>1 前言 1.1 test case的局限 想要更好地理解什么是 Property based testing, 就来先看下已有 test case 的局限，再来观察它解决了什么问题。 用之前《测试技能进阶(二): Parameterized Test</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <h3 id="test-case的局限"><span class="section-num">1.1</span> test case的局限</h3>
-<p>想要更好地理解什么是 Property based testing, 就来先看下已有 test case 的局限，再来观察它解决了什么问题。 <br/></p>
-<p>用之前<a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/">《测试技能进阶(二): Parameterized Tests》</a>中计算折扣的函数为例： <br/></p>
+<p>想要更好地理解什么是 Property based testing, 就来先看下已有 test case 的局限，再来观察它解决了什么问题。</p>
+<p>用之前<a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/">《测试技能进阶(二): Parameterized Tests》</a>中计算折扣的函数为例：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -45,37 +45,37 @@
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">discount_percentage</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Discount_percentage must be greater than zero: </span><span class="si">{</span><span class="n">discount_percentage</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">price</span> <span class="o">&gt;</span> <span class="mi">50000</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="p">(</span><span class="n">discount_percentage</span> <span class="o">*</span> <span class="mf">1.15</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="p">(</span><span class="n">discount_percentage</span> <span class="o">*</span> <span class="mf">1.15</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">price</span> <span class="o">&gt;</span> <span class="mi">100000</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="p">(</span><span class="n">discount_percentage</span> <span class="o">*</span> <span class="mf">1.18</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="p">(</span><span class="n">discount_percentage</span> <span class="o">*</span> <span class="mf">1.18</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="n">discount_percentage</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>即使我们使用了 Parameterized Test, 把测试逻辑和测试数据集作了分离，但是还是有两个缺点： <br/></p>
+</div><p>即使我们使用了 Parameterized Test, 把测试逻辑和测试数据集作了分离，但是还是有两个缺点：</p>
 <ol>
-<li>我们的测试数据集还是要手工构造，即使现在不需要写新的 test case, 手工构造数据集还是很麻烦 <br/></li>
-<li>第二个问题更严重，就是我们的构建的数据集可能不是完备的，如果数据集没有办法覆盖所有的条件分支，那我们仍然可能发现不了代码中的Bug <br/></li>
+<li>我们的测试数据集还是要手工构造，即使现在不需要写新的 test case, 手工构造数据集还是很麻烦</li>
+<li>第二个问题更严重，就是我们的构建的数据集可能不是完备的，如果数据集没有办法覆盖所有的条件分支，那我们仍然可能发现不了代码中的Bug</li>
 </ol>
 <h2 id="property-based-testing"><span class="section-num">2</span> Property Based Testing</h2>
-<p>而 Property Based Testing 就是想解决这个问题，它希望可以结合人脑对特定问题域的理解和机器的运算能力，使用更少的时间来生成更优的测试case. <br/></p>
-<p>Property Based Testing 这个概念是由 Haskell 项目 <a href="https://en.wikipedia.org/wiki/QuickCheck">QuickCheck</a> 在1999年引入的，它的理念是，程序员应该只定义某个测试case, 参数需要满足的标准(specification), 然后程序就会自动生成大量满足这个标准的随机数，用这些随机数来测试这个 test case。 <br/></p>
-<p>而因为测试数据是随机生成的，所以你意料之内的数据，或者意料之外的数据都会被用来测试， <br/>
-既省去了费时费力构造不同数据作数据集来测试的烦恼，又能保证数据集的完备性, 经常可以帮助你发现意想不到的bug. <br/></p>
-<p>这就是声明式定义的一种，你只需要声明你想干什么(用什么样的数据测试什么函数)，而非命令式定义（你需要定义你要怎么做）. <br/></p>
-<p>人力应该是很珍贵，而机器的计算资源却是很便宜，应该让机器代替人去做生成数据的事。 <br/></p>
-<p>举例来说, 以上面的 <code>calculate_discount</code> 函数为例，如果我们告诉程序, <code>price</code> 和 <code>discount_percentage</code> 应该是整数（specification）, 那么 Quickcheck 就会生成各种整数, 从 Integer.Min 到 Integer.Max 不等，用来测试我们的程序. <br/></p>
-<p>如果还是觉得这个概念比较抽象，可以来看下具体的例子： <br/></p>
+<p>而 Property Based Testing 就是想解决这个问题，它希望可以结合人脑对特定问题域的理解和机器的运算能力，使用更少的时间来生成更优的测试case.</p>
+<p>Property Based Testing 这个概念是由 Haskell 项目 <a href="https://en.wikipedia.org/wiki/QuickCheck">QuickCheck</a> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>在1999年引入的，它的理念是，程序员应该只定义某个测试case, 参数需要满足的标准(specification), 然后程序就会自动生成大量满足这个标准的随机数，用这些随机数来测试这个 test case。</p>
+<p>而因为测试数据是随机生成的，所以你意料之内的数据，或者意料之外的数据都会被用来测试，
+既省去了费时费力构造不同数据作数据集来测试的烦恼，又能保证数据集的完备性, 经常可以帮助你发现意想不到的bug.</p>
+<p>这就是声明式定义的一种，你只需要声明你想干什么(用什么样的数据测试什么函数)，而非命令式定义（你需要定义你要怎么做）.</p>
+<p>人力应该是很珍贵，而机器的计算资源却是很便宜，应该让机器代替人去做生成数据的事。</p>
+<p>举例来说, 以上面的 <code>calculate_discount</code> 函数为例，如果我们告诉程序, <code>price</code> 和 <code>discount_percentage</code> 应该是整数（specification）, 那么 Quickcheck 就会生成各种整数, 从 Integer.Min 到 Integer.Max 不等，用来测试我们的程序.</p>
+<p>如果还是觉得这个概念比较抽象，可以来看下具体的例子：</p>
 <h2 id="hypothesis"><span class="section-num">3</span> Hypothesis</h2>
-<p>Python Property Based Testing的测试框架叫 <a href="https://hypothesis.works/">Hypothesis</a>(假想)，这个项目名字也是起得非常有水平，结合Property Based Testing的哲学，可谓信雅达. <br/></p>
-<p>假设我们现在要实现一个简单的数据压缩的算法： <a href="https://en.wikipedia.org/wiki/Run-length_encoding">Run-length Encoding</a>(RLE)，通常用于压缩包含连续重复数据的序列, 这种编码方法特别适用于那些有大量重复字符或值的数据. <br/></p>
-<p>它的基本原理是： <br/></p>
+<p>Python Property Based Testing的测试框架叫 <a href="https://hypothesis.works/">Hypothesis </a><sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>(假想)，这个项目名字也是起得非常有水平，结合Property Based Testing的哲学，可谓信雅达.</p>
+<p>假设我们现在要实现一个简单的数据压缩的算法： <a href="https://en.wikipedia.org/wiki/Run-length_encoding">Run-length Encoding</a> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>(RLE)，通常用于压缩包含连续重复数据的序列, 这种编码方法特别适用于那些有大量重复字符或值的数据.</p>
+<p>它的基本原理是：</p>
 <ol>
-<li>统计连续重复的数据元素的数量。 <br/></li>
-<li>用一个计数值和数据值的组合来替代这些重复的数据。 <br/></li>
+<li>统计连续重复的数据元素的数量。</li>
+<li>用一个计数值和数据值的组合来替代这些重复的数据。</li>
 </ol>
-<p>比如字符串: <code>AABBBCCCC</code>, RLE 编码后: <code>2A3B4C</code>. <code>2A</code> 表示两个连续的 <code>A</code>, <code>3B</code> 表示三个连续的 <code>B</code>, <code>4C</code> 表示四个连续的 <code>C</code> 。 <br/></p>
-<p>Python实现如下: <br/></p>
+<p>比如字符串: <code>AABBBCCCC</code>, RLE 编码后: <code>2A3B4C</code>. <code>2A</code> 表示两个连续的 <code>A</code>, <code>3B</code> 表示三个连续的 <code>B</code>, <code>4C</code> 表示四个连续的 <code>C</code> 。</p>
+<p>Python实现如下:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -128,7 +128,7 @@
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">q</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>如果我们的代码实现没有问题的话，对于任意的字符串，编码后的字符串，解码后的结果应该和原来的字符串一致的，这个就是我们的测试逻辑: <br/></p>
+</div><p>如果我们的代码实现没有问题的话，对于任意的字符串，编码后的字符串，解码后的结果应该和原来的字符串一致的，这个就是我们的测试逻辑:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -149,7 +149,7 @@
 </span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">decode</span><span class="p">(</span><span class="n">encode</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">==</span> <span class="n">s</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>使用 <code>pytest</code> 运行上面的用例，结果如下: <br/></p>
+</div><p>使用 <code>pytest</code> 运行上面的用例，结果如下:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -205,7 +205,7 @@
 </span></span><span class="line"><span class="cl">platform darwin -- Python 3.12.6, pytest-8.3.3, pluggy-1.5.0
 </span></span><span class="line"><span class="cl">rootdir: /Users/ramsayleung/code/python/test_technique
 </span></span><span class="line"><span class="cl">plugins: hypothesis-6.115.0
-</span></span><span class="line"><span class="cl">collected <span class="m">1</span> item                                                                           
+</span></span><span class="line"><span class="cl">collected <span class="m">1</span> item
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">property_based_testing.py F                                                          <span class="o">[</span>100%<span class="o">]</span>
 </span></span><span class="line"><span class="cl">
@@ -215,11 +215,11 @@
 </span></span><span class="line"><span class="cl">@given<span class="o">(</span>text<span class="o">())</span>
 </span></span><span class="line"><span class="cl">&gt;   def test_decode_inverts_encode<span class="o">(</span>s<span class="o">)</span>:
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">property_based_testing.py:29: 
-</span></span><span class="line"><span class="cl">_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+</span></span><span class="line"><span class="cl">property_based_testing.py:29:
+</span></span><span class="line"><span class="cl">_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 </span></span><span class="line"><span class="cl">property_based_testing.py:30: in test_decode_inverts_encode
 </span></span><span class="line"><span class="cl">assert decode<span class="o">(</span>encode<span class="o">(</span>s<span class="o">))</span> <span class="o">==</span> s
-</span></span><span class="line"><span class="cl">_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+</span></span><span class="line"><span class="cl">_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nv">input_string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 </span></span><span class="line"><span class="cl">
@@ -248,7 +248,7 @@
 </span></span><span class="line"><span class="cl">                       <span class="o">====================================</span> <span class="m">1</span> failed in 0.14s <span class="o">=====================================</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>可以看到，当 <code>input_string =''</code> 是空字符串的时候， <code>encode</code> 函数抛出异常了，说 <code>character</code> 变量未定义。原来是 <code>encode</code> 函数没有对空字符串这个 corner case 作处理，那么就加个判断条件，修复一下: <br/></p>
+</div><p>可以看到，当 <code>input_string =''</code> 是空字符串的时候， <code>encode</code> 函数抛出异常了，说 <code>character</code> 变量未定义。原来是 <code>encode</code> 函数没有对空字符串这个 corner case 作处理，那么就加个判断条件，修复一下:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -291,7 +291,7 @@
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">lst</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>既然我们知道空字符串是个特殊的 case, 因为 hypothesis 生成的都是任意的随机数，不一定每次都会测到空字符串，那我们就自己指定一个 case: <br/></p>
+</div><p>既然我们知道空字符串是个特殊的 case, 因为 hypothesis 生成的都是任意的随机数，不一定每次都会测到空字符串，那我们就自己指定一个 case:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -307,14 +307,14 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nd">@given</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
-</span></span><span class="line"><span class="cl"><span class="nd">@example</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">)</span> <span class="c1"># 手工指定空字符串这个 corner case </span>
+</span></span><span class="line"><span class="cl"><span class="nd">@example</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">)</span> <span class="c1"># 手工指定空字符串这个 corner case</span>
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_decode_inverts_encode</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">decode</span><span class="p">(</span><span class="n">encode</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">==</span> <span class="n">s</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><code>pytest</code> 重新运行，测试就通过了。但是，对 <code>hypothesis</code> 框架还没有建立信心的你我就不确定，它是否真的生成很多随机来运行这个 test case 呢？ <br/></p>
-<p>有两个方法可以验证： <br/></p>
-<p>方法一：最简单粗暴的方式，把 <code>s</code> 变量给打印出来，毕竟眼见为实: <br/></p>
+</div><p><code>pytest</code> 重新运行，测试就通过了。但是，对 <code>hypothesis</code> 框架还没有建立信心的你我就不确定，它是否真的生成很多随机来运行这个 test case 呢？</p>
+<p>有两个方法可以验证：</p>
+<p>方法一：最简单粗暴的方式，把 <code>s</code> 变量给打印出来，毕竟眼见为实:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -331,7 +331,7 @@
 </span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">decode</span><span class="p">(</span><span class="n">encode</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">==</span> <span class="n">s</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>然后通过 <code>pytest -s</code> 参数要求 <code>pytest</code> 将写入到 <code>stdout</code> 的内容给打印出来 <br/></p>
+</div><p>然后通过 <code>pytest -s</code> 参数要求 <code>pytest</code> 将写入到 <code>stdout</code> 的内容给打印出来</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -378,9 +378,9 @@
 </span></span><span class="line"><span class="cl">platform darwin -- Python 3.12.6, pytest-8.3.3, pluggy-1.5.0
 </span></span><span class="line"><span class="cl">rootdir: /Users/ramsayleung/code/python/test_technique
 </span></span><span class="line"><span class="cl">plugins: hypothesis-6.115.0
-</span></span><span class="line"><span class="cl">collected <span class="m">1</span> item                                                                                  
+</span></span><span class="line"><span class="cl">collected <span class="m">1</span> item
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">property_based_testing.py 
+</span></span><span class="line"><span class="cl">property_based_testing.py
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">O
 </span></span><span class="line"><span class="cl">
@@ -412,9 +412,9 @@
 </span></span><span class="line"><span class="cl">   <span class="o">========================================</span> <span class="m">1</span> passed in 0.15s <span class="o">========================================</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这一堆都是什么字符呢, 都乱码了。 <br/></p>
-<p>毕竟我们告诉 <code>hypothesis</code> 框架的是，我们参数接受的标准是任意的字符串， <code>hypothesis</code> 就非常尽职地帮我们生成了各种字符串，这个测试数据集可比我们自己手工构建的范围大得多，这就是 property based testing 的优势所在. <br/></p>
-<p>第二种方法是使用 <code>hypothesis</code> 框架提供的命令行参数 =&ndash;hypothesis-show-statistics=，用于打印统计信息: <br/></p>
+</div><p>这一堆都是什么字符呢, 都乱码了。</p>
+<p>毕竟我们告诉 <code>hypothesis</code> 框架的是，我们参数接受的标准是任意的字符串， <code>hypothesis</code> 就非常尽职地帮我们生成了各种字符串，这个测试数据集可比我们自己手工构建的范围大得多，这就是 property based testing 的优势所在.</p>
+<p>第二种方法是使用 <code>hypothesis</code> 框架提供的命令行参数 =&ndash;hypothesis-show-statistics=，用于打印统计信息:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -444,7 +444,7 @@
 </span></span><span class="line"><span class="cl">platform darwin -- Python 3.12.6, pytest-8.3.3, pluggy-1.5.0
 </span></span><span class="line"><span class="cl">rootdir: /Users/ramsayleung/code/python/test_technique
 </span></span><span class="line"><span class="cl">plugins: hypothesis-6.115.0
-</span></span><span class="line"><span class="cl">collected <span class="m">1</span> item                                                                                  
+</span></span><span class="line"><span class="cl">collected <span class="m">1</span> item
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">property_based_testing.py .                                                                 <span class="o">[</span>100%<span class="o">]</span>
 </span></span><span class="line"><span class="cl"><span class="o">======================================</span> Hypothesis <span class="nv">Statistics</span> <span class="o">======================================</span>
@@ -461,7 +461,7 @@
 </span></span><span class="line"><span class="cl"><span class="o">========================================</span> <span class="m">1</span> passed in 0.05s <span class="o">========================================</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>上面运行了 100 条数据，如果你觉得还想跑更多，可以通过 <code>settings</code> 装饰器指定更多: <br/></p>
+</div><p>上面运行了 100 条数据，如果你觉得还想跑更多，可以通过 <code>settings</code> 装饰器指定更多:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -471,11 +471,11 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="quickcheck-and-proptest"><span class="section-num">4</span> Quickcheck &amp; Proptest</h2>
-<p>而在Rust生态，就有两个 Property Based Testing 的库，一个是由Rust社区知名开发者，<a href="https://github.com/BurntSushi/ripgrep">ripgrep</a>和 regex 库作者移植自 Haskell Quickcheck 库的 <a href="https://github.com/BurntSushi/quickcheck">quickcheck</a> (名字也一并移植了), 另外一个是思路继承自 Python Hypothesis 的 <a href="https://github.com/proptest-rs/proptest">Proptest</a>(这位直接用property based testing技术来命名了，不得不说，命名真的是门艺术) <br/></p>
-<p>两者的社区接受度都相差无几(star, 使用者数量), 而在公司内部，我也发现 quickcheck 和 proptest 都有人用，坐我旁边的Principle Engineer 用的是 proptest, 而另外一个现在和我共事的同事，她的之前团队用的就是 quickcheck，看到都势均力敌嘛。 <br/></p>
-<p>翻开 quickcheck 和 proptest 的API 文档之后，我发现我更喜欢 quickcheck 的接口风格，虽说它的活跃度更低一些，我最后还是选择了使用 quickcheck. <br/></p>
-<p>下面就来介绍一下我在Rust上使用 quickcheck 的心得: <br/></p>
-<p>假设我们现在有一个可以反转列表的函数 <code>reverse</code>: <br/></p>
+<p>而在Rust生态，就有两个 Property Based Testing 的库，一个是由Rust社区知名开发者，<a href="https://github.com/BurntSushi/ripgrep">ripgrep</a> <sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>和 regex 库作者移植自 Haskell Quickcheck 库的 <a href="https://github.com/BurntSushi/quickcheck">quickcheck</a> <sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>(名字也一并移植了), 另外一个是思路继承自 Python Hypothesis 的 <a href="https://github.com/proptest-rs/proptest">Proptest</a> <sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup>(这位直接用property based testing技术来命名了，不得不说，命名真的是门艺术)</p>
+<p>两者的社区接受度都相差无几(star, 使用者数量), 而在公司内部，我也发现 quickcheck 和 proptest 都有人用，坐我旁边的Principle Engineer 用的是 proptest, 而另外一个现在和我共事的同事，她的之前团队用的就是 quickcheck，看到都势均力敌嘛。</p>
+<p>翻开 quickcheck 和 proptest 的API 文档之后，我发现我更喜欢 quickcheck 的接口风格，虽说它的活跃度更低一些，我最后还是选择了使用 quickcheck.</p>
+<p>下面就来介绍一下我在Rust上使用 quickcheck 的心得:</p>
+<p>假设我们现在有一个可以反转列表的函数 <code>reverse</code>:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -496,7 +496,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>对于任意类型的列表，反转之后现反转的结果，肯定是和原结果一样的，那么我们就可以开始声明我们的标准(specification), 那就是任意的列表，可以是字符串列表，整型列表或者是其他的结构体列表: <br/></p>
+</div><p>对于任意类型的列表，反转之后现反转的结果，肯定是和原结果一样的，那么我们就可以开始声明我们的标准(specification), 那就是任意的列表，可以是字符串列表，整型列表或者是其他的结构体列表:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -533,9 +533,9 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>Rust 的unit test 是不支持带参数的，=#[quickcheck]= 这个宏就会自动将 <code>double_reversal_is_identity_isize</code> 转换成 property based test case, 而得益于Rust的类型系统, <code>quickcheck</code> 就能推断出入参就是我们声明的标准 <code>Vec&lt;isze&gt;</code>, 任意 <code>isize</code> 类型的数组. <br/></p>
+</div><p>Rust 的unit test 是不支持带参数的，=#[quickcheck]= 这个宏就会自动将 <code>double_reversal_is_identity_isize</code> 转换成 property based test case, 而得益于Rust的类型系统, <code>quickcheck</code> 就能推断出入参就是我们声明的标准 <code>Vec&lt;isze&gt;</code>, 任意 <code>isize</code> 类型的数组.</p>
 <h3 id="struct-with-quickcheck"><span class="section-num">4.1</span> Struct with quickcheck</h3>
-<p>如果上面的例子觉得过于简单的话，现在就让我们看个复杂一点的例子, 一个简单的图书管理系统，支持会员，借书，还书功能： <br/></p>
+<p>如果上面的例子觉得过于简单的话，现在就让我们看个复杂一点的例子, 一个简单的图书管理系统，支持会员，借书，还书功能：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -728,7 +728,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>通过上面的简单代码，就实现了新增图书，新增会员，借书，和还书功能。现在就让我们来结合 <code>quickcheck</code> 的 <code>Arbitrary</code> 接口，实现生成任意的图书和会员，以便用于测试: <br/></p>
+</div><p>通过上面的简单代码，就实现了新增图书，新增会员，借书，和还书功能。现在就让我们来结合 <code>quickcheck</code> 的 <code>Arbitrary</code> 接口，实现生成任意的图书和会员，以便用于测试:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -777,13 +777,13 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">id</span>: <span class="kt">u32</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">),</span><span class="w"> </span><span class="c1">// 任意大于0，小于uint32.max_value的整型
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="n">name</span>: <span class="nb">String</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">),</span><span class="w"> </span><span class="c1">// 任意字符串
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="c1">// 任意字符开头, 以@example.com 结尾的字符
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="n">email</span>: <span class="nc">format</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;{}@example.com&#34;</span><span class="p">,</span><span class="w"> </span><span class="nb">String</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">)),</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="n">email</span>: <span class="nc">format</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;{}@example.com&#34;</span><span class="p">,</span><span class="w"> </span><span class="nb">String</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">)),</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>现在就让我们来看下借助 quickcheck 编写的 test case, 注意参数为 <code>Book</code> 和 <code>Member</code> 类型的 case, quickcheck 就会以我们上面定义的标准，自动给我们生成符合规定的 <code>Book</code> 和 <code>Member</code> 参数. <br/></p>
+</div><p>现在就让我们来看下借助 quickcheck 编写的 test case, 注意参数为 <code>Book</code> 和 <code>Member</code> 类型的 case, quickcheck 就会以我们上面定义的标准，自动给我们生成符合规定的 <code>Book</code> 和 <code>Member</code> 参数.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -854,39 +854,59 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>通过 <code>quickcheck</code> 我们就可以只专注测试逻辑，可以假定测试数据集是完备的了。可能看到 <code>Book</code> 和 <code>Member</code>, 你会觉得 quickcheck 并没有做太多事情，你手工也可以构造。 <br/></p>
-<p>但是我在的实际工作中，我就需要构造一个超过23个成员变量的 struct, 大部分还是 optional, 然后需要将这个 struct 写入到 parquet 文件，然后再测试读取逻辑。 <br/>
-不同成员变量的值可取的范围实在太多了，再叠加上 optional 的可能性，构造数据的代码写得相当恶心. <br/></p>
-<p>所以有了 quickcheck 之后，我只需要为这个 struct 实现 <code>Arbitrary</code> 接口，剩下的就由 <code>quickcheck</code> 替我生成，所以我直接和PE大佬说: <br/></p>
+</div><p>通过 <code>quickcheck</code> 我们就可以只专注测试逻辑，可以假定测试数据集是完备的了。可能看到 <code>Book</code> 和 <code>Member</code>, 你会觉得 quickcheck 并没有做太多事情，你手工也可以构造。</p>
+<p>但是我在的实际工作中，我就需要构造一个超过23个成员变量的 struct, 大部分还是 optional, 然后需要将这个 struct 写入到 parquet 文件，然后再测试读取逻辑。
+不同成员变量的值可取的范围实在太多了，再叠加上 optional 的可能性，构造数据的代码写得相当恶心.</p>
+<p>所以有了 quickcheck 之后，我只需要为这个 struct 实现 <code>Arbitrary</code> 接口，剩下的就由 <code>quickcheck</code> 替我生成，所以我直接和PE大佬说:</p>
 <blockquote>
-<p>property test saves me life, now I couldn&rsquo;t live without it. <br/></p>
+<p>property test saves me life, now I couldn&rsquo;t live without it.</p>
 </blockquote>
 <h2 id="总结"><span class="section-num">5</span> 总结</h2>
-<p>本来想抒发感想写点结语，但是看到 Hypothesis 作者写的 <a href="https://hypothesis.readthedocs.io/en/latest/manifesto.html">The purpose of Hypothesis</a> 来说明他开发的 Hypothesis 的动机，他的文章甚至用来给这个《测试技能进阶》系列总结都相当妥当。 <br/></p>
-<p>我就试翻译下他文章的部分段落, 更推荐阅读原文，可谓是用心良苦，字字珠玑: <br/></p>
+<p>本来想抒发感想写点结语，但是看到 Hypothesis 作者写的 <a href="https://hypothesis.readthedocs.io/en/latest/manifesto.html">The purpose of Hypothesis</a><sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup> 来说明他开发的 Hypothesis 的动机，他的文章甚至用来给这个《测试技能进阶》系列总结都相当妥当。</p>
+<p>我就试翻译下他文章的部分段落, 更推荐阅读原文，可谓是用心良苦，字字珠玑:</p>
 <blockquote>
-<p>请容我狂妄一下，Hypothesis 的目标是希望可以让这个世界迈进到一个全新，由高质量软件打造的新世代。 <br/></p>
-<p>正如人们所说，软件正在吞噬整个世界。但软件本身却很烂，它充满bug，又不安全，还经常被设计得很烂，这样的软件可谓是万恶之源. <br/></p>
-<p>而软件测试的状况甚至更糟糕，虽然大家都认同应该对代码进行测试，但是你能问心无愧地说，你经手过的代码都有被充分测试么？ <br/></p>
-<p>问题在于，实在是太难写出好的测试了， <br/>
-<strong><strong>你写测试用例的时候，通常持有和你写代码时一样的假设与误区，你写的测试用例自然无法发现你当初埋下的bug</strong></strong> (精辟) <br/></p>
-<p>与此同时，有各种各样让测试变成更好的工具却基本无人使用，最初的 Quickcheck 是1999年推出的，但是大多数开发者甚至从未听说过它，更别提使用了（开山始祖的Quickcheck在GitHub只有700多个Star，就知道作者所言不虚）。 <br/>
-虽然其他语言有些半成品的实现，但是大部分都不值得一试。 <br/></p>
-<p>而 Hypothesis 的目标正是正本清源，把先进的测试技术传递给大众，并提供一个高质量的实现，让人们可以接纳它。 <br/></p>
-<p>希望可以集百家之所长，附以个人微薄之力，让软件测试变得更好。 <br/></p>
+<p>请容我狂妄一下，Hypothesis 的目标是希望可以让这个世界迈进到一个全新，由高质量软件打造的新世代。</p>
+<p>正如人们所说，软件正在吞噬整个世界。但软件本身却很烂，它充满bug，又不安全，还经常被设计得很烂，这样的软件可谓是万恶之源.</p>
+<p>而软件测试的状况甚至更糟糕，虽然大家都认同应该对代码进行测试，但是你能问心无愧地说，你经手过的代码都有被充分测试么？</p>
+<p>问题在于，实在是太难写出好的测试了，
+<strong><strong>你写测试用例的时候，通常持有和你写代码时一样的假设与误区，你写的测试用例自然无法发现你当初埋下的bug</strong></strong> (精辟)</p>
+<p>与此同时，有各种各样让测试变成更好的工具却基本无人使用，最初的 Quickcheck 是1999年推出的，但是大多数开发者甚至从未听说过它，更别提使用了（开山始祖的Quickcheck在GitHub只有700多个Star，就知道作者所言不虚）。
+虽然其他语言有些半成品的实现，但是大部分都不值得一试。</p>
+<p>而 Hypothesis 的目标正是正本清源，把先进的测试技术传递给大众，并提供一个高质量的实现，让人们可以接纳它。</p>
+<p>希望可以集百家之所长，附以个人微薄之力，让软件测试变得更好。</p>
 </blockquote>
-<p>系列文章: <br/></p>
+<p>系列文章:</p>
 <ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%80_%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E8%AE%A4%E7%9F%A5/">测试技能进阶(一): 软件质量认知</a> <br/></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/">测试技能进阶(二): Parameterized Tests</a> <br/></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%80_%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E8%AE%A4%E7%9F%A5/">测试技能进阶(一): 软件质量认知</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/">测试技能进阶(二): Parameterized Tests</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%89_property_based_testing/">测试技能进阶(三): Property Based Testing</a></li>
 </ul>
-<h2 id="参考"><span class="section-num">6</span> 参考</h2>
-<ul>
-<li><a href="https://hackage.haskell.org/package/QuickCheck">Haskell Quickcheck</a> <br/></li>
-<li><a href="https://hypothesis.works/">Hypothesis</a> <br/></li>
-<li><a href="https://github.com/proptest-rs/proptest">Proptest</a> <br/></li>
-<li><a href="https://github.com/BurntSushi/quickcheck">Rust quickcheck</a> <br/></li>
-</ul>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://en.wikipedia.org/wiki/QuickCheck">https://en.wikipedia.org/wiki/QuickCheck</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://hypothesis.works/">https://hypothesis.works/</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://en.wikipedia.org/wiki/Run-length_encoding">https://en.wikipedia.org/wiki/Run-length_encoding</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="https://github.com/BurntSushi/ripgrep">https://github.com/BurntSushi/ripgrep</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5">
+<p><a href="https://github.com/BurntSushi/quickcheck">https://github.com/BurntSushi/quickcheck</a>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:6">
+<p><a href="https://github.com/proptest-rs/proptest">https://github.com/proptest-rs/proptest</a>&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:7">
+<p><a href="https://hypothesis.readthedocs.io/en/latest/manifesto.html">https://hypothesis.readthedocs.io/en/latest/manifesto.html</a>&#160;<a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
 ]]></content:encoded>
     </item>
     <item>
@@ -896,11 +916,11 @@
       <guid>https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/</guid>
       <description>1 前言 测试技巧具有普适性，大多是与语言无关的，只是不同语言的生态可能对测试技术的支持各不一样， 比如Python和Java，基本什么库都有，而</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
-<p>测试技巧具有普适性，大多是与语言无关的，只是不同语言的生态可能对测试技术的支持各不一样， <br/>
-比如Python和Java，基本什么库都有，而像C++，有顺手的单元测试和Mock库能用就很不错了。 <br/></p>
-<p>因为Python比较适合写POC(proof of concept), 而我日常工作的语言是Java+Rust，所以我会穿插着引用这三种语言。 <br/></p>
+<p>测试技巧具有普适性，大多是与语言无关的，只是不同语言的生态可能对测试技术的支持各不一样，
+比如Python和Java，基本什么库都有，而像C++，有顺手的单元测试和Mock库能用就很不错了。</p>
+<p>因为Python比较适合写POC(proof of concept), 而我日常工作的语言是Java+Rust，所以我会穿插着引用这三种语言。</p>
 <h2 id="parameterized-test"><span class="section-num">2</span> Parameterized Test</h2>
-<p>在介绍 Parameterized Test 之前，让我们先来看个简单的计算价格与折扣的函数（实际的生产代码肯定会更复杂，但是背后的思路是相通的）： <br/></p>
+<p>在介绍 Parameterized Test 之前，让我们先来看个简单的计算价格与折扣的函数（实际的生产代码肯定会更复杂，但是背后的思路是相通的）：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -911,9 +931,9 @@
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="n">discount_percentage</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>针对这个函数，我们可能会编写多个 test case, 比如价格是 100, 给10%的折扣; 价格是200, 给20%的折扣; 价格是50, 给0的折扣；还有异常case，比如价格为负数的时候，或者折扣为负数的时候. <br/></p>
+</div><p>针对这个函数，我们可能会编写多个 test case, 比如价格是 100, 给10%的折扣; 价格是200, 给20%的折扣; 价格是50, 给0的折扣；还有异常case，比如价格为负数的时候，或者折扣为负数的时候.</p>
 <h3 id="单个-test-case"><span class="section-num">2.1</span> 单个 test case</h3>
-<p>对于这么多的 case, 一个简单粗暴的方式就是把所有的 case 都写在一个 test case 里： <br/></p>
+<p>对于这么多的 case, 一个简单粗暴的方式就是把所有的 case 都写在一个 test case 里：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -938,10 +958,10 @@
 </span></span><span class="line"><span class="cl">    <span class="c1"># assert calculate_discount(10, -2)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>但是这样的做法一般是不推荐的，Best Practice是一个 test case 只测一种情况，因为如果一个 test case 包含多个测试条件，如果 test case fail 了，那么不看源码或者堆栈，一般还看不出是什么 case 失败了，不好排查。 <br/></p>
+</div><p>但是这样的做法一般是不推荐的，Best Practice是一个 test case 只测一种情况，因为如果一个 test case 包含多个测试条件，如果 test case fail 了，那么不看源码或者堆栈，一般还看不出是什么 case 失败了，不好排查。</p>
 <h3 id="多个-test-case"><span class="section-num">2.2</span> 多个 test case</h3>
-<p>推荐做法就是每个测试条件定个单独的 test case。 <br/></p>
-<p>另外我们通过test case发现上面的代码没有处理异常情况，我们现在要优化下我们的代码，增加异常处理逻辑(这个就是TDD所推崇的开发哲学, test case 先行，通过test case发现问题，让test case fail掉，然后修正业务逻辑，test case再运行通过). <br/></p>
+<p>推荐做法就是每个测试条件定个单独的 test case。</p>
+<p>另外我们通过test case发现上面的代码没有处理异常情况，我们现在要优化下我们的代码，增加异常处理逻辑(这个就是TDD所推崇的开发哲学, test case 先行，通过test case发现问题，让test case fail掉，然后修正业务逻辑，test case再运行通过).</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1004,11 +1024,11 @@
 </span></span><span class="line"><span class="cl">            <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>代码的确是整洁易读了，但话虽如此，我们要多写了很多的 test case. <br/></p>
-<p>如果 <code>calculate_discount</code> 变得更复杂，我们要写的 test case 肯定是更多更复杂，总不能都 copy-paste test case吧。 <br/></p>
+</div><p>代码的确是整洁易读了，但话虽如此，我们要多写了很多的 test case.</p>
+<p>如果 <code>calculate_discount</code> 变得更复杂，我们要写的 test case 肯定是更多更复杂，总不能都 copy-paste test case吧。</p>
 <h3 id="parameterized-test"><span class="section-num">2.3</span> Parameterized Test</h3>
-<p>话题就回到 Parameterized Test 了, 它就是用来解决这个问题的，它可以让你用不同的测试数据集会运行相同的测试逻辑. <br/>
-还是以上面的代码为例子，你会发现 <code>test_calculate_discount_with_10_discount_percentage</code> 和 <code>test_calculate_discount_with_20_discount_percentage</code> 的测试逻辑是完全一样的，但只是数据集不同，所以我们就可以使用 Parameterized Test 来优化： <br/></p>
+<p>话题就回到 Parameterized Test 了, 它就是用来解决这个问题的，它可以让你用不同的测试数据集会运行相同的测试逻辑.
+还是以上面的代码为例子，你会发现 <code>test_calculate_discount_with_10_discount_percentage</code> 和 <code>test_calculate_discount_with_20_discount_percentage</code> 的测试逻辑是完全一样的，但只是数据集不同，所以我们就可以使用 Parameterized Test 来优化：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1057,9 +1077,9 @@
 </span></span><span class="line"><span class="cl">            <span class="n">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>其实就是把测试逻辑和数据进行了分离，后面需要测试新的数据集，只需要向数据集里面添加数据即可。 <br/></p>
-<p>由此可见，使用 Parameterized Test 有几个显而易见的好处： <br/></p>
-<p>首先是减少代码冗余，不需要类似的代码 copy-paste 很多次；其次是方便提到测试覆盖率，这个在上面的例子可能不明显，我们可以再修改一下 <code>calculate_discount</code> 函数，增加两个分支： <br/></p>
+</div><p>其实就是把测试逻辑和数据进行了分离，后面需要测试新的数据集，只需要向数据集里面添加数据即可。</p>
+<p>由此可见，使用 Parameterized Test 有几个显而易见的好处：</p>
+<p>首先是减少代码冗余，不需要类似的代码 copy-paste 很多次；其次是方便提到测试覆盖率，这个在上面的例子可能不明显，我们可以再修改一下 <code>calculate_discount</code> 函数，增加两个分支：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1081,14 +1101,14 @@
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">discount_percentage</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Discount_percentage must be greater than zero: </span><span class="si">{</span><span class="n">discount_percentage</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">price</span> <span class="o">&gt;</span> <span class="mi">50000</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="p">(</span><span class="n">discount_percentage</span> <span class="o">*</span> <span class="mf">1.15</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="p">(</span><span class="n">discount_percentage</span> <span class="o">*</span> <span class="mf">1.15</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">price</span> <span class="o">&gt;</span> <span class="mi">100000</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="p">(</span><span class="n">discount_percentage</span> <span class="o">*</span> <span class="mf">1.18</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="p">(</span><span class="n">discount_percentage</span> <span class="o">*</span> <span class="mf">1.18</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="n">discount_percentage</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>价格超过50000, 在已有折扣基础上，再额外给折扣的15%作为折扣；价格超过100000，在已有折扣的基础上，再额外给折扣的18%作为折扣. 如果要覆盖这两个新的分支，只需要在数据集上添加大于50000 和大于100000的数据集，就可以直接覆盖到了. <br/></p>
+</div><p>价格超过50000, 在已有折扣基础上，再额外给折扣的15%作为折扣；价格超过100000，在已有折扣的基础上，再额外给折扣的18%作为折扣. 如果要覆盖这两个新的分支，只需要在数据集上添加大于50000 和大于100000的数据集，就可以直接覆盖到了.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1113,11 +1133,11 @@
 </span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>然后测试这段代码的时候，我又发现一个新的问题，这里的价格变成浮点数后，没有作小数点后几位的取整。 <br/></p>
-<p>（对于这样简单的函数，也能不断地通过写 test case 发现新问题，这无疑就是 test case 最大的价值所在了） <br/></p>
-<p>使用 Parameterized Test 还可以提高测试代码的可读性和可维护性，这部分内容还是显而易见的，就不展开了。 <br/></p>
+</div><p>然后测试这段代码的时候，我又发现一个新的问题，这里的价格变成浮点数后，没有作小数点后几位的取整。</p>
+<p>（对于这样简单的函数，也能不断地通过写 test case 发现新问题，这无疑就是 test case 最大的价值所在了）</p>
+<p>使用 Parameterized Test 还可以提高测试代码的可读性和可维护性，这部分内容还是显而易见的，就不展开了。</p>
 <h3 id="junit"><span class="section-num">2.4</span> Junit</h3>
-<p>在Java的测试生态中，Junit是毫无疑问的龙头大哥，而在Junit5 ，Junit也引入了对 Parameterized Test 的支持，通过 <code>@ParameterizedTest</code> 这个枚举就可以将某个 test case 标注成 Parameterized Test, 通过 <code>@ValueSource</code> 传入待测试数据集： <br/></p>
+<p>在Java的测试生态中，Junit是毫无疑问的龙头大哥，而在Junit5 ，Junit也引入了对 Parameterized Test 的支持，通过 <code>@ParameterizedTest</code> 这个枚举就可以将某个 test case 标注成 Parameterized Test, 通过 <code>@ValueSource</code> 传入待测试数据集：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1146,23 +1166,38 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>这只是最基本的用法，Junit还支持通过函数，枚举，CSV格式甚至文件来传入待测试数据集，可谓是包罗万有，具体的用法可以参考这篇文章：<a href="https://www.baeldung.com/parameterized-tests-junit-5">Guide to JUnit 5 Parameterized Tests</a> 和 <a href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests">Junit官方文档</a> <br/></p>
+</div><p>这只是最基本的用法，Junit还支持通过函数，枚举，CSV格式甚至文件来传入待测试数据集，可谓是包罗万有，具体的用法可以参考这篇文章：<a href="https://www.baeldung.com/parameterized-tests-junit-5">Guide to JUnit 5 Parameterized Tests</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> 和 <a href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests">Junit官方文档</a> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
 <h3 id="rstest-and-test-case"><span class="section-num">2.5</span> rstest &amp; test_case</h3>
-<p>Rust 也有对Parameterized Test支持的库，一个就是 <a href="https://github.com/la10736/rstest"><code>rstest</code></a>, 另外一个就是 <a href="https://github.com/frondeus/test-case"><code>test_case</code></a>，两者都对 Parameterized Test 有较好的支持，在公司的代码库中，两者我都见过有项目在使用，而我在工作中使用的是 <code>rstest</code>, 因为它的功能更加强大，维护者也更加活跃. <br/></p>
+<p>Rust 也有对Parameterized Test支持的库，一个就是 <a href="https://github.com/la10736/rstest"><code>rstest</code></a><sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>, 另外一个就是 <a href="https://github.com/frondeus/test-case"><code>test_case</code></a> <sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>, 两者都对 Parameterized Test 有较好的支持，在公司的代码库中，两者我都见过有项目在使用，而我在工作中使用的是 <code>rstest</code>, 因为它的功能更加强大，维护者也更加活跃.</p>
 <h2 id="总结"><span class="section-num">3</span> 总结</h2>
-<p>在了解 Parameterized Test 之前，我的每个CR基本都有 test case 覆盖，但是坐我旁边 Principle Engineer 巨佬 review 我代码的时候，总会说我的 test case 太 verbose 和 heavy, 我在想test case多还不好嘛，我的 code coverage 都超过80%了. <br/></p>
-<p>然而他的意思是，不是说我的 test case 没有覆盖到代码，我100行的变更，附上200行的 test case 也没有问题，只不过我的test case大多只是数据不一样，测试逻辑基本相同，能否抽象下，减少下code redundancy, 然后就强烈建议我去看下 <code>Parameterized Test</code> 以及 <code>Property Based Test</code>. <br/></p>
-<p>大佬的确一针见血，我的 test case 大多是复制已有的 test case, 修改下函数名，再加加减减改下数据集。 <br/></p>
-<p>经他指点，在了解 <code>Parameterized Test</code> 之后，我的确再也没有复制 test case，每次CR的test case也更精简了，CR也更容易通过了. <br/></p>
-<p>而他提到的 <code>Property Based Test</code> 则是一项更强大的测试技术，下回再分解了。 <br/></p>
-<h2 id="参考"><span class="section-num">4</span> 参考</h2>
+<p>在了解 Parameterized Test 之前，我的每个CR基本都有 test case 覆盖，但是坐我旁边 Principle Engineer 巨佬 review 我代码的时候，总会说我的 test case 太 verbose 和 heavy, 我在想test case多还不好嘛，我的 code coverage 都超过80%了.</p>
+<p>然而他的意思是，不是说我的 test case 没有覆盖到代码，我100行的变更，附上200行的 test case 也没有问题，只不过我的test case大多只是数据不一样，测试逻辑基本相同，能否抽象下，减少下code redundancy, 然后就强烈建议我去看下 <code>Parameterized Test</code> 以及 <code>Property Based Test</code>.</p>
+<p>大佬的确一针见血，我的 test case 大多是复制已有的 test case, 修改下函数名，再加加减减改下数据集。</p>
+<p>经他指点，在了解 <code>Parameterized Test</code> 之后，我的确再也没有复制 test case，每次CR的test case也更精简了，CR也更容易通过了.</p>
+<p>而他提到的 <code>Property Based Test</code> 则是一项更强大的测试技术，下回再分解了。</p>
+<p>系列文章:</p>
 <ul>
-<li><a href="https://www.baeldung.com/parameterized-tests-junit-5">Guide to JUnit 5 Parameterized Tests</a> <br/></li>
-<li><a href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests">Junit: Parameterized Tests</a> <br/></li>
-<li><a href="https://docs.pytest.org/en/stable/example/parametrize.html">Parametrizing tests</a> <br/></li>
-<li><a href="https://github.com/la10736/rstest">rstest</a> <br/></li>
-<li><a href="https://github.com/frondeus/test-case">test_case</a> <br/></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%80_%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E8%AE%A4%E7%9F%A5/">测试技能进阶(一): 软件质量认知</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/">测试技能进阶(二): Parameterized Tests</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%89_property_based_testing/">测试技能进阶(三): Property Based Testing</a></li>
 </ul>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://www.baeldung.com/parameterized-tests-junit-5">https://www.baeldung.com/parameterized-tests-junit-5</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests">https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://github.com/la10736/rstest">https://github.com/la10736/rstest</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="https://github.com/frondeus/test-case">https://github.com/frondeus/test-case</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
 ]]></content:encoded>
     </item>
     <item>
