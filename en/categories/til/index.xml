@@ -38,15 +38,33 @@
 <p>For example, if you refactor a function from one file to another, the normal <code>git</code> blame will simply show you as the author in the new file, but the <code>-C</code> option will follow that movement and show the last person who actually change those lines of code. <br/></p>
 <p><code>-C</code> is extremely helpful when I need to find out the original author of some lines of code after file renames or refactors, to know more about the background and context behind this code <br/></p>
 <p>According to the <code>git blame</code> doc, you could pass <code>-C</code> up to three times to ask Git try even harder: <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">-C<span class="o">[</span>&lt;num&gt;<span class="o">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">-C<span class="o">[</span>&lt;num&gt;<span class="o">]</span>
 </span></span><span class="line"><span class="cl">           In addition to -M, detect lines moved or copied from other files that were modified in the same commit.
 </span></span><span class="line"><span class="cl">           This is useful when you reorganize your program and move code around across files.
 </span></span><span class="line"><span class="cl">           When this option is given twice, the <span class="nb">command</span> additionally looks <span class="k">for</span> copies from other files in the commit that creates the file.
 </span></span><span class="line"><span class="cl">           When this option is given three times, the <span class="nb">command</span> additionally looks <span class="k">for</span> copies from other files in any commit.
-</span></span></code></pre></div><p>(it&rsquo;s a bit of odd design) <br/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>(it&rsquo;s a bit of odd design) <br/></p>
 <p>Let&rsquo;s take <a href="https://github.com/rails/rails/blob/main/activemodel/lib/active_model/access.rb">the access.rb file of ActiveModel module in Rails framework</a> for example: <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git blame activemodel/lib/active_model/access.rb
-</span></span></code></pre></div><p><figure>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git blame activemodel/lib/active_model/access.rb
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure>
     <img loading="lazy" src="/ox-hugo/normal_git_blame.png"
          alt="Figure 1: Vanilla git blame"/> <figcaption>
             <p><span class="figure-number">Figure 1: </span>Vanilla git blame</p>
@@ -72,12 +90,32 @@
       <pubDate>Sun, 07 Apr 2024 12:38:00 -0700</pubDate>
       
       <guid>https://ramsayleung.github.io/en/post/2024/git_conditional_configs/</guid>
-      <description>Every Git user will have probably been asked to set up their Git at the first time: git config --global user.name &amp;#34;Ramsay Leung&amp;#34; git config --global user.email ramsayleung@gmail.com The above command will simply add the user.name and user.email value into your ~/.gitconfig file &amp;gt; cat ~/.gitconfig [user] name = Ramsay Leung email = ramsayleung@gmail.com [core] quotepath = false [init] defaultBranch = master You could also specify --local argument to writes the config values to .</description>
+      <description>Every Git user will have probably been asked to set up their Git at the first time: 1 2 git config --global user.name &amp;#34;Ramsay Leung&amp;#34; git config --global user.email ramsayleung@gmail.com The above command will simply add the user.name and user.email value into your ~/.gitconfig file 1 2 3 4 5 6 7 8 &amp;gt; cat ~/.gitconfig [user] name = Ramsay Leung email = ramsayleung@gmail.com [core] quotepath = false [init] defaultBranch = master You could also specify --local argument to writes the config values to .</description>
       <content:encoded><![CDATA[<p>Every Git user will have probably been asked to set up their Git at the first time: <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">git config --global user.name <span class="s2">&#34;Ramsay Leung&#34;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">git config --global user.name <span class="s2">&#34;Ramsay Leung&#34;</span>
 </span></span><span class="line"><span class="cl">git config --global user.email ramsayleung@gmail.com
-</span></span></code></pre></div><p>The above command will simply add the <code>user.name</code> and <code>user.email</code> value into your <code>~/.gitconfig</code> file <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">&gt; cat ~/.gitconfig
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The above command will simply add the <code>user.name</code> and <code>user.email</code> value into your <code>~/.gitconfig</code> file <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">&gt; cat ~/.gitconfig
 </span></span><span class="line"><span class="cl"><span class="o">[</span>user<span class="o">]</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">name</span> <span class="o">=</span> Ramsay Leung
 </span></span><span class="line"><span class="cl">    <span class="nv">email</span> <span class="o">=</span> ramsayleung@gmail.com
@@ -85,17 +123,30 @@
 </span></span><span class="line"><span class="cl">    <span class="nv">quotepath</span> <span class="o">=</span> <span class="nb">false</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>init<span class="o">]</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">defaultBranch</span> <span class="o">=</span> master
-</span></span></code></pre></div><p>You could also specify <code>--local</code> argument to writes the config values to <code>.git/config</code> in whatever project you&rsquo;re currently in. <br/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>You could also specify <code>--local</code> argument to writes the config values to <code>.git/config</code> in whatever project you&rsquo;re currently in. <br/></p>
 <p>If you need to simultaneously contribute to your work and open source project on the same laptop, with different Git config values, e.g.(company email address for work-specific projects, personal email address for open source project), what should you do? <br/></p>
 <p>You could definitely set up work-specific config as global config, then set up personal config with <code>--local</code> for every personal project separately. It works, but tedious and easy to mess-up. <br/></p>
 <p>Fortunately, starting from Git version 2.13, Git supports conditional configuration includes, you are capable of setting up different configs for different repositories. <br/></p>
 <p>If you add the following config to your global config file: <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl"><span class="p">[</span><span class="nx">includeIf</span> <span class="s2">&#34;gitdir:~/projects/oss/&#34;</span><span class="p">]</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl"><span class="p">[</span><span class="nx">includeIf</span> <span class="s2">&#34;gitdir:~/projects/oss/&#34;</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">path</span> <span class="p">=</span> <span class="err">~/</span><span class="p">.</span><span class="nx">gitconfig-oss</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="p">[</span><span class="nx">includeIf</span> <span class="s2">&#34;gitdir:~/projects/work/&#34;</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">path</span> <span class="p">=</span> <span class="err">~/</span><span class="p">.</span><span class="nx">gitconfig-work</span>
-</span></span></code></pre></div><p>Then Git will look in the <code>~/.gitconfig-oss</code> files for values only if the project you are currently working on matches <code>~/projects/oss/</code>. <br/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Then Git will look in the <code>~/.gitconfig-oss</code> files for values only if the project you are currently working on matches <code>~/projects/oss/</code>. <br/></p>
 <p><strong><strong>Caution</strong></strong>: If you forget to specify the &ldquo;/&rdquo; at the end of the git dir, e.g. &ldquo;~/projects/oss&rdquo;, Conditional Config won&rsquo;t work! <br/></p>
 <p>Therefore, you could have a &ldquo;work&rdquo; directory and work-specific config here and an &ldquo;oss&rdquo; directory with values for your open source projects, etc. <br/></p>
 <p><figure>
@@ -103,11 +154,21 @@
 </figure>
  <br/></p>
 <p>Git also supports other filters more than <code>gitdir</code>, you could specify a branch name as an include filter with <code>onbranch</code> <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl">  <span class="err">;</span> <span class="nx">include</span> <span class="nx">only</span> <span class="nx">if</span> <span class="nx">we</span> <span class="nx">are</span> <span class="nx">in</span> <span class="nx">a</span> <span class="nx">worktree</span> <span class="nx">where</span> <span class="nx">foo-branch</span> <span class="nx">is</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl">  <span class="err">;</span> <span class="nx">include</span> <span class="nx">only</span> <span class="nx">if</span> <span class="nx">we</span> <span class="nx">are</span> <span class="nx">in</span> <span class="nx">a</span> <span class="nx">worktree</span> <span class="nx">where</span> <span class="nx">foo-branch</span> <span class="nx">is</span>
 </span></span><span class="line"><span class="cl"><span class="err">;</span> <span class="nx">currently</span> <span class="nx">checked</span> <span class="nx">out</span>
 </span></span><span class="line"><span class="cl"><span class="p">[</span><span class="nx">includeIf</span> <span class="s2">&#34;onbranch:foo-branch&#34;</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">        <span class="nx">path</span> <span class="p">=</span> <span class="nx">foo</span><span class="p">.</span><span class="nx">inc</span>
-</span></span></code></pre></div><p>Check out <a href="https://git-scm.com/docs/git-config?ref=blog.gitbutler.com#_includes">the Git docs</a> for more details <br/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Check out <a href="https://git-scm.com/docs/git-config?ref=blog.gitbutler.com#_includes">the Git docs</a> for more details <br/></p>
 ]]></content:encoded>
     </item>
     

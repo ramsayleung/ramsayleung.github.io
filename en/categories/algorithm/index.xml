@@ -44,7 +44,21 @@ It sounds pretty academic, but I am sure you are using topological sort unconsci
 <h3 id="program-build-dependencies"><span class="section-num">2.3</span> Program build dependencies</h3>
 <p>You want to figure out in which order you should compile all the program&rsquo;s dependencies so that you will never try and compile a dependency for which you haven&rsquo;t first built all of its dependencies.</p>
 <p>A typical example is <code>GNU Make</code>: you specific your targets in a <code>makefile</code>, <code>Make</code> will parse <code>makefile</code>, and figure out which target should be built firstly. Supposing you have a <code>makefile</code> like this:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="line"><span class="cl"><span class="c"># Makefile for analysis report
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="line"><span class="cl"><span class="c"># Makefile for analysis report
 </span></span></span><span class="line"><span class="cl"><span class="c"></span>
 </span></span><span class="line"><span class="cl"><span class="nf">output/figure_1.png</span><span class="o">:</span> <span class="n">data</span>/<span class="n">input_file_</span>1.<span class="n">csv</span> <span class="n">scripts</span>/<span class="n">generate_histogram</span>.<span class="n">py</span>
 </span></span><span class="line"><span class="cl"><span class="err">python</span> <span class="err">scripts/generate_histogram.py</span> <span class="err">-i</span> <span class="err">data/input_file_1.csv</span> <span class="err">-o</span> <span class="err">output/figure_1.png</span>
@@ -54,7 +68,9 @@ It sounds pretty academic, but I am sure you are using topological sort unconsci
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nf">output/report.pdf</span><span class="o">:</span> <span class="n">report</span>/<span class="n">report</span>.<span class="n">tex</span> <span class="n">output</span>/<span class="n">figure_</span>1.<span class="n">png</span> <span class="n">output</span>/<span class="n">figure_</span>2.<span class="n">png</span>
 </span></span><span class="line"><span class="cl"><span class="err">cd</span> <span class="err">report/</span> <span class="err">&amp;&amp;</span> <span class="err">pdflatex</span> <span class="err">report.tex</span> <span class="err">&amp;&amp;</span> <span class="err">mv</span> <span class="err">report.pdf</span> <span class="err">../output/report.pdf</span>
-</span></span></code></pre></div><p><code>Make</code> will generate a DAG internally to figure out which target should be executed firstly with typological sort:</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>Make</code> will generate a DAG internally to figure out which target should be executed firstly with typological sort:</p>
 <figure><a href="/ox-hugo/build_dependencies.png">
     <img loading="lazy" src="/ox-hugo/build_dependencies.png"/> </a>
 </figure>
@@ -98,7 +114,58 @@ It sounds pretty academic, but I am sure you are using topological sort unconsci
 </figure>
 
 <p>Now we should understand how Kahn&rsquo;s algorithm works. Let&rsquo;s have a look at a C++ implementation of Kahn&rsquo;s algorithm:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;deque&gt;</span><span class="cp">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;deque&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1">// Kahn&#39;s algorithm
 </span></span></span><span class="line"><span class="cl"><span class="c1">// `adj` is a directed acyclic graph represented as an adjacency list.
@@ -145,7 +212,9 @@ It sounds pretty academic, but I am sure you are using topological sort unconsci
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">{};</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h2 id="bonus"><span class="section-num">5</span> Bonus</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="bonus"><span class="section-num">5</span> Bonus</h2>
 <p>When a pregnant woman takes calcium pills, she must make sure also that her diet is rich in vitamin D, since this vitamin makes the absorption of calcium possible.</p>
 <p>After reading the demonstration of topological ordering, you (and I) too should take a certain vitamin, metaphorically speaking, to help you absorb. The vitamin D I pick for you (and myself) is two leetcode problems, which involve with the most typical use case of topological ordering &ndash; college class prerequisites:</p>
 <ul>

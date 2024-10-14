@@ -44,7 +44,31 @@
 
 <h2 id="源代码"><span class="section-num">4</span> 源代码</h2>
 <p>得益于 <code>Ivy</code>强大的内置函数, 功能实现起来相当便利，完整代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-lisp" data-lang="lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">samray/esh-history</span> <span class="p">()</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lisp" data-lang="lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">samray/esh-history</span> <span class="p">()</span>
 </span></span><span class="line"><span class="cl">  <span class="s">&#34;Interactive search eshell history.&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;em-hist</span><span class="p">)</span>
@@ -64,7 +88,9 @@
 </span></span><span class="line"><span class="cl">  <span class="c1">;; move cursor to eol</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nv">end-of-line</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="p">)</span>
-</span></span></code></pre></div><p>代码不是很复杂, 主要功能是获取用户输入的命令, 然后把所有的历史命令读取出来,最后使用<code>ivy-read</code>内置的<code>ivy-completion-in-region-action</code>功能, 用用户的输入的命令与历史命令进行匹配, 由用户选择最终的命令.</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>代码不是很复杂, 主要功能是获取用户输入的命令, 然后把所有的历史命令读取出来,最后使用<code>ivy-read</code>内置的<code>ivy-completion-in-region-action</code>功能, 用用户的输入的命令与历史命令进行匹配, 由用户选择最终的命令.</p>
 <p><code>ivy-read</code>是Emacs内置<code>completing-read</code>的函数的强化, 关于<code>ivy-read</code>具体用法可以参考文档<a href="https://oremacs.com/swiper/#getting-started">ivy-read</a>.</p>
 <h2 id="总结"><span class="section-num">5</span> 总结</h2>
 <p>最后, 我也顺便把代码分享到 <a href="https://www.reddit.com/r/emacs/comments/7k54px/snippet_share_make_eshell_search_command_history/">Emacs社区</a>, 而 <a href="https://github.com/manateelazycat">manateelazycat</a>也把这段代码的功能加入到<a href="https://github.com/manateelazycat/aweshell/commit/ecaddac98b87f881910dbee8b51a98f00b6d9d5d">aweshell</a>, Oh yeah !</p>
@@ -83,7 +109,26 @@
 <p><a href="/ox-hugo/eshell_prompt.png"><img loading="lazy" src="/ox-hugo/eshell_prompt.png" alt=""  />
 </a>
 本着拿来主义的想法，我就直接把这位小哥的代码添加到了我的配置文件里面：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">setq</span> <span class="nv">eshell-prompt-function</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">setq</span> <span class="nv">eshell-prompt-function</span>
 </span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nb">lambda</span> <span class="p">()</span>
 </span></span><span class="line"><span class="cl">	<span class="p">(</span><span class="nf">concat</span>
 </span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;┌─[&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
@@ -98,7 +143,9 @@
 </span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;└─&gt;&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">=</span> <span class="p">(</span><span class="nf">user-uid</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="s">&#34; # &#34;</span> <span class="s">&#34; $ &#34;</span><span class="p">)</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">	 <span class="p">)))</span>
-</span></span></code></pre></div><p>效果自然是很 sexy.</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>效果自然是很 sexy.</p>
 <h2 id="与原有提示符冲突"><span class="section-num">2</span> 与原有提示符冲突</h2>
 <p>但是我原来使用的 <a href="https://github.com/kaihaosw/eshell-prompt-extras">eshell-prompt-extra</a> 的效果就被覆盖了。而 <code>eshell_prompt_extra</code> 可以提供的额外信息非常多，包括：git, python virtualenv, 以及远程登录时的主机信息，如图：</p>
 <figure><a href="/ox-hugo/eshell_extra_prompt.png">
@@ -109,7 +156,22 @@
 <p>鱼和熊掌我都想要，似乎太贪心了？怎么办，自己去修改 <code>eshell_prompt_extra</code> 的<a href="https://github.com/kaihaosw/eshell-prompt-extras/blob/master/eshell-prompt-extras.el">源码</a> :).</p>
 <h2 id="折腾源码"><span class="section-num">3</span> 折腾源码</h2>
 <p><code>eshell_prompt_extra</code> 这个包注释加上全部代码也只是 400 行，代码也写得很清晰. 其中大部份是辅助函数，而 Eshell 的提示符效果是通过两个 eshell-theme 函数来实现的。use-package 的配置：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">eshell-prompt-extras</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">eshell-prompt-extras</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:ensure</span> <span class="no">t</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:load-path</span> <span class="s">&#34;~/Code/github/eshell-prompt-extras&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:config</span> <span class="p">(</span><span class="nb">progn</span>
@@ -120,8 +182,47 @@
 </span></span><span class="line"><span class="cl">	      <span class="p">(</span><span class="nb">setq</span> <span class="nv">eshell-highlight-prompt</span> <span class="no">nil</span>
 </span></span><span class="line"><span class="cl">		    <span class="nv">eshell-prompt-function</span> <span class="ss">&#39;epe-theme-lambda</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">	    <span class="p">))</span>
-</span></span></code></pre></div><p>而 <code>epe-theme-lambda</code> 的代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl">
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>而 <code>epe-theme-lambda</code> 的代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">epe-theme-lambda</span> <span class="p">()</span>
 </span></span><span class="line"><span class="cl">  <span class="s">&#34;A eshell-prompt lambda theme.&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">setq</span> <span class="nv">eshell-prompt-regexp</span> <span class="s">&#34;^[^#\nλ]*[#λ] &#34;</span><span class="p">)</span>
@@ -154,11 +255,36 @@
 </span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">=</span> <span class="p">(</span><span class="nf">user-uid</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="s">&#34;#&#34;</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">			   <span class="ss">&#39;epe-sudo-symbol-face</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">   <span class="s">&#34; &#34;</span><span class="p">))</span>
-</span></span></code></pre></div><p>代码主要逻辑是调用之前定义的辅助函数，判断是否需要显示 git, python, 远程主机等信息，然后对相应的提示符进行拼接。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>代码主要逻辑是调用之前定义的辅助函数，判断是否需要显示 git, python, 远程主机等信息，然后对相应的提示符进行拼接。</p>
 <p>而其中出现得比较频繁的 <code>epe-colorize-with-face</code> 就是作者定义的一个宏(macro), 用来显示字符串以及对应的 face(其实就是不同的颜色啦). 看懂了代码就好办了，现在就可以自己添加一个 Eshell 主题。</p>
 <h3 id="定义所需的-face"><span class="section-num">3.1</span> 定义所需的 face</h3>
 <p>因为我需要显示的 face(颜色), <code>eshell-extra-prompt</code> 并没有定义，所以就只好自己动手啦：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defface</span> <span class="nv">epe-pipeline-delimiter-face</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defface</span> <span class="nv">epe-pipeline-delimiter-face</span>
 </span></span><span class="line"><span class="cl">  <span class="o">&#39;</span><span class="p">((</span><span class="no">t</span> <span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">  <span class="s">&#34;Face for pipeline theme delimiter.&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:group</span> <span class="ss">&#39;epe</span><span class="p">)</span>
@@ -177,8 +303,62 @@
 </span></span><span class="line"><span class="cl">  <span class="o">&#39;</span><span class="p">((</span><span class="no">t</span> <span class="nb">:foreground</span> <span class="s">&#34;yellow&#34;</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">  <span class="s">&#34;Face for time in pipeline theme.&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:group</span> <span class="ss">&#39;epe</span><span class="p">)</span>
-</span></span></code></pre></div><p>然后就是按着原有的 Eshell 提示符来组装一个新的 Eshell 主题了，然后把这个主题定义成 pipeline (其实是我自己也没想出比较新颖的名字啦):</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">epe-theme-pipeline</span> <span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后就是按着原有的 Eshell 提示符来组装一个新的 Eshell 主题了，然后把这个主题定义成 pipeline (其实是我自己也没想出比较新颖的名字啦):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">epe-theme-pipeline</span> <span class="p">()</span>
 </span></span><span class="line"><span class="cl">  <span class="s">&#34;A eshell-prompt theme with full path, smiliar to oh-my-zsh theme.&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">setq</span> <span class="nv">eshell-prompt-regexp</span> <span class="s">&#34;^[^#\nλ]* λ[#]* &#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nf">concat</span>
@@ -226,7 +406,9 @@
 </span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">=</span> <span class="p">(</span><span class="nf">user-uid</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="s">&#34;#&#34;</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">			   <span class="ss">&#39;epe-sudo-symbol-face</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">   <span class="s">&#34; &#34;</span><span class="p">))</span>
-</span></span></code></pre></div><h2 id="总结"><span class="section-num">4</span> 总结</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="总结"><span class="section-num">4</span> 总结</h2>
 <p>这样一个新的 Eshell 主题就完工了，然后我给 <code>eshell-extra-prompt</code> 发了一个<a href="https://github.com/kaihaosw/eshell-prompt-extras/pull/16">Pull Request</a>, 最终效果如下：</p>
 <figure><a href="/ox-hugo/epe.png">
     <img loading="lazy" src="/ox-hugo/epe.png"/> </a>
@@ -252,9 +434,17 @@
 <h2 id="fasd"><span class="section-num">1</span> Fasd</h2>
 <p>在 Shell 下面有非常多的命令操作是与文件和目录相关的，如果你要进入到另外一个目 录你可以使用相对或者绝对路径来访问该目录，但是如果这是一个与当前目录不相关的目 录你就只能通过绝对路径来访问。</p>
 <p>以我自己的目录为例，当前目录是 <strong><em>home/samray</em>.emacs.d/elisp/</strong> ,我希望访问 <strong>Document</strong> 目录下一个的子目录 <strong>Python</strong>, 我可以通过下面的命令来访问：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> ~/Document/Programming/Python
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> ~/Document/Programming/Python
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> /home/samray/Document/Programming/Python
-</span></span></code></pre></div><p>这就是我需要的命令，虽然可以通过 <strong>tab</strong> 进行目录名的补全，但是我还是觉得要输入的东西太多了(正如 Larry Wall 所说，懒惰是程序员的美德). 然后，我发现了 <a href="https://github.com/clvv/fasd">Fasd </a>这个神器。它可以让我只输入 <strong>Python</strong> 就进入到我想访问的 <strong>Python</strong> 目录，</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这就是我需要的命令，虽然可以通过 <strong>tab</strong> 进行目录名的补全，但是我还是觉得要输入的东西太多了(正如 Larry Wall 所说，懒惰是程序员的美德). 然后，我发现了 <a href="https://github.com/clvv/fasd">Fasd </a>这个神器。它可以让我只输入 <strong>Python</strong> 就进入到我想访问的 <strong>Python</strong> 目录，</p>
 <p>神奇吧！:)</p>
 <hr>
 <p>Fasd以访问的频繁程度和最近是否有访问对文件和目录分配优先级，然后通过判断已访问的文件以及其优先级来切换目录或者打开文件，所以如果你之前已经访问过某个目录.</p>
@@ -279,7 +469,19 @@
 <li>
 <p><strong>-f</strong>:只匹配文件
 Fasd 文档还建议你为 fasd的命令选项设置别名</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">a</span><span class="o">=</span><span class="s1">&#39;fasd -a&#39;</span>        <span class="c1"># any</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">a</span><span class="o">=</span><span class="s1">&#39;fasd -a&#39;</span>        <span class="c1"># any</span>
 </span></span><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">s</span><span class="o">=</span><span class="s1">&#39;fasd -si&#39;</span>       <span class="c1"># show / search / select</span>
 </span></span><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">d</span><span class="o">=</span><span class="s1">&#39;fasd -d&#39;</span>        <span class="c1"># directory</span>
 </span></span><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">f</span><span class="o">=</span><span class="s1">&#39;fasd -f&#39;</span>        <span class="c1"># file</span>
@@ -287,23 +489,67 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 </span></span><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">sf</span><span class="o">=</span><span class="s1">&#39;fasd -sif&#39;</span>     <span class="c1"># interactive file selection</span>
 </span></span><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">z</span><span class="o">=</span><span class="s1">&#39;fasd_cd -d&#39;</span>     <span class="c1"># cd, same functionality as j in autojump</span>
 </span></span><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">zz</span><span class="o">=</span><span class="s1">&#39;fasd_cd -d -i&#39;</span> <span class="c1"># cd with interactive selection</span>
-</span></span></code></pre></div><p>这样你就可以通过 <strong>z some-dir</strong> 直接进入到某个目录或者 <strong>zz some-dir</strong> 选择进入有多个匹配的特定目录。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样你就可以通过 <strong>z some-dir</strong> 直接进入到某个目录或者 <strong>zz some-dir</strong> 选择进入有多个匹配的特定目录。</p>
 <p>Fasd 还会判断应该显示所有的匹配选项或者是直接选择最佳匹配. 例如你也可以将fasd配合 <em>subshell</em> 使用，例如打开 <strong>foo</strong></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">vim <span class="sb">`</span>f foo<span class="sb">`</span>
-</span></span></code></pre></div><p>又或者打开  <strong>/etc/rc.conf</strong></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">vim <span class="sb">`</span>f rc conf<span class="sb">`</span>
-</span></span></code></pre></div></li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">vim <span class="sb">`</span>f foo<span class="sb">`</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>又或者打开  <strong>/etc/rc.conf</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">vim <span class="sb">`</span>f rc conf<span class="sb">`</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ul>
 <h3 id="例子"><span class="section-num">1.2</span> 例子</h3>
 <p>你可以将fasd 配合正则表达式使用，例如列举以 <em>py</em> 结尾的最近访问的文件：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">f py$
-</span></span></code></pre></div><p>又或者使用Emacs 打开最近频繁访问的文件 <em>bar</em></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">f -e emacs bar
-</span></span></code></pre></div><h2 id="fasd-plus-eshell"><span class="section-num">2</span> Fasd +Eshell</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">f py$
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>又或者使用Emacs 打开最近频繁访问的文件 <em>bar</em></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">f -e emacs bar
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="fasd-plus-eshell"><span class="section-num">2</span> Fasd +Eshell</h2>
 <p>fasd 真的可以大幅度提高效率，但是我有点不太满意的是，我是个 Emacser, 我的操作基本是在 Emacs 里完成的，而我在 Emacs里面使用的 shell 是 Eshell,Eshell 似乎不能与 fasd 无缝结合，似乎可以折腾一下。</p>
 <hr>
 <p><strong>z</strong> 和 <strong>zz</strong> 命令是无法在Eshell 里面运行，因为 <strong>z</strong> 是 <strong>fasd_cd</strong> 的别名，而<strong>fasd_cd</strong> 是一个shell script 函数，Eshell无法运行该函数，代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">fasd_cd <span class="o">()</span> <span class="o">{</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">fasd_cd <span class="o">()</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="nv">$#</span> -le <span class="m">1</span> <span class="o">]</span>
 </span></span><span class="line"><span class="cl">    <span class="k">then</span>
 </span></span><span class="line"><span class="cl">	fasd <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span>
@@ -313,8 +559,24 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 </span></span><span class="line"><span class="cl">	<span class="o">[</span> -d <span class="s2">&#34;</span><span class="nv">$_fasd_ret</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="s2">&#34;</span><span class="nv">$_fasd_ret</span><span class="s2">&#34;</span> <span class="o">||</span> <span class="nb">printf</span> %s<span class="se">\n</span> <span class="s2">&#34;</span><span class="nv">$_fasd_ret</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>Eshell无法运行该函数，因为Eshell文档的匮乏，我也不知道如何编写跟上面代码等价的 &ldquo;Eshell script&rdquo;,所以就用 elisp 写一段同样功能的函数好了。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">samray/eshell-fasd-z</span> <span class="p">(</span><span class="kp">&amp;rest</span> <span class="nv">args</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Eshell无法运行该函数，因为Eshell文档的匮乏，我也不知道如何编写跟上面代码等价的 &ldquo;Eshell script&rdquo;,所以就用 elisp 写一段同样功能的函数好了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">samray/eshell-fasd-z</span> <span class="p">(</span><span class="kp">&amp;rest</span> <span class="nv">args</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="s">&#34;Use fasd to change directory more effectively by passing ARGS.&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">setq</span> <span class="nv">args</span> <span class="p">(</span><span class="nv">eshell-flatten-list</span> <span class="nv">args</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">let*</span> <span class="p">((</span><span class="nv">fasd</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;fasd &#34;</span> <span class="p">(</span><span class="nf">car</span> <span class="nv">args</span><span class="p">)))</span>
@@ -324,14 +586,30 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 </span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">eshell/cd</span> <span class="nv">path</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">eshell/echo</span> <span class="nv">path</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">))</span>
-</span></span></code></pre></div><p>函数功能很快就写好了，实现了 <strong>z</strong> 的功能，但是原来的代码一直不能正常运行，折腾了一个多小时都没解决，输出什么都正常，最后 debug 发现是因为显示的路径后面多了一个换行符即 <strong>/home/samray</strong> 变成了 <strong>/home/samray\n</strong>,而输出换行符又不会显示，真
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>函数功能很快就写好了，实现了 <strong>z</strong> 的功能，但是原来的代码一直不能正常运行，折腾了一个多小时都没解决，输出什么都正常，最后 debug 发现是因为显示的路径后面多了一个换行符即 <strong>/home/samray</strong> 变成了 <strong>/home/samray\n</strong>,而输出换行符又不会显示，真
 的坑。</p>
 <p>最后为命令赋予别名就可以像在 <strong>zsh</strong> 下那样工作了：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">alias</span> z <span class="s1">&#39;samray/shell-fasd-z $1&#39;</span>
-</span></span></code></pre></div><hr>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">alias</span> z <span class="s1">&#39;samray/shell-fasd-z $1&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
 <p>更多的用法就要查阅官方文档了</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">man fasd
-</span></span></code></pre></div><p>Enjoy Emacs and Shell :)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">man fasd
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Enjoy Emacs and Shell :)</p>
 <p>参考：
 <a href="https://github.com/clvv/fasd">https://github.com/clvv/fasd</a></p>
 ]]></content:encoded>

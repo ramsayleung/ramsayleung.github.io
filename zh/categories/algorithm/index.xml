@@ -44,7 +44,21 @@ It sounds pretty academic, but I am sure you are using topological sort unconsci
 <h3 id="program-build-dependencies"><span class="section-num">2.3</span> Program build dependencies</h3>
 <p>You want to figure out in which order you should compile all the program&rsquo;s dependencies so that you will never try and compile a dependency for which you haven&rsquo;t first built all of its dependencies.</p>
 <p>A typical example is <code>GNU Make</code>: you specific your targets in a <code>makefile</code>, <code>Make</code> will parse <code>makefile</code>, and figure out which target should be built firstly. Supposing you have a <code>makefile</code> like this:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="line"><span class="cl"><span class="c"># Makefile for analysis report
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="line"><span class="cl"><span class="c"># Makefile for analysis report
 </span></span></span><span class="line"><span class="cl"><span class="c"></span>
 </span></span><span class="line"><span class="cl"><span class="nf">output/figure_1.png</span><span class="o">:</span> <span class="n">data</span>/<span class="n">input_file_</span>1.<span class="n">csv</span> <span class="n">scripts</span>/<span class="n">generate_histogram</span>.<span class="n">py</span>
 </span></span><span class="line"><span class="cl"><span class="err">python</span> <span class="err">scripts/generate_histogram.py</span> <span class="err">-i</span> <span class="err">data/input_file_1.csv</span> <span class="err">-o</span> <span class="err">output/figure_1.png</span>
@@ -54,7 +68,9 @@ It sounds pretty academic, but I am sure you are using topological sort unconsci
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nf">output/report.pdf</span><span class="o">:</span> <span class="n">report</span>/<span class="n">report</span>.<span class="n">tex</span> <span class="n">output</span>/<span class="n">figure_</span>1.<span class="n">png</span> <span class="n">output</span>/<span class="n">figure_</span>2.<span class="n">png</span>
 </span></span><span class="line"><span class="cl"><span class="err">cd</span> <span class="err">report/</span> <span class="err">&amp;&amp;</span> <span class="err">pdflatex</span> <span class="err">report.tex</span> <span class="err">&amp;&amp;</span> <span class="err">mv</span> <span class="err">report.pdf</span> <span class="err">../output/report.pdf</span>
-</span></span></code></pre></div><p><code>Make</code> will generate a DAG internally to figure out which target should be executed firstly with typological sort:</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>Make</code> will generate a DAG internally to figure out which target should be executed firstly with typological sort:</p>
 <figure><a href="/ox-hugo/build_dependencies.png">
     <img loading="lazy" src="/ox-hugo/build_dependencies.png"/> </a>
 </figure>
@@ -98,7 +114,58 @@ It sounds pretty academic, but I am sure you are using topological sort unconsci
 </figure>
 
 <p>Now we should understand how Kahn&rsquo;s algorithm works. Let&rsquo;s have a look at a C++ implementation of Kahn&rsquo;s algorithm:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;deque&gt;</span><span class="cp">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;deque&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1">// Kahn&#39;s algorithm
 </span></span></span><span class="line"><span class="cl"><span class="c1">// `adj` is a directed acyclic graph represented as an adjacency list.
@@ -145,7 +212,9 @@ It sounds pretty academic, but I am sure you are using topological sort unconsci
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">{};</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h2 id="bonus"><span class="section-num">5</span> Bonus</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="bonus"><span class="section-num">5</span> Bonus</h2>
 <p>When a pregnant woman takes calcium pills, she must make sure also that her diet is rich in vitamin D, since this vitamin makes the absorption of calcium possible.</p>
 <p>After reading the demonstration of topological ordering, you (and I) too should take a certain vitamin, metaphorically speaking, to help you absorb. The vitamin D I pick for you (and myself) is two leetcode problems, which involve with the most typical use case of topological ordering &ndash; college class prerequisites:</p>
 <ul>
@@ -186,26 +255,81 @@ flake 算法生成的是 128 位的 ID, 略长；所以最后笔者选择了 Sno
 <p>虽说 Twitter 没有了相应的实现，但是 Snowflake 算法原理很简单，实现起来并不难.</p>
 <h3 id="snowflake-算法"><span class="section-num">2.1</span> Snowflake 算法</h3>
 <p>Snowflake 算法生成 64 位的 ID, ID 的格式是 41 位的时间戳 + 10 位的截断的 mac 地址 + 12 位递增序列：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;id format =&gt;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;id format =&gt;
 </span></span></span><span class="line"><span class="cl"><span class="s2">timestamp | machineId|sequence
 </span></span></span><span class="line"><span class="cl"><span class="s2">41        | 10       |12
 </span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
-</span></span></code></pre></div><h3 id="snowflake-实现"><span class="section-num">2.2</span> Snowflake 实现</h3>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="snowflake-实现"><span class="section-num">2.2</span> Snowflake 实现</h3>
 <h4 id="生成时间戳"><span class="section-num">2.2.1</span> 生成时间戳</h4>
 <p>Java 内置了生成精确到毫秒的时间戳的方法，非常便利：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">long</span> <span class="n">timestamp</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>
-</span></span></code></pre></div><h4 id="生成递增序列"><span class="section-num">2.2.2</span> 生成递增序列</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">long</span> <span class="n">timestamp</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="生成递增序列"><span class="section-num">2.2.2</span> 生成递增序列</h4>
 <p>12 bits 的最大值是 2**12=4096, 所以生成递增序列也非常简单：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span> <span class="kd">final</span> <span class="kt">long</span> <span class="n">sequenceMax</span> <span class="o">=</span> <span class="mi">4096</span><span class="o">;</span> <span class="c1">//2**12
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span> <span class="kd">final</span> <span class="kt">long</span> <span class="n">sequenceMax</span> <span class="o">=</span> <span class="mi">4096</span><span class="o">;</span> <span class="c1">//2**12
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">private</span> <span class="kd">volatile</span> <span class="kt">long</span> <span class="n">sequence</span> <span class="o">=</span> <span class="mi">0</span><span class="n">L</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">generateId</span><span class="o">(){</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">//do something
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">sequence</span> <span class="o">=</span> <span class="o">(</span><span class="n">sequence</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">%</span> <span class="n">sequenceMax</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">//do something
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">}</span>
-</span></span></code></pre></div><h4 id="获取-mac-地址"><span class="section-num">2.2.3</span> 获取 Mac 地址</h4>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="获取-mac-地址"><span class="section-num">2.2.3</span> 获取 Mac 地址</h4>
 <p>我们通过获取当前机器的 IP 地址以获取对应的物理地址：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">protected</span> <span class="kt">long</span> <span class="nf">getMachineId</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">GetHardwareIdFailedException</span> <span class="o">{</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">protected</span> <span class="kt">long</span> <span class="nf">getMachineId</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">GetHardwareIdFailedException</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">try</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">	<span class="n">InetAddress</span> <span class="n">ip</span> <span class="o">=</span> <span class="n">InetAddress</span><span class="o">.</span><span class="na">getLocalHost</span><span class="o">();</span>
@@ -226,10 +350,110 @@ flake 算法生成的是 128 位的 ID, 略长；所以最后笔者选择了 Sno
 </span></span><span class="line"><span class="cl">	<span class="k">throw</span> <span class="k">new</span> <span class="n">GetHardwareIdFailedException</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>又因为 Mac 地址是6 个字节 (48 bits)，而需要的只是 10 bit, 所以需要取最低位的 2个字节 (16 bits)，然后右移 6 bits 以获取 10 个 bits 的 Mac地址</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>又因为 Mac 地址是6 个字节 (48 bits)，而需要的只是 10 bit, 所以需要取最低位的 2个字节 (16 bits)，然后右移 6 bits 以获取 10 个 bits 的 Mac地址</p>
 <h3 id="snowflake-完整代码"><span class="section-num">2.3</span> Snowflake 完整代码</h3>
 <p>下面是 Snowflake 的 Java 实现：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">IdGenerator</span> <span class="o">{</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">IdGenerator</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1">//   id format  =&gt;
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//   timestamp |datacenter | sequence
@@ -323,19 +547,33 @@ flake 算法生成的是 128 位的 ID, 略长；所以最后笔者选择了 Sno
 </span></span><span class="line"><span class="cl">	<span class="o">}</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>正如笔者所言，算法并不难，就是分别获取时间戳， mac 地址，和递增序列号，然后移位得到 ID. 但是在具体的实现中还是有一些需要注意的细节的。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>正如笔者所言，算法并不难，就是分别获取时间戳， mac 地址，和递增序列号，然后移位得到 ID. 但是在具体的实现中还是有一些需要注意的细节的。</p>
 <h4 id="线程同步"><span class="section-num">2.3.1</span> 线程同步</h4>
 <p>因为算法中使用到递增的序列号来生成 ID,而在实际的开发或者生产环境中很可能不止一个线程在使用 IdGenerator 这个类，如果这样就很容易出现不同线程的竞争问题，所以我使用了单例模式来生成 ID, 一方面更符合生成器的设计，另一方面因为对生成 ID的方法进行了同步，就保证了不会出现竞争问题。</p>
 <h4 id="同一毫秒生成多个-id"><span class="section-num">2.3.2</span> 同一毫秒生成多个 ID</h4>
 <p>因为序列号长度是 12个 bit, 那么序列号最大值就是2**12=4096了，此外时间戳是精确到毫秒的，这就是意味着，当一毫秒内，产生超过 4096 个 ID 的时候就会出现重复的ID.</p>
 <p>这样的情况并不是不可能发生，所以要对此进行处理；所以在 <em>generateId()</em> 函数中：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="k">if</span> <span class="o">(</span><span class="n">lastTimestamp</span> <span class="o">==</span> <span class="n">timestamp</span><span class="o">)</span> <span class="o">{</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="k">if</span> <span class="o">(</span><span class="n">lastTimestamp</span> <span class="o">==</span> <span class="n">timestamp</span><span class="o">)</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="n">sequence</span> <span class="o">=</span> <span class="o">(</span><span class="n">sequence</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">%</span> <span class="n">sequenceMax</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">(</span><span class="n">sequence</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">	<span class="n">timestamp</span> <span class="o">=</span> <span class="n">tillNextMillis</span><span class="o">(</span><span class="n">lastTimestamp</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>有以上的一段代码。当现在的时间戳与之前的时间戳一致，那么就意味着还是同一毫秒，如果序列号为 0, 就说明已经产生了 4096 个 ID了，继续产生 ID,就会出现重复 ID, 所以要等待一毫秒，这个就是 <em>tillNextMills()</em> 函数的作用了。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>有以上的一段代码。当现在的时间戳与之前的时间戳一致，那么就意味着还是同一毫秒，如果序列号为 0, 就说明已经产生了 4096 个 ID了，继续产生 ID,就会出现重复 ID, 所以要等待一毫秒，这个就是 <em>tillNextMills()</em> 函数的作用了。</p>
 <h2 id="小结"><span class="section-num">3</span> 小结</h2>
 <p>算法虽然简单，但是在找到 Snowflake 算法之前，笔者尝试了挺多的算法，但是都是因为不符合要求而被一一否决， 而 Snowflake 算法虽然简单，但是胜在实用。最后附上我写的 snowflake 算法的 Python 实现： <a href="https://github.com/samrayleung/snowflake">Snowfloke</a></p>
 ]]></content:encoded>
@@ -381,7 +619,20 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 <h2 id="python-bloomfilter"><span class="section-num">2</span> Python BloomFilter</h2>
 <p>算法都是为了实际问题服务的，又回到爬虫这个话题上。在了解布隆过滤器原理之后，可以很容易地实现自己的布隆过滤器，但是想要实现一个高效健壮的布隆过滤器就需要比较多的功夫了，因为需要考虑的问题略多。</p>
 <p>幸好，得益Python 强大的社区，已经有<a href="https://axiak.github.io/pybloomfiltermmap/">Python BloomFilter</a> 的库。一个文档中的简单例子：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pybloomfilter</span> <span class="kn">import</span> <span class="n">BloomFilter</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pybloomfilter</span> <span class="kn">import</span> <span class="n">BloomFilter</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">bf</span> <span class="o">=</span> <span class="n">BloomFilter</span><span class="p">(</span><span class="mi">10000000</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="s1">&#39;filter.bloom&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
@@ -390,7 +641,9 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 </span></span><span class="line"><span class="cl">	<span class="n">bf</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nb">print</span> <span class="s1">&#39;apple&#39;</span> <span class="ow">in</span> <span class="n">bf</span>
-</span></span></code></pre></div><p>结果为 <strong>True</strong></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果为 <strong>True</strong></p>
 <h2 id="总结"><span class="section-num">3</span> 总结</h2>
 <p>原理就说得差不多了，要想对布隆过滤器有更深的认识，还需要更多的实战。多写，多思考。 Enjoy Python,Enjoy Crawler :)</p>
 <h2 id="参考"><span class="section-num">4</span> 参考</h2>
@@ -416,7 +669,20 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 <p>因为递归会使小规模问题中的方法被频繁调用，所以改进对它们的处理方法就能改进整个算法。</p>
 <p>对于小数组可以使用插入排序或者选择排序来避免递归调用。<a href="https://github.com/samrayleung/AlgorithmsCode">完整代码</a></p>
 <h4 id="未改进归并排序"><span class="section-num">1.1.1</span> 未改进归并排序</h4>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span>  <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">aux</span><span class="o">,</span><span class="kt">int</span> <span class="n">lo</span><span class="o">,</span><span class="kt">int</span> <span class="n">hi</span><span class="o">){</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span>  <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">aux</span><span class="o">,</span><span class="kt">int</span> <span class="n">lo</span><span class="o">,</span><span class="kt">int</span> <span class="n">hi</span><span class="o">){</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="o">(</span><span class="n">hi</span><span class="o">&lt;=</span><span class="n">lo</span><span class="o">){</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
@@ -425,8 +691,28 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 </span></span><span class="line"><span class="cl">    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">aux</span><span class="o">,</span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="o">,</span><span class="n">hi</span><span class="o">);</span><span class="cm">/*将右半边排序*/</span>
 </span></span><span class="line"><span class="cl">    <span class="n">merge</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">aux</span><span class="o">,</span><span class="n">lo</span><span class="o">,</span><span class="n">mid</span><span class="o">,</span><span class="n">hi</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h4 id="改进后归并排序"><span class="section-num">1.1.2</span> 改进后归并排序</h4>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">aux</span><span class="o">,</span><span class="kt">int</span> <span class="n">lo</span><span class="o">,</span><span class="kt">int</span> <span class="n">hi</span><span class="o">){</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="改进后归并排序"><span class="section-num">1.1.2</span> 改进后归并排序</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">aux</span><span class="o">,</span><span class="kt">int</span> <span class="n">lo</span><span class="o">,</span><span class="kt">int</span> <span class="n">hi</span><span class="o">){</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="o">(</span><span class="n">hi</span><span class="o">&lt;=</span><span class="n">lo</span><span class="o">){</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">hi</span><span class="o">-</span><span class="n">lo</span><span class="o">&lt;</span><span class="mi">15</span><span class="o">){</span>
@@ -440,7 +726,9 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 </span></span><span class="line"><span class="cl">	<span class="n">merge</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">aux</span><span class="o">,</span> <span class="n">lo</span><span class="o">,</span> <span class="n">mid</span><span class="o">,</span> <span class="n">hi</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><figure>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure>
     <img loading="lazy" src="http://algs4.cs.princeton.edu/22mergesort/images/mergesortTD-bars.png"
          alt="Figure 1: 轨迹图如上：(图来源于《算法》)"/> <figcaption>
             <p><span class="figure-number">Figure 1: </span>轨迹图如上：(图来源于《算法》)</p>
@@ -484,7 +772,20 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 <h3 id="测试数组是否已经有序"><span class="section-num">1.2</span> 测试数组是否已经有序</h3>
 <p>可以添加一个判断条件，如果 a[mid]小于等于 a[mid+1],便可认为数组已经有序并跳过 <code>merge</code> 方法。这个改动不影响排序的递归调用，但是任意有序的子数组算法的运行时间都变成线性的了</p>
 <h4 id="未改进归并排序"><span class="section-num">1.2.1</span> 未改进归并排序</h4>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span>  <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">aux</span><span class="o">,</span><span class="kt">int</span> <span class="n">lo</span><span class="o">,</span><span class="kt">int</span> <span class="n">hi</span><span class="o">){</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span>  <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">aux</span><span class="o">,</span><span class="kt">int</span> <span class="n">lo</span><span class="o">,</span><span class="kt">int</span> <span class="n">hi</span><span class="o">){</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="o">(</span><span class="n">hi</span><span class="o">&lt;=</span><span class="n">lo</span><span class="o">){</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
@@ -493,8 +794,30 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 </span></span><span class="line"><span class="cl">    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">aux</span><span class="o">,</span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="o">,</span><span class="n">hi</span><span class="o">);</span><span class="cm">/*将右半边排序*/</span>
 </span></span><span class="line"><span class="cl">    <span class="n">merge</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">aux</span><span class="o">,</span><span class="n">lo</span><span class="o">,</span><span class="n">mid</span><span class="o">,</span><span class="n">hi</span><span class="o">);</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h4 id="改进后归并排序"><span class="section-num">1.2.2</span> 改进后归并排序</h4>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">aux</span><span class="o">,</span><span class="kt">int</span> <span class="n">lo</span><span class="o">,</span><span class="kt">int</span> <span class="n">hi</span><span class="o">){</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="改进后归并排序"><span class="section-num">1.2.2</span> 改进后归并排序</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">aux</span><span class="o">,</span><span class="kt">int</span> <span class="n">lo</span><span class="o">,</span><span class="kt">int</span> <span class="n">hi</span><span class="o">){</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="o">(</span><span class="n">hi</span><span class="o">&lt;=</span><span class="n">lo</span><span class="o">){</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">hi</span><span class="o">-</span><span class="n">lo</span><span class="o">&lt;</span><span class="mi">15</span><span class="o">){</span>
@@ -510,7 +833,9 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 </span></span><span class="line"><span class="cl">	<span class="o">}</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h4 id="测试1"><span class="section-num">1.2.3</span> 测试1</h4>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="测试1"><span class="section-num">1.2.3</span> 测试1</h4>
 <p>对100*1000 个字符进行排序，结果如下：
 <a href="/ox-hugo/100*1000-2.png"><img loading="lazy" src="/ox-hugo/100*1000-2.png" alt=""  />
 </a></p>

@@ -422,7 +422,20 @@
 <p>我又尝试了<code>Emacs</code> + <code>org-mode</code> + <code>hugo</code> 的博客方案，发现使用起来非常舒心，发布文章几乎无成本。正好碰上博客服务器到期，就干脆切换回<code>Github Pages</code>.</p>
 <p><code>hugo</code> 是使用<code>markdown</code> 来构建网站的框架，而我使用的<code>org-mode</code>，所以还需要一个工具将<code>org-mode</code> 转换为<code>hugo markdown</code>，这个就是<code>Emacs</code> 插件<a href="https://ox-hugo.scripter.co/"><code>ox-hugo</code></a>。当然， <code>hugo</code> 原生也支持<code>org-mode</code>, 只是功能支持不完整， 不及<code>ox-hugo</code>.</p>
 <p><code>ox-hugo</code> 只需要将在<code>org-mode</code> 内容的最开始插入标记：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-org" data-lang="org"><span class="line"><span class="cl"><span class="cs">#+HUGO_BASE_DIR</span><span class="c">: ~/code/org/ramsayleung.github.io</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-org" data-lang="org"><span class="line"><span class="cl"><span class="cs">#+HUGO_BASE_DIR</span><span class="c">: ~/code/org/ramsayleung.github.io</span>
 </span></span><span class="line"><span class="cl"><span class="cs">#+HUGO_SECTION</span><span class="c">: post/2023</span>
 </span></span><span class="line"><span class="cl"><span class="cs">#+HUGO_CUSTOM_FRONT_MATTER</span><span class="c">: :toc true</span>
 </span></span><span class="line"><span class="cl"><span class="cs">#+HUGO_AUTO_SET_LASTMOD</span><span class="c">: t</span>
@@ -431,7 +444,9 @@
 </span></span><span class="line"><span class="cl"><span class="cs">#+TITLE</span><span class="c">: 我的写作流</span>
 </span></span><span class="line"><span class="cl"><span class="cs">#+HUGO_TAGS</span><span class="c">: writing</span>
 </span></span><span class="line"><span class="cl"><span class="cs">#+HUGO_CATEGORIES</span><span class="c">: writing</span>
-</span></span></code></pre></div><p>Emacs一个快捷键 <code>C-c C-e H h</code> 就可以将<code>org-mode</code> 转换成<code>hugo</code> 格式的<code>markdown</code>:</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Emacs一个快捷键 <code>C-c C-e H h</code> 就可以将<code>org-mode</code> 转换成<code>hugo</code> 格式的<code>markdown</code>:</p>
 <figure><a href="/ox-hugo/one-post-per-subtree.png">
     <img loading="lazy" src="/ox-hugo/one-post-per-subtree.png"/> </a>
 </figure>

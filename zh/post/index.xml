@@ -26,12 +26,33 @@
 <p>因为Python比较适合写POC(proof of concept), 而我日常工作的语言是Java+Rust，所以我会穿插着引用这三种语言。 <br/></p>
 <h2 id="parameterized-test"><span class="section-num">2</span> Parameterized Test</h2>
 <p>在介绍 Parameterized Test 之前，让我们先来看个简单的计算价格与折扣的函数（实际的生产代码肯定会更复杂，但是背后的思路是相通的）： <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount_percentage</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount_percentage</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="n">discount_percentage</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
-</span></span></code></pre></div><p>针对这个函数，我们可能会编写多个 test case, 比如价格是 100, 给10%的折扣; 价格是200, 给20%的折扣; 价格是50, 给0的折扣；还有异常case，比如价格为负数的时候，或者折扣为负数的时候. <br/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>针对这个函数，我们可能会编写多个 test case, 比如价格是 100, 给10%的折扣; 价格是200, 给20%的折扣; 价格是50, 给0的折扣；还有异常case，比如价格为负数的时候，或者折扣为负数的时候. <br/></p>
 <h3 id="单个-test-case"><span class="section-num">2.1</span> 单个 test case</h3>
 <p>对于这么多的 case, 一个简单粗暴的方式就是把所有的 case 都写在一个 test case 里： <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytest</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytest</span>
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_calculate_discount</span><span class="p">():</span>
 </span></span><span class="line"><span class="cl">    <span class="c1"># happy path</span>
 </span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="mi">90</span>
@@ -40,11 +61,45 @@
 </span></span><span class="line"><span class="cl">    <span class="c1"># unhappy path</span>
 </span></span><span class="line"><span class="cl">    <span class="c1"># assert calculate_discount(-2, 10)</span>
 </span></span><span class="line"><span class="cl">    <span class="c1"># assert calculate_discount(10, -2)</span>
-</span></span></code></pre></div><p>但是这样的做法一般是不推荐的，Best Practice是一个 test case 只测一种情况，因为如果一个 test case 包含多个测试条件，如果 test case fail 了，那么不看源码或者堆栈，一般还看不出是什么 case 失败了，不好排查。 <br/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是这样的做法一般是不推荐的，Best Practice是一个 test case 只测一种情况，因为如果一个 test case 包含多个测试条件，如果 test case fail 了，那么不看源码或者堆栈，一般还看不出是什么 case 失败了，不好排查。 <br/></p>
 <h3 id="多个-test-case"><span class="section-num">2.2</span> 多个 test case</h3>
 <p>推荐做法就是每个测试条件定个单独的 test case。 <br/></p>
 <p>另外我们通过test case发现上面的代码没有处理异常情况，我们现在要优化下我们的代码，增加异常处理逻辑(这个就是TDD所推崇的开发哲学, test case 先行，通过test case发现问题，让test case fail掉，然后修正业务逻辑，test case再运行通过). <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytest</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytest</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount_percentage</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">price</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -72,12 +127,39 @@
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">test_calculate_discount_with_negative_discount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">            <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
-</span></span></code></pre></div><p>代码的确是整洁易读了，但话虽如此，我们要多写了很多的 test case. <br/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>代码的确是整洁易读了，但话虽如此，我们要多写了很多的 test case. <br/></p>
 <p>如果 <code>calculate_discount</code> 变得更复杂，我们要写的 test case 肯定是更多更复杂，总不能都 copy-paste test case吧。 <br/></p>
 <h3 id="parameterized-test"><span class="section-num">2.3</span> Parameterized Test</h3>
 <p>话题就回到 Parameterized Test 了, 它就是用来解决这个问题的，它可以让你用不同的测试数据集会运行相同的测试逻辑. <br/>
 还是以上面的代码为例子，你会发现 <code>test_calculate_discount_with_10_discount_percentage</code> 和 <code>test_calculate_discount_with_20_discount_percentage</code> 的测试逻辑是完全一样的，但只是数据集不同，所以我们就可以使用 Parameterized Test 来优化： <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytest</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytest</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TestClassCalculateDiscount</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">
@@ -98,10 +180,27 @@
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">test_calculate_discount_invalid_cases</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">            <span class="n">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">)</span>
-</span></span></code></pre></div><p>其实就是把测试逻辑和数据进行了分离，后面需要测试新的数据集，只需要向数据集里面添加数据即可。 <br/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其实就是把测试逻辑和数据进行了分离，后面需要测试新的数据集，只需要向数据集里面添加数据即可。 <br/></p>
 <p>由此可见，使用 Parameterized Test 有几个显而易见的好处： <br/></p>
 <p>首先是减少代码冗余，不需要类似的代码 copy-paste 很多次；其次是方便提到测试覆盖率，这个在上面的例子可能不明显，我们可以再修改一下 <code>calculate_discount</code> 函数，增加两个分支： <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount_percentage</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount_percentage</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">price</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Price must be greater than zero: </span><span class="si">{</span><span class="n">price</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">discount_percentage</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -112,8 +211,23 @@
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="p">(</span><span class="n">discount_percentage</span> <span class="o">*</span> <span class="mf">1.18</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span> 
 </span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="n">discount_percentage</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
-</span></span></code></pre></div><p>价格超过50000, 在已有折扣基础上，再额外给折扣的15%作为折扣；价格超过100000，在已有折扣的基础上，再额外给折扣的18%作为折扣. 如果要覆盖这两个新的分支，只需要在数据集上添加大于50000 和大于100000的数据集，就可以直接覆盖到了. <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@pytest.mark.parametrize</span><span class="p">(</span><span class="s2">&#34;price, discount, expected&#34;</span><span class="p">,</span> <span class="p">[</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>价格超过50000, 在已有折扣基础上，再额外给折扣的15%作为折扣；价格超过100000，在已有折扣的基础上，再额外给折扣的18%作为折扣. 如果要覆盖这两个新的分支，只需要在数据集上添加大于50000 和大于100000的数据集，就可以直接覆盖到了. <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@pytest.mark.parametrize</span><span class="p">(</span><span class="s2">&#34;price, discount, expected&#34;</span><span class="p">,</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">90</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">160</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
@@ -122,12 +236,29 @@
 </span></span><span class="line"><span class="cl"><span class="p">])</span>
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_calculate_discount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected</span>
-</span></span></code></pre></div><p>然后测试这段代码的时候，我又发现一个新的问题，这里的价格变成浮点数后，没有作小数点后几位的取整。 <br/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后测试这段代码的时候，我又发现一个新的问题，这里的价格变成浮点数后，没有作小数点后几位的取整。 <br/></p>
 <p>（对于这样简单的函数，也能不断地通过写 test case 发现新问题，这无疑就是 test case 最大的价值所在了） <br/></p>
 <p>使用 Parameterized Test 还可以提高测试代码的可读性和可维护性，这部分内容还是显而易见的，就不展开了。 <br/></p>
 <h3 id="junit"><span class="section-num">2.4</span> Junit</h3>
 <p>在Java的测试生态中，Junit是毫无疑问的龙头大哥，而在Junit5 ，Junit也引入了对 Parameterized Test 的支持，通过 <code>@ParameterizedTest</code> 这个枚举就可以将某个 test case 标注成 Parameterized Test, 通过 <code>@ValueSource</code> 传入待测试数据集： <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Numbers</span> <span class="o">{</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Numbers</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">isOdd</span><span class="o">(</span><span class="kt">int</span> <span class="n">number</span><span class="o">)</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
@@ -138,7 +269,9 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">isOdd_ShouldReturnTrueForOddNumbers</span><span class="o">(</span><span class="kt">int</span> <span class="n">number</span><span class="o">)</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="n">assertTrue</span><span class="o">(</span><span class="n">Numbers</span><span class="o">.</span><span class="na">isOdd</span><span class="o">(</span><span class="n">number</span><span class="o">));</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>这只是最基本的用法，Junit还支持通过函数，枚举，CSV格式甚至文件来传入待测试数据集，可谓是包罗万有，具体的用法可以参考这篇文章：<a href="https://www.baeldung.com/parameterized-tests-junit-5">Guide to JUnit 5 Parameterized Tests</a> 和 <a href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests">Junit官方文档</a> <br/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这只是最基本的用法，Junit还支持通过函数，枚举，CSV格式甚至文件来传入待测试数据集，可谓是包罗万有，具体的用法可以参考这篇文章：<a href="https://www.baeldung.com/parameterized-tests-junit-5">Guide to JUnit 5 Parameterized Tests</a> 和 <a href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests">Junit官方文档</a> <br/></p>
 <h3 id="rstest-and-test-case"><span class="section-num">2.5</span> rstest &amp; test_case</h3>
 <p>Rust 也有对Parameterized Test支持的库，一个就是 <a href="https://github.com/la10736/rstest"><code>rstest</code></a>, 另外一个就是 <a href="https://github.com/frondeus/test-case"><code>test_case</code></a>，两者都对 Parameterized Test 有较好的支持，在公司的代码库中，两者我都见过有项目在使用，而我在工作中使用的是 <code>rstest</code>, 因为它的功能更加强大，维护者也更加活跃. <br/></p>
 <h2 id="总结"><span class="section-num">3</span> 总结</h2>
@@ -494,7 +627,24 @@ Your browser does not support the video tag.</video></p>
 </ol>
 <h2 id="常规解法"><span class="section-num">2</span> 常规解法</h2>
 <p>问题非常简单，刚学编程的学生都可以写出符合要求的代码，下面是 Rust 的常规解法： <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">0</span><span class="o">..=</span><span class="mi">100</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;FizzBuzz&#34;</span><span class="p">);</span><span class="w">
@@ -507,12 +657,34 @@ Your browser does not support the video tag.</video></p>
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>这个没有什么太多可说的，就是直接按需求翻译代码了。 <br/></p>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个没有什么太多可说的，就是直接按需求翻译代码了。 <br/></p>
 <h2 id="iterator-解法"><span class="section-num">3</span> Iterator 解法</h2>
 <p>如果现在给 FizzBuzz 问题再加一个限制，不能使用乘法，除法，或者取模操作，那么又要怎么实现呢？ <br/></p>
 <p>Rust 标准库中的各式 <code>Iterator</code> 可以算是Rust零开销抽象(Zero Cost Abstraction)与表达能力的最佳体现了。 <br/></p>
 <p>最近在读 Programming Rust, 2nd edition, 里面就有使用各种 Iterator 组合，不使用除法或者取模操作来解决 FizzBuzz 问题的实现, 可以说是把 <code>iterator</code> 玩得非常花了： <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">iter</span>::<span class="p">{</span><span class="n">once</span><span class="p">,</span><span class="w"> </span><span class="n">repeat</span><span class="p">};</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">iter</span>::<span class="p">{</span><span class="n">once</span><span class="p">,</span><span class="w"> </span><span class="n">repeat</span><span class="p">};</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">fizzes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">repeat</span><span class="p">(</span><span class="s">&#34;&#34;</span><span class="p">).</span><span class="n">take</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="n">chain</span><span class="p">(</span><span class="n">once</span><span class="p">(</span><span class="s">&#34;fizz&#34;</span><span class="p">)).</span><span class="n">cycle</span><span class="p">();</span><span class="w">
@@ -528,11 +700,29 @@ Your browser does not support the video tag.</video></p>
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;{line}&#34;</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>看起来是否不知道所云呢? 现在可以把每个 <code>iterator</code> 的作用逐一拆解。 <br/></p>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>看起来是否不知道所云呢? 现在可以把每个 <code>iterator</code> 的作用逐一拆解。 <br/></p>
 <h3 id="repeat-plus-take"><span class="section-num">3.1</span> repeat + take</h3>
 <p><code>repeat</code> 的作用就是无限重复某个传入的元素, 例如 <code>repeat(4)</code> 就是生成无限个数字4, <code>repeat(&quot;&quot;)</code> 就是生成无限个空白字符. <br/></p>
 <p>虽然 <code>repeat</code> 能生成无限个指定的元素，但是我只想要若干个元素，怎么整呢？ <code>take</code> 就可以满足这个要求，所以 <code>repeat(4).take(4)</code> 就是生成4个数字4的意思，而 <code>repeat(&quot;&quot;).take(2)</code> 就是生成2个空字符 <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">iter</span><span class="p">;</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">iter</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// that last example was too many fours. Let&#39;s only have four fours.
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">four_fours</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iter</span>::<span class="n">repeat</span><span class="p">(</span><span class="mi">4</span><span class="p">).</span><span class="n">take</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span><span class="w">
@@ -544,10 +734,25 @@ Your browser does not support the video tag.</video></p>
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// ... and now we&#39;re done
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="nb">None</span><span class="p">,</span><span class="w"> </span><span class="n">four_fours</span><span class="p">.</span><span class="n">next</span><span class="p">());</span><span class="w">
-</span></span></span></code></pre></div><h3 id="once"><span class="section-num">3.2</span> once</h3>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="once"><span class="section-num">3.2</span> once</h3>
 <p>有生成无限个元素的 <code>iterator</code>, 自然就有只生成一个元素的 <code>iterator</code>, 那就是 <code>once()</code>, 这个 <code>iterator</code> 只会返回一个指定的元素。 <br/></p>
 <p>所以 <code>once(&quot;fizz&quot;)</code> 就是创建一个只会返回一个 <code>&quot;fizz&quot;</code> 的 <code>iterator</code> : <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">iter</span><span class="p">;</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">iter</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// one is the loneliest number
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iter</span>::<span class="n">once</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w">
@@ -556,9 +761,29 @@ Your browser does not support the video tag.</video></p>
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// just one, that&#39;s all we get
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="nb">None</span><span class="p">,</span><span class="w"> </span><span class="n">one</span><span class="p">.</span><span class="n">next</span><span class="p">());</span><span class="w">
-</span></span></span></code></pre></div><h3 id="chain"><span class="section-num">3.3</span> chain</h3>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="chain"><span class="section-num">3.3</span> chain</h3>
 <p>顾名思义，就是把两个 iterator 像链子一样串起来, 合并成一个 iterator: <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">iter</span>::<span class="n">chain</span><span class="p">;</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">iter</span>::<span class="n">chain</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">];</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">];</span><span class="w">
@@ -572,9 +797,23 @@ Your browser does not support the video tag.</video></p>
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="mi">6</span><span class="p">));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">None</span><span class="p">);</span><span class="w">
-</span></span></span></code></pre></div><h3 id="circle"><span class="section-num">3.4</span> circle</h3>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="circle"><span class="section-num">3.4</span> circle</h3>
 <p><code>circle</code> 就比较有趣了，它的作用是无限循环一个 <code>iterator</code>, <code>repeat</code> 循环一个元素，而 <code>circle</code> 是循环一个 iterator: <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">dirs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#34;North&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;East&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;South&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;West&#34;</span><span class="p">];</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">dirs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#34;North&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;East&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;South&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;West&#34;</span><span class="p">];</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">spin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dirs</span><span class="p">.</span><span class="n">iter</span><span class="p">().</span><span class="n">cycle</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">spin</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="s">&#34;North&#34;</span><span class="p">));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">spin</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="s">&#34;East&#34;</span><span class="p">));</span><span class="w">
@@ -582,10 +821,25 @@ Your browser does not support the video tag.</video></p>
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">spin</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="s">&#34;West&#34;</span><span class="p">));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">spin</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="s">&#34;North&#34;</span><span class="p">));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">spin</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="s">&#34;East&#34;</span><span class="p">));</span><span class="w">
-</span></span></span></code></pre></div><p>把4个 iterator 组合起来的 <code>repeat(&quot;&quot;).take(2).chain(once(&quot;fizz&quot;)).cycle();</code> 表达式的意思就是: 返回一个 iterator, 这个 iterator 无限循环: <code>&quot;&quot; &quot;&quot; &quot;fizz&quot; &quot;&quot; &quot;&quot; &quot;fizz&quot; ...</code> <br/></p>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>把4个 iterator 组合起来的 <code>repeat(&quot;&quot;).take(2).chain(once(&quot;fizz&quot;)).cycle();</code> 表达式的意思就是: 返回一个 iterator, 这个 iterator 无限循环: <code>&quot;&quot; &quot;&quot; &quot;fizz&quot; &quot;&quot; &quot;&quot; &quot;fizz&quot; ...</code> <br/></p>
 <h3 id="zip"><span class="section-num">3.5</span> zip</h3>
 <p><code>zip</code> iterator 的含义就是 &ldquo;zips up&rdquo;, 翻译过来就是拉上拉链，它的作用就是把两个 <code>iterator</code> 像拉链一样拉起来，返回一个 iterator，用代码来解释会更直观: <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">a1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">];</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">a1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">];</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">a2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">];</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">iter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a1</span><span class="p">.</span><span class="n">iter</span><span class="p">().</span><span class="n">zip</span><span class="p">(</span><span class="n">a2</span><span class="p">.</span><span class="n">iter</span><span class="p">());</span><span class="w">
@@ -594,21 +848,51 @@ Your browser does not support the video tag.</video></p>
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">((</span><span class="o">&amp;</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="mi">5</span><span class="p">)));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">((</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="mi">6</span><span class="p">)));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">next</span><span class="p">(),</span><span class="w"> </span><span class="nb">None</span><span class="p">);</span><span class="w">
-</span></span></span></code></pre></div><p><code>zip</code> 就是把 <code>a1</code> 和 <code>a2</code> 两个iterator 「拉起来」了，每次返回一对的元素. 所以 <code>fizzes.zip(buzzes)</code> ，就是合并了两个 iterator : <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// fizzes: &#34;&#34; &#34;&#34; &#34;fizz&#34; &#34;&#34; &#34;&#34; &#34;fizz&#34; &#34;&#34; &#34;&#34; &#34;fizz&#34; ..
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>zip</code> 就是把 <code>a1</code> 和 <code>a2</code> 两个iterator 「拉起来」了，每次返回一对的元素. 所以 <code>fizzes.zip(buzzes)</code> ，就是合并了两个 iterator : <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// fizzes: &#34;&#34; &#34;&#34; &#34;fizz&#34; &#34;&#34; &#34;&#34; &#34;fizz&#34; &#34;&#34; &#34;&#34; &#34;fizz&#34; ..
 </span></span></span><span class="line"><span class="cl"><span class="c1">// buzzes: &#34;&#34; &#34;&#34; &#34;&#34; &#34;&#34; &#34;buzz&#34; &#34;&#34; &#34;&#34; &#34;&#34; &#34;&#34; &#34;buzz&#34;
 </span></span></span><span class="line"><span class="cl"><span class="c1">// fizzes_buzzes: (&#34;&#34; &#34;&#34;) (&#34;&#34; &#34;&#34;) (&#34;fizz&#34; &#34;&#34;) (&#34;&#34; &#34;&#34;) (&#34;&#34; &#34;buzz&#34;) ...
-</span></span></span></code></pre></div><p>而 <code>(1..=100).zip(fizzes_buzzes)</code> 就是创建一个包含三个元素的 tuple： <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// (1..=100): 1 2 3 4 5 6 7 ...
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>而 <code>(1..=100).zip(fizzes_buzzes)</code> 就是创建一个包含三个元素的 tuple： <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// (1..=100): 1 2 3 4 5 6 7 ...
 </span></span></span><span class="line"><span class="cl"><span class="c1">// fizzes_buzzes: (&#34;&#34; &#34;&#34;) (&#34;&#34; &#34;&#34;) (&#34;fizz&#34; &#34;&#34;) (&#34;&#34; &#34;&#34;) (&#34;&#34; &#34;buzz&#34;) ...
 </span></span></span><span class="line"><span class="cl"><span class="c1">// (1..=100).zip(fizzes_buzzes): (1 (&#34;&#34; &#34;&#34;)) (2 (&#34;&#34; &#34;&#34;)) (3 (&#34;fizz&#34; &#34;&#34;)) (4 (&#34;&#34; &#34;&#34;)) (5 (&#34;&#34; &#34;buzz&#34;)) ..
-</span></span></span></code></pre></div><h3 id="map"><span class="section-num">3.6</span> map</h3>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="map"><span class="section-num">3.6</span> map</h3>
 <p><code>map</code> 这个 iterator 在其他语言也有相同的实现，入参是一个闭包函数，然后把每个元素作为入参，调用闭包函数，在新的迭代返回函数的调用结果. <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">tuple</span><span class="o">|</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="n">tuple</span><span class="w"> </span><span class="p">{</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">tuple</span><span class="o">|</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="n">tuple</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="s">&#34;&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;&#34;</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">fizz</span><span class="p">,</span><span class="w"> </span><span class="n">buzz</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">format!</span><span class="p">(</span><span class="s">&#34;{}{}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">fizz</span><span class="p">,</span><span class="w"> </span><span class="n">buzz</span><span class="p">),</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">})</span><span class="w">
-</span></span></span></code></pre></div><p>最核心的是Rust的 pattern matching, 用来匹配不同的值, <code>(i, (&quot;&quot;, &quot;&quot;))</code> 就是匹配所有 fizz 和 buzz为 <code>(&quot;&quot;, &quot;&quot;)</code> 的值，什么情况下 <code>fizz</code> 和 <code>buzz</code> 会都为 &quot;&quot; 呢，无法整除3以及无法整除5的时候，那么就直接返回数字 <code>i</code>; <br/></p>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>最核心的是Rust的 pattern matching, 用来匹配不同的值, <code>(i, (&quot;&quot;, &quot;&quot;))</code> 就是匹配所有 fizz 和 buzz为 <code>(&quot;&quot;, &quot;&quot;)</code> 的值，什么情况下 <code>fizz</code> 和 <code>buzz</code> 会都为 &quot;&quot; 呢，无法整除3以及无法整除5的时候，那么就直接返回数字 <code>i</code>; <br/></p>
 <p><code>(_, (fizz,buzz))</code>, <code>_</code> 就是通配符，就是匹配掉所有其他的情况，无论是 fizz = &ldquo;&rdquo;, fizz = &ldquo;fizz&rdquo;, buzz = &quot;&quot; 或者 buzz = &ldquo;buzz&rdquo;, 都把返回 <code>&quot;{fizz}{buzz}&quot;</code>, 也就是 <code>(_, (fizz,buzz))</code> 匹配了4种情况. <br/></p>
 <p><code>map</code> 迭代器返回的是一个 String, 最后再加 String 打印出来. <br/></p>
 <p>同样是解决问题，这个版本的解法肯定是看起来「高大上」得多，说不定能让面试官眼前一亮，又或者是把自己绕晕。 <br/></p>
@@ -620,7 +904,21 @@ Your browser does not support the video tag.</video></p>
 <p>概括来说，就是使用 Iterator 写出来的代码，和你自己 for-loop 手写是性能是一样的，并不会有额外的抽象开销。 <br/></p>
 <p>换个角度讲，你手写的代码也没法实现得比 Iterator 更快，表达力还可能没有那么强。 <br/></p>
 <p>如果看上面的 Iterator 实现觉得着实难以理解，我们可以再来一版兼具优雅与简洁的实现： <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">..=</span><span class="mi">100</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;FizzBuzz&#34;</span><span class="p">),</span><span class="w">
@@ -630,7 +928,9 @@ Your browser does not support the video tag.</video></p>
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h2 id="reference"><span class="section-num">5</span> Reference</h2>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="reference"><span class="section-num">5</span> Reference</h2>
 <ul>
 <li>Programming Rust, 2nd edition <br/></li>
 </ul>
@@ -653,25 +953,56 @@ Your browser does not support the video tag.</video></p>
 <p>为什么说是「部分」呢，因为前文提到，所谓的函数重载是指多个同名但函数签名不一样的函数，而Rust能模拟的就是参数类型不一样，但是参数数量一致的重载函数。 <br/></p>
 <p>假设我们想实现自己的 <code>ping</code> 命名, 入参可以是 <a href="https://doc.rust-lang.org/std/net/struct.Ipv4Addr.html"><code>Ipv4Addr</code></a> 这个 struct, ipv4的地址也可以使用2进制来表示, 又或者可以使用 u32 来表示，毕竟只有32位。 <br/></p>
 <p>如果用 C++, 我们可以写3个重载函数，入参分别是, <code>Ipv4Addr</code>, <code>bitset</code> 和 <code>uint32</code>. 在 Rust, 我们也实现类似的函数： <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">net</span>::<span class="n">Ipv4Addr</span><span class="p">;</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">net</span>::<span class="n">Ipv4Addr</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">ping</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">(</span><span class="n">address</span>: <span class="nc">A</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">std</span>::<span class="n">io</span>::<span class="nb">Result</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w"> </span><span class="n">A</span>: <span class="nb">Into</span><span class="o">&lt;</span><span class="n">Ipv4Addr</span><span class="o">&gt;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">ipv4_address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">into</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">..</span><span class="p">.</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>需要注意的是，上面函数的入参并不是 <code>Ipv4Addr</code>, 而是 <code>Into&lt;Ipv4Addr&gt;</code> ，这就是意味着，所有实现了 <code>Into&lt;Ipv4Addr&gt;</code> 这个 trait 的类型都可以是 <code>ping</code> 的入参，而恰好 <code>u32</code> 和 <code>[u8; 4]</code> 都实现了 <code>Into&lt;Ipv4Addr&gt;</code> ，所以下面的调用都是编译通过的： <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;{:?}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">ping</span><span class="p">(</span><span class="n">Ipv4Addr</span>::<span class="n">new</span><span class="p">(</span><span class="mi">23</span><span class="p">,</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">,</span><span class="w"> </span><span class="mi">141</span><span class="p">)));</span><span class="w"> </span><span class="c1">// pass an Ipv4Addr
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>需要注意的是，上面函数的入参并不是 <code>Ipv4Addr</code>, 而是 <code>Into&lt;Ipv4Addr&gt;</code> ，这就是意味着，所有实现了 <code>Into&lt;Ipv4Addr&gt;</code> 这个 trait 的类型都可以是 <code>ping</code> 的入参，而恰好 <code>u32</code> 和 <code>[u8; 4]</code> 都实现了 <code>Into&lt;Ipv4Addr&gt;</code> ，所以下面的调用都是编译通过的： <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;{:?}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">ping</span><span class="p">(</span><span class="n">Ipv4Addr</span>::<span class="n">new</span><span class="p">(</span><span class="mi">23</span><span class="p">,</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">,</span><span class="w"> </span><span class="mi">141</span><span class="p">)));</span><span class="w"> </span><span class="c1">// pass an Ipv4Addr
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;{:?}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">ping</span><span class="p">([</span><span class="mi">66</span><span class="p">,</span><span class="w"> </span><span class="mi">146</span><span class="p">,</span><span class="w"> </span><span class="mi">219</span><span class="p">,</span><span class="w"> </span><span class="mi">98</span><span class="p">]));</span><span class="w">             </span><span class="c1">// pass a [u8; 4]
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;{:?}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">ping</span><span class="p">(</span><span class="mh">0xd076eb94_</span><span class="k">u32</span><span class="p">));</span><span class="w">                 </span><span class="c1">// pass a u32
-</span></span></span></code></pre></div><p>当然，如果你实现了 <code>impl From&lt;u32&gt; for Ipv4Addr</code>, Rust 编译器也会贴心地帮你把反向的 <code>Into&lt;Ipv4Addr&gt;</code> 也实现掉。 <br/></p>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>当然，如果你实现了 <code>impl From&lt;u32&gt; for Ipv4Addr</code>, Rust 编译器也会贴心地帮你把反向的 <code>Into&lt;Ipv4Addr&gt;</code> 也实现掉。 <br/></p>
 <h2 id="限制"><span class="section-num">3</span> 限制</h2>
 <p>看完上面的函数实现，有经验的朋友可能就会发现了，Rust版本的函数重载限制比C++的要多。 <br/></p>
 <p>在C++版本的函数重载中： <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">func1</span><span class="p">(</span><span class="n">Type1</span> <span class="n">foo</span><span class="p">);</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">func1</span><span class="p">(</span><span class="n">Type1</span> <span class="n">foo</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">func1</span><span class="p">(</span><span class="n">Type2</span> <span class="n">bar</span><span class="p">);</span>
-</span></span></code></pre></div><p>参数类型 <code>Type1</code> 和 <code>Type2</code> 并不需要存在任何关系，但是在 Rust 版本中，需要两个类型之间支持相互转换，所以可以理解成 Rust 的「函数重载」本质就是通过显示类型转换来实现的。 <br/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>参数类型 <code>Type1</code> 和 <code>Type2</code> 并不需要存在任何关系，但是在 Rust 版本中，需要两个类型之间支持相互转换，所以可以理解成 Rust 的「函数重载」本质就是通过显示类型转换来实现的。 <br/></p>
 <p>毕竟 Rust 设计初衷之一就是支持强类型，就函数重载而言，终归聊胜于无啦。 <br/></p>
 <h2 id="参考"><span class="section-num">4</span> 参考</h2>
 <ul>

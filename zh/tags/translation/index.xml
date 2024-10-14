@@ -37,11 +37,21 @@
 <p>我想我应该算得上是一个中级的Helm 用户吧。我有读过<a href="http://tuhdo.github.io/helm-intro.html">这篇文章</a> 还有<a href="http://tuhdo.github.io/helm-projectile.html">这篇文章</a> 以及<a href="https://github.com/emacs-helm/helm/wiki">Wiki</a> 此外，在长达一年的时间里，我每天都是使用Helm的</p>
 <p><strong>Helm 是一个非常成熟的工具</strong>.根据git 的提交历史，Helm 的开发工作是在2009年左右开始的。
 在写这篇文章的时候，Helm 官方的git 仓库有超过26000行elisp 代码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git clone https://github.com/emacs-helm/helm.git
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git clone https://github.com/emacs-helm/helm.git
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> helm
 </span></span><span class="line"><span class="cl">cat *.el <span class="p">|</span> wc -l
 </span></span><span class="line"><span class="cl"><span class="c1"># =&gt; 26431</span>
-</span></span></code></pre></div><p>这还是没有把在MELPA 上查询到跟Helm 有关的包有142个的情况考虑在内的呢。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这还是没有把在MELPA 上查询到跟Helm 有关的包有142个的情况考虑在内的呢。</p>
 <p>你可以用Helm来完成任何事情它主要的强大之处在于你可以把Helm 和很多Emacs 的行为整合在一起。你可以以Helm 为中心构造接口，就像Spacemacs 做的那样。Helm 支持非常一致的接口，你可以通过Helm 来做任何事</p>
 <p>你可以搜索文件，搜索缓冲区，搜索颜色，搜索项目，搜索你最近编辑过的文件，搜索系统进程, 搜索音乐，搜索网络资源，搜索补全，搜索代码片段，搜索正则表达式，搜索命令，文档
 相关描述，手册&hellip;.</p>
@@ -72,7 +82,20 @@
 和Ivy 这两个工具间不同的设计理念。阅读<a href="http://oremacs.com/swiper/">Ivy介绍</a> 以便更好了解Ivy的理念。</p>
 <p>在写这篇文章的时候，Ivy 只有大概3400行代码，为Ivy 所打造的生态系统：即Swipter 和
 Counsel 也只有7500 行代码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git clone https://github.com/abo-abo/swiper.git
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git clone https://github.com/abo-abo/swiper.git
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> swiper
 </span></span><span class="line"><span class="cl"><span class="c1">## Only ivy ?</span>
 </span></span><span class="line"><span class="cl">cat ivy.el <span class="p">|</span> wc -l
@@ -81,8 +104,33 @@ Counsel 也只有7500 行代码</p>
 </span></span><span class="line"><span class="cl"><span class="c1">## count lines of code into the whole swiper ecosystem</span>
 </span></span><span class="line"><span class="cl">cat *.el <span class="p">|</span> wc -l
 </span></span><span class="line"><span class="cl"><span class="c1"># =&gt; 7526</span>
-</span></span></code></pre></div><p>Ivy 真的是很容易上手，下面就是我的全部配置：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">ivy</span> <span class="nb">:ensure</span> <span class="no">t</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Ivy 真的是很容易上手，下面就是我的全部配置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">ivy</span> <span class="nb">:ensure</span> <span class="no">t</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:diminish</span> <span class="p">(</span><span class="nv">ivy-mode</span> <span class="o">.</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:bind</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">:map</span> <span class="nv">ivy-mode-map</span>
@@ -101,7 +149,9 @@ Counsel 也只有7500 行代码</p>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">setq</span> <span class="nv">ivy-re-builders-alist</span>
 </span></span><span class="line"><span class="cl">	<span class="c1">;; allow input not in order</span>
 </span></span><span class="line"><span class="cl">	<span class="o">&#39;</span><span class="p">((</span><span class="no">t</span>   <span class="o">.</span> <span class="nv">ivy--regex-ignore-order</span><span class="p">))))</span>
-</span></span></code></pre></div><p>Ivy 是很低调的；它不想让你把一切都整合到Ivy去。它仅仅是提供你必需的补全。你不能像Helm 那样用Ivy 来做任何事；那为什么我还要切换到Ivy 去呢？</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Ivy 是很低调的；它不想让你把一切都整合到Ivy去。它仅仅是提供你必需的补全。你不能像Helm 那样用Ivy 来做任何事；那为什么我还要切换到Ivy 去呢？</p>
 <p>虽然Ivy 已经最小化，但是我依然可以用Ivy 来代替我绝大部分日常使用的Helm命令。</p>
 <p>因为Ivy是如此简洁， <em>abo-abo</em> 在它上开发了一个叫 <strong>Counsel</strong> 的包； <strong>Counsel</strong> 可以为你提供非常非常多像你在Helm使用的命令</p>
 <p>你可以切换缓冲区，搜索文件，在项目级别进行搜索和替换，与Projectile 整合，搜索你最近
@@ -186,9 +236,28 @@ Counsel 也只有7500 行代码</p>
 <p>最后，这真的跟个人的品味有关。对于我自己来说，&ldquo;Ivy 还是Helm&rdquo; 这样的争论跟&quot;Emacs 还是Spacemacs&quot; &ldquo;Emacs 还是Ide&rdquo; &ldquo;C 还是Java&rdquo; &ldquo;简洁还是全能&rdquo; &ldquo;Thelonious 还是 Duke&rdquo;(译者注，两者都是爵士乐作曲家),&ldquo;Van Der Rohe 还是 Gaudi.&quot;(译者注：前者是德国美国
 的建筑风格，后者是西班牙加泰罗尼亚的建筑风格)这样的争论是非常相似的。</p>
 <p>你选择Helm呢，你会得到一个巨型的包，一系列你不会用到的特性，一堆你可能只是偶尔用一下的功能，一些你会一个小时使用50次的特性。如果你选择Ivy,你会得到一个只拥有那些让你顺心的必要特性的精简的包，你可以很容易地通过 <strong>Counsel</strong> 或者简单的函数对它进行扩展</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nv">ivy-read</span> <span class="s">&#34;Pick:&#34;</span> <span class="p">(</span><span class="nf">mapcar</span> <span class="nf">#&#39;number-to-string</span> <span class="p">(</span><span class="nv">number-sequence</span> <span class="mi">1</span> <span class="mi">10</span><span class="p">)))</span>
-</span></span></code></pre></div><p>如果你想要通过Helm 来扩展：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nv">helm</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nv">ivy-read</span> <span class="s">&#34;Pick:&#34;</span> <span class="p">(</span><span class="nf">mapcar</span> <span class="nf">#&#39;number-to-string</span> <span class="p">(</span><span class="nv">number-sequence</span> <span class="mi">1</span> <span class="mi">10</span><span class="p">)))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果你想要通过Helm 来扩展：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nv">helm</span>
 </span></span><span class="line"><span class="cl"> <span class="nb">:sources</span>
 </span></span><span class="line"><span class="cl"> <span class="p">(</span><span class="nv">helm-build-sync-source</span> <span class="s">&#34;one-to-ten&#34;</span>
 </span></span><span class="line"><span class="cl">			 <span class="nb">:candidates</span>
@@ -196,9 +265,18 @@ Counsel 也只有7500 行代码</p>
 </span></span><span class="line"><span class="cl">			 <span class="nb">:fuzzy-match</span> <span class="no">t</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"> <span class="nb">:buffer</span>
 </span></span><span class="line"><span class="cl"> <span class="s">&#34;*helm one-to-ten*&#34;</span><span class="p">)</span>
-</span></span></code></pre></div><p>或者简单的列表：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nv">helm-comp-read</span> <span class="s">&#34;Pick:&#34;</span> <span class="p">(</span><span class="nf">mapcar</span> <span class="nf">#&#39;number-to-string</span> <span class="p">(</span><span class="nv">number-sequence</span> <span class="mi">1</span> <span class="mi">10</span><span class="p">)))</span>
-</span></span></code></pre></div><p>Helm 为用户作了非常多的决定，Ivy 让用户按需求进行定制；Helm 通过耗费非常多的内存来变得快速，Ivy 通过保持简洁来实现快速；Helm 很成熟，Ivy 很青涩；Helm 为Emacs 提供一致性，Ivy 为Emacs 提供简洁性和可预见性；Helm 需要你进行一定的配置，Ivy 开箱即用</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>或者简单的列表：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nv">helm-comp-read</span> <span class="s">&#34;Pick:&#34;</span> <span class="p">(</span><span class="nf">mapcar</span> <span class="nf">#&#39;number-to-string</span> <span class="p">(</span><span class="nv">number-sequence</span> <span class="mi">1</span> <span class="mi">10</span><span class="p">)))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Helm 为用户作了非常多的决定，Ivy 让用户按需求进行定制；Helm 通过耗费非常多的内存来变得快速，Ivy 通过保持简洁来实现快速；Helm 很成熟，Ivy 很青涩；Helm 为Emacs 提供一致性，Ivy 为Emacs 提供简洁性和可预见性；Helm 需要你进行一定的配置，Ivy 开箱即用</p>
 <p>我自己是稍偏向Ivy 的，因为我正在使用它；
 它更符合我的口味。但是作为一个用户，Helm和Ivy并没有那么大的差别。它们都是非常优秀的包，只是以不用的方式去实现相同的目标</p>
 <p>原文地址 <a href="https://sam217pa.github.io/2016/09/13/from-helm-to-ivy/">https://sam217pa.github.io/2016/09/13/from-helm-to-ivy/</a></p>

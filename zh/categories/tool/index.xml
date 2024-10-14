@@ -38,8 +38,15 @@
 <p>搜索结果太多，我想对搜索内容进行筛选，google 就提供了相当多的搜索指令(search operator) <br/></p>
 <h3 id="时间"><span class="section-num">2.1</span> 时间</h3>
 <p>cpp modules是c++20 才新增的特性，如果我想按时间搜索下相关的内容，可以使用 <code>:before</code>, <code>:after</code> 指令，后面跟着一个日期: <br/></p>
-<pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules :before 2020
-</code></pre><p><figure>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cpp modules :before 2020
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure>
     <img loading="lazy" src="/ox-hugo/google_search_before.png"/> 
 </figure>
  <br/></p>
@@ -47,14 +54,28 @@
 <h3 id="站点"><span class="section-num">2.2</span> 站点</h3>
 <p>如果你只想搜索某个站点，但是这个站点没有提供搜索功能（比如学校或者公司官网），或者搜索质量不够好，那么就可以加上 <code>site:</code> 的关键词, 要求 Google 只返回某个网站的检索结果: <br/></p>
 <p>比如我想看下 jetbrains家的IDE 对 c++ 20 Modules的支持程度: <br/></p>
-<pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules site:jetbrains.com
-</code></pre><p><figure>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cpp modules site:jetbrains.com
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure>
     <img loading="lazy" src="/ox-hugo/google_search_site.png"/> 
 </figure>
  <br/></p>
 <p>又或者，我搜索网站的时候，想把某个网站排除掉, 比如使用中文搜索编程相关关键词的时候，经常会被CSDN 的垃圾内容污染，那么就可以使用 <code>-</code>, 来排除掉某些内容. <br/></p>
-<pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules -microsoft
-</code></pre><p><figure>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cpp modules -microsoft
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure>
     <img loading="lazy" src="/ox-hugo/google_search_exclude.png"/> 
 </figure>
  <br/></p>
@@ -62,20 +83,41 @@
 <h3 id="社交媒体"><span class="section-num">2.3</span> 社交媒体</h3>
 <p>如果你想在社交媒体上搜索某个关键词，那么可以使用 <code>@</code> 后跟社交媒体的名字来进行搜索，例如 &ldquo;cpp modules @twitter&rdquo; 或者 &ldquo;cpp modules @reddit&rdquo;, 可以把 <code>@</code> 理解成是 <code>:site</code> 指令的简化版本. <br/></p>
 <p>只是社交媒体(social media)的定义比较含糊, Google没有给出具体的说明，但是比较有名的社交媒体都是支持的. <br/></p>
-<pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules @reddit
-</code></pre><p><figure>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cpp modules @reddit
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure>
     <img loading="lazy" src="/ox-hugo/google_search_reddit.png"/> 
 </figure>
  <br/></p>
-<pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules @zhihu
-</code></pre><p><figure>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cpp modules @zhihu
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure>
     <img loading="lazy" src="/ox-hugo/google_search_zhihu.png"/> 
 </figure>
  <br/></p>
 <h3 id="文件类型"><span class="section-num">2.4</span> 文件类型</h3>
 <p>可以通过 <code>filetype</code> 来指定想要搜索的文件类型，比如想搜索 pdf 相关的内容: <br/></p>
-<pre tabindex="0"><code class="language-nil" data-lang="nil">cpp modules filetype:pdf
-</code></pre><p><figure>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cpp modules filetype:pdf
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure>
     <img loading="lazy" src="/ox-hugo/google_search_pdf.png"/> 
 </figure>
  <br/></p>
@@ -83,8 +125,15 @@
 <h3 id="关键字匹配"><span class="section-num">2.5</span> 关键字匹配</h3>
 <p>Google 支持若干个关键字匹配的指令: <br/></p>
 <p>双引号: &ldquo;cpp modules&rdquo;, 精确匹配，只匹配包含&quot;cpp modules&quot;的内容 <br/></p>
-<pre tabindex="0"><code class="language-nil" data-lang="nil">&#34;cpp modules&#34;
-</code></pre><p><figure>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&#34;cpp modules&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure>
     <img loading="lazy" src="/ox-hugo/google_search_precise_match.png"/> 
 </figure>
  <br/></p>
@@ -125,10 +174,24 @@
 <p>一套流程下来，大概需要30-40秒，不能说很慢吧，但是起码算不上快。 <br/></p>
 <p>但是如果使用 Custom Search, 大概可以缩短至 7-8秒, 并且适用于绝对大部分的网站. <br/></p>
 <p>首先把查询函数引用的url 复制下来, 观察： <br/></p>
-<pre tabindex="0"><code class="language-log" data-lang="log">https://opengrok.libreoffice.org/search?full=&amp;defs=&amp;refs=Intersection&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=refs&amp;searchall=true&amp;si=refs
-</code></pre><p><code>refs</code> 后面跟着的就是需要查询的内容, 即 <code>Intersection</code>, 将 <code>Intersection</code> 替换成 <code>%s</code> : <br/></p>
-<pre tabindex="0"><code class="language-log" data-lang="log">https://opengrok.libreoffice.org/search?full=&amp;defs=&amp;refs=%s&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=refs&amp;searchall=true&amp;si=refs
-</code></pre><h3 id="chrome-chromium-site-search"><span class="section-num">3.1</span> Chrome/Chromium Site Search</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">https://opengrok.libreoffice.org/search?full=&amp;defs=&amp;refs=Intersection&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=refs&amp;searchall=true&amp;si=refs
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>refs</code> 后面跟着的就是需要查询的内容, 即 <code>Intersection</code>, 将 <code>Intersection</code> 替换成 <code>%s</code> : <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">https://opengrok.libreoffice.org/search?full=&amp;defs=&amp;refs=%s&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=refs&amp;searchall=true&amp;si=refs
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="chrome-chromium-site-search"><span class="section-num">3.1</span> Chrome/Chromium Site Search</h3>
 <p>打开Chrome/Chromium -&gt; 点击设置(Setting) -&gt; 点击搜索引擎（Search Engine） -&gt; Manage search engines and site search -&gt; Site search [Add] <br/></p>
 <ul>
 <li>Search Engine: OpenGrok Code Search Find Reference(取个有意义的名字) <br/></li>
@@ -145,8 +208,15 @@
 </figure>
  <br/></p>
 <p>而搜索代码定义，URL 如下: <br/></p>
-<pre tabindex="0"><code class="language-log" data-lang="log">https://opengrok.libreoffice.org/search?full=&amp;defs=Intersection&amp;refs=&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=defs&amp;searchall=true&amp;si=defs
-</code></pre><p>只需要将 <code>defs</code> 后面的内容修改成 <code>%s</code>, 再建一个新的site search, 名为 <code>Opengrok Code Search Find Definition</code>, keyword 为 <code>csd</code>, 就可以快速搜索代码定义. <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">https://opengrok.libreoffice.org/search?full=&amp;defs=Intersection&amp;refs=&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=defs&amp;searchall=true&amp;si=defs
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>只需要将 <code>defs</code> 后面的内容修改成 <code>%s</code>, 再建一个新的site search, 名为 <code>Opengrok Code Search Find Definition</code>, keyword 为 <code>csd</code>, 就可以快速搜索代码定义. <br/></p>
 <p>如果想要搜索其他网站，比如公司内网: <a href="https://search.xxoa.com/query=Foobar">https://search.xxoa.com/query=Foobar</a>, <br/>
 只需要把查询内容修改为 %s, 再新建个Site Search 即可。 <br/></p>
 <p>在老东家，搜索错误码，或者是搜索内网上的文章，我都是这么干的；所以到新东家之后，我也是这么搞的。 <br/></p>
@@ -570,8 +640,15 @@
 <p>(商户系统的头像就是引用自 library)</p>
 <h3 id="在线协作"><span class="section-num">2.3</span> 在线协作</h3>
 <p>excalidraw 还支持端对端加密的在线协作，只需要将一个链接发送给协议方，就能实现画图在线协作：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">https://excalidraw.com/#room=91bd46ae3aa84dff9d20,pfLqgEoY1c2ioq8LmGwsFA
-</span></span></code></pre></div><p>在远程会议，需要多方画图协作沟通的时候非常有用。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">https://excalidraw.com/#room=91bd46ae3aa84dff9d20,pfLqgEoY1c2ioq8LmGwsFA
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在远程会议，需要多方画图协作沟通的时候非常有用。</p>
 <h3 id="技巧分享"><span class="section-num">2.4</span> 技巧分享</h3>
 <p>excalidraw 画曲线的技巧</p>
 <ol>
@@ -631,22 +708,44 @@
 <h4 id="有向图--digraph--与无向图--graph"><span class="section-num">3.1.1</span> 有向图 (digraph)与无向图 (graph)</h4>
 <p>dot语言支持两种图形，分别是有向图 (digraph)与无向图(graph).</p>
 <p>定义一个无向图</p>
-<pre tabindex="0"><code class="language-dot" data-lang="dot">graph mygraph {
-1 -- 2 -- 3;
-2 -- 4;
-}
-// graph 标识来定义一个无向图
-</code></pre><figure>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">graph mygraph {
+</span></span><span class="line"><span class="cl">1 -- 2 -- 3;
+</span></span><span class="line"><span class="cl">2 -- 4;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">// graph 标识来定义一个无向图
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure>
     <img loading="lazy" src="/ox-hugo/graph.png"/> 
 </figure>
 
 <p>定义一个有向图：</p>
-<pre tabindex="0"><code class="language-dot" data-lang="dot">digraph mydigraph {
-1 -&gt; 2 -&gt; 3;
-2 -&gt; 4;
-}
-// digraph 标识来定义一个无向图
-</code></pre><figure>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">digraph mydigraph {
+</span></span><span class="line"><span class="cl">1 -&gt; 2 -&gt; 3;
+</span></span><span class="line"><span class="cl">2 -&gt; 4;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">// digraph 标识来定义一个无向图
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure>
     <img loading="lazy" src="/ox-hugo/digraph.png"/> 
 </figure>
 
@@ -657,8 +756,15 @@
 <h4 id="属性--property"><span class="section-num">3.1.3</span> 属性(property)</h4>
 <p>属性可以设置在节点和边上，通过「方括号 <code>[]</code>」来定义属性，属性之间用英文逗号分隔。</p>
 <p>属性的定义采用如下的格式：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">属性名 = 属性值
-</span></span></code></pre></div><p>常见的属性有：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">属性名 = 属性值
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>常见的属性有：</p>
 <ul>
 <li>label: 标题</li>
 <li>color: 颜色</li>
@@ -666,16 +772,31 @@
 <li>shape: 形状</li>
 </ul>
 <!--listend-->
-<pre tabindex="0"><code class="language-dot" data-lang="dot">strict graph {
-// 设置节点属性
-1 [shape=box];
-3 [shape=triangle];
-
-// 设置边属性
-1 -- 2 [color=blue];
-1 -- 3 [style=dotted];
-}
-</code></pre><figure>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">strict graph {
+</span></span><span class="line"><span class="cl">// 设置节点属性
+</span></span><span class="line"><span class="cl">1 [shape=box];
+</span></span><span class="line"><span class="cl">3 [shape=triangle];
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 设置边属性
+</span></span><span class="line"><span class="cl">1 -- 2 [color=blue];
+</span></span><span class="line"><span class="cl">1 -- 3 [style=dotted];
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure>
     <img loading="lazy" src="/ox-hugo/attr.png"/> 
 </figure>
 
@@ -689,14 +810,27 @@
 <li>center:是否居中绘制</li>
 </ul>
 <!--listend-->
-<pre tabindex="0"><code class="language-dot" data-lang="dot">digraph graph_attr
-{
-graph[bgcolor=&#34;yellow&#34; label=&#34;标题&#34; fontsize=24 fontcolor=&#34;green&#34;];
-
-1 -&gt; 2;
-1 -&gt; 3;
-}
-</code></pre><figure>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">digraph graph_attr
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">graph[bgcolor=&#34;yellow&#34; label=&#34;标题&#34; fontsize=24 fontcolor=&#34;green&#34;];
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">1 -&gt; 2;
+</span></span><span class="line"><span class="cl">1 -&gt; 3;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure>
     <img loading="lazy" src="/ox-hugo/graph_attr.png"/> 
 </figure>
 
@@ -707,24 +841,47 @@ graph[bgcolor=&#34;yellow&#34; label=&#34;标题&#34; fontsize=24 fontcolor=&#34
 <li>表示图的结构，对节点和边进行分组</li>
 <li>提供一个单独的上下文设置属性（类似操作系统里面不同的线程，有不同的线程变量）</li>
 <li>针对特定引擎使用特殊的布局。比如下面的例子，如果 subgraph 的名字以 cluster 开头，所有属于这个子图的节点会用一个矩形和其他节点分开。
-<pre tabindex="0"><code class="language-dot" data-lang="dot">digraph graphname{
-a -&gt; {b c};
-c -&gt; e;
-b -&gt; d;
-
-subgraph cluster_bc {
-bgcolor=red;
-b;
-c;
-}
-
-subgraph cluster_de {
-label=&#34;Block&#34;
-d;
-e;
-}
-}
-</code></pre><figure>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">digraph graphname{
+</span></span><span class="line"><span class="cl">a -&gt; {b c};
+</span></span><span class="line"><span class="cl">c -&gt; e;
+</span></span><span class="line"><span class="cl">b -&gt; d;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">subgraph cluster_bc {
+</span></span><span class="line"><span class="cl">bgcolor=red;
+</span></span><span class="line"><span class="cl">b;
+</span></span><span class="line"><span class="cl">c;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">subgraph cluster_de {
+</span></span><span class="line"><span class="cl">label=&#34;Block&#34;
+</span></span><span class="line"><span class="cl">d;
+</span></span><span class="line"><span class="cl">e;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure>
         <img loading="lazy" src="/ox-hugo/subgraph.png"/> 
     </figure>
 </li>
@@ -732,82 +889,163 @@ e;
 <h4 id="图布局--layout"><span class="section-num">3.1.5</span> 图布局(layout)</h4>
 <p>默认情况下图是从上到下布局的(rankdir <code>&quot;TB&quot;)，通过设置 rankdir</code>&ldquo;LR&rdquo; 可以让图从左到右布局。</p>
 <p>默认布局(From top to bottom)</p>
-<pre tabindex="0"><code class="language-dot" data-lang="dot">digraph {
-rankdir=&#34;TB&#34;
-a -&gt; b -&gt; c;
-}
-</code></pre><figure>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">digraph {
+</span></span><span class="line"><span class="cl">rankdir=&#34;TB&#34;
+</span></span><span class="line"><span class="cl">a -&gt; b -&gt; c;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure>
     <img loading="lazy" src="/ox-hugo/rankdir_tb.png"/> 
 </figure>
 
 <p>From Left to right:</p>
-<pre tabindex="0"><code class="language-dot" data-lang="dot">digraph {
-rankdir=&#34;LR&#34;
-a -&gt; b -&gt; c;
-}
-</code></pre><figure>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">digraph {
+</span></span><span class="line"><span class="cl">rankdir=&#34;LR&#34;
+</span></span><span class="line"><span class="cl">a -&gt; b -&gt; c;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure>
     <img loading="lazy" src="/ox-hugo/rankdir_lr.png"/> 
 </figure>
 
 <p>该属性只针对图(graph)生效.</p>
 <h4 id="示例"><span class="section-num">3.1.6</span> 示例</h4>
 <p>再回头看下，「土地财政时间线」这图的源代码：</p>
-<pre tabindex="0"><code class="language-dot" data-lang="dot">digraph 土地财政时间线 {
-size=&#34;7,8&#34;;
-node [fontsize=24, shape = plaintext];
-
-1976 -&gt; 1985;
-1985 -&gt; 1994;
-1994 -&gt; 1998;
-1998 -&gt; 1999;
-1999 -&gt; 2000;
-2000 -&gt; 2001;
-2001 -&gt; 2002;
-2002 -&gt; 2008;
-2008 -&gt; 2009;
-2009 -&gt; 2014;
-2014 -&gt; 2015;
-
-node [fontsize=20, shape = box];
-{ rank=same;  1976 &#34;改革开放&#34;; }
-{ rank=same;  1985 &#34;财政包干&#34;; }
-{ rank=same;  1994 &#34;分税制改革&#34;; }
-{ rank=same;  1998 &#34;住房商品化改革&#34; &#34;《中华人民共和国土地管理法》实施&#34;; }
-{ rank=same;  1999 &#34;土地财政兴起&#34;; }
-{ rank=same;  2000 &#34;工业化&#34; &#34;城市化&#34; &#34;土地金融&#34;; }
-{ rank=same;  2001 &#34;房价&#34;; }
-{ rank=same;  2002 &#34;所得税改革&#34;; }
-{ rank=same;  2008 &#34;金融危机&#34; &#34;四万亿刺激&#34;; }
-{ rank=same;  2009 &#34;房地产与基建投资激增&#34;; }
-{ rank=same;  2014 &#34;产能积压&#34; &#34;库存过剩&#34;; }
-{ rank=same;  2015 &#34;棚改货币化&#34; &#34;涨价去库存&#34; ; }
-
-&#34;改革开放&#34; -&gt; &#34;财政包干&#34;;
-&#34;财政包干&#34; -&gt; &#34;分税制改革&#34;[label=&#34;地方政府收入下降&#34;];
-&#34;分税制改革&#34; -&gt; &#34;所得税改革&#34;[label=&#34;地方政府占比下降&#34;];
-&#34;所得税改革&#34; -&gt; &#34;土地金融&#34;[label=&#34;促进&#34;]
-&#34;分税制改革&#34; -&gt; &#34;土地财政兴起&#34;[label=&#34;推动&#34;]
-&#34;土地财政兴起&#34; -&gt; &#34;工业化&#34;;
-&#34;土地财政兴起&#34; -&gt; &#34;城市化&#34;;
-&#34;土地金融&#34; -&gt; &#34;城市化&#34;[label=&#34;促进&#34; color =&#34;red&#34;];
-&#34;土地金融&#34; -&gt; &#34;房价&#34;[label =&#34;推高&#34;]
-&#34;城市化&#34; -&gt; &#34;房价&#34;[label =&#34;推高&#34;]
-&#34;土地财政兴起&#34; -&gt; &#34;土地金融&#34;[label=&#34;地方政府收入增加&#34;];
-&#34;土地金融&#34; -&gt; &#34;工业化&#34;[label=&#34;促进&#34; color =&#34;red&#34;];
-&#34;住房商品化改革&#34; -&gt; &#34;土地财政兴起&#34;[label=&#34;停止福利分房&#34;];
-&#34;《中华人民共和国土地管理法》实施&#34; -&gt; &#34;土地财政兴起&#34;[label=&#34;限制农业用地非农用途&#34;];
-&#34;金融危机&#34; -&gt; &#34;四万亿刺激&#34;;
-&#34;四万亿刺激&#34; -&gt; &#34;房地产与基建投资激增&#34;[label=&#34;宽松货币政策&#34;]
-&#34;房地产与基建投资激增&#34; -&gt; &#34;产能积压&#34;;
-&#34;房地产与基建投资激增&#34; -&gt; &#34;库存过剩&#34;;
-&#34;房地产与基建投资激增&#34; -&gt; &#34;土地金融&#34;[label=&#34;强化&#34;];
-&#34;产能积压&#34; -&gt; &#34;涨价去库存&#34;;
-&#34;库存过剩&#34; -&gt; &#34;涨价去库存&#34;;
-&#34;棚改货币化&#34; -&gt; &#34;房价起飞&#34;;
-&#34;涨价去库存&#34; -&gt; &#34;房价起飞&#34;;
-&#34;房价&#34; -&gt; &#34;房价起飞&#34;[label =&#34;逐年上涨&#34;];
-}
-</code></pre><h4 id="编辑器支持"><span class="section-num">3.1.7</span> 编辑器支持</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">digraph 土地财政时间线 {
+</span></span><span class="line"><span class="cl">size=&#34;7,8&#34;;
+</span></span><span class="line"><span class="cl">node [fontsize=24, shape = plaintext];
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">1976 -&gt; 1985;
+</span></span><span class="line"><span class="cl">1985 -&gt; 1994;
+</span></span><span class="line"><span class="cl">1994 -&gt; 1998;
+</span></span><span class="line"><span class="cl">1998 -&gt; 1999;
+</span></span><span class="line"><span class="cl">1999 -&gt; 2000;
+</span></span><span class="line"><span class="cl">2000 -&gt; 2001;
+</span></span><span class="line"><span class="cl">2001 -&gt; 2002;
+</span></span><span class="line"><span class="cl">2002 -&gt; 2008;
+</span></span><span class="line"><span class="cl">2008 -&gt; 2009;
+</span></span><span class="line"><span class="cl">2009 -&gt; 2014;
+</span></span><span class="line"><span class="cl">2014 -&gt; 2015;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">node [fontsize=20, shape = box];
+</span></span><span class="line"><span class="cl">{ rank=same;  1976 &#34;改革开放&#34;; }
+</span></span><span class="line"><span class="cl">{ rank=same;  1985 &#34;财政包干&#34;; }
+</span></span><span class="line"><span class="cl">{ rank=same;  1994 &#34;分税制改革&#34;; }
+</span></span><span class="line"><span class="cl">{ rank=same;  1998 &#34;住房商品化改革&#34; &#34;《中华人民共和国土地管理法》实施&#34;; }
+</span></span><span class="line"><span class="cl">{ rank=same;  1999 &#34;土地财政兴起&#34;; }
+</span></span><span class="line"><span class="cl">{ rank=same;  2000 &#34;工业化&#34; &#34;城市化&#34; &#34;土地金融&#34;; }
+</span></span><span class="line"><span class="cl">{ rank=same;  2001 &#34;房价&#34;; }
+</span></span><span class="line"><span class="cl">{ rank=same;  2002 &#34;所得税改革&#34;; }
+</span></span><span class="line"><span class="cl">{ rank=same;  2008 &#34;金融危机&#34; &#34;四万亿刺激&#34;; }
+</span></span><span class="line"><span class="cl">{ rank=same;  2009 &#34;房地产与基建投资激增&#34;; }
+</span></span><span class="line"><span class="cl">{ rank=same;  2014 &#34;产能积压&#34; &#34;库存过剩&#34;; }
+</span></span><span class="line"><span class="cl">{ rank=same;  2015 &#34;棚改货币化&#34; &#34;涨价去库存&#34; ; }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&#34;改革开放&#34; -&gt; &#34;财政包干&#34;;
+</span></span><span class="line"><span class="cl">&#34;财政包干&#34; -&gt; &#34;分税制改革&#34;[label=&#34;地方政府收入下降&#34;];
+</span></span><span class="line"><span class="cl">&#34;分税制改革&#34; -&gt; &#34;所得税改革&#34;[label=&#34;地方政府占比下降&#34;];
+</span></span><span class="line"><span class="cl">&#34;所得税改革&#34; -&gt; &#34;土地金融&#34;[label=&#34;促进&#34;]
+</span></span><span class="line"><span class="cl">&#34;分税制改革&#34; -&gt; &#34;土地财政兴起&#34;[label=&#34;推动&#34;]
+</span></span><span class="line"><span class="cl">&#34;土地财政兴起&#34; -&gt; &#34;工业化&#34;;
+</span></span><span class="line"><span class="cl">&#34;土地财政兴起&#34; -&gt; &#34;城市化&#34;;
+</span></span><span class="line"><span class="cl">&#34;土地金融&#34; -&gt; &#34;城市化&#34;[label=&#34;促进&#34; color =&#34;red&#34;];
+</span></span><span class="line"><span class="cl">&#34;土地金融&#34; -&gt; &#34;房价&#34;[label =&#34;推高&#34;]
+</span></span><span class="line"><span class="cl">&#34;城市化&#34; -&gt; &#34;房价&#34;[label =&#34;推高&#34;]
+</span></span><span class="line"><span class="cl">&#34;土地财政兴起&#34; -&gt; &#34;土地金融&#34;[label=&#34;地方政府收入增加&#34;];
+</span></span><span class="line"><span class="cl">&#34;土地金融&#34; -&gt; &#34;工业化&#34;[label=&#34;促进&#34; color =&#34;red&#34;];
+</span></span><span class="line"><span class="cl">&#34;住房商品化改革&#34; -&gt; &#34;土地财政兴起&#34;[label=&#34;停止福利分房&#34;];
+</span></span><span class="line"><span class="cl">&#34;《中华人民共和国土地管理法》实施&#34; -&gt; &#34;土地财政兴起&#34;[label=&#34;限制农业用地非农用途&#34;];
+</span></span><span class="line"><span class="cl">&#34;金融危机&#34; -&gt; &#34;四万亿刺激&#34;;
+</span></span><span class="line"><span class="cl">&#34;四万亿刺激&#34; -&gt; &#34;房地产与基建投资激增&#34;[label=&#34;宽松货币政策&#34;]
+</span></span><span class="line"><span class="cl">&#34;房地产与基建投资激增&#34; -&gt; &#34;产能积压&#34;;
+</span></span><span class="line"><span class="cl">&#34;房地产与基建投资激增&#34; -&gt; &#34;库存过剩&#34;;
+</span></span><span class="line"><span class="cl">&#34;房地产与基建投资激增&#34; -&gt; &#34;土地金融&#34;[label=&#34;强化&#34;];
+</span></span><span class="line"><span class="cl">&#34;产能积压&#34; -&gt; &#34;涨价去库存&#34;;
+</span></span><span class="line"><span class="cl">&#34;库存过剩&#34; -&gt; &#34;涨价去库存&#34;;
+</span></span><span class="line"><span class="cl">&#34;棚改货币化&#34; -&gt; &#34;房价起飞&#34;;
+</span></span><span class="line"><span class="cl">&#34;涨价去库存&#34; -&gt; &#34;房价起飞&#34;;
+</span></span><span class="line"><span class="cl">&#34;房价&#34; -&gt; &#34;房价起飞&#34;[label =&#34;逐年上涨&#34;];
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="编辑器支持"><span class="section-num">3.1.7</span> 编辑器支持</h4>
 <p>如果是Emacs 用户，可以使用<a href="https://github.com/ppareit/graphviz-dot-mode">graphviz-dot-mode</a> 来编辑并预览生成的图片，效果如下：</p>
 <figure><a href="/ox-hugo/graphviz-dot-mode.png">
     <img loading="lazy" src="/ox-hugo/graphviz-dot-mode.png"/> </a>
@@ -828,46 +1066,91 @@ node [fontsize=20, shape = box];
 <h3 id="时序图"><span class="section-num">4.1</span> 时序图</h3>
 <p>plantuml 提供不同的组件供时序图使用。不同的组件有不同的形状，默认情况下，组件的声明顺序就是他们的展示顺序。</p>
 <p>使用<code>-&gt;</code> 来表示在两个组件/参与者(participant) 之间传递消息，<code>&lt;--</code> 表示回包信息。</p>
-<pre tabindex="0"><code class="language-plantuml" data-lang="plantuml">@startuml
-participant Participant as Foo
-actor       Actor       as Foo1
-boundary    Boundary    as Foo2
-control     Control     as Foo3
-entity      Entity      as Foo4
-database    Database    as Foo5
-collections Collections as Foo6
-queue       Queue       as Foo7
-Foo -&gt; Foo1 : To actor
-Foo -&gt; Foo2 : To boundary
-Foo -&gt; Foo3 : To control
-Foo -&gt; Foo4 : To entity
-Foo -&gt; Foo5 : To database
-Foo -&gt; Foo6 : To collections
-Foo -&gt; Foo7: To queue
-Foo &lt;-- Foo7: Response from queue
-@enduml
-</code></pre><figure>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@startuml
+</span></span><span class="line"><span class="cl">participant Participant as Foo
+</span></span><span class="line"><span class="cl">actor       Actor       as Foo1
+</span></span><span class="line"><span class="cl">boundary    Boundary    as Foo2
+</span></span><span class="line"><span class="cl">control     Control     as Foo3
+</span></span><span class="line"><span class="cl">entity      Entity      as Foo4
+</span></span><span class="line"><span class="cl">database    Database    as Foo5
+</span></span><span class="line"><span class="cl">collections Collections as Foo6
+</span></span><span class="line"><span class="cl">queue       Queue       as Foo7
+</span></span><span class="line"><span class="cl">Foo -&gt; Foo1 : To actor
+</span></span><span class="line"><span class="cl">Foo -&gt; Foo2 : To boundary
+</span></span><span class="line"><span class="cl">Foo -&gt; Foo3 : To control
+</span></span><span class="line"><span class="cl">Foo -&gt; Foo4 : To entity
+</span></span><span class="line"><span class="cl">Foo -&gt; Foo5 : To database
+</span></span><span class="line"><span class="cl">Foo -&gt; Foo6 : To collections
+</span></span><span class="line"><span class="cl">Foo -&gt; Foo7: To queue
+</span></span><span class="line"><span class="cl">Foo &lt;-- Foo7: Response from queue
+</span></span><span class="line"><span class="cl">@enduml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure>
     <img loading="lazy" src="/ox-hugo/sequence.png"/> 
 </figure>
 
 <p>时序图的更多用法可见官网文档：<a href="https://plantuml.com/sequence-diagram">Sequence-Diagram</a></p>
 <h3 id="活动图"><span class="section-num">4.2</span> 活动图</h3>
-<pre tabindex="0"><code class="language-plantuml" data-lang="plantuml">@startuml
-start
-repeat
-	:Test something;
-	if (Something went wrong?) then (no)
-	#palegreen:OK;
-	break
-endif
--&gt;NOK;
-:Alert &#34;Error with long text&#34;;
-repeat while (Something went wrong with long text?) is (yes) not (no)
--&gt;//merged step//;
-:Alert &#34;Success&#34;;
-stop
-@enduml
-</code></pre><figure>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@startuml
+</span></span><span class="line"><span class="cl">start
+</span></span><span class="line"><span class="cl">repeat
+</span></span><span class="line"><span class="cl">	:Test something;
+</span></span><span class="line"><span class="cl">	if (Something went wrong?) then (no)
+</span></span><span class="line"><span class="cl">	#palegreen:OK;
+</span></span><span class="line"><span class="cl">	break
+</span></span><span class="line"><span class="cl">endif
+</span></span><span class="line"><span class="cl">-&gt;NOK;
+</span></span><span class="line"><span class="cl">:Alert &#34;Error with long text&#34;;
+</span></span><span class="line"><span class="cl">repeat while (Something went wrong with long text?) is (yes) not (no)
+</span></span><span class="line"><span class="cl">-&gt;//merged step//;
+</span></span><span class="line"><span class="cl">:Alert &#34;Success&#34;;
+</span></span><span class="line"><span class="cl">stop
+</span></span><span class="line"><span class="cl">@enduml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure>
     <img loading="lazy" src="/ox-hugo/activity-digram.png"/> 
 </figure>
 
@@ -881,7 +1164,107 @@ stop
 <p>这就是个绘图库了，主要是用来绘制各种图表，比如折线图，饼图，直方图等，通常是配合数据分析使用，还支持xkcd 风格。</p>
 <p>之前在上MIT 6.00网课的时候，John Guttag教授出了一个概率统计题，一个醉汉每次向四个方向中任意一个方向走一步，500步后，醉汉是离原点越来越近呢，还是越来越远？</p>
 <p>下面是Python代码实现，模拟醉汉行为：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 运行下面代码前，确保依赖已安装</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 运行下面代码前，确保依赖已安装</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># pip3 install matplotlib --user</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">math</span><span class="o">,</span> <span class="nn">random</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -977,7 +1360,9 @@ stop
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">fname</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="n">firstTest</span><span class="p">()</span>
-</span></span></code></pre></div><p>模拟5次，生成出来的<a href="https://xkcd.com/">xkcd</a>风格的图表：</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>模拟5次，生成出来的<a href="https://xkcd.com/">xkcd</a>风格的图表：</p>
 <figure><a href="/ox-hugo/simulation_random_walk_trail1.png">
     <img loading="lazy" src="/ox-hugo/simulation_random_walk_trail1.png"/> </a>
 </figure>
@@ -985,14 +1370,32 @@ stop
 <h3 id="再话org-mode"><span class="section-num">5.1</span> 再话org-mode</h3>
 <p>在<a href="https://mp.weixin.qq.com/s/mid3TpmXJMM7xWm5rfl7qg">《我的写作流》</a>里面，我有提到过，我使用Emacs + org-mode 来编写文章，对比markdown 或者其他的标记语言，<code>org-mode</code> 有一个巨大的优势，就是<code>org-mode</code> 借助内置的<a href="https://orgmode.org/worg/org-contrib/babel/"><code>org-babel</code></a> 组件，可以直接运行代码。</p>
 <p>在markdown 里面，下面的代码块的用处仅仅是语法高亮：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl"><span class="s">```python
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl"><span class="s">```python
 </span></span></span><span class="line"><span class="cl"><span class="s"></span><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;helloworld&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="s">```</span>
-</span></span></code></pre></div><p>但在 <code>org-mode</code>, 下面的代码块是可运行的，我只要在Emacs中按下<code>C-c C-c</code>，就会运行代码，并输出<code>helloword</code>。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-org" data-lang="org"><span class="line"><span class="cl"><span class="c">#+begin_src </span><span class="cs">python</span><span class="c">
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但在 <code>org-mode</code>, 下面的代码块是可运行的，我只要在Emacs中按下<code>C-c C-c</code>，就会运行代码，并输出<code>helloword</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-org" data-lang="org"><span class="line"><span class="cl"><span class="c">#+begin_src </span><span class="cs">python</span><span class="c">
 </span></span></span><span class="line"><span class="cl"><span class="c"></span>  <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;helloworld&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="c">#+end_src</span>
-</span></span></code></pre></div><p>看起来作用不大，但是和 <code>graphviz</code>, <code>plantuml</code>, <code>matplotlib</code> 结合，就会产生无穷的威力：<strong><strong>只要我把绘图源码写好，然后再按下 <code>C-c C-c</code>，就能自动生成图片，并自动插入到当前这篇文章中(当然，如果代码写错了，是编译生成不出图片的)</strong></strong>。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>看起来作用不大，但是和 <code>graphviz</code>, <code>plantuml</code>, <code>matplotlib</code> 结合，就会产生无穷的威力：<strong><strong>只要我把绘图源码写好，然后再按下 <code>C-c C-c</code>，就能自动生成图片，并自动插入到当前这篇文章中(当然，如果代码写错了，是编译生成不出图片的)</strong></strong>。</p>
 <p>根本不需要手动编译，生成图片，然后再把图片以markdown格式手动插入: <code>![图片](链接)</code> 。</p>
 <p>上面的概率统计模拟图也是这样生成出来的，写好Python 代码，然后按下 <code>C-c C-c</code></p>
 <p>一切都浑然天成。</p>
@@ -1031,12 +1434,60 @@ stop
 <h2 id="准备工作"><span class="section-num">1</span> 准备工作</h2>
 <p>因为我比较多的脚本都是基于 <code>percol</code> 这个神器，所以需要先安装 <code>percol</code>, 如果 不了解 <code>percol</code> 的话，可以翻看一下我之前的文章 <a href="https://ramsayleung.github.io/post/2017/percol/">Linux/Unix Shell 二三事之神器percol</a> .</p>
 <p>我一般将写好的函数 source 命令添加到 Shell. 例如脚本函数都在一个叫<code>tool_function.sh</code> 的文件里面，而我使用 Zsh, 则只需要在 <code>.zshrc</code> 添加一句语句：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">source</span> /path/to/tool_function.sh
-</span></span></code></pre></div><p>如果使用 Bash, 添加到 <code>.bashrc</code> 即可。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">source</span> /path/to/tool_function.sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果使用 Bash, 添加到 <code>.bashrc</code> 即可。</p>
 <h2 id="有趣的脚本"><span class="section-num">2</span> 有趣的脚本</h2>
 <h3 id="ssh-免密码登录"><span class="section-num">2.1</span> SSH 免密码登录</h3>
 <p>SSH 基本就是登录远程服务器的标配了，只是每次登录服务器都要输入密码，未免太麻烦了(好吧，我拥有懒惰这个美德)，所以我决定配置 SSH 的免密码登录。代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="k">function</span> config_ssh_login_key<span class="o">(){</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="k">function</span> config_ssh_login_key<span class="o">(){</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="nv">$#</span> -lt <span class="m">3</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
 </span></span><span class="line"><span class="cl">       <span class="nb">echo</span> <span class="s2">&#34;Usage: </span><span class="k">$(</span>basename <span class="nv">$0</span><span class="k">)</span><span class="s2"> -u user -h hostname -p port&#34;</span>
 </span></span><span class="line"><span class="cl">       <span class="nb">kill</span> -INT <span class="nv">$$</span>
@@ -1073,14 +1524,48 @@ stop
 </span></span><span class="line"><span class="cl">		    <span class="c1"># ssh-copy-id &#34;$user@$hostname -p $port&#34;</span>
 </span></span><span class="line"><span class="cl">	     <span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>基本做法就是生成一对公私密钥，然后把公钥发送到服务器。而脚本其他的部分就是判断密钥是否存在，修改密钥权限等工作。用法也很简单，假如你把以上脚本保存到了一个叫 <code>config_ssh_login_key.sh</code> 的文件：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">bash config_ssh_login_key.sh -h your-server-ip -u user -p <span class="m">2222</span>
-</span></span></code></pre></div><p>当然，如果你按照我的前面提到的做法，用 source 命令引入脚本，你可以直接在命令行输入：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">config_ssh_login_key -u root -h your-server-ip
-</span></span></code></pre></div><p>如果端口未指定，默认端口为 22</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>基本做法就是生成一对公私密钥，然后把公钥发送到服务器。而脚本其他的部分就是判断密钥是否存在，修改密钥权限等工作。用法也很简单，假如你把以上脚本保存到了一个叫 <code>config_ssh_login_key.sh</code> 的文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">bash config_ssh_login_key.sh -h your-server-ip -u user -p <span class="m">2222</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当然，如果你按照我的前面提到的做法，用 source 命令引入脚本，你可以直接在命令行输入：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">config_ssh_login_key -u root -h your-server-ip
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果端口未指定，默认端口为 22</p>
 <h3 id="生成若干位密钥"><span class="section-num">2.2</span> 生成若干位密钥</h3>
 <p>生成若干位的密钥是常见的需求，得益于 Linux/Unix 命令行强大的过滤器，所以只需把命令整理成脚本即可：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># generate key</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># generate key</span>
 </span></span><span class="line"><span class="cl"><span class="k">function</span> gkey<span class="o">(){</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> -n <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
 </span></span><span class="line"><span class="cl">       <span class="nb">local</span> <span class="nv">length</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span>
@@ -1094,12 +1579,43 @@ stop
 </span></span><span class="line"><span class="cl">	   cat /dev/urandom <span class="p">|</span>tr -cd <span class="s2">&#34;[:alnum:]&#34;</span><span class="p">|</span>head -c <span class="s2">&#34;</span><span class="nv">$length</span><span class="s2">&#34;</span><span class="p">;</span><span class="nb">echo</span>
 </span></span><span class="line"><span class="cl">       <span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>用法：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">gkey <span class="m">45</span>
-</span></span></code></pre></div><p>即生成一个45位字符的随机密钥，如果没有指定长度的话，默认是 32 位。因为 OS X和 Linux 的 <code>tr</code> 使用有差异，所以要处理一下</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>用法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">gkey <span class="m">45</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>即生成一个45位字符的随机密钥，如果没有指定长度的话，默认是 32 位。因为 OS X和 Linux 的 <code>tr</code> 使用有差异，所以要处理一下</p>
 <h3 id="复制命令行输出"><span class="section-num">2.3</span> 复制命令行输出</h3>
 <p>有时可能需要复制某个命令的输出，一般的做法都是运行某个命令，用鼠标选中，然后复制。例如在生成密钥之后，需要复制到项目的配置文件。但是每次都要用鼠标，效率实在不高。这个功能其实可以脚本实现：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nv">OS_NAME</span><span class="o">=</span><span class="k">$(</span>uname<span class="k">)</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nv">OS_NAME</span><span class="o">=</span><span class="k">$(</span>uname<span class="k">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">function</span> pclip<span class="o">()</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="nv">$OS_NAME</span> <span class="o">=</span> <span class="s2">&#34;CYGWIN&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">	putclip <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
@@ -1117,19 +1633,40 @@ stop
 </span></span><span class="line"><span class="cl">	<span class="k">fi</span>
 </span></span><span class="line"><span class="cl">    <span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>备注：这个脚本不是我原创，取自 <a href="http://blog.binchen.org/archive.html">陈斌</a> 博客。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>备注：这个脚本不是我原创，取自 <a href="http://blog.binchen.org/archive.html">陈斌</a> 博客。</p>
 <p>在 Linux 运行这脚本需要先安装 xsel 或者是 xclip 命令。结合生成密钥的命令使用：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">gkey -28<span class="p">|</span>pclip
-</span></span></code></pre></div><p>这样，生成的密钥就被复制到系统上了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">gkey -28<span class="p">|</span>pclip
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样，生成的密钥就被复制到系统上了。</p>
 <h3 id="复制当前目录"><span class="section-num">2.4</span> 复制当前目录</h3>
 <p>有时候，我需要复制当前目录下某个文件的路径，但是无论是文件管理器，还是在Shell 中都要用鼠标选中然后复制指定文件的路径，效率不高且很不方便。所以我通过结合 percol 和上面提高的 pclip 函数改进了做法：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="k">function</span> pwdf<span class="o">()</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="k">function</span> pwdf<span class="o">()</span>
 </span></span><span class="line"><span class="cl"><span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">local</span> <span class="nv">current_dir</span><span class="o">=</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">local</span> <span class="nv">copied_file</span><span class="o">=</span><span class="sb">`</span>find <span class="nv">$current_dir</span> -type f -print <span class="p">|</span>percol<span class="sb">`</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">echo</span> -n <span class="nv">$copied_file</span> <span class="p">|</span>pclip<span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>只需在 Shell 中输入 <code>pwdf</code>, 然后选择需要复制的路径即可。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>只需在 Shell 中输入 <code>pwdf</code>, 然后选择需要复制的路径即可。
 运行截图：</p>
 <figure>
     <img loading="lazy" src="https://i.imgur.com/Ppkm2xV.gif"/> 
@@ -1140,7 +1677,63 @@ stop
 <h3 id="判断-unix-系统的版本"><span class="section-num">2.5</span> 判断 Unix 系统的版本</h3>
 <p>因为我经常需要在不同的 Unix 机器之间切换，例如工作用的 Mac OS X, 另外一台笔记本上的 Fedora, 还有一台工作站上的 Arch Linux, 以及各种发行版本的 VPS 等，在不同的发行版本或者系统之间切换，我希望我常用的工具也可以很轻易地移植到不同的发行版本上。</p>
 <p>但是不同的发行版本使用不同的包安装管理器，例如 OS X 上的 <code>brew</code>, Fedora 的 <code>dnf</code>, Centos 的 <code>yum</code>, Ubuntu 上的 <code>apt-get</code> 等等。如果可以通过使用脚本来实现根据不同的发行版本使用不同的包安装管理器安装软件，这样就省心很多。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># GetOSVersion</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># GetOSVersion</span>
 </span></span><span class="line"><span class="cl"><span class="k">function</span> GetOSVersion <span class="o">{</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1"># Figure out which vendor we are</span>
@@ -1192,9 +1785,169 @@ stop
 </span></span><span class="line"><span class="cl">    <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">export</span> os_VENDOR
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h3 id="根据不同的发行版本安装软件"><span class="section-num">2.6</span> 根据不同的发行版本安装软件</h3>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="根据不同的发行版本安装软件"><span class="section-num">2.6</span> 根据不同的发行版本安装软件</h3>
 <p>刚刚上面的脚本是为了准确判断出所有的 *nix 系统的，但是方便起见，也可以直接使用<code>uname</code> 命令</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>uname<span class="k">)</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;Darwin&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>uname<span class="k">)</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;Darwin&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">    <span class="c1"># Do something under Mac OS X platform</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;This is mac os&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="c1"># check if brew exists</span>
@@ -1348,16 +2101,32 @@ stop
 </span></span><span class="line"><span class="cl">    <span class="c1"># Do something under 64 bits Windows NT platform</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;this is 64-bit windows&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span></code></pre></div><h3 id="加密目录"><span class="section-num">2.7</span> 加密目录</h3>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="加密目录"><span class="section-num">2.7</span> 加密目录</h3>
 <p>每个人都会有需要只属于自己的东西，保护这些东西最好的办法就是对其进行加密：</p>
 <h4 id="加密"><span class="section-num">2.7.1</span> 加密</h4>
 <p>使用 <code>tar</code> 和 <code>openssl</code> 对目录进行加密，先使用 <code>tar</code> 归档当前文件，然后使用
 <code>aes256</code> 算法进行加密：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">tar -czf - * <span class="p">|</span> openssl enc -e -aes256 -out encrypted.tar.gz
-</span></span></code></pre></div><h4 id="解密"><span class="section-num">2.7.2</span> 解密</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">tar -czf - * <span class="p">|</span> openssl enc -e -aes256 -out encrypted.tar.gz
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="解密"><span class="section-num">2.7.2</span> 解密</h4>
 <p>把加密后的归档文件解密到当前命令：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">openssl enc -d -aes256 -in encrypted.tar.gz<span class="p">|</span> tar xz -C <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
-</span></span></code></pre></div>]]></content:encoded>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">openssl enc -d -aes256 -in encrypted.tar.gz<span class="p">|</span> tar xz -C <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>]]></content:encoded>
     </item>
     
     <item>

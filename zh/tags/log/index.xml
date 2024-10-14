@@ -50,7 +50,22 @@
 <h2 id="logging-的正确姿势"><span class="section-num">3</span> Logging 的正确姿势</h2>
 <h3 id="使用-python-的-logging-模块"><span class="section-num">3.1</span> 使用 Python 的 logging 模块</h3>
 <p>我认为，使用 Python 的标准日志库是比较好的实践，因为标准库已经提供了开箱即用的特性，无需重复造轮子。Python 的 logging 模块也很容易上手，举个小例子：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">logging</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">logging</span>
 </span></span><span class="line"><span class="cl"><span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># define a logger</span>
 </span></span><span class="line"><span class="cl"><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -61,32 +76,93 @@
 </span></span><span class="line"><span class="cl"><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Debug level message&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="c1">#Warning level msg</span>
 </span></span><span class="line"><span class="cl"><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Warning level message&#39;</span><span class="p">)</span>
-</span></span></code></pre></div><p>日志输出如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">INFO:__main__: Info level message
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>日志输出如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">INFO:__main__: Info level message
 </span></span><span class="line"><span class="cl">DEBUG:__main__: Debug level message
 </span></span><span class="line"><span class="cl">WARN:__main__: Warning level message
-</span></span></code></pre></div><h3 id="记录异常信息"><span class="section-num">3.2</span> 记录异常信息</h3>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="记录异常信息"><span class="section-num">3.2</span> 记录异常信息</h3>
 <p>日志一个非常重要的作用就是调试，所以记录出现异常的地方是有必要，并且需要记录栈的调用信息。例如：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">try</span><span class="p">:</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">try</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;file_not_exist.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;wt&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Failed to write a file&#39;</span><span class="p">,</span><span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span></span></code></pre></div><p>通过将 <code>exc_info</code> 设置成 True, 栈的调用信息就会记录到日志里面。而也可以使用 <code>logger.exception(message,*args)</code> 方法，它等同于 <code>logger.error(msg,exc_info=True,*args)</code> 方法。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过将 <code>exc_info</code> 设置成 True, 栈的调用信息就会记录到日志里面。而也可以使用 <code>logger.exception(message,*args)</code> 方法，它等同于 <code>logger.error(msg,exc_info=True,*args)</code> 方法。</p>
 <h3 id="使用日志文件轮转控制器--rotating-file-handler"><span class="section-num">3.3</span> 使用日志文件轮转控制器 (rotating file handler)</h3>
 <p>如果使用日志文件控制器 (FileHandler), 不断地运行程序，就会产生越来越多的日志 信息或者是日志文件。</p>
 <p>为了控制日志文件的数量，可以使用 <code>RotatingFileHandler</code> 自 动新建新的日志文件，并且保留旧的日志文件，当产生一定数量的日志文件之后，就会 自动删除掉最旧的日志文件。例如：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">RotatingFileHandler</span><span class="p">(</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">RotatingFileHandler</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">    <span class="n">LOG_FILENAME</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">maxBytes</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">backupCount</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">my_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
-</span></span></code></pre></div><p>就是日志文件大小超过20个字节 (当然，真实情况不会那么小的阀值)，就创建一个新的日志文件，把原来的日志文件，例如叫 <em>example.log</em> 重命名为 <em>example.log.1</em>,然后新建的日志文件就会被命名为_example.log_, 一直到产生了6个日志文件，即 <em>example.log.5</em>, 继续记录日志，最开始的第一个日志就会被删除。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>就是日志文件大小超过20个字节 (当然，真实情况不会那么小的阀值)，就创建一个新的日志文件，把原来的日志文件，例如叫 <em>example.log</em> 重命名为 <em>example.log.1</em>,然后新建的日志文件就会被命名为_example.log_, 一直到产生了6个日志文件，即 <em>example.log.5</em>, 继续记录日志，最开始的第一个日志就会被删除。</p>
 <h3 id="使用日志服务器"><span class="section-num">3.4</span> 使用日志服务器</h3>
 <p>对于那些分布式的应用，或者部署多台服务器上有不同日志的程序而言，逐个服务器或者节点查看日志实在太可怕了. 这个时候，就可以设置一个日志服务器，把重要的日志信息发送到日志服务器，你就在日志服务器上监控各个节点的日志状态了。</p>
 <p><a href="https://docs.python.org/3/howto/logging-cookbook.html">logging-cookbook</a> 的例子：</p>
 <p>客户端或者节点：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">logging</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">logging</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">logging.handlers</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">rootLogger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
@@ -110,8 +186,101 @@
 </span></span><span class="line"><span class="cl"><span class="n">logger1</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;How quickly daft jumping zebras vex.&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">logger2</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Jail zesty vixen who grabbed pay from quack.&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">logger2</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;The five boxing wizards jump quickly.&#39;</span><span class="p">)</span>
-</span></span></code></pre></div><p>日志服务器：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">logging</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>日志服务器：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">logging</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">logging.handlers</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pickle</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">socketserver</span>
@@ -198,11 +367,68 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>
-</span></span></code></pre></div><p>通过给 logger 添加一个SocketHandler 就可以把日志事件发送到服务器端</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过给 logger 添加一个SocketHandler 就可以把日志事件发送到服务器端</p>
 <h3 id="使用配置文件"><span class="section-num">3.5</span> 使用配置文件</h3>
 <p>虽然开发者可以使用 Python 代码来配置日志系统，但是这样是很不灵活的，每次修改日志等级还需要去改动代码。</p>
 <p>而使用配置文件无疑是一个更好的选择，例如 json 或者是 yaml 文件，这样就可以在 json/yaml 文件中加载日志配置了。以 <a href="https://docs.djangoproject.com/en/1.9/topics/logging/#configuring-logging">Django</a> 项目的配置文件为例，我改成了 json 格式：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="nt">&#34;disable_existing_loggers&#34;</span><span class="p">:</span> <span class="err">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="nt">&#34;formatters&#34;</span><span class="p">:</span> <span class="p">{</span>
@@ -253,8 +479,25 @@
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>以及加载 json 文件到日志配置中：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">json</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>以及加载 json 文件到日志配置中：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">json</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">logging.config</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
@@ -265,7 +508,9 @@
 </span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;logging_configuration.json&#39;</span><span class="p">,</span> <span class="s1">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">	<span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">	<span class="n">logging</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">dictConfig</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-</span></span></code></pre></div><p>使用 json 还有一个好处是标准库已经内置了 json 模块，无需像 yaml 那样需要安装额外的模块，不过我更推崇 yaml, 因为清晰之余，还可以少打很多字 :)</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用 json 还有一个好处是标准库已经内置了 json 模块，无需像 yaml 那样需要安装额外的模块，不过我更推崇 yaml, 因为清晰之余，还可以少打很多字 :)</p>
 <h3 id="对于不同的代码-使用不同的日志等级"><span class="section-num">3.6</span> 对于不同的代码，使用不同的日志等级</h3>
 <p>因为一个项目不同代码要求不一样，也无需把每一个实现细节都记录在日志，只需要根 据不同的实现，使用不同的日志等级，例如使用 <code>Debug</code> 记录系统启动，处理业务逻辑 请求的信息，使用 <code>Error</code>, 记录系统的出错信息，可以结合堆栈分析原因，等等。</p>
 <p>此外，Logger 实例可以被配置成基于名字的树状结构。 每一个部件都定义了一个基础的名字，对应的模块被设置成子节点。而 root logger 没有名字。如图：</p>
@@ -282,7 +527,28 @@
 <h3 id="使用结构化日志"><span class="section-num">3.7</span> 使用结构化日志</h3>
 <p>虽然大部份的日志信息对于人类都是可读的，但是对于程序而言，就很难进行解析了。</p>
 <p>这个时候，为了方便程序进行解析，我建议使用结构化格式的日志，这样就不再需要各种复杂的正则表达式来解析日志了。得益于内置的 json 模块，使用 json 就可以很简单地生成的利于程序解析结构化日志，以 <a href="https://docs.python.org/3/howto/logging-cookbook.html">logging cookbook</a> 中的例子说明：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">json</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">json</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">logging</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
@@ -299,9 +565,18 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;message 1&#39;</span><span class="p">,</span> <span class="n">foo</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">bar</span><span class="o">=</span><span class="s1">&#39;baz&#39;</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span> <span class="n">fnum</span><span class="o">=</span><span class="mf">123.456</span><span class="p">))</span>
-</span></span></code></pre></div><p>日志输出结果如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="err">message</span> <span class="mi">1</span> <span class="err">&gt;&gt;&gt;</span> <span class="p">{</span><span class="nt">&#34;fnum&#34;</span><span class="p">:</span> <span class="mf">123.456</span><span class="p">,</span> <span class="nt">&#34;num&#34;</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nt">&#34;bar&#34;</span><span class="p">:</span> <span class="s2">&#34;baz&#34;</span><span class="p">,</span> <span class="nt">&#34;foo&#34;</span><span class="p">:</span> <span class="s2">&#34;bar&#34;</span><span class="p">}</span>
-</span></span></code></pre></div><h3 id="参考"><span class="section-num">3.8</span> 参考</h3>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>日志输出结果如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="err">message</span> <span class="mi">1</span> <span class="err">&gt;&gt;&gt;</span> <span class="p">{</span><span class="nt">&#34;fnum&#34;</span><span class="p">:</span> <span class="mf">123.456</span><span class="p">,</span> <span class="nt">&#34;num&#34;</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span> <span class="nt">&#34;bar&#34;</span><span class="p">:</span> <span class="s2">&#34;baz&#34;</span><span class="p">,</span> <span class="nt">&#34;foo&#34;</span><span class="p">:</span> <span class="s2">&#34;bar&#34;</span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="参考"><span class="section-num">3.8</span> 参考</h3>
 <ul>
 <li><a href="https://logmatic.io/blog/python-logging-with-json-steroids/">https://logmatic.io/blog/python-logging-with-json-steroids/</a></li>
 <li><a href="https://fangpenlin.com/posts/2012/08/26/good-logging-practice-in-python/">https://fangpenlin.com/posts/2012/08/26/good-logging-practice-in-python/</a></li>

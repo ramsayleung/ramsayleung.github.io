@@ -53,7 +53,20 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 <h2 id="python-bloomfilter"><span class="section-num">2</span> Python BloomFilter</h2>
 <p>算法都是为了实际问题服务的，又回到爬虫这个话题上。在了解布隆过滤器原理之后，可以很容易地实现自己的布隆过滤器，但是想要实现一个高效健壮的布隆过滤器就需要比较多的功夫了，因为需要考虑的问题略多。</p>
 <p>幸好，得益Python 强大的社区，已经有<a href="https://axiak.github.io/pybloomfiltermmap/">Python BloomFilter</a> 的库。一个文档中的简单例子：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pybloomfilter</span> <span class="kn">import</span> <span class="n">BloomFilter</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pybloomfilter</span> <span class="kn">import</span> <span class="n">BloomFilter</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">bf</span> <span class="o">=</span> <span class="n">BloomFilter</span><span class="p">(</span><span class="mi">10000000</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="s1">&#39;filter.bloom&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
@@ -62,7 +75,9 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 </span></span><span class="line"><span class="cl">	<span class="n">bf</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nb">print</span> <span class="s1">&#39;apple&#39;</span> <span class="ow">in</span> <span class="n">bf</span>
-</span></span></code></pre></div><p>结果为 <strong>True</strong></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果为 <strong>True</strong></p>
 <h2 id="总结"><span class="section-num">3</span> 总结</h2>
 <p>原理就说得差不多了，要想对布隆过滤器有更深的认识，还需要更多的实战。多写，多思考。 Enjoy Python,Enjoy Crawler :)</p>
 <h2 id="参考"><span class="section-num">4</span> 参考</h2>

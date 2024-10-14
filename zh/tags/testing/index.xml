@@ -26,12 +26,33 @@
 <p>因为Python比较适合写POC(proof of concept), 而我日常工作的语言是Java+Rust，所以我会穿插着引用这三种语言。 <br/></p>
 <h2 id="parameterized-test"><span class="section-num">2</span> Parameterized Test</h2>
 <p>在介绍 Parameterized Test 之前，让我们先来看个简单的计算价格与折扣的函数（实际的生产代码肯定会更复杂，但是背后的思路是相通的）： <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount_percentage</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount_percentage</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="n">discount_percentage</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
-</span></span></code></pre></div><p>针对这个函数，我们可能会编写多个 test case, 比如价格是 100, 给10%的折扣; 价格是200, 给20%的折扣; 价格是50, 给0的折扣；还有异常case，比如价格为负数的时候，或者折扣为负数的时候. <br/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>针对这个函数，我们可能会编写多个 test case, 比如价格是 100, 给10%的折扣; 价格是200, 给20%的折扣; 价格是50, 给0的折扣；还有异常case，比如价格为负数的时候，或者折扣为负数的时候. <br/></p>
 <h3 id="单个-test-case"><span class="section-num">2.1</span> 单个 test case</h3>
 <p>对于这么多的 case, 一个简单粗暴的方式就是把所有的 case 都写在一个 test case 里： <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytest</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytest</span>
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_calculate_discount</span><span class="p">():</span>
 </span></span><span class="line"><span class="cl">    <span class="c1"># happy path</span>
 </span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="mi">90</span>
@@ -40,11 +61,45 @@
 </span></span><span class="line"><span class="cl">    <span class="c1"># unhappy path</span>
 </span></span><span class="line"><span class="cl">    <span class="c1"># assert calculate_discount(-2, 10)</span>
 </span></span><span class="line"><span class="cl">    <span class="c1"># assert calculate_discount(10, -2)</span>
-</span></span></code></pre></div><p>但是这样的做法一般是不推荐的，Best Practice是一个 test case 只测一种情况，因为如果一个 test case 包含多个测试条件，如果 test case fail 了，那么不看源码或者堆栈，一般还看不出是什么 case 失败了，不好排查。 <br/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是这样的做法一般是不推荐的，Best Practice是一个 test case 只测一种情况，因为如果一个 test case 包含多个测试条件，如果 test case fail 了，那么不看源码或者堆栈，一般还看不出是什么 case 失败了，不好排查。 <br/></p>
 <h3 id="多个-test-case"><span class="section-num">2.2</span> 多个 test case</h3>
 <p>推荐做法就是每个测试条件定个单独的 test case。 <br/></p>
 <p>另外我们通过test case发现上面的代码没有处理异常情况，我们现在要优化下我们的代码，增加异常处理逻辑(这个就是TDD所推崇的开发哲学, test case 先行，通过test case发现问题，让test case fail掉，然后修正业务逻辑，test case再运行通过). <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytest</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytest</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount_percentage</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">price</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -72,12 +127,39 @@
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">test_calculate_discount_with_negative_discount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">            <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
-</span></span></code></pre></div><p>代码的确是整洁易读了，但话虽如此，我们要多写了很多的 test case. <br/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>代码的确是整洁易读了，但话虽如此，我们要多写了很多的 test case. <br/></p>
 <p>如果 <code>calculate_discount</code> 变得更复杂，我们要写的 test case 肯定是更多更复杂，总不能都 copy-paste test case吧。 <br/></p>
 <h3 id="parameterized-test"><span class="section-num">2.3</span> Parameterized Test</h3>
 <p>话题就回到 Parameterized Test 了, 它就是用来解决这个问题的，它可以让你用不同的测试数据集会运行相同的测试逻辑. <br/>
 还是以上面的代码为例子，你会发现 <code>test_calculate_discount_with_10_discount_percentage</code> 和 <code>test_calculate_discount_with_20_discount_percentage</code> 的测试逻辑是完全一样的，但只是数据集不同，所以我们就可以使用 Parameterized Test 来优化： <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytest</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytest</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TestClassCalculateDiscount</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">
@@ -98,10 +180,27 @@
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">test_calculate_discount_invalid_cases</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">            <span class="n">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">)</span>
-</span></span></code></pre></div><p>其实就是把测试逻辑和数据进行了分离，后面需要测试新的数据集，只需要向数据集里面添加数据即可。 <br/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其实就是把测试逻辑和数据进行了分离，后面需要测试新的数据集，只需要向数据集里面添加数据即可。 <br/></p>
 <p>由此可见，使用 Parameterized Test 有几个显而易见的好处： <br/></p>
 <p>首先是减少代码冗余，不需要类似的代码 copy-paste 很多次；其次是方便提到测试覆盖率，这个在上面的例子可能不明显，我们可以再修改一下 <code>calculate_discount</code> 函数，增加两个分支： <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount_percentage</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount_percentage</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">price</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Price must be greater than zero: </span><span class="si">{</span><span class="n">price</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">discount_percentage</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -112,8 +211,23 @@
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="p">(</span><span class="n">discount_percentage</span> <span class="o">*</span> <span class="mf">1.18</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span> 
 </span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">*</span> <span class="n">discount_percentage</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
-</span></span></code></pre></div><p>价格超过50000, 在已有折扣基础上，再额外给折扣的15%作为折扣；价格超过100000，在已有折扣的基础上，再额外给折扣的18%作为折扣. 如果要覆盖这两个新的分支，只需要在数据集上添加大于50000 和大于100000的数据集，就可以直接覆盖到了. <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@pytest.mark.parametrize</span><span class="p">(</span><span class="s2">&#34;price, discount, expected&#34;</span><span class="p">,</span> <span class="p">[</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>价格超过50000, 在已有折扣基础上，再额外给折扣的15%作为折扣；价格超过100000，在已有折扣的基础上，再额外给折扣的18%作为折扣. 如果要覆盖这两个新的分支，只需要在数据集上添加大于50000 和大于100000的数据集，就可以直接覆盖到了. <br/></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@pytest.mark.parametrize</span><span class="p">(</span><span class="s2">&#34;price, discount, expected&#34;</span><span class="p">,</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">90</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">160</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
@@ -122,12 +236,29 @@
 </span></span><span class="line"><span class="cl"><span class="p">])</span>
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_calculate_discount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">calculate_discount</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">discount</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected</span>
-</span></span></code></pre></div><p>然后测试这段代码的时候，我又发现一个新的问题，这里的价格变成浮点数后，没有作小数点后几位的取整。 <br/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后测试这段代码的时候，我又发现一个新的问题，这里的价格变成浮点数后，没有作小数点后几位的取整。 <br/></p>
 <p>（对于这样简单的函数，也能不断地通过写 test case 发现新问题，这无疑就是 test case 最大的价值所在了） <br/></p>
 <p>使用 Parameterized Test 还可以提高测试代码的可读性和可维护性，这部分内容还是显而易见的，就不展开了。 <br/></p>
 <h3 id="junit"><span class="section-num">2.4</span> Junit</h3>
 <p>在Java的测试生态中，Junit是毫无疑问的龙头大哥，而在Junit5 ，Junit也引入了对 Parameterized Test 的支持，通过 <code>@ParameterizedTest</code> 这个枚举就可以将某个 test case 标注成 Parameterized Test, 通过 <code>@ValueSource</code> 传入待测试数据集： <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Numbers</span> <span class="o">{</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Numbers</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">isOdd</span><span class="o">(</span><span class="kt">int</span> <span class="n">number</span><span class="o">)</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
@@ -138,7 +269,9 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">isOdd_ShouldReturnTrueForOddNumbers</span><span class="o">(</span><span class="kt">int</span> <span class="n">number</span><span class="o">)</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="n">assertTrue</span><span class="o">(</span><span class="n">Numbers</span><span class="o">.</span><span class="na">isOdd</span><span class="o">(</span><span class="n">number</span><span class="o">));</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>这只是最基本的用法，Junit还支持通过函数，枚举，CSV格式甚至文件来传入待测试数据集，可谓是包罗万有，具体的用法可以参考这篇文章：<a href="https://www.baeldung.com/parameterized-tests-junit-5">Guide to JUnit 5 Parameterized Tests</a> 和 <a href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests">Junit官方文档</a> <br/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这只是最基本的用法，Junit还支持通过函数，枚举，CSV格式甚至文件来传入待测试数据集，可谓是包罗万有，具体的用法可以参考这篇文章：<a href="https://www.baeldung.com/parameterized-tests-junit-5">Guide to JUnit 5 Parameterized Tests</a> 和 <a href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests">Junit官方文档</a> <br/></p>
 <h3 id="rstest-and-test-case"><span class="section-num">2.5</span> rstest &amp; test_case</h3>
 <p>Rust 也有对Parameterized Test支持的库，一个就是 <a href="https://github.com/la10736/rstest"><code>rstest</code></a>, 另外一个就是 <a href="https://github.com/frondeus/test-case"><code>test_case</code></a>，两者都对 Parameterized Test 有较好的支持，在公司的代码库中，两者我都见过有项目在使用，而我在工作中使用的是 <code>rstest</code>, 因为它的功能更加强大，维护者也更加活跃. <br/></p>
 <h2 id="总结"><span class="section-num">3</span> 总结</h2>

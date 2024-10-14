@@ -108,7 +108,31 @@
 
 <h2 id="源代码"><span class="section-num">4</span> 源代码</h2>
 <p>得益于 <code>Ivy</code>强大的内置函数, 功能实现起来相当便利，完整代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-lisp" data-lang="lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">samray/esh-history</span> <span class="p">()</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lisp" data-lang="lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">samray/esh-history</span> <span class="p">()</span>
 </span></span><span class="line"><span class="cl">  <span class="s">&#34;Interactive search eshell history.&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;em-hist</span><span class="p">)</span>
@@ -128,7 +152,9 @@
 </span></span><span class="line"><span class="cl">  <span class="c1">;; move cursor to eol</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nv">end-of-line</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="p">)</span>
-</span></span></code></pre></div><p>代码不是很复杂, 主要功能是获取用户输入的命令, 然后把所有的历史命令读取出来,最后使用<code>ivy-read</code>内置的<code>ivy-completion-in-region-action</code>功能, 用用户的输入的命令与历史命令进行匹配, 由用户选择最终的命令.</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>代码不是很复杂, 主要功能是获取用户输入的命令, 然后把所有的历史命令读取出来,最后使用<code>ivy-read</code>内置的<code>ivy-completion-in-region-action</code>功能, 用用户的输入的命令与历史命令进行匹配, 由用户选择最终的命令.</p>
 <p><code>ivy-read</code>是Emacs内置<code>completing-read</code>的函数的强化, 关于<code>ivy-read</code>具体用法可以参考文档<a href="https://oremacs.com/swiper/#getting-started">ivy-read</a>.</p>
 <h2 id="总结"><span class="section-num">5</span> 总结</h2>
 <p>最后, 我也顺便把代码分享到 <a href="https://www.reddit.com/r/emacs/comments/7k54px/snippet_share_make_eshell_search_command_history/">Emacs社区</a>, 而 <a href="https://github.com/manateelazycat">manateelazycat</a>也把这段代码的功能加入到<a href="https://github.com/manateelazycat/aweshell/commit/ecaddac98b87f881910dbee8b51a98f00b6d9d5d">aweshell</a>, Oh yeah !</p>
@@ -147,7 +173,26 @@
 <p><a href="/ox-hugo/eshell_prompt.png"><img loading="lazy" src="/ox-hugo/eshell_prompt.png" alt=""  />
 </a>
 本着拿来主义的想法，我就直接把这位小哥的代码添加到了我的配置文件里面：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">setq</span> <span class="nv">eshell-prompt-function</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">setq</span> <span class="nv">eshell-prompt-function</span>
 </span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nb">lambda</span> <span class="p">()</span>
 </span></span><span class="line"><span class="cl">	<span class="p">(</span><span class="nf">concat</span>
 </span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;┌─[&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
@@ -162,7 +207,9 @@
 </span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;└─&gt;&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">=</span> <span class="p">(</span><span class="nf">user-uid</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="s">&#34; # &#34;</span> <span class="s">&#34; $ &#34;</span><span class="p">)</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">	 <span class="p">)))</span>
-</span></span></code></pre></div><p>效果自然是很 sexy.</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>效果自然是很 sexy.</p>
 <h2 id="与原有提示符冲突"><span class="section-num">2</span> 与原有提示符冲突</h2>
 <p>但是我原来使用的 <a href="https://github.com/kaihaosw/eshell-prompt-extras">eshell-prompt-extra</a> 的效果就被覆盖了。而 <code>eshell_prompt_extra</code> 可以提供的额外信息非常多，包括：git, python virtualenv, 以及远程登录时的主机信息，如图：</p>
 <figure><a href="/ox-hugo/eshell_extra_prompt.png">
@@ -173,7 +220,22 @@
 <p>鱼和熊掌我都想要，似乎太贪心了？怎么办，自己去修改 <code>eshell_prompt_extra</code> 的<a href="https://github.com/kaihaosw/eshell-prompt-extras/blob/master/eshell-prompt-extras.el">源码</a> :).</p>
 <h2 id="折腾源码"><span class="section-num">3</span> 折腾源码</h2>
 <p><code>eshell_prompt_extra</code> 这个包注释加上全部代码也只是 400 行，代码也写得很清晰. 其中大部份是辅助函数，而 Eshell 的提示符效果是通过两个 eshell-theme 函数来实现的。use-package 的配置：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">eshell-prompt-extras</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">eshell-prompt-extras</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:ensure</span> <span class="no">t</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:load-path</span> <span class="s">&#34;~/Code/github/eshell-prompt-extras&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:config</span> <span class="p">(</span><span class="nb">progn</span>
@@ -184,8 +246,47 @@
 </span></span><span class="line"><span class="cl">	      <span class="p">(</span><span class="nb">setq</span> <span class="nv">eshell-highlight-prompt</span> <span class="no">nil</span>
 </span></span><span class="line"><span class="cl">		    <span class="nv">eshell-prompt-function</span> <span class="ss">&#39;epe-theme-lambda</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">	    <span class="p">))</span>
-</span></span></code></pre></div><p>而 <code>epe-theme-lambda</code> 的代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl">
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>而 <code>epe-theme-lambda</code> 的代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">epe-theme-lambda</span> <span class="p">()</span>
 </span></span><span class="line"><span class="cl">  <span class="s">&#34;A eshell-prompt lambda theme.&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">setq</span> <span class="nv">eshell-prompt-regexp</span> <span class="s">&#34;^[^#\nλ]*[#λ] &#34;</span><span class="p">)</span>
@@ -218,11 +319,36 @@
 </span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">=</span> <span class="p">(</span><span class="nf">user-uid</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="s">&#34;#&#34;</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">			   <span class="ss">&#39;epe-sudo-symbol-face</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">   <span class="s">&#34; &#34;</span><span class="p">))</span>
-</span></span></code></pre></div><p>代码主要逻辑是调用之前定义的辅助函数，判断是否需要显示 git, python, 远程主机等信息，然后对相应的提示符进行拼接。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>代码主要逻辑是调用之前定义的辅助函数，判断是否需要显示 git, python, 远程主机等信息，然后对相应的提示符进行拼接。</p>
 <p>而其中出现得比较频繁的 <code>epe-colorize-with-face</code> 就是作者定义的一个宏(macro), 用来显示字符串以及对应的 face(其实就是不同的颜色啦). 看懂了代码就好办了，现在就可以自己添加一个 Eshell 主题。</p>
 <h3 id="定义所需的-face"><span class="section-num">3.1</span> 定义所需的 face</h3>
 <p>因为我需要显示的 face(颜色), <code>eshell-extra-prompt</code> 并没有定义，所以就只好自己动手啦：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defface</span> <span class="nv">epe-pipeline-delimiter-face</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defface</span> <span class="nv">epe-pipeline-delimiter-face</span>
 </span></span><span class="line"><span class="cl">  <span class="o">&#39;</span><span class="p">((</span><span class="no">t</span> <span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">  <span class="s">&#34;Face for pipeline theme delimiter.&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:group</span> <span class="ss">&#39;epe</span><span class="p">)</span>
@@ -241,8 +367,62 @@
 </span></span><span class="line"><span class="cl">  <span class="o">&#39;</span><span class="p">((</span><span class="no">t</span> <span class="nb">:foreground</span> <span class="s">&#34;yellow&#34;</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">  <span class="s">&#34;Face for time in pipeline theme.&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:group</span> <span class="ss">&#39;epe</span><span class="p">)</span>
-</span></span></code></pre></div><p>然后就是按着原有的 Eshell 提示符来组装一个新的 Eshell 主题了，然后把这个主题定义成 pipeline (其实是我自己也没想出比较新颖的名字啦):</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">epe-theme-pipeline</span> <span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后就是按着原有的 Eshell 提示符来组装一个新的 Eshell 主题了，然后把这个主题定义成 pipeline (其实是我自己也没想出比较新颖的名字啦):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">epe-theme-pipeline</span> <span class="p">()</span>
 </span></span><span class="line"><span class="cl">  <span class="s">&#34;A eshell-prompt theme with full path, smiliar to oh-my-zsh theme.&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">setq</span> <span class="nv">eshell-prompt-regexp</span> <span class="s">&#34;^[^#\nλ]* λ[#]* &#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nf">concat</span>
@@ -290,7 +470,9 @@
 </span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">=</span> <span class="p">(</span><span class="nf">user-uid</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="s">&#34;#&#34;</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">			   <span class="ss">&#39;epe-sudo-symbol-face</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">   <span class="s">&#34; &#34;</span><span class="p">))</span>
-</span></span></code></pre></div><h2 id="总结"><span class="section-num">4</span> 总结</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="总结"><span class="section-num">4</span> 总结</h2>
 <p>这样一个新的 Eshell 主题就完工了，然后我给 <code>eshell-extra-prompt</code> 发了一个<a href="https://github.com/kaihaosw/eshell-prompt-extras/pull/16">Pull Request</a>, 最终效果如下：</p>
 <figure><a href="/ox-hugo/epe.png">
     <img loading="lazy" src="/ox-hugo/epe.png"/> </a>
@@ -324,11 +506,21 @@
 <p>我想我应该算得上是一个中级的Helm 用户吧。我有读过<a href="http://tuhdo.github.io/helm-intro.html">这篇文章</a> 还有<a href="http://tuhdo.github.io/helm-projectile.html">这篇文章</a> 以及<a href="https://github.com/emacs-helm/helm/wiki">Wiki</a> 此外，在长达一年的时间里，我每天都是使用Helm的</p>
 <p><strong>Helm 是一个非常成熟的工具</strong>.根据git 的提交历史，Helm 的开发工作是在2009年左右开始的。
 在写这篇文章的时候，Helm 官方的git 仓库有超过26000行elisp 代码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git clone https://github.com/emacs-helm/helm.git
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git clone https://github.com/emacs-helm/helm.git
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> helm
 </span></span><span class="line"><span class="cl">cat *.el <span class="p">|</span> wc -l
 </span></span><span class="line"><span class="cl"><span class="c1"># =&gt; 26431</span>
-</span></span></code></pre></div><p>这还是没有把在MELPA 上查询到跟Helm 有关的包有142个的情况考虑在内的呢。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这还是没有把在MELPA 上查询到跟Helm 有关的包有142个的情况考虑在内的呢。</p>
 <p>你可以用Helm来完成任何事情它主要的强大之处在于你可以把Helm 和很多Emacs 的行为整合在一起。你可以以Helm 为中心构造接口，就像Spacemacs 做的那样。Helm 支持非常一致的接口，你可以通过Helm 来做任何事</p>
 <p>你可以搜索文件，搜索缓冲区，搜索颜色，搜索项目，搜索你最近编辑过的文件，搜索系统进程, 搜索音乐，搜索网络资源，搜索补全，搜索代码片段，搜索正则表达式，搜索命令，文档
 相关描述，手册&hellip;.</p>
@@ -359,7 +551,20 @@
 和Ivy 这两个工具间不同的设计理念。阅读<a href="http://oremacs.com/swiper/">Ivy介绍</a> 以便更好了解Ivy的理念。</p>
 <p>在写这篇文章的时候，Ivy 只有大概3400行代码，为Ivy 所打造的生态系统：即Swipter 和
 Counsel 也只有7500 行代码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git clone https://github.com/abo-abo/swiper.git
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git clone https://github.com/abo-abo/swiper.git
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> swiper
 </span></span><span class="line"><span class="cl"><span class="c1">## Only ivy ?</span>
 </span></span><span class="line"><span class="cl">cat ivy.el <span class="p">|</span> wc -l
@@ -368,8 +573,33 @@ Counsel 也只有7500 行代码</p>
 </span></span><span class="line"><span class="cl"><span class="c1">## count lines of code into the whole swiper ecosystem</span>
 </span></span><span class="line"><span class="cl">cat *.el <span class="p">|</span> wc -l
 </span></span><span class="line"><span class="cl"><span class="c1"># =&gt; 7526</span>
-</span></span></code></pre></div><p>Ivy 真的是很容易上手，下面就是我的全部配置：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">ivy</span> <span class="nb">:ensure</span> <span class="no">t</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Ivy 真的是很容易上手，下面就是我的全部配置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">ivy</span> <span class="nb">:ensure</span> <span class="no">t</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:diminish</span> <span class="p">(</span><span class="nv">ivy-mode</span> <span class="o">.</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:bind</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">:map</span> <span class="nv">ivy-mode-map</span>
@@ -388,7 +618,9 @@ Counsel 也只有7500 行代码</p>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">setq</span> <span class="nv">ivy-re-builders-alist</span>
 </span></span><span class="line"><span class="cl">	<span class="c1">;; allow input not in order</span>
 </span></span><span class="line"><span class="cl">	<span class="o">&#39;</span><span class="p">((</span><span class="no">t</span>   <span class="o">.</span> <span class="nv">ivy--regex-ignore-order</span><span class="p">))))</span>
-</span></span></code></pre></div><p>Ivy 是很低调的；它不想让你把一切都整合到Ivy去。它仅仅是提供你必需的补全。你不能像Helm 那样用Ivy 来做任何事；那为什么我还要切换到Ivy 去呢？</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Ivy 是很低调的；它不想让你把一切都整合到Ivy去。它仅仅是提供你必需的补全。你不能像Helm 那样用Ivy 来做任何事；那为什么我还要切换到Ivy 去呢？</p>
 <p>虽然Ivy 已经最小化，但是我依然可以用Ivy 来代替我绝大部分日常使用的Helm命令。</p>
 <p>因为Ivy是如此简洁， <em>abo-abo</em> 在它上开发了一个叫 <strong>Counsel</strong> 的包； <strong>Counsel</strong> 可以为你提供非常非常多像你在Helm使用的命令</p>
 <p>你可以切换缓冲区，搜索文件，在项目级别进行搜索和替换，与Projectile 整合，搜索你最近
@@ -473,9 +705,28 @@ Counsel 也只有7500 行代码</p>
 <p>最后，这真的跟个人的品味有关。对于我自己来说，&ldquo;Ivy 还是Helm&rdquo; 这样的争论跟&quot;Emacs 还是Spacemacs&quot; &ldquo;Emacs 还是Ide&rdquo; &ldquo;C 还是Java&rdquo; &ldquo;简洁还是全能&rdquo; &ldquo;Thelonious 还是 Duke&rdquo;(译者注，两者都是爵士乐作曲家),&ldquo;Van Der Rohe 还是 Gaudi.&quot;(译者注：前者是德国美国
 的建筑风格，后者是西班牙加泰罗尼亚的建筑风格)这样的争论是非常相似的。</p>
 <p>你选择Helm呢，你会得到一个巨型的包，一系列你不会用到的特性，一堆你可能只是偶尔用一下的功能，一些你会一个小时使用50次的特性。如果你选择Ivy,你会得到一个只拥有那些让你顺心的必要特性的精简的包，你可以很容易地通过 <strong>Counsel</strong> 或者简单的函数对它进行扩展</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nv">ivy-read</span> <span class="s">&#34;Pick:&#34;</span> <span class="p">(</span><span class="nf">mapcar</span> <span class="nf">#&#39;number-to-string</span> <span class="p">(</span><span class="nv">number-sequence</span> <span class="mi">1</span> <span class="mi">10</span><span class="p">)))</span>
-</span></span></code></pre></div><p>如果你想要通过Helm 来扩展：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nv">helm</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nv">ivy-read</span> <span class="s">&#34;Pick:&#34;</span> <span class="p">(</span><span class="nf">mapcar</span> <span class="nf">#&#39;number-to-string</span> <span class="p">(</span><span class="nv">number-sequence</span> <span class="mi">1</span> <span class="mi">10</span><span class="p">)))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果你想要通过Helm 来扩展：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nv">helm</span>
 </span></span><span class="line"><span class="cl"> <span class="nb">:sources</span>
 </span></span><span class="line"><span class="cl"> <span class="p">(</span><span class="nv">helm-build-sync-source</span> <span class="s">&#34;one-to-ten&#34;</span>
 </span></span><span class="line"><span class="cl">			 <span class="nb">:candidates</span>
@@ -483,9 +734,18 @@ Counsel 也只有7500 行代码</p>
 </span></span><span class="line"><span class="cl">			 <span class="nb">:fuzzy-match</span> <span class="no">t</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"> <span class="nb">:buffer</span>
 </span></span><span class="line"><span class="cl"> <span class="s">&#34;*helm one-to-ten*&#34;</span><span class="p">)</span>
-</span></span></code></pre></div><p>或者简单的列表：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nv">helm-comp-read</span> <span class="s">&#34;Pick:&#34;</span> <span class="p">(</span><span class="nf">mapcar</span> <span class="nf">#&#39;number-to-string</span> <span class="p">(</span><span class="nv">number-sequence</span> <span class="mi">1</span> <span class="mi">10</span><span class="p">)))</span>
-</span></span></code></pre></div><p>Helm 为用户作了非常多的决定，Ivy 让用户按需求进行定制；Helm 通过耗费非常多的内存来变得快速，Ivy 通过保持简洁来实现快速；Helm 很成熟，Ivy 很青涩；Helm 为Emacs 提供一致性，Ivy 为Emacs 提供简洁性和可预见性；Helm 需要你进行一定的配置，Ivy 开箱即用</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>或者简单的列表：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nv">helm-comp-read</span> <span class="s">&#34;Pick:&#34;</span> <span class="p">(</span><span class="nf">mapcar</span> <span class="nf">#&#39;number-to-string</span> <span class="p">(</span><span class="nv">number-sequence</span> <span class="mi">1</span> <span class="mi">10</span><span class="p">)))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Helm 为用户作了非常多的决定，Ivy 让用户按需求进行定制；Helm 通过耗费非常多的内存来变得快速，Ivy 通过保持简洁来实现快速；Helm 很成熟，Ivy 很青涩；Helm 为Emacs 提供一致性，Ivy 为Emacs 提供简洁性和可预见性；Helm 需要你进行一定的配置，Ivy 开箱即用</p>
 <p>我自己是稍偏向Ivy 的，因为我正在使用它；
 它更符合我的口味。但是作为一个用户，Helm和Ivy并没有那么大的差别。它们都是非常优秀的包，只是以不用的方式去实现相同的目标</p>
 <p>原文地址 <a href="https://sam217pa.github.io/2016/09/13/from-helm-to-ivy/">https://sam217pa.github.io/2016/09/13/from-helm-to-ivy/</a></p>
@@ -622,9 +882,17 @@ maigt 会自动为你在另外一个窗口显示提交信息</p>
 <h2 id="fasd"><span class="section-num">1</span> Fasd</h2>
 <p>在 Shell 下面有非常多的命令操作是与文件和目录相关的，如果你要进入到另外一个目 录你可以使用相对或者绝对路径来访问该目录，但是如果这是一个与当前目录不相关的目 录你就只能通过绝对路径来访问。</p>
 <p>以我自己的目录为例，当前目录是 <strong><em>home/samray</em>.emacs.d/elisp/</strong> ,我希望访问 <strong>Document</strong> 目录下一个的子目录 <strong>Python</strong>, 我可以通过下面的命令来访问：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> ~/Document/Programming/Python
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> ~/Document/Programming/Python
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> /home/samray/Document/Programming/Python
-</span></span></code></pre></div><p>这就是我需要的命令，虽然可以通过 <strong>tab</strong> 进行目录名的补全，但是我还是觉得要输入的东西太多了(正如 Larry Wall 所说，懒惰是程序员的美德). 然后，我发现了 <a href="https://github.com/clvv/fasd">Fasd </a>这个神器。它可以让我只输入 <strong>Python</strong> 就进入到我想访问的 <strong>Python</strong> 目录，</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这就是我需要的命令，虽然可以通过 <strong>tab</strong> 进行目录名的补全，但是我还是觉得要输入的东西太多了(正如 Larry Wall 所说，懒惰是程序员的美德). 然后，我发现了 <a href="https://github.com/clvv/fasd">Fasd </a>这个神器。它可以让我只输入 <strong>Python</strong> 就进入到我想访问的 <strong>Python</strong> 目录，</p>
 <p>神奇吧！:)</p>
 <hr>
 <p>Fasd以访问的频繁程度和最近是否有访问对文件和目录分配优先级，然后通过判断已访问的文件以及其优先级来切换目录或者打开文件，所以如果你之前已经访问过某个目录.</p>
@@ -649,7 +917,19 @@ maigt 会自动为你在另外一个窗口显示提交信息</p>
 <li>
 <p><strong>-f</strong>:只匹配文件
 Fasd 文档还建议你为 fasd的命令选项设置别名</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">a</span><span class="o">=</span><span class="s1">&#39;fasd -a&#39;</span>        <span class="c1"># any</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">a</span><span class="o">=</span><span class="s1">&#39;fasd -a&#39;</span>        <span class="c1"># any</span>
 </span></span><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">s</span><span class="o">=</span><span class="s1">&#39;fasd -si&#39;</span>       <span class="c1"># show / search / select</span>
 </span></span><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">d</span><span class="o">=</span><span class="s1">&#39;fasd -d&#39;</span>        <span class="c1"># directory</span>
 </span></span><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">f</span><span class="o">=</span><span class="s1">&#39;fasd -f&#39;</span>        <span class="c1"># file</span>
@@ -657,23 +937,67 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 </span></span><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">sf</span><span class="o">=</span><span class="s1">&#39;fasd -sif&#39;</span>     <span class="c1"># interactive file selection</span>
 </span></span><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">z</span><span class="o">=</span><span class="s1">&#39;fasd_cd -d&#39;</span>     <span class="c1"># cd, same functionality as j in autojump</span>
 </span></span><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">zz</span><span class="o">=</span><span class="s1">&#39;fasd_cd -d -i&#39;</span> <span class="c1"># cd with interactive selection</span>
-</span></span></code></pre></div><p>这样你就可以通过 <strong>z some-dir</strong> 直接进入到某个目录或者 <strong>zz some-dir</strong> 选择进入有多个匹配的特定目录。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样你就可以通过 <strong>z some-dir</strong> 直接进入到某个目录或者 <strong>zz some-dir</strong> 选择进入有多个匹配的特定目录。</p>
 <p>Fasd 还会判断应该显示所有的匹配选项或者是直接选择最佳匹配. 例如你也可以将fasd配合 <em>subshell</em> 使用，例如打开 <strong>foo</strong></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">vim <span class="sb">`</span>f foo<span class="sb">`</span>
-</span></span></code></pre></div><p>又或者打开  <strong>/etc/rc.conf</strong></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">vim <span class="sb">`</span>f rc conf<span class="sb">`</span>
-</span></span></code></pre></div></li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">vim <span class="sb">`</span>f foo<span class="sb">`</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>又或者打开  <strong>/etc/rc.conf</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">vim <span class="sb">`</span>f rc conf<span class="sb">`</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ul>
 <h3 id="例子"><span class="section-num">1.2</span> 例子</h3>
 <p>你可以将fasd 配合正则表达式使用，例如列举以 <em>py</em> 结尾的最近访问的文件：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">f py$
-</span></span></code></pre></div><p>又或者使用Emacs 打开最近频繁访问的文件 <em>bar</em></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">f -e emacs bar
-</span></span></code></pre></div><h2 id="fasd-plus-eshell"><span class="section-num">2</span> Fasd +Eshell</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">f py$
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>又或者使用Emacs 打开最近频繁访问的文件 <em>bar</em></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">f -e emacs bar
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="fasd-plus-eshell"><span class="section-num">2</span> Fasd +Eshell</h2>
 <p>fasd 真的可以大幅度提高效率，但是我有点不太满意的是，我是个 Emacser, 我的操作基本是在 Emacs 里完成的，而我在 Emacs里面使用的 shell 是 Eshell,Eshell 似乎不能与 fasd 无缝结合，似乎可以折腾一下。</p>
 <hr>
 <p><strong>z</strong> 和 <strong>zz</strong> 命令是无法在Eshell 里面运行，因为 <strong>z</strong> 是 <strong>fasd_cd</strong> 的别名，而<strong>fasd_cd</strong> 是一个shell script 函数，Eshell无法运行该函数，代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">fasd_cd <span class="o">()</span> <span class="o">{</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">fasd_cd <span class="o">()</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="nv">$#</span> -le <span class="m">1</span> <span class="o">]</span>
 </span></span><span class="line"><span class="cl">    <span class="k">then</span>
 </span></span><span class="line"><span class="cl">	fasd <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span>
@@ -683,8 +1007,24 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 </span></span><span class="line"><span class="cl">	<span class="o">[</span> -d <span class="s2">&#34;</span><span class="nv">$_fasd_ret</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="s2">&#34;</span><span class="nv">$_fasd_ret</span><span class="s2">&#34;</span> <span class="o">||</span> <span class="nb">printf</span> %s<span class="se">\n</span> <span class="s2">&#34;</span><span class="nv">$_fasd_ret</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>Eshell无法运行该函数，因为Eshell文档的匮乏，我也不知道如何编写跟上面代码等价的 &ldquo;Eshell script&rdquo;,所以就用 elisp 写一段同样功能的函数好了。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">samray/eshell-fasd-z</span> <span class="p">(</span><span class="kp">&amp;rest</span> <span class="nv">args</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Eshell无法运行该函数，因为Eshell文档的匮乏，我也不知道如何编写跟上面代码等价的 &ldquo;Eshell script&rdquo;,所以就用 elisp 写一段同样功能的函数好了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">samray/eshell-fasd-z</span> <span class="p">(</span><span class="kp">&amp;rest</span> <span class="nv">args</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="s">&#34;Use fasd to change directory more effectively by passing ARGS.&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">setq</span> <span class="nv">args</span> <span class="p">(</span><span class="nv">eshell-flatten-list</span> <span class="nv">args</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">let*</span> <span class="p">((</span><span class="nv">fasd</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;fasd &#34;</span> <span class="p">(</span><span class="nf">car</span> <span class="nv">args</span><span class="p">)))</span>
@@ -694,14 +1034,30 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 </span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">eshell/cd</span> <span class="nv">path</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">eshell/echo</span> <span class="nv">path</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">))</span>
-</span></span></code></pre></div><p>函数功能很快就写好了，实现了 <strong>z</strong> 的功能，但是原来的代码一直不能正常运行，折腾了一个多小时都没解决，输出什么都正常，最后 debug 发现是因为显示的路径后面多了一个换行符即 <strong>/home/samray</strong> 变成了 <strong>/home/samray\n</strong>,而输出换行符又不会显示，真
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>函数功能很快就写好了，实现了 <strong>z</strong> 的功能，但是原来的代码一直不能正常运行，折腾了一个多小时都没解决，输出什么都正常，最后 debug 发现是因为显示的路径后面多了一个换行符即 <strong>/home/samray</strong> 变成了 <strong>/home/samray\n</strong>,而输出换行符又不会显示，真
 的坑。</p>
 <p>最后为命令赋予别名就可以像在 <strong>zsh</strong> 下那样工作了：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">alias</span> z <span class="s1">&#39;samray/shell-fasd-z $1&#39;</span>
-</span></span></code></pre></div><hr>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">alias</span> z <span class="s1">&#39;samray/shell-fasd-z $1&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
 <p>更多的用法就要查阅官方文档了</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">man fasd
-</span></span></code></pre></div><p>Enjoy Emacs and Shell :)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">man fasd
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Enjoy Emacs and Shell :)</p>
 <p>参考：
 <a href="https://github.com/clvv/fasd">https://github.com/clvv/fasd</a></p>
 ]]></content:encoded>
@@ -724,18 +1080,46 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 <p>有时候，经常看到社区里面有人吐嘈Emacs 什么都好，就是启动时间太长了，其实是存在一些技巧来缩短加载时间的</p>
 <h2 id="技巧1"><span class="section-num">1</span> 技巧1</h2>
 <p>在你的 <strong>.emacs</strong> 或者相应的初始化文件里面添加如下代码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="err">#</span> <span class="nv">Increase</span> <span class="nv">the</span> <span class="nv">garbage</span> <span class="nv">collection</span> <span class="nv">threshold</span> <span class="nv">to</span> <span class="mi">128</span> <span class="nv">MB</span> <span class="nv">to</span> <span class="nv">ease</span> <span class="nv">startup</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="err">#</span> <span class="nv">Increase</span> <span class="nv">the</span> <span class="nv">garbage</span> <span class="nv">collection</span> <span class="nv">threshold</span> <span class="nv">to</span> <span class="mi">128</span> <span class="nv">MB</span> <span class="nv">to</span> <span class="nv">ease</span> <span class="nv">startup</span>
 </span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">setq</span> <span class="nv">gc-cons-threshold</span> <span class="p">(</span><span class="nf">*</span> <span class="mi">128</span> <span class="mi">1024</span> <span class="mi">1024</span> <span class="p">))</span>
 </span></span><span class="line"><span class="cl"><span class="err">#</span> <span class="nv">your</span> <span class="nv">configuration</span> <span class="nv">code</span>
 </span></span><span class="line"><span class="cl"><span class="err">#</span> <span class="o">......</span>
 </span></span><span class="line"><span class="cl"><span class="err">#</span> <span class="nv">Garbage</span> <span class="nv">collector-decrease</span> <span class="nv">threshold</span> <span class="nv">to</span> <span class="mi">5</span> <span class="nv">MB</span>
 </span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;after-init-hook</span> <span class="p">(</span><span class="nb">lambda</span> <span class="p">()</span> <span class="p">(</span><span class="nb">setq</span> <span class="nv">gc-cons-threshold</span> <span class="p">(</span><span class="nf">*</span> <span class="mi">5</span> <span class="mi">1024</span> <span class="mi">1024</span><span class="p">))))</span>
 </span></span><span class="line"><span class="cl"><span class="err">#</span> <span class="nv">init.el</span> <span class="nv">ends</span> <span class="nv">here</span>
-</span></span></code></pre></div><p><strong>gc-cons-threshold</strong> 指定了emacs 进行垃圾回收的阀值，默认值是 <strong>800000byte</strong>,实在是太小了，所以Emacs 会在启动期间进行非常多次的垃圾回收，启动时间自然长了。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>gc-cons-threshold</strong> 指定了emacs 进行垃圾回收的阀值，默认值是 <strong>800000byte</strong>,实在是太小了，所以Emacs 会在启动期间进行非常多次的垃圾回收，启动时间自然长了。</p>
 <p>在加载完以后，再把 <strong>gc-cons-threshold</strong> 的值调低，当然，如果你的内存很大，也可以不改回来</p>
 <h2 id="技巧2"><span class="section-num">2</span> 技巧2</h2>
 <p><strong>(let((file-name-hander-alist nil))init.file)</strong> 包裹(wrap)你的初始化文件，即：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">setq</span> <span class="nv">gc-cons-threshold</span> <span class="p">(</span><span class="nf">*</span> <span class="mi">500</span> <span class="mi">1024</span> <span class="mi">1024</span><span class="p">))</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">setq</span> <span class="nv">gc-cons-threshold</span> <span class="p">(</span><span class="nf">*</span> <span class="mi">500</span> <span class="mi">1024</span> <span class="mi">1024</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">let</span> <span class="p">((</span><span class="nv">file-name-handler-alist</span> <span class="no">nil</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">  <span class="o">...</span>
 </span></span><span class="line"><span class="cl">
@@ -746,29 +1130,66 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 </span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;after-init-hook</span> <span class="p">(</span><span class="nb">lambda</span> <span class="p">()</span> <span class="p">(</span><span class="nb">setq</span> <span class="nv">gc-cons-threshold</span> <span class="p">(</span><span class="nf">*</span> <span class="mi">5</span> <span class="mi">1024</span> <span class="mi">1024</span><span class="p">))))</span>
 </span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">provide</span> <span class="ss">&#39;init</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="c1">;;; init.el ends here</span>
-</span></span></code></pre></div><p>因为 <strong>file-name-handler-alist</strong> 的默认值是一些正则表达式，也就是说Emacs 在启动过程中加载el和elc 文件都会将文件名和正则表达式进行匹配</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为 <strong>file-name-handler-alist</strong> 的默认值是一些正则表达式，也就是说Emacs 在启动过程中加载el和elc 文件都会将文件名和正则表达式进行匹配</p>
 <h2 id="技巧3"><span class="section-num">3</span> 技巧3</h2>
 <p>Emacs lisp 有一项auto-load 的技术，类似延迟加载，合理运用延迟，让笔者的Emacs启动加载时间减少一半，因为笔者用 <strong>use-package</strong> 这个macro,而 <strong>use-package</strong> 又集成了延迟加载的功能，所以笔者就直接拿自己的代码举例了</p>
 <h3 id="after"><span class="section-num">3.1</span> :after</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="c1">;;; Export to twitter bootstrap</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="c1">;;; Export to twitter bootstrap</span>
 </span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">ox-twbs</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:after</span> <span class="nv">org</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:ensure</span> <span class="nv">ox-twbs</span>
 </span></span><span class="line"><span class="cl">  <span class="p">)</span>
-</span></span></code></pre></div><p><strong>:after</strong> 关键字的作用基本跟 <strong>with-eval-after-load</strong> 的作用是相同的，所以笔者所
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>:after</strong> 关键字的作用基本跟 <strong>with-eval-after-load</strong> 的作用是相同的，所以笔者所
 有类似的org-mode 插件包都会在org-mode 加载以后才会加载</p>
 <h3 id="commands"><span class="section-num">3.2</span> :commands</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">avy</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">avy</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:commands</span> <span class="p">(</span><span class="nv">avy-goto-char</span> <span class="nv">avy-goto-line</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:ensure</span> <span class="no">t</span><span class="p">)</span>
-</span></span></code></pre></div><p>这里就贴上<a href="https://github.com/jwiegley/use-package">use-package</a>文档 的说明了</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里就贴上<a href="https://github.com/jwiegley/use-package">use-package</a>文档 的说明了</p>
 <blockquote>
 <p>When you use the :commands keyword, it creates autoloads for those commands
 and defers loading of the module until they are used</p>
 </blockquote>
 <p>也就是 <strong>:commands</strong> 关键字就创建了后面所接的命令的 <strong>autoloads</strong> 机制了</p>
 <h3 id="bind-mode"><span class="section-num">3.3</span> :bind :mode</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">hi-lock</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">hi-lock</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:bind</span> <span class="p">((</span><span class="s">&#34;M-o l&#34;</span> <span class="o">.</span> <span class="nv">highlight-lines-matching-regexp</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="s">&#34;M-o r&#34;</span> <span class="o">.</span> <span class="nv">highlight-regexp</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="s">&#34;M-o w&#34;</span> <span class="o">.</span> <span class="nv">highlight-phrase</span><span class="p">)))</span>
@@ -779,7 +1200,9 @@ and defers loading of the module until they are used</p>
 </span></span><span class="line"><span class="cl">  <span class="nb">:config</span> <span class="p">(</span><span class="nb">progn</span>
 </span></span><span class="line"><span class="cl">	    <span class="p">(</span><span class="nb">setq</span> <span class="nv">mmm-submode-decoration-level</span> <span class="mi">0</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">	    <span class="p">))</span>
-</span></span></code></pre></div><p>附上文档说明</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>附上文档说明</p>
 <blockquote>
 <p>In almost all cases you don&rsquo;t need to manually specify :defer t. This is implied
 whenever :bind or :mode or :interpreter is used</p>
@@ -793,14 +1216,27 @@ time, and thus you would like to defer loading even though use-package isn&rsquo
 creating any autoloads for you.</p>
 </blockquote>
 <p>贴上笔者自己的代码，可以更加清晰</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">anaconda-mode</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">anaconda-mode</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:defer</span> <span class="no">t</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:ensure</span> <span class="no">t</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:init</span><span class="p">(</span><span class="nb">progn</span>
 </span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;python-mode-hook</span> <span class="ss">&#39;anaconda-mode</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;python-mode-hook</span> <span class="ss">&#39;anaconda-eldoc-mode</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">	 <span class="p">))</span>
-</span></span></code></pre></div><p>这样 <strong>anaconda-mode</strong> 就会在 <strong>python-mode</strong> 加载以后被加载</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样 <strong>anaconda-mode</strong> 就会在 <strong>python-mode</strong> 加载以后被加载</p>
 <p>Enjoy Emacs :)</p>
 ]]></content:encoded>
     </item>
@@ -814,22 +1250,45 @@ creating any autoloads for you.</p>
       <description>Use Ipython in Emasc</description>
       <content:encoded><![CDATA[<h2 id="emacs-ipython-输出错误"><span class="section-num">1</span> Emacs Ipython 输出错误</h2>
 <p>在Emacs 运行 <strong>run-python</strong> 的时候，报错了，如下</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">[</span><span class="sc">?1</span><span class="nv">2l</span><span class="p">[</span><span class="sc">?2</span><span class="nv">5h2+2</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">[</span><span class="sc">?1</span><span class="nv">2l</span><span class="p">[</span><span class="sc">?2</span><span class="nv">5h2+2</span>
 </span></span><span class="line"><span class="cl">      <span class="p">[</span><span class="nv">J</span><span class="p">[</span><span class="sc">?7</span><span class="nv">h</span><span class="p">[</span><span class="sc">?1</span><span class="nv">2l</span><span class="p">[</span><span class="sc">?2</span><span class="nv">5h</span><span class="p">[</span><span class="sc">?2</span><span class="nv">004l</span><span class="p">[</span><span class="sc">?7</span><span class="nv">hOut</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">:</span> <span class="mi">4</span>
-</span></span></code></pre></div><p>因为我的版本时Ipython5,查阅文档<a href="http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1">http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1</a>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为我的版本时Ipython5,查阅文档<a href="http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1">http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1</a>
 之后，发现Ipython5 有了新的terminal 接口，和Emacs 继承的shell 不兼容，所以
 会出现上述的错误，只要给Ipython 加上运行参数就能解决了，所以只要在 <strong>.emacs</strong>
 或者对应的初始化文件加上下面语句</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">setq</span> <span class="nv">python-shell-interpreter</span> <span class="s">&#34;ipython&#34;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">setq</span> <span class="nv">python-shell-interpreter</span> <span class="s">&#34;ipython&#34;</span>
 </span></span><span class="line"><span class="cl">      <span class="nv">python-shell-interpreter-args</span> <span class="s">&#34;--simple-prompt -i&#34;</span><span class="p">)</span>
-</span></span></code></pre></div><hr>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
 <h3 id="update-2017-3-15"><span class="section-num">1.1</span> Update 2017-3-15</h3>
 <p>在添加了 <strong>&ndash;simple-promp -i</strong> 参数以后，虽说乱码的问题解决了，但是新的问题又出现了
 在Ipython 里面是没法无法输入多行内容的，即使是一个简单的循环，详情查看这条issue
 <a href="https://github.com/ipython/ipython/issues/9816">https://github.com/ipython/ipython/issues/9816</a>. 现在Ipython 开发社区还没有解决这个
 问题，所以现在的权宜之计就是使用 Ipython4,等到社区解决了这个问题在升级为 Ipython5</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pip install --force-reinstall <span class="nv">ipython</span><span class="o">==</span>4.2.1
-</span></span></code></pre></div><h2 id="emacs-ipython-的使用优化"><span class="section-num">2</span> Emacs Ipython 的使用优化</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pip install --force-reinstall <span class="nv">ipython</span><span class="o">==</span>4.2.1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="emacs-ipython-的使用优化"><span class="section-num">2</span> Emacs Ipython 的使用优化</h2>
 <h3 id="python-pop"><span class="section-num">2.1</span> python-pop</h3>
 <p>因为我之前使用Emacs的时候，是使用Spacemacs的配置的，但是后来觉得还是自己的
 配置用的更舒服，所以又切换回自己的配置，但是我还是很想念Spacemacs的一些绑定
@@ -837,7 +1296,30 @@ creating any autoloads for you.</p>
 Spacemacs的shell使用习惯。然后我觉得，Ipython shell也可以这样配置，只不过
 我没有发现类似的package,又因为Emacs Lisp的强大，所以我自己写了一段小函数实现
 shell-pop 的功能</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">samray/python-pop</span> <span class="p">()</span>
 </span></span><span class="line"><span class="cl">  <span class="s">&#34;Run python and switch to the python buffer.
 </span></span></span><span class="line"><span class="cl"><span class="s">similar to shell-pop&#34;</span>
@@ -856,16 +1338,26 @@ shell-pop 的功能</p>
 </span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">switch-to-buffer-other-window</span> <span class="s">&#34;*Python*&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">end-of-buffer</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">evil-insert-state</span><span class="p">))))</span>
-</span></span></code></pre></div><p>如果没有使用Evil,可以把 **(evil-insert-state)**去掉</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果没有使用Evil,可以把 **(evil-insert-state)**去掉</p>
 <h3 id="ipython-history"><span class="section-num">2.2</span> Ipython History</h3>
 <p>我在普通的Shell使用Ipython的时候，很自然地使用上下方向键翻到上一条/下一条
 执行的命令，因为shell的使用习惯就是这样滴，但是在Emacs里面使用Ipython,上下
 方向键是去到上一行/下一行，就好像 vim 的 <strong>j</strong> <strong>k</strong>,如果要翻到上一条命令，快捷键
 是 <strong>M-p</strong>,实在很不习惯，所以在查了一下Emacs manual 后，我改了一下按键绑定就实现了
 我想要的效果</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nf">define-key</span> <span class="nv">comint-mode-map</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&#34;&lt;up&gt;&#34;</span><span class="p">)</span> <span class="ss">&#39;comint-previous-input</span><span class="p">)</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nf">define-key</span> <span class="nv">comint-mode-map</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&#34;&lt;up&gt;&#34;</span><span class="p">)</span> <span class="ss">&#39;comint-previous-input</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nf">define-key</span> <span class="nv">comint-mode-map</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&#34;&lt;down&gt;&#34;</span><span class="p">)</span> <span class="ss">&#39;comint-next-input</span><span class="p">)</span>
-</span></span></code></pre></div><p>Enjoy Emacs :)</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Enjoy Emacs :)</p>
 ]]></content:encoded>
     </item>
     

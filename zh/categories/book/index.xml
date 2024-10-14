@@ -1061,22 +1061,44 @@
 <li>尽管罗马平民强烈要求少数人统治的政体下的机会均等, 但是他们并没有要求改变少数人统治的政体, 即寡头政治. 尽管他们要求授予自己的代表以统治的权力, 但是他们并没有要求让平民阶级的所有人都参与政权.</li>
 </ol>
 <p>王政时期的罗马:</p>
-<pre tabindex="0"><code class="language-dot" data-lang="dot">graph 王政{
-rankdir=LR;
-国王 -- 市民大会;
-元老院 -- 市民大会;
-元老院 -- 国王;
-}
-</code></pre><figure>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">graph 王政{
+</span></span><span class="line"><span class="cl">rankdir=LR;
+</span></span><span class="line"><span class="cl">国王 -- 市民大会;
+</span></span><span class="line"><span class="cl">元老院 -- 市民大会;
+</span></span><span class="line"><span class="cl">元老院 -- 国王;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure>
     <img loading="lazy" src="/ox-hugo/%e7%8e%8b%e6%94%bf%e6%97%b6%e4%bb%a3.png"/> 
 </figure>
 
 <p>共和政体的罗马:</p>
-<pre tabindex="0"><code class="language-dot" data-lang="dot">graph{
-执政官 -- 市民大会;
-元老院 -- 市民大会;
-}
-</code></pre><figure>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">graph{
+</span></span><span class="line"><span class="cl">执政官 -- 市民大会;
+</span></span><span class="line"><span class="cl">元老院 -- 市民大会;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure>
     <img loading="lazy" src="/ox-hugo/%e5%85%b1%e5%92%8c%e6%97%b6%e4%bb%a3.png"/> 
 </figure>
 
@@ -1132,35 +1154,69 @@ rankdir=LR;
 <p>从此, 罗马不再是贵族政体, 而是变成名副其实的寡头政体国家, 所谓贵族政体是由贵族出身的少数人统治绝大多数人的政体, 而寡头政体在少数人统治多数人的这一点上与贵族政体相同, 但是, 对少数人的血统没有要求. (寡头政体也是分情况的, 罗马这种由市民大会选举出来的执政官执政的方式是少数人统治的寡头政体, 像俄罗斯这种普京一人转的, 也是寡头政体, 但是他是上了不会下来. 而80年代某国的老人政治, 一群老家伙在最高领导人之上继续执政的方式, 也是寡头政体, 他们也不是选举出来的)</p>
 <h3 id="罗马政体"><span class="section-num">3.6</span> 罗马政体</h3>
 <p>以前在教科书上, 学到的&quot;真理&quot;是: 经济基础决定上层建筑(即政治体系), 现在的认识是, 政治体系是一切的基础, 涉及国民的生活形式, 经济也自然是受政治的影响.</p>
-<pre tabindex="0"><code class="language-dot" data-lang="dot">digraph G{
-subgraph K{
-
-法务官[label =&#34;法务官 1人-&gt;2人-&gt;16人&#34;];
-财务检查官[label = &#34;财务检查官 2人-&gt;40人&#34;];
-财务官[label=&#34;财务官 2人&#34;];
-按察官[label=&#34;按察官 4人&#34;];
-元老院议员[label=&#34;元老院议员 300人&#34;];
-执政官[label=&#34;执政官 2人&#34;];
-独裁官[label=&#34;独裁官 1人&#34;];
-骑兵长官[label=&#34;骑兵长官 实质上的副官 1人&#34;];
-市民大会[label=&#34;市民大会 全体市民&#34;]
-
-市民大会-&gt;法务官[label = &#34;选出&#34;];
-市民大会-&gt;财务检查官[label = &#34;选出&#34;];
-市民大会-&gt;财务官[label = &#34;选出&#34;];
-市民大会-&gt;按察官[label = &#34;选出&#34;];
-市民大会-&gt;元老院议员[label = &#34;选出&#34;];
-元老院议员-&gt;执政官[label=&#34;承认劝告&#34;];
-执政官-&gt;独裁官[label=&#34;指名&#34;];
-独裁官-&gt;骑兵长官[label=&#34;任命&#34;];
-}
-subgraph H{
-平民大会[label=&#34;平民大会(仅限平民)&#34;];
-护民官[label=&#34;护民官2人-&gt;10人&#34;];
-平民大会 -&gt; 护民官[label=&#34;选出&#34;];
-}
-}
-</code></pre><figure>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">digraph G{
+</span></span><span class="line"><span class="cl">subgraph K{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">法务官[label =&#34;法务官 1人-&gt;2人-&gt;16人&#34;];
+</span></span><span class="line"><span class="cl">财务检查官[label = &#34;财务检查官 2人-&gt;40人&#34;];
+</span></span><span class="line"><span class="cl">财务官[label=&#34;财务官 2人&#34;];
+</span></span><span class="line"><span class="cl">按察官[label=&#34;按察官 4人&#34;];
+</span></span><span class="line"><span class="cl">元老院议员[label=&#34;元老院议员 300人&#34;];
+</span></span><span class="line"><span class="cl">执政官[label=&#34;执政官 2人&#34;];
+</span></span><span class="line"><span class="cl">独裁官[label=&#34;独裁官 1人&#34;];
+</span></span><span class="line"><span class="cl">骑兵长官[label=&#34;骑兵长官 实质上的副官 1人&#34;];
+</span></span><span class="line"><span class="cl">市民大会[label=&#34;市民大会 全体市民&#34;]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">市民大会-&gt;法务官[label = &#34;选出&#34;];
+</span></span><span class="line"><span class="cl">市民大会-&gt;财务检查官[label = &#34;选出&#34;];
+</span></span><span class="line"><span class="cl">市民大会-&gt;财务官[label = &#34;选出&#34;];
+</span></span><span class="line"><span class="cl">市民大会-&gt;按察官[label = &#34;选出&#34;];
+</span></span><span class="line"><span class="cl">市民大会-&gt;元老院议员[label = &#34;选出&#34;];
+</span></span><span class="line"><span class="cl">元老院议员-&gt;执政官[label=&#34;承认劝告&#34;];
+</span></span><span class="line"><span class="cl">执政官-&gt;独裁官[label=&#34;指名&#34;];
+</span></span><span class="line"><span class="cl">独裁官-&gt;骑兵长官[label=&#34;任命&#34;];
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">subgraph H{
+</span></span><span class="line"><span class="cl">平民大会[label=&#34;平民大会(仅限平民)&#34;];
+</span></span><span class="line"><span class="cl">护民官[label=&#34;护民官2人-&gt;10人&#34;];
+</span></span><span class="line"><span class="cl">平民大会 -&gt; 护民官[label=&#34;选出&#34;];
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure>
     <img loading="lazy" src="/ox-hugo/%e5%85%b1%e5%92%8c%e6%94%bf%e6%b2%bb%e5%bb%ba%e7%ad%91.png"/> 
 </figure>
 

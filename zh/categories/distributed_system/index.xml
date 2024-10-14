@@ -624,13 +624,25 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 <p>所以可见, 主/从复制模式提供的一致性保证, 只能说明是&quot;尽力而为&quot;. 为了避免异常导致一致性保证被违反, 我们需要增加多一轮的消息传递, 就来到了段提供协议(2PC)</p>
 <h3 id="two-phase-commit--2pc"><span class="section-num">5.5</span> Two phase commit (2PC)</h3>
 <p>下图说明两阶段提交(2PC)的消息流:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">[ Coordinator ] -&gt; OK to commit?     [ Peers ]
 </span></span><span class="line"><span class="cl">&lt;- Yes / No
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">[ Coordinator ] -&gt; Commit / Rollback [ Peers ]
 </span></span><span class="line"><span class="cl">&lt;- ACK
-</span></span></code></pre></div><p>2PC流程如下:</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>2PC流程如下:</p>
 <ul>
 <li>在一阶段(投票), 协调者将更新请求发送给所有的参与者, 每个参与者处理请求并决定是commit 还是 rollback.</li>
 <li>在二阶段(决定), 协调者决定结果并通知每个参与者.</li>
@@ -693,7 +705,20 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 <p>P2c. For any v and n, if a proposal with value v and number n is issued [by a leader], then there is a set S consisting of a majority of acceptors [followers] such that either (a) no acceptor in S has accepted any proposal numbered less than n, or (b) v is the value of the highest-numbered proposal among all proposals numbered less than n accepted by the followers in S.</p>
 </blockquote>
 <p>这是Paxos算法的核心, 为了确保领导在咨询民众编号最高的提案与值时, 没有竞争提案出现,领导要求民众不能接受比当前编号低的提案. 所以把Lamport的话组合起来, 使用Paxos算法要达到一个共识, 需要两轮的沟通:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">[ Proposer ] -&gt; Prepare(n)                                [ Followers ]
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">[ Proposer ] -&gt; Prepare(n)                                [ Followers ]
 </span></span><span class="line"><span class="cl">&lt;- Promise(n; previous proposal number
 </span></span><span class="line"><span class="cl">and previous value if accepted a
 </span></span><span class="line"><span class="cl">proposal in the past)
@@ -702,7 +727,9 @@ Even though it&amp;rsquo;s old and full of black magic code, but it also also ha
 </span></span><span class="line"><span class="cl">associated with the highest proposal number
 </span></span><span class="line"><span class="cl">reported by the followers)
 </span></span><span class="line"><span class="cl">&lt;- Accepted(n, value)
-</span></span></code></pre></div><p>第一轮, 带上最近的提案与值, 就是为了避免在第一轮问询与第二轮更新之间, 接受一个新更新请求, 就工程实践的角度来看, 此处的previous value with the highest proposal number 相当于是一个乐观锁, 避免被更少的值所更新; 假如中间插入的更新请求成功, highest proposal number 就不是第一轮问询持有的值, 更新就会失败, 避免被覆写.</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>第一轮, 带上最近的提案与值, 就是为了避免在第一轮问询与第二轮更新之间, 接受一个新更新请求, 就工程实践的角度来看, 此处的previous value with the highest proposal number 相当于是一个乐观锁, 避免被更少的值所更新; 假如中间插入的更新请求成功, highest proposal number 就不是第一轮问询持有的值, 更新就会失败, 避免被覆写.</p>
 <h3 id="paxos-raft-zab"><span class="section-num">5.7</span> Paxos, Raft, ZAB</h3>
 <p>有名的分区容忍性共识(Partition tolerant consensus algorithms)算法:</p>
 <ul>

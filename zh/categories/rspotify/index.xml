@@ -94,7 +94,34 @@
 <p>当时RSpotify最大的问题在于有两份几乎一样，但是使用同步调用和异步调用模式的代码。</p>
 <p>而异步调用的代码，返回参数都是一个 <code>Future&lt;T&gt;</code> ，将真正的响应结果封装在一个 <code>Future</code> 结构里面。</p>
 <p>所以当时Mario 提出的第一个<a href="https://github.com/ramsayleung/rspotify/issues/112">解决思路</a>，是将对异步代码进行封装，使用同步调用的runtime调用异步函数，然后再把响应结果返回回去：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// 异步代码
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// 异步代码
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">original</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="n">reqwest</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">reqwest</span>::<span class="n">get</span><span class="p">(</span><span class="s">&#34;https://www.rust-lang.org&#34;</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="k">await</span><span class="o">?</span><span class="w">
@@ -117,7 +144,9 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">original</span><span class="p">().</span><span class="k">await</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">})</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>再通过Rust macro来为每个async 函数生成一个block_on 版本的函数。</p>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>再通过Rust macro来为每个async 函数生成一个block_on 版本的函数。</p>
 <p>但实际上，发现编写<a href="https://github.com/ramsayleung/rspotify/pull/120">macro太复杂</a>，并且这种方案不够灵活，实现起来也相当复杂。</p>
 <p>然后Mario 又调研出一种<a href="https://github.com/ramsayleung/rspotify/pull/129">新方案</a>，通过 <a href="https://github.com/fMeow/maybe-async-rs"><code>maybe_async</code></a> 这个库在同步和异步模式之间切换。
 默认是异步模式，但可以通过 <code>features = [&quot;is_sync&quot;]</code> 编译选项来切换到同步模式，<code>maybe_async</code> 就会把所有的<code>async/await</code> 关键字给去掉。</p>
@@ -339,7 +368,34 @@
 <p>当时RSpotify最大的问题在于有两份几乎一样，但是使用同步调用和异步调用模式的代码。</p>
 <p>而异步调用的代码，返回参数都是一个 <code>Future&lt;T&gt;</code> ，将真正的响应结果封装在一个 <code>Future</code> 结构里面。</p>
 <p>所以当时Mario 提出的第一个<a href="https://github.com/ramsayleung/rspotify/issues/112">解决思路</a>，是将对异步代码进行封装，使用同步调用的runtime调用异步函数，然后再把响应结果返回回去：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// 异步代码
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// 异步代码
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">original</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="n">reqwest</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">reqwest</span>::<span class="n">get</span><span class="p">(</span><span class="s">&#34;https://www.rust-lang.org&#34;</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="k">await</span><span class="o">?</span><span class="w">
@@ -362,7 +418,9 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">original</span><span class="p">().</span><span class="k">await</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">})</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><p>再通过Rust macro来为每个async 函数生成一个block_on 版本的函数。</p>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>再通过Rust macro来为每个async 函数生成一个block_on 版本的函数。</p>
 <p>但实际上，发现编写<a href="https://github.com/ramsayleung/rspotify/pull/120">macro太复杂</a>，并且这种方案不够灵活，实现起来也相当复杂。</p>
 <p>然后Mario 又调研出一种<a href="https://github.com/ramsayleung/rspotify/pull/129">新方案</a>，通过 <a href="https://github.com/fMeow/maybe-async-rs"><code>maybe_async</code></a> 这个库在同步和异步模式之间切换。
 默认是异步模式，但可以通过 <code>features = [&quot;is_sync&quot;]</code> 编译选项来切换到同步模式，<code>maybe_async</code> 就会把所有的<code>async/await</code> 关键字给去掉。</p>

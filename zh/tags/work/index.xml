@@ -636,14 +636,27 @@
 <p>对于开发岗, 实习经历和项目经历是重要的栏目, 也是面试官期待看到的栏目,
 因为应届生没有工作经历, 所以就只好写实习经历和项目经历,
 对于实习经历/项目经历, 按时间升序或者降序排列, 不要太乱, 个人推荐的格式:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">xx</span> <span class="err">公司</span><span class="o">/</span><span class="n">xx</span> <span class="err">项目</span><span class="o">,</span> <span class="err">时间</span><span class="o">:</span> <span class="mf">2020.03</span><span class="o">-</span><span class="mf">2020.</span><span class="n">xx</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">xx</span> <span class="err">公司</span><span class="o">/</span><span class="n">xx</span> <span class="err">项目</span><span class="o">,</span> <span class="err">时间</span><span class="o">:</span> <span class="mf">2020.03</span><span class="o">-</span><span class="mf">2020.</span><span class="n">xx</span>
 </span></span><span class="line"><span class="cl">    <span class="mf">1.</span> <span class="err">项目背景一句话、</span>
 </span></span><span class="line"><span class="cl">    <span class="mf">2.</span> <span class="err">自己在项目里负责的工作</span>
 </span></span><span class="line"><span class="cl">    <span class="mf">3.</span> <span class="err">用到的技能</span><span class="o">/</span><span class="err">思考的过程或者难点攻克的过程</span>
 </span></span><span class="line"><span class="cl">    <span class="mf">4.</span> <span class="err">项目的结果或者我的成绩</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="err">总而言之</span><span class="o">,</span> <span class="err">参考</span><span class="n">STAR</span><span class="err">法则</span><span class="o">.</span>
-</span></span></code></pre></div><p>需要避免的一些问题:</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>需要避免的一些问题:</p>
 <ol>
 <li>技术无关的事情少写, 更不要写一些大家都知道的事情. 在项目中负责”代码的编写, 用例的测试, 以及相关文档的校对/编辑”,
 总结来说, 你写代码了, 但是做了啥呢? 没体现.</li>

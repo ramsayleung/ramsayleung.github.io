@@ -51,7 +51,24 @@
 <p>又是由LLVM之父来操刀，所以语言本身也设计得很优雅. <br/></p>
 <p>让我眼前一亮的可能是借鉴自 <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/extension-methods">C# Extension Methods</a> <sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>的 <code>extension</code> 功能 , 可以对已有的 class, enum 或者是 protocol 类型增加新的函数，也就是在不修改源码的情况下，扩展已有的功能. <br/></p>
 <p>例如，以下的代码就可以扩展内置的 <code>Double</code> 类型, 实现以米为单位，进行千米, 厘米，毫米，公尺的转换: <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="kd">extension</span> <span class="nc">Double</span> <span class="p">{</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="kd">extension</span> <span class="nc">Double</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nv">km</span><span class="p">:</span> <span class="nb">Double</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">self</span> <span class="o">*</span> <span class="mf">1_000.0</span> <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nv">m</span><span class="p">:</span> <span class="nb">Double</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">self</span> <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nv">cm</span><span class="p">:</span> <span class="nb">Double</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">self</span> <span class="o">/</span> <span class="mf">100.0</span> <span class="p">}</span>
@@ -64,11 +81,32 @@
 </span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nv">threeFeet</span> <span class="p">=</span> <span class="mf">3.</span><span class="n">ft</span>
 </span></span><span class="line"><span class="cl"><span class="bp">print</span><span class="p">(</span><span class="s">&#34;Three feet is </span><span class="si">\(</span><span class="n">threeFeet</span><span class="si">)</span><span class="s"> meters&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// Prints &#34;Three feet is 0.914399970739201 meters&#34;</span>
-</span></span></code></pre></div><p>总体而言, Swift是一门吸收了众多PL理论的现代编程语言, 官方说支持Linux，Windows，MacOS等多个平台，不过我估计大多是在MacOS上用来写IOS和Mac应用 <br/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>总体而言, Swift是一门吸收了众多PL理论的现代编程语言, 官方说支持Linux，Windows，MacOS等多个平台，不过我估计大多是在MacOS上用来写IOS和Mac应用 <br/></p>
 <h2 id="swiftui"><span class="section-num">3</span> SwiftUI</h2>
 <p>SwiftUI 使用的声明式语法，让开发者写页面布局和效果变得简洁清晰, 例如通过 <code>VStack</code>, <code>HStack</code>, <code>ZStack</code> 就可以实现X轴，Y轴，和Z轴方向的布局 <br/></p>
 <p>例如下面这个就是通过 <code>ZStack</code> 几行代码实现的叠加效果: <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nv">colors</span><span class="p">:</span> <span class="p">[</span><span class="n">Color</span><span class="p">]</span> <span class="p">=</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nv">colors</span><span class="p">:</span> <span class="p">[</span><span class="n">Color</span><span class="p">]</span> <span class="p">=</span>
 </span></span><span class="line"><span class="cl">    <span class="p">[.</span><span class="n">red</span><span class="p">,</span> <span class="p">.</span><span class="n">orange</span><span class="p">,</span> <span class="p">.</span><span class="n">yellow</span><span class="p">,</span> <span class="p">.</span><span class="n">green</span><span class="p">,</span> <span class="p">.</span><span class="n">blue</span><span class="p">,</span> <span class="p">.</span><span class="n">purple</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
@@ -83,12 +121,44 @@
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p><figure>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure>
     <img loading="lazy" src="/ox-hugo/zstack_rectangle.png"/> 
 </figure>
  <br/></p>
 <p>除了声明式语法之外，SwiftUI让人赏心悦目的就是动画。好的动画在App里面绝对能起到画龙点睛的作用，而SwiftUI的内置动画已经非常强大了，下面就是使用内置动画实现的动画效果: <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="kd">struct</span> <span class="nc">ContentView</span><span class="p">:</span> <span class="n">View</span> <span class="p">{</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="kd">struct</span> <span class="nc">ContentView</span><span class="p">:</span> <span class="n">View</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="p">@</span><span class="n">State</span> <span class="kd">private</span> <span class="kd">var</span> <span class="nv">dragAmount</span> <span class="p">=</span> <span class="n">CGSize</span><span class="p">.</span><span class="n">zero</span>
 </span></span><span class="line"><span class="cl">    <span class="p">@</span><span class="n">State</span> <span class="kd">private</span> <span class="kd">var</span> <span class="nv">enable</span> <span class="p">=</span> <span class="kc">false</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nv">letters</span> <span class="p">=</span> <span class="s">&#34;Hello, World&#34;</span>
@@ -114,11 +184,39 @@
 </span></span><span class="line"><span class="cl">        <span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p><figure>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure>
     <img loading="lazy" src="/ox-hugo/drag_animation.gif"/> 
 </figure>
  <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl">  <span class="kd">struct</span> <span class="nc">HeartBeatView</span><span class="p">:</span> <span class="n">View</span> <span class="p">{</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl">  <span class="kd">struct</span> <span class="nc">HeartBeatView</span><span class="p">:</span> <span class="n">View</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="p">@</span><span class="n">State</span> <span class="kd">private</span> <span class="kd">var</span> <span class="nv">animationAmount</span> <span class="p">=</span> <span class="mf">1.0</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="n">View</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="n">Button</span><span class="p">(</span><span class="s">&#34;SOS&#34;</span><span class="p">){</span>
@@ -140,7 +238,9 @@
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p><figure>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure>
     <img loading="lazy" src="/ox-hugo/hearbeat.gif"/> 
 </figure>
  <br/></p>
@@ -163,7 +263,29 @@
 <p>又因为接受SwiftUI的开发者还不多，苹果版本迭代起来更加肆无忌惮，新版本又引入一堆的Breaking change，导致开发者更新版本非常痛苦. <br/></p>
 <p>另外一个问题就是SwiftUI与苹果现有框架整合得不够好，如 <code>CoreImage</code> 框架，顾名思义是用来作图片处理. <br/></p>
 <p>但之前是使用Objective-C写的，通过SwiftUI来调用，就会变成相当恶心，需要把Swift的数据结构传换成Objective-C来处理, 如： <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">applyProcess</span><span class="p">(){</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">applyProcess</span><span class="p">(){</span>
 </span></span><span class="line"><span class="cl">    <span class="k">guard</span> <span class="kd">let</span> <span class="nv">outputImage</span> <span class="p">=</span> <span class="n">currentFilter</span><span class="p">.</span><span class="n">outputImage</span> <span class="k">else</span> <span class="p">{</span><span class="k">return</span><span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="k">guard</span> <span class="kd">let</span> <span class="nv">cgImage</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="n">createCGImage</span><span class="p">(</span><span class="n">outputImage</span><span class="p">,</span> <span class="n">from</span><span class="p">:</span> <span class="n">outputImage</span><span class="p">.</span><span class="n">extent</span><span class="p">)</span> <span class="k">else</span><span class="p">{</span><span class="k">return</span><span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nv">uiImage</span> <span class="p">=</span> <span class="n">UIImage</span><span class="p">(</span><span class="n">cgImage</span><span class="p">:</span> <span class="n">cgImage</span><span class="p">)</span>
@@ -181,7 +303,9 @@
 </span></span><span class="line"><span class="cl">        <span class="n">applyProcess</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>把 <code>CoreImage</code> 框架的 <code>CIImage</code> 转成 <code>CoreGraphics</code> 框架的 <code>CGImage</code>, 然后再把 <code>CGImage</code> 转换成 <code>UIKit</code> 框架 <code>UIImage</code>, 然后再转换回SwiftUI 内置的 <code>Image</code> 类型, 可谓是相当麻烦了. <br/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>把 <code>CoreImage</code> 框架的 <code>CIImage</code> 转成 <code>CoreGraphics</code> 框架的 <code>CGImage</code>, 然后再把 <code>CGImage</code> 转换成 <code>UIKit</code> 框架 <code>UIImage</code>, 然后再转换回SwiftUI 内置的 <code>Image</code> 类型, 可谓是相当麻烦了. <br/></p>
 <p>但是对比SwiftUI只支持高版本的问题，Objective-C和Swift的互操作问题也只能算是恶心，但是起码有解决方法，对于前者，开发者是完全没法自行解决. <br/></p>
 <h2 id="总结"><span class="section-num">5</span> 总结</h2>
 <p>过了一把野生IOS开发的瘾，但是除非是苹果愿意让SwiftUI支持低版本的IOS， <br/>

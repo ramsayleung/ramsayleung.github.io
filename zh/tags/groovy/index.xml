@@ -84,29 +84,68 @@ Junit 的测试用例, 你会发现 Spock 的测试用例, 只需函数名, 就�
 的注释。而这只是 Spock 和 Junit 的一部分差异，其他的差异，接下来会继续说明。</p>
 <h2 id="spock-语法"><span class="section-num">4</span> Spock 语法</h2>
 <h3 id="specification"><span class="section-num">4.1</span> Specification</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">MyFirstSpecification</span> <span class="n">extend</span> <span class="n">Specification</span><span class="o">{</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">MyFirstSpecification</span> <span class="n">extend</span> <span class="n">Specification</span><span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">//fields
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//fixture methods
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//feature methods
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//helper methods
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">}</span>
-</span></span></code></pre></div><p>Specification 是指一个继承于 <strong>spock.lang.Specification</strong> 的一个 Groovy 类. 而
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Specification 是指一个继承于 <strong>spock.lang.Specification</strong> 的一个 Groovy 类. 而
 Specification 的名字一般是跟系统或者业务逻辑有关的组合词，例如之前的AdderSpec</p>
 <h3 id="fields"><span class="section-num">4.2</span> Fields</h3>
 <p>实例化一个类</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kt">def</span> <span class="n">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClassUnderSpecification</span><span class="o">()</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kt">def</span> <span class="n">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClassUnderSpecification</span><span class="o">()</span>
 </span></span><span class="line"><span class="cl"><span class="kt">def</span> <span class="n">coll</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Collaborator</span><span class="o">()</span>
-</span></span></code></pre></div><h3 id="feature-methods"><span class="section-num">4.3</span> Feature Methods</h3>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="feature-methods"><span class="section-num">4.3</span> Feature Methods</h3>
 <p>Feature Methods 指具体的测试用例方法</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kt">def</span> <span class="s2">&#34;pushing an element on the stack&#34;</span><span class="o">()</span> <span class="o">{</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kt">def</span> <span class="s2">&#34;pushing an element on the stack&#34;</span><span class="o">()</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">// blocks go here
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">}</span>
-</span></span></code></pre></div><h3 id="fixture-methods"><span class="section-num">4.4</span> Fixture Methods</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kt">def</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{}</span>          <span class="c1">// run before every feature method
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="fixture-methods"><span class="section-num">4.4</span> Fixture Methods</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kt">def</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{}</span>          <span class="c1">// run before every feature method
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">def</span> <span class="nf">cleanup</span><span class="o">()</span> <span class="o">{}</span>        <span class="c1">// run after every feature method
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">def</span> <span class="nf">setupSpec</span><span class="o">()</span> <span class="o">{}</span>     <span class="c1">// run before the first feature method
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">def</span> <span class="nf">cleanupSpec</span><span class="o">()</span> <span class="o">{}</span>   <span class="c1">// run after the last feature method
-</span></span></span></code></pre></div><p>关于 Fixture Methods 的作用，笔者引用一下官方文档的一段话</p>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>关于 Fixture Methods 的作用，笔者引用一下官方文档的一段话</p>
 <blockquote>
 <p>Fixture methods are responsible for setting up and cleaning up the environment in
 which feature methods are run. Usually it’s a good idea to use a fresh fixture for
@@ -158,7 +197,30 @@ Spock 使用的是 assertion, 笔者个人理解成这是一种隐式的断言�
 </figure>
 
 <p>然通过模拟用户添加商品到购物车, 以展示 Spock 的用法</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Product</span><span class="o">{</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Product</span><span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kt">int</span> <span class="n">price</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kt">int</span> <span class="n">weight</span><span class="o">;</span>
@@ -177,8 +239,26 @@ Spock 使用的是 assertion, 笔者个人理解成这是一种隐式的断言�
 </span></span><span class="line"><span class="cl">	<span class="c1">//
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="o">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>然后编写 Spock 的测试用例</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kt">def</span> <span class="s2">&#34;A basket with one product has equal weight&#34;</span><span class="o">(){</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后编写 Spock 的测试用例</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kt">def</span> <span class="s2">&#34;A basket with one product has equal weight&#34;</span><span class="o">(){</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="nl">given:</span> <span class="s2">&#34;an empty basket and a Tv&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">Product</span> <span class="n">tv</span><span class="o">=</span><span class="k">new</span> <span class="n">Product</span><span class="o">(</span><span class="nl">name:</span><span class="s2">&#34;bravia&#34;</span><span class="o">,</span><span class="nl">price:</span><span class="mi">1200</span><span class="o">,</span><span class="nl">weight:</span><span class="mi">18</span><span class="o">)</span>
@@ -190,12 +270,36 @@ Spock 使用的是 assertion, 笔者个人理解成这是一种隐式的断言�
 </span></span><span class="line"><span class="cl">    <span class="nl">then:</span><span class="s2">&#34;basket weight is equal to the TV&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">basket</span><span class="o">.</span><span class="na">currentWeight</span><span class="o">==</span><span class="n">tv</span><span class="o">.</span><span class="na">weight</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>现在对 Spock 有一个初步的认识了。也可以使用 given-when-then 这 &ldquo;三板斧&rdquo; 来写
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>现在对 Spock 有一个初步的认识了。也可以使用 given-when-then 这 &ldquo;三板斧&rdquo; 来写
 一些逻辑不是非常复杂的测试用例了。</p>
 <h4 id="the-and-block"><span class="section-num">4.5.5</span> The <strong>and</strong>: block</h4>
 <p><strong>and</strong>: 它的用法有点像语法糖，它自己本身是没有什么功能，它只是拿来扩展其他的
 功能的. 用上面的例子来解释一下用法:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kt">def</span> <span class="s2">&#34;A basket with one product has equal weight&#34;</span><span class="o">(){</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kt">def</span> <span class="s2">&#34;A basket with one product has equal weight&#34;</span><span class="o">(){</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="nl">given:</span> <span class="s2">&#34;an empty basket &#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">Basket</span> <span class="n">basket</span><span class="o">=</span><span class="k">new</span> <span class="n">Basket</span><span class="o">()</span>
@@ -213,7 +317,9 @@ Spock 使用的是 assertion, 笔者个人理解成这是一种隐式的断言�
 </span></span><span class="line"><span class="cl">    <span class="nl">then:</span><span class="s2">&#34;basket weight is equal to all product weight&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">basket</span><span class="o">.</span><span class="na">currentWeight</span><span class="o">==(</span><span class="n">tv</span><span class="o">.</span><span class="na">weight</span><span class="o">+</span><span class="n">camera</span><span class="o">.</span><span class="na">weight</span><span class="o">+</span><span class="n">hifi</span><span class="o">.</span><span class="na">weight</span><span class="err">）</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>从上面的代码可以看出，given 和 and 都用来进行类初始化，只是根据 Basket 和
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>从上面的代码可以看出，given 和 and 都用来进行类初始化，只是根据 Basket 和
 Product 类型进行了细分。如下图</p>
 <figure>
     <img loading="lazy" src="http://ww1.sinaimg.cn/large/cd613764jw1f71jq4hwjlj20wt0e10uv.jpg"/> 
@@ -224,13 +330,36 @@ Product 类型进行了细分。如下图</p>
 <h4 id="the-expect-block"><span class="section-num">4.5.6</span> The <strong>expect</strong>: block</h4>
 <p><strong>expect</strong> 是一个很强大的特性，它用很多种用法，最常用的用法就是把
 given-when-then 都结合起来</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kt">def</span> <span class="s2">&#34;An empty basket has no weight&#34;</span><span class="o">(){</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kt">def</span> <span class="s2">&#34;An empty basket has no weight&#34;</span><span class="o">(){</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="nl">expect:</span><span class="s2">&#34;zero weight when nothing is added&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">new</span> <span class="nf">Basket</span><span class="o">().</span><span class="na">currentWeight</span><span class="o">==</span><span class="mi">0</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>或者是以下这种形式</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kt">def</span> <span class="s2">&#34;An empty basket has no weight(alternative)&#34;</span><span class="o">(){</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>或者是以下这种形式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kt">def</span> <span class="s2">&#34;An empty basket has no weight(alternative)&#34;</span><span class="o">(){</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="nl">given:</span><span class="s2">&#34;an empty basket&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">Basket</span> <span class="n">basket</span><span class="o">=</span><span class="k">new</span> <span class="n">Basket</span><span class="o">()</span>
@@ -238,8 +367,37 @@ given-when-then 都结合起来</p>
 </span></span><span class="line"><span class="cl">    <span class="nl">expect:</span><span class="s2">&#34;that the weight is 0&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">basket</span><span class="o">.</span><span class="na">currentWeight</span><span class="o">==</span><span class="mi">0</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>又或者用 <strong>expect</strong> 提前进行条件判断</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kt">def</span> <span class="s2">&#34;A basket with two products weights as their sum (precondition)&#34;</span><span class="o">()</span> <span class="o">{</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>又或者用 <strong>expect</strong> 提前进行条件判断</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kt">def</span> <span class="s2">&#34;A basket with two products weights as their sum (precondition)&#34;</span><span class="o">()</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="nl">given:</span> <span class="s2">&#34;an empty basket, a TV and a camera&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">Product</span> <span class="n">tv</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Product</span><span class="o">(</span><span class="nl">name:</span><span class="s2">&#34;bravia&#34;</span><span class="o">,</span><span class="nl">price:</span><span class="mi">1200</span><span class="o">,</span><span class="nl">weight:</span><span class="mi">18</span><span class="o">)</span>
@@ -262,7 +420,9 @@ given-when-then 都结合起来</p>
 </span></span><span class="line"><span class="cl">    <span class="cm">/* then: block examines
 </span></span></span><span class="line"><span class="cl"><span class="cm">     the final result*/</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>上面那个例子是在添加产品之前检查初始化条件，这种情况下，能更容易看出是哪里测试 fail</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上面那个例子是在添加产品之前检查初始化条件，这种情况下，能更容易看出是哪里测试 fail</p>
 <h4 id="the-clean-block"><span class="section-num">4.5.7</span> The <strong>clean</strong>: block</h4>
 <p>clean 就相当于在所有的测试结束以后执行的操作，例如，如果在测试中新建了 IO 流，
 就可以在 clean 里面关闭 IO 流，那样就可以保证代码的正确性了</p>
@@ -310,7 +470,78 @@ given-when-then 都结合起来</p>
 </figure>
 
 <p>现在，假如用 Junit 来写测试用例</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@RunWith</span><span class="o">(</span><span class="n">Parameterized</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@RunWith</span><span class="o">(</span><span class="n">Parameterized</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
 </span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NuclearReactorTest</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">triggeredFireSensors</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Float</span><span class="o">&gt;</span> <span class="n">radiationDataReadings</span><span class="o">;</span>
@@ -377,10 +608,51 @@ given-when-then 都结合起来</p>
 </span></span><span class="line"><span class="cl">		      <span class="kc">true</span><span class="o">,</span> <span class="mi">3</span> <span class="o">},</span> <span class="o">});</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
-</span></span></code></pre></div><p>各种输入输出数据以及 getter setter 耦合在一起，代码变得难读起来. 此外，除了可
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>各种输入输出数据以及 getter setter 耦合在一起，代码变得难读起来. 此外，除了可
 读性， 还有更严重的问题，假如需求要增加一个输入或者增加一个输出呢， 就只能改
 变数据结构， 这样的代码真的难以维护。不知道 Spock 的表现又如何呢？</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">NuclearReactorSpec</span> <span class="kd">extends</span> <span class="n">spock</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">Specification</span><span class="o">{</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">NuclearReactorSpec</span> <span class="kd">extends</span> <span class="n">spock</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">Specification</span><span class="o">{</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="kt">def</span> <span class="s2">&#34;Complete test of all nuclear scenarios&#34;</span><span class="o">()</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">
@@ -415,7 +687,9 @@ given-when-then 都结合起来</p>
 </span></span><span class="line"><span class="cl">    <span class="o">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>除了上面提及的 given-when-then 范式外，还多了一个之前没见过的 where block。现
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>除了上面提及的 given-when-then 范式外，还多了一个之前没见过的 where block。现
 在就来认识一下 Spock 的 killer 特性. 可以看到 Spock 的输入输出参数都保存在类
 似表格的数据结构，其实这是 Spock 的 Parameterized tests，而在 <strong>||</strong> 符号左边的
 是输入，右边的输出，每一列开始都是该参数的属性名，这样就可以很便捷地在 <strong>then</strong>

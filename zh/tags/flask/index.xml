@@ -57,7 +57,40 @@
 <li>开发者获得加密后的字符串可与signature对比，标识该请求来源于微信</li>
 </ol>
 <p>流程并不复杂，官网给出了代码示例，只不过是PHP的，换成python 也是很容易滴：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
 </span></span><span class="line"><span class="cl">	<span class="k">def</span> <span class="nf">wechat</span><span class="p">():</span>
 </span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="o">==</span><span class="s1">&#39;GET&#39;</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">	    <span class="n">token</span><span class="o">=</span><span class="s1">&#39;your token&#39;</span>
@@ -86,7 +119,9 @@
 </span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">Content</span><span class="o">&gt;&lt;</span><span class="err">!</span><span class="p">[</span><span class="n">CDATA</span><span class="p">[</span><span class="o">%</span><span class="n">s</span><span class="p">]]</span><span class="o">&gt;&lt;/</span><span class="n">Content</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">FuncFlag</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">FuncFlag</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="n">xml</span><span class="o">&gt;</span><span class="s2">&#34;</span>
-</span></span></code></pre></div><p>这样服务器就校验成功了，就可以编写相关的业务逻辑了</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样服务器就校验成功了，就可以编写相关的业务逻辑了</p>
 <h2 id="歌词查询"><span class="section-num">2</span> 歌词查询</h2>
 <p>笔者自己平时是打开音乐播放器，戴上耳机，就开始播放音乐；所以经常出现笔者听到某首歌曲觉得旋律非常熟悉，但是就无法想起歌名的情况，这种感觉实在不好，所以笔者觉得可以编写一个通过歌词查询歌曲，并返回所有歌词的功能。</p>
 <p>思路大概是编写爬虫，通过歌词进行查询，然后对返回的html 页面进行检索和信息提取。剩下的事就是爬虫和解析页面了，笔者是使用<a href="http://www.xiami.com/">虾米</a> 进行歌词查询的，使用 request 发送 http 请求，使用 lxml进行解析，其他就不一一细表了</p>

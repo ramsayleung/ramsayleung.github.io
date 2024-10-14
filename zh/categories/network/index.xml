@@ -31,7 +31,22 @@
 <p>这是最简单的一种方法，一般被称为连接扫描，即利用 <code>socket</code> 对目标机器进行连接尝试，如果能够成功建立三次握手连接，那就说明你用 <code>socket</code> 连接的端口是开放的；然后你就可以断开连接，扫描下一个目标端口了 (如果不断开连接，这就是一种 DDOS攻击了).</p>
 <p>只不过TCP连接扫描不是很常用，不仅是因为容易被发现，而且你的IP地址也可能会被目标地址记录下来的(对于攻击者来说，隐藏身份是很重要的)</p>
 <h4 id="代码解析"><span class="section-num">2.1.1</span> 代码解析：</h4>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">scan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">scan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">args</span>
 </span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">	<span class="c1"># Create a TCP socket and try to connect</span>
@@ -42,7 +57,9 @@
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="kc">True</span>
 </span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="kc">False</span>
-</span></span></code></pre></div><p>因为原理很简单，所以核心代码也是很简洁的，只是建立 <code>socket</code> 然后进行连接，如果连接不上，就很大几率说明端口是关闭的 (并不是绝对的，例如socket超时的异常可能就是因为网络异常，不一定是目标机器的缘故)</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为原理很简单，所以核心代码也是很简洁的，只是建立 <code>socket</code> 然后进行连接，如果连接不上，就很大几率说明端口是关闭的 (并不是绝对的，例如socket超时的异常可能就是因为网络异常，不一定是目标机器的缘故)</p>
 <h3 id="syn扫描"><span class="section-num">2.2</span> SYN扫描</h3>
 <p>再回顾一下TCP的三次握手：</p>
 <h4 id="tcp三次握手"><span class="section-num">2.2.1</span> TCP三次握手</h4>
@@ -95,7 +112,38 @@
 </li>
 </ol>
 <h4 id="代码解释"><span class="section-num">2.2.3</span> 代码解释</h4>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">scan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">scan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span> <span class="o">=</span> <span class="n">args</span>
 </span></span><span class="line"><span class="cl">    <span class="n">src_port</span> <span class="o">=</span> <span class="n">RandShort</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    <span class="n">answered</span><span class="p">,</span> <span class="n">unanswered</span> <span class="o">=</span> <span class="n">sr</span><span class="p">(</span><span class="n">IP</span><span class="p">(</span><span class="n">dst</span><span class="o">=</span><span class="n">dst_ip</span><span class="p">)</span> <span class="o">/</span> <span class="n">TCP</span><span class="p">(</span><span class="n">sport</span><span class="o">=</span><span class="n">src_port</span><span class="p">,</span>
@@ -122,7 +170,9 @@
 </span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span><span class="p">,</span> <span class="s2">&#34;Filtered&#34;</span>
 </span></span><span class="line"><span class="cl">	<span class="k">else</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">	    <span class="k">return</span> <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span><span class="p">,</span> <span class="s2">&#34;CHECK&#34;</span>
-</span></span></code></pre></div><p>核心代码很简单，就是发送建立连接的握手请求，然后根据不同的返回结果判断不同的状态。</p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>核心代码很简单，就是发送建立连接的握手请求，然后根据不同的返回结果判断不同的状态。</p>
 <p>如果端口确定是开放，那就发送 <code>R</code> flag给目标机器结束握手 (如果不结束握手的话，那就是DDOS,这也是DDOS最常用的手段); 因为这次不是使用操作系统原生的 <code>socket</code>, 而是自行构造发送 IP数据包，所以需要使用一个很强大的构造 操作各种数据包的工具 &ndash; <a href="https://github.com/phaethon/scapy">scapy</a></p>
 <p>(顺便说一下，如果在Windows下安装 scapy,需要非常多的步骤，如果是Unix/Linux,只需几行命令:) )</p>
 <h2 id="后话"><span class="section-num">3</span> 后话</h2>

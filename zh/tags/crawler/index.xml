@@ -31,11 +31,21 @@
 <p>可以看出，京东不同的商品类别是对应不同的子域名的，例如 <code>book</code> 对应的是图书， <code>mvd</code> 对应的是音像， <code>shouji</code> 对应的是手机等。</p>
 <p>因为我使用的是获取 <code>&lt;a href&gt;</code> 标签里面的 url 值，然后迭代爬取的策略。所以要把爬取的 url 限定在域名为<code>jd.com</code> 范围内，不然就有可能会出现无限广度。</p>
 <p>此外，有相当多的页面是不会包含商品信息的；例如： <code>help.jd.com</code>, <code>doc.jd.com</code> 等，因此使用 <code>jd.com</code> 这个域名范围实在太大了，所以把所需的子域名都添加到一个 list :</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">jd_subdomain</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;jiadian&#34;</span><span class="p">,</span> <span class="s2">&#34;shouji&#34;</span><span class="p">,</span> <span class="s2">&#34;wt&#34;</span><span class="p">,</span> <span class="s2">&#34;shuma&#34;</span><span class="p">,</span> <span class="s2">&#34;diannao&#34;</span><span class="p">,</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">jd_subdomain</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;jiadian&#34;</span><span class="p">,</span> <span class="s2">&#34;shouji&#34;</span><span class="p">,</span> <span class="s2">&#34;wt&#34;</span><span class="p">,</span> <span class="s2">&#34;shuma&#34;</span><span class="p">,</span> <span class="s2">&#34;diannao&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">		<span class="s2">&#34;bg&#34;</span><span class="p">,</span> <span class="s2">&#34;channel&#34;</span><span class="p">,</span> <span class="s2">&#34;jipiao&#34;</span><span class="p">,</span> <span class="s2">&#34;hotel&#34;</span><span class="p">,</span> <span class="s2">&#34;trip&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">		<span class="s2">&#34;ish&#34;</span><span class="p">,</span> <span class="s2">&#34;book&#34;</span><span class="p">,</span> <span class="s2">&#34;e&#34;</span><span class="p">,</span> <span class="s2">&#34;health&#34;</span><span class="p">,</span> <span class="s2">&#34;baby&#34;</span><span class="p">,</span> <span class="s2">&#34;toy&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">		<span class="s2">&#34;nong&#34;</span><span class="p">,</span> <span class="s2">&#34;jiu&#34;</span><span class="p">,</span> <span class="s2">&#34;fresh&#34;</span><span class="p">,</span> <span class="s2">&#34;china&#34;</span><span class="p">,</span> <span class="s2">&#34;che&#34;</span><span class="p">,</span> <span class="s2">&#34;list&#34;</span><span class="p">]</span>
-</span></span></code></pre></div><h2 id="提取数据"><span class="section-num">2</span> 提取数据</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="提取数据"><span class="section-num">2</span> 提取数据</h2>
 <p>在确定了爬取策略之后，爬虫就可以不断地进行工作了。那么爬虫怎么知道什么时候才是商品信息的页面呢？再来分析一下京东的商品页面：</p>
 <figure><a href="/ox-hugo/jd_item_analyze.png">
     <img loading="lazy" src="/ox-hugo/jd_item_analyze.png"/> </a>
@@ -66,14 +76,27 @@
 <p>而且这些爬虫可以光明正大地去爬取各式网站，相信各式网站也很乐意被它爬。</p>
 <p>那么， 现在可以通过修改 user-agent 伪装成搜索引擎，然后再结合上面的轮转 user-agent,</p>
 <p>伪装成各式搜索引擎：</p>
-<pre tabindex="0"><code class="language-nil" data-lang="nil">&#39;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&#39;,
-&#39;Mozilla/5.0 (compatible; Bingbot/2.0; +http://www.bing.com/bingbot.htm)&#39;,
-&#39;Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)&#39;,
-&#39;DuckDuckBot/1.0; (+http://duckduckgo.com/duckduckbot.html)&#39;,
-&#39;Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)&#39;,
-&#39;Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)&#39;,
-&#39;ia_archiver (+http://www.alexa.com/site/help/webmasters; crawler@alexa.com)&#39;,
-</code></pre><h3 id="代理-ip"><span class="section-num">4.4</span> 代理 IP</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&#39;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&#39;,
+</span></span><span class="line"><span class="cl">&#39;Mozilla/5.0 (compatible; Bingbot/2.0; +http://www.bing.com/bingbot.htm)&#39;,
+</span></span><span class="line"><span class="cl">&#39;Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)&#39;,
+</span></span><span class="line"><span class="cl">&#39;DuckDuckBot/1.0; (+http://duckduckgo.com/duckduckbot.html)&#39;,
+</span></span><span class="line"><span class="cl">&#39;Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)&#39;,
+</span></span><span class="line"><span class="cl">&#39;Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)&#39;,
+</span></span><span class="line"><span class="cl">&#39;ia_archiver (+http://www.alexa.com/site/help/webmasters; crawler@alexa.com)&#39;,
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="代理-ip"><span class="section-num">4.4</span> 代理 IP</h3>
 <p>虽说可以伪装成搜索引擎，但是因为 http 请求是建立在三次握手之上的，爬虫的 IP 还是会被记录下来的，如果同一个 IP 访问得太频繁，那基本就可以确定是一只爬虫了，然后就把它的 IP 封掉，温和一点的就会叫你输入验证码，不然就返回 403.</p>
 <p>对待这种情况，就需要使用代理 IP 了。</p>
 <p>只是代理 IP 都有不同程度的延迟，并且免费的 IP 大多不能用，所以这是不得而为之了</p>
@@ -168,7 +191,20 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 <h2 id="python-bloomfilter"><span class="section-num">2</span> Python BloomFilter</h2>
 <p>算法都是为了实际问题服务的，又回到爬虫这个话题上。在了解布隆过滤器原理之后，可以很容易地实现自己的布隆过滤器，但是想要实现一个高效健壮的布隆过滤器就需要比较多的功夫了，因为需要考虑的问题略多。</p>
 <p>幸好，得益Python 强大的社区，已经有<a href="https://axiak.github.io/pybloomfiltermmap/">Python BloomFilter</a> 的库。一个文档中的简单例子：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pybloomfilter</span> <span class="kn">import</span> <span class="n">BloomFilter</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pybloomfilter</span> <span class="kn">import</span> <span class="n">BloomFilter</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">bf</span> <span class="o">=</span> <span class="n">BloomFilter</span><span class="p">(</span><span class="mi">10000000</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="s1">&#39;filter.bloom&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
@@ -177,7 +213,9 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 </span></span><span class="line"><span class="cl">	<span class="n">bf</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nb">print</span> <span class="s1">&#39;apple&#39;</span> <span class="ow">in</span> <span class="n">bf</span>
-</span></span></code></pre></div><p>结果为 <strong>True</strong></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果为 <strong>True</strong></p>
 <h2 id="总结"><span class="section-num">3</span> 总结</h2>
 <p>原理就说得差不多了，要想对布隆过滤器有更深的认识，还需要更多的实战。多写，多思考。 Enjoy Python,Enjoy Crawler :)</p>
 <h2 id="参考"><span class="section-num">4</span> 参考</h2>

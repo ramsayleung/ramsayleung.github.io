@@ -26,7 +26,44 @@
 <p>虽然我可以登录 Google 账号并关闭自动播放，但是每次我使用匿名模式来浏览，关闭窗口之后，所有的操作记录都会被清除了，自动播放设置也不会被保存。 <br/></p>
 <p>所以我使用 TamperMonkey 给 Youtube写了一个关闭自动播放的脚本，打开 Youtube 播放器时，把自动播放按钮给关闭掉，避免我使用浏览器的匿名窗口打开 Youtube 之后，Youtube自动播放导致一直有声音。 <br/></p>
 <p>脚本逻辑很简单： <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// ==UserScript==
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// ==UserScript==
 </span></span></span><span class="line"><span class="cl"><span class="c1">// @name         Disable YouTube Autoplay
 </span></span></span><span class="line"><span class="cl"><span class="c1">// @namespace    http://tampermonkey.net/
 </span></span></span><span class="line"><span class="cl"><span class="c1">// @version      0.1
@@ -59,7 +96,9 @@
 </span></span><span class="line"><span class="cl">        <span class="nx">disableAutoplay</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">    <span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="p">})();</span>
-</span></span></code></pre></div><h2 id="问题"><span class="section-num">2</span> 问题</h2>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="问题"><span class="section-num">2</span> 问题</h2>
 <p>但是我发现这个脚本时灵不灵，甚至有一天晚上，睡着之后被自动播放的声音吵醒了。 <br/></p>
 <p>我就在找能稳定复现这个问题的场景，花费半个小时，终于能稳定复现问题了。 <br/></p>
 <ol>
@@ -87,7 +126,29 @@
 <p>如果手动刷新，页面重新加载，脚本就又会被加载。 <br/></p>
 <h2 id="解决方案"><span class="section-num">4</span> 解决方案</h2>
 <p>最后通过 <a href="https://stackoverflow.com/a/39508954">Stackoverflow</a> 的建议，增加一个对 DOM 事件变化的监听来解决： <br/></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// https://stackoverflow.com/questions/2844565/is-there-a-javascript-jquery-dom-change-listener/39508954#39508954
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// https://stackoverflow.com/questions/2844565/is-there-a-javascript-jquery-dom-change-listener/39508954#39508954
 </span></span></span><span class="line"><span class="cl"><span class="c1">// Detect the url change for programmatic navigation
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span> <span class="nx">lastUrl</span> <span class="o">=</span> <span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="k">new</span> <span class="nx">MutationObserver</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -105,7 +166,9 @@
 </span></span><span class="line"><span class="cl">        <span class="nx">disableAutoplay</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>这样就可以正常运行了。 <br/></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样就可以正常运行了。 <br/></p>
 ]]></content:encoded>
     </item>
     
