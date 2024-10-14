@@ -1,0 +1,8 @@
+.post-content pre code , 
+.post-content .highlight:not(table) ,
+.post-content .highlight table
+ {
+    background: unset !important;
+    background-color: var(--code-bg) !important; /* support light/dark */
+    color: var(--secondary) !important; /* support light/dark */
+}
