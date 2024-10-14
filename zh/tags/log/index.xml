@@ -9,15 +9,15 @@
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sun, 09 Apr 2017 00:00:00 +0800</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/tags/log/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- 0.120.4</generator>
+    <language>zh</language>
+    <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
+    <lastBuildDate>Wed, 23 Feb 2022 21:48:13 +0800</lastBuildDate>
+    <atom:link href="https://ramsayleung.github.io/zh/tags/log/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>你所不可或缺的 – logging</title>
       <link>https://ramsayleung.github.io/zh/post/2017/logging/</link>
       <pubDate>Sun, 09 Apr 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/logging/</guid>
       <description>an introduction about logging</description>
       <content:encoded><![CDATA[<h2 id="重要性"><span class="section-num">1</span> 重要性</h2>
@@ -588,6 +588,5 @@
 <p>这些都是我在日常项目中的一点体会，与诸君共赏罢。Enjoy :)</p>
 ]]></content:encoded>
     </item>
-    
   </channel>
 </rss>

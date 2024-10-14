@@ -9,15 +9,15 @@
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Fri, 09 Mar 2018 13:55:00 +0800</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- 0.120.4</generator>
+    <language>zh</language>
+    <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
+    <lastBuildDate>Thu, 24 Feb 2022 22:29:04 +0800</lastBuildDate>
+    <atom:link href="https://ramsayleung.github.io/zh/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>记存储集群的一次迁移过程（下）</title>
       <link>https://ramsayleung.github.io/zh/post/2018/store_cluster_migrate2/</link>
       <pubDate>Fri, 09 Mar 2018 13:55:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2018/store_cluster_migrate2/</guid>
       <description>从Mysql, Hbase 迁移数据 1 Mysql 数据迁移 搭建完之后就是数据迁移了，mysql 的数据迁移比较简单。在旧的机器用 mysqldump 把所 有的数据导出来，然后传到新的环</description>
       <content:encoded><![CDATA[<p>从Mysql, Hbase 迁移数据</p>
@@ -198,12 +198,10 @@
 <p>折腾一波之后，终于把环境弄好。如果目标机房和源机房不同的话，也可以尝试使用 Hbase 的 <code>Exporter</code> 和 <code>Importer</code></p>
 ]]></content:encoded>
     </item>
-    
     <item>
       <title>记存储集群的一次迁移过程（上）</title>
       <link>https://ramsayleung.github.io/zh/post/2018/store_cluster_migrate1/</link>
       <pubDate>Mon, 05 Mar 2018 17:39:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2018/store_cluster_migrate1/</guid>
       <description>搭建和配置 Hadoop, Zookeeper, Hbase 1 前言 最近负责公司测试环境的迁移，主要包括 Hbase+Mysql 存储集群的迁移，消息队列，缓存组件的迁移, 而我打算说说存储集群的迁移。因为公司的</description>
       <content:encoded><![CDATA[<p>搭建和配置 Hadoop, Zookeeper, Hbase</p>
@@ -1175,6 +1173,5 @@ wget <a href="http://archive.cloudera.com/cdh5/cdh/5/hbase-1.2.0-cdh5.7.1.tar.gz
 </ul>
 ]]></content:encoded>
     </item>
-    
   </channel>
 </rss>

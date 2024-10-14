@@ -9,15 +9,15 @@
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sat, 22 Apr 2017 00:00:00 +0800</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/tags/shell/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- 0.120.4</generator>
+    <language>zh</language>
+    <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
+    <lastBuildDate>Thu, 24 Feb 2022 15:15:45 +0800</lastBuildDate>
+    <atom:link href="https://ramsayleung.github.io/zh/tags/shell/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>脚本分享</title>
       <link>https://ramsayleung.github.io/zh/post/2017/share_shell_script/</link>
       <pubDate>Sat, 22 Apr 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/share_shell_script/</guid>
       <description>share of my shell script snippet</description>
       <content:encoded><![CDATA[<p>分享一下平时工作生活中编写的一些脚本片段(一直更新). 适用于 OS X 和 Linux</p>
@@ -718,12 +718,10 @@
 </div>
 </div>]]></content:encoded>
     </item>
-    
     <item>
       <title>Linux/Unix Shell 二三事之过滤器grep</title>
       <link>https://ramsayleung.github.io/zh/post/2017/grep/</link>
       <pubDate>Mon, 13 Mar 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/grep/</guid>
       <description>an introduction about grep</description>
       <content:encoded><![CDATA[<p>文本三剑客之 Grep</p>
@@ -1407,12 +1405,10 @@ IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE</p>
 </div><p>Enjoy Shell :)</p>
 ]]></content:encoded>
     </item>
-    
     <item>
       <title>Shell神器fasd与Eshell的不期而遇</title>
       <link>https://ramsayleung.github.io/zh/post/2017/fasd-meet-eshell/</link>
       <pubDate>Thu, 02 Mar 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/fasd-meet-eshell/</guid>
       <description>An introduction about tweaking eshell with fasd</description>
       <content:encoded><![CDATA[<blockquote>
@@ -1604,12 +1600,10 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 <a href="https://github.com/clvv/fasd">https://github.com/clvv/fasd</a></p>
 ]]></content:encoded>
     </item>
-    
     <item>
       <title>Linux/Unix Shell 二三事之过滤器diff</title>
       <link>https://ramsayleung.github.io/zh/post/2017/diff/</link>
       <pubDate>Tue, 28 Feb 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/diff/</guid>
       <description>An introduction about diff</description>
       <content:encoded><![CDATA[<blockquote>
@@ -1823,247 +1817,10 @@ address1 包含：</p>
 </div>
 </div>]]></content:encoded>
     </item>
-    
-    <item>
-      <title>Linux/Unix Shell 二三事之过滤器cat</title>
-      <link>https://ramsayleung.github.io/zh/post/2017/cat/</link>
-      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
-      
-      <guid>https://ramsayleung.github.io/zh/post/2017/cat/</guid>
-      <description>An introduction about cat</description>
-      <content:encoded><![CDATA[<blockquote>
-<p>cat - concatenate files and print on the standard output</p>
-</blockquote>
-<h2 id="过滤器"><span class="section-num">1</span> 过滤器</h2>
-<p>何谓过滤器呢，例如cat,grep,wl 之类的命令就是过滤器了。这样的命令
-读取数据，对数据执行一些操作，然后写入结果。更准确地说，过滤器就是任何能够从标准
-输入读取 <strong>文本</strong> 数据，并向标准输出写入 <strong>文本</strong> 数据的命令。又因为Unix 的 <strong>KISS</strong>
-设计理念，所以每个程序都被设计成能够出色完成一项特定任务的工具。又因为重定向和
-管道的存在，使得可以将这些工具组合起来，发挥无穷威力</p>
-<h2 id="cat"><span class="section-num">2</span> cat</h2>
-<p>在shell 里面运行cat,你会被要求输入文本数据，当你输入一行数据以后，然后按下回
-车你输入的数据就会显示在屏幕，当你按下 ^D(&lt;ctrl&gt;+d),发送eof 信号给shell,退出
-cat。cat 做的事就是把你输入的字符，复制到标准输出 (一般情况是指你的屏幕).看到
-这里有人或许会质疑，这东西有什么用呢？似乎什么都作不了。不，它的用处很大呢，
-且容笔者细细禀来</p>
-<h3 id="场景1"><span class="section-num">2.1</span> 场景1</h3>
-<p>假如你要新建一个文本文件，里面只是很少的文本，你会怎么做呢？一般情况下，都是用
-vim/emacs 新建一个文本文件，然后输入几行文字，然后保存退出。这是一般的做法，
-看到这里，很自然有人会发问，难道有更优雅的解决方法？有，不用打开文本编辑器写入文本
-的hacking方法：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &gt; data
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>输入数据，然后 ^D(&lt;ctrl&gt;+d) 保存。你就新建了一个文本了。当然，如果你已经有一个 <strong>data</strong> 文件
-,就会被代替，当然，你也可以也在原来文本末尾添加的方法：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &gt;&gt; data
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="场景2"><span class="section-num">2.2</span> 场景2</h3>
-<p>如果你有一个短文件，你想查看一下，同样，你可以使用cat</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &lt; data
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>当然，你也可以省略 <strong>&lt;</strong> 这个重定向符号：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat data
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>抑或是，你想显示某个大文件的最后一部分，你也可以如上操作。或许你会觉得，这个功能
-很多命令也有，最典型的就是 <strong>tail</strong>. 但是如果 <strong>cat</strong> 可以很完美地很其他过滤器结合
-充当整套管道线工具流的起始端，这个以后慢慢再阐述</p>
-<h3 id="场景3"><span class="section-num">2.3</span> 场景3</h3>
-<p>如果你想复制文本文件，你首先会想起什么命令？ <strong>cp</strong>,很自然嘛，我也不例外，但是cat
-也可以实现同样的功能，很意外吧：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &lt; file &gt; newfile
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>即把 <strong>file</strong> 复制到标准输出，然后再把 <strong>file</strong> 当作标准输入复制到 <strong>newfile</strong>.hacking!</p>
-<h3 id="场景4"><span class="section-num">2.4</span> 场景4</h3>
-<p>如果你想把多个文本文件的组合到一个文件，你会怎么做？用编辑器打开所有的文件
-然后 select,cut,paste,save.我也会很自然地想到这个方法，但是是否存在着更
-优雅的解决方案呢？当然：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat file1 file2 file3 &gt;newfile
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="总结"><span class="section-num">3</span> 总结</h2>
-<p>上面已经介绍了挺多cat 的使用场景了，你觉得cat 表现滴怎么样呢？相信你的感觉是
-还行，但是并没有，我吹嘘的那么令人惊艳。因为这只是cat 最基本的功能，它最大的
-用法还没有完全展现出来，笔者先举一例，以后再慢慢详叙：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat file <span class="p">|</span>grep <span class="s2">&#34;something&#34;</span> <span class="p">|</span>sort -n <span class="p">|</span>tee newfile
-</span></span></code></pre></td></tr></table>
-</div>
-</div><table>
-<thead>
-<tr>
-<th>语法</th>
-<th>用法</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>cat &gt; file</td>
-<td>读取输入，创建新的文件或替换</td>
-</tr>
-<tr>
-<td>cat &gt;&gt;file</td>
-<td>读取输入，追加新的文件</td>
-</tr>
-<tr>
-<td>cat file/cat &lt;file</td>
-<td>显示一个已有文件</td>
-</tr>
-<tr>
-<td>cat &lt;oldfile&gt; newfile</td>
-<td>复制一个文件</td>
-</tr>
-<tr>
-<td>cat file1 file2 file3&gt;file4</td>
-<td>组合多个文件</td>
-</tr>
-</tbody>
-</table>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>Linux/Unix Shell 二三事之过滤器head&#43;tail</title>
-      <link>https://ramsayleung.github.io/zh/post/2017/head_tail/</link>
-      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
-      
-      <guid>https://ramsayleung.github.io/zh/post/2017/head_tail/</guid>
-      <description>An introduction about head and tail</description>
-      <content:encoded><![CDATA[<blockquote>
-<p>head - output the first part of files
-tail - output the last part of files</p>
-</blockquote>
-<p>当拥有的数据太多的时候，使用cat 来展示数据的话，数据量过大，屏幕就只能显示最后一部分的数据了。</p>
-<p>所以如果你想选取部分的数据的话，cat 就不是一个好选择了。有两个命令可以满足你的要求，分别是 <strong>head</strong> 和 <strong>tail</strong>.顾名思义，head 选取数据的开头部分tail 是选取数据的结尾部分</p>
-<h2 id="用法"><span class="section-num">1</span> 用法</h2>
-<p>当把 <strong>head</strong> <strong>tail</strong> 当作过滤器来使用的时候，用法很简单</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ head data
-</span></span><span class="line"><span class="cl">$ tail data
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>默认情况下 <strong>head</strong> 会选取数据开头的10行数据 <strong>tail</strong> 会选取数据最后的10行数据. 如果你想选取更多的数据的时候，你可以指定行数，例如</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ head <span class="o">[</span>-n line<span class="o">]</span> data
-</span></span><span class="line"><span class="cl">$ tail <span class="o">[</span>-n line<span class="o">]</span> data
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>其中 line 是希望选取的数据行的数量</p>
-<h2 id="惊艳点"><span class="section-num">2</span> 惊艳点</h2>
-<p>你可能觉得 <strong>head</strong> <strong>tail</strong> 两个命令很简单，似乎用处不大。</p>
-<p>是的，就笔者一直所介绍的那样，单个unix命令只是完成一个特定的工作，但是当它们组合起来的时候，就很威力无穷了</p>
-<h3 id="场景1"><span class="section-num">2.1</span> 场景1</h3>
-<p>假如你要生成一串密钥来加密你的某个文件，这是很常见的需求，你会怎么办，用python 或者 java 写一个随机数函数来实现么？无需，你用简单的过滤器加Linux/Unix</p>
-<p>内置的设备(dev):</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ cat /dev/urandom <span class="p">|</span> tr -cd <span class="s2">&#34;[[:alnum:]]&#34;</span> <span class="p">|</span>head -c 32<span class="p">;</span><span class="nb">echo</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>在Unix/Linux 的机器下，运行上面的命令就可以生成一个包含数字和字母的32个字符长的密钥了。</p>
-<p>/dev/urandom 是一个可以通过收集硬件驱动的环境噪音来产生伪随机数特殊的文件，tr 是转换和删除字符的命令；更多详细的东西，以后笔者会慢慢介绍滴</p>
-<h3 id="场景2"><span class="section-num">2.2</span> 场景2</h3>
-<p>在日常的开发或者运行环境中，日志是必不可少滴，但是日志是不断产生新的数据的,所以有时候就会出现用编辑器打开日志的时候，就会出现，编辑器不断提醒你文件已经发生了变化，是否重新加载，但是如果只是用cat,tail 来查看日志，日志又是保持在
-打开的那个状态，新产生的日志数据是没办法浏览到，果真如此？</p>
-<p>其实不然, tail 可以在查看日志的时候，保持日志一直在更新。关键就在 <strong>-f</strong> 选项</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ tail -f <span class="o">[</span>-n line<span class="o">]</span> file
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><strong>-f</strong> 选项告诉tail 当到达文件的末尾不要停止。相反，tail 要一直等下去，并且随着文件的增长，显示更多的输出 (-f -&gt; follow)</p>
-<p>你也可以模拟日志不断生成的过程：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ tail -f -n <span class="m">20</span> something.log
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>然后打开一个新的Shell, 运行：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">cat &gt;&gt; something.log
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>使用 <strong>&gt;&gt;</strong> 追加数据，就可以模拟日志生成的过程了</p>
-<h2 id="总结"><span class="section-num">3</span> 总结</h2>
-<p>要掌握更多的用法还是要查看文档滴：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">man head
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Enjoy Shell :)</p>
-]]></content:encoded>
-    </item>
-    
     <item>
       <title>Linux/Unix Shell 二三事之神器percol</title>
       <link>https://ramsayleung.github.io/zh/post/2017/percol/</link>
       <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/percol/</guid>
       <description>An introduction about percol</description>
       <content:encoded><![CDATA[<p><a href="https://github.com/mooz/percol">Percol</a> 是Emacs 的一个非常优秀package:js2-mode作者mooz 的又一力作得益于Unix Shell的管道和重定向设计理念，percol 所有的输入输出变得可交互 percol 给我一种很熟悉的感觉，就是 Eamcs 中helm 增量补全 (incremental completion)的感觉，真的可以10倍提高工作效率。</p>
@@ -2221,6 +1978,236 @@ tail - output the last part of files</p>
 <p>Enjoy Shell :)</p>
 ]]></content:encoded>
     </item>
-    
+    <item>
+      <title>Linux/Unix Shell 二三事之过滤器cat</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/cat/</link>
+      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2017/cat/</guid>
+      <description>An introduction about cat</description>
+      <content:encoded><![CDATA[<blockquote>
+<p>cat - concatenate files and print on the standard output</p>
+</blockquote>
+<h2 id="过滤器"><span class="section-num">1</span> 过滤器</h2>
+<p>何谓过滤器呢，例如cat,grep,wl 之类的命令就是过滤器了。这样的命令
+读取数据，对数据执行一些操作，然后写入结果。更准确地说，过滤器就是任何能够从标准
+输入读取 <strong>文本</strong> 数据，并向标准输出写入 <strong>文本</strong> 数据的命令。又因为Unix 的 <strong>KISS</strong>
+设计理念，所以每个程序都被设计成能够出色完成一项特定任务的工具。又因为重定向和
+管道的存在，使得可以将这些工具组合起来，发挥无穷威力</p>
+<h2 id="cat"><span class="section-num">2</span> cat</h2>
+<p>在shell 里面运行cat,你会被要求输入文本数据，当你输入一行数据以后，然后按下回
+车你输入的数据就会显示在屏幕，当你按下 ^D(&lt;ctrl&gt;+d),发送eof 信号给shell,退出
+cat。cat 做的事就是把你输入的字符，复制到标准输出 (一般情况是指你的屏幕).看到
+这里有人或许会质疑，这东西有什么用呢？似乎什么都作不了。不，它的用处很大呢，
+且容笔者细细禀来</p>
+<h3 id="场景1"><span class="section-num">2.1</span> 场景1</h3>
+<p>假如你要新建一个文本文件，里面只是很少的文本，你会怎么做呢？一般情况下，都是用
+vim/emacs 新建一个文本文件，然后输入几行文字，然后保存退出。这是一般的做法，
+看到这里，很自然有人会发问，难道有更优雅的解决方法？有，不用打开文本编辑器写入文本
+的hacking方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &gt; data
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输入数据，然后 ^D(&lt;ctrl&gt;+d) 保存。你就新建了一个文本了。当然，如果你已经有一个 <strong>data</strong> 文件
+,就会被代替，当然，你也可以也在原来文本末尾添加的方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &gt;&gt; data
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="场景2"><span class="section-num">2.2</span> 场景2</h3>
+<p>如果你有一个短文件，你想查看一下，同样，你可以使用cat</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &lt; data
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当然，你也可以省略 <strong>&lt;</strong> 这个重定向符号：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat data
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>抑或是，你想显示某个大文件的最后一部分，你也可以如上操作。或许你会觉得，这个功能
+很多命令也有，最典型的就是 <strong>tail</strong>. 但是如果 <strong>cat</strong> 可以很完美地很其他过滤器结合
+充当整套管道线工具流的起始端，这个以后慢慢再阐述</p>
+<h3 id="场景3"><span class="section-num">2.3</span> 场景3</h3>
+<p>如果你想复制文本文件，你首先会想起什么命令？ <strong>cp</strong>,很自然嘛，我也不例外，但是cat
+也可以实现同样的功能，很意外吧：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &lt; file &gt; newfile
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>即把 <strong>file</strong> 复制到标准输出，然后再把 <strong>file</strong> 当作标准输入复制到 <strong>newfile</strong>.hacking!</p>
+<h3 id="场景4"><span class="section-num">2.4</span> 场景4</h3>
+<p>如果你想把多个文本文件的组合到一个文件，你会怎么做？用编辑器打开所有的文件
+然后 select,cut,paste,save.我也会很自然地想到这个方法，但是是否存在着更
+优雅的解决方案呢？当然：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat file1 file2 file3 &gt;newfile
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="总结"><span class="section-num">3</span> 总结</h2>
+<p>上面已经介绍了挺多cat 的使用场景了，你觉得cat 表现滴怎么样呢？相信你的感觉是
+还行，但是并没有，我吹嘘的那么令人惊艳。因为这只是cat 最基本的功能，它最大的
+用法还没有完全展现出来，笔者先举一例，以后再慢慢详叙：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat file <span class="p">|</span>grep <span class="s2">&#34;something&#34;</span> <span class="p">|</span>sort -n <span class="p">|</span>tee newfile
+</span></span></code></pre></td></tr></table>
+</div>
+</div><table>
+<thead>
+<tr>
+<th>语法</th>
+<th>用法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cat &gt; file</td>
+<td>读取输入，创建新的文件或替换</td>
+</tr>
+<tr>
+<td>cat &gt;&gt;file</td>
+<td>读取输入，追加新的文件</td>
+</tr>
+<tr>
+<td>cat file/cat &lt;file</td>
+<td>显示一个已有文件</td>
+</tr>
+<tr>
+<td>cat &lt;oldfile&gt; newfile</td>
+<td>复制一个文件</td>
+</tr>
+<tr>
+<td>cat file1 file2 file3&gt;file4</td>
+<td>组合多个文件</td>
+</tr>
+</tbody>
+</table>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Linux/Unix Shell 二三事之过滤器head&#43;tail</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/head_tail/</link>
+      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2017/head_tail/</guid>
+      <description>An introduction about head and tail</description>
+      <content:encoded><![CDATA[<blockquote>
+<p>head - output the first part of files
+tail - output the last part of files</p>
+</blockquote>
+<p>当拥有的数据太多的时候，使用cat 来展示数据的话，数据量过大，屏幕就只能显示最后一部分的数据了。</p>
+<p>所以如果你想选取部分的数据的话，cat 就不是一个好选择了。有两个命令可以满足你的要求，分别是 <strong>head</strong> 和 <strong>tail</strong>.顾名思义，head 选取数据的开头部分tail 是选取数据的结尾部分</p>
+<h2 id="用法"><span class="section-num">1</span> 用法</h2>
+<p>当把 <strong>head</strong> <strong>tail</strong> 当作过滤器来使用的时候，用法很简单</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ head data
+</span></span><span class="line"><span class="cl">$ tail data
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>默认情况下 <strong>head</strong> 会选取数据开头的10行数据 <strong>tail</strong> 会选取数据最后的10行数据. 如果你想选取更多的数据的时候，你可以指定行数，例如</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ head <span class="o">[</span>-n line<span class="o">]</span> data
+</span></span><span class="line"><span class="cl">$ tail <span class="o">[</span>-n line<span class="o">]</span> data
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中 line 是希望选取的数据行的数量</p>
+<h2 id="惊艳点"><span class="section-num">2</span> 惊艳点</h2>
+<p>你可能觉得 <strong>head</strong> <strong>tail</strong> 两个命令很简单，似乎用处不大。</p>
+<p>是的，就笔者一直所介绍的那样，单个unix命令只是完成一个特定的工作，但是当它们组合起来的时候，就很威力无穷了</p>
+<h3 id="场景1"><span class="section-num">2.1</span> 场景1</h3>
+<p>假如你要生成一串密钥来加密你的某个文件，这是很常见的需求，你会怎么办，用python 或者 java 写一个随机数函数来实现么？无需，你用简单的过滤器加Linux/Unix</p>
+<p>内置的设备(dev):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ cat /dev/urandom <span class="p">|</span> tr -cd <span class="s2">&#34;[[:alnum:]]&#34;</span> <span class="p">|</span>head -c 32<span class="p">;</span><span class="nb">echo</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在Unix/Linux 的机器下，运行上面的命令就可以生成一个包含数字和字母的32个字符长的密钥了。</p>
+<p>/dev/urandom 是一个可以通过收集硬件驱动的环境噪音来产生伪随机数特殊的文件，tr 是转换和删除字符的命令；更多详细的东西，以后笔者会慢慢介绍滴</p>
+<h3 id="场景2"><span class="section-num">2.2</span> 场景2</h3>
+<p>在日常的开发或者运行环境中，日志是必不可少滴，但是日志是不断产生新的数据的,所以有时候就会出现用编辑器打开日志的时候，就会出现，编辑器不断提醒你文件已经发生了变化，是否重新加载，但是如果只是用cat,tail 来查看日志，日志又是保持在
+打开的那个状态，新产生的日志数据是没办法浏览到，果真如此？</p>
+<p>其实不然, tail 可以在查看日志的时候，保持日志一直在更新。关键就在 <strong>-f</strong> 选项</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ tail -f <span class="o">[</span>-n line<span class="o">]</span> file
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>-f</strong> 选项告诉tail 当到达文件的末尾不要停止。相反，tail 要一直等下去，并且随着文件的增长，显示更多的输出 (-f -&gt; follow)</p>
+<p>你也可以模拟日志不断生成的过程：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ tail -f -n <span class="m">20</span> something.log
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后打开一个新的Shell, 运行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">cat &gt;&gt; something.log
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用 <strong>&gt;&gt;</strong> 追加数据，就可以模拟日志生成的过程了</p>
+<h2 id="总结"><span class="section-num">3</span> 总结</h2>
+<p>要掌握更多的用法还是要查看文档滴：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">man head
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Enjoy Shell :)</p>
+]]></content:encoded>
+    </item>
   </channel>
 </rss>

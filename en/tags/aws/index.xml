@@ -9,15 +9,15 @@
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Wed, 28 Jun 2023 09:41:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/en/tags/aws/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- 0.120.4</generator>
+    <language>en</language>
+    <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
+    <lastBuildDate>Sat, 02 Dec 2023 10:09:35 -0800</lastBuildDate>
+    <atom:link href="https://ramsayleung.github.io/en/tags/aws/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>How to share resource between CDK stacks</title>
       <link>https://ramsayleung.github.io/en/post/2023/how_to_share_resource_between_cdk_stacks/</link>
       <pubDate>Wed, 28 Jun 2023 09:41:00 -0700</pubDate>
-      
       <guid>https://ramsayleung.github.io/en/post/2023/how_to_share_resource_between_cdk_stacks/</guid>
       <description>1 Introduction 1.1 IaC Infrastructure as code(IaC) is the managing and provisioning of infrastructure through code instead of manual processes, for example, clicking button, adding or editing roles in AWS console.
 1.2 AWS CloudFormation AWS CloudFormation is the original IaC tool for AWS, released in 2011, which uses template files to automate and mange the setup of AWS resources.
@@ -217,6 +217,5 @@
 </div>
 ]]></content:encoded>
     </item>
-    
   </channel>
 </rss>

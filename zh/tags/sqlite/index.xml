@@ -9,15 +9,15 @@
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sun, 12 Nov 2017 07:05:00 +0800</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/tags/sqlite/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- 0.120.4</generator>
+    <language>zh</language>
+    <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
+    <lastBuildDate>Thu, 24 Feb 2022 16:00:09 +0800</lastBuildDate>
+    <atom:link href="https://ramsayleung.github.io/zh/tags/sqlite/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>用python 来操控 sqlite3</title>
       <link>https://ramsayleung.github.io/zh/post/2017/python_with_sqlite3/</link>
       <pubDate>Sun, 12 Nov 2017 07:05:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/python_with_sqlite3/</guid>
       <description>python 与嵌入式关系数据库 sqlite3的邂逅 SQLite 是一个非常优秀的嵌入式数据库，非常轻量，可以与 Mysql, PostgreSQL 这样的 大型数据库互补使用. 而 Python 标准库中的 sqlite3 模块实</description>
       <content:encoded><![CDATA[<p>python 与嵌入式关系数据库 sqlite3的邂逅</p>
@@ -932,6 +932,5 @@
 </ul>
 ]]></content:encoded>
     </item>
-    
   </channel>
 </rss>

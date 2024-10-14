@@ -9,15 +9,15 @@
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sat, 04 Mar 2023 21:55:00 +0800</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/categories/emacs/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- 0.120.4</generator>
+    <language>zh</language>
+    <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
+    <lastBuildDate>Sat, 04 Mar 2023 21:58:52 +0800</lastBuildDate>
+    <atom:link href="https://ramsayleung.github.io/zh/categories/emacs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Emacs技巧分享: 使用eww打开在线org-mode文档</title>
       <link>https://ramsayleung.github.io/zh/post/2023/emacs%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_%E4%BD%BF%E7%94%A8eww%E6%89%93%E5%BC%80%E5%9C%A8%E7%BA%BForg-mode%E6%96%87%E6%A1%A3/</link>
       <pubDate>Sat, 04 Mar 2023 21:55:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2023/emacs%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_%E4%BD%BF%E7%94%A8eww%E6%89%93%E5%BC%80%E5%9C%A8%E7%BA%BForg-mode%E6%96%87%E6%A1%A3/</guid>
       <description>1 技巧 对于使用org-mode 格式的文本，例如Emacs官方 tree-sitter 的使用教程 在线阅读不是很易读，相当于人脑解析 org-mode. 我的个人习惯是使用 eww 浏览器来阅读</description>
       <content:encoded><![CDATA[<h2 id="技巧"><span class="section-num">1</span> 技巧</h2>
@@ -38,12 +38,10 @@
 
 ]]></content:encoded>
     </item>
-    
     <item>
       <title>Emacs 技巧分享：dired-mode 批量修改文件名</title>
       <link>https://ramsayleung.github.io/zh/post/2023/%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_dired%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8D/</link>
       <pubDate>Sat, 04 Mar 2023 21:34:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2023/%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_dired%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8D/</guid>
       <description>1 技巧 分享一下平时使用 dired-mode 批量修改文件名的技巧: C-x C-f 指定的文件目录，进入 dired-mode C-x C-q dired-toggle-read-only: Edit Dired buffer with Wdired. 批量修改，手段有 使用 query-replace 批量修改文件名 使用evil的多</description>
       <content:encoded><![CDATA[<h2 id="技巧"><span class="section-num">1</span> 技巧</h2>
@@ -76,12 +74,10 @@
 
 ]]></content:encoded>
     </item>
-    
     <item>
       <title>Eshell实现fzf的历史命令搜索功能</title>
       <link>https://ramsayleung.github.io/zh/post/2017/search_eshell_history_like_fzf/</link>
       <pubDate>Sun, 17 Dec 2017 15:46:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/search_eshell_history_like_fzf/</guid>
       <description>1 前言 目标: 在Eshell中像在bash/zsh中使用fzf那般搜索历史命令 2 fzf 我的主力Shell 是Eshell, 但是平时我也会用Zsh, 而</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
@@ -160,12 +156,10 @@
 <p>最后, 我也顺便把代码分享到 <a href="https://www.reddit.com/r/emacs/comments/7k54px/snippet_share_make_eshell_search_command_history/">Emacs社区</a>, 而 <a href="https://github.com/manateelazycat">manateelazycat</a>也把这段代码的功能加入到<a href="https://github.com/manateelazycat/aweshell/commit/ecaddac98b87f881910dbee8b51a98f00b6d9d5d">aweshell</a>, Oh yeah !</p>
 ]]></content:encoded>
     </item>
-    
     <item>
       <title>Eshell提示符优化</title>
       <link>https://ramsayleung.github.io/zh/post/2017/tweak_eshell_prompt/</link>
       <pubDate>Wed, 07 Jun 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/tweak_eshell_prompt/</guid>
       <description>Tweak with Emacs shell prompt</description>
       <content:encoded><![CDATA[<h2 id="发现帅气的提示符"><span class="section-num">1</span> 发现帅气的提示符</h2>
@@ -481,12 +475,10 @@
 <p>Enjoy Emacs, Enjor Tweaking :)</p>
 ]]></content:encoded>
     </item>
-    
     <item>
       <title>(翻译)从Helm到Ivy</title>
       <link>https://ramsayleung.github.io/zh/post/2017/from-helm-to-ivy/</link>
       <pubDate>Sun, 05 Mar 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/from-helm-to-ivy/</guid>
       <description>An Translated Post about switch from helm to ivy</description>
       <content:encoded><![CDATA[<p>最近，我发现很多Emacs 用户对Ivy 很感兴趣；而且大部份用户都是已经了解过Helm 或者Ido的
@@ -752,12 +744,10 @@ Counsel 也只有7500 行代码</p>
 <p>在下翻译水平有限，如有错误，还请指出</p>
 ]]></content:encoded>
     </item>
-    
     <item>
       <title>(翻译)An Introduction to Magit</title>
       <link>https://ramsayleung.github.io/zh/post/2017/magit/</link>
       <pubDate>Fri, 03 Mar 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/magit/</guid>
       <description>An introduction to Magit</description>
       <content:encoded><![CDATA[<p>如果你足够幸运(或者不幸运，取决于你怎么看待了)可以使用 <em>git</em> 作为你工作流的一部分。</p>
@@ -865,12 +855,10 @@ maigt 会自动为你在另外一个窗口显示提交信息</p>
 在下翻译水平有限，如有错误，还请指出</p>
 ]]></content:encoded>
     </item>
-    
     <item>
       <title>Shell神器fasd与Eshell的不期而遇</title>
       <link>https://ramsayleung.github.io/zh/post/2017/fasd-meet-eshell/</link>
       <pubDate>Thu, 02 Mar 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/fasd-meet-eshell/</guid>
       <description>An introduction about tweaking eshell with fasd</description>
       <content:encoded><![CDATA[<blockquote>
@@ -1062,12 +1050,128 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 <a href="https://github.com/clvv/fasd">https://github.com/clvv/fasd</a></p>
 ]]></content:encoded>
     </item>
-    
+    <item>
+      <title>在Emacs中使用Ipython</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/emacs_ipython/</link>
+      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2017/emacs_ipython/</guid>
+      <description>Use Ipython in Emasc</description>
+      <content:encoded><![CDATA[<h2 id="emacs-ipython-输出错误"><span class="section-num">1</span> Emacs Ipython 输出错误</h2>
+<p>在Emacs 运行 <strong>run-python</strong> 的时候，报错了，如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">[</span><span class="sc">?1</span><span class="nv">2l</span><span class="p">[</span><span class="sc">?2</span><span class="nv">5h2+2</span>
+</span></span><span class="line"><span class="cl">      <span class="p">[</span><span class="nv">J</span><span class="p">[</span><span class="sc">?7</span><span class="nv">h</span><span class="p">[</span><span class="sc">?1</span><span class="nv">2l</span><span class="p">[</span><span class="sc">?2</span><span class="nv">5h</span><span class="p">[</span><span class="sc">?2</span><span class="nv">004l</span><span class="p">[</span><span class="sc">?7</span><span class="nv">hOut</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">:</span> <span class="mi">4</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为我的版本时Ipython5,查阅文档<a href="http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1">http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1</a>
+之后，发现Ipython5 有了新的terminal 接口，和Emacs 继承的shell 不兼容，所以
+会出现上述的错误，只要给Ipython 加上运行参数就能解决了，所以只要在 <strong>.emacs</strong>
+或者对应的初始化文件加上下面语句</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">setq</span> <span class="nv">python-shell-interpreter</span> <span class="s">&#34;ipython&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="nv">python-shell-interpreter-args</span> <span class="s">&#34;--simple-prompt -i&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="update-2017-3-15"><span class="section-num">1.1</span> Update 2017-3-15</h3>
+<p>在添加了 <strong>&ndash;simple-promp -i</strong> 参数以后，虽说乱码的问题解决了，但是新的问题又出现了
+在Ipython 里面是没法无法输入多行内容的，即使是一个简单的循环，详情查看这条issue
+<a href="https://github.com/ipython/ipython/issues/9816">https://github.com/ipython/ipython/issues/9816</a>. 现在Ipython 开发社区还没有解决这个
+问题，所以现在的权宜之计就是使用 Ipython4,等到社区解决了这个问题在升级为 Ipython5</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pip install --force-reinstall <span class="nv">ipython</span><span class="o">==</span>4.2.1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="emacs-ipython-的使用优化"><span class="section-num">2</span> Emacs Ipython 的使用优化</h2>
+<h3 id="python-pop"><span class="section-num">2.1</span> python-pop</h3>
+<p>因为我之前使用Emacs的时候，是使用Spacemacs的配置的，但是后来觉得还是自己的
+配置用的更舒服，所以又切换回自己的配置，但是我还是很想念Spacemacs的一些绑定
+例如shell在底下弹出，或者是关闭，然后找到了<a href="https://github.com/kyagi/shell-pop-el">Shell-pop</a> 这package,就可以用回
+Spacemacs的shell使用习惯。然后我觉得，Ipython shell也可以这样配置，只不过
+我没有发现类似的package,又因为Emacs Lisp的强大，所以我自己写了一段小函数实现
+shell-pop 的功能</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">samray/python-pop</span> <span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="s">&#34;Run python and switch to the python buffer.
+</span></span></span><span class="line"><span class="cl"><span class="s">similar to shell-pop&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">interactive</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">get-buffer</span> <span class="s">&#34;*Python*&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nv">string=</span> <span class="p">(</span><span class="nf">buffer-name</span><span class="p">)</span> <span class="s">&#34;*Python*&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	  <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nv">not</span> <span class="p">(</span><span class="nv">one-window-p</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">	      <span class="p">(</span><span class="nb">progn</span> <span class="p">(</span><span class="nv">bury-buffer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		     <span class="p">(</span><span class="nv">delete-window</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">	    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">(</span><span class="nb">progn</span> <span class="p">(</span><span class="nv">switch-to-buffer-other-window</span> <span class="s">&#34;*Python*&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	       <span class="p">(</span><span class="nv">end-of-buffer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	       <span class="p">(</span><span class="nv">evil-insert-state</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nb">progn</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">run-python</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">switch-to-buffer-other-window</span> <span class="s">&#34;*Python*&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">end-of-buffer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">evil-insert-state</span><span class="p">))))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果没有使用Evil,可以把 **(evil-insert-state)**去掉</p>
+<h3 id="ipython-history"><span class="section-num">2.2</span> Ipython History</h3>
+<p>我在普通的Shell使用Ipython的时候，很自然地使用上下方向键翻到上一条/下一条
+执行的命令，因为shell的使用习惯就是这样滴，但是在Emacs里面使用Ipython,上下
+方向键是去到上一行/下一行，就好像 vim 的 <strong>j</strong> <strong>k</strong>,如果要翻到上一条命令，快捷键
+是 <strong>M-p</strong>,实在很不习惯，所以在查了一下Emacs manual 后，我改了一下按键绑定就实现了
+我想要的效果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nf">define-key</span> <span class="nv">comint-mode-map</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&#34;&lt;up&gt;&#34;</span><span class="p">)</span> <span class="ss">&#39;comint-previous-input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nf">define-key</span> <span class="nv">comint-mode-map</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&#34;&lt;down&gt;&#34;</span><span class="p">)</span> <span class="ss">&#39;comint-next-input</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Enjoy Emacs :)</p>
+]]></content:encoded>
+    </item>
     <item>
       <title>提高Emacs启动速度</title>
       <link>https://ramsayleung.github.io/zh/post/2017/emacs_startup/</link>
       <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/emacs_startup/</guid>
       <description>Tips to reduce emacs startup time</description>
       <content:encoded><![CDATA[<p>之前看到个笑话：</p>
@@ -1240,126 +1344,5 @@ creating any autoloads for you.</p>
 <p>Enjoy Emacs :)</p>
 ]]></content:encoded>
     </item>
-    
-    <item>
-      <title>在Emacs中使用Ipython</title>
-      <link>https://ramsayleung.github.io/zh/post/2017/emacs_ipython/</link>
-      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
-      
-      <guid>https://ramsayleung.github.io/zh/post/2017/emacs_ipython/</guid>
-      <description>Use Ipython in Emasc</description>
-      <content:encoded><![CDATA[<h2 id="emacs-ipython-输出错误"><span class="section-num">1</span> Emacs Ipython 输出错误</h2>
-<p>在Emacs 运行 <strong>run-python</strong> 的时候，报错了，如下</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">[</span><span class="sc">?1</span><span class="nv">2l</span><span class="p">[</span><span class="sc">?2</span><span class="nv">5h2+2</span>
-</span></span><span class="line"><span class="cl">      <span class="p">[</span><span class="nv">J</span><span class="p">[</span><span class="sc">?7</span><span class="nv">h</span><span class="p">[</span><span class="sc">?1</span><span class="nv">2l</span><span class="p">[</span><span class="sc">?2</span><span class="nv">5h</span><span class="p">[</span><span class="sc">?2</span><span class="nv">004l</span><span class="p">[</span><span class="sc">?7</span><span class="nv">hOut</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">:</span> <span class="mi">4</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>因为我的版本时Ipython5,查阅文档<a href="http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1">http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1</a>
-之后，发现Ipython5 有了新的terminal 接口，和Emacs 继承的shell 不兼容，所以
-会出现上述的错误，只要给Ipython 加上运行参数就能解决了，所以只要在 <strong>.emacs</strong>
-或者对应的初始化文件加上下面语句</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">setq</span> <span class="nv">python-shell-interpreter</span> <span class="s">&#34;ipython&#34;</span>
-</span></span><span class="line"><span class="cl">      <span class="nv">python-shell-interpreter-args</span> <span class="s">&#34;--simple-prompt -i&#34;</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><hr>
-<h3 id="update-2017-3-15"><span class="section-num">1.1</span> Update 2017-3-15</h3>
-<p>在添加了 <strong>&ndash;simple-promp -i</strong> 参数以后，虽说乱码的问题解决了，但是新的问题又出现了
-在Ipython 里面是没法无法输入多行内容的，即使是一个简单的循环，详情查看这条issue
-<a href="https://github.com/ipython/ipython/issues/9816">https://github.com/ipython/ipython/issues/9816</a>. 现在Ipython 开发社区还没有解决这个
-问题，所以现在的权宜之计就是使用 Ipython4,等到社区解决了这个问题在升级为 Ipython5</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pip install --force-reinstall <span class="nv">ipython</span><span class="o">==</span>4.2.1
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="emacs-ipython-的使用优化"><span class="section-num">2</span> Emacs Ipython 的使用优化</h2>
-<h3 id="python-pop"><span class="section-num">2.1</span> python-pop</h3>
-<p>因为我之前使用Emacs的时候，是使用Spacemacs的配置的，但是后来觉得还是自己的
-配置用的更舒服，所以又切换回自己的配置，但是我还是很想念Spacemacs的一些绑定
-例如shell在底下弹出，或者是关闭，然后找到了<a href="https://github.com/kyagi/shell-pop-el">Shell-pop</a> 这package,就可以用回
-Spacemacs的shell使用习惯。然后我觉得，Ipython shell也可以这样配置，只不过
-我没有发现类似的package,又因为Emacs Lisp的强大，所以我自己写了一段小函数实现
-shell-pop 的功能</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">samray/python-pop</span> <span class="p">()</span>
-</span></span><span class="line"><span class="cl">  <span class="s">&#34;Run python and switch to the python buffer.
-</span></span></span><span class="line"><span class="cl"><span class="s">similar to shell-pop&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">interactive</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">get-buffer</span> <span class="s">&#34;*Python*&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nv">string=</span> <span class="p">(</span><span class="nf">buffer-name</span><span class="p">)</span> <span class="s">&#34;*Python*&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	  <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nv">not</span> <span class="p">(</span><span class="nv">one-window-p</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	      <span class="p">(</span><span class="nb">progn</span> <span class="p">(</span><span class="nv">bury-buffer</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		     <span class="p">(</span><span class="nv">delete-window</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	    <span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">(</span><span class="nb">progn</span> <span class="p">(</span><span class="nv">switch-to-buffer-other-window</span> <span class="s">&#34;*Python*&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	       <span class="p">(</span><span class="nv">end-of-buffer</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	       <span class="p">(</span><span class="nv">evil-insert-state</span><span class="p">)))</span>
-</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nb">progn</span>
-</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">run-python</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">switch-to-buffer-other-window</span> <span class="s">&#34;*Python*&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">end-of-buffer</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">evil-insert-state</span><span class="p">))))</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>如果没有使用Evil,可以把 **(evil-insert-state)**去掉</p>
-<h3 id="ipython-history"><span class="section-num">2.2</span> Ipython History</h3>
-<p>我在普通的Shell使用Ipython的时候，很自然地使用上下方向键翻到上一条/下一条
-执行的命令，因为shell的使用习惯就是这样滴，但是在Emacs里面使用Ipython,上下
-方向键是去到上一行/下一行，就好像 vim 的 <strong>j</strong> <strong>k</strong>,如果要翻到上一条命令，快捷键
-是 <strong>M-p</strong>,实在很不习惯，所以在查了一下Emacs manual 后，我改了一下按键绑定就实现了
-我想要的效果</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nf">define-key</span> <span class="nv">comint-mode-map</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&#34;&lt;up&gt;&#34;</span><span class="p">)</span> <span class="ss">&#39;comint-previous-input</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nf">define-key</span> <span class="nv">comint-mode-map</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&#34;&lt;down&gt;&#34;</span><span class="p">)</span> <span class="ss">&#39;comint-next-input</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Enjoy Emacs :)</p>
-]]></content:encoded>
-    </item>
-    
   </channel>
 </rss>

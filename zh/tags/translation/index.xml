@@ -9,15 +9,15 @@
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sun, 05 Mar 2017 00:00:00 +0800</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/tags/translation/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- 0.120.4</generator>
+    <language>zh</language>
+    <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
+    <lastBuildDate>Wed, 23 Feb 2022 19:41:32 +0800</lastBuildDate>
+    <atom:link href="https://ramsayleung.github.io/zh/tags/translation/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>(翻译)从Helm到Ivy</title>
       <link>https://ramsayleung.github.io/zh/post/2017/from-helm-to-ivy/</link>
       <pubDate>Sun, 05 Mar 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/from-helm-to-ivy/</guid>
       <description>An Translated Post about switch from helm to ivy</description>
       <content:encoded><![CDATA[<p>最近，我发现很多Emacs 用户对Ivy 很感兴趣；而且大部份用户都是已经了解过Helm 或者Ido的
@@ -283,6 +283,5 @@ Counsel 也只有7500 行代码</p>
 <p>在下翻译水平有限，如有错误，还请指出</p>
 ]]></content:encoded>
     </item>
-    
   </channel>
 </rss>

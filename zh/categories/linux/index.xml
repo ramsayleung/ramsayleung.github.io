@@ -9,15 +9,15 @@
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Mon, 15 May 2023 20:48:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/categories/linux/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- 0.120.4</generator>
+    <language>zh</language>
+    <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
+    <lastBuildDate>Sat, 20 May 2023 08:32:35 -0700</lastBuildDate>
+    <atom:link href="https://ramsayleung.github.io/zh/categories/linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Linux下如何避免蓝牙音箱自动关机</title>
       <link>https://ramsayleung.github.io/zh/post/2023/linux%E4%B8%8B%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E8%87%AA%E5%8A%A8%E5%85%B3%E6%9C%BA/</link>
       <pubDate>Mon, 15 May 2023 20:48:00 -0700</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2023/linux%E4%B8%8B%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E8%87%AA%E5%8A%A8%E5%85%B3%E6%9C%BA/</guid>
       <description>1 问题 最近整理了桌上乱糟糟的线，把原来使用aux 线连接的蓝牙音响换成通过蓝牙连接。 然后就发现一个问题，只要音响没有发出声音超过30分钟，蓝牙</description>
       <content:encoded><![CDATA[<h2 id="问题"><span class="section-num">1</span> 问题</h2>
@@ -125,12 +125,10 @@
 </ul>
 ]]></content:encoded>
     </item>
-    
     <item>
       <title>lsof can&#39;t identify protocol</title>
       <link>https://ramsayleung.github.io/zh/post/2018/lsof_cant_identify_protocol/</link>
       <pubDate>Wed, 11 Apr 2018 15:24:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2018/lsof_cant_identify_protocol/</guid>
       <description>Socket 泄漏引起的Tomcat 宕机问题分析 在2018年4月9号下午，收到反馈：测试集群部分接口访问有问题，请求时而正常，时而超时。 最近的测试环境真</description>
       <content:encoded><![CDATA[<p>Socket 泄漏引起的Tomcat 宕机问题分析</p>
@@ -784,104 +782,104 @@ sockets 处于 <code>CLOSED</code> 的状态，但是却没有真正close 掉，
 </span><span class="lnt">98
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">2018-04-11 09:43:48,363 - [ERROR] - from com.alibaba.druid.pool.DruidDataSource in poolTaskScheduler-11
-</span></span><span class="line"><span class="cl">discard connection
-</span></span><span class="line"><span class="cl">com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="mi">2018</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">11</span> <span class="mi">09</span><span class="p">:</span><span class="mi">43</span><span class="p">:</span><span class="mi">48</span><span class="p">,</span><span class="mi">363</span> <span class="o">-</span> <span class="p">[</span><span class="n">ERROR</span><span class="p">]</span> <span class="o">-</span> <span class="n">from</span> <span class="n">com</span><span class="o">.</span><span class="n">alibaba</span><span class="o">.</span><span class="n">druid</span><span class="o">.</span><span class="n">pool</span><span class="o">.</span><span class="n">DruidDataSource</span> <span class="ow">in</span> <span class="n">poolTaskScheduler</span><span class="o">-</span><span class="mi">11</span>
+</span></span><span class="line"><span class="cl"><span class="n">discard</span> <span class="n">connection</span>
+</span></span><span class="line"><span class="cl"><span class="n">com</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">jdbc4</span><span class="o">.</span><span class="n">CommunicationsException</span><span class="p">:</span> <span class="n">Communications</span> <span class="n">link</span> <span class="n">failure</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">The last packet successfully received from the server was 100,610 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
-</span></span><span class="line"><span class="cl">at sun.reflect.GeneratedConstructorAccessor108.newInstance(Unknown Source)
-</span></span><span class="line"><span class="cl">at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-</span></span><span class="line"><span class="cl">at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
-</span></span><span class="line"><span class="cl">at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
-</span></span><span class="line"><span class="cl">at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:989)
-</span></span><span class="line"><span class="cl">at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3556)
-</span></span><span class="line"><span class="cl">at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3456)
-</span></span><span class="line"><span class="cl">at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3897)
-</span></span><span class="line"><span class="cl">at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2524)
-</span></span><span class="line"><span class="cl">at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2677)
-</span></span><span class="line"><span class="cl">at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
-</span></span><span class="line"><span class="cl">at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2503)
-</span></span><span class="line"><span class="cl">at com.mysql.jdbc.StatementImpl.executeQuery(StatementImpl.java:1369)
-</span></span><span class="line"><span class="cl">at com.alibaba.druid.filter.FilterChainImpl.statement_executeQuery(FilterChainImpl.java:2363)
-</span></span><span class="line"><span class="cl">at com.alibaba.druid.filter.FilterAdapter.statement_executeQuery(FilterAdapter.java:2481)
-</span></span><span class="line"><span class="cl">at com.alibaba.druid.filter.FilterEventAdapter.statement_executeQuery(FilterEventAdapter.java:302)
-</span></span><span class="line"><span class="cl">at com.alibaba.druid.filter.FilterChainImpl.statement_executeQuery(FilterChainImpl.java:2360)
-</span></span><span class="line"><span class="cl">at com.alibaba.druid.proxy.jdbc.StatementProxyImpl.executeQuery(StatementProxyImpl.java:211)
-</span></span><span class="line"><span class="cl">at com.alibaba.druid.pool.DruidPooledStatement.executeQuery(DruidPooledStatement.java:138)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.atom.jdbc.TStatementWrapper.executeQuery(TStatementWrapper.java:315)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.group.jdbc.TGroupStatement.executeQueryOnConnection(TGroupStatement.java:549)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.group.jdbc.TGroupStatement$4.tryOnDataSource(TGroupStatement.java:633)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.group.jdbc.TGroupStatement$4.tryOnDataSource(TGroupStatement.java:615)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.group.dbselector.AbstractDBSelector.tryOnDataSourceHolder(AbstractDBSelector.java:155)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.group.dbselector.OneDBSelector.tryExecuteInternal(OneDBSelector.java:52)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.group.dbselector.AbstractDBSelector.tryExecute(AbstractDBSelector.java:405)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.group.dbselector.AbstractDBSelector.tryExecute(AbstractDBSelector.java:412)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.group.jdbc.TGroupStatement.executeQuery(TGroupStatement.java:488)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.group.jdbc.TGroupStatement.executeInternal(TGroupStatement.java:131)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.group.jdbc.TGroupStatement.execute(TGroupStatement.java:101)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.repo.mysql.spi.My_JdbcHandler.executeQuery(My_JdbcHandler.java:521)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.repo.mysql.spi.My_Cursor.init(My_Cursor.java:106)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.repo.mysql.handler.QueryMyHandler.handle(QueryMyHandler.java:89)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.executor.AbstractGroupExecutor.executeInner(AbstractGroupExecutor.java:47)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.executor.AbstractGroupExecutor.execByExecPlanNode(AbstractGroupExecutor.java:36)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.executor.TopologyExecutor.execByExecPlanNode(TopologyExecutor.java:66)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.executor.MatrixExecutor.execByExecPlanNodeByOne(MatrixExecutor.java:670)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.executor.MatrixExecutor.execByExecPlanNode(MatrixExecutor.java:659)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.executor.MatrixExecutor.execute(MatrixExecutor.java:137)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.matrix.jdbc.TConnection.executeSQL(TConnection.java:241)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.matrix.jdbc.TPreparedStatement.executeSQL(TPreparedStatement.java:64)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.matrix.jdbc.TStatement.executeInternal(TStatement.java:133)
-</span></span><span class="line"><span class="cl">at com.taobao.tddl.matrix.jdbc.TPreparedStatement.execute(TPreparedStatement.java:49)
-</span></span><span class="line"><span class="cl">at sun.reflect.GeneratedMethodAccessor148.invoke(Unknown Source)
-</span></span><span class="line"><span class="cl">at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-</span></span><span class="line"><span class="cl">at java.lang.reflect.Method.invoke(Method.java:498)
-</span></span><span class="line"><span class="cl">at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:59)
-</span></span><span class="line"><span class="cl">at com.sun.proxy.$Proxy102.execute(Unknown Source)
-</span></span><span class="line"><span class="cl">at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:63)
-</span></span><span class="line"><span class="cl">at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:79)
-</span></span><span class="line"><span class="cl">at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:63)
-</span></span><span class="line"><span class="cl">at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:325)
-</span></span><span class="line"><span class="cl">at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:156)
-</span></span><span class="line"><span class="cl">at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:109)
-</span></span><span class="line"><span class="cl">at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:83)
-</span></span><span class="line"><span class="cl">at sun.reflect.GeneratedMethodAccessor146.invoke(Unknown Source)
-</span></span><span class="line"><span class="cl">at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-</span></span><span class="line"><span class="cl">at java.lang.reflect.Method.invoke(Method.java:498)
-</span></span><span class="line"><span class="cl">at org.apache.ibatis.plugin.Invocation.proceed(Invocation.java:49)
-</span></span><span class="line"><span class="cl">at fastfish.interceptor.DbLogInterceptor.intercept(DbLogInterceptor.java:49)
-</span></span><span class="line"><span class="cl">at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:61)
-</span></span><span class="line"><span class="cl">at com.sun.proxy.$Proxy100.query(Unknown Source)
-</span></span><span class="line"><span class="cl">at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:148)
-</span></span><span class="line"><span class="cl">at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:141)
-</span></span><span class="line"><span class="cl">at sun.reflect.GeneratedMethodAccessor145.invoke(Unknown Source)
-</span></span><span class="line"><span class="cl">at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-</span></span><span class="line"><span class="cl">at java.lang.reflect.Method.invoke(Method.java:498)
-</span></span><span class="line"><span class="cl">at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:434)
-</span></span><span class="line"><span class="cl">at com.sun.proxy.$Proxy87.selectList(Unknown Source)
-</span></span><span class="line"><span class="cl">at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:231)
-</span></span><span class="line"><span class="cl">at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:128)
-</span></span><span class="line"><span class="cl">at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:68)
-</span></span><span class="line"><span class="cl">at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:53)
-</span></span><span class="line"><span class="cl">at com.sun.proxy.$Proxy124.selectAll(Unknown Source)
-</span></span><span class="line"><span class="cl">at fastfish.services.BusinessService.getAll(BusinessService.java:73)
-</span></span><span class="line"><span class="cl">at fastfish.services.BusinessService.loadDB(BusinessService.java:38)
-</span></span><span class="line"><span class="cl">at sun.reflect.GeneratedMethodAccessor190.invoke(Unknown Source)
-</span></span><span class="line"><span class="cl">at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-</span></span><span class="line"><span class="cl">at java.lang.reflect.Method.invoke(Method.java:498)
-</span></span><span class="line"><span class="cl">at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:65)
-</span></span><span class="line"><span class="cl">at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
-</span></span><span class="line"><span class="cl">at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
-</span></span><span class="line"><span class="cl">at java.util.concurrent.FutureTask.runAndReset$$$capture(FutureTask.java:308)
-</span></span><span class="line"><span class="cl">at java.util.concurrent.FutureTask.runAndReset(FutureTask.java)
-</span></span><span class="line"><span class="cl">at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
-</span></span><span class="line"><span class="cl">at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
-</span></span><span class="line"><span class="cl">at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-</span></span><span class="line"><span class="cl">at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-</span></span><span class="line"><span class="cl">at java.lang.Thread.run(Thread.java:748)
-</span></span><span class="line"><span class="cl">Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
-</span></span><span class="line"><span class="cl">at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3008)
-</span></span><span class="line"><span class="cl">at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3466)
-</span></span><span class="line"><span class="cl">... 83 common frames omitted
+</span></span><span class="line"><span class="cl"><span class="n">The</span> <span class="n">last</span> <span class="n">packet</span> <span class="n">successfully</span> <span class="n">received</span> <span class="n">from</span> <span class="n">the</span> <span class="n">server</span> <span class="n">was</span> <span class="mi">100</span><span class="p">,</span><span class="mi">610</span> <span class="n">milliseconds</span> <span class="n">ago</span><span class="o">.</span>  <span class="n">The</span> <span class="n">last</span> <span class="n">packet</span> <span class="n">sent</span> <span class="n">successfully</span> <span class="n">to</span> <span class="n">the</span> <span class="n">server</span> <span class="n">was</span> <span class="mi">0</span> <span class="n">milliseconds</span> <span class="n">ago</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">sun</span><span class="o">.</span><span class="n">reflect</span><span class="o">.</span><span class="n">GeneratedConstructorAccessor108</span><span class="o">.</span><span class="n">newInstance</span><span class="p">(</span><span class="n">Unknown</span> <span class="n">Source</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">sun</span><span class="o">.</span><span class="n">reflect</span><span class="o">.</span><span class="n">DelegatingConstructorAccessorImpl</span><span class="o">.</span><span class="n">newInstance</span><span class="p">(</span><span class="n">DelegatingConstructorAccessorImpl</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">45</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">java</span><span class="o">.</span><span class="n">lang</span><span class="o">.</span><span class="n">reflect</span><span class="o">.</span><span class="n">Constructor</span><span class="o">.</span><span class="n">newInstance</span><span class="p">(</span><span class="n">Constructor</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">423</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">Util</span><span class="o">.</span><span class="n">handleNewInstance</span><span class="p">(</span><span class="n">Util</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">425</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">SQLError</span><span class="o">.</span><span class="n">createCommunicationsException</span><span class="p">(</span><span class="n">SQLError</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">989</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">MysqlIO</span><span class="o">.</span><span class="n">reuseAndReadPacket</span><span class="p">(</span><span class="n">MysqlIO</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">3556</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">MysqlIO</span><span class="o">.</span><span class="n">reuseAndReadPacket</span><span class="p">(</span><span class="n">MysqlIO</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">3456</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">MysqlIO</span><span class="o">.</span><span class="n">checkErrorPacket</span><span class="p">(</span><span class="n">MysqlIO</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">3897</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">MysqlIO</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="n">MysqlIO</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">2524</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">MysqlIO</span><span class="o">.</span><span class="n">sqlQueryDirect</span><span class="p">(</span><span class="n">MysqlIO</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">2677</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">ConnectionImpl</span><span class="o">.</span><span class="n">execSQL</span><span class="p">(</span><span class="n">ConnectionImpl</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">2545</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">ConnectionImpl</span><span class="o">.</span><span class="n">execSQL</span><span class="p">(</span><span class="n">ConnectionImpl</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">2503</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">StatementImpl</span><span class="o">.</span><span class="n">executeQuery</span><span class="p">(</span><span class="n">StatementImpl</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">1369</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">alibaba</span><span class="o">.</span><span class="n">druid</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">FilterChainImpl</span><span class="o">.</span><span class="n">statement_executeQuery</span><span class="p">(</span><span class="n">FilterChainImpl</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">2363</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">alibaba</span><span class="o">.</span><span class="n">druid</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">FilterAdapter</span><span class="o">.</span><span class="n">statement_executeQuery</span><span class="p">(</span><span class="n">FilterAdapter</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">2481</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">alibaba</span><span class="o">.</span><span class="n">druid</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">FilterEventAdapter</span><span class="o">.</span><span class="n">statement_executeQuery</span><span class="p">(</span><span class="n">FilterEventAdapter</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">302</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">alibaba</span><span class="o">.</span><span class="n">druid</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">FilterChainImpl</span><span class="o">.</span><span class="n">statement_executeQuery</span><span class="p">(</span><span class="n">FilterChainImpl</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">2360</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">alibaba</span><span class="o">.</span><span class="n">druid</span><span class="o">.</span><span class="n">proxy</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">StatementProxyImpl</span><span class="o">.</span><span class="n">executeQuery</span><span class="p">(</span><span class="n">StatementProxyImpl</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">211</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">alibaba</span><span class="o">.</span><span class="n">druid</span><span class="o">.</span><span class="n">pool</span><span class="o">.</span><span class="n">DruidPooledStatement</span><span class="o">.</span><span class="n">executeQuery</span><span class="p">(</span><span class="n">DruidPooledStatement</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">138</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">TStatementWrapper</span><span class="o">.</span><span class="n">executeQuery</span><span class="p">(</span><span class="n">TStatementWrapper</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">315</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">TGroupStatement</span><span class="o">.</span><span class="n">executeQueryOnConnection</span><span class="p">(</span><span class="n">TGroupStatement</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">549</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">TGroupStatement</span><span class="o">$</span><span class="mf">4.</span><span class="n">tryOnDataSource</span><span class="p">(</span><span class="n">TGroupStatement</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">633</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">TGroupStatement</span><span class="o">$</span><span class="mf">4.</span><span class="n">tryOnDataSource</span><span class="p">(</span><span class="n">TGroupStatement</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">615</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">dbselector</span><span class="o">.</span><span class="n">AbstractDBSelector</span><span class="o">.</span><span class="n">tryOnDataSourceHolder</span><span class="p">(</span><span class="n">AbstractDBSelector</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">155</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">dbselector</span><span class="o">.</span><span class="n">OneDBSelector</span><span class="o">.</span><span class="n">tryExecuteInternal</span><span class="p">(</span><span class="n">OneDBSelector</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">52</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">dbselector</span><span class="o">.</span><span class="n">AbstractDBSelector</span><span class="o">.</span><span class="n">tryExecute</span><span class="p">(</span><span class="n">AbstractDBSelector</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">405</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">dbselector</span><span class="o">.</span><span class="n">AbstractDBSelector</span><span class="o">.</span><span class="n">tryExecute</span><span class="p">(</span><span class="n">AbstractDBSelector</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">412</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">TGroupStatement</span><span class="o">.</span><span class="n">executeQuery</span><span class="p">(</span><span class="n">TGroupStatement</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">488</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">TGroupStatement</span><span class="o">.</span><span class="n">executeInternal</span><span class="p">(</span><span class="n">TGroupStatement</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">131</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">TGroupStatement</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">TGroupStatement</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">101</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">spi</span><span class="o">.</span><span class="n">My_JdbcHandler</span><span class="o">.</span><span class="n">executeQuery</span><span class="p">(</span><span class="n">My_JdbcHandler</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">521</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">spi</span><span class="o">.</span><span class="n">My_Cursor</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">My_Cursor</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">106</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">QueryMyHandler</span><span class="o">.</span><span class="n">handle</span><span class="p">(</span><span class="n">QueryMyHandler</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">89</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">AbstractGroupExecutor</span><span class="o">.</span><span class="n">executeInner</span><span class="p">(</span><span class="n">AbstractGroupExecutor</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">47</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">AbstractGroupExecutor</span><span class="o">.</span><span class="n">execByExecPlanNode</span><span class="p">(</span><span class="n">AbstractGroupExecutor</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">36</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">TopologyExecutor</span><span class="o">.</span><span class="n">execByExecPlanNode</span><span class="p">(</span><span class="n">TopologyExecutor</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">66</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">MatrixExecutor</span><span class="o">.</span><span class="n">execByExecPlanNodeByOne</span><span class="p">(</span><span class="n">MatrixExecutor</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">670</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">MatrixExecutor</span><span class="o">.</span><span class="n">execByExecPlanNode</span><span class="p">(</span><span class="n">MatrixExecutor</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">659</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">MatrixExecutor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">MatrixExecutor</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">137</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">matrix</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">TConnection</span><span class="o">.</span><span class="n">executeSQL</span><span class="p">(</span><span class="n">TConnection</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">241</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">matrix</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">TPreparedStatement</span><span class="o">.</span><span class="n">executeSQL</span><span class="p">(</span><span class="n">TPreparedStatement</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">64</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">matrix</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">TStatement</span><span class="o">.</span><span class="n">executeInternal</span><span class="p">(</span><span class="n">TStatement</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">133</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">tddl</span><span class="o">.</span><span class="n">matrix</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">TPreparedStatement</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">TPreparedStatement</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">49</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">sun</span><span class="o">.</span><span class="n">reflect</span><span class="o">.</span><span class="n">GeneratedMethodAccessor148</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">Unknown</span> <span class="n">Source</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">sun</span><span class="o">.</span><span class="n">reflect</span><span class="o">.</span><span class="n">DelegatingMethodAccessorImpl</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">DelegatingMethodAccessorImpl</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">43</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">java</span><span class="o">.</span><span class="n">lang</span><span class="o">.</span><span class="n">reflect</span><span class="o">.</span><span class="n">Method</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">Method</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">498</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">ibatis</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">PreparedStatementLogger</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">PreparedStatementLogger</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">59</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">sun</span><span class="o">.</span><span class="n">proxy</span><span class="o">.$</span><span class="n">Proxy102</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">Unknown</span> <span class="n">Source</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">ibatis</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">statement</span><span class="o">.</span><span class="n">PreparedStatementHandler</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">PreparedStatementHandler</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">63</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">ibatis</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">statement</span><span class="o">.</span><span class="n">RoutingStatementHandler</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">RoutingStatementHandler</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">79</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">ibatis</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">SimpleExecutor</span><span class="o">.</span><span class="n">doQuery</span><span class="p">(</span><span class="n">SimpleExecutor</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">63</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">ibatis</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">BaseExecutor</span><span class="o">.</span><span class="n">queryFromDatabase</span><span class="p">(</span><span class="n">BaseExecutor</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">325</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">ibatis</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">BaseExecutor</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">BaseExecutor</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">156</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">ibatis</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">CachingExecutor</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">CachingExecutor</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">109</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">ibatis</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">CachingExecutor</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">CachingExecutor</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">83</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">sun</span><span class="o">.</span><span class="n">reflect</span><span class="o">.</span><span class="n">GeneratedMethodAccessor146</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">Unknown</span> <span class="n">Source</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">sun</span><span class="o">.</span><span class="n">reflect</span><span class="o">.</span><span class="n">DelegatingMethodAccessorImpl</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">DelegatingMethodAccessorImpl</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">43</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">java</span><span class="o">.</span><span class="n">lang</span><span class="o">.</span><span class="n">reflect</span><span class="o">.</span><span class="n">Method</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">Method</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">498</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">ibatis</span><span class="o">.</span><span class="n">plugin</span><span class="o">.</span><span class="n">Invocation</span><span class="o">.</span><span class="n">proceed</span><span class="p">(</span><span class="n">Invocation</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">49</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">fastfish</span><span class="o">.</span><span class="n">interceptor</span><span class="o">.</span><span class="n">DbLogInterceptor</span><span class="o">.</span><span class="n">intercept</span><span class="p">(</span><span class="n">DbLogInterceptor</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">49</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">ibatis</span><span class="o">.</span><span class="n">plugin</span><span class="o">.</span><span class="n">Plugin</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">Plugin</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">61</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">sun</span><span class="o">.</span><span class="n">proxy</span><span class="o">.$</span><span class="n">Proxy100</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Unknown</span> <span class="n">Source</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">ibatis</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">DefaultSqlSession</span><span class="o">.</span><span class="n">selectList</span><span class="p">(</span><span class="n">DefaultSqlSession</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">148</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">ibatis</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">DefaultSqlSession</span><span class="o">.</span><span class="n">selectList</span><span class="p">(</span><span class="n">DefaultSqlSession</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">141</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">sun</span><span class="o">.</span><span class="n">reflect</span><span class="o">.</span><span class="n">GeneratedMethodAccessor145</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">Unknown</span> <span class="n">Source</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">sun</span><span class="o">.</span><span class="n">reflect</span><span class="o">.</span><span class="n">DelegatingMethodAccessorImpl</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">DelegatingMethodAccessorImpl</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">43</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">java</span><span class="o">.</span><span class="n">lang</span><span class="o">.</span><span class="n">reflect</span><span class="o">.</span><span class="n">Method</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">Method</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">498</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="n">mybatis</span><span class="o">.</span><span class="n">spring</span><span class="o">.</span><span class="n">SqlSessionTemplate</span><span class="o">$</span><span class="n">SqlSessionInterceptor</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">SqlSessionTemplate</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">434</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">sun</span><span class="o">.</span><span class="n">proxy</span><span class="o">.$</span><span class="n">Proxy87</span><span class="o">.</span><span class="n">selectList</span><span class="p">(</span><span class="n">Unknown</span> <span class="n">Source</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="n">mybatis</span><span class="o">.</span><span class="n">spring</span><span class="o">.</span><span class="n">SqlSessionTemplate</span><span class="o">.</span><span class="n">selectList</span><span class="p">(</span><span class="n">SqlSessionTemplate</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">231</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">ibatis</span><span class="o">.</span><span class="n">binding</span><span class="o">.</span><span class="n">MapperMethod</span><span class="o">.</span><span class="n">executeForMany</span><span class="p">(</span><span class="n">MapperMethod</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">128</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">ibatis</span><span class="o">.</span><span class="n">binding</span><span class="o">.</span><span class="n">MapperMethod</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">MapperMethod</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">68</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">ibatis</span><span class="o">.</span><span class="n">binding</span><span class="o">.</span><span class="n">MapperProxy</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">MapperProxy</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">53</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">sun</span><span class="o">.</span><span class="n">proxy</span><span class="o">.$</span><span class="n">Proxy124</span><span class="o">.</span><span class="n">selectAll</span><span class="p">(</span><span class="n">Unknown</span> <span class="n">Source</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">fastfish</span><span class="o">.</span><span class="n">services</span><span class="o">.</span><span class="n">BusinessService</span><span class="o">.</span><span class="n">getAll</span><span class="p">(</span><span class="n">BusinessService</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">73</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">fastfish</span><span class="o">.</span><span class="n">services</span><span class="o">.</span><span class="n">BusinessService</span><span class="o">.</span><span class="n">loadDB</span><span class="p">(</span><span class="n">BusinessService</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">38</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">sun</span><span class="o">.</span><span class="n">reflect</span><span class="o">.</span><span class="n">GeneratedMethodAccessor190</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">Unknown</span> <span class="n">Source</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">sun</span><span class="o">.</span><span class="n">reflect</span><span class="o">.</span><span class="n">DelegatingMethodAccessorImpl</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">DelegatingMethodAccessorImpl</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">43</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">java</span><span class="o">.</span><span class="n">lang</span><span class="o">.</span><span class="n">reflect</span><span class="o">.</span><span class="n">Method</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">Method</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">498</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="n">springframework</span><span class="o">.</span><span class="n">scheduling</span><span class="o">.</span><span class="n">support</span><span class="o">.</span><span class="n">ScheduledMethodRunnable</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">ScheduledMethodRunnable</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">65</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="n">springframework</span><span class="o">.</span><span class="n">scheduling</span><span class="o">.</span><span class="n">support</span><span class="o">.</span><span class="n">DelegatingErrorHandlingRunnable</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">DelegatingErrorHandlingRunnable</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">54</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">concurrent</span><span class="o">.</span><span class="n">Executors</span><span class="o">$</span><span class="n">RunnableAdapter</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">Executors</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">511</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">concurrent</span><span class="o">.</span><span class="n">FutureTask</span><span class="o">.</span><span class="n">runAndReset</span><span class="o">$$$</span><span class="n">capture</span><span class="p">(</span><span class="n">FutureTask</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">308</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">concurrent</span><span class="o">.</span><span class="n">FutureTask</span><span class="o">.</span><span class="n">runAndReset</span><span class="p">(</span><span class="n">FutureTask</span><span class="o">.</span><span class="n">java</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">concurrent</span><span class="o">.</span><span class="n">ScheduledThreadPoolExecutor</span><span class="o">$</span><span class="n">ScheduledFutureTask</span><span class="o">.</span><span class="n">access</span><span class="o">$</span><span class="mi">301</span><span class="p">(</span><span class="n">ScheduledThreadPoolExecutor</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">180</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">concurrent</span><span class="o">.</span><span class="n">ScheduledThreadPoolExecutor</span><span class="o">$</span><span class="n">ScheduledFutureTask</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">ScheduledThreadPoolExecutor</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">294</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">concurrent</span><span class="o">.</span><span class="n">ThreadPoolExecutor</span><span class="o">.</span><span class="n">runWorker</span><span class="p">(</span><span class="n">ThreadPoolExecutor</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">1149</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">concurrent</span><span class="o">.</span><span class="n">ThreadPoolExecutor</span><span class="o">$</span><span class="n">Worker</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">ThreadPoolExecutor</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">624</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">java</span><span class="o">.</span><span class="n">lang</span><span class="o">.</span><span class="n">Thread</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="ne">Thread</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">748</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Caused</span> <span class="n">by</span><span class="p">:</span> <span class="n">java</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">EOFException</span><span class="p">:</span> <span class="n">Can</span> <span class="ow">not</span> <span class="n">read</span> <span class="n">response</span> <span class="n">from</span> <span class="n">server</span><span class="o">.</span> <span class="n">Expected</span> <span class="n">to</span> <span class="n">read</span> <span class="mi">4</span> <span class="n">bytes</span><span class="p">,</span> <span class="n">read</span> <span class="mi">0</span> <span class="n">bytes</span> <span class="n">before</span> <span class="n">connection</span> <span class="n">was</span> <span class="n">unexpectedly</span> <span class="n">lost</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">MysqlIO</span><span class="o">.</span><span class="n">readFully</span><span class="p">(</span><span class="n">MysqlIO</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">3008</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">jdbc</span><span class="o">.</span><span class="n">MysqlIO</span><span class="o">.</span><span class="n">reuseAndReadPacket</span><span class="p">(</span><span class="n">MysqlIO</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">3466</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="mi">83</span> <span class="n">common</span> <span class="n">frames</span> <span class="n">omitted</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>是数据池连接出错。但是我本地的应用确实是可以访问测试数据库的， 比较有趣的异常就是</p>
@@ -931,12 +929,10 @@ sockets 处于 <code>CLOSED</code> 的状态，但是却没有真正close 掉，
 </ul>
 ]]></content:encoded>
     </item>
-    
     <item>
       <title>大话Linux文件系统</title>
       <link>https://ramsayleung.github.io/zh/post/2017/linux_file_system/</link>
       <pubDate>Thu, 30 Mar 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/linux_file_system/</guid>
       <description>an discussion about linux file system</description>
       <content:encoded><![CDATA[<p>不久前，Apple 的文件系统 (Apple File System) 新推出，然后各方便一起挤身向前对APFS &ldquo;评头品足&rdquo;,我是不了解 APFS ,所以也没有什么发言权嘛，不过话分两头；</p>
@@ -1029,12 +1025,10 @@ sockets 处于 <code>CLOSED</code> 的状态，但是却没有真正close 掉，
 </ul>
 ]]></content:encoded>
     </item>
-    
     <item>
       <title>关于工具,关于折腾</title>
       <link>https://ramsayleung.github.io/zh/post/2017/about_tool_about_tweak/</link>
       <pubDate>Fri, 24 Mar 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/about_tool_about_tweak/</guid>
       <description>An discussion about tool and tweak</description>
       <content:encoded><![CDATA[<p>笔者最近一直在思考，关于工具，关于折腾，关于其中的付出与收获</p>
@@ -1163,12 +1157,10 @@ zsh完成</li>
 </ul>
 ]]></content:encoded>
     </item>
-    
     <item>
       <title>Linux/Unix Shell 二三事之过滤器grep</title>
       <link>https://ramsayleung.github.io/zh/post/2017/grep/</link>
       <pubDate>Mon, 13 Mar 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/grep/</guid>
       <description>an introduction about grep</description>
       <content:encoded><![CDATA[<p>文本三剑客之 Grep</p>
@@ -1852,12 +1844,10 @@ IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE</p>
 </div><p>Enjoy Shell :)</p>
 ]]></content:encoded>
     </item>
-    
     <item>
       <title>Linux/Unix Shell 二三事之过滤器diff</title>
       <link>https://ramsayleung.github.io/zh/post/2017/diff/</link>
       <pubDate>Tue, 28 Feb 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/diff/</guid>
       <description>An introduction about diff</description>
       <content:encoded><![CDATA[<blockquote>
@@ -2071,12 +2061,10 @@ address1 包含：</p>
 </div>
 </div>]]></content:encoded>
     </item>
-    
     <item>
       <title>枯树逢春之ArchLinux领风骚</title>
       <link>https://ramsayleung.github.io/zh/post/2017/install_archlinux/</link>
       <pubDate>Mon, 27 Feb 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/install_archlinux/</guid>
       <description>An description about how to install arch linux in an old machine</description>
       <content:encoded><![CDATA[<h2 id="枯树"><span class="section-num">1</span> 枯树</h2>
@@ -2437,247 +2425,10 @@ address1 包含：</p>
 <p><a href="https://wiki.archlinux.org/index.php/installation_guide">https://wiki.archlinux.org/index.php/installation_guide</a></p>
 ]]></content:encoded>
     </item>
-    
-    <item>
-      <title>Linux/Unix Shell 二三事之过滤器cat</title>
-      <link>https://ramsayleung.github.io/zh/post/2017/cat/</link>
-      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
-      
-      <guid>https://ramsayleung.github.io/zh/post/2017/cat/</guid>
-      <description>An introduction about cat</description>
-      <content:encoded><![CDATA[<blockquote>
-<p>cat - concatenate files and print on the standard output</p>
-</blockquote>
-<h2 id="过滤器"><span class="section-num">1</span> 过滤器</h2>
-<p>何谓过滤器呢，例如cat,grep,wl 之类的命令就是过滤器了。这样的命令
-读取数据，对数据执行一些操作，然后写入结果。更准确地说，过滤器就是任何能够从标准
-输入读取 <strong>文本</strong> 数据，并向标准输出写入 <strong>文本</strong> 数据的命令。又因为Unix 的 <strong>KISS</strong>
-设计理念，所以每个程序都被设计成能够出色完成一项特定任务的工具。又因为重定向和
-管道的存在，使得可以将这些工具组合起来，发挥无穷威力</p>
-<h2 id="cat"><span class="section-num">2</span> cat</h2>
-<p>在shell 里面运行cat,你会被要求输入文本数据，当你输入一行数据以后，然后按下回
-车你输入的数据就会显示在屏幕，当你按下 ^D(&lt;ctrl&gt;+d),发送eof 信号给shell,退出
-cat。cat 做的事就是把你输入的字符，复制到标准输出 (一般情况是指你的屏幕).看到
-这里有人或许会质疑，这东西有什么用呢？似乎什么都作不了。不，它的用处很大呢，
-且容笔者细细禀来</p>
-<h3 id="场景1"><span class="section-num">2.1</span> 场景1</h3>
-<p>假如你要新建一个文本文件，里面只是很少的文本，你会怎么做呢？一般情况下，都是用
-vim/emacs 新建一个文本文件，然后输入几行文字，然后保存退出。这是一般的做法，
-看到这里，很自然有人会发问，难道有更优雅的解决方法？有，不用打开文本编辑器写入文本
-的hacking方法：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &gt; data
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>输入数据，然后 ^D(&lt;ctrl&gt;+d) 保存。你就新建了一个文本了。当然，如果你已经有一个 <strong>data</strong> 文件
-,就会被代替，当然，你也可以也在原来文本末尾添加的方法：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &gt;&gt; data
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="场景2"><span class="section-num">2.2</span> 场景2</h3>
-<p>如果你有一个短文件，你想查看一下，同样，你可以使用cat</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &lt; data
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>当然，你也可以省略 <strong>&lt;</strong> 这个重定向符号：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat data
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>抑或是，你想显示某个大文件的最后一部分，你也可以如上操作。或许你会觉得，这个功能
-很多命令也有，最典型的就是 <strong>tail</strong>. 但是如果 <strong>cat</strong> 可以很完美地很其他过滤器结合
-充当整套管道线工具流的起始端，这个以后慢慢再阐述</p>
-<h3 id="场景3"><span class="section-num">2.3</span> 场景3</h3>
-<p>如果你想复制文本文件，你首先会想起什么命令？ <strong>cp</strong>,很自然嘛，我也不例外，但是cat
-也可以实现同样的功能，很意外吧：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &lt; file &gt; newfile
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>即把 <strong>file</strong> 复制到标准输出，然后再把 <strong>file</strong> 当作标准输入复制到 <strong>newfile</strong>.hacking!</p>
-<h3 id="场景4"><span class="section-num">2.4</span> 场景4</h3>
-<p>如果你想把多个文本文件的组合到一个文件，你会怎么做？用编辑器打开所有的文件
-然后 select,cut,paste,save.我也会很自然地想到这个方法，但是是否存在着更
-优雅的解决方案呢？当然：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat file1 file2 file3 &gt;newfile
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="总结"><span class="section-num">3</span> 总结</h2>
-<p>上面已经介绍了挺多cat 的使用场景了，你觉得cat 表现滴怎么样呢？相信你的感觉是
-还行，但是并没有，我吹嘘的那么令人惊艳。因为这只是cat 最基本的功能，它最大的
-用法还没有完全展现出来，笔者先举一例，以后再慢慢详叙：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat file <span class="p">|</span>grep <span class="s2">&#34;something&#34;</span> <span class="p">|</span>sort -n <span class="p">|</span>tee newfile
-</span></span></code></pre></td></tr></table>
-</div>
-</div><table>
-<thead>
-<tr>
-<th>语法</th>
-<th>用法</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>cat &gt; file</td>
-<td>读取输入，创建新的文件或替换</td>
-</tr>
-<tr>
-<td>cat &gt;&gt;file</td>
-<td>读取输入，追加新的文件</td>
-</tr>
-<tr>
-<td>cat file/cat &lt;file</td>
-<td>显示一个已有文件</td>
-</tr>
-<tr>
-<td>cat &lt;oldfile&gt; newfile</td>
-<td>复制一个文件</td>
-</tr>
-<tr>
-<td>cat file1 file2 file3&gt;file4</td>
-<td>组合多个文件</td>
-</tr>
-</tbody>
-</table>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>Linux/Unix Shell 二三事之过滤器head&#43;tail</title>
-      <link>https://ramsayleung.github.io/zh/post/2017/head_tail/</link>
-      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
-      
-      <guid>https://ramsayleung.github.io/zh/post/2017/head_tail/</guid>
-      <description>An introduction about head and tail</description>
-      <content:encoded><![CDATA[<blockquote>
-<p>head - output the first part of files
-tail - output the last part of files</p>
-</blockquote>
-<p>当拥有的数据太多的时候，使用cat 来展示数据的话，数据量过大，屏幕就只能显示最后一部分的数据了。</p>
-<p>所以如果你想选取部分的数据的话，cat 就不是一个好选择了。有两个命令可以满足你的要求，分别是 <strong>head</strong> 和 <strong>tail</strong>.顾名思义，head 选取数据的开头部分tail 是选取数据的结尾部分</p>
-<h2 id="用法"><span class="section-num">1</span> 用法</h2>
-<p>当把 <strong>head</strong> <strong>tail</strong> 当作过滤器来使用的时候，用法很简单</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ head data
-</span></span><span class="line"><span class="cl">$ tail data
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>默认情况下 <strong>head</strong> 会选取数据开头的10行数据 <strong>tail</strong> 会选取数据最后的10行数据. 如果你想选取更多的数据的时候，你可以指定行数，例如</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ head <span class="o">[</span>-n line<span class="o">]</span> data
-</span></span><span class="line"><span class="cl">$ tail <span class="o">[</span>-n line<span class="o">]</span> data
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>其中 line 是希望选取的数据行的数量</p>
-<h2 id="惊艳点"><span class="section-num">2</span> 惊艳点</h2>
-<p>你可能觉得 <strong>head</strong> <strong>tail</strong> 两个命令很简单，似乎用处不大。</p>
-<p>是的，就笔者一直所介绍的那样，单个unix命令只是完成一个特定的工作，但是当它们组合起来的时候，就很威力无穷了</p>
-<h3 id="场景1"><span class="section-num">2.1</span> 场景1</h3>
-<p>假如你要生成一串密钥来加密你的某个文件，这是很常见的需求，你会怎么办，用python 或者 java 写一个随机数函数来实现么？无需，你用简单的过滤器加Linux/Unix</p>
-<p>内置的设备(dev):</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ cat /dev/urandom <span class="p">|</span> tr -cd <span class="s2">&#34;[[:alnum:]]&#34;</span> <span class="p">|</span>head -c 32<span class="p">;</span><span class="nb">echo</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>在Unix/Linux 的机器下，运行上面的命令就可以生成一个包含数字和字母的32个字符长的密钥了。</p>
-<p>/dev/urandom 是一个可以通过收集硬件驱动的环境噪音来产生伪随机数特殊的文件，tr 是转换和删除字符的命令；更多详细的东西，以后笔者会慢慢介绍滴</p>
-<h3 id="场景2"><span class="section-num">2.2</span> 场景2</h3>
-<p>在日常的开发或者运行环境中，日志是必不可少滴，但是日志是不断产生新的数据的,所以有时候就会出现用编辑器打开日志的时候，就会出现，编辑器不断提醒你文件已经发生了变化，是否重新加载，但是如果只是用cat,tail 来查看日志，日志又是保持在
-打开的那个状态，新产生的日志数据是没办法浏览到，果真如此？</p>
-<p>其实不然, tail 可以在查看日志的时候，保持日志一直在更新。关键就在 <strong>-f</strong> 选项</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ tail -f <span class="o">[</span>-n line<span class="o">]</span> file
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><strong>-f</strong> 选项告诉tail 当到达文件的末尾不要停止。相反，tail 要一直等下去，并且随着文件的增长，显示更多的输出 (-f -&gt; follow)</p>
-<p>你也可以模拟日志不断生成的过程：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ tail -f -n <span class="m">20</span> something.log
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>然后打开一个新的Shell, 运行：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">cat &gt;&gt; something.log
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>使用 <strong>&gt;&gt;</strong> 追加数据，就可以模拟日志生成的过程了</p>
-<h2 id="总结"><span class="section-num">3</span> 总结</h2>
-<p>要掌握更多的用法还是要查看文档滴：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">man head
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Enjoy Shell :)</p>
-]]></content:encoded>
-    </item>
-    
     <item>
       <title>Linux/Unix Shell 二三事之神器percol</title>
       <link>https://ramsayleung.github.io/zh/post/2017/percol/</link>
       <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/percol/</guid>
       <description>An introduction about percol</description>
       <content:encoded><![CDATA[<p><a href="https://github.com/mooz/percol">Percol</a> 是Emacs 的一个非常优秀package:js2-mode作者mooz 的又一力作得益于Unix Shell的管道和重定向设计理念，percol 所有的输入输出变得可交互 percol 给我一种很熟悉的感觉，就是 Eamcs 中helm 增量补全 (incremental completion)的感觉，真的可以10倍提高工作效率。</p>
@@ -2835,6 +2586,236 @@ tail - output the last part of files</p>
 <p>Enjoy Shell :)</p>
 ]]></content:encoded>
     </item>
-    
+    <item>
+      <title>Linux/Unix Shell 二三事之过滤器cat</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/cat/</link>
+      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2017/cat/</guid>
+      <description>An introduction about cat</description>
+      <content:encoded><![CDATA[<blockquote>
+<p>cat - concatenate files and print on the standard output</p>
+</blockquote>
+<h2 id="过滤器"><span class="section-num">1</span> 过滤器</h2>
+<p>何谓过滤器呢，例如cat,grep,wl 之类的命令就是过滤器了。这样的命令
+读取数据，对数据执行一些操作，然后写入结果。更准确地说，过滤器就是任何能够从标准
+输入读取 <strong>文本</strong> 数据，并向标准输出写入 <strong>文本</strong> 数据的命令。又因为Unix 的 <strong>KISS</strong>
+设计理念，所以每个程序都被设计成能够出色完成一项特定任务的工具。又因为重定向和
+管道的存在，使得可以将这些工具组合起来，发挥无穷威力</p>
+<h2 id="cat"><span class="section-num">2</span> cat</h2>
+<p>在shell 里面运行cat,你会被要求输入文本数据，当你输入一行数据以后，然后按下回
+车你输入的数据就会显示在屏幕，当你按下 ^D(&lt;ctrl&gt;+d),发送eof 信号给shell,退出
+cat。cat 做的事就是把你输入的字符，复制到标准输出 (一般情况是指你的屏幕).看到
+这里有人或许会质疑，这东西有什么用呢？似乎什么都作不了。不，它的用处很大呢，
+且容笔者细细禀来</p>
+<h3 id="场景1"><span class="section-num">2.1</span> 场景1</h3>
+<p>假如你要新建一个文本文件，里面只是很少的文本，你会怎么做呢？一般情况下，都是用
+vim/emacs 新建一个文本文件，然后输入几行文字，然后保存退出。这是一般的做法，
+看到这里，很自然有人会发问，难道有更优雅的解决方法？有，不用打开文本编辑器写入文本
+的hacking方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &gt; data
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输入数据，然后 ^D(&lt;ctrl&gt;+d) 保存。你就新建了一个文本了。当然，如果你已经有一个 <strong>data</strong> 文件
+,就会被代替，当然，你也可以也在原来文本末尾添加的方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &gt;&gt; data
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="场景2"><span class="section-num">2.2</span> 场景2</h3>
+<p>如果你有一个短文件，你想查看一下，同样，你可以使用cat</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &lt; data
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当然，你也可以省略 <strong>&lt;</strong> 这个重定向符号：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat data
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>抑或是，你想显示某个大文件的最后一部分，你也可以如上操作。或许你会觉得，这个功能
+很多命令也有，最典型的就是 <strong>tail</strong>. 但是如果 <strong>cat</strong> 可以很完美地很其他过滤器结合
+充当整套管道线工具流的起始端，这个以后慢慢再阐述</p>
+<h3 id="场景3"><span class="section-num">2.3</span> 场景3</h3>
+<p>如果你想复制文本文件，你首先会想起什么命令？ <strong>cp</strong>,很自然嘛，我也不例外，但是cat
+也可以实现同样的功能，很意外吧：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat &lt; file &gt; newfile
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>即把 <strong>file</strong> 复制到标准输出，然后再把 <strong>file</strong> 当作标准输入复制到 <strong>newfile</strong>.hacking!</p>
+<h3 id="场景4"><span class="section-num">2.4</span> 场景4</h3>
+<p>如果你想把多个文本文件的组合到一个文件，你会怎么做？用编辑器打开所有的文件
+然后 select,cut,paste,save.我也会很自然地想到这个方法，但是是否存在着更
+优雅的解决方案呢？当然：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat file1 file2 file3 &gt;newfile
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="总结"><span class="section-num">3</span> 总结</h2>
+<p>上面已经介绍了挺多cat 的使用场景了，你觉得cat 表现滴怎么样呢？相信你的感觉是
+还行，但是并没有，我吹嘘的那么令人惊艳。因为这只是cat 最基本的功能，它最大的
+用法还没有完全展现出来，笔者先举一例，以后再慢慢详叙：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">cat file <span class="p">|</span>grep <span class="s2">&#34;something&#34;</span> <span class="p">|</span>sort -n <span class="p">|</span>tee newfile
+</span></span></code></pre></td></tr></table>
+</div>
+</div><table>
+<thead>
+<tr>
+<th>语法</th>
+<th>用法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cat &gt; file</td>
+<td>读取输入，创建新的文件或替换</td>
+</tr>
+<tr>
+<td>cat &gt;&gt;file</td>
+<td>读取输入，追加新的文件</td>
+</tr>
+<tr>
+<td>cat file/cat &lt;file</td>
+<td>显示一个已有文件</td>
+</tr>
+<tr>
+<td>cat &lt;oldfile&gt; newfile</td>
+<td>复制一个文件</td>
+</tr>
+<tr>
+<td>cat file1 file2 file3&gt;file4</td>
+<td>组合多个文件</td>
+</tr>
+</tbody>
+</table>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Linux/Unix Shell 二三事之过滤器head&#43;tail</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/head_tail/</link>
+      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2017/head_tail/</guid>
+      <description>An introduction about head and tail</description>
+      <content:encoded><![CDATA[<blockquote>
+<p>head - output the first part of files
+tail - output the last part of files</p>
+</blockquote>
+<p>当拥有的数据太多的时候，使用cat 来展示数据的话，数据量过大，屏幕就只能显示最后一部分的数据了。</p>
+<p>所以如果你想选取部分的数据的话，cat 就不是一个好选择了。有两个命令可以满足你的要求，分别是 <strong>head</strong> 和 <strong>tail</strong>.顾名思义，head 选取数据的开头部分tail 是选取数据的结尾部分</p>
+<h2 id="用法"><span class="section-num">1</span> 用法</h2>
+<p>当把 <strong>head</strong> <strong>tail</strong> 当作过滤器来使用的时候，用法很简单</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ head data
+</span></span><span class="line"><span class="cl">$ tail data
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>默认情况下 <strong>head</strong> 会选取数据开头的10行数据 <strong>tail</strong> 会选取数据最后的10行数据. 如果你想选取更多的数据的时候，你可以指定行数，例如</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ head <span class="o">[</span>-n line<span class="o">]</span> data
+</span></span><span class="line"><span class="cl">$ tail <span class="o">[</span>-n line<span class="o">]</span> data
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中 line 是希望选取的数据行的数量</p>
+<h2 id="惊艳点"><span class="section-num">2</span> 惊艳点</h2>
+<p>你可能觉得 <strong>head</strong> <strong>tail</strong> 两个命令很简单，似乎用处不大。</p>
+<p>是的，就笔者一直所介绍的那样，单个unix命令只是完成一个特定的工作，但是当它们组合起来的时候，就很威力无穷了</p>
+<h3 id="场景1"><span class="section-num">2.1</span> 场景1</h3>
+<p>假如你要生成一串密钥来加密你的某个文件，这是很常见的需求，你会怎么办，用python 或者 java 写一个随机数函数来实现么？无需，你用简单的过滤器加Linux/Unix</p>
+<p>内置的设备(dev):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ cat /dev/urandom <span class="p">|</span> tr -cd <span class="s2">&#34;[[:alnum:]]&#34;</span> <span class="p">|</span>head -c 32<span class="p">;</span><span class="nb">echo</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在Unix/Linux 的机器下，运行上面的命令就可以生成一个包含数字和字母的32个字符长的密钥了。</p>
+<p>/dev/urandom 是一个可以通过收集硬件驱动的环境噪音来产生伪随机数特殊的文件，tr 是转换和删除字符的命令；更多详细的东西，以后笔者会慢慢介绍滴</p>
+<h3 id="场景2"><span class="section-num">2.2</span> 场景2</h3>
+<p>在日常的开发或者运行环境中，日志是必不可少滴，但是日志是不断产生新的数据的,所以有时候就会出现用编辑器打开日志的时候，就会出现，编辑器不断提醒你文件已经发生了变化，是否重新加载，但是如果只是用cat,tail 来查看日志，日志又是保持在
+打开的那个状态，新产生的日志数据是没办法浏览到，果真如此？</p>
+<p>其实不然, tail 可以在查看日志的时候，保持日志一直在更新。关键就在 <strong>-f</strong> 选项</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ tail -f <span class="o">[</span>-n line<span class="o">]</span> file
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>-f</strong> 选项告诉tail 当到达文件的末尾不要停止。相反，tail 要一直等下去，并且随着文件的增长，显示更多的输出 (-f -&gt; follow)</p>
+<p>你也可以模拟日志不断生成的过程：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ tail -f -n <span class="m">20</span> something.log
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后打开一个新的Shell, 运行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">cat &gt;&gt; something.log
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用 <strong>&gt;&gt;</strong> 追加数据，就可以模拟日志生成的过程了</p>
+<h2 id="总结"><span class="section-num">3</span> 总结</h2>
+<p>要掌握更多的用法还是要查看文档滴：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">man head
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Enjoy Shell :)</p>
+]]></content:encoded>
+    </item>
   </channel>
 </rss>

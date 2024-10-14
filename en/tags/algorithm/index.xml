@@ -9,15 +9,15 @@
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sun, 22 May 2022 10:34:00 +0800</lastBuildDate><atom:link href="https://ramsayleung.github.io/en/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- 0.120.4</generator>
+    <language>en</language>
+    <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
+    <lastBuildDate>Sun, 22 May 2022 16:22:34 +0800</lastBuildDate>
+    <atom:link href="https://ramsayleung.github.io/en/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Topological Sort</title>
       <link>https://ramsayleung.github.io/en/post/2022/topological_sorting/</link>
       <pubDate>Sun, 22 May 2022 10:34:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/en/post/2022/topological_sorting/</guid>
       <description>1 Definition In computer science, a topological sort or topological ordering of a directed graph is a linear ordering of its vertices such that for every directed edge uv from vertex u to vertx v, u comes before v in the ordering.
 It sounds pretty academic, but I am sure you are using topological sort unconsciously every single day.
@@ -230,6 +230,5 @@ It sounds pretty academic, but I am sure you are using topological sort unconsci
 </ul>
 ]]></content:encoded>
     </item>
-    
   </channel>
 </rss>

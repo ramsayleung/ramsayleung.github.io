@@ -9,15 +9,15 @@
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Thu, 04 Jul 2019 10:16:00 +0800</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/categories/guava/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- 0.120.4</generator>
+    <language>zh</language>
+    <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
+    <lastBuildDate>Fri, 25 Feb 2022 22:20:19 +0800</lastBuildDate>
+    <atom:link href="https://ramsayleung.github.io/zh/categories/guava/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Guava探究系列之二: 优雅校验数据</title>
       <link>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BC%98%E9%9B%85%E6%A0%A1%E9%AA%8C%E6%95%B0%E6%8D%AE/</link>
       <pubDate>Thu, 04 Jul 2019 10:16:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BC%98%E9%9B%85%E6%A0%A1%E9%AA%8C%E6%95%B0%E6%8D%AE/</guid>
       <description>1 前言 根据防御式编程的要求, 在日常的开发中, 总少不了对函数的各种入参做校验, 以便保证函数能按照预期的流程执行下去. 比如各种费率的值就没可能是</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
@@ -42,8 +42,8 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Preconditions</span><span class="o">.</span><span class="na">checkArgument</span><span class="o">(</span><span class="n">a</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">)</span>
-</span></span><span class="line"><span class="cl"><span class="c1">// 如果表达式为false, 抛出IllegalArgumentException
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Preconditions</span><span class="p">.</span><span class="na">checkArgument</span><span class="p">(</span><span class="n">a</span><span class="o">&gt;</span><span class="n">1</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 如果表达式为false, 抛出IllegalArgumentException</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="2">
@@ -72,22 +72,22 @@
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">enum</span> <span class="n">ErrorDetail</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">SC_NOT_FOUND</span><span class="o">(</span><span class="s">&#34;404&#34;</span><span class="o">,</span> <span class="s">&#34;Resource could not be fount&#34;</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// 省略部分内容
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nd">@Override</span>
-</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="s">&#34;ErrorDetail{&#34;</span> <span class="o">+</span> <span class="s">&#34;code=&#39;&#34;</span> <span class="o">+</span> <span class="n">code</span> <span class="o">+</span> <span class="sc">&#39;\&#39;&#39;</span> <span class="o">+</span> <span class="s">&#34;, description=&#39;&#34;</span> <span class="o">+</span> <span class="n">description</span> <span class="o">+</span> <span class="sc">&#39;\&#39;&#39;</span> <span class="o">+</span> <span class="sc">&#39;}&#39;</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">    <span class="o">}</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nd">@Test</span>
-</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testCheckArgument</span><span class="o">()</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Preconditions</span><span class="o">.</span><span class="na">checkArgument</span><span class="o">(</span><span class="mi">1</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="o">,</span> <span class="n">ErrorDetail</span><span class="o">.</span><span class="na">SC_NOT_FOUND</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">// 结果如下:
-</span></span></span><span class="line"><span class="cl"><span class="c1">// java.lang.IllegalArgumentException: ErrorDetail{code=&#39;404&#39;, description=&#39;Resource could not be fount&#39;}
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">enum</span><span class="w"> </span><span class="n">ErrorDetail</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">SC_NOT_FOUND</span><span class="p">(</span><span class="s">&#34;404&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Resource could not be fount&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 省略部分内容</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="s">&#34;ErrorDetail{&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;code=&#39;&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sc">&#39;\&#39;&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;, description=&#39;&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">description</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sc">&#39;\&#39;&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sc">&#39;}&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testCheckArgument</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Preconditions</span><span class="p">.</span><span class="na">checkArgument</span><span class="p">(</span><span class="n">1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="n">ErrorDetail</span><span class="p">.</span><span class="na">SC_NOT_FOUND</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 结果如下:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// java.lang.IllegalArgumentException: ErrorDetail{code=&#39;404&#39;, description=&#39;Resource could not be fount&#39;}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="3">
@@ -104,10 +104,10 @@
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">i</span><span class="o">=-</span><span class="mi">1</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl"><span class="n">checkArgument</span><span class="o">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">,</span> <span class="s">&#34;Argument was %s but expected nonnegative&#34;</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl"><span class="c1">// 结果如下:
-</span></span></span><span class="line"><span class="cl"><span class="c1">// java.lang.IllegalArgumentException: Argument was -1 but expected nonnegative
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=-</span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">checkArgument</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">0</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Argument was %s but expected nonnegative&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 结果如下:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// java.lang.IllegalArgumentException: Argument was -1 but expected nonnegative</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="前置条件函数介绍"><span class="section-num">3</span> 前置条件函数介绍</h2>
@@ -122,10 +122,10 @@
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkArgument</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkArgument</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">,</span> <span class="nd">@Nullable</span> <span class="n">Object</span> <span class="n">errorMessage</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkArgument</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">,</span><span class="nd">@Nullable</span> <span class="n">String</span> <span class="n">errorMessageTemplate</span><span class="o">,</span><span class="nd">@Nullable</span> <span class="n">Object</span><span class="o">...</span> <span class="n">errorMessageArgs</span><span class="o">)</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkArgument</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">expression</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkArgument</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">expression</span><span class="p">,</span><span class="w"> </span><span class="nd">@Nullable</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">errorMessage</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkArgument</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">expression</span><span class="p">,</span><span class="nd">@Nullable</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">errorMessageTemplate</span><span class="p">,</span><span class="nd">@Nullable</span><span class="w"> </span><span class="n">Object</span><span class="p">...</span><span class="w"> </span><span class="n">errorMessageArgs</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="checkargument"><span class="section-num">3.1</span> checkArgument</h3>
 <p>函数的签名如下:</p>
@@ -134,8 +134,8 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkArgument</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">);</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkArgument</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">expression</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>入参是一个布尔表达式, 函数校验这个表达式是否为<code>true</code>, 如果为<code>false</code>,
 抛出<code>IllegalArgumentException</code>. 例子如下:</p>
@@ -147,11 +147,11 @@
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Test</span>
-</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testCheckArgument</span><span class="o">()</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Preconditions</span><span class="o">.</span><span class="na">checkArgument</span><span class="o">(</span><span class="mi">1</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testCheckArgument</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Preconditions</span><span class="p">.</span><span class="na">checkArgument</span><span class="p">(</span><span class="n">1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="checknotnull"><span class="section-num">3.2</span> checkNotNull</h3>
 <p>这是个泛型函数, 函数签名如下:</p>
@@ -160,8 +160,8 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">checkNotNull</span><span class="o">(</span><span class="n">T</span> <span class="n">reference</span><span class="o">);</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">checkNotNull</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">reference</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>入参是个任意类型的对象, 函数校验这个对象是否为<code>null</code>, 如果为空,
 抛出<code>NullPointerException</code>, 否则直接返回该对象,
@@ -173,9 +173,9 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">PreconditionTest</span> <span class="n">caller</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PreconditionTest</span><span class="o">();</span>
-</span></span><span class="line"><span class="cl"><span class="n">caller</span><span class="o">.</span><span class="na">setErrorDetail</span><span class="o">(</span><span class="n">Preconditions</span><span class="o">.</span><span class="na">checkNotNull</span><span class="o">(</span><span class="n">ErrorDetail</span><span class="o">.</span><span class="na">SC_INTERNAL_SERVER_ERROR</span><span class="o">));</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">PreconditionTest</span><span class="w"> </span><span class="n">caller</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PreconditionTest</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">caller</span><span class="p">.</span><span class="na">setErrorDetail</span><span class="p">(</span><span class="n">Preconditions</span><span class="p">.</span><span class="na">checkNotNull</span><span class="p">(</span><span class="n">ErrorDetail</span><span class="p">.</span><span class="na">SC_INTERNAL_SERVER_ERROR</span><span class="p">));</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="checkstate"><span class="section-num">3.3</span> checkState</h3>
 <p>函数签名如下:</p>
@@ -184,8 +184,8 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkState</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">);</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkState</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">expression</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>看着这个函数, 我个人感觉很奇怪:
 这个函数和<code>checkNotNull</code>函数功能非常相似, 实现也基本一样,
@@ -206,18 +206,18 @@
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkArgument</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">(!</span><span class="n">expression</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalArgumentException</span><span class="o">();</span>
-</span></span><span class="line"><span class="cl">    <span class="o">}</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkState</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">(!</span><span class="n">expression</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalStateException</span><span class="o">();</span>
-</span></span><span class="line"><span class="cl">    <span class="o">}</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkArgument</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">expression</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">expression</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkState</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">expression</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">expression</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalStateException</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>此外, 因为这两个函数相当类似, 就不展示相应例子了.</p>
 <h3 id="checkelementindex"><span class="section-num">3.4</span> checkElementIndex</h3>
@@ -227,8 +227,8 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">checkElementIndex</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">,</span> <span class="kt">int</span> <span class="n">size</span><span class="o">);</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">checkElementIndex</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>这个函数用于判断指定数组, 列表, 字符串的下标是否越界, <code>index</code>是下标,
 <code>size</code>是数组, 列表或字符串的长度, 下标的有效范围是<code>[0,数组长度)</code> 即
@@ -246,13 +246,13 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Preconditions</span><span class="o">.</span><span class="na">checkElementIndex</span><span class="o">(</span><span class="s">&#34;test&#34;</span><span class="o">.</span><span class="na">length</span><span class="o">(),</span> <span class="s">&#34;test&#34;</span><span class="o">.</span><span class="na">length</span><span class="o">());</span>
-</span></span><span class="line"><span class="cl"><span class="c1">// 运行结果:
-</span></span></span><span class="line"><span class="cl"><span class="c1">// 抛出异常: java.lang.IndexOutOfBoundsException: index (4) must be less than size (4)
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl"><span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">Preconditions</span><span class="o">.</span><span class="na">checkElementIndex</span><span class="o">(</span><span class="s">&#34;test&#34;</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">-</span> <span class="mi">1</span><span class="o">,</span> <span class="s">&#34;test&#34;</span><span class="o">.</span><span class="na">length</span><span class="o">()));</span>
-</span></span><span class="line"><span class="cl"><span class="c1">// 运行结果:
-</span></span></span><span class="line"><span class="cl"><span class="c1">// 通过
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Preconditions</span><span class="p">.</span><span class="na">checkElementIndex</span><span class="p">(</span><span class="s">&#34;test&#34;</span><span class="p">.</span><span class="na">length</span><span class="p">(),</span><span class="w"> </span><span class="s">&#34;test&#34;</span><span class="p">.</span><span class="na">length</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 运行结果:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 抛出异常: java.lang.IndexOutOfBoundsException: index (4) must be less than size (4)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="n">3</span><span class="p">,</span><span class="w"> </span><span class="n">Preconditions</span><span class="p">.</span><span class="na">checkElementIndex</span><span class="p">(</span><span class="s">&#34;test&#34;</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;test&#34;</span><span class="p">.</span><span class="na">length</span><span class="p">()));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 运行结果:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 通过</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="checkpositionindex"><span class="section-num">4</span> checkPositionIndex</h2>
@@ -262,8 +262,8 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">checkPositionIndex</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">,</span> <span class="kt">int</span> <span class="n">size</span><span class="o">);</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">checkPositionIndex</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>这个函数和<code>checkElementIndex</code>非常类似, 连Guava wiki的说明也基本一致(只有一个单词不同).</p>
 <p>除了一点, <code>checkElementIndex</code>函数的下标有效范围是<code>[0, 数组长度)</code>, 而<code>checkPositionIndex</code>函数的下标有有效范围是<code>[0, 数组长度]</code>,
@@ -279,13 +279,13 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Preconditions</span><span class="o">.</span><span class="na">checkPositionIndex</span><span class="o">(</span><span class="s">&#34;test&#34;</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">+</span> <span class="mi">1</span><span class="o">,</span> <span class="s">&#34;test&#34;</span><span class="o">.</span><span class="na">length</span><span class="o">());</span>
-</span></span><span class="line"><span class="cl"><span class="c1">// 运行结果:
-</span></span></span><span class="line"><span class="cl"><span class="c1">// 抛出异常: java.lang.IndexOutOfBoundsException: index (5) must be less than size (4)
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl"><span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">Preconditions</span><span class="o">.</span><span class="na">checkPositionIndex</span><span class="o">(</span><span class="s">&#34;test&#34;</span><span class="o">.</span><span class="na">length</span><span class="o">(),</span> <span class="s">&#34;test&#34;</span><span class="o">.</span><span class="na">length</span><span class="o">()));</span>
-</span></span><span class="line"><span class="cl"><span class="c1">// 运行结果:
-</span></span></span><span class="line"><span class="cl"><span class="c1">// 通过
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Preconditions</span><span class="p">.</span><span class="na">checkPositionIndex</span><span class="p">(</span><span class="s">&#34;test&#34;</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;test&#34;</span><span class="p">.</span><span class="na">length</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 运行结果:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 抛出异常: java.lang.IndexOutOfBoundsException: index (5) must be less than size (4)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="n">4</span><span class="p">,</span><span class="w"> </span><span class="n">Preconditions</span><span class="p">.</span><span class="na">checkPositionIndex</span><span class="p">(</span><span class="s">&#34;test&#34;</span><span class="p">.</span><span class="na">length</span><span class="p">(),</span><span class="w"> </span><span class="s">&#34;test&#34;</span><span class="p">.</span><span class="na">length</span><span class="p">()));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 运行结果:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 通过</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="checkpositionindexes"><span class="section-num">4.1</span> checkPositionIndexes</h3>
@@ -295,8 +295,8 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkPositionIndexes</span><span class="o">(</span><span class="kt">int</span> <span class="n">start</span><span class="o">,</span> <span class="kt">int</span> <span class="n">end</span><span class="o">,</span> <span class="kt">int</span> <span class="n">size</span><span class="o">);</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkPositionIndexes</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">end</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>这个函数是用于判断<code>[start,end]</code>这个范围是否是个有效范围, 即<code>[start, end]</code> 是否在<code>[0, size]</code> 范围内(如果<code>[start, end]</code>
 和<code>[0, size]</code>相同, 也认为在范围内), 如果不在, 则抛出<code>IndexOutOfBoundsException</code>异常. 例子如下:</p>
@@ -311,13 +311,13 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Preconditions</span><span class="o">.</span><span class="na">checkPositionIndexes</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl"><span class="c1">// 运行结果:
-</span></span></span><span class="line"><span class="cl"><span class="c1">// 抛出异常: java.lang.IndexOutOfBoundsException: end index (3) must not be greater than size (2)
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl"><span class="n">Preconditions</span><span class="o">.</span><span class="na">checkPositionIndexes</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl"><span class="c1">// 运行结果:
-</span></span></span><span class="line"><span class="cl"><span class="c1">// 校验通过
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Preconditions</span><span class="p">.</span><span class="na">checkPositionIndexes</span><span class="p">(</span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">3</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 运行结果:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 抛出异常: java.lang.IndexOutOfBoundsException: end index (3) must not be greater than size (2)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Preconditions</span><span class="p">.</span><span class="na">checkPositionIndexes</span><span class="p">(</span><span class="n">0</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 运行结果:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 校验通过</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="前置条件在实际项目的应用"><span class="section-num">5</span> 前置条件在实际项目的应用</h2>
@@ -375,9 +375,9 @@
 </span><span class="lnt">42
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 封装代码:
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">AssertUtils</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="cm">/**
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 封装代码:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AssertUtils</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
 </span></span></span><span class="line"><span class="cl"><span class="cm">     * 检查条件表达式是否为真
 </span></span></span><span class="line"><span class="cl"><span class="cm">     *
 </span></span></span><span class="line"><span class="cl"><span class="cm">     * @param expression 条件表达式
@@ -385,17 +385,17 @@
 </span></span></span><span class="line"><span class="cl"><span class="cm">     * @param msgTemplate 错误消息模板
 </span></span></span><span class="line"><span class="cl"><span class="cm">     * @param vars 占位符对应变量
 </span></span></span><span class="line"><span class="cl"><span class="cm">     * @throws BkmpException 条件表达式结果为假
-</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
-</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkArgument</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">,</span> <span class="n">ErrDetailEnum</span> <span class="n">errDetailEnum</span><span class="o">,</span> <span class="n">String</span> <span class="n">msgTemplate</span><span class="o">,</span>
-</span></span><span class="line"><span class="cl">				     <span class="n">Object</span><span class="o">...</span> <span class="n">vars</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">try</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">Preconditions</span><span class="o">.</span><span class="na">checkArgument</span><span class="o">(</span><span class="n">expression</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">	<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IllegalArgumentException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">throw</span> <span class="k">new</span> <span class="n">BkmpException</span><span class="o">(</span><span class="n">errDetailEnum</span><span class="o">,</span> <span class="n">msgTemplate</span><span class="o">,</span> <span class="n">vars</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">	<span class="o">}</span>
-</span></span><span class="line"><span class="cl">    <span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkArgument</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">expression</span><span class="p">,</span><span class="w"> </span><span class="n">ErrDetailEnum</span><span class="w"> </span><span class="n">errDetailEnum</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">msgTemplate</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">				     </span><span class="n">Object</span><span class="p">...</span><span class="w"> </span><span class="n">vars</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="n">Preconditions</span><span class="p">.</span><span class="na">checkArgument</span><span class="p">(</span><span class="n">expression</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IllegalArgumentException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BkmpException</span><span class="p">(</span><span class="n">errDetailEnum</span><span class="p">,</span><span class="w"> </span><span class="n">msgTemplate</span><span class="p">,</span><span class="w"> </span><span class="n">vars</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
 </span></span></span><span class="line"><span class="cl"><span class="cm">     * 检查条件表达式是否为假
 </span></span></span><span class="line"><span class="cl"><span class="cm">     *
 </span></span></span><span class="line"><span class="cl"><span class="cm">     * @param expression 条件表达式
@@ -403,21 +403,21 @@
 </span></span></span><span class="line"><span class="cl"><span class="cm">     * @param msgTemplate 错误消息模板
 </span></span></span><span class="line"><span class="cl"><span class="cm">     * @param vars 占位符对应变量
 </span></span></span><span class="line"><span class="cl"><span class="cm">     * @throws BkmpException 条件表达式结果为假
-</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
-</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkArgumentNotTrue</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">expression</span><span class="o">,</span> <span class="n">ErrDetailEnum</span> <span class="n">errDetailEnum</span><span class="o">,</span> <span class="n">String</span> <span class="n">msgTemplate</span><span class="o">,</span>
-</span></span><span class="line"><span class="cl">					    <span class="n">Object</span><span class="o">...</span> <span class="n">vars</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">try</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">Preconditions</span><span class="o">.</span><span class="na">checkArgument</span><span class="o">(!</span><span class="n">expression</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">	<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IllegalArgumentException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">throw</span> <span class="k">new</span> <span class="n">BkmpException</span><span class="o">(</span><span class="n">errDetailEnum</span><span class="o">,</span> <span class="n">msgTemplate</span><span class="o">,</span> <span class="n">vars</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">	<span class="o">}</span>
-</span></span><span class="line"><span class="cl">    <span class="o">}</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl"><span class="c1">// 省略其他部分的封装
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl"><span class="c1">// 调用例子:
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">AssertUtils</span><span class="o">.</span><span class="na">checkArgument</span><span class="o">(</span><span class="n">merchantEntity</span><span class="o">.</span><span class="na">exist</span><span class="o">(),</span> <span class="n">ErrDetailEnum</span><span class="o">.</span><span class="na">DATA_NOT_EXIT</span><span class="o">,</span> <span class="s">&#34;商户不存在&#34;</span><span class="o">);</span>
-</span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkArgumentNotTrue</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">expression</span><span class="p">,</span><span class="w"> </span><span class="n">ErrDetailEnum</span><span class="w"> </span><span class="n">errDetailEnum</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">msgTemplate</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">					    </span><span class="n">Object</span><span class="p">...</span><span class="w"> </span><span class="n">vars</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="n">Preconditions</span><span class="p">.</span><span class="na">checkArgument</span><span class="p">(</span><span class="o">!</span><span class="n">expression</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IllegalArgumentException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BkmpException</span><span class="p">(</span><span class="n">errDetailEnum</span><span class="p">,</span><span class="w"> </span><span class="n">msgTemplate</span><span class="p">,</span><span class="w"> </span><span class="n">vars</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 省略其他部分的封装</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 调用例子:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">AssertUtils</span><span class="p">.</span><span class="na">checkArgument</span><span class="p">(</span><span class="n">merchantEntity</span><span class="p">.</span><span class="na">exist</span><span class="p">(),</span><span class="w"> </span><span class="n">ErrDetailEnum</span><span class="p">.</span><span class="na">DATA_NOT_EXIT</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;商户不存在&#34;</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="guava-precondition-vs-apache-common-validate"><span class="section-num">6</span> Guava Precondition vs Apache Common Validate</h2>
 <p>自古文无第一, 武无第二, 文人之间的口水战总是少不了的.</p>
@@ -441,6 +441,5 @@ Guava wiki 还提了两点最佳实践(best practice):</p>
 </ul>
 ]]></content:encoded>
     </item>
-    
   </channel>
 </rss>

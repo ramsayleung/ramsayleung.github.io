@@ -9,15 +9,15 @@
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Fri, 30 Aug 2024 22:23:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/categories/c++/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- 0.120.4</generator>
+    <language>zh</language>
+    <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
+    <lastBuildDate>Fri, 30 Aug 2024 23:00:10 -0700</lastBuildDate>
+    <atom:link href="https://ramsayleung.github.io/zh/categories/c++/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Rust模拟C&#43;&#43;的函数重载</title>
       <link>https://ramsayleung.github.io/zh/post/2024/rust%E6%A8%A1%E6%8B%9Fc&#43;&#43;%E7%9A%84%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD/</link>
       <pubDate>Fri, 30 Aug 2024 22:23:00 -0700</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2024/rust%E6%A8%A1%E6%8B%9Fc&#43;&#43;%E7%9A%84%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD/</guid>
       <description>1 函数重载(function overloading) 所谓的函数重载，指的是某些语言支持创建函数名相同，但函数签名不同的多个函数，所谓的函数签名，既指参数类型，也指</description>
       <content:encoded><![CDATA[<h2 id="函数重载--function-overloading"><span class="section-num">1</span> 函数重载(function overloading)</h2>
@@ -57,9 +57,9 @@
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;{:?}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">ping</span><span class="p">(</span><span class="n">Ipv4Addr</span>::<span class="n">new</span><span class="p">(</span><span class="mi">23</span><span class="p">,</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">,</span><span class="w"> </span><span class="mi">141</span><span class="p">)));</span><span class="w"> </span><span class="c1">// pass an Ipv4Addr
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;{:?}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">ping</span><span class="p">([</span><span class="mi">66</span><span class="p">,</span><span class="w"> </span><span class="mi">146</span><span class="p">,</span><span class="w"> </span><span class="mi">219</span><span class="p">,</span><span class="w"> </span><span class="mi">98</span><span class="p">]));</span><span class="w">             </span><span class="c1">// pass a [u8; 4]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;{:?}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">ping</span><span class="p">(</span><span class="mh">0xd076eb94_</span><span class="k">u32</span><span class="p">));</span><span class="w">                 </span><span class="c1">// pass a u32
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">ping</span><span class="p">(</span><span class="n">Ipv4Addr</span>::<span class="n">new</span><span class="p">(</span><span class="mi">23</span><span class="p">,</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">,</span><span class="w"> </span><span class="mi">141</span><span class="p">)));</span><span class="w"> </span><span class="c1">// pass an Ipv4Addr
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">ping</span><span class="p">([</span><span class="mi">66</span><span class="p">,</span><span class="w"> </span><span class="mi">146</span><span class="p">,</span><span class="w"> </span><span class="mi">219</span><span class="p">,</span><span class="w"> </span><span class="mi">98</span><span class="p">]));</span><span class="w">             </span><span class="c1">// pass a [u8; 4]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">ping</span><span class="p">(</span><span class="mh">0xd076eb94_</span><span class="k">u32</span><span class="p">));</span><span class="w">                 </span><span class="c1">// pass a u32
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>当然，如果你实现了 <code>impl From&lt;u32&gt; for Ipv4Addr</code>, Rust 编译器也会贴心地帮你把反向的 <code>Into&lt;Ipv4Addr&gt;</code> 也实现掉。 <br/></p>
@@ -86,6 +86,5 @@
 </ul>
 ]]></content:encoded>
     </item>
-    
   </channel>
 </rss>

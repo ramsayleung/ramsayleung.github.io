@@ -9,15 +9,15 @@
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sat, 22 Apr 2017 00:00:00 +0800</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/tags/command_line/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- 0.120.4</generator>
+    <language>zh</language>
+    <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
+    <lastBuildDate>Thu, 24 Feb 2022 15:15:45 +0800</lastBuildDate>
+    <atom:link href="https://ramsayleung.github.io/zh/tags/command_line/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>脚本分享</title>
       <link>https://ramsayleung.github.io/zh/post/2017/share_shell_script/</link>
       <pubDate>Sat, 22 Apr 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/share_shell_script/</guid>
       <description>share of my shell script snippet</description>
       <content:encoded><![CDATA[<p>分享一下平时工作生活中编写的一些脚本片段(一直更新). 适用于 OS X 和 Linux</p>
@@ -718,12 +718,10 @@
 </div>
 </div>]]></content:encoded>
     </item>
-    
     <item>
       <title>Linux/Unix Shell 二三事之过滤器grep</title>
       <link>https://ramsayleung.github.io/zh/post/2017/grep/</link>
       <pubDate>Mon, 13 Mar 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/grep/</guid>
       <description>an introduction about grep</description>
       <content:encoded><![CDATA[<p>文本三剑客之 Grep</p>
@@ -1407,12 +1405,10 @@ IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE</p>
 </div><p>Enjoy Shell :)</p>
 ]]></content:encoded>
     </item>
-    
     <item>
       <title>Linux/Unix Shell 二三事之过滤器diff</title>
       <link>https://ramsayleung.github.io/zh/post/2017/diff/</link>
       <pubDate>Tue, 28 Feb 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/diff/</guid>
       <description>An introduction about diff</description>
       <content:encoded><![CDATA[<blockquote>
@@ -1626,12 +1622,10 @@ address1 包含：</p>
 </div>
 </div>]]></content:encoded>
     </item>
-    
     <item>
       <title>Linux/Unix Shell 二三事之过滤器cat</title>
       <link>https://ramsayleung.github.io/zh/post/2017/cat/</link>
       <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/cat/</guid>
       <description>An introduction about cat</description>
       <content:encoded><![CDATA[<blockquote>
@@ -1762,12 +1756,10 @@ vim/emacs 新建一个文本文件，然后输入几行文字，然后保存退�
 </table>
 ]]></content:encoded>
     </item>
-    
     <item>
       <title>Linux/Unix Shell 二三事之过滤器head&#43;tail</title>
       <link>https://ramsayleung.github.io/zh/post/2017/head_tail/</link>
       <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2017/head_tail/</guid>
       <description>An introduction about head and tail</description>
       <content:encoded><![CDATA[<blockquote>
@@ -1861,6 +1853,5 @@ tail - output the last part of files</p>
 </div><p>Enjoy Shell :)</p>
 ]]></content:encoded>
     </item>
-    
   </channel>
 </rss>

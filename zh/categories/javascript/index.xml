@@ -9,15 +9,15 @@
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>See this site&#39;s source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sat, 26 Aug 2023 09:29:00 -0700</lastBuildDate><atom:link href="https://ramsayleung.github.io/zh/categories/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- 0.120.4</generator>
+    <language>zh</language>
+    <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
+    <lastBuildDate>Sat, 26 Aug 2023 11:41:17 -0700</lastBuildDate>
+    <atom:link href="https://ramsayleung.github.io/zh/categories/javascript/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>TamperMonkey userscript在 Single Page Application 跳转链接后不运行问题分析</title>
       <link>https://ramsayleung.github.io/zh/post/2023/tampermonkey_userscript_not_invokved_in_spa/</link>
       <pubDate>Sat, 26 Aug 2023 09:29:00 -0700</pubDate>
-      
       <guid>https://ramsayleung.github.io/zh/post/2023/tampermonkey_userscript_not_invokved_in_spa/</guid>
       <description>1 背景 我习惯使用浏览器匿名模式来打开 Youtube 视频，避免 Youtube 的推荐算法给我总是推荐同一类的视频。 但有个问题: 匿名模式下，Youtube的播放器是默认自</description>
       <content:encoded><![CDATA[<h2 id="背景"><span class="section-num">1</span> 背景</h2>
@@ -171,6 +171,5 @@
 </div><p>这样就可以正常运行了。 <br/></p>
 ]]></content:encoded>
     </item>
-    
   </channel>
 </rss>
