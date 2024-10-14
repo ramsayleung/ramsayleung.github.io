@@ -1,7 +1,7 @@
 +++
 title = "测试技能进阶(三): Property Based Testing"
 date = 2024-10-14T09:37:00-07:00
-lastmod = 2024-10-14T14:56:09-07:00
+lastmod = 2024-10-14T15:28:08-07:00
 tags = ["testing", "rust"]
 categories = ["testing", "rust"]
 draft = false
@@ -308,7 +308,7 @@ fn reverse<T: Clone>(xs: &[T]) -> Vec<T> {
 }
 ```
 
-对于任意类型的列表，反转之后现反转的结果，肯定是和原结果一样的，那么我们就可以开始声明我们的标准(specification), 那就是任意的列表，可以是字符串列表，整型列表或者是其他的结构体列表:
+对于任意类型的列表，反转之后再反转的结果，肯定是和原结果一样的，那么我们就可以开始声明我们的标准(specification), 那就是任意的列表，可以是字符串列表，整型列表或者是其他的结构体列表:
 
 ```rust
 #[cfg(test)]
