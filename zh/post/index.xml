@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Mon, 14 Oct 2024 15:28:08 -0700</lastBuildDate>
+    <lastBuildDate>Mon, 14 Oct 2024 18:55:16 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>测试技能进阶(三): Property Based Testing</title>
@@ -1253,7 +1253,7 @@
 </figure>
  <br/></p>
 <p>假设现在我们有 <code>tx2</code> 的交易数据，我们只需要 Merkle Proof 提供3个hash 值(图中的绿色部分)，然后我们只计算4次（橙色部分），就会算出 Merkle Root Tree 的值，用来和区块头部的 Merkle root 值进行比对。 <br/></p>
-<p>通过 Merkle Proof 提供的数据集，我们就可以把下载8笔交易，计算15次hash，优化成只需3个 hash 值，以及计算4次hash，时间复杂度从O(N)降低成O(logN). <br/></p>
+<p>通过 Merkle Proof 提供的数据集，我们就可以把下载8笔交易，计算15次hash，优化成只需3个 hash 值，以及计算4次hash，需要的 Merkle Proof 数量等于Merkle Tree的高度，而Merkle Tree就是一棵完美的平衡二叉树, 树的高度就是 <code>log₂(N)</code>, 所以时间复杂度从O(N)降低成O(logN). <br/></p>
 <p>这个比对似乎不明显，但是以1亿交易为例的话，log(1_000_000_000) ~= 27, 也就是只需要 Merkle Proof 提供27个 hash 值即可, 巨大的性能提升. <br/></p>
 <h2 id="区块链的不可窜改性"><span class="section-num">5</span> 区块链的不可窜改性</h2>
 <p>通过Merkle tree root可以保证交易的不可窜改性，而区块 hash 又能保证区块头部的元数据不被窜改. <br/></p>
