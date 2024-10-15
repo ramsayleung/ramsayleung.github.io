@@ -1,7 +1,7 @@
 +++
 title = "区块链的完整性校验方案: Merkle Tree"
 date = 2024-10-12T18:22:00-07:00
-lastmod = 2024-10-12T23:11:56-07:00
+lastmod = 2024-10-14T18:55:16-07:00
 tags = ["blockchain"]
 categories = ["blockchain"]
 draft = false
@@ -71,7 +71,7 @@ toc = true
 
 假设现在我们有 `tx2` 的交易数据，我们只需要 Merkle Proof 提供3个hash 值(图中的绿色部分)，然后我们只计算4次（橙色部分），就会算出 Merkle Root Tree 的值，用来和区块头部的 Merkle root 值进行比对。 <br/>
 
-通过 Merkle Proof 提供的数据集，我们就可以把下载8笔交易，计算15次hash，优化成只需3个 hash 值，以及计算4次hash，时间复杂度从O(N)降低成O(logN). <br/>
+通过 Merkle Proof 提供的数据集，我们就可以把下载8笔交易，计算15次hash，优化成只需3个 hash 值，以及计算4次hash，需要的 Merkle Proof 数量等于Merkle Tree的高度，而Merkle Tree就是一棵完美的平衡二叉树, 树的高度就是 `log₂(N)`, 所以时间复杂度从O(N)降低成O(logN). <br/>
 
 这个比对似乎不明显，但是以1亿交易为例的话，log(1_000_000_000) ~= 27, 也就是只需要 Merkle Proof 提供27个 hash 值即可, 巨大的性能提升. <br/>
 
