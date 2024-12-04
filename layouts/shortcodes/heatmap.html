@@ -64,9 +64,8 @@
     <script type="text/javascript">
         var myChart;
 
-        // Function to get current theme
         function getCurrentTheme() {
-            return document.body.classList.contains('dark') ? 'dark' : 'light';
+          return document.documentElement.getAttribute('data-theme') || document.body.classList.contains('dark') ? 'dark' : 'light';
         }
 
         function getThemeColors() {

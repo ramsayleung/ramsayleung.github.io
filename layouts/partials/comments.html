@@ -1,7 +1,52 @@
-<script src="https://utteranc.es/client.js"
-        repo="ramsayleung/comment"
-        issue-term="title"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
+<section>
+  <h2>Comments</h2>
+  <div id="comments-utteranc"></div>
+</section>
+
+<script type="text/javascript">
+
+function getCurrentTheme() {
+  return document.documentElement.getAttribute('data-theme') || document.body.classList.contains('dark') ? 'dark' : 'light';
+}
+
+function loadUtterances(darkMode=false) {
+  const giscusContainer = document.getElementById("comments-utteranc");
+  if (giscusContainer !== null) {
+    giscusContainer.innerHTML = ''
+    const giscusScript = document.createElement("script");
+    giscusScript.setAttribute("id", "utteranc");
+    giscusScript.setAttribute("src", "https://utteranc.es/client.js");
+    giscusScript.setAttribute("data-repo", "ramsayleung/comment");
+    giscusScript.setAttribute("data-category", "Announcements");
+    giscusScript.setAttribute("data-mapping", "pathname");
+    giscusScript.setAttribute("data-reactions-enabled", "1");
+    giscusScript.setAttribute("data-emit-metadata", "0");
+    giscusScript.setAttribute("data-theme", darkMode ? "github-dark" : "github-light");
+    giscusScript.setAttribute("data-issue-term", "title");
+    giscusScript.setAttribute("crossorigin", "anonymous");
+    giscusScript.setAttribute("async", "true");
+    giscusContainer.appendChild(giscusScript);
+  }
+}
+
+const isDarkMode = getCurrentTheme() === 'dark';
+loadUtterances(isDarkMode);
+
+// Watch for theme changes
+const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          const isDarkMode = getCurrentTheme() === 'dark';
+          loadUtterances(isDarkMode);
+          console.log(`changing theme`);
+        }
+    });
+});
+
+// Start observing the body element for class changes
+observer.observe(document.body, { 
+    attributes: true, 
+    attributeFilter: ['class'] 
+});
+
 </script>
