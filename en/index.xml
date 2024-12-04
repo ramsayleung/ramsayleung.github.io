@@ -1008,10 +1008,10 @@ RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
                 yearLabel: { show: false },
                 dayLabel: {
                     firstDay: 1,
-                    nameMap: 'EN'
+                    nameMap: "EN"
                 },
                 monthLabel: {
-                    nameMap: 'EN'
+                    nameMap: "EN"
                 },
                 splitLine: {
                     show: false,
@@ -1021,7 +1021,7 @@ RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
                 hideDelay: 1000,
                 enterable: true,
                 formatter: function (params) {
-                    const thousandWordsText = 'k words';
+                    const thousandWordsText = "EN" === "EN" ? 'k words': '千字';
                     const date = params.data[0];
                     const posts = postsByDate.get(date).get("posts");
                     var content = `${date}`;
