@@ -33,7 +33,7 @@ const isDarkMode = getCurrentTheme() === 'dark';
 loadUtterances(isDarkMode);
 
 // Watch for theme changes
-const observer = new MutationObserver((mutations) => {
+const themeObserver = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
         if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
           const isDarkMode = getCurrentTheme() === 'dark';
@@ -44,7 +44,7 @@ const observer = new MutationObserver((mutations) => {
 });
 
 // Start observing the body element for class changes
-observer.observe(document.body, { 
+themeObserver.observe(document.body, { 
     attributes: true, 
     attributeFilter: ['class'] 
 });
