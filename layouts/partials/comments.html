@@ -10,22 +10,22 @@ function getCurrentTheme() {
 }
 
 function loadUtterances(darkMode=false) {
-  const giscusContainer = document.getElementById("comments-utteranc");
-  if (giscusContainer !== null) {
-    giscusContainer.innerHTML = ''
-    const giscusScript = document.createElement("script");
-    giscusScript.setAttribute("id", "utteranc");
-    giscusScript.setAttribute("src", "https://utteranc.es/client.js");
-    giscusScript.setAttribute("data-repo", "ramsayleung/comment");
-    giscusScript.setAttribute("data-category", "Announcements");
-    giscusScript.setAttribute("data-mapping", "pathname");
-    giscusScript.setAttribute("data-reactions-enabled", "1");
-    giscusScript.setAttribute("data-emit-metadata", "0");
-    giscusScript.setAttribute("data-theme", darkMode ? "github-dark" : "github-light");
-    giscusScript.setAttribute("data-issue-term", "title");
-    giscusScript.setAttribute("crossorigin", "anonymous");
-    giscusScript.setAttribute("async", "true");
-    giscusContainer.appendChild(giscusScript);
+  const commentContainer = document.getElementById("comments-utteranc");
+  if (commentContainer !== null) {
+    commentContainer.innerHTML = ''
+    const commentScript = document.createElement("script");
+    commentScript.setAttribute("id", "utteranc");
+    commentScript.setAttribute("src", "https://utteranc.es/client.js");
+    commentScript.setAttribute("data-repo", "ramsayleung/comment");
+    commentScript.setAttribute("data-category", "Announcements");
+    commentScript.setAttribute("data-mapping", "pathname");
+    commentScript.setAttribute("data-reactions-enabled", "1");
+    commentScript.setAttribute("data-emit-metadata", "0");
+    commentScript.setAttribute("data-theme", darkMode ? "github-dark" : "github-light");
+    commentScript.setAttribute("data-issue-term", "title");
+    commentScript.setAttribute("crossorigin", "anonymous");
+    commentScript.setAttribute("async", "true");
+    commentContainer.appendChild(commentScript);
   }
 }
 
