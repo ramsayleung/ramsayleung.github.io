@@ -12,8 +12,298 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Wed, 04 Dec 2024 14:33:02 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 04 Dec 2024 19:21:59 +0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust通过Trait扩展已有类型</title>
+      <link>https://ramsayleung.github.io/zh/post/2024/rust%E7%94%A8trait%E6%89%A9%E5%B1%95%E5%B7%B2%E6%9C%89%E7%B1%BB%E5%9E%8B/</link>
+      <pubDate>Wed, 04 Dec 2024 18:04:00 +0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2024/rust%E7%94%A8trait%E6%89%A9%E5%B1%95%E5%B7%B2%E6%9C%89%E7%B1%BB%E5%9E%8B/</guid>
+      <description>1 Swift extension 可扩展性是一个语言非常关键的特性，以Swift 为例，它有一个相当好用的特性，名为 extension, 它可以非常便利地扩展已有的类型, 例如给已有类型增加 computed</description>
+      <content:encoded><![CDATA[<h2 id="swift-extension"><span class="section-num">1</span> Swift extension</h2>
+<p>可扩展性是一个语言非常关键的特性，以Swift 为例，它有一个相当好用的特性，名为 <a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/extensions/">extension</a>, 它可以非常便利地扩展已有的类型, 例如给已有类型增加 computed property, 实例方法, 新增构造器又或是实现新的 Protocol.</p>
+<p>已有的类型既可以是你自己的代码，或者是第三方的代码，甚至是标准库的代码, 以标准库的 <code>String</code> 类型为例:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="kd">extension</span> <span class="nc">String</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nv">isPalindrome</span><span class="p">:</span> <span class="nb">Bool</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">let</span> <span class="nv">reversed</span> <span class="p">=</span> <span class="nb">String</span><span class="p">(</span><span class="kc">self</span><span class="p">.</span><span class="n">reversed</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">self</span> <span class="p">==</span> <span class="n">reversed</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">func</span> <span class="nf">greet</span><span class="p">()</span> <span class="p">-&gt;</span> <span class="nb">Void</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">print</span><span class="p">(</span><span class="s">&#34;Hello </span><span class="si">\(</span><span class="kc">self</span><span class="si">)</span><span class="s">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nv">word</span> <span class="p">=</span> <span class="s">&#34;racecar&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="bp">print</span><span class="p">(</span><span class="n">word</span><span class="p">.</span><span class="n">isPalindrome</span><span class="p">)</span> <span class="c1">// Outputs: true</span>
+</span></span><span class="line"><span class="cl"><span class="n">word</span><span class="p">.</span><span class="n">greet</span><span class="p">()</span> <span class="c1">// Outputs: Hello racecar</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>又或者让 <code>String</code> 实现新的 Protocol, 如:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="kd">extension</span> <span class="nc">String</span><span class="p">:</span> <span class="n">YourOwnProtocol</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>换言之，如果你对已有的类型不满意，你可以直接扩展已有的类型，添加上你想要的属性，方法或者实现你期望的接口。</p>
+<h2 id="rust-的扩展能力"><span class="section-num">2</span> Rust 的扩展能力</h2>
+<p>Rust 也部分支持Swift extension 特性，如让已有的类型实现新的Trait.</p>
+<p>还是以 <code>String</code> 为例子, 我们希望给 <code>String</code> 实现一个 <code>Greet</code> 的接口:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// Define a trait with the desired functionality
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">trait</span><span class="w"> </span><span class="n">Greet</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">greet</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">String</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// Implement the trait for an existing type
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">impl</span><span class="w"> </span><span class="n">Greet</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">greet</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">String</span> <span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="fm">format!</span><span class="p">(</span><span class="s">&#34;Hello, </span><span class="si">{}</span><span class="s">!&#34;</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;Rust&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">.</span><span class="n">greet</span><span class="p">());</span><span class="w"> </span><span class="c1">// Outputs: &#34;Hello, Rust!&#34;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样我们就给 <code>String</code> 添加上 <code>greet</code> 方法，不足之处在于，需要定义一个额外的 <code>trait=，没有像 Swift 那样的 =extension</code> 语法糖可以用.</p>
+<h3 id="实际例子"><span class="section-num">2.1</span> 实际例子</h3>
+<p>上面的 <code>Greet</code> 接口可能过于简单，让我们来看下实际项目的例子, 在<a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%89_property_based_testing/">测试技能进阶(三): Property Based Testing</a> 一文中，我提到了使用 <a href="https://github.com/BurntSushi/quickcheck">Quickcheck</a> 库在Rust实现 Property Based Testing.</p>
+<p>假如有 Book struct, 我们只要实现 quickcheck 的 Arbitrary 接口，quickcheck 就会按照我们指定的规则来生成随机测试数据:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">quickcheck</span>::<span class="p">{</span><span class="n">Arbitrary</span><span class="p">,</span><span class="w"> </span><span class="n">Gen</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cp">#[derive(Debug, Clone, PartialEq)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">struct</span> <span class="nc">Book</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">isbn</span>: <span class="nb">String</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">title</span>: <span class="nb">String</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">author</span>: <span class="nb">String</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">publication_year</span>: <span class="kt">u16</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">impl</span><span class="w"> </span><span class="n">Arbitrary</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Book</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">arbitrary</span><span class="p">(</span><span class="n">g</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">Gen</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Book</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// isbn必须以`ISBN` 开头，后接任意的大于等于0，小于uint32.max_value
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="c1">// 的整型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="n">isbn</span>: <span class="nc">format</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;ISBN-{}&#34;</span><span class="p">,</span><span class="w"> </span><span class="kt">u32</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">)),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">title</span>: <span class="nb">String</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">),</span><span class="w"> </span><span class="c1">// 任意的字符串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="n">author</span>: <span class="nb">String</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">),</span><span class="w"> </span><span class="c1">// 任意的字符串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="n">publication_year</span>: <span class="o">*</span><span class="n">g</span><span class="p">.</span><span class="n">choose</span><span class="p">(</span><span class="o">&amp;</span><span class="p">[</span><span class="mi">2014_</span><span class="k">u16</span><span class="p">,</span><span class="w"> </span><span class="mi">2022_</span><span class="k">u16</span><span class="p">,</span><span class="w"> </span><span class="mi">2025_</span><span class="k">u16</span><span class="p">]).</span><span class="n">unwrap</span><span class="p">(),</span><span class="w"> </span><span class="c1">// 2014,2022或2025年出版的书
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>quickcheck 的 <code>Gen</code> 结构体有一个非常顺手的函数 <code>gen_range</code> ，用于生成指定的范围的数据, 但是作者在<a href="https://github.com/BurntSushi/quickcheck/blob/aa968a94650b5d4d572c4ef581a7f5eb259aa0d2/src/arbitrary.rs#L72">1.0</a>之后，就不向外暴露这个接口了，不然我们就可以通过 <code>g.gen_range(b'a'...b'z') as char)</code> 来指定我们想要的数据.</p>
+<p>既然这么好用的函数没有了，我们可以通过 <code>Trait</code> 的扩展能力，把这个 <code>gen_range</code> 函数带回来.</p>
+<p>思路很简单，就是定义一个 <code>GenRange</code> Trait, 然后再让 <code>Gen</code> 实现这个 <code>Trait</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">core</span>::<span class="n">ops</span>::<span class="n">Range</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">num_traits</span>::<span class="n">sign</span>::<span class="n">Unsigned</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">use</span><span class="w"> </span><span class="n">quickcheck</span>::<span class="o">*</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">GenRange</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">gen_range</span><span class="o">&lt;</span><span class="n">T</span>: <span class="nc">Unsigned</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Arbitrary</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">Copy</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">_range</span>: <span class="nc">Range</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">T</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">impl</span><span class="w"> </span><span class="n">GenRange</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Gen</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">gen_range</span><span class="o">&lt;</span><span class="n">T</span>: <span class="nc">Unsigned</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Arbitrary</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">Copy</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">range</span>: <span class="nc">Range</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">T</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="o">&lt;</span><span class="n">T</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">Arbitrary</span><span class="o">&gt;</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="p">(</span><span class="n">range</span><span class="p">.</span><span class="n">end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">range</span><span class="p">.</span><span class="n">start</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">range</span><span class="p">.</span><span class="n">start</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过上面的代码, 我们就可以在 <code>Book</code> 的 <code>arbitrary</code> 函数中使用 <code>gen_range</code> 了:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">impl</span><span class="w"> </span><span class="n">Arbitrary</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Book</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">arbitrary</span><span class="p">(</span><span class="n">g</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">Gen</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Book</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// isbn必须以`ISBN` 开头，后接任意的大于等于0，小于uint32.max_value
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="c1">// 的整型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="n">isbn</span>: <span class="nc">format</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;ISBN-{}&#34;</span><span class="p">,</span><span class="w"> </span><span class="kt">u32</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">)),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">title</span>: <span class="nb">String</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">),</span><span class="w"> </span><span class="c1">// 任意的字符串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="n">author</span>: <span class="nb">String</span>::<span class="n">arbitrary</span><span class="p">(</span><span class="n">g</span><span class="p">),</span><span class="w"> </span><span class="c1">// 任意的字符串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="n">publication_year</span>: <span class="nc">g</span><span class="p">.</span><span class="n">gen_range</span><span class="p">(</span><span class="mi">2014</span><span class="o">..</span><span class="p">.</span><span class="mi">2026</span><span class="p">),</span><span class="w"> </span><span class="c1">// 2014-2025年出版的书
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="使用已有trait扩展已有类型"><span class="section-num">2.2</span> 使用已有Trait扩展已有类型</h3>
+<p>上面提到的例子都是通过定义一个新的 <code>Trait</code>, 然后让已有类型实现这个新Trait, 那么是否可以让已有类型实现已有的Trait 呢?</p>
+<p>事实上, 由于Orphan Rule的限制, Rust 并不允许已有类型实现已有接口, 以下的代码是无法编译通过的:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">fmt</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// Implement the external trait for the wrapper
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">impl</span><span class="w"> </span><span class="n">fmt</span>::<span class="n">Display</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">f</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">fmt</span>::<span class="n">Formatter</span><span class="o">&lt;</span><span class="nb">&#39;_</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">fmt</span>::<span class="nb">Result</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="fm">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;String: {}&#34;</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>所谓的 <code>Orphan Rule</code> 限制指的是，如果允许已有类型实现已有接口, 那么 <code>lib1</code> 和 <code>lib2</code> 都实现了 <code>impl fmt::Display for String</code>, 编译器并不知道应该使用哪个lib的实现.</p>
+<p>对此，Rust 官方也提供了<a href="https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#using-the-newtype-pattern-to-implement-external-traits-on-external-types">指引</a>，我们可以通过定义一个 <code>Wrapper</code> 类来实现我们的诉求：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">fmt</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// Define a newtype wrapper
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">struct</span> <span class="nc">MyString</span><span class="p">(</span><span class="nb">String</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// Implement the external trait for the wrapper
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">impl</span><span class="w"> </span><span class="n">fmt</span>::<span class="n">Display</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">MyString</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">f</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">fmt</span>::<span class="n">Formatter</span><span class="o">&lt;</span><span class="nb">&#39;_</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">fmt</span>::<span class="nb">Result</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="fm">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;MyString: {}&#34;</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MyString</span><span class="p">(</span><span class="s">&#34;Hello&#34;</span><span class="p">.</span><span class="n">to_string</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">);</span><span class="w"> </span><span class="c1">// Outputs: MyString: Hello
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="参考"><span class="section-num">3</span> 参考</h2>
+<ul>
+<li><a href="https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#using-the-newtype-pattern-to-implement-external-traits-on-external-types">Using the Newtype Pattern to Implement External Traits on External Types</a></li>
+<li><a href="//github.com/BurntSushi/quickcheck/issues/267">add back a way to put a bound on numbers generated</a></li>
+</ul>
+]]></content:encoded>
+    </item>
     <item>
       <title>Hugo评论系统自适应博客主题: 支持dark与light theme</title>
       <link>https://ramsayleung.github.io/zh/post/2024/hugo%E8%AF%84%E8%AE%BA%E7%BB%84%E4%BB%B6%E8%87%AA%E9%80%82%E5%BA%94%E5%8D%9A%E5%AE%A2%E6%9A%97%E9%BB%91%E4%B8%BB%E9%A2%98/</link>
@@ -2193,78 +2483,6 @@ Your browser does not support the video tag.</video></p>
 </div><h2 id="reference"><span class="section-num">5</span> Reference</h2>
 <ul>
 <li>Programming Rust, 2nd edition <br/></li>
-</ul>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>Rust模拟C&#43;&#43;的函数重载</title>
-      <link>https://ramsayleung.github.io/zh/post/2024/rust%E6%A8%A1%E6%8B%9Fc&#43;&#43;%E7%9A%84%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD/</link>
-      <pubDate>Fri, 30 Aug 2024 22:23:00 -0700</pubDate>
-      <guid>https://ramsayleung.github.io/zh/post/2024/rust%E6%A8%A1%E6%8B%9Fc&#43;&#43;%E7%9A%84%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD/</guid>
-      <description>1 函数重载(function overloading) 所谓的函数重载，指的是某些语言支持创建函数名相同，但函数签名不同的多个函数，所谓的函数签名，既指参数类型，也指</description>
-      <content:encoded><![CDATA[<h2 id="函数重载--function-overloading"><span class="section-num">1</span> 函数重载(function overloading)</h2>
-<p>所谓的函数重载，指的是某些语言支持创建函数名相同，但函数签名不同的多个函数，所谓的函数签名，既指参数类型，也指参数的数量。 <br/></p>
-<p>如C++，Java都是支持函数重载的，而Rust是不支持函数重载的, 个人猜测可能是Rust最初的设计者认为函数重载可能会导致增加代码理解难度，尤其是在C++里面，隐式类型转换叠加函数重载，可能看代码都看不出实际调用的是哪个版本的函数。 <br/></p>
-<h2 id="rust版本的函数重载"><span class="section-num">2</span> Rust版本的函数重载</h2>
-<p>但是我个人觉得函数重载在大部分情况下都是很方便，也不需要为相同的函数想不同的名字，毕竟命名是编程最难的问题之一。 <br/>
-今天重读 Programming Rust, 2nd Edition关于 <code>Into</code> 这个trait 的功能的时候，突然意识到，可以使用 <code>Into</code> 模拟出部分的函数重载功能。 <br/></p>
-<p>为什么说是「部分」呢，因为前文提到，所谓的函数重载是指多个同名但函数签名不一样的函数，而Rust能模拟的就是参数类型不一样，但是参数数量一致的重载函数。 <br/></p>
-<p>假设我们想实现自己的 <code>ping</code> 命名, 入参可以是 <a href="https://doc.rust-lang.org/std/net/struct.Ipv4Addr.html"><code>Ipv4Addr</code></a> 这个 struct, ipv4的地址也可以使用2进制来表示, 又或者可以使用 u32 来表示，毕竟只有32位。 <br/></p>
-<p>如果用 C++, 我们可以写3个重载函数，入参分别是, <code>Ipv4Addr</code>, <code>bitset</code> 和 <code>uint32</code>. 在 Rust, 我们也实现类似的函数： <br/></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">net</span>::<span class="n">Ipv4Addr</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">ping</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">(</span><span class="n">address</span>: <span class="nc">A</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">std</span>::<span class="n">io</span>::<span class="nb">Result</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w"> </span><span class="n">A</span>: <span class="nb">Into</span><span class="o">&lt;</span><span class="n">Ipv4Addr</span><span class="o">&gt;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">ipv4_address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">into</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">..</span><span class="p">.</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>需要注意的是，上面函数的入参并不是 <code>Ipv4Addr</code>, 而是 <code>Into&lt;Ipv4Addr&gt;</code> ，这就是意味着，所有实现了 <code>Into&lt;Ipv4Addr&gt;</code> 这个 trait 的类型都可以是 <code>ping</code> 的入参，而恰好 <code>u32</code> 和 <code>[u8; 4]</code> 都实现了 <code>Into&lt;Ipv4Addr&gt;</code> ，所以下面的调用都是编译通过的： <br/></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">ping</span><span class="p">(</span><span class="n">Ipv4Addr</span>::<span class="n">new</span><span class="p">(</span><span class="mi">23</span><span class="p">,</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">,</span><span class="w"> </span><span class="mi">141</span><span class="p">)));</span><span class="w"> </span><span class="c1">// pass an Ipv4Addr
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">ping</span><span class="p">([</span><span class="mi">66</span><span class="p">,</span><span class="w"> </span><span class="mi">146</span><span class="p">,</span><span class="w"> </span><span class="mi">219</span><span class="p">,</span><span class="w"> </span><span class="mi">98</span><span class="p">]));</span><span class="w">             </span><span class="c1">// pass a [u8; 4]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">ping</span><span class="p">(</span><span class="mh">0xd076eb94_</span><span class="k">u32</span><span class="p">));</span><span class="w">                 </span><span class="c1">// pass a u32
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>当然，如果你实现了 <code>impl From&lt;u32&gt; for Ipv4Addr</code>, Rust 编译器也会贴心地帮你把反向的 <code>Into&lt;Ipv4Addr&gt;</code> 也实现掉。 <br/></p>
-<h2 id="限制"><span class="section-num">3</span> 限制</h2>
-<p>看完上面的函数实现，有经验的朋友可能就会发现了，Rust版本的函数重载限制比C++的要多。 <br/></p>
-<p>在C++版本的函数重载中： <br/></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">func1</span><span class="p">(</span><span class="n">Type1</span> <span class="n">foo</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">func1</span><span class="p">(</span><span class="n">Type2</span> <span class="n">bar</span><span class="p">);</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>参数类型 <code>Type1</code> 和 <code>Type2</code> 并不需要存在任何关系，但是在 Rust 版本中，需要两个类型之间支持相互转换，所以可以理解成 Rust 的「函数重载」本质就是通过显示类型转换来实现的。 <br/></p>
-<p>毕竟 Rust 设计初衷之一就是支持强类型，就函数重载而言，终归聊胜于无啦。 <br/></p>
-<h2 id="参考"><span class="section-num">4</span> 参考</h2>
-<ul>
-<li><a href="https://www.oreilly.com/library/view/programming-rust-2nd/9781492052586/">Programming Rust, 2nd Edition</a> <br/></li>
 </ul>
 ]]></content:encoded>
     </item>
