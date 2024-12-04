@@ -1,7 +1,7 @@
 +++
 title = "Hugo评论系统自适应博客主题: 支持dark与light theme"
 date = 2024-12-04T13:25:00+08:00
-lastmod = 2024-12-04T14:27:41+08:00
+lastmod = 2024-12-04T14:33:02+08:00
 tags = ["blog", "hugo"]
 categories = ["blog", "hugo"]
 draft = false
@@ -52,7 +52,7 @@ console.log(isDarkMode ? 'dark' : 'light');
 </body>
 ```
 
-dark theme 的时候 `class` 就变为了 `class`"dark"=:
+dark theme 的时候 `class` 就变为了 `class="dark"`:
 
 ```css
 <body id = "top" class="">
