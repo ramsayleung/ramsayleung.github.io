@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Wed, 04 Dec 2024 14:27:41 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 04 Dec 2024 14:33:02 +0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Hugo评论系统自适应博客主题: 支持dark与light theme</title>
@@ -74,7 +74,7 @@
 </span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="nt">body</span><span class="o">&gt;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>dark theme 的时候 <code>class</code> 就变为了 <code>class</code>&ldquo;dark&rdquo;=:</p>
+</div><p>dark theme 的时候 <code>class</code> 就变为了 <code>class=&quot;dark&quot;</code>:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
