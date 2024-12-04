@@ -620,24 +620,40 @@ It sounds pretty academic, but I am sure you are using topological sort unconsci
 The slogan of this site is In pursuit of Simplicity, because I prefer simple over complex
 Projects I&amp;rsquo;ve contributed multiple projects to open source community, I mainly focus on RSpotify right now due to the constrained energy.
 RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
-      <content:encoded><![CDATA[
-<!DOCTYPE html>
+      <content:encoded><![CDATA[<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Responsive Heatmap</title>
     <style>
-         
-        .heatmap-container {
-            display: block;
-        }
+	 
+	.heatmap-container {
+	    display: block;
+
+	}
+
+	 
+	@media only screen and (max-width: 1024px) {
+	    .heatmap-container {
+		display: none;
+
+	    }
+	}
 
          
-        @media only screen and (max-width: 1024px) {
-            .heatmap-container {
-                display: none;
-            }
+        :root {
+            --heatmap-bg-light: #fff;
+            --heatmap-colors-light-0: #c6e48b;
+            --heatmap-colors-light-1: #7bc96f;
+            --heatmap-colors-light-2: #239a3b;
+            --heatmap-colors-light-3: #196127;
+
+            --heatmap-bg-dark: #585c59;
+            --heatmap-colors-dark-0: #c6e48b;
+            --heatmap-colors-dark-1: #7bc96f;
+            --heatmap-colors-dark-2: #239a3b;
+            --heatmap-colors-dark-3: #196127;
         }
     </style>
 </head>
@@ -645,20 +661,10 @@ RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
     <div class="heatmap-container">
         <div>
             <div style="display: flex; justify-content: center; align-items: center">
-                <p style="margin-right: 15px; margin-bottom: 0; color: #333; padding: 8px">
+                <p style="margin-right: 15px; margin-bottom: 0; padding: 8px">
                     Article Activity
                 </p>
-                <select
-                    id="yearSelector"
-                    style="
-                        padding: 8px 12px;
-                        border: 1px solid #ccc;
-                        border-radius: 5px;
-                        background-color: #fff;
-                        cursor: pointer;
-                        transition: border-color 0.3s ease, box-shadow 0.3s ease;
-                    "
-                >
+                <select id="yearSelector">
                     
                 </select>
             </div>
@@ -675,302 +681,373 @@ RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
             ></div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/dist/echarts.min.js"></script>
+    <script type="text/javascript">
+        var myChart;
+
+        
+        function getCurrentTheme() {
+            return document.body.classList.contains('dark') ? 'dark' : 'light';
+        }
+
+        function getThemeColors() {
+            if ('dark' === getCurrentTheme()) {
+                return [
+                    getCSSVariableValue('--heatmap-colors-dark-0'),
+                    getCSSVariableValue('--heatmap-colors-dark-1'),
+                    getCSSVariableValue('--heatmap-colors-dark-2'),
+                    getCSSVariableValue('--heatmap-colors-dark-3')
+                ];
+            } else {
+                return [
+                    getCSSVariableValue('--heatmap-colors-light-0'),
+                    getCSSVariableValue('--heatmap-colors-light-1'),
+                    getCSSVariableValue('--heatmap-colors-light-2'),
+                    getCSSVariableValue('--heatmap-colors-light-3')
+                ];
+            }
+        }
+
+        function getThemeBgColor(){
+          const currentTheme = getCurrentTheme();
+          return currentTheme === 'dark' 
+                          ? getCSSVariableValue('--heatmap-bg-dark') 
+                          : getCSSVariableValue('--heatmap-bg-light');
+        }
+
+        function getCSSVariableValue(variableName) {
+            return getComputedStyle(document.documentElement)
+                .getPropertyValue(variableName).trim();
+        }
+
+        
+        function initOrUpdateChart() {
+            
+            if (myChart) {
+                myChart.dispose();
+            }
+
+            
+            const theme = getCurrentTheme();
+            const chartDom = document.getElementById('heatmap');
+            
+            myChart = echarts.init(chartDom, theme === 'dark' ? 'dark' : 'light');
+            
+            option.visualMap.inRange.color = getThemeColors();
+            option.calendar.itemStyle.color = getThemeBgColor();
+            myChart.setOption(option);
+        }
+
+        function populatePostData() {
+          var postsByDate = new Map();
+          var years = new Set();
+
+          
+              var date = "2024-04-13";
+              var year = "2024";
+              years.add(year);
+              var postObj = new Map();
+              postObj.set("title", "TIL: Git Blame with Following");
+              postObj.set("link", "/en/post/2024/git_blame_with_following/");
+              postObj.set("wordCount",  431 );
+              var wordCount =  431 ;
+              var data = postsByDate.get(date);
+              if (data === undefined) {
+                  data = new Map();
+                  data.set("posts", []);
+                  data.set("totalWordCount", 0);
+              }
+              var posts = data.get("posts");
+              posts.push(postObj);
+              var totalWordCount = data.get("totalWordCount");
+              totalWordCount += wordCount;
+              data.set("totalWordCount", totalWordCount);
+              postsByDate.set(date, data);
+              var date = "2024-04-07";
+              var year = "2024";
+              years.add(year);
+              var postObj = new Map();
+              postObj.set("title", "TIL: Git Conditional Configs");
+              postObj.set("link", "/en/post/2024/git_conditional_configs/");
+              postObj.set("wordCount",  326 );
+              var wordCount =  326 ;
+              var data = postsByDate.get(date);
+              if (data === undefined) {
+                  data = new Map();
+                  data.set("posts", []);
+                  data.set("totalWordCount", 0);
+              }
+              var posts = data.get("posts");
+              posts.push(postObj);
+              var totalWordCount = data.get("totalWordCount");
+              totalWordCount += wordCount;
+              data.set("totalWordCount", totalWordCount);
+              postsByDate.set(date, data);
+              var date = "2024-01-01";
+              var year = "2024";
+              years.add(year);
+              var postObj = new Map();
+              postObj.set("title", "Rewind your Github summary");
+              postObj.set("link", "/en/post/2024/github_summary/");
+              postObj.set("wordCount",  241 );
+              var wordCount =  241 ;
+              var data = postsByDate.get(date);
+              if (data === undefined) {
+                  data = new Map();
+                  data.set("posts", []);
+                  data.set("totalWordCount", 0);
+              }
+              var posts = data.get("posts");
+              posts.push(postObj);
+              var totalWordCount = data.get("totalWordCount");
+              totalWordCount += wordCount;
+              data.set("totalWordCount", totalWordCount);
+              postsByDate.set(date, data);
+              var date = "2023-06-28";
+              var year = "2023";
+              years.add(year);
+              var postObj = new Map();
+              postObj.set("title", "How to share resource between CDK stacks");
+              postObj.set("link", "/en/post/2023/how_to_share_resource_between_cdk_stacks/");
+              postObj.set("wordCount",  717 );
+              var wordCount =  717 ;
+              var data = postsByDate.get(date);
+              if (data === undefined) {
+                  data = new Map();
+                  data.set("posts", []);
+                  data.set("totalWordCount", 0);
+              }
+              var posts = data.get("posts");
+              posts.push(postObj);
+              var totalWordCount = data.get("totalWordCount");
+              totalWordCount += wordCount;
+              data.set("totalWordCount", totalWordCount);
+              postsByDate.set(date, data);
+              var date = "2022-05-22";
+              var year = "2022";
+              years.add(year);
+              var postObj = new Map();
+              postObj.set("title", "Topological Sort");
+              postObj.set("link", "/en/post/2022/topological_sorting/");
+              postObj.set("wordCount",  931 );
+              var wordCount =  931 ;
+              var data = postsByDate.get(date);
+              if (data === undefined) {
+                  data = new Map();
+                  data.set("posts", []);
+                  data.set("totalWordCount", 0);
+              }
+              var posts = data.get("posts");
+              posts.push(postObj);
+              var totalWordCount = data.get("totalWordCount");
+              totalWordCount += wordCount;
+              data.set("totalWordCount", totalWordCount);
+              postsByDate.set(date, data);
+              var date = "2021-08-05";
+              var year = "2021";
+              years.add(year);
+              var postObj = new Map();
+              postObj.set("title", "How To Design A Reliable Distributed Timer");
+              postObj.set("link", "/en/post/2021/how_to_design_a_reliable_distributed_timer/");
+              postObj.set("wordCount",  1845 );
+              var wordCount =  1845 ;
+              var data = postsByDate.get(date);
+              if (data === undefined) {
+                  data = new Map();
+                  data.set("posts", []);
+                  data.set("totalWordCount", 0);
+              }
+              var posts = data.get("posts");
+              posts.push(postObj);
+              var totalWordCount = data.get("totalWordCount");
+              totalWordCount += wordCount;
+              data.set("totalWordCount", totalWordCount);
+              postsByDate.set(date, data);
+              var date = "2021-04-29";
+              var year = "2021";
+              years.add(year);
+              var postObj = new Map();
+              postObj.set("title", "Let's make everything iterable");
+              postObj.set("link", "/en/post/2021/iterate_through_pagination_api/");
+              postObj.set("wordCount",  1117 );
+              var wordCount =  1117 ;
+              var data = postsByDate.get(date);
+              if (data === undefined) {
+                  data = new Map();
+                  data.set("posts", []);
+                  data.set("totalWordCount", 0);
+              }
+              var posts = data.get("posts");
+              posts.push(postObj);
+              var totalWordCount = data.get("totalWordCount");
+              totalWordCount += wordCount;
+              data.set("totalWordCount", totalWordCount);
+              postsByDate.set(date, data);
+              var date = "2020-12-13";
+              var year = "2020";
+              years.add(year);
+              var postObj = new Map();
+              postObj.set("title", "Serde Tricks");
+              postObj.set("link", "/en/post/2020/serde_lesson/");
+              postObj.set("wordCount",  2305 );
+              var wordCount =  2305 ;
+              var data = postsByDate.get(date);
+              if (data === undefined) {
+                  data = new Map();
+                  data.set("posts", []);
+                  data.set("totalWordCount", 0);
+              }
+              var posts = data.get("posts");
+              posts.push(postObj);
+              var totalWordCount = data.get("totalWordCount");
+              totalWordCount += wordCount;
+              data.set("totalWordCount", totalWordCount);
+              postsByDate.set(date, data);
+              var date = "2020-02-28";
+              var year = "2020";
+              years.add(year);
+              var postObj = new Map();
+              postObj.set("title", "rspotify has come to async/await");
+              postObj.set("link", "/en/post/2020/async_await_for_rspotify/");
+              postObj.set("wordCount",  459 );
+              var wordCount =  459 ;
+              var data = postsByDate.get(date);
+              if (data === undefined) {
+                  data = new Map();
+                  data.set("posts", []);
+                  data.set("totalWordCount", 0);
+              }
+              var posts = data.get("posts");
+              posts.push(postObj);
+              var totalWordCount = data.get("totalWordCount");
+              totalWordCount += wordCount;
+              data.set("totalWordCount", totalWordCount);
+              postsByDate.set(date, data);return [postsByDate, years];
+        }
+
+        function getHeatmapData(year) {
+            var heatmapData = [];
+            for (const [date, data] of postsByDate.entries()) {
+                if (date.startsWith(year)) {
+                    heatmapData.push([date, data.get("totalWordCount")]);
+                }
+            }
+            return heatmapData;
+        }
+
+        function updateHeatmap(year) {
+            option.calendar.range = year;
+            option.series.data = getHeatmapData(year);
+            myChart.setOption(option);
+        }
+
+
+        
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    initOrUpdateChart();
+                }
+            });
+        });
+
+        
+        observer.observe(document.body, { 
+            attributes: true, 
+            attributeFilter: ['class'] 
+        });
+
+        var option;
+        
+        
+        var [postsByDate, years] = populatePostData();
+
+        
+        years = Array.from(years).sort().reverse();
+        var yearSelector = document.getElementById('yearSelector');
+        years.forEach(year => {
+            var option = document.createElement('option');
+            option.value = year;
+            option.text = year;
+            yearSelector.appendChild(option);
+        });
+
+        yearSelector.addEventListener('change', function() {
+            updateHeatmap(this.value);
+        });
+
+        option = {
+            title: { show: false },
+            legend: { show: false },
+            visualMap: {
+                show: false,
+                min: 0,
+                max: 10000,
+                type: 'piecewise',
+                showLabel: false,
+                orient: 'horizontal',
+                left: 'center',
+                top: 0,
+                itemGap: 10,
+                inRange: {
+                    color: getThemeColors(),
+                },
+            },
+            calendar: {
+                top: 30,
+                left: 30,
+                right: 30,
+                cellSize: ['auto', 'auto'],
+                range: years[0],
+                itemStyle: {
+                    color: getThemeBgColor(),
+                    borderWidth: 0.5,
+                    borderColor: '#eee',
+                },
+                yearLabel: { show: false },
+                dayLabel: {
+                    firstDay: 1,
+                    nameMap: 'EN'
+                },
+                monthLabel: {
+                    nameMap: 'EN'
+                },
+                splitLine: {
+                    show: false,
+                },
+            },
+            tooltip: {
+                hideDelay: 1000,
+                enterable: true,
+                formatter: function (params) {
+                    const thousandWordsText = 'k words';
+                    const date = params.data[0];
+                    const posts = postsByDate.get(date).get("posts");
+                    var content = `${date}`;
+                    for (const [i, post] of posts.entries()) {
+                        content += "<br>";
+                        var link = post.get("link");
+                        var title = post.get("title");
+                        const thousandWords = (post.get("wordCount")/1000.0).toFixed(1);
+                        content += `<a href="${link}" target="_blank">${title} | ${thousandWords}${thousandWordsText}</a>`
+                    }
+                    return content;
+                }
+            },
+            series: {
+                type: 'heatmap',
+                coordinateSystem: 'calendar',
+                calendarIndex: 0,
+                data: getHeatmapData(years[0])
+            }
+        };
+
+        
+        initOrUpdateChart();
+    </script>
 </body>
 </html>
-
-<script src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/dist/echarts.min.js"></script>
-<script type="text/javascript">
-  var chartDom = document.getElementById('heatmap');
-  var myChart = echarts.init(chartDom);
-  var yearSelector = document.getElementById('yearSelector');
-  window.onresize = function() {
-      myChart.resize();
-  };
-  var option;
-  var postsByDate = new Map();
-  var years = new Set();
-
-  
-      var date = "2024-04-13";
-      var year = "2024";
-      years.add(year);
-      var postObj = new Map();
-      postObj.set("title", "TIL: Git Blame with Following");
-      postObj.set("link", "/en/post/2024/git_blame_with_following/");
-      postObj.set("wordCount",  431 );
-      var wordCount =  431 ;
-      var data = postsByDate.get(date);
-      if (data === undefined) {
-          data = new Map();
-          data.set("posts", []);
-          data.set("totalWordCount", 0);
-      }
-      var posts = data.get("posts");
-      posts.push(postObj);
-      var totalWordCount = data.get("totalWordCount");
-      totalWordCount += wordCount;
-      data.set("totalWordCount", totalWordCount);
-      postsByDate.set(date, data);
-      var date = "2024-04-07";
-      var year = "2024";
-      years.add(year);
-      var postObj = new Map();
-      postObj.set("title", "TIL: Git Conditional Configs");
-      postObj.set("link", "/en/post/2024/git_conditional_configs/");
-      postObj.set("wordCount",  326 );
-      var wordCount =  326 ;
-      var data = postsByDate.get(date);
-      if (data === undefined) {
-          data = new Map();
-          data.set("posts", []);
-          data.set("totalWordCount", 0);
-      }
-      var posts = data.get("posts");
-      posts.push(postObj);
-      var totalWordCount = data.get("totalWordCount");
-      totalWordCount += wordCount;
-      data.set("totalWordCount", totalWordCount);
-      postsByDate.set(date, data);
-      var date = "2024-01-01";
-      var year = "2024";
-      years.add(year);
-      var postObj = new Map();
-      postObj.set("title", "Rewind your Github summary");
-      postObj.set("link", "/en/post/2024/github_summary/");
-      postObj.set("wordCount",  241 );
-      var wordCount =  241 ;
-      var data = postsByDate.get(date);
-      if (data === undefined) {
-          data = new Map();
-          data.set("posts", []);
-          data.set("totalWordCount", 0);
-      }
-      var posts = data.get("posts");
-      posts.push(postObj);
-      var totalWordCount = data.get("totalWordCount");
-      totalWordCount += wordCount;
-      data.set("totalWordCount", totalWordCount);
-      postsByDate.set(date, data);
-      var date = "2023-06-28";
-      var year = "2023";
-      years.add(year);
-      var postObj = new Map();
-      postObj.set("title", "How to share resource between CDK stacks");
-      postObj.set("link", "/en/post/2023/how_to_share_resource_between_cdk_stacks/");
-      postObj.set("wordCount",  717 );
-      var wordCount =  717 ;
-      var data = postsByDate.get(date);
-      if (data === undefined) {
-          data = new Map();
-          data.set("posts", []);
-          data.set("totalWordCount", 0);
-      }
-      var posts = data.get("posts");
-      posts.push(postObj);
-      var totalWordCount = data.get("totalWordCount");
-      totalWordCount += wordCount;
-      data.set("totalWordCount", totalWordCount);
-      postsByDate.set(date, data);
-      var date = "2022-05-22";
-      var year = "2022";
-      years.add(year);
-      var postObj = new Map();
-      postObj.set("title", "Topological Sort");
-      postObj.set("link", "/en/post/2022/topological_sorting/");
-      postObj.set("wordCount",  931 );
-      var wordCount =  931 ;
-      var data = postsByDate.get(date);
-      if (data === undefined) {
-          data = new Map();
-          data.set("posts", []);
-          data.set("totalWordCount", 0);
-      }
-      var posts = data.get("posts");
-      posts.push(postObj);
-      var totalWordCount = data.get("totalWordCount");
-      totalWordCount += wordCount;
-      data.set("totalWordCount", totalWordCount);
-      postsByDate.set(date, data);
-      var date = "2021-08-05";
-      var year = "2021";
-      years.add(year);
-      var postObj = new Map();
-      postObj.set("title", "How To Design A Reliable Distributed Timer");
-      postObj.set("link", "/en/post/2021/how_to_design_a_reliable_distributed_timer/");
-      postObj.set("wordCount",  1845 );
-      var wordCount =  1845 ;
-      var data = postsByDate.get(date);
-      if (data === undefined) {
-          data = new Map();
-          data.set("posts", []);
-          data.set("totalWordCount", 0);
-      }
-      var posts = data.get("posts");
-      posts.push(postObj);
-      var totalWordCount = data.get("totalWordCount");
-      totalWordCount += wordCount;
-      data.set("totalWordCount", totalWordCount);
-      postsByDate.set(date, data);
-      var date = "2021-04-29";
-      var year = "2021";
-      years.add(year);
-      var postObj = new Map();
-      postObj.set("title", "Let's make everything iterable");
-      postObj.set("link", "/en/post/2021/iterate_through_pagination_api/");
-      postObj.set("wordCount",  1117 );
-      var wordCount =  1117 ;
-      var data = postsByDate.get(date);
-      if (data === undefined) {
-          data = new Map();
-          data.set("posts", []);
-          data.set("totalWordCount", 0);
-      }
-      var posts = data.get("posts");
-      posts.push(postObj);
-      var totalWordCount = data.get("totalWordCount");
-      totalWordCount += wordCount;
-      data.set("totalWordCount", totalWordCount);
-      postsByDate.set(date, data);
-      var date = "2020-12-13";
-      var year = "2020";
-      years.add(year);
-      var postObj = new Map();
-      postObj.set("title", "Serde Tricks");
-      postObj.set("link", "/en/post/2020/serde_lesson/");
-      postObj.set("wordCount",  2305 );
-      var wordCount =  2305 ;
-      var data = postsByDate.get(date);
-      if (data === undefined) {
-          data = new Map();
-          data.set("posts", []);
-          data.set("totalWordCount", 0);
-      }
-      var posts = data.get("posts");
-      posts.push(postObj);
-      var totalWordCount = data.get("totalWordCount");
-      totalWordCount += wordCount;
-      data.set("totalWordCount", totalWordCount);
-      postsByDate.set(date, data);
-      var date = "2020-02-28";
-      var year = "2020";
-      years.add(year);
-      var postObj = new Map();
-      postObj.set("title", "rspotify has come to async/await");
-      postObj.set("link", "/en/post/2020/async_await_for_rspotify/");
-      postObj.set("wordCount",  459 );
-      var wordCount =  459 ;
-      var data = postsByDate.get(date);
-      if (data === undefined) {
-          data = new Map();
-          data.set("posts", []);
-          data.set("totalWordCount", 0);
-      }
-      var posts = data.get("posts");
-      posts.push(postObj);
-      var totalWordCount = data.get("totalWordCount");
-      totalWordCount += wordCount;
-      data.set("totalWordCount", totalWordCount);
-      postsByDate.set(date, data);
-  years = Array.from(years).sort().reverse();
-  years.forEach(year => {
-      var option = document.createElement('option');
-      option.value = year;
-      option.text = year;
-      yearSelector.appendChild(option);
-  });
-
-  function getHeatmapData(year) {
-      var heatmapData = [];
-      for (const [date, data] of postsByDate.entries()) {
-          if (date.startsWith(year)) {
-              heatmapData.push([date, data.get("totalWordCount")]);
-          }
-      }
-      return heatmapData;
-  }
-
-  function updateHeatmap(year) {
-      option.calendar.range = year;
-      option.series.data = getHeatmapData(year);
-      myChart.setOption(option);
-  }
-
-  yearSelector.addEventListener('change', function() {
-      updateHeatmap(this.value);
-  });
-
-  option = {
-      title: {
-          show: false,
-      },
-  legend: {
-      show: false,
-  },
-  visualMap: {
-      show: false,
-      min: 0,
-      max: 10000,
-      type: 'piecewise',
-      showLable: false,
-      orient: 'horizontal',
-      left: 'center',
-      top: 0,
-      itemGap: 10,
-      inRange: {
-          color: ['#c6e48b', '#7bc96f', '#239a3b', '#196127'],
-      },
-  },
-  calendar: {
-          top: 30,
-          left: 30,
-          right: 30,
-          cellSize: ['auto', 'auto'],
-          range: years[0],
-          itemStyle: {
-              color: '#fff',
-              borderWidth: 0.5,
-              borderColor: '#eee',
-          },
-          yearLabel: { show: false },
-          dayLabel: {
-              firstDay: 1,
-              nameMap: "EN"
-          },
-          monthLabel: {
-              nameMap: "EN"
-          },
-          splitLine: {
-              show: false,
-          },
-      },
-      tooltip: {
-          hideDelay: 1000,
-          enterable: true,
-          formatter: function (params) {
-	          const thousandWordsText = "EN" === "EN" ? 'k words': '千字';
-              const date = params.data[0];
-              const posts = postsByDate.get(date).get("posts");
-              var content = `${date}`;
-              for (const [i, post] of posts.entries()) {
-                  content += "<br>";
-                  var link = post.get("link");
-                  var title = post.get("title");
-	              const thousandWords = (post.get("wordCount")/1000.0).toFixed(1);
-                  content += `<a href="${link}" target="_blank">${title} | ${thousandWords}${thousandWordsText}</a>`
-              }
-              return content;
-          }
-      },
-      series: {
-          type: 'heatmap',
-          coordinateSystem: 'calendar',
-          calendarIndex: 0,
-          data: getHeatmapData(years[0])
-      }
-  };
-
-  option && myChart.setOption(option);
-</script>
 
 <h2 id="about-me">About me</h2>
 <p>I&rsquo;m Ramsay, a software engineer making a living by pressing keyboard, an amateur cook, an Emacs deadhead and Linux enthusiast.</p>
