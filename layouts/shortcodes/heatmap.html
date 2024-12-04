@@ -40,7 +40,7 @@
         <div>
             <div style="display: flex; justify-content: center; align-items: center">
                 <p style="margin-right: 15px; margin-bottom: 0; padding: 8px">
-                    Article Activity
+                    {{ default "Article Activity" (.Get "title_text") }}
                 </p>
                 <select id="yearSelector">
                     <!-- Years will be dynamically added here -->
@@ -229,10 +229,10 @@
                 yearLabel: { show: false },
                 dayLabel: {
                     firstDay: 1,
-                    nameMap: 'EN'
+                    nameMap: {{ default "EN" (.Get "language")}}
                 },
                 monthLabel: {
-                    nameMap: 'EN'
+                    nameMap: {{ default "EN" (.Get "language")}}
                 },
                 splitLine: {
                     show: false,
@@ -242,7 +242,7 @@
                 hideDelay: 1000,
                 enterable: true,
                 formatter: function (params) {
-                    const thousandWordsText = 'k words';
+                    const thousandWordsText = {{ default "EN" (.Get "language")}} === "EN" ? 'k words': '千字';
                     const date = params.data[0];
                     const posts = postsByDate.get(date).get("posts");
                     var content = `${date}`;
