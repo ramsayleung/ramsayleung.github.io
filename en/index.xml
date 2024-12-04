@@ -686,9 +686,8 @@ RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
     <script type="text/javascript">
         var myChart;
 
-        
         function getCurrentTheme() {
-            return document.body.classList.contains('dark') ? 'dark' : 'light';
+          return document.documentElement.getAttribute('data-theme') || document.body.classList.contains('dark') ? 'dark' : 'light';
         }
 
         function getThemeColors() {
