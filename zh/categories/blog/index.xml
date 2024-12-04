@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>blog on 自由庄园</title>
+    <link>https://ramsayleung.github.io/zh/categories/blog/</link>
+    <description>Recent content in blog on 自由庄园</description>
+    <image>
+      <title>自由庄园</title>
+      <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- 0.120.4</generator>
+    <language>zh</language>
+    <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
+    <lastBuildDate>Wed, 04 Dec 2024 14:27:41 +0800</lastBuildDate>
+    <atom:link href="https://ramsayleung.github.io/zh/categories/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo评论系统自适应博客主题: 支持dark与light theme</title>
+      <link>https://ramsayleung.github.io/zh/post/2024/hugo%E8%AF%84%E8%AE%BA%E7%BB%84%E4%BB%B6%E8%87%AA%E9%80%82%E5%BA%94%E5%8D%9A%E5%AE%A2%E6%9A%97%E9%BB%91%E4%B8%BB%E9%A2%98/</link>
+      <pubDate>Wed, 04 Dec 2024 13:25:00 +0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2024/hugo%E8%AF%84%E8%AE%BA%E7%BB%84%E4%BB%B6%E8%87%AA%E9%80%82%E5%BA%94%E5%8D%9A%E5%AE%A2%E6%9A%97%E9%BB%91%E4%B8%BB%E9%A2%98/</guid>
+      <description>1 问题 评论系统是博客的关键组件，Hugo 支持若干个评论系统，包括流行的 Disqus, 基于 GitHub 的 Giscus 和 Utteranc, 以及其他评论系统 我博客使用的评论系统是 Utteranc, 主题是 PaperMod, PaperMod 支持</description>
+      <content:encoded><![CDATA[<h2 id="问题"><span class="section-num">1</span> 问题</h2>
+<p>评论系统是博客的关键组件，Hugo 支持若干个评论系统，包括流行的 <a href="https://disqus.com/">Disqus</a>, 基于 GitHub 的 <a href="https://giscus.app">Giscus</a> 和 <a href="https://utteranc.es/">Utteranc</a>, 以及其他<a href="https://gohugo.io/content-management/comments/">评论系统</a></p>
+<p>我<a href="https://ramsayleung.github.io/">博客</a>使用的评论系统是 Utteranc, 主题是 <a href="https://github.com/adityatelange/hugo-PaperMod/">PaperMod</a>, PaperMod 支持 dark 和 light 两种主题, 在初始化 Utteranc 时可以指定 theme, 如 <code>Github-Light</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;https://utteranc.es/client.js&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">repo</span><span class="o">=</span><span class="s">&#34;ramsayleung/comment&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">issue-term</span><span class="o">=</span><span class="s">&#34;title&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">theme</span><span class="o">=</span><span class="s">&#34;github-light&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">crossorigin</span><span class="o">=</span><span class="s">&#34;anonymous&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">async</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是 theme 在初始化时就指定好了，那么在博客切换到 dark theme 的时候， Utteranc 也不会自适应 dark theme，博客的theme与评论theme就不一致：</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/responsive_comment_theme.jpg"/> 
+</figure>
+
+<h2 id="解决思路"><span class="section-num">2</span> 解决思路</h2>
+<p>解决思路其实很简单，就获取当前的 theme, 然后再初始化 Utteranc 对应的 theme; 再在用户切换 theme 之后，再重新初始化 <code>Utteranc</code>.</p>
+<h3 id="获取当前theme"><span class="section-num">2.1</span> 获取当前Theme</h3>
+<p>Hugo 并没有提供标准接口来获取当前主题， 虽然可以通过以下的方式来获取的 theme:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">isDarkMode</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">matchMedia</span><span class="p">(</span><span class="s1">&#39;(prefers-color-scheme: dark)&#39;</span><span class="p">).</span><span class="nx">matches</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">isDarkMode</span> <span class="o">?</span> <span class="s1">&#39;dark&#39;</span> <span class="o">:</span> <span class="s1">&#39;light&#39;</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是这个是通过编译出来的CSS来判断当前theme，用户一旦手动切换了 theme, 上面的代码就无法生效了.</p>
+<p>每个Hugo主题定义的方式可能还不一样, 以 PaperMod 为例，观察之后发现，light theme的时候body的html 为:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nt">body</span> <span class="nt">id</span> <span class="o">=</span> <span class="s2">&#34;top&#34;</span> <span class="nt">class</span><span class="o">=</span><span class="s2">&#34;&#34;</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="nt">body</span><span class="o">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>dark theme 的时候 <code>class</code> 就变为了 <code>class</code>&ldquo;dark&rdquo;=:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nt">body</span> <span class="nt">id</span> <span class="o">=</span> <span class="s2">&#34;top&#34;</span> <span class="nt">class</span><span class="o">=</span><span class="s2">&#34;&#34;</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="nt">body</span><span class="o">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所以可以通过判断 <code>body</code> 是否包含 <code>dark</code> 的 class 来判断当前是否为 dark theme.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// 不同的Hugo theme可能会需要不同的判断方式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">function</span> <span class="nx">getCurrentTheme</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="s1">&#39;dark&#39;</span><span class="p">)</span> <span class="o">?</span> <span class="s1">&#39;dark&#39;</span> <span class="o">:</span> <span class="s1">&#39;light&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="初始化评论系统"><span class="section-num">2.2</span> 初始化评论系统</h3>
+<p><a href="https://utteranc.es/">Utteranc</a> 文档提供的启用评价系统代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;https://utteranc.es/client.js&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">repo</span><span class="o">=</span><span class="s">&#34;[ENTER REPO HERE]&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">issue-term</span><span class="o">=</span><span class="s">&#34;pathname&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">theme</span><span class="o">=</span><span class="s">&#34;github-light&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">crossorigin</span><span class="o">=</span><span class="s">&#34;anonymous&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">async</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为我们需要在切换 Theme 时重新加载 Utteranc, 所以就需要通过 Javascript 来实现上面的HTML功能:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">loadUtterances</span><span class="p">(</span><span class="nx">darkMode</span><span class="o">=</span><span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">commentContainer</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;comments-utteranc&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">commentContainer</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">commentContainer</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="kr">const</span> <span class="nx">commentScript</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&#34;script&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">commentScript</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&#34;id&#34;</span><span class="p">,</span> <span class="s2">&#34;utteranc&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">commentScript</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&#34;src&#34;</span><span class="p">,</span> <span class="s2">&#34;https://utteranc.es/client.js&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">commentScript</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&#34;data-repo&#34;</span><span class="p">,</span> <span class="s2">&#34;ramsayleung/comment&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">commentScript</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&#34;data-theme&#34;</span><span class="p">,</span> <span class="nx">darkMode</span> <span class="o">?</span> <span class="s2">&#34;github-dark&#34;</span> <span class="o">:</span> <span class="s2">&#34;github-light&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">commentScript</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&#34;data-issue-term&#34;</span><span class="p">,</span> <span class="s2">&#34;title&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">commentScript</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&#34;crossorigin&#34;</span><span class="p">,</span> <span class="s2">&#34;anonymous&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">commentScript</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&#34;async&#34;</span><span class="p">,</span> <span class="s2">&#34;true&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">commentContainer</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">commentScript</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="监听主题变动"><span class="section-num">2.3</span> 监听主题变动</h3>
+<p>用户可以在博客界面手动选择他们喜欢的主题，可以从 <code>dark</code> -&gt; <code>light</code>, <code>light</code> -&gt; <code>dark</code>, 我们需要做的就是监听主题的变动，在切换主题之后，重新加载评论系统。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// Watch for theme changes
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">themeObserver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MutationObserver</span><span class="p">((</span><span class="nx">mutations</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">mutations</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">mutation</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">mutation</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s1">&#39;attributes&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">mutation</span><span class="p">.</span><span class="nx">attributeName</span> <span class="o">===</span> <span class="s1">&#39;class&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="kr">const</span> <span class="nx">isDarkMode</span> <span class="o">=</span> <span class="nx">getCurrentTheme</span><span class="p">()</span> <span class="o">===</span> <span class="s1">&#39;dark&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">loadUtterances</span><span class="p">(</span><span class="nx">isDarkMode</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`changing theme`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Start observing the body element for class changes
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">themeObserver</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">attributes</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">attributeFilter</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="总结"><span class="section-num">3</span> 总结</h2>
+<p>自适应评论系统的代码<a href="https://github.com/ramsayleung/ramsayleung.github.io/blob/master/layouts/partials/comments.html">在这里</a>, 实现的效果如下:</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/responsive_comment_theme_2.jpg"/> 
+</figure>
+
+<figure>
+    <img loading="lazy" src="/ox-hugo/responsive_comment_theme_3.jpg"/> 
+</figure>
+
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

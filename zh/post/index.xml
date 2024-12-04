@@ -12,8 +12,205 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sun, 20 Oct 2024 17:09:12 -0700</lastBuildDate>
+    <lastBuildDate>Wed, 04 Dec 2024 14:27:41 +0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo评论系统自适应博客主题: 支持dark与light theme</title>
+      <link>https://ramsayleung.github.io/zh/post/2024/hugo%E8%AF%84%E8%AE%BA%E7%BB%84%E4%BB%B6%E8%87%AA%E9%80%82%E5%BA%94%E5%8D%9A%E5%AE%A2%E6%9A%97%E9%BB%91%E4%B8%BB%E9%A2%98/</link>
+      <pubDate>Wed, 04 Dec 2024 13:25:00 +0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2024/hugo%E8%AF%84%E8%AE%BA%E7%BB%84%E4%BB%B6%E8%87%AA%E9%80%82%E5%BA%94%E5%8D%9A%E5%AE%A2%E6%9A%97%E9%BB%91%E4%B8%BB%E9%A2%98/</guid>
+      <description>1 问题 评论系统是博客的关键组件，Hugo 支持若干个评论系统，包括流行的 Disqus, 基于 GitHub 的 Giscus 和 Utteranc, 以及其他评论系统 我博客使用的评论系统是 Utteranc, 主题是 PaperMod, PaperMod 支持</description>
+      <content:encoded><![CDATA[<h2 id="问题"><span class="section-num">1</span> 问题</h2>
+<p>评论系统是博客的关键组件，Hugo 支持若干个评论系统，包括流行的 <a href="https://disqus.com/">Disqus</a>, 基于 GitHub 的 <a href="https://giscus.app">Giscus</a> 和 <a href="https://utteranc.es/">Utteranc</a>, 以及其他<a href="https://gohugo.io/content-management/comments/">评论系统</a></p>
+<p>我<a href="https://ramsayleung.github.io/">博客</a>使用的评论系统是 Utteranc, 主题是 <a href="https://github.com/adityatelange/hugo-PaperMod/">PaperMod</a>, PaperMod 支持 dark 和 light 两种主题, 在初始化 Utteranc 时可以指定 theme, 如 <code>Github-Light</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;https://utteranc.es/client.js&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">repo</span><span class="o">=</span><span class="s">&#34;ramsayleung/comment&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">issue-term</span><span class="o">=</span><span class="s">&#34;title&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">theme</span><span class="o">=</span><span class="s">&#34;github-light&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">crossorigin</span><span class="o">=</span><span class="s">&#34;anonymous&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">async</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是 theme 在初始化时就指定好了，那么在博客切换到 dark theme 的时候， Utteranc 也不会自适应 dark theme，博客的theme与评论theme就不一致：</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/responsive_comment_theme.jpg"/> 
+</figure>
+
+<h2 id="解决思路"><span class="section-num">2</span> 解决思路</h2>
+<p>解决思路其实很简单，就获取当前的 theme, 然后再初始化 Utteranc 对应的 theme; 再在用户切换 theme 之后，再重新初始化 <code>Utteranc</code>.</p>
+<h3 id="获取当前theme"><span class="section-num">2.1</span> 获取当前Theme</h3>
+<p>Hugo 并没有提供标准接口来获取当前主题， 虽然可以通过以下的方式来获取的 theme:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">isDarkMode</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">matchMedia</span><span class="p">(</span><span class="s1">&#39;(prefers-color-scheme: dark)&#39;</span><span class="p">).</span><span class="nx">matches</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">isDarkMode</span> <span class="o">?</span> <span class="s1">&#39;dark&#39;</span> <span class="o">:</span> <span class="s1">&#39;light&#39;</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是这个是通过编译出来的CSS来判断当前theme，用户一旦手动切换了 theme, 上面的代码就无法生效了.</p>
+<p>每个Hugo主题定义的方式可能还不一样, 以 PaperMod 为例，观察之后发现，light theme的时候body的html 为:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nt">body</span> <span class="nt">id</span> <span class="o">=</span> <span class="s2">&#34;top&#34;</span> <span class="nt">class</span><span class="o">=</span><span class="s2">&#34;&#34;</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="nt">body</span><span class="o">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>dark theme 的时候 <code>class</code> 就变为了 <code>class</code>&ldquo;dark&rdquo;=:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nt">body</span> <span class="nt">id</span> <span class="o">=</span> <span class="s2">&#34;top&#34;</span> <span class="nt">class</span><span class="o">=</span><span class="s2">&#34;&#34;</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="nt">body</span><span class="o">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所以可以通过判断 <code>body</code> 是否包含 <code>dark</code> 的 class 来判断当前是否为 dark theme.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// 不同的Hugo theme可能会需要不同的判断方式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">function</span> <span class="nx">getCurrentTheme</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="s1">&#39;dark&#39;</span><span class="p">)</span> <span class="o">?</span> <span class="s1">&#39;dark&#39;</span> <span class="o">:</span> <span class="s1">&#39;light&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="初始化评论系统"><span class="section-num">2.2</span> 初始化评论系统</h3>
+<p><a href="https://utteranc.es/">Utteranc</a> 文档提供的启用评价系统代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;https://utteranc.es/client.js&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">repo</span><span class="o">=</span><span class="s">&#34;[ENTER REPO HERE]&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">issue-term</span><span class="o">=</span><span class="s">&#34;pathname&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">theme</span><span class="o">=</span><span class="s">&#34;github-light&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">crossorigin</span><span class="o">=</span><span class="s">&#34;anonymous&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">async</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为我们需要在切换 Theme 时重新加载 Utteranc, 所以就需要通过 Javascript 来实现上面的HTML功能:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">loadUtterances</span><span class="p">(</span><span class="nx">darkMode</span><span class="o">=</span><span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">commentContainer</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;comments-utteranc&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">commentContainer</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">commentContainer</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="kr">const</span> <span class="nx">commentScript</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&#34;script&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">commentScript</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&#34;id&#34;</span><span class="p">,</span> <span class="s2">&#34;utteranc&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">commentScript</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&#34;src&#34;</span><span class="p">,</span> <span class="s2">&#34;https://utteranc.es/client.js&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">commentScript</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&#34;data-repo&#34;</span><span class="p">,</span> <span class="s2">&#34;ramsayleung/comment&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">commentScript</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&#34;data-theme&#34;</span><span class="p">,</span> <span class="nx">darkMode</span> <span class="o">?</span> <span class="s2">&#34;github-dark&#34;</span> <span class="o">:</span> <span class="s2">&#34;github-light&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">commentScript</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&#34;data-issue-term&#34;</span><span class="p">,</span> <span class="s2">&#34;title&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">commentScript</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&#34;crossorigin&#34;</span><span class="p">,</span> <span class="s2">&#34;anonymous&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">commentScript</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&#34;async&#34;</span><span class="p">,</span> <span class="s2">&#34;true&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">commentContainer</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">commentScript</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="监听主题变动"><span class="section-num">2.3</span> 监听主题变动</h3>
+<p>用户可以在博客界面手动选择他们喜欢的主题，可以从 <code>dark</code> -&gt; <code>light</code>, <code>light</code> -&gt; <code>dark</code>, 我们需要做的就是监听主题的变动，在切换主题之后，重新加载评论系统。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// Watch for theme changes
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">themeObserver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MutationObserver</span><span class="p">((</span><span class="nx">mutations</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">mutations</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">mutation</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">mutation</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s1">&#39;attributes&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">mutation</span><span class="p">.</span><span class="nx">attributeName</span> <span class="o">===</span> <span class="s1">&#39;class&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="kr">const</span> <span class="nx">isDarkMode</span> <span class="o">=</span> <span class="nx">getCurrentTheme</span><span class="p">()</span> <span class="o">===</span> <span class="s1">&#39;dark&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">loadUtterances</span><span class="p">(</span><span class="nx">isDarkMode</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`changing theme`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Start observing the body element for class changes
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">themeObserver</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">attributes</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">attributeFilter</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="总结"><span class="section-num">3</span> 总结</h2>
+<p>自适应评论系统的代码<a href="https://github.com/ramsayleung/ramsayleung.github.io/blob/master/layouts/partials/comments.html">在这里</a>, 实现的效果如下:</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/responsive_comment_theme_2.jpg"/> 
+</figure>
+
+<figure>
+    <img loading="lazy" src="/ox-hugo/responsive_comment_theme_3.jpg"/> 
+</figure>
+
+]]></content:encoded>
+    </item>
     <item>
       <title>旁观者眼中的加拿大省议会选举</title>
       <link>https://ramsayleung.github.io/zh/post/2024/%E6%97%81%E8%A7%82%E8%80%85%E7%9C%BC%E4%B8%AD%E7%9A%84%E5%8A%A0%E6%8B%BF%E5%A4%A7%E7%9C%81%E8%AE%AE%E4%BC%9A%E9%80%89%E4%B8%BE/</link>
@@ -2069,127 +2266,6 @@ Your browser does not support the video tag.</video></p>
 <ul>
 <li><a href="https://www.oreilly.com/library/view/programming-rust-2nd/9781492052586/">Programming Rust, 2nd Edition</a> <br/></li>
 </ul>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>《走出戈壁》：从沙漠苦力到常青藤教授</title>
-      <link>https://ramsayleung.github.io/zh/post/2024/%E8%B5%B0%E5%87%BA%E6%88%88%E5%A3%81/</link>
-      <pubDate>Sun, 25 Aug 2024 11:24:00 -0700</pubDate>
-      <guid>https://ramsayleung.github.io/zh/post/2024/%E8%B5%B0%E5%87%BA%E6%88%88%E5%A3%81/</guid>
-      <description>1 前言 六月份的时候，读到了一篇名为《运气与努力》1的文章，是由 LeanCloud的创始人江宏博士写的，文章以一本书开篇，引出他关于运气与努力</description>
-      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
-<p>六月份的时候，读到了一篇名为《<a href="https://1byte.io/articles/luck/">运气与努力</a>》<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>的文章，是由 LeanCloud的创始人江宏博士写的，文章以一本书开篇，引出他关于运气与努力的思考:(文章写得相当真诚，充满洞见，也推荐大家阅读下) <br/></p>
-<blockquote>
-<p>很多人意识不到运气的重要性，而错把成功归功于自己的才能和努力， <br/>
-却没有意识到好运在其中的重要性。忽视了这一点就难以保持谦虚，难以不断学习。 <br/></p>
-<p>明白了运气的重要性，就知道不是人人生而能得到平等的机会的， <br/>
-在遇到处境不如自己的人，不能假设这种差别是聪明或努力程度的不同造成的，应该知道善待弱者。 <br/></p>
-</blockquote>
-<p>而文章开篇提到的书名为(Out of the Gobi: My story of China and America)《走出戈壁：我的中美故事》, 作者单伟建在读完小学之后，就被文革的知青下乡运动感召，「自愿」下放到内蒙古生产建设兵团做了六年的苦力。 <br/></p>
-<p>文革后，没拿到小学毕业证的他进入了首都经济贸易大学，之后在旧金山大学获得了 MBA， <br/>
-在 UC Berkeley 取得博士学位，后来在 University of Pennsylvania 任教。 <br/></p>
-<p>现在他是亚洲最大的私募基金之一 PAG Group 的主席和 CEO，而他当时在UC Berkeley的导师，现在也成为了美国财政部的部长，即Janet Yellen (珍妮特·耶伦), 她为本书作了序。 <br/></p>
-<p>对于这样传奇的人生经历，我自然也是希望一读究竟。 <br/></p>
-<h2 id="不以物喜-不以已悲"><span class="section-num">2</span> 不以物喜，不以已悲</h2>
-<p>不少自传或者回亿类的书籍看起来，难免会有一种自吹自擂的感觉，这也是人之常情。 <br/></p>
-<p>只是在本书的作者却是用一种云淡风轻，略带些幽默的口吻来描写在戈壁滩的艰苦生活，以至于那样痛苦的生活， <br/>
-在作者笔下，都显得不那么痛苦了。 <br/></p>
-<p>可能正如同样被下放到戈壁滩的民航机长老易教诲作者那般，“前面的路还很长，所有快乐的事情都会结束，所有的悲伤也是如此” <br/></p>
-<p>书中有很多动人的经历，我印象比较深的是以下的几个故事： <br/></p>
-<h2 id="戈壁生活"><span class="section-num">3</span> 戈壁生活</h2>
-<h3 id="理想与现实"><span class="section-num">3.1</span> 理想与现实</h3>
-<p>知识青年下乡，响应号召，接受贫下中农再教育；参加建设兵团，为国戌边，建设国家。 <br/></p>
-<p>这个是他们离家时的理想与目标，但实际的情况却与他们幻想得天差地别； <br/></p>
-<p>一群年轻人秋天去国营农场里收土豆，挖了无数的土豆，但是却没有人来运土豆，他们也只能眼睁睁地看着被挖出来的土豆被冻烂， <br/>
-不停地收获土豆，却又不停地看着收获好的土豆被冻烂在地里，循环往复，直到不再有挖土豆的念头。 <br/></p>
-<p>兵团领导人希望可以把戈壁变成沃野，思路就是通过挖掘人工运河，把河里的水引到戈壁进行灌溉， <br/>
-甚至有一天，作者他们被告知必须连夜赶工完成运河，以赶上最后限期，在完成之前，他们不能离开。 <br/></p>
-<p>就这样，这群年轻人连续在运河上工作了31个小时，终于完成了人工运河的建设。 <br/></p>
-<p>一周后，他们被告知，运河的路线被误算了，他们建造的那部分太高了，水无法流过，那部分必须被放弃，另建一条新路线。 <br/></p>
-<p>军队建议兵团对改善贫困农村没有任何帮忙，事实上，他们只是让事情变成更糟糕，他们每天消耗的粮食是生产的三到四倍， <br/>
-他们工作越努力，浪费的资源就越多。 <br/></p>
-<p>兵团只是想给他们找些事情做，不让他们闲下来。 <br/></p>
-<h3 id="努力-智慧与运气"><span class="section-num">3.2</span> 努力，智慧与运气</h3>
-<p>在这样的折腾下，六年时间，难免会让把人的志气给磨没，变得随大流，磨洋工。 <br/></p>
-<p>农场上大多数人都不去田里工作，但他还在每天工作， 作者的心态是「干什么事都要干好，否则闲着也是浪费时间，而且争强好胜，虽然身体瘦弱，但不甘人后，如此而已。」 <br/></p>
-<p>作者抓住一切能学习的机会，阅读能读到的各种书籍，向同样被流放的前民航机长学习英语，背诵药品的英文名字， <br/>
-希望有一天能重新回到城市，能回到大学校园。 <br/></p>
-<p>1971年，大学逐渐恢复了上课，但是那时的入学资格却不是考试，而是「群众推荐」制度，即由同龄人选举产生。 <br/></p>
-<p>而作者不但没有被推举上，反而因为谈及外语，巴黎纽约这些外国城市，反而被人举报，渴望「资本主义生活方式」，并被众人被声讨。 <br/></p>
-<p>这不仅让作者失去了被推举上大学的机会，还留下了个坏名声，但是作者并没有沉沦，他反而反思自己为何会成为众矢之的。 <br/></p>
-<p>他分析下来是自己太与众不同，别人下棋他看书，他不屑于追求这些无用的东西，但人终究是群体性动物，太与众不同只会被人疏远。 <br/></p>
-<p>所以他决定要融入这个集体，获得大家的好感，而不是作为一个孤僻的书呆子。 <br/></p>
-<p>在观察到大家都喜欢篮球和排球运动，但却缺乏熟悉排球规则的裁判时， <br/></p>
-<p>他让父亲寄书过来学着当排球裁判，让更多其他连的人认识他，让自己变成不可或缺，同时更加努力地工作，赢得众人的尊重。 <br/>
-（能站在旁观者角度冷静分析问题，并利用现有条件进行解决，真的是充满智慧又难能可贵） <br/></p>
-<p>终于，在第二年的入学资格「群众推荐」中，他得票第二，但是却因为与连队领导关系不佳， <br/>
-他被以「年纪太轻（21岁），不能上大学」为由，把他从名单中删除。 <br/></p>
-<p>得知消息的那一天晚上，作者深一脚浅一脚地走出营房，来到空旷的地方，边走边流泪，当再也不会没有人听到他的声音后， <br/>
-他放眼大哭，在黑暗中撕心裂肺地喊叫，在沮丧和悲伤中喊得声嘶力竭。 <br/></p>
-<p>那天晚上后，作者收拾心情，告诫自己生活必须继续，总会有未来的。 <br/>
-他发誓不会让自己失望，他已经经历这么多了，但他绝对不会在绝望中迷失自我，放弃就是对自己犯下罪行。 <br/></p>
-<p>如果大环境一直很糟糕，自己要在戈壁待一辈子而没有出头之日，他没有谁可怨； <br/>
-但是如果将来发生变化，因为自己没有准备好而失去了改变命运的机会，他只能怪自己。 <br/></p>
-<p>所以他在逆境中也一直在为将来准备。 <br/></p>
-<p>终于，在第三年，在11人竞选9个名额的竞争中，作者作为最后一名修补人选， <br/>
-在名单中的两名正式候选人先后被除名后，递补入选，获得了首都经济贸易大学的入学资格. <br/></p>
-<h2 id="自助者天助之"><span class="section-num">4</span> 自助者天助之</h2>
-<p>作者在毕业后成为首经贸的教师，后来得到亚洲基金会赞助前往旧金山大学一年的访学机会。 <br/></p>
-<p>到校后，在与教授们交流后，他决定攻读该校的MBA 课程并争取拿到学位，但苦于没有学费，他决定先抓住机会学习知识，知识先于学历，再看能否找机会凑到学费。 <br/></p>
-<p>第一学期各门课程优异，但是学费还是没有着落，在各种方法尝试未果后将要放弃时， <br/>
-他的导师给他带来了一个好消息：一个匿名人士愿意资助他的学费，于是他得而注册并开始MBA课程。 <br/></p>
-<p>待他学业小有所成时，他导师告知他，那位匿名赞助人希望与他在某个高档餐厅共进晚餐，相见一面。 <br/></p>
-<p>当导师夫妇身着正装出现在餐厅时，他才猛然意识到，他们原来就是自己的资助人，他的感激之情，无以言表。 <br/></p>
-<p>如果不是作者在学习过程所表现出来的专注，付出与努力，相信也没有那么容易可以打动到导师，这也许是所谓的「自助者天助之」吧。 <br/></p>
-<p>多年之后，待他事业有所成时，他以导师与自己名字，联名捐赠了一个奖学金，以帮助更多学子追求梦想。 <br/></p>
-<h2 id="洞察规则的智慧"><span class="section-num">5</span> 洞察规则的智慧</h2>
-<p>在旧金山大学获得MBA 课程硕士需要2年时间，在学费问题得而解决之后， <br/>
-作者面临的问题就是访学项目只是一年，要获得学位，他就需要亚洲基金会批准延长他的项目，并且获得首都经济贸易大学的批准。 <br/></p>
-<p>也就是攻读硕士学位不在项目原有计划之内，他当时已经是首都经济贸易大学的教师，再延期一年属于「节外生枝」。 <br/></p>
-<p>基金会领导安迪表示他要给经贸学院的领导写一封信，征求北京的意见。 <br/></p>
-<p>作者表示，你不能这么写，安迪问为什么。 <br/></p>
-<p>作者回答到，如果你征求北京方面的意见，他们就要研究是否批准。 <br/></p>
-<p>只有两个可能——批准或者不予批准。批准了当然好，但是如果不予批准，我怎么办？ <br/></p>
-<p>安迪问作者还有更好的办法吗？ <br/></p>
-<p>作者表示，你就给北京发个贺电，说我学习成绩优异，校方决定给我奖学金，只需延期一个学期，就可以获得硕士学位， <br/>
-对于这样的成绩，亚基会向外贸学院表示祝贺，其他的都不必说。 <br/></p>
-<p>安迪写了一封信，信中对作者大加赞扬，但小心地将大部分奉承留给了经贸学院。 <br/></p>
-<p>两周后，学院回复，只有四个字——‘非常感谢’。 <br/></p>
-<p>作者心花怒放。 <br/></p>
-<p>读到此处，真的为作者深谙体制的规则和处理事情的智慧所折服。 <br/></p>
-<p>正如他所料，谁能拒绝别人的道贺呢？ <br/></p>
-<p>更何况是来自曾经的敌人，美帝国主义的夸奖，这足以让学院领导扬眉吐气。 <br/></p>
-<h2 id="总结"><span class="section-num">6</span> 总结</h2>
-<p>在单伟建回到母校旧金山大学<a href="https://www.youtube.com/watch?v=R0Niw73cyIo&amp;t=4304s">演讲</a>时<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>，当循例被主持人问到能给学生们什么建议时，他说在任何领域，成功的三个重要要素是： <br/></p>
-<ol>
-<li>终身学习；如果他在戈壁没有坚持学习，那么他不可能在失学十年后，在中国重新开放时，能抓住来之不易的机会，自然就没有后来的一切 <br/></li>
-<li>好的判断力；好的判断比毅力更加重要，做正确的事情远比正确地做事重要，方向对了，努力才有意义。而没有人生来就有好的判断力，这个就源于经验，知识，就需要不断地学习才能获取到，又呼应上「终身学习」了 <br/></li>
-<li>运气；正如单伟建的观点与罗翔老师的类似，「运气并非成就，是命运之手把我托举到所不配有的高度，让人飘然，让人晕眩，最终，让人诚惶诚恐」，意识到运气的重要，才能让人谦卑。 <br/></li>
-</ol>
-<p>对于终身学习这条建议，我自已也有些许浅薄体会，一年半前，我写了一篇文章: <a href="https://ramsayleung.github.io/zh/post/2023/rspotify_%E4%B8%80%E4%B8%AA%E7%94%A8%E7%88%B1%E5%8F%91%E7%94%B5%E4%BA%94%E5%B9%B4%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">《RSpotify: 一个用爱发电五年的开源项目》</a>, 分享自己学习了六年Rust，并且维护一个开源项目的经历。 <br/></p>
-<p>在我大学的最后一年，我选择了学习Rust这个新兴的编程语言，距离当时它发布1.0稳定版本也仅仅过了2年， <br/>
-我既不觉得我未来的工作会因此受益，也不会获取什么额外的报酬，毕竟这东西太小众了，国内也不会有公司会用，大厂不是用Java就是用C++。 <br/></p>
-<p>我只是觉得好玩，再兼之大四没有课，总要学点新东西。 <br/>
-就这样，一学就是六七年，维护这个用Rust的开源项目也五年了，除了不时的Github Issue, 也没有其他的收益。 <br/></p>
-<p>在今年七月，我又被换到了一个新的组，创下了一个个人职业新纪录，在一年三个月内，待了4个组。 <br/></p>
-<p>新组还是在AWS S3, 而新组领导对Rust相当狂热，因为Rust的特点几乎完美契合S3的要求， <br/>
-媲美C的高性能，内存安全，强类型，高并发，所以大老板非常想要在新服务使用Rust, 美中不足的就是Rust学习曲线陡峭，懂Rust的人不多。 <br/></p>
-<p>而我刚好就是懂Rust又会Java的那个，毕竟都学这么久了，就这样我无缝对接到新组，在新的核心服务上开始写Rust，达成了通过写Rust养活自己的成就。 <br/></p>
-<p>像单伟建那样，在戈壁那样艰苦的环境坚持学习，在困境中保持乐观，在苦厄中坚持成长 <br/>
-，穷且益坚，实现从小学文凭苦力到常青藤教授的成就，绝大部分人自然难以望其项背。 <br/></p>
-<p>但是，如果把终身学习理解成投资的定投，只需要持续学习，无论每天，每周或者每月学多么微小的知识，在时间的复利作用下， <br/>
-终有一天，都会有带来质的提升。 <br/></p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p><a href="https://1byte.io/articles/luck/">https://1byte.io/articles/luck/</a>  <br/>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p><a href="https://www.youtube.com/watch?v=R0Niw73cyIo&amp;t=4304s">https://www.youtube.com/watch?v=R0Niw73cyIo&amp;t=4304s</a>  <br/>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>
 ]]></content:encoded>
     </item>
   </channel>
