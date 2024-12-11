@@ -143,6 +143,7 @@
               postsByDate.set(date, data);
           {{- end -}}
 
+          years = Array.from(years).sort().reverse();
           return [postsByDate, years];
         }
 
@@ -162,6 +163,21 @@
             myChart.setOption(option);
         }
 
+        function renderYearSelector(years){
+          // Populate year selector
+          var yearSelector = document.getElementById('yearSelector');
+          years.forEach(year => {
+              var option = document.createElement('option');
+              option.value = year;
+              option.text = year;
+              yearSelector.appendChild(option);
+          });
+
+          yearSelector.addEventListener('change', function() {
+              updateHeatmap(this.value);
+          });
+        }
+
 
         // Watch for theme changes
         const observer = new MutationObserver((mutations) => {
@@ -179,23 +195,8 @@
         });
 
         var option;
-        //var postsByDate = new Map();
-        //var years = new Set();
-        var [postsByDate, years] = populatePostData();
-
-        // Populate year selector
-        years = Array.from(years).sort().reverse();
-        var yearSelector = document.getElementById('yearSelector');
-        years.forEach(year => {
-            var option = document.createElement('option');
-            option.value = year;
-            option.text = year;
-            yearSelector.appendChild(option);
-        });
-
-        yearSelector.addEventListener('change', function() {
-            updateHeatmap(this.value);
-        });
+        const [postsByDate, years] = populatePostData();
+        const latestYear = years && years.length > 0 ? years[0]: new Date().getFullYear();
 
         option = {
             title: { show: false },
@@ -259,9 +260,11 @@
                 type: 'heatmap',
                 coordinateSystem: 'calendar',
                 calendarIndex: 0,
-                data: getHeatmapData(years[0])
+                data: getHeatmapData(latestYear)
             }
         };
+
+        renderYearSelector(years);
 
         // Initial chart initialization
         initOrUpdateChart();
