@@ -922,7 +922,8 @@ RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
               var totalWordCount = data.get("totalWordCount");
               totalWordCount += wordCount;
               data.set("totalWordCount", totalWordCount);
-              postsByDate.set(date, data);return [postsByDate, years];
+              postsByDate.set(date, data);years = Array.from(years).sort().reverse();
+          return [postsByDate, years];
         }
 
         function getHeatmapData(year) {
@@ -939,6 +940,21 @@ RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
             option.calendar.range = year;
             option.series.data = getHeatmapData(year);
             myChart.setOption(option);
+        }
+
+        function renderYearSelector(years){
+          
+          var yearSelector = document.getElementById('yearSelector');
+          years.forEach(year => {
+              var option = document.createElement('option');
+              option.value = year;
+              option.text = year;
+              yearSelector.appendChild(option);
+          });
+
+          yearSelector.addEventListener('change', function() {
+              updateHeatmap(this.value);
+          });
         }
 
 
@@ -958,23 +974,8 @@ RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
         });
 
         var option;
-        
-        
-        var [postsByDate, years] = populatePostData();
-
-        
-        years = Array.from(years).sort().reverse();
-        var yearSelector = document.getElementById('yearSelector');
-        years.forEach(year => {
-            var option = document.createElement('option');
-            option.value = year;
-            option.text = year;
-            yearSelector.appendChild(option);
-        });
-
-        yearSelector.addEventListener('change', function() {
-            updateHeatmap(this.value);
-        });
+        const [postsByDate, years] = populatePostData();
+        const latestYear = years && years.length > 0 ? years[0]: new Date().getFullYear();
 
         option = {
             title: { show: false },
@@ -1038,9 +1039,11 @@ RSpotify: A Spotify Web API wrapper implemented in Rust.</description>
                 type: 'heatmap',
                 coordinateSystem: 'calendar',
                 calendarIndex: 0,
-                data: getHeatmapData(years[0])
+                data: getHeatmapData(latestYear)
             }
         };
+
+        renderYearSelector(years);
 
         
         initOrUpdateChart();
