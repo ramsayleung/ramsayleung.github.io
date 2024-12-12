@@ -26,12 +26,17 @@
             --heatmap-colors-light-1: #7bc96f;
             --heatmap-colors-light-2: #239a3b;
             --heatmap-colors-light-3: #196127;
+            --tooltip-bg-light: #fff;
+            --tooltip-textstyle-light: #1c1a1b;
 
             --heatmap-bg-dark: #585c59;
             --heatmap-colors-dark-0: #c6e48b;
             --heatmap-colors-dark-1: #7bc96f;
             --heatmap-colors-dark-2: #239a3b;
             --heatmap-colors-dark-3: #196127;
+            
+            --tooltip-bg-dark: #585c59;
+            --tooltip-textstyle-dark: #fff;
         }
     </style>
 </head>
@@ -93,6 +98,21 @@
                           : getCSSVariableValue('--heatmap-bg-light');
         }
 
+        function getTooltipBgColor(){
+          const currentTheme = getCurrentTheme();
+          return currentTheme === 'dark' 
+                          ? getCSSVariableValue('--tooltip-bg-dark') 
+                          : getCSSVariableValue('--tooltip-bg-light');
+        }
+
+        function getTextStyleColor() {
+          const currentTheme = getCurrentTheme();
+          return currentTheme === 'dark' 
+                          ? getCSSVariableValue('--tooltip-textstyle-dark') 
+                          : getCSSVariableValue('--tooltip-textstyle-light');
+
+        }
+
         function getCSSVariableValue(variableName) {
             return getComputedStyle(document.documentElement)
                 .getPropertyValue(variableName).trim();
@@ -113,6 +133,8 @@
             // Reapply the option with theme-specific colors
             option.visualMap.inRange.color = getThemeColors();
             option.calendar.itemStyle.color = getThemeBgColor();
+            option.tooltip.backgroundColor = getTooltipBgColor();
+            option.tooltip.textStyle.color = getTextStyleColor();
             myChart.setOption(option);
         }
 
@@ -241,6 +263,10 @@
             tooltip: {
                 hideDelay: 1000,
                 enterable: true,
+                textStyle: {
+                  color: getTextStyleColor(),
+                },
+                backgroundColor: getTooltipBgColor(),
                 formatter: function (params) {
                     const thousandWordsText = {{ default "EN" (.Get "language")}} === "EN" ? 'k words': '千字';
                     const date = params.data[0];
