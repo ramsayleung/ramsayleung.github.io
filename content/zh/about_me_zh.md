@@ -13,18 +13,21 @@ toc = true
 
 ## <span class="section-num">0x1</span> 主业 {#主业}
 
-Ramsay 是位软件工程师，以写程序为业.<br/>
+Ramsay 是位软件工程师，以写程序为业, 曾经就职于蚂蚁金服，微信，现供职于AWS, 详见[Linkedin](https://www.linkedin.com/in/ramsayleung/)<br/>
 
 推崇开源与动手精神，使用Emacs 与Linux 多年，喜欢动手折腾。 <br/>
 
 写过 C++, Java, Javascript/Typescript, Rust这几种语言的生产代码，目前在[AWS S3](https://aws.amazon.com/s3/) 写Rust和Java养活自己，偶尔用[EmacsLisp](https://github.com/ramsayleung/emacs.d) 为自己的工作流写小工具，喜欢用 Python 做自动化，使用 Ruby on Rails 写 Web <br/>
 
+在职业生涯，作为核心开发深度参与开发&设计的产品:
+- 微信支付[委托代扣](https://pay.weixin.qq.com/docs/merchant/products/entrusted-payment/introduction.html)
+- [S3 Metadata](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingMetadata.html)
 
 ## <span class="section-num">0x2</span> 写作 {#写作}
 
 从16年开始在博客上写博文，期间经历过多次迁移，但大多时候，博客的读者都只有我自己。 <br/>
 
-博客还有一个对应的英文博客，名为「In pursuit of Simplicity」，主要是记录一些英文写作与感悟的平台。 <br/>
+博客还有一个对应的英文版本，名为「In pursuit of Simplicity」，主要是记录一些英文写作与感悟的平台。 <br/>
 
 > Simple is Beautiful <br/>
 
