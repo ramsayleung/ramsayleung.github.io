@@ -12,8 +12,187 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Wed, 04 Dec 2024 19:21:59 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 22 Dec 2024 16:53:59 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/programming/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>编程十年的十条感悟</title>
+      <link>https://ramsayleung.github.io/zh/post/2024/%E7%BC%96%E7%A8%8B%E5%8D%81%E5%B9%B4%E7%9A%84%E5%8D%81%E6%9D%A1%E6%84%9F%E6%82%9F/</link>
+      <pubDate>Sun, 15 Dec 2024 21:09:00 -0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2024/%E7%BC%96%E7%A8%8B%E5%8D%81%E5%B9%B4%E7%9A%84%E5%8D%81%E6%9D%A1%E6%84%9F%E6%82%9F/</guid>
+      <description>1 前言 美国作家马尔科姆(Malcolm Gladwell)提出了著名了「一万小时定律」，就是不管你做什么事情，只要坚持一万小时，基本上都可以成</description>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
+<p>美国作家马尔科姆(Malcolm Gladwell)提出了著名了「一万小时定律」，就是不管你做什么事情，只要坚持一万小时，基本上都可以成为该领域的专家。</p>
+<p>如果你每周练习20小时，每天3小时，一万小时大概就是10年时间，从我写下第一行C代码开始算起，到现在也超过10年了.</p>
+<p>10年的时间, 我写了超过30万行代码了, 我曾经在微信写的代码，也服务过超过一亿的用户.</p>
+<p>虽然写了那么久的代码，但我还很难自称为专家；
+但工多艺熟，编程多年自然会有所感悟，除去开头在学校的那几年，后来的时间都是在工作中写代码，所以写的既是编程感悟, 又是「打工感悟」。</p>
+<h2 id="持续学习"><span class="section-num">2</span> 持续学习</h2>
+<p>虽然大学是从C语言入门编程的，但是我在大学时主修的语言是Java
+，毕竟Java是门非常成熟的工业语言，有非常丰富的框架，在国内的企业非常受欢迎，工作岗位也多。</p>
+<p>我当时从Java Servlets入门Web开发，再学习了非常流行的JavaEE 企业开发框架SSH, 即 <a href="https://struts.apache.org/">Structs2</a> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>+ <a href="https://spring.io/projects/spring-framework">Spring</a> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>+ <a href="https://hibernate.org/">Hibernate</a> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>, Struct2 负责控制逻辑关系，Spring 负责解耦, Hibernate 负责操作数据库.</p>
+<p>而到我开始找工作时，SSH的概念就变了, Struct2 被<a href="https://docs.spring.io/spring-framework/reference/web/webmvc.html">SpringMVC</a> <sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>所取代, SSH 变成了 SpringMVC + Spring + Hibernate.</p>
+<p>到我实习入职蚂蚁金服的时候，发现组里代码库操作数据库的ORM框架用的并不是Hibernate，而是 <a href="https://ibatis.apache.org/">Ibatis</a> <sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>, 后面又切换成了新的 <a href="https://mybatis.org/mybatis-3/">MyBatis</a> <sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup></p>
+<p>而蚂蚁金服内部使用的也并不是Spring/SpringMVC, 而是自主研发出发的 <a href="https://github.com/sofastack/sofa-rpc">Sofa框架</a> <sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup>, Spring 社区后来觉得Spring框架过于重量级，不利于快速开发，又开发了更轻量级的 <a href="https://spring.io/projects/spring-boot">SpringBoot </a><sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup>, 而蚂蚁内部又推出了Sofa版本的 <a href="https://github.com/sofastack/sofa-boot">Sofaboot</a> <sup id="fnref:9"><a href="#fn:9" class="footnote-ref" role="doc-noteref">9</a></sup></p>
+<p>去了微信支付后，前期都是在写C++, 使用微信内部自研的svrkit 框架，到后期因为负责数据治理相关项目的缘故，开始使用 Spark + Python + Hive SQL</p>
+<p>现在在AWS S3, 因为业务对性能和资源使用有非常高的要求，又开始使用Rust, 而历史业务又是使用Java, 兜兜转转之后，又回到Java的路子上。</p>
+<p>细数下来, 这些年来，我写过Java,C++,Python,Rust,Javascript/Typescript 这些语言的生产代码.</p>
+<p>除去工作之外, 我还因为学习SICP 学习了Scheme, 因为使用Emacs 而学习了Emacs Lisp, 想做独立开发赚钱学习了Swift, 想感受Ruby on Rails的魅力而学习的Ruby, 还有以前为了压测写的Golang, 还有各种语言对应的框架和库.</p>
+<p>自我学习编程以来，学过的编程语言没有10种也有半打了.</p>
+<p>我也从来不会把自己定义为某门语言的程序员，如Java程序员,C++程序员等等, 我只叫自己做Software Development Engineer. 语言从来只是工具，只要你持续学习，遇到新的场景，自然就会学习新的编程语言了.</p>
+<p>计算机的世界日新月异，可能几个月就会出个新框架，几年又会流行一门新语言，只有持续学习，才能持续保持自己的竞争力。</p>
+<h2 id="学好英语"><span class="section-num">3</span> 学好英语</h2>
+<p>领袖常说，「东升西降」，虽然不知道此种变化何时才能实现，但起码说明，目前是「西尚在上，东尚在下」，在计算机领域，尤其如此。</p>
+<p>最前沿的技术都是英文资料，英语又是世界通行的语言，来自不同国家的开发者又会不约而同地使用英语来交流，
+因此学好英语既可以了解最新的技术潮流，又可以融入社区，建立自己的影响力。</p>
+<p>疫情之后，越来越多的公司都开始推行远程办公，从全世界招聘开发者.
+这就意味着如果你英文过硬，甚至可以离开一线城市，避免高额的生活开销，在老家工作，陪伴在父母身边，同时赚取外汇；这对于饱受996困扰的程序员来说，未尝不是一条出路.</p>
+<p>于我个人而言，坚持学习英语可能是我收获最大的投资之一。</p>
+<p>熟悉我的朋友，尤其是我的高中同学可能知道，十年以前，我的英文可以说着实挺烂的:
+满分150分的英语，只考个及格的90分可谓是家常便饭，后来也只会笨学英语，到高三的时候能考个120分已经是巅峰水平。</p>
+<p>但上大学之后，我也没有就此懈怠放下英语，大一还每天去晨读英语。</p>
+<p>没有口语交流的条件，就自己创造，去网上找人聊天, 当时还在一个叫 <a href="https://www.interpals.net/">Interpals</a> <sup id="fnref:10"><a href="#fn:10" class="footnote-ref" role="doc-noteref">10</a></sup> 聊天网站认识了全世界好多的人, 其中还有一个是年龄相仿的土耳其女孩，我们还加了Facebook, 经常用Skype 视频聊天.</p>
+<p>大学毕业后就没有那么多的时间闲聊后就断了联系, 最近看Facebook的动态，看她也穿上婚纱了.</p>
+<p>工作后也一直阅读英文的技术文章，用英文搜索内容，在Stackoverflow 和 GitHub 用英文回答问题，在Discord 的英语学习频道找人聊天, 把电脑和手机系统语言都换成英文的，从学习英语变成用英语。</p>
+<p>人们常说，路应该要越走越宽，而不是越走越窄；</p>
+<p>而在我看来，英语就是夜里走路时手上拿着的手电筒，可以让我们走自己的路的同时，
+扫一下旁边那条道的情况，需要时及时转向，不至于一条路走到黑.</p>
+<h2 id="独立思考"><span class="section-num">4</span> 独立思考</h2>
+<p>微信以前一直有发最新Iphone手机的传统，但是那已经是4年前的美好时光了。</p>
+<p>记得2021年是小龙明确年会不会发手机的第一年，他当时透露，那一年会发个铝片。</p>
+<p>当时同事之间还在讨论，Iphone也是一块铝片冲压而成的嘛，那发的是否还是Iphone呢，不发手机只是烟雾弹?</p>
+<p>拆开年会礼物之后发现，的确是一块铝片，上面写着「2022保持独立思考」.</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/think_independently.jpg"/> 
+</figure>
+
+<p>小龙一直强调「独立思考」对微信的重要性，认为如果要选择一个最重要的品质，他会选择「独立思考」。</p>
+<p>上级说的不一定是对的，老师说的不一定是对，学术机构说的也不一定是对，媒体说的也不一定是对，声音大的更不一定是对，毕竟有理不在言高。</p>
+<p>比如微服务架构非常流行，许多公司都在搞微服务，那么单体架构是否就应该不使用？</p>
+<p>作为初创公司或小团队，新业务是否要上微服务架构呢？还是先使用单体架构，业务发展起来再迁移到服务呢？</p>
+<p>开发过程免不了要做各种决策，比如技术选型，针对你的需求，你可能会找到一打「看似」符合要求的组件，
+可能还会去网上找找对各个组件的评价，会发现众说纷纭，就需要自己独立对每个组件做出分析，找出其优劣，再结合自身团队的特点，做出决策.</p>
+<p>关于独立思考，我最喜欢的是一句话是HBO出品短剧《切尔诺贝利》里面，
+科学家瓦列里·列加索夫希望克格勃释放调查真相同事乌拉娜·霍缪克的要求，说可以保证她是没问题的，克格勃头子回答的那句话:</p>
+<blockquote>
+<p>Trust, but verify.(相信，但要核实)</p>
+</blockquote>
+<h2 id="先跑起来再说"><span class="section-num">5</span> 先跑起来再说</h2>
+<p>这句话还有一个广为人知的变种：「又不是不能用」</p>
+<p>很多的程序员都是完美主义者，尤其是读过《重构》和《设计模式》的程序员，会倾向于把很多时间来优化代码，做重构。</p>
+<p>以前的我也会有类似的冲动，总会想时间去优化代码, 但是项目肝多了之后，有种强烈的感觉，还是先把MVP上线，及早让用户体验。</p>
+<p>如果没有用户使用，再好再漂亮的代码也没有任何意义了。</p>
+<p>所以经常看到社区有人问做副业的时候，应该用什么语言和框架，PHP/Python/Ruby 会不会太慢，我的观点一直都是，先做个原型跑起来，先找到第一个用户再说。</p>
+<p>当运行速度成为瓶颈时, 你的业务已经非常大，肯定有足够的钱可以招一打的程序员把你的项目换成Golang/Java了。</p>
+<p>对此，我很赞同坐我旁边大佬关于代码质量的说法：</p>
+<blockquote>
+<p>make it run, make it fast, make it beautiful.</p>
+</blockquote>
+<p>最近在做副业的尝试，有个深刻的体会，技术可能是商业里面最不重要的。</p>
+<p>从零把产品做出来，推广给用户，用户只会关注你的产品是否好用，能否解决他们的问题.</p>
+<p>他们既不会关注你是用C++/Java还是Javascript 写的,也不会关注你代码写得是否优雅，与其执着于技术选型，不如先把产品干出来让用户试用。</p>
+<h2 id="顺手的才是最好的"><span class="section-num">6</span> 顺手的才是最好的</h2>
+<p>经常会看到有人在社区提问，什么语言最好，什么框架最好，什么编辑器最好，什么操作系统最好。</p>
+<p>「最好」是个相当主观的结论，也并没有针对所有场景的「最好」的解决方案, 但是经常能看到社区有人因为哪个语言更好而吵起来.</p>
+<p>或者有人在分享A的时候，有人会在下面回复B/C/D更好, 然后又争吵起来.</p>
+<p>让不禁让我想起《社会性动物》这本著名的社会心理学著作里面提到的团队认同现象，
+当球迷与某支球队产生强烈的认同感后，会将球队视为自我认同的一部分，这里他们会：</p>
+<ol>
+<li>用「我们」而不是「他们」来称呼球队</li>
+<li>将球队的成功视为个人的成功</li>
+<li>对批评球队的言论产生防御性反应，将这些批评视为对自我的攻击</li>
+</ol>
+<p>如果有人问我这个问题，我会回答「你顺手熟悉的工具的最好」。</p>
+<p>即使是出于乐趣，编程的目的还是利用计算机解决问题，而解决问题最好的工具就是你最熟悉的工具。</p>
+<p>除非你了解的工具不适用于你的问题，那么自然就需要一个新工具，也不要削足适履，矫枉过正。</p>
+<p>当然，如果是为了满足求知欲而想去学习一个新的语言，那选择你感兴趣的就可以了。</p>
+<p>当初在2017年学习Rust, 也只是因为大四没有课，时间充裕, 想学点有趣的新东西，那时候Rust1.0才发布2年, 可没指望能靠Rust找到工作</p>
+<p>记不清在哪里看过的一段话：</p>
+<blockquote>
+<p>我也曾问过自己类似的问题:</p>
+<ol>
+<li>是不是好的东西就能流行？不一定</li>
+<li>是不是我喜欢的东西就是好的东西？不一定</li>
+<li>我会不会花时间精力在一个不一定会流行但是我喜欢的东西上？会</li>
+</ol>
+</blockquote>
+<h2 id="多与人交流"><span class="section-num">7</span> 多与人交流</h2>
+<p>程序员固然是和机器打交道，但是本质解决的还是人的问题.</p>
+<p>当初学习编程的时候，曾经有个误区，认为自己只要把技术搞好，就可以不去关心什么「人情世故」。</p>
+<p>因此初入职场之后，我既是这么持有这样的想法，又是这样行动的，虽然不至于对其他人冷脸相对，但是难免会如好友形容那般：「孤傲」</p>
+<p>但是被毒打时间久了才会发现，无论是在国内或国外，都难免会有「人情世故」，用英文来说，那叫 network and connection.</p>
+<p>即使我技术能力过硬，也需要被人见到才行，和同事领导相处关系好，才可以在做出成绩的时候，「花花轿子被众人抬」。</p>
+<p>所以我现在都是有事没事都和同事们聊天，既可以提升下熟悉度，也可以了解到许多部门八卦，
+还可以从同事们抱怨中找到潜在优化点，践行自己「Work hard and be nice to people」的理念.</p>
+<p>这行做久了，会发现软件工程其实说到底，就是人的系统工程。</p>
+<h2 id="代码不是万能的"><span class="section-num">8</span> 代码不是万能的</h2>
+<p>程序写多了之后就会有种幻觉，就是觉得什么事情都可以用代码来解决。</p>
+<p>手里拿着锤子的时候，把什么都当成钉子来砸。</p>
+<p>被毒打多才认清的事实就是，有很多事情是无法用代码来解决，代码只是个工具，只能在个合适的场景使用, 避免路径依赖.</p>
+<p>酒香也怕巷子深，只会写代码没啥用，还要写文章，在公司内部做分享，让别人能「看到你」。</p>
+<p>编程肝项目的专业能力固然重要，但是也要有营销自己的软实力，就像一位长者说的那样: 两手抓，两手都要硬.</p>
+<p>不知道是中国人讲究谦虚内敛的品质，还是程序员「木讷呆板」的刻板印象，导致大家都不怎么营销自己。</p>
+<p>有事没事和老板聊下天，增进下交流，经常露个脸，可能比肝十个项目还有用。</p>
+<h2 id="与优秀的人共事"><span class="section-num">9</span> 与优秀的人共事</h2>
+<p>从业多年，去过蚂蚁金服，微信支付和AWS 搬砖, 和各种各样的同事都共事过，有个越发强烈的感悟：</p>
+<p><strong><strong>要与优秀的人共事</strong></strong></p>
+<p>不仅能从他们身上学到非常到的优点，提升技术能力，可以学到最佳实践和工程经验，在Code Review 的时候可以学到更好的编程方式，遇到问题时又有靠谱的队友帮忙和指导。</p>
+<p>由优秀的程序员开发出来的系统的独特之处，知道什么叫简单好用的系统，形成自己的技术品味。</p>
+<p>品味与美感这个词是很抽象，但是用过了好用的系统，自然就不会对那些粗制滥造，还靠老板背书强行推广的系统感兴趣。</p>
+<p>和优秀的同事共事的另外一个好处是可以建立高质量的人脉网络，利于职业发展，跳槽换赛道也多个选择。</p>
+<p>虽然初始公司也有优秀的开发者，但是平均而言，大公司优秀程序员的比例会更高，毕竟他们更有竞争力的薪资福利，自然也有更高的招聘门槛。</p>
+<p>比如微信就有所谓的面试委员会，除了招聘部门的面试官之外，还要通过面委面试官的考核，避免为了快速招人而降低标准。</p>
+<p>所以个人建议应届毕业生，有机会还是去大公司，见识下。</p>
+<p>虽然离职微信快两年了，我仍然想念当初同组共事的同事们，他们真的是技术过硬，人又超nice, 还乐于帮忙.</p>
+<h2 id="身体是一切的本钱"><span class="section-num">10</span> 身体是一切的本钱</h2>
+<p>编程这么多年，落下一堆的职业病。</p>
+<p>大学时候就有的鼠标手(腱鞘炎), 工作几年之后「喜提」腰椎间盘突出，久坐下半身会麻痹，还有我曾经浓密黝黑的头发，现在也日渐凋零。</p>
+<p>因为腾讯总部有免费的健身房，所以我基本工作日都会去健身房薅公司羊毛，2天有氧慢跑，2天无氧器械，坚持了快3年。
+也开始注意自己的饮食，尽量少油少糖不喝酒。</p>
+<p>健身虽然不是包治百病，但是起码人显得有精神了，也有精力应付高强度的工作了。</p>
+<p>只有失去才会懂得珍惜，也真的只有在开始吃药，去医院复诊，才会开始注意身体。</p>
+<p>虽然编程很有趣，虽然养家很重要，但是还是要注意身体，毕竟身体是一切的本钱，垮就没有其他的精彩故事了。</p>
+<h2 id="总结"><span class="section-num">11</span> 总结</h2>
+<p>无论是编程，还是其他的技能，我感觉都是「马太效应」，你学得越多，你懂得越多，再学新的东西，你就会学得越快。</p>
+<p>代码写多了才意识到，程序员的竞争力并不是写代码，也并不是哪门语言或者框架，
+其核心竞争力是通过技术解决问题的能力，又何必再去拘泥于哪门具体的编程语言或技术呢。</p>
+<p>希望编程十年只是个起点，十年后可以再写一篇「编程二十年的二十条感悟」</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://struts.apache.org/">https://struts.apache.org/</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://spring.io/projects/spring-framework">https://spring.io/projects/spring-framework</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://hibernate.org/">https://hibernate.org/</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="https://docs.spring.io/spring-framework/reference/web/webmvc.html">https://docs.spring.io/spring-framework/reference/web/webmvc.html</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5">
+<p><a href="https://ibatis.apache.org/">https://ibatis.apache.org/</a>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:6">
+<p><a href="https://mybatis.org/mybatis-3/">https://mybatis.org/mybatis-3/</a>&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:7">
+<p><a href="https://github.com/sofastack/sofa-rpc">https://github.com/sofastack/sofa-rpc</a>&#160;<a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:8">
+<p><a href="https://spring.io/projects/spring-boot">https://spring.io/projects/spring-boot</a>&#160;<a href="#fnref:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:9">
+<p><a href="https://github.com/sofastack/sofa-boot">https://github.com/sofastack/sofa-boot</a>&#160;<a href="#fnref:9" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:10">
+<p><a href="https://www.interpals.net/">https://www.interpals.net/</a>&#160;<a href="#fnref:10" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+]]></content:encoded>
+    </item>
     <item>
       <title>Rust通过Trait扩展已有类型</title>
       <link>https://ramsayleung.github.io/zh/post/2024/rust%E7%94%A8trait%E6%89%A9%E5%B1%95%E5%B7%B2%E6%9C%89%E7%B1%BB%E5%9E%8B/</link>
