@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Wed, 04 Dec 2024 19:21:59 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 30 Dec 2024 22:28:48 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/rust/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Rust通过Trait扩展已有类型</title>
@@ -1890,7 +1890,7 @@
     <item>
       <title>RSpotify: 一个用爱发电五年的开源项目</title>
       <link>https://ramsayleung.github.io/zh/post/2023/rspotify_%E4%B8%80%E4%B8%AA%E7%94%A8%E7%88%B1%E5%8F%91%E7%94%B5%E4%BA%94%E5%B9%B4%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</link>
-      <pubDate>Tue, 07 Feb 2023 15:40:00 +0800</pubDate>
+      <pubDate>Tue, 07 Feb 2023 15:40:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2023/rspotify_%E4%B8%80%E4%B8%AA%E7%94%A8%E7%88%B1%E5%8F%91%E7%94%B5%E4%BA%94%E5%B9%B4%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</guid>
       <description>1 前言 一周前看到个新闻，Spotify在其第四季度财报中披露，截至2022年12月31日，它的付费订阅用户数达到了2.05亿，同比增长14%</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
@@ -1919,13 +1919,13 @@
 （然后过了5年之后，服务器欠费，又把自建博客迁移回Github Pages。当然，那是后话了。）</p>
 <p>在花了2-3个月写完博客之后，觉得自己入门Rust，就想写个开源项目，感受下与其他开发者协作的场景。</p>
 <p>当时看到个网易云音乐命令行版本的播放器 <a href="https://github.com/darknessomi/musicbox">musicbox</a>, 当时我在用的是Spotify，就希望可以为Spotify写个类似的播放器。</p>
-<figure><a href="/ox-hugo/musicbox.gif">
-    <img loading="lazy" src="/ox-hugo/musicbox.gif"/> </a>
-</figure>
-
 <p>虽说Spotify API是对外开放，但直接使用HttpClient来请求HTTP API有点太祼，所以就希望使用先封装个library，方便后续的Rust应用直接调用，就不需要自己操心Http请求了。</p>
 <p>这就是RSpotify这个库的来源。</p>
-<p>这次，我就只在 <a href="https://www.reddit.com/r/rust/comments/7xn9mh/my_first_crate_rspotify_spotify_api_wrapper/">Reddit</a>和<a href="https://ramsayleung.github.io/post/2018/rspotify/">博客</a> 上分享使用Rust来写library 的经历了。</p>
+<p>这次，我就只在 Reddit和博客 上分享使用Rust来写library 的经历了。</p>
+<ul>
+<li>Reddit: <a href="https://www.reddit.com/r/rust/comments/7xn9mh/my_first_crate_rspotify_spotify_api_wrapper/">My first crate&ndash; rspotify, Spotify API wrapper implemented in Rust</a></li>
+<li>博客: <a href="https://ramsayleung.github.io/zh/post/2018/rspotify/">RSpotify– 我的第一个Rust crate</a></li>
+</ul>
 <h2 id="演进"><span class="section-num">3</span> 演进</h2>
 <h3 id="野蛮生长阶段"><span class="section-num">3.1</span> 野蛮生长阶段</h3>
 <p>刚开始写RSpotify的时候，对于如何设计一个易用，友好的library 完全没有头绪，毕竟设计好用的类库需要相当的经验沉淀。</p>
@@ -1949,13 +1949,13 @@
 <h3 id="async-阶段"><span class="section-num">3.2</span> async 阶段</h3>
 <p>时间来到2019年，对于Rust社区来说，<a href="https://www.reddit.com/r/rust/comments/ct7aus/stabilize_async_await_in_rust_1390/">最激动人心</a>的应该是Rust 1.39版本，将正式包含 <code>async/await</code> 特性，自那天起，Rust正式支持异步编程。</p>
 <p>自此之后，Rust社区在做的事情，就是把已有Rust代码疯狂升级到async await，RSpotify虽迟，但也赶上了这波潮流。</p>
-<p>当时RSpotify 请求Spotify的API使用的HTTP库是 <code>reqwest</code>，在 <code>reqwest</code> 支持异步模式之后，开发者 <a href="https://github.com/Rigellute">Alexander</a>就提了一个超大的<a href="https://github.com/ramsayleung/rspotify/pull/81">PR</a>，把所有已有的api全部修改成<code>async</code>, 我就乐见其成，就把这个PR合并了。</p>
+<p>当时RSpotify 请求Spotify的API使用的HTTP库是 <code>reqwest=，在 =reqwest</code> 支持异步模式之后，开发者 <a href="https://github.com/Rigellute">Alexander</a>就提了一个超大的<a href="https://github.com/ramsayleung/rspotify/pull/81">PR</a>，把所有已有的api全部修改成=async=, 我就乐见其成，就把这个PR合并了。</p>
 <figure><a href="/ox-hugo/add_async_await_1.png">
     <img loading="lazy" src="/ox-hugo/add_async_await_1.png"/> </a>
 </figure>
 
 <p>有社区的同学抱怨说异步模式的代码不好使用，他对性能没有什么要求，能否保留同步模式的接口调用。</p>
-<p>后来为了兼顾同步模式和异步模式这两种调用方式，Alexander 又提了一个超大超大的<a href="https://github.com/ramsayleung/rspotify/pull/82/files">PR</a>，把现有的异步模式代码复制一份，然后把<code>async</code> 关键字去掉。</p>
+<p>后来为了兼顾同步模式和异步模式这两种调用方式，Alexander 又提了一个超大超大的<a href="https://github.com/ramsayleung/rspotify/pull/82/files">PR</a>，把现有的异步模式代码复制一份，然后把=async= 关键字去掉。</p>
 <figure><a href="/ox-hugo/add_async_await_2.png">
     <img loading="lazy" src="/ox-hugo/add_async_await_2.png"/> </a>
 </figure>
@@ -1997,24 +1997,24 @@
 <pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// 异步代码
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">original</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="n">reqwest</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">reqwest</span>::<span class="n">get</span><span class="p">(</span><span class="s">&#34;https://www.rust-lang.org&#34;</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="k">await</span><span class="o">?</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="n">text</span><span class="p">()</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="k">await</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">.</span><span class="k">await</span><span class="o">?</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">.</span><span class="n">text</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">.</span><span class="k">await</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">lazy_static!</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Mutex to have mutable access and Arc so that it&#39;s thread-safe.
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">ref</span><span class="w"> </span><span class="no">RT</span>: <span class="nc">Arc</span><span class="o">&lt;</span><span class="n">Mutex</span><span class="o">&lt;</span><span class="n">runtime</span>::<span class="n">Runtime</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arc</span>::<span class="n">new</span><span class="p">(</span><span class="n">Mutex</span>::<span class="n">new</span><span class="p">(</span><span class="n">runtime</span>::<span class="n">Builder</span>::<span class="n">new</span><span class="p">()</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">								      </span><span class="p">.</span><span class="n">basic_scheduler</span><span class="p">()</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">								      </span><span class="p">.</span><span class="n">enable_all</span><span class="p">()</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">								      </span><span class="p">.</span><span class="n">build</span><span class="p">()</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">								      </span><span class="p">.</span><span class="n">unwrap</span><span class="p">()));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                                                      </span><span class="p">.</span><span class="n">basic_scheduler</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                                                      </span><span class="p">.</span><span class="n">enable_all</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                                                      </span><span class="p">.</span><span class="n">build</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                                                      </span><span class="p">.</span><span class="n">unwrap</span><span class="p">()));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 同步版本代码
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">fn</span> <span class="nf">with_block_on</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="n">reqwest</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="no">RT</span><span class="p">.</span><span class="n">lock</span><span class="p">().</span><span class="n">unwrap</span><span class="p">().</span><span class="n">block_on</span><span class="p">(</span><span class="k">async</span><span class="w"> </span><span class="k">move</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">original</span><span class="p">().</span><span class="k">await</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">original</span><span class="p">().</span><span class="k">await</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">})</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
@@ -2022,7 +2022,7 @@
 </div><p>再通过Rust macro来为每个async 函数生成一个block_on 版本的函数。</p>
 <p>但实际上，发现编写<a href="https://github.com/ramsayleung/rspotify/pull/120">macro太复杂</a>，并且这种方案不够灵活，实现起来也相当复杂。</p>
 <p>然后Mario 又调研出一种<a href="https://github.com/ramsayleung/rspotify/pull/129">新方案</a>，通过 <a href="https://github.com/fMeow/maybe-async-rs"><code>maybe_async</code></a> 这个库在同步和异步模式之间切换。
-默认是异步模式，但可以通过 <code>features = [&quot;is_sync&quot;]</code> 编译选项来切换到同步模式，<code>maybe_async</code> 就会把所有的<code>async/await</code> 关键字给去掉。</p>
+默认是异步模式，但可以通过 <code>features = [&quot;is_sync&quot;]</code> 编译选项来切换到同步模式，=maybe_async= 就会把所有的=async/await= 关键字给去掉。</p>
 <p>这个方案简单，可读性高，易于扩展，也不需要维护复杂的 macro 代码。</p>
 <p>这也是我们最终采取的方案，重构之后，把 <code>blocking</code> 目录的近万行复制粘贴而来的代码删除掉，就非常爽。</p>
 <h3 id="二次重构-阶段"><span class="section-num">3.4</span> 二次重构 阶段</h3>
@@ -2033,7 +2033,7 @@
     <img loading="lazy" src="/ox-hugo/meta-issue.png"/> </a>
 </figure>
 
-<p>这么多的优化建议，可以看出Kestrer真的花了很多时间来阅读和改善RSpotify的代码，盛情难却（可见原来的代码是<del>多烂</del>, 有非常多激发社区同学参与改进的空间）.</p>
+<p>这么多的优化建议，可以看出Kestrer真的花了很多时间来阅读和改善RSpotify的代码，盛情难却（可见原来的代码是+多烂+, 有非常多激发社区同学参与改进的空间）.</p>
 <p>别人指出问题，就要好好优化。</p>
 <p>所以我和Mario就分别对每个接口返回的数据模型，数据模型与Json间转换的序列化方式，授权流程作了改进。
 并对RSpotify这个library作了拆分，按照功能，拆分成 <code>model</code>, <code>http</code>, <code>macros</code> 三个单独的library。</p>
@@ -2096,7 +2096,7 @@
 <p>想到的点：</p>
 <ol>
 <li>使用Rust的macro来减少copy-paste的代码（但复杂的 macro，基本不具备可读性。）</li>
-<li>使用serde 自定义序列化函数；</li>
+<li>使用 serde 自定义序列化函数；</li>
 <li>以workspace 模式管理多个crates;</li>
 <li>编写 async/await 的异步代码；</li>
 <li>使用标准库的Trait, 风格契合标准库；</li>
@@ -2124,7 +2124,6 @@
 <li>我们做了个好东西，我们要抢占市场。我们就开源，搞人海战术，让竞品淹没在人民群众的汪洋大海中，让我们的东西成为事实的标准。（Android，Chromium, Kubernetes, Vscode）</li>
 <li>就想开源让你们见识下大佬是怎么样子的。</li>
 </ol>
-<p>个人理解，<strong><strong>开源是「手段」，而非「目的」</strong></strong></p>
 <p>对于商业公司而言，如果没有收益，为什么要把花钱雇的人写的内部组件开源出来呢？总不成是为了在B站上博取小朋友的称赞吧。</p>
 <p>而公司内部的组件，往往是与业务共生，高度适配的，藕断丝连，没有那么容易开源的。</p>
 <p>商业公司，只谈收益与预期，如果名声能卖钱，估计也会拿来换取利润。</p>
@@ -2133,7 +2132,7 @@
 <p>开源是一个技术与管理结合的决定，需要把开发模式都切换到开源社区，决策过程与动机要对社区可见。</p>
 <p>不仅让人能从代码中读懂功能是「什么」，也要从动机讨论中知道「为什么」要这么改。</p>
 <h3 id="些许成果"><span class="section-num">4.4</span> 些许成果</h3>
-<p>在Github上，收获了495个star，被1108个仓库及18个package 所依赖，而其中Alexander的 <a href="https://github.com/Rigellute/spotify-tui">spotify-tui</a> 就是我期望做的终端版本的Spotify。</p>
+<p>在Github上，被1108个仓库及18个package 所依赖，而其中Alexander的 <a href="https://github.com/Rigellute/spotify-tui">spotify-tui</a> 就是我期望做的终端版本的Spotify。</p>
 <p>开源的好处就是，在开发好基础设施之后，自然就会有其他有相同想法的同学，把应用开发出来。</p>
 <figure><a href="/ox-hugo/dependent_packages.png">
     <img loading="lazy" src="/ox-hugo/dependent_packages.png"/> </a>
@@ -2144,18 +2143,15 @@
     <img loading="lazy" src="/ox-hugo/stats.png"/> </a>
 </figure>
 
-<p>对于有Rust，Spotify，Library等诸多定语的RSpotify来说，目标受众本来就不多，能有现在这样的用户量已远超我最初了预期了。</p>
+<p>对于有Rust，Spotify，Library等诸多定语的RSpotify来说，目标受众本来就不多，能有现在这样的用户量也算是个挺不错的成果了。</p>
 <h2 id="总结"><span class="section-num">5</span> 总结</h2>
 <p>虽然我未曾从这个项目上获得到一分物质上的回报，但在创建这个项目的时候，我可能不会想到，我能维护它长达五年。</p>
 <p>天上的云，飘来又飘走；开源的项目，挖坑又弃坑。</p>
-<p>视线望不到下一个五年，唯有且行且看。</p>
+<p>视线望不穿下一个五年，唯有且行且看。</p>
 <h2 id="参考"><span class="section-num">6</span> 参考</h2>
 <ul>
 <li><a href="https://www.theverge.com/2023/1/31/23577499/spotify-q4-2022-earnings-release-subscriber-growth-layoffs">Spotify is first music streaming service to surpass 200M paid subscribers</a></li>
 <li><a href="https://github.com/ramsayleung/rspotify">RSpotify</a></li>
-<li><a href="https://ramsayleung.github.io/post/2020/serde_lesson/">The lesson learned from refactoring rspotify</a></li>
-<li><a href="https://ramsayleung.github.io/post/2021/iterate_through_pagination_api/">Let&rsquo;s make everything iterable</a></li>
-<li><a href="https://github.com/Rigellute/spotify-tui">spotify-tui</a></li>
 </ul>
 ]]></content:encoded>
     </item>

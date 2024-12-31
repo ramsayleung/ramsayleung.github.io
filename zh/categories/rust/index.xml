@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Wed, 04 Dec 2024 19:21:59 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 30 Dec 2024 22:28:21 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/categories/rust/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Rust通过Trait扩展已有类型</title>
@@ -3160,13 +3160,14 @@ tracker!</p>
 ]]></content:encoded>
     </item>
     <item>
-      <title>rspotify– 我的第一个Rust crate</title>
+      <title>RSpotify– 我的第一个Rust crate</title>
       <link>https://ramsayleung.github.io/zh/post/2018/rspotify/</link>
-      <pubDate>Wed, 28 Feb 2018 20:44:00 +0800</pubDate>
+      <pubDate>Wed, 28 Feb 2018 20:44:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2018/rspotify/</guid>
-      <description>开发第一个Rust crate 的感受和踩到的坑 最近写了人生第一个 Rust crate&amp;ndash; rspotify. 虽说并不是什么惊天地，泣鬼神的大作，但是也是我花费了近两个月实现的。 现在就来聊聊</description>
+      <description>开发第一个Rust crate 的感受和踩到的坑 最近写了人生第一个 Rust crate &amp;ndash; RSpotify. 虽说并不是什么惊天地，泣鬼神的大作，但是也是我花费了近两个月实现的。 现在就来聊</description>
       <content:encoded><![CDATA[<p>开发第一个Rust crate 的感受和踩到的坑</p>
-<p>最近写了人生第一个 Rust crate&ndash; <a href="https://github.com/samrayleung/rspotify">rspotify</a>. 虽说并不是什么惊天地，泣鬼神的大作，但是也是我花费了近两个月实现的。</p>
+<p>最近写了人生第一个 Rust crate &ndash; <a href="https://github.com/ramsayleung/rspotify">RSpotify</a>.</p>
+<p>虽说并不是什么惊天地，泣鬼神的大作，但是也是我花费了近两个月实现的。</p>
 <p>现在就来聊聊这个开发过程的感悟和踩到的坑</p>
 <h2 id="感悟"><span class="section-num">1</span> 感悟</h2>
 <h3 id="函数的缺省值"><span class="section-num">1.1</span> 函数的缺省值</h3>
@@ -3189,18 +3190,19 @@ tracker!</p>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">artist_top_tracks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artist_id</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;US&#39;</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34; Get Spotify catalog information about an artist&#39;s top 10 tracks
-</span></span></span><span class="line"><span class="cl"><span class="s2">	by country.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        by country.
 </span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">	Parameters:
-</span></span></span><span class="line"><span class="cl"><span class="s2">	    - artist_id - the artist ID, URI or URL
-</span></span></span><span class="line"><span class="cl"><span class="s2">	    - country - limit the response to one particular country.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">            - artist_id - the artist ID, URI or URL
+</span></span></span><span class="line"><span class="cl"><span class="s2">            - country - limit the response to one particular country.
 </span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="n">trid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_id</span><span class="p">(</span><span class="s1">&#39;artist&#39;</span><span class="p">,</span> <span class="n">artist_id</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="s1">&#39;artists/&#39;</span> <span class="o">+</span> <span class="n">trid</span> <span class="o">+</span> <span class="s1">&#39;/top-tracks&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="n">country</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>但是用 Rust 来实现的时候，问题就来了，因为Rust 是没有缺省参数的。而Rust 处理缺省参数的策略一般是<code>Builder Pattern</code>:</p>
+</div><p>但是用 Rust 来实现的时候，问题就来了，因为Rust 是没有缺省参数的。而Rust 处理缺省
+参数的策略一般是=Builder Pattern=:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -3245,24 +3247,24 @@ tracker!</p>
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">impl</span><span class="w"> </span><span class="n">Part1</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">new</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nc">Part1</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">Part1</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">points</span>: <span class="mi">30_</span><span class="k">u32</span><span class="p">,</span><span class="w"> </span><span class="n">tf</span>: <span class="mi">3_</span><span class="k">f64</span><span class="p">,</span><span class="w"> </span><span class="n">dt</span>: <span class="mf">0.1_</span><span class="k">f64</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Part1</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">points</span>: <span class="mi">30_</span><span class="k">u32</span><span class="p">,</span><span class="w"> </span><span class="n">tf</span>: <span class="mi">3_</span><span class="k">f64</span><span class="p">,</span><span class="w"> </span><span class="n">dt</span>: <span class="mf">0.1_</span><span class="k">f64</span><span class="w"> </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">tf</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">tf</span>: <span class="kt">f64</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="bp">self</span><span class="p">.</span><span class="n">tf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tf</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="bp">self</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">tf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tf</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="bp">self</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">points</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">points</span>: <span class="kt">u32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="bp">self</span><span class="p">.</span><span class="n">points</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">points</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="bp">self</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">points</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">points</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="bp">self</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">dt</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">dt</span>: <span class="kt">f64</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="bp">self</span><span class="p">.</span><span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dt</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="bp">self</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dt</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="bp">self</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="w">  </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="c1">// code here
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// code here
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -3273,7 +3275,7 @@ tracker!</p>
 </div>
 </div><p>具体情况具体分析，就 rspotify 而言， <code>Builder Pattern</code> 并不适用，因为 rspotify
 有很多函数都需要缺省参数，而不同函数的缺省值可能又不一样。</p>
-<p>例如，有些函数的 <code>offset</code>参数是 0, 而另外一些函数的 <code>offset</code> 参数是1. 为此，我还在 <a href="https://www.reddit.com/r/rust/comments/7u1zjl/question_about_default_values_for_function/">Reddit</a> 发贴询问意见，<a href="https://www.reddit.com/user/PM_ME_WALLPAPER">PM_ME_WALLPAPER</a> 建议我用<code>Into&lt;Option&lt;T&gt;&gt;</code>:</p>
+<p>例如，有些函数的 <code>offset=参数是 0, 而另外一些函数的 =offset</code> 参数是1. 为此，我还在 <a href="https://www.reddit.com/r/rust/comments/7u1zjl/question_about_default_values_for_function/">Reddit</a> 发贴询问意见，<a href="https://www.reddit.com/user/PM_ME_WALLPAPER">PM_ME_WALLPAPER</a> 建议我用=Into&lt;Option&lt;T&gt;&gt;=:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -3330,17 +3332,17 @@ tracker!</p>
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">url</span><span class="p">.</span><span class="n">push_str</span><span class="p">(</span><span class="o">&amp;</span><span class="n">trid</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">url</span><span class="p">.</span><span class="n">push_str</span><span class="p">(</span><span class="s">&#34;/top-tracks&#34;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">match</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">url</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">params</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nb">Some</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="c1">// let mut albums: Albums = ;
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	    </span><span class="k">match</span><span class="w"> </span><span class="n">serde_json</span>::<span class="n">from_str</span>::<span class="o">&lt;</span><span class="n">FullTracks</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">result</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nb">Ok</span><span class="p">(</span><span class="n">_tracks</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">_tracks</span><span class="p">),</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nb">Err</span><span class="p">(</span><span class="n">why</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">		    </span><span class="fm">eprintln!</span><span class="p">(</span><span class="s">&#34;convert albums from String to Albums failed </span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">why</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">		    </span><span class="nb">None</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nb">None</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">None</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nb">Some</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// let mut albums: Albums = ;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="k">match</span><span class="w"> </span><span class="n">serde_json</span>::<span class="n">from_str</span>::<span class="o">&lt;</span><span class="n">FullTracks</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">result</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="nb">Ok</span><span class="p">(</span><span class="n">_tracks</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">_tracks</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="nb">Err</span><span class="p">(</span><span class="n">why</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="fm">eprintln!</span><span class="p">(</span><span class="s">&#34;convert albums from String to Albums failed </span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">why</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="nb">None</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nb">None</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">None</span><span class="p">,</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
@@ -3348,8 +3350,9 @@ tracker!</p>
 </div><p>虽说不如Python 那样优雅，但是看起来还是不错滴</p>
 <h3 id="错误处理"><span class="section-num">1.2</span> 错误处理</h3>
 <p>对于一个 library 而言，错误处理是设计的重要一环。</p>
-<p>因为我之前只有开发应用的经验， 而开发应用的错误处理和开发类库的错误处理显然需要考虑的东西不一样，所以我还谨慎思考过这个问题。后来，我决定不处理调用Spotify API 或者其他操作导致的错误，将错误进行一次包装(wrap), 然后再返回给library 的调用者。</p>
-<p>最开始的时候，我是自己定义错误类型的，后来觉得过于累赘，就用上<code>error_chain</code>. 用上 error_chain 之后， <code>errors.rs</code>这个文件也非常简单：</p>
+<p>因为我之前只有开发应用的经验， 而开发应用的错误处理和开发类库的错误处理显然需要考虑的东西不一样，所以我还谨慎思
+考过这个问题。后来，我决定不处理调用Spotify API 或者其他操作导致的错误，将错误进行一次包装(wrap), 然后再返回给library 的调用者。</p>
+<p>最开始的时候，我是自己定义错误类型的，后来觉得过于累赘，就用上=error_chain=. 用上 error_chain 之后， =errors.rs=这个文件也非常简单：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -3371,12 +3374,12 @@ tracker!</p>
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">errors</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">foreign_links</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">Json</span><span class="p">(</span><span class="n">serde_json</span>::<span class="n">Error</span><span class="p">)</span><span class="w"> </span><span class="cp">#[doc = </span><span class="s">&#34;An error happened while serializing JSON&#34;</span><span class="cp">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Json</span><span class="p">(</span><span class="n">serde_json</span>::<span class="n">Error</span><span class="p">)</span><span class="w"> </span><span class="cp">#[doc = </span><span class="s">&#34;An error happened while serializing JSON&#34;</span><span class="cp">]</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>而刚刚我提到了只对错误作简单的包装，得益于 <code>error_chain</code>的设计，这个特性也很容易实现：</p>
+</div><p>而刚刚我提到了只对错误作简单的包装，得益于 =error_chain=的设计，这个特性也很容易实现：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -3388,14 +3391,15 @@ tracker!</p>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">convert_result</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="p">,</span><span class="w"> </span><span class="n">T</span>: <span class="nc">Deserialize</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">input</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span> <span class="kt">str</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">serde_json</span>::<span class="n">from_str</span>::<span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">input</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="n">chain_err</span><span class="p">(</span><span class="o">||</span><span class="w"> </span><span class="fm">format!</span><span class="p">(</span><span class="s">&#34;convert result failed, content </span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="n">input</span><span class="p">))</span><span class="o">?</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">.</span><span class="n">chain_err</span><span class="p">(</span><span class="o">||</span><span class="w"> </span><span class="fm">format!</span><span class="p">(</span><span class="s">&#34;convert result failed, content </span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="n">input</span><span class="p">))</span><span class="o">?</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nb">Ok</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>这个函数是将 Spotify 的响应体映射成对应的 object(例如 playlist, album 等). 如果转换过程出错了，那么就返回<code>convert result failed, content {:?}</code>错误信息之后，返回 <code>serde_json</code> 转换时出现的错误信息。</p>
+</div><p>这个函数是将 Spotify 的响应体映射成对应的 object(例如 playlist, album 等). 如果转换过程出错了，那么就返回=convert result failed, content {:?}=错误信息之后，返回 <code>serde_json</code> 转换时出现的错误信息。</p>
 <h3 id="reddit-plus-clippy"><span class="section-num">1.3</span> Reddit+clippy</h3>
-<p>剩下的是在纠结定义一个函数传参的时候是传值，参数是 mutable 还是 immutable, 以及其他类似的考虑。</p>
+<p>剩下的是在纠结定义一个函数传参的时候是传值，参数是 mutable 还是 immutable, 以及
+其他类似的考虑。</p>
 <p>或许 Effective Rust 和 More Effective Rust 出现之后，我读完就知道什么样的设计才是 best practice. 因为有诸多设计的不确定，所以在完成rspotify 90% 的代码量之后，我在 <a href="https://www.reddit.com/r/rust/comments/7xn9mh/my_first_crate_rspotify_spotify_api_wrapper/">Reddit</a>
 上发贴，邀请社区的同学来 review code 以帮我完善代码。</p>
 <p>他们的确给了我很多建议，我也根据他们的建议修改 rspotify. 在经过人肉 code review 之后，是时候祭出
@@ -3405,7 +3409,7 @@ tracker!</p>
 <h2 id="坑"><span class="section-num">2</span> 坑</h2>
 <h3 id="debugger"><span class="section-num">2.1</span> Debugger</h3>
 <p>虽说 Rust 也有Debugger&ndash; gdb-rust. gdb 我以前写c 的时候用过，gdb 熟悉程度虽然谈 不上精通，但是也能熟练使用。但是用gdb-rust 调试并不是非常便利，比如在使用 <a href="https://rocket.rs/">Rocket</a> 这个Web框架的时候，就很难使用gdb来调试Web程序。</p>
-<p>虽说 <a href="https://intellij-rust.github.io/">intellij-rust</a> 这个 Intellij Idea 的插件也支 持Debugger, 但是只有配合<a href="https://www.jetbrains.com/clion/">Clion</a>才能使用。因为 只有 Clion 才能调用 gdb, 无奈。所以在开发 rspotify 的时候，我用得都是 <code>println!()</code>调试大法。</p>
+<p>虽说 <a href="https://intellij-rust.github.io/">intellij-rust</a> 这个 Intellij Idea 的插件也支 持Debugger, 但是只有配合<a href="https://www.jetbrains.com/clion/">Clion</a>才能使用。因为 只有 Clion 才能调用 gdb, 无奈。所以在开发 rspotify 的时候，我用得都是 =println!()=调试大法。</p>
 <h3 id="编译器bug"><span class="section-num">2.2</span> 编译器Bug</h3>
 <p>战战兢兢地开发着，终于到发布到 <a href="https://crates.io/">crates.io</a> 的大喜日子了，怎知在发布之后一直没办法看到生成的文档，本地不是一切正常么？</p>
 <p>后来在<a href="https://www.reddit.com/r/rust/comments/7yrofg/rspotify_is_published_to_cratesio/">社区</a> 同学的提醒下， 我才发现我踩到了 Rust 编译器的一个bug, 最后我就顺手提交了一个 <a href="https://github.com/rust-lang/rust/issues/48368">issue</a>, 虽说这个问题已经在 <code>nightly</code> 里面修复了。</p>
