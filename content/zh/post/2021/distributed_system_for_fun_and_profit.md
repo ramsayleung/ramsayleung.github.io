@@ -1,9 +1,9 @@
 +++
 title = "(笔记)Distributed Systems for fun and profit"
 date = 2021-06-12T13:08:54
-lastmod = 2022-02-24T14:18:39+08:00
-tags = ["distributed_system"]
-categories = ["distributed_system"]
+lastmod = 2024-12-30T22:17:29-08:00
+tags = ["distributed_system", "book"]
+categories = ["distributed_system", "book"]
 draft = false
 toc = true
 +++
@@ -26,13 +26,7 @@ source: <http://book.mixu.net/distsys/>
 
 关于 `availability`, 计算公式是:
 
-<style>.org-center { margin-left: auto; margin-right: auto; text-align: center; }</style>
-
-<div class="org-center">
-
-Availability = uptime / (uptime  + downtime)
-
-</div>
+> Availability = uptime / (uptime  + downtime)
 
 
 ### <span class="section-num">2.2</span> Failt tolerance {#failt-tolerance}
@@ -46,11 +40,11 @@ Availability = uptime / (uptime  + downtime)
 1.  节点数(你想要更多的存储空间, 更强的计算能力, 自然需要更多的节点)
 2.  节点间的距离(信息传输, 光速是上限)
 
-    从设计系统的角度来考虑这两个限制:
+从设计系统的角度来考虑这两个限制:
 
-    -   节点数越多, 出错(failure)的概率就越高(降低可用性, 增加了管理成本)
-    -   节点数越多, 节点之间的通信就越多(限制节点数与性能之间的线性增长)
-    -   距离越大, 节点通信的延迟就大(性能下降)
+-   节点数越多, 出错(failure)的概率就越高(降低可用性, 增加了管理成本)
+-   节点数越多, 节点之间的通信就越多(限制节点数与性能之间的线性增长)
+-   距离越大, 节点通信的延迟就大(性能下降)
 
 
 ### <span class="section-num">2.3</span> Abstraction and model {#abstraction-and-model}
@@ -60,11 +54,11 @@ Availability = uptime / (uptime  + downtime)
 -   Abstraction: it make things more manageable by removing real-world aspects that are not relevant to solving a problem.
 -   Model: it describes the key properties of a distributed system in a precise manner.
 
-    基于不同维度, 可以总结出不同的 Model:
+基于不同维度, 可以总结出不同的 Model:
 
-    -   System model(asynchronous/synchronous)
-    -   Failure model(crash-fail, partitions, Byzantine)
-    -   Consistency model(strong, eventual)
+-   System model(asynchronous/synchronous)
+-   Failure model(crash-fail, partitions, Byzantine)
+-   Consistency model(strong, eventual)
 
 
 ### <span class="section-num">2.4</span> Partition and replicate {#partition-and-replicate}
@@ -74,7 +68,7 @@ Availability = uptime / (uptime  + downtime)
 -   partitioning: data set can be split over multiple nodes to allow for more parallel processing.
 -   replication: data set can be copied or cached on different nodes to reduce the distance between the client and the server and for greater fault tolerence.
 
-    {{< figure src="/ox-hugo/part-repl.png" link="/ox-hugo/part-repl.png" >}}
+{{< figure src="/ox-hugo/part-repl.png" link="/ox-hugo/part-repl.png" >}}
 
 -   partitioning: 相当每个节点存储一部分数据, 所有节点的数据汇总起来就是该系统存储的总数据. 但是某个节点挂了, 该节点的数据就丢了
 -   replication: 不同节点都存储同一份数据, 这样就可以减少读取不同数据的开销, 以及避免某个节点挂了, 导致部分数据不可用的情况. 但是需要更多的存储空间且不同节点之间数据的同步又是个大问题, 可以说是按下葫芦浮起瓢
@@ -100,21 +94,21 @@ Availability = uptime / (uptime  + downtime)
 -   通过网络通信, 可能出现某种不确定性或消息丢包
 -   没有共享内容或共享锁
 
-    上面的特定会带来诸多的影响:
+上面的特定会带来诸多的影响:
 
-    -   每个节点都并发运行程序
-    -   本地为先: 每个节点都可以快速访问他们的本地状态, 而所有关于全局状态的信息都有可能是过时的
-    -   节点可能挂掉, 并从故障中恢复回来
-    -   消息可能延迟或丢失(不同于节点故障, 通常很难区分节点故障或网络故障)
-    -   节点间的时钟可能不同步(本地时间与全局时间不一定对应, 且很难观察到异常)
+-   每个节点都并发运行程序
+-   本地为先: 每个节点都可以快速访问他们的本地状态, 而所有关于全局状态的信息都有可能是过时的
+-   节点可能挂掉, 并从故障中恢复回来
+-   消息可能延迟或丢失(不同于节点故障, 通常很难区分节点故障或网络故障)
+-   节点间的时钟可能不同步(本地时间与全局时间不一定对应, 且很难观察到异常)
 
-        通过定义一个模型(model)来标识实现一个分布式系统需要交互的环境与机制:
+通过定义一个模型(model)来标识实现一个分布式系统需要交互的环境与机制:
 
-        > a set of assumptions about the environment and facilities on which a distributed system is implemented
+> a set of assumptions about the environment and facilities on which a distributed system is implemented
 
-        A robust system model is one that makes the weakest assumptions: any algorithm written for such a system is very tolerant of different environments, since it makes very few and very weak assumptions.
+A robust system model is one that makes the weakest assumptions: any algorithm written for such a system is very tolerant of different environments, since it makes very few and very weak assumptions.
 
-        模型需要越少的假设条件, 可以适应的环境就越多. 等价交换, fair enough.
+模型需要越少的假设条件, 可以适应的环境就越多. 等价交换, fair enough.
 
 
 #### <span class="section-num">3.2.1</span> Nodes in our system model {#nodes-in-our-system-model}
@@ -125,9 +119,9 @@ Availability = uptime / (uptime  + downtime)
 -   可以存储数据到volatile memory(例如内存)或stable state(日志或磁盘)
 -   拥有时钟(可以准的或者是不准的)
 
-    有很多的故障模型(failure models) 描述了节点挂掉(fail)的方式, 实际中, 大部分的系统都假设是个crash-recovery failure model, 即节点可能挂掉, 但是能从某个状态中恢复回来.
+有很多的故障模型(failure models) 描述了节点挂掉(fail)的方式, 实际中, 大部分的系统都假设是个crash-recovery failure model, 即节点可能挂掉, 但是能从某个状态中恢复回来.
 
-    > A crash-recovery failure model: that is, nodes can only fail by crashing, and can(possibly) recover after crashing at some later point.
+> A crash-recovery failure model: that is, nodes can only fail by crashing, and can(possibly) recover after crashing at some later point.
 
 
 #### <span class="section-num">3.2.2</span> Communication links in our system model {#communication-links-in-our-system-model}
@@ -137,7 +131,8 @@ communication links 不知道应该怎么翻译, 通讯链路? 不译也罢
 communication links 用于沟通不同的节点, 允许信息在双向流动. 部分算法假设网络是可靠的: 消息永不丢失并且永不延迟. 虽说这样假设有些许道理, 但是通常我们都是假设网络是不可靠, 因此消息可能丢失或者延迟.
 
 节点故障 vs 网络分区故障:
-[![](/ox-hugo/system-of-2.png)](/ox-hugo/system-of-2.png)
+
+{{< figure src="/ox-hugo/system-of-2.png" link="/ox-hugo/system-of-2.png" >}}
 
 
 #### <span class="section-num">3.2.3</span> Timing/ordering assumptions {#timing-ordering-assumptions}
@@ -179,21 +174,22 @@ FLP impossibility result 定义了一个最坏情况, 在允许节点失效的�
 -   Availability: node failures do not prevent survivors from continuing to operate.
 -   Partition tolerance: the system continues to operate despite message loss due to network and/or node failure.
 
-    最多只能有两个属性被满足, 如下图:
+最多只能有两个属性被满足, 如下图:
 
-    {{< figure src="/ox-hugo/CAP.png" link="/ox-hugo/CAP.png" >}}
+{{< figure src="/ox-hugo/CAP.png" link="/ox-hugo/CAP.png" >}}
 
-    同时满足三个属性情况是无法实现的, 即中间交集处. 而满足两个属性的系统模型有如下三个:
+同时满足三个属性情况是无法实现的, 即中间交集处. 而满足两个属性的系统模型有如下三个:
 
-    -   CA(consistency + availability): 弱化分区, 保证一致性和可用性, 也变成单机程序, 个人认为Oracle就是其中典范
-    -   CP(consistency + partition tolerance): 弱化可用性, 可能出现无法提供可用结果的情形, 允许少数节点不可用. 典型算法就是Paxos
-    -   AP(availability + partition tolerance): 弱化一致性, 节点之间可能失去联系, 导致全局数据不一致. 典型例子就是诸多的NoSql
+-   CA(consistency + availability): 弱化分区, 保证一致性和可用性, 也变成单机程序, 个人认为Oracle就是其中典范
+-   CP(consistency + partition tolerance): 弱化可用性, 可能出现无法提供可用结果的情形, 允许少数节点不可用. 典型算法就是Paxos
+-   AP(availability + partition tolerance): 弱化一致性, 节点之间可能失去联系, 导致全局数据不一致. 典型例子就是诸多的NoSql
 
-        CA 和CP 模型都提供强一致的模型, 唯一的差别是, CA系统不允许任何节点故障, 因为CA系统无法区别节点故障和网络故障, 为了避免状态不一致, 只能停写; 而对于 `2f+1` 个节点的CP系统, 允许 `f` 个节点故障, 是因为其能通过 single-copy consistency 机制, 能保证状态能达到最终一致, 避免出现状态不一致, 从而支持部分节点不可用
+CA 和CP 模型都提供强一致的模型, 唯一的差别是, CA系统不允许任何节点故障, 因为CA系统无法区别节点故障和网络故障, 为了避免状态不一致, 只能停写;
+而对于 `2f+1` 个节点的CP系统, 允许 `f` 个节点故障, 是因为其能通过 single-copy consistency 机制, 能保证状态能达到最终一致, 避免出现状态不一致, 从而支持部分节点不可用
 
-        因此, 选择了网络分区, 就需要在高可用和强一致性之间作取舍, 而系统设计即是在基于不同的场景, 作出不同的取舍.
+因此, 选择了网络分区, 就需要在高可用和强一致性之间作取舍, 而系统设计即是在基于不同的场景, 作出不同的取舍.
 
-        同样, 强一致性和高性能也存在矛盾, 要保证强一致性, 自然需要节点之间通信达到共识, 这自然会拉高延迟, 这也要系统设计者作出取舍.
+同样, 强一致性和高性能也存在矛盾, 要保证强一致性, 自然需要节点之间通信达到共识, 这自然会拉高延迟, 这也要系统设计者作出取舍.
 
 
 ### <span class="section-num">3.5</span> Consistency model {#consistency-model}
@@ -314,7 +310,7 @@ Time is a source of order. 时间可以解析成以下三种形式:
 不过, 工程实践中的确有程序使用这样的模型:
 
 -   Facebook的[Cassandra](https://en.wikipedia.org/wiki/Apache_Cassandra): 假设时钟是同步的, 因为它使用时间戳来处理写冲突, 以最新的时间为准
--   Google的[Spanner](https://research.google.com/archive/spanner.html): 使用`TrueTime` API, 保证时间同步的条件下, 又消除了时间漂移的最坏情况.
+-   Google的[Spanner](https://research.google.com/archive/spanner.html): 使用=TrueTime= API, 保证时间同步的条件下, 又消除了时间漂移的最坏情况.
 
 
 #### <span class="section-num">4.3.2</span> Time with a "Local-clock" assumption {#time-with-a-local-clock-assumption}
@@ -389,7 +385,7 @@ Vector clock是Lamport clock 的扩展, 对于有 `N` 个节点的分布式系�
 
 使用全序关系也是可能的, 但是为了协调全局顺序, 会付出高昂的性能代价.
 
-如果你对时间_顺序_同步性要求没有那么高, 你可以获得相当的性能提升. 那么, 什么时候需要顺序来保证正确性呢? 后面提到 `CALM定理` 会为你提供答案.
+如果你对时间/顺序/同步性要求没有那么高, 你可以获得相当的性能提升. 那么, 什么时候需要顺序来保证正确性呢? 后面提到 `CALM定理` 会为你提供答案.
 
 说到底, 又是取舍的话题, 下面的情景只存在电影中:
 
@@ -479,7 +475,7 @@ Vector clock是Lamport clock 的扩展, 对于有 `N` 个节点的分布式系�
 -   synchronous primary/backup replication
 -   asynchronous primary/backup replication
 
-前者需要两条消息(update + ack), 而后者只需要一条消息(update). 主_从复制非常常见, MySQL 复制使用的就是主_从复制, MySQL 支持三种模式复制:
+前者需要两条消息(update + ack), 而后者只需要一条消息(update). 主/从复制非常常见, MySQL 复制使用的就是主/从复制, MySQL 支持三种模式复制:
 
 -   同步: 客户端请求, 先写入主机, 然后同步到所有备机, 成功后响应客户端, 在此之间, 阻塞客户端(性能最差)
 -   异步: 客户端请求, 先写入主机, 然后响应客户端, 再同步备机(同步备机前主机挂, 则丢失数据)

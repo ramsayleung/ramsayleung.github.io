@@ -1,7 +1,7 @@
 +++
 title = "How To Design A Reliable Distributed Timer"
 date = 2021-08-05T09:19:36
-lastmod = 2022-02-24T14:01:37+08:00
+lastmod = 2024-12-30T22:16:46-08:00
 tags = ["distributed_system", "timer"]
 categories = ["distributed_system"]
 draft = false
