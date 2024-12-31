@@ -141,9 +141,6 @@ languages:
         - name: Search
           url: /search/
           weight: 10
-        - name: Categories
-          url: /categories/
-          weight: 20
         - name: Tags
           url: /tags/
           weight: 30
@@ -175,9 +172,6 @@ languages:
         - name: "搜索"
           url: zh/search/
           weight: 10
-        - name: "目录"
-          url: zh/categories/
-          weight: 20
         - name: "标签"
           url: zh/tags/
           weight: 30
