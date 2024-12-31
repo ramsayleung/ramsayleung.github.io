@@ -1,9 +1,9 @@
 +++
 title = "在Emacs中使用Ipython"
 description = "Use Ipython in Emasc"
-date = 2017-02-22T00:00:00+08:00
+date = 2016-08-03T00:00:00-07:00
 keywords = ["emacs", "ipython"]
-lastmod = 2022-02-23T19:16:07+08:00
+lastmod = 2024-12-31T11:48:36-08:00
 tags = ["emacs", "python"]
 categories = ["emacs"]
 draft = false
@@ -64,13 +64,13 @@ similar to shell-pop"
   (interactive)
   (if (get-buffer "*Python*")
       (if (string= (buffer-name) "*Python*")
-	  (if (not (one-window-p))
-	      (progn (bury-buffer)
-		     (delete-window))
-	    )
-	(progn (switch-to-buffer-other-window "*Python*")
-	       (end-of-buffer)
-	       (evil-insert-state)))
+          (if (not (one-window-p))
+              (progn (bury-buffer)
+                     (delete-window))
+            )
+        (progn (switch-to-buffer-other-window "*Python*")
+               (end-of-buffer)
+               (evil-insert-state)))
     (progn
       (run-python)
       (switch-to-buffer-other-window "*Python*")
@@ -78,7 +78,7 @@ similar to shell-pop"
       (evil-insert-state))))
 ```
 
-如果没有使用Evil,可以把 **(evil-insert-state)**去掉
+如果没有使用Evil,可以把 \*(evil-insert-state)\*去掉
 
 
 ### <span class="section-num">2.2</span> Ipython History {#ipython-history}

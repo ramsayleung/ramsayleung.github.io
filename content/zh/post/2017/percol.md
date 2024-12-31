@@ -1,15 +1,15 @@
 +++
 title = "Linux/Unix Shell 二三事之神器percol"
 description = "An introduction about percol"
-date = 2017-02-22T00:00:00+08:00
-lastmod = 2022-02-23T22:20:18+08:00
+date = 2017-02-13T00:00:00-08:00
+lastmod = 2024-12-31T12:18:10-08:00
 tags = ["linux", "shell"]
 categories = ["linux"]
 draft = false
 toc = true
 +++
 
-[Percol](https://github.com/mooz/percol) 是Emacs 的一个非常优秀package:js2-mode作者mooz 的又一力作得益于Unix Shell的管道和重定向设计理念，percol 所有的输入输出变得可交互 percol 给我一种很熟悉的感觉，就是 Eamcs 中helm 增量补全 (incremental completion)的感觉，真的可以10倍提高工作效率。
+[Percol](https://github.com/mooz/percol) 是Emacs 的一个非常优秀package, js2-mode作者mooz 的又一力作得益于Unix Shell的管道和重定向设计理念，percol 所有的输入输出变得可交互 percol 给我一种很熟悉的感觉，就是 Eamcs 中helm 增量补全 (incremental completion)的感觉，真的可以10倍提高工作效率。
 
 
 ## <span class="section-num">1</span> 例子 {#例子}
@@ -29,19 +29,19 @@ $ git checkout $(git branch|percol)
 ```shell
 function ppgrep() {
     if [[ $1 == "" ]]; then
-	PERCOL=percol
+        PERCOL=percol
     else
-	PERCOL="percol --query $1"
+        PERCOL="percol --query $1"
     fi
     ps aux | eval $PERCOL | awk '{ print $2 }'
 }
 
 function ppkill() {
     if [[ $1 =~ "^-" ]]; then
-	QUERY=""            # options only
+        QUERY=""            # options only
     else
-	QUERY=$1            # with a query
-	[[ $# > 0 ]] && shift
+        QUERY=$1            # with a query
+        [[ $# > 0 ]] && shift
     fi
     ppgrep $QUERY | xargs kill $*
 }
@@ -54,11 +54,11 @@ function exists { which $1 &> /dev/null }
 
 if exists percol; then
     function percol_select_history() {
-	local tac
-	exists gtac && tac="gtac" || { exists tac && tac="tac" || { tac="tail -r" } }
-	BUFFER=$(fc -l -n 1 | eval $tac | percol --query "$LBUFFER")
-	CURSOR=$#BUFFER         # move cursor
-	zle -R -c               # refresh
+        local tac
+        exists gtac && tac="gtac" || { exists tac && tac="tac" || { tac="tail -r" } }
+        BUFFER=$(fc -l -n 1 | eval $tac | percol --query "$LBUFFER")
+        CURSOR=$#BUFFER         # move cursor
+        zle -R -c               # refresh
     }
 
     zle -N percol_select_history
@@ -70,25 +70,27 @@ fi
 ### <span class="section-num">1.1</span> 运行截图 {#运行截图}
 
 [![](/ox-hugo/percol1.png)](/ox-hugo/percol1.png)
-有时候，我需要复制当前目录下，某个文件的路径，但是无论是文件管理器，还是shell都要用鼠标来复制指定文件的路径，效率不高且很不方便。在 [陈斌](http://blog.binchen.org/posts/how-to-use-git-effectively.html) 代码的启发下，我自己写了一个函数来复制当前文件夹某个特定目录的路径，很方便地解决了问题：
+有时候，我需要复制当前目录下，某个文件的路径，但是无论是文件管理器，还是shell都要用鼠标来复制指定文件的路径，效率不高且很不方便。
+
+在 [陈斌](http://blog.binchen.org/posts/how-to-use-git-effectively.html) 代码的启发下，我自己写了一个函数来复制当前文件夹某个特定目录的路径，很方便地解决了问题：
 
 ```shell
 OS_NAME=`uname`
 function pclip() {
     if [ $OS_NAME = "CYGWIN" ]; then
-	putclip "$@";
+        putclip "$@";
     elif [ $OS_NAME = "Darwin" ]; then
-	pbcopy "$@";
+        pbcopy "$@";
     else
-	if [ -x /usr/bin/xsel ]; then
-	    xsel -ib "$@";
-	else
-	    if [ -x /usr/bin/xclip ]; then
-		xclip -selection c "$@";
-	    else
-		echo "Neither xsel or xclip is installed!"
-	    fi
-	fi
+        if [ -x /usr/bin/xsel ]; then
+            xsel -ib "$@";
+        else
+            if [ -x /usr/bin/xclip ]; then
+                xclip -selection c "$@";
+            else
+                echo "Neither xsel or xclip is installed!"
+            fi
+        fi
     fi
 }
 

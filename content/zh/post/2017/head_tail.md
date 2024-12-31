@@ -1,8 +1,8 @@
 +++
 title = "Linux/Unix Shell 二三事之过滤器head+tail"
 description = "An introduction about head and tail"
-date = 2017-02-22T00:00:00+08:00
-lastmod = 2022-02-23T19:51:45+08:00
+date = 2017-02-17T00:00:00-08:00
+lastmod = 2024-12-31T12:18:30-08:00
 tags = ["shell", "linux", "command_line"]
 categories = ["linux"]
 draft = false
@@ -40,7 +40,7 @@ $ tail [-n line] data
 
 你可能觉得 **head** **tail** 两个命令很简单，似乎用处不大。
 
-是的，就笔者一直所介绍的那样，单个unix命令只是完成一个特定的工作，但是当它们组合起来的时候，就很威力无穷了
+是的，就我一直所介绍的那样，单个unix命令只是完成一个特定的工作，但是当它们组合起来的时候，就很威力无穷了
 
 
 ### <span class="section-num">2.1</span> 场景1 {#场景1}
@@ -55,7 +55,7 @@ $ cat /dev/urandom | tr -cd "[[:alnum:]]" |head -c 32;echo
 
 在Unix/Linux 的机器下，运行上面的命令就可以生成一个包含数字和字母的32个字符长的密钥了。
 
-/dev/urandom 是一个可以通过收集硬件驱动的环境噪音来产生伪随机数特殊的文件，tr 是转换和删除字符的命令；更多详细的东西，以后笔者会慢慢介绍滴
+/dev/urandom 是一个可以通过收集硬件驱动的环境噪音来产生伪随机数特殊的文件，tr 是转换和删除字符的命令；更多详细的东西，以后我会慢慢介绍滴
 
 
 ### <span class="section-num">2.2</span> 场景2 {#场景2}
