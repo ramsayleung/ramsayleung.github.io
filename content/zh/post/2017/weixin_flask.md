@@ -1,8 +1,8 @@
 +++
 title = "flask牛刀小试之微信公众号开发"
 description = "An flask project"
-date = 2017-02-23T00:00:00+08:00
-lastmod = 2022-02-23T22:37:41+08:00
+date = 2017-02-23T00:00:00-08:00
+lastmod = 2024-12-30T22:32:24-08:00
 tags = ["python", "flask"]
 categories = ["python"]
 draft = false
@@ -25,7 +25,8 @@ toc = true
 | nonce     | 随机数                                                    |
 | echostr   | 随机字符串                                                |
 
-校验流程：加密/校验流程如下：
+校验流程：
+加密/校验流程如下：
 
 1.  将token、timestamp、nonce三个参数进行字典序排序
 2.  将三个参数字符串拼接成一个字符串进行sha1加密
@@ -35,26 +36,26 @@ toc = true
 
 ```python
 @app.route('/',methods=['GET','POST'])
-	def wechat():
-	if request.method=='GET':
-	    token='your token'
-	    data=request.args
-	    signature=data.get('signature','')
-	    timestamp=data.get('timestamp','')
-	    nonce =data.get('nonce','')
-	    echostr=data.get('echostr','')
-	    s=[timestamp,nonce,token]
-	    s.sort()
-	    s=''.join(s)
-	if(hashlib.sha1(s).hexdigest()==signature):
-	return make_response(echostr)
-	else:
-	    rec=request.stream.read()
-	    xml_rec=ET.fromstring(rec)
-	    tou = xml_rec.find('ToUserName').text
-	    fromu = xml_rec.find('FromUserName').text
-	    content = xml_rec.find('Content').text
-	    xml_rep = "
+        def wechat():
+        if request.method=='GET':
+            token='your token'
+            data=request.args
+            signature=data.get('signature','')
+            timestamp=data.get('timestamp','')
+            nonce =data.get('nonce','')
+            echostr=data.get('echostr','')
+            s=[timestamp,nonce,token]
+            s.sort()
+            s=''.join(s)
+        if(hashlib.sha1(s).hexdigest()==signature):
+        return make_response(echostr)
+        else:
+            rec=request.stream.read()
+            xml_rec=ET.fromstring(rec)
+            tou = xml_rec.find('ToUserName').text
+            fromu = xml_rec.find('FromUserName').text
+            content = xml_rec.find('Content').text
+            xml_rep = "
 <xml>
 <ToUserName><![CDATA[%s]]></ToUserName>
 <FromUserName><![CDATA[%s]]></FromUserName>
@@ -89,4 +90,4 @@ toc = true
 
 感觉这次开发公众号，笔者就是用 flask 编写 restful api, 然后做的其他事情就是编写爬虫。
 
-[项目github地址](https://github.com/samrayleung/SamrayJustForFun)
+[项目github地址](https://github.com/ramsayleung/SamrayJustForFun)

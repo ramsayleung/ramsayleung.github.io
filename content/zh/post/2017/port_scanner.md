@@ -1,8 +1,8 @@
 +++
 title = "Python多线程端口扫描器"
 description = "An introduction about port scan"
-date = 2017-03-19T00:00:00+08:00
-lastmod = 2022-02-23T22:26:46+08:00
+date = 2017-03-19T00:00:00-07:00
+lastmod = 2024-12-30T22:35:12-08:00
 tags = ["python", "network", "tool"]
 categories = ["network"]
 draft = false
@@ -39,14 +39,14 @@ toc = true
 def scan(self, args):
     host, port = args
     try:
-	# Create a TCP socket and try to connect
-	# AF_INET for ipv4,AF_INET6 for ipv6
-	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	sock.connect((host, port))
-	sock.close()
-	return host, port, True
+        # Create a TCP socket and try to connect
+        # AF_INET for ipv4,AF_INET6 for ipv6
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect((host, port))
+        sock.close()
+        return host, port, True
     except (socket.timeout, socket.error):
-	return host, port, False
+        return host, port, False
 ```
 
 因为原理很简单，所以核心代码也是很简洁的，只是建立 `socket` 然后进行连接，如果连接不上，就很大几率说明端口是关闭的 (并不是绝对的，例如socket超时的异常可能就是因为网络异常，不一定是目标机器的缘故)
@@ -74,7 +74,7 @@ def scan(self, args):
 
 1.  SYN+ACK
 
-    那么现在再回到SYN扫描上来.如果在发送第一次握手的 `SYN` flag 时，目标机器回复了`SYN+ACK`,这不就说明笔者发送的TCP包中的目标端口是开放的么！如果不开放，服务器就不会期待第三次握手了，也不会给笔者发送 `SYN+ACK` 了；如图：
+    那么现在再回到SYN扫描上来.如果在发送第一次握手的 `SYN` flag 时，目标机器回复了=SYN+ACK=,这不就说明笔者发送的TCP包中的目标端口是开放的么！如果不开放，服务器就不会期待第三次握手了，也不会给笔者发送 `SYN+ACK` 了；如图：
 
     {{< figure src="http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/uploads/101613_1123_PortScannin3.jpg" >}}
 
@@ -110,29 +110,29 @@ def scan(self, args):
     dst_ip, dst_port = args
     src_port = RandShort()
     answered, unanswered = sr(IP(dst=dst_ip) / TCP(sport=src_port,
-						   dport=dst_port, flags="S"),
-			  timeout=self.timeout, verbose=False)
+                                                   dport=dst_port, flags="S"),
+                          timeout=self.timeout, verbose=False)
     for packet in unanswered:
-	return packet.dst, packet.dport, "Filtered"
+        return packet.dst, packet.dport, "Filtered"
 
     for (send, recv) in answered:
-	if(recv.haslayer(TCP)):
-	    flags = recv.getlayer(TCP).sprintf("%")
-	    if(flags == "SA"):
-		# set RST to server in case of ddos attack
-		send_rst = sr(IP(dst=dst_ip) / TCP(sport=src_port,
-						   dport=dst_port, flags="R"),
-			  timeout=self.timeout, verbose=True)
-		return dst_ip, dst_port, "Open"
-	    elif (flags == "RA" or flags == "R"):
-		return dst_ip, dst_port, "Closed"
-	elif(recv.haslayer(ICMP)):
-	    icmp_type = recv.getlayer(ICMP).type
-	    icmp_code = recv.getlayer(ICMP).code
-	    if(icmp_type == ICMP_TYPE_DESTINATION_UNREACHABLE and icmp_code in ICMP_CODE):
-		return dst_ip, dst_port, "Filtered"
-	else:
-	    return dst_ip, dst_port, "CHECK"
+        if(recv.haslayer(TCP)):
+            flags = recv.getlayer(TCP).sprintf("%flags%")
+            if(flags == "SA"):
+                # set RST to server in case of ddos attack
+                send_rst = sr(IP(dst=dst_ip) / TCP(sport=src_port,
+                                                   dport=dst_port, flags="R"),
+                          timeout=self.timeout, verbose=True)
+                return dst_ip, dst_port, "Open"
+            elif (flags == "RA" or flags == "R"):
+                return dst_ip, dst_port, "Closed"
+        elif(recv.haslayer(ICMP)):
+            icmp_type = recv.getlayer(ICMP).type
+            icmp_code = recv.getlayer(ICMP).code
+            if(icmp_type == ICMP_TYPE_DESTINATION_UNREACHABLE and icmp_code in ICMP_CODE):
+                return dst_ip, dst_port, "Filtered"
+        else:
+            return dst_ip, dst_port, "CHECK"
 ```
 
 核心代码很简单，就是发送建立连接的握手请求，然后根据不同的返回结果判断不同的状态。
@@ -152,7 +152,7 @@ def scan(self, args):
 
 当然你如果不想针对各种扫描都写一个扫描器，你可以使用 [nmap](https://nmap.org/) 这个地球最强大的扫描器 (没有之一). 在Python也已经有与nmap整合的强大的包 [python-nmap](http://xael.org/pages/python-nmap-en.html)
 
-扫描器完整代码地址 <https://github.com/samrayleung/PortScanner>
+扫描器完整代码地址 <https://github.com/ramsayleung/PortScanner>
 
 ---
 

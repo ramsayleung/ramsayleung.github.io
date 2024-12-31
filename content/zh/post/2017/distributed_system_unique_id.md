@@ -1,9 +1,9 @@
 +++
 title = "关于分布式系统唯一ID的探究"
 description = "An discussion about unique id in distributed system"
-date = 2017-05-23T00:00:00+08:00
+date = 2017-05-23T00:00:00-07:00
 keywords = ["uuid", "java"]
-lastmod = 2022-02-23T19:03:46+08:00
+lastmod = 2024-12-30T22:34:05-08:00
 tags = ["java", "algorithm", "distributed_system", "design"]
 categories = ["algorithm"]
 draft = false
@@ -22,14 +22,14 @@ toc = true
 -   Twitter 的 Snowflake 算法
 -   Boundary 的 flake 算法
 
-其中 UUID 生成的 ID 是字符串＋数字，不适用； ticket server 的做法略麻烦，笔者
+其中 UUID 生成的 ID 是字符串＋数字，不适用； ticket server 的做法略麻烦，我
 并不想为了个 ID 还要去访问中央服务器；剩下就是 Snowflake 和 flake 算法，
-flake 算法生成的是 128 位的 ID, 略长；所以最后笔者选择了 Snowflake 算法。
+flake 算法生成的是 128 位的 ID, 略长；所以最后我选择了 Snowflake 算法。
 
 
 ## <span class="section-num">2</span> Snowflake 算法实现 {#snowflake-算法实现}
 
-本来 Twitter 的算法是有相应实现的，不过后来删除了；笔者就只好自己卷起袖子自己 实现了:(
+本来 Twitter 的算法是有相应实现的，不过后来删除了；我就只好自己卷起袖子自己 实现了:(
 
 虽说 Twitter 没有了相应的实现，但是 Snowflake 算法原理很简单，实现起来并不难.
 
@@ -81,22 +81,22 @@ public void generateId(){
 protected long getMachineId() throws GetHardwareIdFailedException {
 
     try {
-	InetAddress ip = InetAddress.getLocalHost();
-	NetworkInterface network = NetworkInterface.getByInetAddress(ip);
-	long id;
-	if (network == null) {
-	    id = 1;
-	} else {
-	    byte[] mac = network.getHardwareAddress();
-	    id =
-		((0x000000FF & (long) mac[mac.length - 1]) |
-		 (0x0000FF00 & (((long) mac[mac.length - 2]) << 8))) >> 6;
-	}
-	return id;
+        InetAddress ip = InetAddress.getLocalHost();
+        NetworkInterface network = NetworkInterface.getByInetAddress(ip);
+        long id;
+        if (network == null) {
+            id = 1;
+        } else {
+            byte[] mac = network.getHardwareAddress();
+            id =
+                ((0x000000FF & (long) mac[mac.length - 1]) |
+                 (0x0000FF00 & (((long) mac[mac.length - 2]) << 8))) >> 6;
+        }
+        return id;
     } catch (SocketException e) {
-	throw new GetHardwareIdFailedException(e);
+        throw new GetHardwareIdFailedException(e);
     } catch (UnknownHostException e) {
-	throw new GetHardwareIdFailedException(e);
+        throw new GetHardwareIdFailedException(e);
     }
 }
 ```
@@ -131,81 +131,81 @@ public class IdGenerator {
     private static volatile IdGenerator  instance;
 
     public static IdGenerator getInstance() throws Exception {
-	IdGenerator generator=instance;
-	if (instance == null) {
-	    synchronized(lock){
-		generator=instance;
-		if(generator==null){
-		    generator=new IdGenerator();
-		    instance=generator;
-		}
-	    }
-	}
-	return generator;
+        IdGenerator generator=instance;
+        if (instance == null) {
+            synchronized(lock){
+                generator=instance;
+                if(generator==null){
+                    generator=new IdGenerator();
+                    instance=generator;
+                }
+            }
+        }
+        return generator;
     }
 
     private IdGenerator() throws Exception {
-	machineId = getMachineId();
-	if (machineId > MaxMachineId || machineId < 0) {
-	    throw new Exception("machineId > MaxMachineId");
-	}
+        machineId = getMachineId();
+        if (machineId > MaxMachineId || machineId < 0) {
+            throw new Exception("machineId > MaxMachineId");
+        }
     }
 
     public synchronized Long generateLongId() throws Exception {
-	long timestamp = System.currentTimeMillis();
-	if (timestamp < lastTimestamp) {
-	    throw new Exception(
-				"Clock moved backwards.  Refusing to generate id for " + (
-											  lastTimestamp - timestamp) + " milliseconds.");
-	}
-	if (lastTimestamp == timestamp) {
-	    sequence = (sequence + 1) % sequenceMax;
-	    if (sequence == 0) {
-		timestamp = tillNextMillis(lastTimestamp);
-	    }
-	} else {
-	    sequence = 0;
-	}
-	lastTimestamp = timestamp;
-	Long id = ((timestamp - twepoch) << timestampLeftShift) |
-	    (machineId << machineIdShift) |
-	    sequence;
-	return id;
+        long timestamp = System.currentTimeMillis();
+        if (timestamp < lastTimestamp) {
+            throw new Exception(
+                                "Clock moved backwards.  Refusing to generate id for " + (
+                                                                                          lastTimestamp - timestamp) + " milliseconds.");
+        }
+        if (lastTimestamp == timestamp) {
+            sequence = (sequence + 1) % sequenceMax;
+            if (sequence == 0) {
+                timestamp = tillNextMillis(lastTimestamp);
+            }
+        } else {
+            sequence = 0;
+        }
+        lastTimestamp = timestamp;
+        Long id = ((timestamp - twepoch) << timestampLeftShift) |
+            (machineId << machineIdShift) |
+            sequence;
+        return id;
     }
 
     protected long tillNextMillis(long lastTimestamp) {
-	long timestamp = System.currentTimeMillis();
-	while (timestamp <= lastTimestamp) {
-	    timestamp = System.currentTimeMillis();
-	}
-	return timestamp;
+        long timestamp = System.currentTimeMillis();
+        while (timestamp <= lastTimestamp) {
+            timestamp = System.currentTimeMillis();
+        }
+        return timestamp;
     }
 
     protected long getMachineId() throws GetHardwareIdFailedException {
 
-	try {
-	    InetAddress ip = InetAddress.getLocalHost();
-	    NetworkInterface network = NetworkInterface.getByInetAddress(ip);
-	    long id;
-	    if (network == null) {
-		id = 1;
-	    } else {
-		byte[] mac = network.getHardwareAddress();
-		id =
-		    ((0x000000FF & (long) mac[mac.length - 1]) |
-		     (0x0000FF00 & (((long) mac[mac.length - 2]) << 8))) >> 6;
-	    }
-	    return id;
-	} catch (SocketException e) {
-	    throw new GetHardwareIdFailedException(e);
-	} catch (UnknownHostException e) {
-	    throw new GetHardwareIdFailedException(e);
-	}
+        try {
+            InetAddress ip = InetAddress.getLocalHost();
+            NetworkInterface network = NetworkInterface.getByInetAddress(ip);
+            long id;
+            if (network == null) {
+                id = 1;
+            } else {
+                byte[] mac = network.getHardwareAddress();
+                id =
+                    ((0x000000FF & (long) mac[mac.length - 1]) |
+                     (0x0000FF00 & (((long) mac[mac.length - 2]) << 8))) >> 6;
+            }
+            return id;
+        } catch (SocketException e) {
+            throw new GetHardwareIdFailedException(e);
+        } catch (UnknownHostException e) {
+            throw new GetHardwareIdFailedException(e);
+        }
     }
 }
 ```
 
-正如笔者所言，算法并不难，就是分别获取时间戳， mac 地址，和递增序列号，然后移位得到 ID. 但是在具体的实现中还是有一些需要注意的细节的。
+正如我所言，算法并不难，就是分别获取时间戳， mac 地址，和递增序列号，然后移位得到 ID. 但是在具体的实现中还是有一些需要注意的细节的。
 
 
 #### <span class="section-num">2.3.1</span> 线程同步 {#线程同步}
@@ -223,7 +223,7 @@ public class IdGenerator {
 if (lastTimestamp == timestamp) {
     sequence = (sequence + 1) % sequenceMax;
     if (sequence == 0) {
-	timestamp = tillNextMillis(lastTimestamp);
+        timestamp = tillNextMillis(lastTimestamp);
     }
 }
 ```
@@ -233,4 +233,6 @@ if (lastTimestamp == timestamp) {
 
 ## <span class="section-num">3</span> 小结 {#小结}
 
-算法虽然简单，但是在找到 Snowflake 算法之前，笔者尝试了挺多的算法，但是都是因为不符合要求而被一一否决， 而 Snowflake 算法虽然简单，但是胜在实用。最后附上我写的 snowflake 算法的 Python 实现： [Snowfloke](https://github.com/samrayleung/snowflake)
+算法虽然简单，但是在找到 Snowflake 算法之前，我尝试了挺多的算法，但是都是因为不符合要求而被一一否决， 而 Snowflake 算法虽然简单，但是胜在实用。
+
+最后附上我写的 snowflake 算法的 Python 实现： [Snowfloke](https://github.com/ramsayleung/snowflake)
