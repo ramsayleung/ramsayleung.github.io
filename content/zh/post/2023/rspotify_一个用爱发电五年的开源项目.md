@@ -1,11 +1,12 @@
 +++
 title = "RSpotify: 一个用爱发电五年的开源项目"
-date = 2023-02-07T15:40:00+08:00
-lastmod = 2023-02-10T10:37:29+08:00
+date = 2023-02-07T15:40:00-08:00
+lastmod = 2024-12-30T22:28:48-08:00
 tags = ["rspotify", "rust"]
 categories = ["rspotify"]
 draft = false
 toc = true
+highlighted = true
 +++
 
 ## <span class="section-num">1</span> 前言 {#前言}
@@ -44,13 +45,14 @@ toc = true
 
 当时看到个网易云音乐命令行版本的播放器 [musicbox](https://github.com/darknessomi/musicbox), 当时我在用的是Spotify，就希望可以为Spotify写个类似的播放器。
 
-{{< figure src="/ox-hugo/musicbox.gif" link="/ox-hugo/musicbox.gif" >}}
-
 虽说Spotify API是对外开放，但直接使用HttpClient来请求HTTP API有点太祼，所以就希望使用先封装个library，方便后续的Rust应用直接调用，就不需要自己操心Http请求了。
 
 这就是RSpotify这个库的来源。
 
-这次，我就只在 [Reddit](https://www.reddit.com/r/rust/comments/7xn9mh/my_first_crate_rspotify_spotify_api_wrapper/)和[博客](https://ramsayleung.github.io/post/2018/rspotify/) 上分享使用Rust来写library 的经历了。
+这次，我就只在 Reddit和博客 上分享使用Rust来写library 的经历了。
+
+-   Reddit: [My first crate-- rspotify, Spotify API wrapper implemented in Rust](https://www.reddit.com/r/rust/comments/7xn9mh/my_first_crate_rspotify_spotify_api_wrapper/)
+-   博客: [RSpotify– 我的第一个Rust crate](https://ramsayleung.github.io/zh/post/2018/rspotify/)
 
 
 ## <span class="section-num">3</span> 演进 {#演进}
@@ -87,13 +89,13 @@ toc = true
 
 自此之后，Rust社区在做的事情，就是把已有Rust代码疯狂升级到async await，RSpotify虽迟，但也赶上了这波潮流。
 
-当时RSpotify 请求Spotify的API使用的HTTP库是 `reqwest`，在 `reqwest` 支持异步模式之后，开发者 [Alexander](https://github.com/Rigellute)就提了一个超大的[PR](https://github.com/ramsayleung/rspotify/pull/81)，把所有已有的api全部修改成`async`, 我就乐见其成，就把这个PR合并了。
+当时RSpotify 请求Spotify的API使用的HTTP库是 `reqwest=，在 =reqwest` 支持异步模式之后，开发者 [Alexander](https://github.com/Rigellute)就提了一个超大的[PR](https://github.com/ramsayleung/rspotify/pull/81)，把所有已有的api全部修改成=async=, 我就乐见其成，就把这个PR合并了。
 
 {{< figure src="/ox-hugo/add_async_await_1.png" link="/ox-hugo/add_async_await_1.png" >}}
 
 有社区的同学抱怨说异步模式的代码不好使用，他对性能没有什么要求，能否保留同步模式的接口调用。
 
-后来为了兼顾同步模式和异步模式这两种调用方式，Alexander 又提了一个超大超大的[PR](https://github.com/ramsayleung/rspotify/pull/82/files)，把现有的异步模式代码复制一份，然后把`async` 关键字去掉。
+后来为了兼顾同步模式和异步模式这两种调用方式，Alexander 又提了一个超大超大的[PR](https://github.com/ramsayleung/rspotify/pull/82/files)，把现有的异步模式代码复制一份，然后把=async= 关键字去掉。
 
 {{< figure src="/ox-hugo/add_async_await_2.png" link="/ox-hugo/add_async_await_2.png" >}}
 
@@ -115,24 +117,24 @@ toc = true
 // 异步代码
 async fn original() -> Result<String, reqwest::Error> {
     reqwest::get("https://www.rust-lang.org")
-	.await?
-	.text()
-	.await
+        .await?
+        .text()
+        .await
 }
 
 lazy_static! {
     // Mutex to have mutable access and Arc so that it's thread-safe.
     static ref RT: Arc<Mutex<runtime::Runtime>> = Arc::new(Mutex::new(runtime::Builder::new()
-								      .basic_scheduler()
-								      .enable_all()
-								      .build()
-								      .unwrap()));
+                                                                      .basic_scheduler()
+                                                                      .enable_all()
+                                                                      .build()
+                                                                      .unwrap()));
 }
 
 // 同步版本代码
 fn with_block_on() -> Result<String, reqwest::Error> {
     RT.lock().unwrap().block_on(async move {
-	original().await
+        original().await
     })
 }
 ```
@@ -142,7 +144,7 @@ fn with_block_on() -> Result<String, reqwest::Error> {
 但实际上，发现编写[macro太复杂](https://github.com/ramsayleung/rspotify/pull/120)，并且这种方案不够灵活，实现起来也相当复杂。
 
 然后Mario 又调研出一种[新方案](https://github.com/ramsayleung/rspotify/pull/129)，通过 [`maybe_async`](https://github.com/fMeow/maybe-async-rs) 这个库在同步和异步模式之间切换。
-默认是异步模式，但可以通过 `features = ["is_sync"]` 编译选项来切换到同步模式，`maybe_async` 就会把所有的`async/await` 关键字给去掉。
+默认是异步模式，但可以通过 `features = ["is_sync"]` 编译选项来切换到同步模式，=maybe_async= 就会把所有的=async/await= 关键字给去掉。
 
 这个方案简单，可读性高，易于扩展，也不需要维护复杂的 macro 代码。
 
@@ -158,7 +160,7 @@ fn with_block_on() -> Result<String, reqwest::Error> {
 
 {{< figure src="/ox-hugo/meta-issue.png" link="/ox-hugo/meta-issue.png" >}}
 
-这么多的优化建议，可以看出Kestrer真的花了很多时间来阅读和改善RSpotify的代码，盛情难却（可见原来的代码是~~多烂~~, 有非常多激发社区同学参与改进的空间）.
+这么多的优化建议，可以看出Kestrer真的花了很多时间来阅读和改善RSpotify的代码，盛情难却（可见原来的代码是+多烂+, 有非常多激发社区同学参与改进的空间）.
 
 别人指出问题，就要好好优化。
 
@@ -233,7 +235,7 @@ fn with_block_on() -> Result<String, reqwest::Error> {
 想到的点：
 
 1.  使用Rust的macro来减少copy-paste的代码（但复杂的 macro，基本不具备可读性。）
-2.  使用serde 自定义序列化函数；
+2.  使用 serde 自定义序列化函数；
 3.  以workspace 模式管理多个crates;
 4.  编写 async/await 的异步代码；
 5.  使用标准库的Trait, 风格契合标准库；
@@ -269,8 +271,6 @@ fn with_block_on() -> Result<String, reqwest::Error> {
 2.  我们做了个好东西，我们要抢占市场。我们就开源，搞人海战术，让竞品淹没在人民群众的汪洋大海中，让我们的东西成为事实的标准。（Android，Chromium, Kubernetes, Vscode）
 3.  就想开源让你们见识下大佬是怎么样子的。
 
-个人理解，****开源是「手段」，而非「目的」****
-
 对于商业公司而言，如果没有收益，为什么要把花钱雇的人写的内部组件开源出来呢？总不成是为了在B站上博取小朋友的称赞吧。
 
 而公司内部的组件，往往是与业务共生，高度适配的，藕断丝连，没有那么容易开源的。
@@ -288,7 +288,7 @@ fn with_block_on() -> Result<String, reqwest::Error> {
 
 ### <span class="section-num">4.4</span> 些许成果 {#些许成果}
 
-在Github上，收获了495个star，被1108个仓库及18个package 所依赖，而其中Alexander的 [spotify-tui](https://github.com/Rigellute/spotify-tui) 就是我期望做的终端版本的Spotify。
+在Github上，被1108个仓库及18个package 所依赖，而其中Alexander的 [spotify-tui](https://github.com/Rigellute/spotify-tui) 就是我期望做的终端版本的Spotify。
 
 开源的好处就是，在开发好基础设施之后，自然就会有其他有相同想法的同学，把应用开发出来。
 
@@ -298,7 +298,7 @@ crates.io 的统计，总计被下载23w次，当然包括很多CI的重复下�
 
 {{< figure src="/ox-hugo/stats.png" link="/ox-hugo/stats.png" >}}
 
-对于有Rust，Spotify，Library等诸多定语的RSpotify来说，目标受众本来就不多，能有现在这样的用户量已远超我最初了预期了。
+对于有Rust，Spotify，Library等诸多定语的RSpotify来说，目标受众本来就不多，能有现在这样的用户量也算是个挺不错的成果了。
 
 
 ## <span class="section-num">5</span> 总结 {#总结}
@@ -307,13 +307,10 @@ crates.io 的统计，总计被下载23w次，当然包括很多CI的重复下�
 
 天上的云，飘来又飘走；开源的项目，挖坑又弃坑。
 
-视线望不到下一个五年，唯有且行且看。
+视线望不穿下一个五年，唯有且行且看。
 
 
 ## <span class="section-num">6</span> 参考 {#参考}
 
 -   [Spotify is first music streaming service to surpass 200M paid subscribers](https://www.theverge.com/2023/1/31/23577499/spotify-q4-2022-earnings-release-subscriber-growth-layoffs)
 -   [RSpotify](https://github.com/ramsayleung/rspotify)
--   [The lesson learned from refactoring rspotify](https://ramsayleung.github.io/post/2020/serde_lesson/)
--   [Let's make everything iterable](https://ramsayleung.github.io/post/2021/iterate_through_pagination_api/)
--   [spotify-tui](https://github.com/Rigellute/spotify-tui)
