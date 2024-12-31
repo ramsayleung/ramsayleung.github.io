@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Mon, 30 Dec 2024 21:47:59 -0800</lastBuildDate>
+    <lastBuildDate>Mon, 30 Dec 2024 23:23:40 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/categories/summary/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>编程十年的感悟</title>
@@ -1534,39 +1534,68 @@ Tyrion Lannister所说的那般, 好脑筋需要书本, 就如同宝剑需要磨
 ]]></content:encoded>
     </item>
     <item>
-      <title>写博客的动机</title>
-      <link>https://ramsayleung.github.io/zh/post/2017/blog/</link>
-      <pubDate>Sun, 17 Sep 2017 10:36:00 -0700</pubDate>
-      <guid>https://ramsayleung.github.io/zh/post/2017/blog/</guid>
-      <description>1 博客迁移 我将博客从 org-page 搭建的 Github Page 迁移到现在的博客上，原来基于 Gtihub Page，使用 Emacs, org-mode 和 org-page 的博客其实也相当好用，只是某一些我想要的功能却缺失，所以</description>
-      <content:encoded><![CDATA[<h2 id="博客迁移"><span class="section-num">1</span> 博客迁移</h2>
-<p>我将博客从 <a href="https://github.com/emacsorphanage/org-page">org-page</a> 搭建的 <a href="https://github.com/ramsayleung/samrayleung.github.io/">Github Page</a> 迁移到现在的<a href="https://github.com/ramsayleung/blog">博客</a>上，原来基于 Gtihub Page，使用 Emacs, org-mode 和 org-page 的博客其实也相当好用，只是某一些我想要的功能却缺失，所以我就自己花时间动手写了现在这个博客，并且将原来的博文迁移</p>
-<p>当时 <a href="https://github.com/emacsorphanage/org-page">org-page</a> bug不少，支持不是很及时，虽然org-mode很好用，但最后走到自建的博客的路子上。</p>
-<p>使用Rust练手写的博客很不错，但是写作workflow 还不够滑顺，使用orgmode写作，导出为markdown；</p>
-<p>对于图片，只能先上传到图床，然后再插入到文章里面。</p>
-<hr>
-<p><span class="timestamp-wrapper"><span class="timestamp">&lt;2022-02-25 Fri&gt;</span></span></p>
-<p>没想到五年后，我又从自建的<a href="https://github.com/ramsayleung/blog/"> Blog</a>，又迁移回 <a href="https://ox-hugo.scripter.co/">ox-hugo</a> 驱动的Github Page。</p>
-<p>所以现在切换回Github Page，使用org-mode和ox-hugo, 不需要修改就可以直接把文章发布成博客，又可以愉快地写文章了。</p>
-<p>关于我现在的写作流，可以参考文章: <a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E5%86%99%E4%BD%9C%E6%B5%81/">《我的写作流》</a></p>
-<h2 id="为什么要写博客"><span class="section-num">2</span> 为什么要写博客</h2>
-<p>虽说我写博客的时间不长，但是当9月份为止，我已写了不少博文的。那么，为什么要写博文呢？</p>
-<p>很明显，这是一个费时费精力的工作，那么为什么我还要写呢？我自己思考过这个问题，我觉得，原因有下：</p>
-<h3 id="技术沉淀"><span class="section-num">2.1</span> 技术沉淀</h3>
-<p>在平时的工作生活中，我免不了会碰到种种问题，了解这些问题，思考解决方案并最终付诸行动，这本身就是一个学习和进步的过程。</p>
-<p>而把其中的想法感悟写成博文会更有益于我的技术沉淀</p>
-<h3 id="提高组织文字的能力"><span class="section-num">2.2</span> 提高组织文字的能力</h3>
-<p>对于很多工科生来说，不擅文字，不擅言语表达估计是他们撕不掉的标签之一，但是，学会 恰当地表达自己的想法是一项非常重要的技能，写博客可以提高自己的语言组织能力。</p>
-<p>此外， 一位前辈曾经告诫我，如果你连文字都没办法组织好，我怎么相信你可以把你的代码组织好呢？</p>
-<h3 id="便于了解自我"><span class="section-num">2.3</span> 便于了解自我</h3>
-<p>当在编写博客的时候，你会有诸多的想法和思考，然后你会把你的思考一点一滴付诸于笔尖， 你的博文越来越清晰了，你的自己的认识也会越来越清晰，你最终会了解到自己是一个什么样的人，喜欢做的事是什么，想要的又是什么？</p>
-<h3 id="分享与交流"><span class="section-num">2.4</span> 分享与交流</h3>
-<p>你有一个苹果，我有一个苹果，我们交换了苹果，我们还只是拥有一个苹果.</p>
-<p>但是，你有一种想法，我有一种想法，我们交换了想法，我们就有两个想法。</p>
-<p>写博客就是一种双向的交流方式，笔者介绍自己的观点，读者发表自己的评论，思想由此而激荡，甚至孕育出新的想法</p>
-<h2 id="结语"><span class="section-num">3</span> 结语</h2>
-<p>每个人总会有不同的想法，不同的际遇，如果你想和他人分享而不知从何言起，与何人言？
-何不付诸博客呢？</p>
+      <title>恰同学少年： 纪念我的大学时光</title>
+      <link>https://ramsayleung.github.io/zh/post/2018/farewell_to_my_university_time/</link>
+      <pubDate>Mon, 21 May 2018 18:25:00 -0700</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2018/farewell_to_my_university_time/</guid>
+      <description>1 前言 转眼到了5月，广州的夏天来的特别早。 学校的花已谢幕，而我在上个月已经拍完毕业照，在上星期已经完成了毕业答辨，如无意外，我大学的旅程已要</description>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
+<p>转眼到了5月，广州的夏天来的特别早。</p>
+<p>学校的花已谢幕，而我在上个月已经拍完毕业照，在上星期已经完成了毕业答辨，如无意外，我大学的旅程已要走到尽头。</p>
+<p>而我大一入学的场景还历历在目，恍如昨日。</p>
+<h2 id="迷茫"><span class="section-num">2</span> 迷茫</h2>
+<p>往事如烟，当初因高考失利(是个人都说自己失利, 这不禁让我想起了《肖申克的救赎》, 每个罪犯都自嘲说自己无罪)，入学时充满不甘。</p>
+<p>但是心知一切已成事实，我自己无论怎样不甘和愤懑，都是于事无补的。</p>
+<p>当时的我一心想要弥补当初的失利，只是不知道如何去规划，如何去做。</p>
+<p>开始时是效仿高中时的学习方法，好好上课，努力做题，大一上学期大半个学期就是这么度过的。</p>
+<p>只是这样无甚成效，也没有一个准确的评判标准来衡量我的努力。</p>
+<p>后来经常向助班师兄请教，希望师兄可以帮我走出困扰，与师兄聊了很多次，师兄建议我学好专业课，多实践, 学习计算机不能像高中那样学。</p>
+<h2 id="奋进"><span class="section-num">3</span> 奋进</h2>
+<p>助班师兄的建议以及身边同学的激励（业神在大一的时候已经可以自己编写绕过游戏的程序保护的游戏外挂，可以自己和大三的师兄组建工作室赚外快）让我有了方向.</p>
+<p>所以从大一下学期到大三上学期，我大部份时间都是在图书馆和工作室度过，
+在图书馆自学计算机系的专业课，从操作系统到计算机网络，再到数据库，而后在工作室中跟着其他师兄做各种项目。</p>
+<p>那些年在学校的图书馆还是借阅了很多书的，虽说有些只是借了之后就还回去了，但是大部份的书还是有看的，如图：</p>
+<figure>
+    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191104110628.png"
+         alt="Figure 1: 借书"/> <figcaption>
+            <p><span class="figure-number">Figure 1: </span>借书</p>
+        </figcaption>
+</figure>
+
+<p>大二寒暑假放假后，我都会留校去工作室写项目。</p>
+<p>记得大二那年的寒假，也就是2016年的春节前后，在广州下了雪（只不过山东的同学说那只能算是冰渣子），那时我骑车从宿舍去 工作室，每次都把手冻得通红。</p>
+<p>现在想来，真的感慨万分</p>
+<h2 id="机遇"><span class="section-num">4</span> 机遇</h2>
+<h3 id="创业公司"><span class="section-num">4.1</span> 创业公司</h3>
+<p>经过大一大二的恶补之后，我那时基本可以写些简单的项目了，正好那个时候同班的聪哥想要组队去参加比赛，就带上了我。</p>
+<p>聪哥负责移动端，我负责后端，我们一起写了个类似超级课程表简化版的APP参加比赛，
+幸运地拿了校内计算机比赛的冠军，后来我们那同样的作品去参加穗港澳的一个计算机比赛，也侥幸地拿了个三等奖。</p>
+<p>在颁奖典礼上，我偶遇了人生中 第一个大「Boss」&ndash; 老刘，老刘的 title 很多，只记得其中的几个：曾在上世纪90年代任职于微软，惠普华南区总裁，现在是美国一所大学的终身副教授，国内电子科技大学的教授。</p>
+<p>当时在颁奖典礼既技术分享沙龙上，老刘问了几个问题，在场的同学应该是过于羞涩，所以只有我举手回答。</p>
+<p>分享之后老刘就和我交流，当时老刘在一个深圳的创业公司担任VP, 交流过后就邀请我去他的公司实习，就这样我就在大二暑假的时候拿了第一份实习Offer.</p>
+<p>在老刘的教导下，实习的最大收获是视野和信心，看到很多学校老师不能教给我的东西，比如开发规范，上线流程等。</p>
+<p>在老刘的鼓励下，我觉得自己并不比其他人差。</p>
+<h3 id="阿里"><span class="section-num">4.2</span> 阿里</h3>
+<h4 id="蚂蚁金服"><span class="section-num">4.2.1</span> 蚂蚁金服</h4>
+<p>在大三下学期找实习的时候，在面蚂蚁金服的时候，幸运地通过内推面笔试，
+在一面二面技术面，面试官考察的问题我也恰好有了解过，就这样我就侥幸拿到名额不多的阿里实习Offer.</p>
+<p>在蚂蚁金服只是实习了一个暑假，具体的需求只是完成了两三个，
+更多地是在学习蚂蚁金服的技术体系，了解这么大用户量的公司的开发流程，如何在保证代码质量的前提下进行开发。</p>
+<h4 id="阿里大文娱"><span class="section-num">4.2.2</span> 阿里大文娱</h4>
+<p>在蚂蚁金服实习回来之后，已经大四的我不想在宿舍虚度光阴，因为我大四已经没有任何课了，所以我在广州另外找了个实习－－阿里大文娱－UC.</p>
+<p>是Kevin 把我招到UC 的，Kevin很看好我，把我安排到了新成立的核心组，是负责UC 国内业务的平台组，组里的目标是可以发展成可以支撑起100亿量级数据的平台，我入职的时候正是平台刚起步的时候，所以我算是见证了平台的负责。</p>
+<p>而在UC 的半年，是我技术成长最快的半年，Java 的GC, 平台的双活，控流，资源融断等高可用策略，分布式的存储和搜索（Hbase+ElasticSeach）到数据库的优化和基于 shardingKey 的分库分表。</p>
+<p>虽然我不是平台的核心开发者，但是作为参与者，我也是获益匪浅。</p>
+<p>4月底，实习近半年后，我拿到了UC 的Offer，只不过我最终离开了UC, 选择蚂蚁金服，我依然感谢UC 所有帮过我的同事。</p>
+<h2 id="展望"><span class="section-num">5</span> 展望</h2>
+<p>在我参加工作前的最后一个半月，我回到了宿舍，看我自己喜欢的动漫，
+看我自己喜欢的书，吹奏我喜欢的乐曲，登录上我5年没玩的游戏，折腾起如智力游戏般的CPP;</p>
+<p>在我还是学生时，做我自己喜欢的事。</p>
+<p>峥嵘四载，今再望，诸事宛如梦中。</p>
+<p>前路茫茫，不失辛酸与希望，突然想起高中英语口试前，用于设备测试的那句名言：</p>
+<blockquote>
+<p>生活就像海洋，只有意志坚强的人才能到达彼岸。</p>
+</blockquote>
 ]]></content:encoded>
     </item>
   </channel>
