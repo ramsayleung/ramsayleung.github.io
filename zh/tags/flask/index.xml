@@ -12,12 +12,12 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Wed, 23 Feb 2022 22:37:41 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 30 Dec 2024 22:32:24 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/flask/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>flask牛刀小试之微信公众号开发</title>
       <link>https://ramsayleung.github.io/zh/post/2017/weixin_flask/</link>
-      <pubDate>Thu, 23 Feb 2017 00:00:00 +0800</pubDate>
+      <pubDate>Thu, 23 Feb 2017 00:00:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/weixin_flask/</guid>
       <description>An flask project</description>
       <content:encoded><![CDATA[<p><a href="http://flask.pocoo.org/">flask</a> 是一个轻量级的python 框架(官网称为微型框架),很容易上手，之前因为笔者跟朋友开发小程序的时候使用过 flask,过后就遗忘了。</p>
@@ -50,7 +50,8 @@
 </tr>
 </tbody>
 </table>
-<p>校验流程：加密/校验流程如下：</p>
+<p>校验流程：
+加密/校验流程如下：</p>
 <ol>
 <li>将token、timestamp、nonce三个参数进行字典序排序</li>
 <li>将三个参数字符串拼接成一个字符串进行sha1加密</li>
@@ -91,26 +92,26 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
-</span></span><span class="line"><span class="cl">	<span class="k">def</span> <span class="nf">wechat</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="o">==</span><span class="s1">&#39;GET&#39;</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">token</span><span class="o">=</span><span class="s1">&#39;your token&#39;</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">data</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">args</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">signature</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;signature&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">timestamp</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestamp&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">nonce</span> <span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nonce&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">echostr</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;echostr&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">s</span><span class="o">=</span><span class="p">[</span><span class="n">timestamp</span><span class="p">,</span><span class="n">nonce</span><span class="p">,</span><span class="n">token</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">s</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">s</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span><span class="o">==</span><span class="n">signature</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="n">echostr</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">else</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">rec</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">xml_rec</span><span class="o">=</span><span class="n">ET</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">rec</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">tou</span> <span class="o">=</span> <span class="n">xml_rec</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;ToUserName&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">fromu</span> <span class="o">=</span> <span class="n">xml_rec</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;FromUserName&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">content</span> <span class="o">=</span> <span class="n">xml_rec</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Content&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">xml_rep</span> <span class="o">=</span> <span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">def</span> <span class="nf">wechat</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="o">==</span><span class="s1">&#39;GET&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">token</span><span class="o">=</span><span class="s1">&#39;your token&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">data</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">args</span>
+</span></span><span class="line"><span class="cl">            <span class="n">signature</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;signature&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">timestamp</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestamp&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">nonce</span> <span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nonce&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">echostr</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;echostr&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">s</span><span class="o">=</span><span class="p">[</span><span class="n">timestamp</span><span class="p">,</span><span class="n">nonce</span><span class="p">,</span><span class="n">token</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">s</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="n">s</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span><span class="o">==</span><span class="n">signature</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="n">echostr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">rec</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="n">xml_rec</span><span class="o">=</span><span class="n">ET</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">rec</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tou</span> <span class="o">=</span> <span class="n">xml_rec</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;ToUserName&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+</span></span><span class="line"><span class="cl">            <span class="n">fromu</span> <span class="o">=</span> <span class="n">xml_rec</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;FromUserName&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+</span></span><span class="line"><span class="cl">            <span class="n">content</span> <span class="o">=</span> <span class="n">xml_rec</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Content&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+</span></span><span class="line"><span class="cl">            <span class="n">xml_rep</span> <span class="o">=</span> <span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">xml</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">ToUserName</span><span class="o">&gt;&lt;</span><span class="err">!</span><span class="p">[</span><span class="n">CDATA</span><span class="p">[</span><span class="o">%</span><span class="n">s</span><span class="p">]]</span><span class="o">&gt;&lt;/</span><span class="n">ToUserName</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">FromUserName</span><span class="o">&gt;&lt;</span><span class="err">!</span><span class="p">[</span><span class="n">CDATA</span><span class="p">[</span><span class="o">%</span><span class="n">s</span><span class="p">]]</span><span class="o">&gt;&lt;/</span><span class="n">FromUserName</span><span class="o">&gt;</span>
@@ -131,7 +132,7 @@
 <p>有时无聊想去看电影，但是不知道看什么电影，因为选择太多，质量参差不齐的片太多了所以笔者会先去豆瓣看一下新上影的电影，看一下评分，然后再决定看什么电影。所以，笔者可以把这个功能搬到公众号来。如何实现呢？还是爬虫</p>
 <h2 id="总结"><span class="section-num">5</span> 总结</h2>
 <p>感觉这次开发公众号，笔者就是用 flask 编写 restful api, 然后做的其他事情就是编写爬虫。</p>
-<p><a href="https://github.com/samrayleung/SamrayJustForFun">项目github地址</a></p>
+<p><a href="https://github.com/ramsayleung/SamrayJustForFun">项目github地址</a></p>
 ]]></content:encoded>
     </item>
   </channel>

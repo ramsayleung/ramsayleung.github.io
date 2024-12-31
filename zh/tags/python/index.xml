@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Mon, 14 Oct 2024 14:57:47 -0700</lastBuildDate>
+    <lastBuildDate>Mon, 30 Dec 2024 22:35:12 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>测试技能进阶(二): Parameterized Tests</title>
@@ -2009,7 +2009,7 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
     <item>
       <title>Python多线程端口扫描器</title>
       <link>https://ramsayleung.github.io/zh/post/2017/port_scanner/</link>
-      <pubDate>Sun, 19 Mar 2017 00:00:00 +0800</pubDate>
+      <pubDate>Sun, 19 Mar 2017 00:00:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/port_scanner/</guid>
       <description>An introduction about port scan</description>
       <content:encoded><![CDATA[<p>近两日，闲来无事，就写了些端口扫描器，重温TCP/IP协议栈的部分原理。</p>
@@ -2041,14 +2041,14 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">scan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">args</span>
 </span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># Create a TCP socket and try to connect</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># AF_INET for ipv4,AF_INET6 for ipv6</span>
-</span></span><span class="line"><span class="cl">	<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	<span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Create a TCP socket and try to connect</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># AF_INET for ipv4,AF_INET6 for ipv6</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="kc">True</span>
 </span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="kc">False</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>因为原理很简单，所以核心代码也是很简洁的，只是建立 <code>socket</code> 然后进行连接，如果连接不上，就很大几率说明端口是关闭的 (并不是绝对的，例如socket超时的异常可能就是因为网络异常，不一定是目标机器的缘故)</p>
@@ -2073,7 +2073,7 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 <ol>
 <li>
 <p>SYN+ACK</p>
-<p>那么现在再回到SYN扫描上来.如果在发送第一次握手的 <code>SYN</code> flag 时，目标机器回复了<code>SYN+ACK</code>,这不就说明笔者发送的TCP包中的目标端口是开放的么！如果不开放，服务器就不会期待第三次握手了，也不会给笔者发送 <code>SYN+ACK</code> 了；如图：</p>
+<p>那么现在再回到SYN扫描上来.如果在发送第一次握手的 <code>SYN</code> flag 时，目标机器回复了=SYN+ACK=,这不就说明笔者发送的TCP包中的目标端口是开放的么！如果不开放，服务器就不会期待第三次握手了，也不会给笔者发送 <code>SYN+ACK</code> 了；如图：</p>
 <figure>
         <img loading="lazy" src="http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/uploads/101613_1123_PortScannin3.jpg"/> 
     </figure>
@@ -2139,29 +2139,29 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 </span></span><span class="line"><span class="cl">    <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span> <span class="o">=</span> <span class="n">args</span>
 </span></span><span class="line"><span class="cl">    <span class="n">src_port</span> <span class="o">=</span> <span class="n">RandShort</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    <span class="n">answered</span><span class="p">,</span> <span class="n">unanswered</span> <span class="o">=</span> <span class="n">sr</span><span class="p">(</span><span class="n">IP</span><span class="p">(</span><span class="n">dst</span><span class="o">=</span><span class="n">dst_ip</span><span class="p">)</span> <span class="o">/</span> <span class="n">TCP</span><span class="p">(</span><span class="n">sport</span><span class="o">=</span><span class="n">src_port</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">						   <span class="n">dport</span><span class="o">=</span><span class="n">dst_port</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s2">&#34;S&#34;</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">			  <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                                                   <span class="n">dport</span><span class="o">=</span><span class="n">dst_port</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s2">&#34;S&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                          <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">packet</span> <span class="ow">in</span> <span class="n">unanswered</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">packet</span><span class="o">.</span><span class="n">dst</span><span class="p">,</span> <span class="n">packet</span><span class="o">.</span><span class="n">dport</span><span class="p">,</span> <span class="s2">&#34;Filtered&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">packet</span><span class="o">.</span><span class="n">dst</span><span class="p">,</span> <span class="n">packet</span><span class="o">.</span><span class="n">dport</span><span class="p">,</span> <span class="s2">&#34;Filtered&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">recv</span><span class="p">)</span> <span class="ow">in</span> <span class="n">answered</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="n">recv</span><span class="o">.</span><span class="n">haslayer</span><span class="p">(</span><span class="n">TCP</span><span class="p">)):</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">flags</span> <span class="o">=</span> <span class="n">recv</span><span class="o">.</span><span class="n">getlayer</span><span class="p">(</span><span class="n">TCP</span><span class="p">)</span><span class="o">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s2">&#34;%&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">if</span><span class="p">(</span><span class="n">flags</span> <span class="o">==</span> <span class="s2">&#34;SA&#34;</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">		<span class="c1"># set RST to server in case of ddos attack</span>
-</span></span><span class="line"><span class="cl">		<span class="n">send_rst</span> <span class="o">=</span> <span class="n">sr</span><span class="p">(</span><span class="n">IP</span><span class="p">(</span><span class="n">dst</span><span class="o">=</span><span class="n">dst_ip</span><span class="p">)</span> <span class="o">/</span> <span class="n">TCP</span><span class="p">(</span><span class="n">sport</span><span class="o">=</span><span class="n">src_port</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">						   <span class="n">dport</span><span class="o">=</span><span class="n">dst_port</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s2">&#34;R&#34;</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">			  <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span><span class="p">,</span> <span class="s2">&#34;Open&#34;</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">elif</span> <span class="p">(</span><span class="n">flags</span> <span class="o">==</span> <span class="s2">&#34;RA&#34;</span> <span class="ow">or</span> <span class="n">flags</span> <span class="o">==</span> <span class="s2">&#34;R&#34;</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span><span class="p">,</span> <span class="s2">&#34;Closed&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">elif</span><span class="p">(</span><span class="n">recv</span><span class="o">.</span><span class="n">haslayer</span><span class="p">(</span><span class="n">ICMP</span><span class="p">)):</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">icmp_type</span> <span class="o">=</span> <span class="n">recv</span><span class="o">.</span><span class="n">getlayer</span><span class="p">(</span><span class="n">ICMP</span><span class="p">)</span><span class="o">.</span><span class="n">type</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">icmp_code</span> <span class="o">=</span> <span class="n">recv</span><span class="o">.</span><span class="n">getlayer</span><span class="p">(</span><span class="n">ICMP</span><span class="p">)</span><span class="o">.</span><span class="n">code</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">if</span><span class="p">(</span><span class="n">icmp_type</span> <span class="o">==</span> <span class="n">ICMP_TYPE_DESTINATION_UNREACHABLE</span> <span class="ow">and</span> <span class="n">icmp_code</span> <span class="ow">in</span> <span class="n">ICMP_CODE</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span><span class="p">,</span> <span class="s2">&#34;Filtered&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">else</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">return</span> <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span><span class="p">,</span> <span class="s2">&#34;CHECK&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">recv</span><span class="o">.</span><span class="n">haslayer</span><span class="p">(</span><span class="n">TCP</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">flags</span> <span class="o">=</span> <span class="n">recv</span><span class="o">.</span><span class="n">getlayer</span><span class="p">(</span><span class="n">TCP</span><span class="p">)</span><span class="o">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">%f</span><span class="s2">lags%&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">flags</span> <span class="o">==</span> <span class="s2">&#34;SA&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># set RST to server in case of ddos attack</span>
+</span></span><span class="line"><span class="cl">                <span class="n">send_rst</span> <span class="o">=</span> <span class="n">sr</span><span class="p">(</span><span class="n">IP</span><span class="p">(</span><span class="n">dst</span><span class="o">=</span><span class="n">dst_ip</span><span class="p">)</span> <span class="o">/</span> <span class="n">TCP</span><span class="p">(</span><span class="n">sport</span><span class="o">=</span><span class="n">src_port</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                                   <span class="n">dport</span><span class="o">=</span><span class="n">dst_port</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s2">&#34;R&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                          <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span><span class="p">,</span> <span class="s2">&#34;Open&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">elif</span> <span class="p">(</span><span class="n">flags</span> <span class="o">==</span> <span class="s2">&#34;RA&#34;</span> <span class="ow">or</span> <span class="n">flags</span> <span class="o">==</span> <span class="s2">&#34;R&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span><span class="p">,</span> <span class="s2">&#34;Closed&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span><span class="p">(</span><span class="n">recv</span><span class="o">.</span><span class="n">haslayer</span><span class="p">(</span><span class="n">ICMP</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">icmp_type</span> <span class="o">=</span> <span class="n">recv</span><span class="o">.</span><span class="n">getlayer</span><span class="p">(</span><span class="n">ICMP</span><span class="p">)</span><span class="o">.</span><span class="n">type</span>
+</span></span><span class="line"><span class="cl">            <span class="n">icmp_code</span> <span class="o">=</span> <span class="n">recv</span><span class="o">.</span><span class="n">getlayer</span><span class="p">(</span><span class="n">ICMP</span><span class="p">)</span><span class="o">.</span><span class="n">code</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">icmp_type</span> <span class="o">==</span> <span class="n">ICMP_TYPE_DESTINATION_UNREACHABLE</span> <span class="ow">and</span> <span class="n">icmp_code</span> <span class="ow">in</span> <span class="n">ICMP_CODE</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span><span class="p">,</span> <span class="s2">&#34;Filtered&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span><span class="p">,</span> <span class="s2">&#34;CHECK&#34;</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>核心代码很简单，就是发送建立连接的握手请求，然后根据不同的返回结果判断不同的状态。</p>
@@ -2172,7 +2172,7 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 <p>很想吐嘈一下，真的对Python 的多线程恨铁不成钢，只好换成多进程；也给 Python2 Python3 API的改变折腾得够呛，不禁让笔者怀念起Java:(</p>
 <p>其实正如笔者开头所言的，你确定隔壁家妹子是否在家的方法有很多，你扫描端口的方法也有很多：例如 XMAS scan(TCP圣诞树扫描), FIN scan,Null scan, ACK scan, Window scan, UDP scan等。</p>
 <p>当然你如果不想针对各种扫描都写一个扫描器，你可以使用 <a href="https://nmap.org/">nmap</a> 这个地球最强大的扫描器 (没有之一). 在Python也已经有与nmap整合的强大的包 <a href="http://xael.org/pages/python-nmap-en.html">python-nmap</a></p>
-<p>扫描器完整代码地址 <a href="https://github.com/samrayleung/PortScanner">https://github.com/samrayleung/PortScanner</a></p>
+<p>扫描器完整代码地址 <a href="https://github.com/ramsayleung/PortScanner">https://github.com/ramsayleung/PortScanner</a></p>
 <hr>
 <p>参考</p>
 <ul>
@@ -2183,7 +2183,7 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
     <item>
       <title>flask牛刀小试之微信公众号开发</title>
       <link>https://ramsayleung.github.io/zh/post/2017/weixin_flask/</link>
-      <pubDate>Thu, 23 Feb 2017 00:00:00 +0800</pubDate>
+      <pubDate>Thu, 23 Feb 2017 00:00:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/weixin_flask/</guid>
       <description>An flask project</description>
       <content:encoded><![CDATA[<p><a href="http://flask.pocoo.org/">flask</a> 是一个轻量级的python 框架(官网称为微型框架),很容易上手，之前因为笔者跟朋友开发小程序的时候使用过 flask,过后就遗忘了。</p>
@@ -2216,7 +2216,8 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 </tr>
 </tbody>
 </table>
-<p>校验流程：加密/校验流程如下：</p>
+<p>校验流程：
+加密/校验流程如下：</p>
 <ol>
 <li>将token、timestamp、nonce三个参数进行字典序排序</li>
 <li>将三个参数字符串拼接成一个字符串进行sha1加密</li>
@@ -2257,26 +2258,26 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
-</span></span><span class="line"><span class="cl">	<span class="k">def</span> <span class="nf">wechat</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="o">==</span><span class="s1">&#39;GET&#39;</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">token</span><span class="o">=</span><span class="s1">&#39;your token&#39;</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">data</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">args</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">signature</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;signature&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">timestamp</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestamp&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">nonce</span> <span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nonce&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">echostr</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;echostr&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">s</span><span class="o">=</span><span class="p">[</span><span class="n">timestamp</span><span class="p">,</span><span class="n">nonce</span><span class="p">,</span><span class="n">token</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">s</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">s</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span><span class="o">==</span><span class="n">signature</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="n">echostr</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">else</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">rec</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">xml_rec</span><span class="o">=</span><span class="n">ET</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">rec</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">tou</span> <span class="o">=</span> <span class="n">xml_rec</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;ToUserName&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">fromu</span> <span class="o">=</span> <span class="n">xml_rec</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;FromUserName&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">content</span> <span class="o">=</span> <span class="n">xml_rec</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Content&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">xml_rep</span> <span class="o">=</span> <span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">def</span> <span class="nf">wechat</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="o">==</span><span class="s1">&#39;GET&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">token</span><span class="o">=</span><span class="s1">&#39;your token&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">data</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">args</span>
+</span></span><span class="line"><span class="cl">            <span class="n">signature</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;signature&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">timestamp</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestamp&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">nonce</span> <span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nonce&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">echostr</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;echostr&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">s</span><span class="o">=</span><span class="p">[</span><span class="n">timestamp</span><span class="p">,</span><span class="n">nonce</span><span class="p">,</span><span class="n">token</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">s</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="n">s</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span><span class="o">==</span><span class="n">signature</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span><span class="n">echostr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">rec</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="n">xml_rec</span><span class="o">=</span><span class="n">ET</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">rec</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tou</span> <span class="o">=</span> <span class="n">xml_rec</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;ToUserName&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+</span></span><span class="line"><span class="cl">            <span class="n">fromu</span> <span class="o">=</span> <span class="n">xml_rec</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;FromUserName&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+</span></span><span class="line"><span class="cl">            <span class="n">content</span> <span class="o">=</span> <span class="n">xml_rec</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Content&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+</span></span><span class="line"><span class="cl">            <span class="n">xml_rep</span> <span class="o">=</span> <span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">xml</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">ToUserName</span><span class="o">&gt;&lt;</span><span class="err">!</span><span class="p">[</span><span class="n">CDATA</span><span class="p">[</span><span class="o">%</span><span class="n">s</span><span class="p">]]</span><span class="o">&gt;&lt;/</span><span class="n">ToUserName</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">FromUserName</span><span class="o">&gt;&lt;</span><span class="err">!</span><span class="p">[</span><span class="n">CDATA</span><span class="p">[</span><span class="o">%</span><span class="n">s</span><span class="p">]]</span><span class="o">&gt;&lt;/</span><span class="n">FromUserName</span><span class="o">&gt;</span>
@@ -2297,7 +2298,7 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 <p>有时无聊想去看电影，但是不知道看什么电影，因为选择太多，质量参差不齐的片太多了所以笔者会先去豆瓣看一下新上影的电影，看一下评分，然后再决定看什么电影。所以，笔者可以把这个功能搬到公众号来。如何实现呢？还是爬虫</p>
 <h2 id="总结"><span class="section-num">5</span> 总结</h2>
 <p>感觉这次开发公众号，笔者就是用 flask 编写 restful api, 然后做的其他事情就是编写爬虫。</p>
-<p><a href="https://github.com/samrayleung/SamrayJustForFun">项目github地址</a></p>
+<p><a href="https://github.com/ramsayleung/SamrayJustForFun">项目github地址</a></p>
 ]]></content:encoded>
     </item>
     <item>

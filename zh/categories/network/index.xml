@@ -12,12 +12,12 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Wed, 23 Feb 2022 22:26:46 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 30 Dec 2024 22:35:12 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/categories/network/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Python多线程端口扫描器</title>
       <link>https://ramsayleung.github.io/zh/post/2017/port_scanner/</link>
-      <pubDate>Sun, 19 Mar 2017 00:00:00 +0800</pubDate>
+      <pubDate>Sun, 19 Mar 2017 00:00:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/port_scanner/</guid>
       <description>An introduction about port scan</description>
       <content:encoded><![CDATA[<p>近两日，闲来无事，就写了些端口扫描器，重温TCP/IP协议栈的部分原理。</p>
@@ -49,14 +49,14 @@
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">scan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">args</span>
 </span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># Create a TCP socket and try to connect</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># AF_INET for ipv4,AF_INET6 for ipv6</span>
-</span></span><span class="line"><span class="cl">	<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	<span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Create a TCP socket and try to connect</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># AF_INET for ipv4,AF_INET6 for ipv6</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="kc">True</span>
 </span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="kc">False</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>因为原理很简单，所以核心代码也是很简洁的，只是建立 <code>socket</code> 然后进行连接，如果连接不上，就很大几率说明端口是关闭的 (并不是绝对的，例如socket超时的异常可能就是因为网络异常，不一定是目标机器的缘故)</p>
@@ -81,7 +81,7 @@
 <ol>
 <li>
 <p>SYN+ACK</p>
-<p>那么现在再回到SYN扫描上来.如果在发送第一次握手的 <code>SYN</code> flag 时，目标机器回复了<code>SYN+ACK</code>,这不就说明笔者发送的TCP包中的目标端口是开放的么！如果不开放，服务器就不会期待第三次握手了，也不会给笔者发送 <code>SYN+ACK</code> 了；如图：</p>
+<p>那么现在再回到SYN扫描上来.如果在发送第一次握手的 <code>SYN</code> flag 时，目标机器回复了=SYN+ACK=,这不就说明笔者发送的TCP包中的目标端口是开放的么！如果不开放，服务器就不会期待第三次握手了，也不会给笔者发送 <code>SYN+ACK</code> 了；如图：</p>
 <figure>
         <img loading="lazy" src="http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/uploads/101613_1123_PortScannin3.jpg"/> 
     </figure>
@@ -147,29 +147,29 @@
 </span></span><span class="line"><span class="cl">    <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span> <span class="o">=</span> <span class="n">args</span>
 </span></span><span class="line"><span class="cl">    <span class="n">src_port</span> <span class="o">=</span> <span class="n">RandShort</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    <span class="n">answered</span><span class="p">,</span> <span class="n">unanswered</span> <span class="o">=</span> <span class="n">sr</span><span class="p">(</span><span class="n">IP</span><span class="p">(</span><span class="n">dst</span><span class="o">=</span><span class="n">dst_ip</span><span class="p">)</span> <span class="o">/</span> <span class="n">TCP</span><span class="p">(</span><span class="n">sport</span><span class="o">=</span><span class="n">src_port</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">						   <span class="n">dport</span><span class="o">=</span><span class="n">dst_port</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s2">&#34;S&#34;</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">			  <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                                                   <span class="n">dport</span><span class="o">=</span><span class="n">dst_port</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s2">&#34;S&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                          <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">packet</span> <span class="ow">in</span> <span class="n">unanswered</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">packet</span><span class="o">.</span><span class="n">dst</span><span class="p">,</span> <span class="n">packet</span><span class="o">.</span><span class="n">dport</span><span class="p">,</span> <span class="s2">&#34;Filtered&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">packet</span><span class="o">.</span><span class="n">dst</span><span class="p">,</span> <span class="n">packet</span><span class="o">.</span><span class="n">dport</span><span class="p">,</span> <span class="s2">&#34;Filtered&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="n">send</span><span class="p">,</span> <span class="n">recv</span><span class="p">)</span> <span class="ow">in</span> <span class="n">answered</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="n">recv</span><span class="o">.</span><span class="n">haslayer</span><span class="p">(</span><span class="n">TCP</span><span class="p">)):</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">flags</span> <span class="o">=</span> <span class="n">recv</span><span class="o">.</span><span class="n">getlayer</span><span class="p">(</span><span class="n">TCP</span><span class="p">)</span><span class="o">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s2">&#34;%&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">if</span><span class="p">(</span><span class="n">flags</span> <span class="o">==</span> <span class="s2">&#34;SA&#34;</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">		<span class="c1"># set RST to server in case of ddos attack</span>
-</span></span><span class="line"><span class="cl">		<span class="n">send_rst</span> <span class="o">=</span> <span class="n">sr</span><span class="p">(</span><span class="n">IP</span><span class="p">(</span><span class="n">dst</span><span class="o">=</span><span class="n">dst_ip</span><span class="p">)</span> <span class="o">/</span> <span class="n">TCP</span><span class="p">(</span><span class="n">sport</span><span class="o">=</span><span class="n">src_port</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">						   <span class="n">dport</span><span class="o">=</span><span class="n">dst_port</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s2">&#34;R&#34;</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">			  <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span><span class="p">,</span> <span class="s2">&#34;Open&#34;</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">elif</span> <span class="p">(</span><span class="n">flags</span> <span class="o">==</span> <span class="s2">&#34;RA&#34;</span> <span class="ow">or</span> <span class="n">flags</span> <span class="o">==</span> <span class="s2">&#34;R&#34;</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span><span class="p">,</span> <span class="s2">&#34;Closed&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">elif</span><span class="p">(</span><span class="n">recv</span><span class="o">.</span><span class="n">haslayer</span><span class="p">(</span><span class="n">ICMP</span><span class="p">)):</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">icmp_type</span> <span class="o">=</span> <span class="n">recv</span><span class="o">.</span><span class="n">getlayer</span><span class="p">(</span><span class="n">ICMP</span><span class="p">)</span><span class="o">.</span><span class="n">type</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">icmp_code</span> <span class="o">=</span> <span class="n">recv</span><span class="o">.</span><span class="n">getlayer</span><span class="p">(</span><span class="n">ICMP</span><span class="p">)</span><span class="o">.</span><span class="n">code</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">if</span><span class="p">(</span><span class="n">icmp_type</span> <span class="o">==</span> <span class="n">ICMP_TYPE_DESTINATION_UNREACHABLE</span> <span class="ow">and</span> <span class="n">icmp_code</span> <span class="ow">in</span> <span class="n">ICMP_CODE</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span><span class="p">,</span> <span class="s2">&#34;Filtered&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">else</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">return</span> <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span><span class="p">,</span> <span class="s2">&#34;CHECK&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">recv</span><span class="o">.</span><span class="n">haslayer</span><span class="p">(</span><span class="n">TCP</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">flags</span> <span class="o">=</span> <span class="n">recv</span><span class="o">.</span><span class="n">getlayer</span><span class="p">(</span><span class="n">TCP</span><span class="p">)</span><span class="o">.</span><span class="n">sprintf</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">%f</span><span class="s2">lags%&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">flags</span> <span class="o">==</span> <span class="s2">&#34;SA&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># set RST to server in case of ddos attack</span>
+</span></span><span class="line"><span class="cl">                <span class="n">send_rst</span> <span class="o">=</span> <span class="n">sr</span><span class="p">(</span><span class="n">IP</span><span class="p">(</span><span class="n">dst</span><span class="o">=</span><span class="n">dst_ip</span><span class="p">)</span> <span class="o">/</span> <span class="n">TCP</span><span class="p">(</span><span class="n">sport</span><span class="o">=</span><span class="n">src_port</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                                   <span class="n">dport</span><span class="o">=</span><span class="n">dst_port</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s2">&#34;R&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                          <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span><span class="p">,</span> <span class="s2">&#34;Open&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">elif</span> <span class="p">(</span><span class="n">flags</span> <span class="o">==</span> <span class="s2">&#34;RA&#34;</span> <span class="ow">or</span> <span class="n">flags</span> <span class="o">==</span> <span class="s2">&#34;R&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span><span class="p">,</span> <span class="s2">&#34;Closed&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span><span class="p">(</span><span class="n">recv</span><span class="o">.</span><span class="n">haslayer</span><span class="p">(</span><span class="n">ICMP</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">icmp_type</span> <span class="o">=</span> <span class="n">recv</span><span class="o">.</span><span class="n">getlayer</span><span class="p">(</span><span class="n">ICMP</span><span class="p">)</span><span class="o">.</span><span class="n">type</span>
+</span></span><span class="line"><span class="cl">            <span class="n">icmp_code</span> <span class="o">=</span> <span class="n">recv</span><span class="o">.</span><span class="n">getlayer</span><span class="p">(</span><span class="n">ICMP</span><span class="p">)</span><span class="o">.</span><span class="n">code</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">icmp_type</span> <span class="o">==</span> <span class="n">ICMP_TYPE_DESTINATION_UNREACHABLE</span> <span class="ow">and</span> <span class="n">icmp_code</span> <span class="ow">in</span> <span class="n">ICMP_CODE</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span><span class="p">,</span> <span class="s2">&#34;Filtered&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">dst_ip</span><span class="p">,</span> <span class="n">dst_port</span><span class="p">,</span> <span class="s2">&#34;CHECK&#34;</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>核心代码很简单，就是发送建立连接的握手请求，然后根据不同的返回结果判断不同的状态。</p>
@@ -180,7 +180,7 @@
 <p>很想吐嘈一下，真的对Python 的多线程恨铁不成钢，只好换成多进程；也给 Python2 Python3 API的改变折腾得够呛，不禁让笔者怀念起Java:(</p>
 <p>其实正如笔者开头所言的，你确定隔壁家妹子是否在家的方法有很多，你扫描端口的方法也有很多：例如 XMAS scan(TCP圣诞树扫描), FIN scan,Null scan, ACK scan, Window scan, UDP scan等。</p>
 <p>当然你如果不想针对各种扫描都写一个扫描器，你可以使用 <a href="https://nmap.org/">nmap</a> 这个地球最强大的扫描器 (没有之一). 在Python也已经有与nmap整合的强大的包 <a href="http://xael.org/pages/python-nmap-en.html">python-nmap</a></p>
-<p>扫描器完整代码地址 <a href="https://github.com/samrayleung/PortScanner">https://github.com/samrayleung/PortScanner</a></p>
+<p>扫描器完整代码地址 <a href="https://github.com/ramsayleung/PortScanner">https://github.com/ramsayleung/PortScanner</a></p>
 <hr>
 <p>参考</p>
 <ul>
