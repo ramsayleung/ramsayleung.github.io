@@ -105,6 +105,13 @@
         <div class="archive-meta">
           {{- partial "post_meta.html" . -}}
         </div>
+        {{- if .Params.tags }}
+        <div class="archive-tags">
+          {{- range .Params.tags }}
+          <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}" class="archive-tag">{{ . }}</a>
+          {{- end }}
+        </div>
+        {{- end }}
         <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
       </div>
       {{- end }}

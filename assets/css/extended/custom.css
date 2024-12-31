@@ -1,0 +1,41 @@
+/* Structure the entry for proper link handling */
+.archive-entry {
+    position: relative;  /* Container for positioning */
+}
+
+/* Remove z-index from title to allow click-through */
+.archive-entry-title {
+    position: relative;
+    margin-bottom: 0.5rem;
+}
+
+/* Position entry-link to cover title area */
+.entry-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    /* Cover title and metadata, but stop before tags */
+    bottom: 2rem;  /* Adjust this value based on your layout */
+    z-index: 1;    /* Above base content */
+}
+.archive-tags {
+    margin-top: 0.2rem;
+}
+
+.archive-tag {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    margin-right: 0.2rem;
+    margin-bottom: 0.2rem;
+    border-radius: 0.3rem;
+    font-size: 0.9rem;
+    text-decoration: none;
+    background-color: #f0f0f0;
+    color: #666;
+}
+
+.archive-tag:hover {
+    background-color: #e0e0e0;
+    color: #333;
+}
