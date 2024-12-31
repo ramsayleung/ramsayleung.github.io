@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Mon, 30 Dec 2024 22:35:12 -0800</lastBuildDate>
+    <lastBuildDate>Tue, 31 Dec 2024 11:48:36 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>测试技能进阶(二): Parameterized Tests</title>
@@ -2303,9 +2303,9 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
     </item>
     <item>
       <title>在Emacs中使用Ipython</title>
-      <link>https://ramsayleung.github.io/zh/post/2017/emacs_ipython/</link>
-      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
-      <guid>https://ramsayleung.github.io/zh/post/2017/emacs_ipython/</guid>
+      <link>https://ramsayleung.github.io/zh/post/2016/emacs_ipython/</link>
+      <pubDate>Wed, 03 Aug 2016 00:00:00 -0700</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2016/emacs_ipython/</guid>
       <description>Use Ipython in Emasc</description>
       <content:encoded><![CDATA[<h2 id="emacs-ipython-输出错误"><span class="section-num">1</span> Emacs Ipython 输出错误</h2>
 <p>在Emacs 运行 <strong>run-python</strong> 的时候，报错了，如下</p>
@@ -2385,13 +2385,13 @@ shell-pop 的功能</p>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">interactive</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">get-buffer</span> <span class="s">&#34;*Python*&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nv">string=</span> <span class="p">(</span><span class="nf">buffer-name</span><span class="p">)</span> <span class="s">&#34;*Python*&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	  <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nv">not</span> <span class="p">(</span><span class="nv">one-window-p</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	      <span class="p">(</span><span class="nb">progn</span> <span class="p">(</span><span class="nv">bury-buffer</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		     <span class="p">(</span><span class="nv">delete-window</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	    <span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">(</span><span class="nb">progn</span> <span class="p">(</span><span class="nv">switch-to-buffer-other-window</span> <span class="s">&#34;*Python*&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	       <span class="p">(</span><span class="nv">end-of-buffer</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	       <span class="p">(</span><span class="nv">evil-insert-state</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nv">not</span> <span class="p">(</span><span class="nv">one-window-p</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">              <span class="p">(</span><span class="nb">progn</span> <span class="p">(</span><span class="nv">bury-buffer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                     <span class="p">(</span><span class="nv">delete-window</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nb">progn</span> <span class="p">(</span><span class="nv">switch-to-buffer-other-window</span> <span class="s">&#34;*Python*&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nv">end-of-buffer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nv">evil-insert-state</span><span class="p">)))</span>
 </span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nb">progn</span>
 </span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">run-python</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">switch-to-buffer-other-window</span> <span class="s">&#34;*Python*&#34;</span><span class="p">)</span>
@@ -2399,7 +2399,7 @@ shell-pop 的功能</p>
 </span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">evil-insert-state</span><span class="p">))))</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>如果没有使用Evil,可以把 **(evil-insert-state)**去掉</p>
+</div><p>如果没有使用Evil,可以把 *(evil-insert-state)*去掉</p>
 <h3 id="ipython-history"><span class="section-num">2.2</span> Ipython History</h3>
 <p>我在普通的Shell使用Ipython的时候，很自然地使用上下方向键翻到上一条/下一条
 执行的命令，因为shell的使用习惯就是这样滴，但是在Emacs里面使用Ipython,上下

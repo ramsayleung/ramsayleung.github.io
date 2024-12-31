@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Thu, 24 Feb 2022 15:15:45 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 31 Dec 2024 12:18:30 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/command_line/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>脚本分享</title>
@@ -1759,7 +1759,7 @@ vim/emacs 新建一个文本文件，然后输入几行文字，然后保存退�
     <item>
       <title>Linux/Unix Shell 二三事之过滤器head&#43;tail</title>
       <link>https://ramsayleung.github.io/zh/post/2017/head_tail/</link>
-      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
+      <pubDate>Fri, 17 Feb 2017 00:00:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/head_tail/</guid>
       <description>An introduction about head and tail</description>
       <content:encoded><![CDATA[<blockquote>
@@ -1794,7 +1794,7 @@ tail - output the last part of files</p>
 </div><p>其中 line 是希望选取的数据行的数量</p>
 <h2 id="惊艳点"><span class="section-num">2</span> 惊艳点</h2>
 <p>你可能觉得 <strong>head</strong> <strong>tail</strong> 两个命令很简单，似乎用处不大。</p>
-<p>是的，就笔者一直所介绍的那样，单个unix命令只是完成一个特定的工作，但是当它们组合起来的时候，就很威力无穷了</p>
+<p>是的，就我一直所介绍的那样，单个unix命令只是完成一个特定的工作，但是当它们组合起来的时候，就很威力无穷了</p>
 <h3 id="场景1"><span class="section-num">2.1</span> 场景1</h3>
 <p>假如你要生成一串密钥来加密你的某个文件，这是很常见的需求，你会怎么办，用python 或者 java 写一个随机数函数来实现么？无需，你用简单的过滤器加Linux/Unix</p>
 <p>内置的设备(dev):</p>
@@ -1807,7 +1807,7 @@ tail - output the last part of files</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>在Unix/Linux 的机器下，运行上面的命令就可以生成一个包含数字和字母的32个字符长的密钥了。</p>
-<p>/dev/urandom 是一个可以通过收集硬件驱动的环境噪音来产生伪随机数特殊的文件，tr 是转换和删除字符的命令；更多详细的东西，以后笔者会慢慢介绍滴</p>
+<p>/dev/urandom 是一个可以通过收集硬件驱动的环境噪音来产生伪随机数特殊的文件，tr 是转换和删除字符的命令；更多详细的东西，以后我会慢慢介绍滴</p>
 <h3 id="场景2"><span class="section-num">2.2</span> 场景2</h3>
 <p>在日常的开发或者运行环境中，日志是必不可少滴，但是日志是不断产生新的数据的,所以有时候就会出现用编辑器打开日志的时候，就会出现，编辑器不断提醒你文件已经发生了变化，是否重新加载，但是如果只是用cat,tail 来查看日志，日志又是保持在
 打开的那个状态，新产生的日志数据是没办法浏览到，果真如此？</p>

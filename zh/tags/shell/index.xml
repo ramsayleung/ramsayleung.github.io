@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Thu, 24 Feb 2022 15:15:45 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 31 Dec 2024 12:18:30 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/shell/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>脚本分享</title>
@@ -1818,167 +1818,6 @@ address1 包含：</p>
 </div>]]></content:encoded>
     </item>
     <item>
-      <title>Linux/Unix Shell 二三事之神器percol</title>
-      <link>https://ramsayleung.github.io/zh/post/2017/percol/</link>
-      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
-      <guid>https://ramsayleung.github.io/zh/post/2017/percol/</guid>
-      <description>An introduction about percol</description>
-      <content:encoded><![CDATA[<p><a href="https://github.com/mooz/percol">Percol</a> 是Emacs 的一个非常优秀package:js2-mode作者mooz 的又一力作得益于Unix Shell的管道和重定向设计理念，percol 所有的输入输出变得可交互 percol 给我一种很熟悉的感觉，就是 Eamcs 中helm 增量补全 (incremental completion)的感觉，真的可以10倍提高工作效率。</p>
-<h2 id="例子"><span class="section-num">1</span> 例子</h2>
-<p>假如你要用git 切换分支，但是分支很多，你不能记住你要切换的分支的名字。那么有percol 你可以：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ git checkout <span class="k">$(</span>git branch<span class="p">|</span>percol<span class="k">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>那样，你就可以，选择要切换的分支了</p>
-<p>平时在Linux/Unix 下，如果要kill 掉某个进程的话，我一般是用 <code>htop</code> 或者是ps 找出要kill 掉的进程的pid, 然后在 <code>kill pid</code>. 但是现在有了percol, 可以一步搞定所有的步骤。</p>
-<p>官网给出的例子函数：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="k">function</span> ppgrep<span class="o">()</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$1</span> <span class="o">==</span> <span class="s2">&#34;&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="nv">PERCOL</span><span class="o">=</span>percol
-</span></span><span class="line"><span class="cl">    <span class="k">else</span>
-</span></span><span class="line"><span class="cl">	<span class="nv">PERCOL</span><span class="o">=</span><span class="s2">&#34;percol --query </span><span class="nv">$1</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">    ps aux <span class="p">|</span> <span class="nb">eval</span> <span class="nv">$PERCOL</span> <span class="p">|</span> awk <span class="s1">&#39;{ print $2 }&#39;</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> ppkill<span class="o">()</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$1</span> <span class="o">=</span>~ <span class="s2">&#34;^-&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="nv">QUERY</span><span class="o">=</span><span class="s2">&#34;&#34;</span>            <span class="c1"># options only</span>
-</span></span><span class="line"><span class="cl">    <span class="k">else</span>
-</span></span><span class="line"><span class="cl">	<span class="nv">QUERY</span><span class="o">=</span><span class="nv">$1</span>            <span class="c1"># with a query</span>
-</span></span><span class="line"><span class="cl">	<span class="o">[[</span> <span class="nv">$#</span> &gt; <span class="m">0</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">shift</span>
-</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">    ppgrep <span class="nv">$QUERY</span> <span class="p">|</span> xargs <span class="nb">kill</span> <span class="nv">$*</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>又或者是更好地进行查找历史命令：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="k">function</span> exists <span class="o">{</span> which <span class="nv">$1</span> <span class="p">&amp;</span>&gt; /dev/null <span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">if</span> exists percol<span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="k">function</span> percol_select_history<span class="o">()</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nb">local</span> tac
-</span></span><span class="line"><span class="cl">	exists gtac <span class="o">&amp;&amp;</span> <span class="nv">tac</span><span class="o">=</span><span class="s2">&#34;gtac&#34;</span> <span class="o">||</span> <span class="o">{</span> exists tac <span class="o">&amp;&amp;</span> <span class="nv">tac</span><span class="o">=</span><span class="s2">&#34;tac&#34;</span> <span class="o">||</span> <span class="o">{</span> <span class="nv">tac</span><span class="o">=</span><span class="s2">&#34;tail -r&#34;</span> <span class="o">}</span> <span class="o">}</span>
-</span></span><span class="line"><span class="cl">	<span class="nv">BUFFER</span><span class="o">=</span><span class="k">$(</span><span class="nb">fc</span> -l -n <span class="m">1</span> <span class="p">|</span> <span class="nb">eval</span> <span class="nv">$tac</span> <span class="p">|</span> percol --query <span class="s2">&#34;</span><span class="nv">$LBUFFER</span><span class="s2">&#34;</span><span class="k">)</span>
-</span></span><span class="line"><span class="cl">	<span class="nv">CURSOR</span><span class="o">=</span><span class="nv">$#</span>BUFFER         <span class="c1"># move cursor</span>
-</span></span><span class="line"><span class="cl">	zle -R -c               <span class="c1"># refresh</span>
-</span></span><span class="line"><span class="cl">    <span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    zle -N percol_select_history
-</span></span><span class="line"><span class="cl">    bindkey <span class="s1">&#39;^R&#39;</span> percol_select_history
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="运行截图"><span class="section-num">1.1</span> 运行截图</h3>
-<p><a href="/ox-hugo/percol1.png"><img loading="lazy" src="/ox-hugo/percol1.png" alt=""  />
-</a>
-有时候，我需要复制当前目录下，某个文件的路径，但是无论是文件管理器，还是shell都要用鼠标来复制指定文件的路径，效率不高且很不方便。在 <a href="http://blog.binchen.org/posts/how-to-use-git-effectively.html">陈斌</a> 代码的启发下，我自己写了一个函数来复制当前文件夹某个特定目录的路径，很方便地解决了问题：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nv">OS_NAME</span><span class="o">=</span><span class="sb">`</span>uname<span class="sb">`</span>
-</span></span><span class="line"><span class="cl"><span class="k">function</span> pclip<span class="o">()</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="nv">$OS_NAME</span> <span class="o">=</span> <span class="s2">&#34;CYGWIN&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	putclip <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">[</span> <span class="nv">$OS_NAME</span> <span class="o">=</span> <span class="s2">&#34;Darwin&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	pbcopy <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">else</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[</span> -x /usr/bin/xsel <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	    xsel -ib <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">else</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">if</span> <span class="o">[</span> -x /usr/bin/xclip <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">		xclip -selection c <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">else</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;Neither xsel or xclip is installed!&#34;</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
-</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">function</span> pwdf<span class="o">()</span>
-</span></span><span class="line"><span class="cl"><span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">local</span> <span class="nv">current_dir</span><span class="o">=</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">local</span> <span class="nv">copied_file</span><span class="o">=</span><span class="sb">`</span>find <span class="nv">$current_dir</span> -type f -print <span class="p">|</span>percol<span class="sb">`</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> -n <span class="nv">$copied_file</span> <span class="p">|</span>pclip<span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>更多的用法就要查看官方文档<a href="https://github.com/mooz/percol"> percol</a></p>
-<p>Enjoy Shell :)</p>
-]]></content:encoded>
-    </item>
-    <item>
       <title>Linux/Unix Shell 二三事之过滤器cat</title>
       <link>https://ramsayleung.github.io/zh/post/2017/cat/</link>
       <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
@@ -2115,7 +1954,7 @@ vim/emacs 新建一个文本文件，然后输入几行文字，然后保存退�
     <item>
       <title>Linux/Unix Shell 二三事之过滤器head&#43;tail</title>
       <link>https://ramsayleung.github.io/zh/post/2017/head_tail/</link>
-      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
+      <pubDate>Fri, 17 Feb 2017 00:00:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/head_tail/</guid>
       <description>An introduction about head and tail</description>
       <content:encoded><![CDATA[<blockquote>
@@ -2150,7 +1989,7 @@ tail - output the last part of files</p>
 </div><p>其中 line 是希望选取的数据行的数量</p>
 <h2 id="惊艳点"><span class="section-num">2</span> 惊艳点</h2>
 <p>你可能觉得 <strong>head</strong> <strong>tail</strong> 两个命令很简单，似乎用处不大。</p>
-<p>是的，就笔者一直所介绍的那样，单个unix命令只是完成一个特定的工作，但是当它们组合起来的时候，就很威力无穷了</p>
+<p>是的，就我一直所介绍的那样，单个unix命令只是完成一个特定的工作，但是当它们组合起来的时候，就很威力无穷了</p>
 <h3 id="场景1"><span class="section-num">2.1</span> 场景1</h3>
 <p>假如你要生成一串密钥来加密你的某个文件，这是很常见的需求，你会怎么办，用python 或者 java 写一个随机数函数来实现么？无需，你用简单的过滤器加Linux/Unix</p>
 <p>内置的设备(dev):</p>
@@ -2163,7 +2002,7 @@ tail - output the last part of files</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>在Unix/Linux 的机器下，运行上面的命令就可以生成一个包含数字和字母的32个字符长的密钥了。</p>
-<p>/dev/urandom 是一个可以通过收集硬件驱动的环境噪音来产生伪随机数特殊的文件，tr 是转换和删除字符的命令；更多详细的东西，以后笔者会慢慢介绍滴</p>
+<p>/dev/urandom 是一个可以通过收集硬件驱动的环境噪音来产生伪随机数特殊的文件，tr 是转换和删除字符的命令；更多详细的东西，以后我会慢慢介绍滴</p>
 <h3 id="场景2"><span class="section-num">2.2</span> 场景2</h3>
 <p>在日常的开发或者运行环境中，日志是必不可少滴，但是日志是不断产生新的数据的,所以有时候就会出现用编辑器打开日志的时候，就会出现，编辑器不断提醒你文件已经发生了变化，是否重新加载，但是如果只是用cat,tail 来查看日志，日志又是保持在
 打开的那个状态，新产生的日志数据是没办法浏览到，果真如此？</p>
@@ -2207,6 +2046,168 @@ tail - output the last part of files</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Enjoy Shell :)</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Linux/Unix Shell 二三事之神器percol</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/percol/</link>
+      <pubDate>Mon, 13 Feb 2017 00:00:00 -0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2017/percol/</guid>
+      <description>An introduction about percol</description>
+      <content:encoded><![CDATA[<p><a href="https://github.com/mooz/percol">Percol</a> 是Emacs 的一个非常优秀package, js2-mode作者mooz 的又一力作得益于Unix Shell的管道和重定向设计理念，percol 所有的输入输出变得可交互 percol 给我一种很熟悉的感觉，就是 Eamcs 中helm 增量补全 (incremental completion)的感觉，真的可以10倍提高工作效率。</p>
+<h2 id="例子"><span class="section-num">1</span> 例子</h2>
+<p>假如你要用git 切换分支，但是分支很多，你不能记住你要切换的分支的名字。那么有percol 你可以：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ git checkout <span class="k">$(</span>git branch<span class="p">|</span>percol<span class="k">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>那样，你就可以，选择要切换的分支了</p>
+<p>平时在Linux/Unix 下，如果要kill 掉某个进程的话，我一般是用 <code>htop</code> 或者是ps 找出要kill 掉的进程的pid, 然后在 <code>kill pid</code>. 但是现在有了percol, 可以一步搞定所有的步骤。</p>
+<p>官网给出的例子函数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="k">function</span> ppgrep<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$1</span> <span class="o">==</span> <span class="s2">&#34;&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">PERCOL</span><span class="o">=</span>percol
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">PERCOL</span><span class="o">=</span><span class="s2">&#34;percol --query </span><span class="nv">$1</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">    ps aux <span class="p">|</span> <span class="nb">eval</span> <span class="nv">$PERCOL</span> <span class="p">|</span> awk <span class="s1">&#39;{ print $2 }&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> ppkill<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$1</span> <span class="o">=</span>~ <span class="s2">&#34;^-&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">QUERY</span><span class="o">=</span><span class="s2">&#34;&#34;</span>            <span class="c1"># options only</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">QUERY</span><span class="o">=</span><span class="nv">$1</span>            <span class="c1"># with a query</span>
+</span></span><span class="line"><span class="cl">        <span class="o">[[</span> <span class="nv">$#</span> &gt; <span class="m">0</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">shift</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">    ppgrep <span class="nv">$QUERY</span> <span class="p">|</span> xargs <span class="nb">kill</span> <span class="nv">$*</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>又或者是更好地进行查找历史命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="k">function</span> exists <span class="o">{</span> which <span class="nv">$1</span> <span class="p">&amp;</span>&gt; /dev/null <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> exists percol<span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> percol_select_history<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">local</span> tac
+</span></span><span class="line"><span class="cl">        exists gtac <span class="o">&amp;&amp;</span> <span class="nv">tac</span><span class="o">=</span><span class="s2">&#34;gtac&#34;</span> <span class="o">||</span> <span class="o">{</span> exists tac <span class="o">&amp;&amp;</span> <span class="nv">tac</span><span class="o">=</span><span class="s2">&#34;tac&#34;</span> <span class="o">||</span> <span class="o">{</span> <span class="nv">tac</span><span class="o">=</span><span class="s2">&#34;tail -r&#34;</span> <span class="o">}</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">BUFFER</span><span class="o">=</span><span class="k">$(</span><span class="nb">fc</span> -l -n <span class="m">1</span> <span class="p">|</span> <span class="nb">eval</span> <span class="nv">$tac</span> <span class="p">|</span> percol --query <span class="s2">&#34;</span><span class="nv">$LBUFFER</span><span class="s2">&#34;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">CURSOR</span><span class="o">=</span><span class="nv">$#</span>BUFFER         <span class="c1"># move cursor</span>
+</span></span><span class="line"><span class="cl">        zle -R -c               <span class="c1"># refresh</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    zle -N percol_select_history
+</span></span><span class="line"><span class="cl">    bindkey <span class="s1">&#39;^R&#39;</span> percol_select_history
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="运行截图"><span class="section-num">1.1</span> 运行截图</h3>
+<p><a href="/ox-hugo/percol1.png"><img loading="lazy" src="/ox-hugo/percol1.png" alt=""  />
+</a>
+有时候，我需要复制当前目录下，某个文件的路径，但是无论是文件管理器，还是shell都要用鼠标来复制指定文件的路径，效率不高且很不方便。</p>
+<p>在 <a href="http://blog.binchen.org/posts/how-to-use-git-effectively.html">陈斌</a> 代码的启发下，我自己写了一个函数来复制当前文件夹某个特定目录的路径，很方便地解决了问题：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nv">OS_NAME</span><span class="o">=</span><span class="sb">`</span>uname<span class="sb">`</span>
+</span></span><span class="line"><span class="cl"><span class="k">function</span> pclip<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="nv">$OS_NAME</span> <span class="o">=</span> <span class="s2">&#34;CYGWIN&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        putclip <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">[</span> <span class="nv">$OS_NAME</span> <span class="o">=</span> <span class="s2">&#34;Darwin&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        pbcopy <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">[</span> -x /usr/bin/xsel <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">            xsel -ib <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">[</span> -x /usr/bin/xclip <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">                xclip -selection c <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">echo</span> <span class="s2">&#34;Neither xsel or xclip is installed!&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> pwdf<span class="o">()</span>
+</span></span><span class="line"><span class="cl"><span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">local</span> <span class="nv">current_dir</span><span class="o">=</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">local</span> <span class="nv">copied_file</span><span class="o">=</span><span class="sb">`</span>find <span class="nv">$current_dir</span> -type f -print <span class="p">|</span>percol<span class="sb">`</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> -n <span class="nv">$copied_file</span> <span class="p">|</span>pclip<span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>更多的用法就要查看官方文档<a href="https://github.com/mooz/percol"> percol</a></p>
+<p>Enjoy Shell :)</p>
 ]]></content:encoded>
     </item>
   </channel>
