@@ -1,11 +1,12 @@
 +++
 title = "写博客的动机"
 date = 2017-09-17T10:36:00-07:00
-lastmod = 2024-12-30T20:58:14-08:00
+lastmod = 2024-12-30T21:47:59-08:00
 tags = ["summary"]
 categories = ["summary"]
 draft = false
 toc = true
+highlighted = true
 +++
 
 ## <span class="section-num">1</span> 博客迁移 {#博客迁移}
