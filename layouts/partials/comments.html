@@ -1,6 +1,6 @@
 <section>
   <h2>Comments</h2>
-  <div id="comments-utteranc"></div>
+  <div id="comments-giscus"></div>
 </section>
 
 <script type="text/javascript">
@@ -9,35 +9,41 @@ function getCurrentTheme() {
   return document.documentElement.getAttribute('data-theme') || document.body.classList.contains('dark') ? 'dark' : 'light';
 }
 
-function loadUtterances(darkMode=false) {
-  const commentContainer = document.getElementById("comments-utteranc");
+function loadComment(darkMode=false) {
+  const currentUrl = URL.parse(window.location.href); 
+  const paths = currentUrl.pathname.split('/').filter(x => x!= '');
+  const isChinese = paths.length > 0 && paths[0] == "zh";
+  const commentContainer = document.getElementById("comments-giscus");
   if (commentContainer !== null) {
     commentContainer.innerHTML = ''
     const commentScript = document.createElement("script");
-    commentScript.setAttribute("id", "utteranc");
-    commentScript.setAttribute("src", "https://utteranc.es/client.js");
+    commentScript.setAttribute("src", "https://giscus.app/client.js");
     commentScript.setAttribute("data-repo", "ramsayleung/comment");
-    commentScript.setAttribute("data-category", "Announcements");
+    commentScript.setAttribute("data-repo-id", "MDEwOlJlcG9zaXRvcnkzMDk2NjQ1NDk=");
+    commentScript.setAttribute("data-category", "General");
+    commentScript.setAttribute("data-category-id", "DIC_kwDOEnUbJc4Cltnz");
     commentScript.setAttribute("data-mapping", "pathname");
+    commentScript.setAttribute("data-strict", "0");
     commentScript.setAttribute("data-reactions-enabled", "1");
     commentScript.setAttribute("data-emit-metadata", "0");
-    commentScript.setAttribute("data-theme", darkMode ? "github-dark" : "github-light");
-    commentScript.setAttribute("data-issue-term", "title");
+    commentScript.setAttribute("data-input-position", "bottom");
+    commentScript.setAttribute("data-theme", darkMode ? "dark" : "light");
     commentScript.setAttribute("crossorigin", "anonymous");
+    commentScript.setAttribute("data-lang", isChinese ? "zh-CN": "en");
     commentScript.setAttribute("async", "true");
     commentContainer.appendChild(commentScript);
   }
 }
 
 const isDarkMode = getCurrentTheme() === 'dark';
-loadUtterances(isDarkMode);
+loadComment(isDarkMode);
 
 // Watch for theme changes
 const themeObserver = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
         if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
           const isDarkMode = getCurrentTheme() === 'dark';
-          loadUtterances(isDarkMode);
+          loadComment(isDarkMode);
           console.log(`changing theme`);
         }
     });

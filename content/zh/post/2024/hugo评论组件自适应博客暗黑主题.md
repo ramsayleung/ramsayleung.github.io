@@ -87,7 +87,7 @@ function getCurrentTheme() {
 
 ```js
 function loadUtterances(darkMode=false) {
-    const commentContainer = document.getElementById("comments-utteranc");
+    const commentContainer = document.getElementById("comments-giscus");
     if (commentContainer !== null) {
         commentContainer.innerHTML = ''
         const commentScript = document.createElement("script");
