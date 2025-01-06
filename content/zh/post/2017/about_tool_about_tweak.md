@@ -2,7 +2,7 @@
 title = "关于工具,关于折腾"
 description = "An discussion about tool and tweak"
 date = 2017-03-24T00:00:00-07:00
-lastmod = 2024-12-30T22:36:15-08:00
+lastmod = 2025-01-05T15:47:40-08:00
 tags = ["linux", "tool", "tweak"]
 categories = ["linux", "tool"]
 draft = false
@@ -189,6 +189,6 @@ i3wm, 在折腾过炫酷的 KDE, Gnome, xfce, 而我最后选择的是 i3这个�
 
 更新 2017-4-21
 
-附上一篇关于折腾的文章 (需翻墙) [The importance of ZheTeng](https://program-think.blogspot.com/2017/04/The-Importance-of-Zheteng.html)
+编程随想也发一篇文章来说明[聊聊【折腾】的重要性](https://program-think.blogspot.com/2017/04/The-Importance-of-Zheteng.html), 来阐述「折腾」对自学与提高的重要性。
 
 -   Enjoy tweaking;Enjoy Linux :)
