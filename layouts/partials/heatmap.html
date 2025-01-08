@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- Add heatmap section at the top -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Responsive Heatmap</title>
     <style>
+	.heatmap-section {
+	    margin-bottom: 30px;
+	}
+
 	/* Default styles */
 	.heatmap-container {
 	    display: block;
@@ -45,7 +48,7 @@
         <div>
             <div style="display: flex; justify-content: center; align-items: center">
                 <p style="margin-right: 15px; margin-bottom: 0; padding: 8px">
-                    {{ default "Article Activity" (.Get "title_text") }}
+		  {{ i18n "article_activity" }}
                 </p>
                 <select id="yearSelector">
                     <!-- Years will be dynamically added here -->
@@ -141,7 +144,6 @@
         function populatePostData() {
           var postsByDate = new Map();
           var years = new Set();
-
           {{ range ((where .Site.RegularPages "Type" "post"))  }}
               var date = {{ .Date.Format "2006-01-02" }};
               var year = {{ .Date.Format "2006" }};
@@ -163,7 +165,7 @@
               totalWordCount += wordCount;
               data.set("totalWordCount", totalWordCount);
               postsByDate.set(date, data);
-          {{- end -}}
+	    {{- end -}}
 
           years = Array.from(years).sort().reverse();
           return [postsByDate, years];
@@ -251,10 +253,10 @@
                 yearLabel: { show: false },
                 dayLabel: {
                     firstDay: 1,
-                    nameMap: {{ default "EN" (.Get "language")}}
+                    nameMap: "{{.Lang}}"
                 },
                 monthLabel: {
-                    nameMap: {{ default "EN" (.Get "language")}}
+                    nameMap: "{{.Lang}}"
                 },
                 splitLine: {
                     show: false,
@@ -268,7 +270,7 @@
                 },
                 backgroundColor: getTooltipBgColor(),
                 formatter: function (params) {
-                    const thousandWordsText = {{ default "EN" (.Get "language")}} === "EN" ? 'k words': '千字';
+                    const thousandWordsText = {{ i18n "thousand_words" }};
                     const date = params.data[0];
                     const posts = postsByDate.get(date).get("posts");
                     var content = `${date}`;

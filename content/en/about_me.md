@@ -5,8 +5,6 @@ lastmod = 2022-02-23T17:23:37+08:00
 draft = false
 +++
 
-{{< heatmap >}}
-
 ## About me {#about-me}
 
 I'm Ramsay, a software engineer making a living by pressing keyboard, an amateur cook, an Emacs deadhead and Linux enthusiast.
