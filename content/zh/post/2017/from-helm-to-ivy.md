@@ -1,11 +1,11 @@
 +++
 title = "(翻译)从Helm到Ivy"
 description = "An Translated Post about switch from helm to ivy"
-date = 2017-03-05T00:00:00+08:00
+date = 2017-03-05T00:00:00-08:00
 keywords = ["emacs", "helm", "ivy"]
-lastmod = 2022-02-23T19:41:32+08:00
+lastmod = 2025-01-09T19:18:56-08:00
 tags = ["emacs", "translation"]
-categories = ["emacs"]
+categories = ["翻译"]
 draft = false
 toc = true
 +++
@@ -27,7 +27,7 @@ Ivy 和Helm 都有相同的目标，但是它们实现的方法却是迥然不�
 
 现在我想站在用户的角度来比较一下这两个工具。我这里指的用户观点是我在不需要了解Helm 和Ivy 的内部工作原理的前提下对这两个工具进行比较。
 
-其实，因为我对 **elisp**还谈不上精通，所以也没办法就两者实现细节来进行比较。但是这两个工具我都使用过，所以我可以从用户的角度，跟你分享我使用它们的不同感受。最后，我从Helm 切换到了Ivy
+其实，因为我对 \*elisp\*还谈不上精通，所以也没办法就两者实现细节来进行比较。但是这两个工具我都使用过，所以我可以从用户的角度，跟你分享我使用它们的不同感受。最后，我从Helm 切换到了Ivy
 
 我想先谈Helm.当我使用Spacemacs 的时候，我学会了怎么使用Helm,以Helm 的方式思考, 如何自定义Helm,怎么把Helm 配置得称心如意。
 
@@ -105,7 +105,7 @@ Ivy 真的是很容易上手，下面就是我的全部配置：
   :diminish (ivy-mode . "")
   :bind
   (:map ivy-mode-map
-	("C-'" . ivy-avy))
+        ("C-'" . ivy-avy))
   :config
   (ivy-mode 1)
   ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
@@ -118,8 +118,8 @@ Ivy 真的是很容易上手，下面就是我的全部配置：
   (setq ivy-initial-inputs-alist nil)
   ;; configure regexp engine.
   (setq ivy-re-builders-alist
-	;; allow input not in order
-	'((t   . ivy--regex-ignore-order))))
+        ;; allow input not in order
+        '((t   . ivy--regex-ignore-order))))
 ```
 
 Ivy 是很低调的；它不想让你把一切都整合到Ivy去。它仅仅是提供你必需的补全。你不能像Helm 那样用Ivy 来做任何事；那为什么我还要切换到Ivy 去呢？
@@ -173,9 +173,9 @@ Ivy 是很低调的；它不想让你把一切都整合到Ivy去。它仅仅是�
 (helm
  :sources
  (helm-build-sync-source "one-to-ten"
-			 :candidates
-			 (mapcar #'number-to-string (number-sequence 1 10))
-			 :fuzzy-match t)
+                         :candidates
+                         (mapcar #'number-to-string (number-sequence 1 10))
+                         :fuzzy-match t)
  :buffer
  "*helm one-to-ten*")
 

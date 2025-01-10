@@ -1,9 +1,9 @@
 +++
 title = "Emacs技巧分享: 使用eww打开在线org-mode文档"
-date = 2023-03-04T21:55:00+08:00
-lastmod = 2023-03-04T21:58:52+08:00
+date = 2023-03-04T21:55:00-08:00
+lastmod = 2025-01-09T18:07:56-08:00
 tags = ["emacs"]
-categories = ["emacs"]
+categories = ["Emacs技巧"]
 draft = false
 toc = true
 +++

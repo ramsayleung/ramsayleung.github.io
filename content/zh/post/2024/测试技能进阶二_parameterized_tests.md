@@ -1,9 +1,9 @@
 +++
 title = "测试技能进阶(二): Parameterized Tests"
 date = 2024-10-13T09:35:00-07:00
-lastmod = 2024-10-14T14:57:47-07:00
+lastmod = 2025-01-09T01:14:26-08:00
 tags = ["testing", "rust", "python"]
-categories = ["testing", "rust", "python"]
+categories = ["测试技能进阶"]
 draft = false
 toc = true
 +++
@@ -49,7 +49,7 @@ def test_calculate_discount():
 
 ### <span class="section-num">2.2</span> 多个 test case {#多个-test-case}
 
-推荐做法就是每个测试条件定个单独的 test case。
+推荐做法就是每个测试条件一个单独的 test case。
 
 另外我们通过test case发现上面的代码没有处理异常情况，我们现在要优化下我们的代码，增加异常处理逻辑(这个就是TDD所推崇的开发哲学, test case 先行，通过test case发现问题，让test case fail掉，然后修正业务逻辑，test case再运行通过).
 

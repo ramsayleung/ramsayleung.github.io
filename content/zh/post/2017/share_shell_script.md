@@ -1,10 +1,9 @@
 +++
 title = "脚本分享"
 description = "share of my shell script snippet"
-date = 2017-04-22T00:00:00+08:00
-lastmod = 2022-02-24T15:15:45+08:00
+date = 2017-04-22T00:00:00-07:00
+lastmod = 2025-01-09T20:51:33-08:00
 tags = ["shell", "linux", "command_line", "tool"]
-categories = ["tool"]
 draft = false
 toc = true
 +++
@@ -16,7 +15,7 @@ toc = true
 
 因为我比较多的脚本都是基于 `percol` 这个神器，所以需要先安装 `percol`, 如果 不了解 `percol` 的话，可以翻看一下我之前的文章 [Linux/Unix Shell 二三事之神器percol](https://ramsayleung.github.io/post/2017/percol/) .
 
-我一般将写好的函数 source 命令添加到 Shell. 例如脚本函数都在一个叫`tool_function.sh` 的文件里面，而我使用 Zsh, 则只需要在 `.zshrc` 添加一句语句：
+我一般将写好的函数 source 命令添加到 Shell. 例如脚本函数都在一个叫 `tool_function.sh` 的文件里面，而我使用 Zsh, 则只需要在 `.zshrc` 添加一句语句：
 
 ```shell
 source /path/to/tool_function.sh
@@ -40,35 +39,35 @@ function config_ssh_login_key(){
     fi
        #if public/private key doesn't exist ,generate public/private key
        if [ -f ~/.ssh/id_rsa ];then
-	  echo "public/private key exists"
-	  else
-	      ssh-keygen -t rsa
+          echo "public/private key exists"
+          else
+              ssh-keygen -t rsa
        fi
-	  while getopts :u:h:p: option
-	  do
-	      case "$option" in
-		  u) user=$OPTARG;;
-		  h) hostname=$OPTARG;;
-		  p) port=$OPTARG;;
-		  *) echo "Unknown option:$option";;
-	      esac
-	  done
+          while getopts :u:h:p: option
+          do
+              case "$option" in
+                  u) user=$OPTARG;;
+                  h) hostname=$OPTARG;;
+                  p) port=$OPTARG;;
+                  *) echo "Unknown option:$option";;
+              esac
+          done
 
-	  if [ -z "$port" ];then
-	     port=22
-	  fi
-	     #check whether it is the first time to run this script and whether authorized_keys exists
-	     # ssh_host_and_user="$1@$2"
-	     authorized_keys="$HOME/.ssh/authorized_keys"
-	     read -r -s -p "$user@$hostname's password:" password
-	     if sshpass -pv $password ssh -p "$port" "$user@$hostname" test -e "$authorized_keys";then
-		echo "authorized key exists"
-		kill -INT $$
-		else
-		    sshpass -p $password ssh  $user@$hostname -p $port "mkdir -p ~/.ssh;chmod 0700 .ssh"
-		    sshpass -p $password scp -P $port  ~/.ssh/id_rsa.pub $user@$hostname:~/.ssh/authorized_keys
-		    # ssh-copy-id "$user@$hostname -p $port"
-	     fi
+          if [ -z "$port" ];then
+             port=22
+          fi
+             #check whether it is the first time to run this script and whether authorized_keys exists
+             # ssh_host_and_user="$1@$2"
+             authorized_keys="$HOME/.ssh/authorized_keys"
+             read -r -s -p "$user@$hostname's password:" password
+             if sshpass -pv $password ssh -p "$port" "$user@$hostname" test -e "$authorized_keys";then
+                echo "authorized key exists"
+                kill -INT $$
+                else
+                    sshpass -p $password ssh  $user@$hostname -p $port "mkdir -p ~/.ssh;chmod 0700 .ssh"
+                    sshpass -p $password scp -P $port  ~/.ssh/id_rsa.pub $user@$hostname:~/.ssh/authorized_keys
+                    # ssh-copy-id "$user@$hostname -p $port"
+             fi
 }
 ```
 
@@ -97,13 +96,13 @@ function gkey(){
     if [ -n "$1" ];then
        local length="$1"
        else
-	   local length=32
+           local length=32
     fi
        OS_NAME=$(uname)
        if [ $OS_NAME = "Darwin" ]; then
-	   LC_CTYPE=C cat /dev/urandom |tr -cd "[:alnum:]"|head -c "$length";echo
+           LC_CTYPE=C cat /dev/urandom |tr -cd "[:alnum:]"|head -c "$length";echo
        else
-	   cat /dev/urandom |tr -cd "[:alnum:]"|head -c "$length";echo
+           cat /dev/urandom |tr -cd "[:alnum:]"|head -c "$length";echo
        fi
 }
 ```
@@ -125,19 +124,19 @@ gkey 45
 OS_NAME=$(uname)
 function pclip() {
     if [ $OS_NAME = "CYGWIN" ]; then
-	putclip "$@";
+        putclip "$@";
     elif [ $OS_NAME = "Darwin" ]; then
-	pbcopy "$@";
+        pbcopy "$@";
     else
-	if [ -x /usr/bin/xsel ]; then
-	    xsel -ib "$@";
-	else
-	    if [ -x /usr/bin/xclip ]; then
-		xclip -selection c "$@";
-	    else
-		echo "Neither xsel or xclip is installed!"
-	    fi
-	fi
+        if [ -x /usr/bin/xsel ]; then
+            xsel -ib "$@";
+        else
+            if [ -x /usr/bin/xclip ]; then
+                xclip -selection c "$@";
+            else
+                echo "Neither xsel or xclip is installed!"
+            fi
+        fi
     fi
 }
 ```
@@ -188,50 +187,50 @@ function GetOSVersion {
 
     # Figure out which vendor we are
     if [[ -x "`which sw_vers 2>/dev/null`" ]]; then
-	# OS/X
-	os_VENDOR=`sw_vers -productName`
+        # OS/X
+        os_VENDOR=`sw_vers -productName`
     elif [[ -x $(which lsb_release 2>/dev/null) ]]; then
-	os_VENDOR=$(lsb_release -i -s)
-	if [[ "Debian,Ubuntu,LinuxMint" =~ $os_VENDOR ]]; then
-	    os_PACKAGE="deb"
-	elif [[ "SUSE LINUX" =~ $os_VENDOR ]]; then
-	    lsb_release -d -s | grep -q openSUSE
-	    if [[ $? -eq 0 ]]; then
-		os_VENDOR="openSUSE"
-	    fi
-	elif [[ $os_VENDOR == "openSUSE project" ]]; then
-	    os_VENDOR="openSUSE"
-	elif [[ $os_VENDOR =~ Red.*Hat ]]; then
-	    os_VENDOR="Red Hat"
-	fi
-	os_CODENAME=$(lsb_release -c -s)
+        os_VENDOR=$(lsb_release -i -s)
+        if [[ "Debian,Ubuntu,LinuxMint" =~ $os_VENDOR ]]; then
+            os_PACKAGE="deb"
+        elif [[ "SUSE LINUX" =~ $os_VENDOR ]]; then
+            lsb_release -d -s | grep -q openSUSE
+            if [[ $? -eq 0 ]]; then
+                os_VENDOR="openSUSE"
+            fi
+        elif [[ $os_VENDOR == "openSUSE project" ]]; then
+            os_VENDOR="openSUSE"
+        elif [[ $os_VENDOR =~ Red.*Hat ]]; then
+            os_VENDOR="Red Hat"
+        fi
+        os_CODENAME=$(lsb_release -c -s)
     elif [[ -r /etc/redhat-release ]]; then
-	# Red Hat Enterprise Linux Server release 5.5 (Tikanga)
-	# Red Hat Enterprise Linux Server release 7.0 Beta (Maipo)
-	# CentOS release 5.5 (Final)
-	# CentOS Linux release 6.0 (Final)
-	# Fedora release 16 (Verne)
-	# XenServer release 6.2.0-70446c (xenenterprise)
-	# Oracle Linux release 7
-	os_CODENAME=""
-	for r in "Red Hat" CentOS Fedora XenServer; do
-	    os_VENDOR=$r
-	done
-	if [ "$os_VENDOR" = "Red Hat" ] && [[ -r /etc/oracle-release ]]; then
-	    os_VENDOR=OracleLinux
-	fi
+        # Red Hat Enterprise Linux Server release 5.5 (Tikanga)
+        # Red Hat Enterprise Linux Server release 7.0 Beta (Maipo)
+        # CentOS release 5.5 (Final)
+        # CentOS Linux release 6.0 (Final)
+        # Fedora release 16 (Verne)
+        # XenServer release 6.2.0-70446c (xenenterprise)
+        # Oracle Linux release 7
+        os_CODENAME=""
+        for r in "Red Hat" CentOS Fedora XenServer; do
+            os_VENDOR=$r
+        done
+        if [ "$os_VENDOR" = "Red Hat" ] && [[ -r /etc/oracle-release ]]; then
+            os_VENDOR=OracleLinux
+        fi
     elif [[ -r /etc/SuSE-release ]]; then
-	for r in openSUSE "SUSE Linux"; do
-	    if [[ "$r" = "SUSE Linux" ]]; then
-		os_VENDOR="SUSE LINUX"
-	    else
-		os_VENDOR=$r
-	    fi
-	    os_VENDOR=""
-	done
-	# If lsb_release is not installed, we should be able to detect Debian OS
+        for r in openSUSE "SUSE Linux"; do
+            if [[ "$r" = "SUSE Linux" ]]; then
+                os_VENDOR="SUSE LINUX"
+            else
+                os_VENDOR=$r
+            fi
+            os_VENDOR=""
+        done
+        # If lsb_release is not installed, we should be able to detect Debian OS
     elif [[ -f /etc/debian_version ]] && [[ $(cat /proc/version) =~ "Debian" ]]; then
-	os_VENDOR="Debian"
+        os_VENDOR="Debian"
     fi
     export os_VENDOR
 }
@@ -241,7 +240,7 @@ function GetOSVersion {
 
 ### <span class="section-num">2.6</span> 根据不同的发行版本安装软件 {#根据不同的发行版本安装软件}
 
-刚刚上面的脚本是为了准确判断出所有的 \*nix 系统的，但是方便起见，也可以直接使用`uname` 命令
+刚刚上面的脚本是为了准确判断出所有的 \*nix 系统的，但是方便起见，也可以直接使用=uname= 命令
 
 ```shell
 if [ "$(uname)" == "Darwin" ]; then
@@ -249,8 +248,8 @@ if [ "$(uname)" == "Darwin" ]; then
     echo "This is mac os"
     # check if brew exists
     type brew>/dev/null 2>&1 || {
-	echo >&2 " require brew but it's not installed.  Aborting.";
-	exit 1; }
+        echo >&2 " require brew but it's not installed.  Aborting.";
+        exit 1; }
     echo "install htop"
     brew install htop
 
@@ -287,109 +286,109 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
     # Do something under GNU/Linux platform
     GetOSVersion
     if [ "$os_VENDOR" == "Ubuntu" ] || [[ "$os_VENDOR" == "Debian" ]] || [[ "$os_VENDOR" == "LinuxMint" ]]; then
-	# install htop
-	sudo apt-get install htop -y
-	# install httpie
-	sudo apt-get install httpie -y
-	# install ag
-	sudo apt-get install  silversearcher-ag -y
-	# install zeal
-	sudo apt-get install zeal -y
-	# install ncdu
-	sudo apt-get install ncdu -y
-	# install i3
-	sudo apt-get install i3 -y
-	# install emacs (i could die without it)
-	sudo apt-get install emacs -y
-	# install vim
-	sudo apt-get install vim -y
-	# install tree
-	sudo apt-get install tree -y
-	# install shellcheck
-	sudo apt-get install shellcheck -y
-	# install guile (scheme compiler)
-	sudo apt-get install guile -y
-	# install source code pro font
-	[ -d /usr/share/fonts/opentype ] || sudo mkdir /usr/share/fonts/opentype
-	sudo git clone https://github.com/adobe-fonts/source-code-pro.git /usr/share/fonts/opentype/scp
-	sudo fc-cache -f -v
-	# install proxychains-ng
-	sudo apt-get install proxychains-ng -y
-	# install pandoc
-	sudo apt-get install pandoc -y
+        # install htop
+        sudo apt-get install htop -y
+        # install httpie
+        sudo apt-get install httpie -y
+        # install ag
+        sudo apt-get install  silversearcher-ag -y
+        # install zeal
+        sudo apt-get install zeal -y
+        # install ncdu
+        sudo apt-get install ncdu -y
+        # install i3
+        sudo apt-get install i3 -y
+        # install emacs (i could die without it)
+        sudo apt-get install emacs -y
+        # install vim
+        sudo apt-get install vim -y
+        # install tree
+        sudo apt-get install tree -y
+        # install shellcheck
+        sudo apt-get install shellcheck -y
+        # install guile (scheme compiler)
+        sudo apt-get install guile -y
+        # install source code pro font
+        [ -d /usr/share/fonts/opentype ] || sudo mkdir /usr/share/fonts/opentype
+        sudo git clone https://github.com/adobe-fonts/source-code-pro.git /usr/share/fonts/opentype/scp
+        sudo fc-cache -f -v
+        # install proxychains-ng
+        sudo apt-get install proxychains-ng -y
+        # install pandoc
+        sudo apt-get install pandoc -y
 
-	sudo apt-get install markdown -y
+        sudo apt-get install markdown -y
 
-	sudo apt-get install cloc -y
+        sudo apt-get install cloc -y
     elif [  "$os_VENDOR" == "Fedora" ] || [[ "$os_VENDOR" == "CentOS" ]] || [[ "$os_VENDOR" == "Korora" ]]; then
-	# install ag
-	sudo yum install -y the_silver_searcher
-	# install zeal
-	sudo yum install -y zeal
-	# install httpie
-	sudo yum install -y httpie
-	# install htop
-	sudo yum install -y htop
-	# install ncdu
-	sudo yum install -y ncdu
-	# install vim
-	sudo yum install -y vim
-	# install emacs
-	sudo yum install -y emacs
-	# install i3
-	sudo yum install -y i3
-	# install tree
-	sudo yum install -y tree
-	# install shellcheck
-	sudo yum install ShellCheck -y
-	# install guile
-	sudo yum install guile -y
-	# install source  code pro font
-	sudo yum install adobe-source-code-pro-fonts -y
-	# install proxychains-ng
-	sudo yum install proxychains-ng -y
+        # install ag
+        sudo yum install -y the_silver_searcher
+        # install zeal
+        sudo yum install -y zeal
+        # install httpie
+        sudo yum install -y httpie
+        # install htop
+        sudo yum install -y htop
+        # install ncdu
+        sudo yum install -y ncdu
+        # install vim
+        sudo yum install -y vim
+        # install emacs
+        sudo yum install -y emacs
+        # install i3
+        sudo yum install -y i3
+        # install tree
+        sudo yum install -y tree
+        # install shellcheck
+        sudo yum install ShellCheck -y
+        # install guile
+        sudo yum install guile -y
+        # install source  code pro font
+        sudo yum install adobe-source-code-pro-fonts -y
+        # install proxychains-ng
+        sudo yum install proxychains-ng -y
 
-	sudo yum install pandoc -y
+        sudo yum install pandoc -y
 
-	sudo yum install markdown -y
+        sudo yum install markdown -y
 
-	# count line and space in code
-	sudo yum install cloc  -y
+        # count line and space in code
+        sudo yum install cloc  -y
     elif [  "$os_VENDOR" == "Arch" ] ; then
-	# install ag
-	sudo pacman -S -y the_silver_searcher
-	# install zeal
-	sudo pacman -S -y zeal
-	# install httpie
-	sudo pacman -S -y httpie
-	# install htop
-	sudo pacman -S -y htop
-	# install ncdu
-	sudo pacman -S -y ncdu
-	# install vim
-	sudo pacman -S -y vim
-	# install emacs
-	sudo pacman -S -y emacs
-	# install i3
-	sudo pacman -S -y i3
-	# install tree
-	sudo pacman -S -y tree
-	# install shellcheck
-	sudo pacman -S ShellCheck -y
-	# install guile
-	sudo pacman -S guile -y
-	# install source-code-pro font
-	sudo pacman -S adobe-source-code-pro-fonts -y
-	# install proxychains-ng
-	sudo pacman -S proxychains-ng -y
+        # install ag
+        sudo pacman -S -y the_silver_searcher
+        # install zeal
+        sudo pacman -S -y zeal
+        # install httpie
+        sudo pacman -S -y httpie
+        # install htop
+        sudo pacman -S -y htop
+        # install ncdu
+        sudo pacman -S -y ncdu
+        # install vim
+        sudo pacman -S -y vim
+        # install emacs
+        sudo pacman -S -y emacs
+        # install i3
+        sudo pacman -S -y i3
+        # install tree
+        sudo pacman -S -y tree
+        # install shellcheck
+        sudo pacman -S ShellCheck -y
+        # install guile
+        sudo pacman -S guile -y
+        # install source-code-pro font
+        sudo pacman -S adobe-source-code-pro-fonts -y
+        # install proxychains-ng
+        sudo pacman -S proxychains-ng -y
 
-	sudo pacman -S pandoc -y
+        sudo pacman -S pandoc -y
 
-	sudo pacman -S markdown -y
+        sudo pacman -S markdown -y
 
-	sudo pacman -S ripgrep -y
+        sudo pacman -S ripgrep -y
 
-	sudo pacman -S cloc  -y
+        sudo pacman -S cloc  -y
     fi
 elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
     # Do something under 32 bits Windows NT platform

@@ -1,9 +1,9 @@
 +++
 title = "恰同学少年： 纪念我的大学时光"
 date = 2018-05-21T18:25:00-07:00
-lastmod = 2024-12-30T23:23:40-08:00
+lastmod = 2025-01-09T20:53:24-08:00
 tags = ["life", "summary"]
-categories = ["life", "summary"]
+categories = ["得失感悟"]
 draft = false
 toc = true
 highlighted = true

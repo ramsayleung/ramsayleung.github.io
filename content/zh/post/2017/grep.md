@@ -1,11 +1,11 @@
 +++
 title = "Linux/Unix Shell 二三事之过滤器grep"
 description = "an introduction about grep"
-date = 2017-03-13T00:00:00+08:00
+date = 2017-03-13T00:00:00-07:00
 keywords = ["shell", "linux", "grep"]
-lastmod = 2022-02-23T19:48:37+08:00
+lastmod = 2025-01-09T17:37:12-08:00
 tags = ["shell", "linux", "command_line"]
-categories = ["linux"]
+categories = ["Linux/Unix Shell 二三事"]
 draft = false
 toc = true
 +++
@@ -16,7 +16,7 @@ toc = true
 
 今天我想聊聊 **grep** 这个命令；据说，有Unix/Linux 的地方就会有 **grep**, 这个可能是安装得最广泛的命令之一；那么 **grep** 是用来干什么的呢？
 
-grep 其实是用来在文件中搜索特定内容或者模式的工具(配合正则表达式“食用”，味道更佳 :))现在就来一起看看**grep** 的用法
+grep 其实是用来在文件中搜索特定内容或者模式的工具(配合正则表达式“食用”，味道更佳 :))现在就来一起看看\*grep\* 的用法
 
 
 ## <span class="section-num">1</span> 基本用法 {#基本用法}
@@ -60,7 +60,7 @@ grep "e...h" /tmp/tinytale.txt
 > it was the epoch of belief it was the epoch of incredulity
 > ```
 
-可以看到，正则表达式匹配了 **epoch** 这个单词。正则表达式的威力无与伦比的，把 **grep**和正则表达式结合起来可以更好地发挥 **grep** 这个工具的潜力；而本文主要是介绍 **grep**, 更多有关正则表达式的用法不细讲了
+可以看到，正则表达式匹配了 **epoch** 这个单词。正则表达式的威力无与伦比的，把 **grep\*和正则表达式结合起来可以更好地发挥 \*grep** 这个工具的潜力；而本文主要是介绍 **grep**, 更多有关正则表达式的用法不细讲了
 
 
 ### <span class="section-num">1.3</span> 统计出现的次数 {#统计出现的次数}
@@ -141,7 +141,7 @@ tale.txt:herself into the show of a belief that they would soon be reunited
 grep belief /tmp/*.txt
 ````
 
-输出结果也会跟上面一致 (假设你 **_tmp_** 目录下只有两个文本文件); 我告诉**grep** 搜索**/tmp** 下所有的 **.txt** 文件。
+输出结果也会跟上面一致 (假设你 **_tmp_** 目录下只有两个文本文件); 我告诉\*grep\* 搜索\*/tmp\* 下所有的 **.txt** 文件。
 
 
 ### <span class="section-num">2.1</span> 递归搜索 {#递归搜索}

@@ -1,9 +1,8 @@
 +++
 title = "OpenAI-translator: 基于ChatGPT的划词翻译及润色应用"
-date = 2023-03-12T10:20:00+08:00
-lastmod = 2023-03-12T14:03:35+08:00
+date = 2023-03-12T10:20:00-07:00
+lastmod = 2025-01-09T20:50:53-08:00
 tags = ["tool"]
-categories = ["tool"]
 draft = false
 toc = true
 +++

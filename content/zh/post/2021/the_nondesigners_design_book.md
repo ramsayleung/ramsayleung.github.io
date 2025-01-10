@@ -1,9 +1,9 @@
 +++
 title = "The Non-designer's design book"
 date = 2021-10-17T15:16:36
-lastmod = 2022-02-26T11:40:09+08:00
+lastmod = 2025-01-09T19:10:19-08:00
 tags = ["book", "design"]
-categories = ["book"]
+categories = ["读书感悟"]
 draft = false
 toc = true
 +++

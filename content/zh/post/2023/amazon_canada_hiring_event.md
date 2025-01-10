@@ -1,9 +1,8 @@
 +++
 title = "做个摆渡人：Amazon Canada的国内专场招聘"
 date = 2023-05-02T18:17:00-07:00
-lastmod = 2023-05-03T14:40:02-07:00
+lastmod = 2025-01-09T20:03:24-08:00
 tags = ["amazon"]
-categories = ["amazon"]
 draft = false
 toc = true
 +++

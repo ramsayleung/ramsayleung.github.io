@@ -1,9 +1,9 @@
 +++
 title = "区块链的完整性校验方案: Merkle Tree"
 date = 2024-10-12T18:22:00-07:00
-lastmod = 2024-10-14T18:55:16-07:00
+lastmod = 2025-01-09T20:03:58-08:00
 tags = ["blockchain"]
-categories = ["blockchain"]
+categories = ["区块链"]
 draft = false
 toc = true
 +++

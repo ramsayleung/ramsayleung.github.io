@@ -1,9 +1,8 @@
 +++
 title = "Hugo评论系统自适应博客主题: 支持dark与light theme"
-date = 2024-12-04T13:25:00+08:00
-lastmod = 2024-12-04T14:33:02+08:00
+date = 2024-12-04T13:25:00-08:00
+lastmod = 2025-01-09T20:12:43-08:00
 tags = ["blog", "hugo"]
-categories = ["blog", "hugo"]
 draft = false
 toc = true
 +++
@@ -87,7 +86,7 @@ function getCurrentTheme() {
 
 ```js
 function loadUtterances(darkMode=false) {
-    const commentContainer = document.getElementById("comments-giscus");
+    const commentContainer = document.getElementById("comments-utteranc");
     if (commentContainer !== null) {
         commentContainer.innerHTML = ''
         const commentScript = document.createElement("script");

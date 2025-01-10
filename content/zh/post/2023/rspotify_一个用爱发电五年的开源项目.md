@@ -1,9 +1,8 @@
 +++
 title = "RSpotify: 一个用爱发电五年的开源项目"
 date = 2023-02-07T15:40:00-08:00
-lastmod = 2024-12-30T22:28:48-08:00
+lastmod = 2025-01-09T20:06:55-08:00
 tags = ["rspotify", "rust"]
-categories = ["rspotify"]
 draft = false
 toc = true
 highlighted = true

@@ -1,9 +1,8 @@
 +++
 title = "最好的学习方式：费曼学习法(Feynman Technique)"
 date = 2022-03-26T17:07:00-07:00
-lastmod = 2023-04-08T18:27:13-07:00
+lastmod = 2025-01-09T20:17:57-08:00
 tags = ["learning"]
-categories = ["learning", "summary"]
 draft = false
 toc = true
 +++
@@ -144,7 +143,8 @@ Your browser does not support the video tag.</video>
 
 #### <span class="section-num">2.4.2</span> 换位思考 {#换位思考}
 
-为了践行这种「以教代学」的学习方法，在向小白讲授内容的时候，为了更好地帮助他们理解，你就可能需要切换到「小白视角」，以他们的角度来思考问题。
+为了践行这种「以教代学」的学习方法，在向小白讲授内容的时候，为了更好地帮助他们理解，你就可能需要切换到「小白视角」，
+以他们的角度来思考问题。
 
 久而久之，你的「换位思考」和「共情」能力自然就会得到提升。
 

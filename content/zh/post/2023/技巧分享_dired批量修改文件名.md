@@ -1,9 +1,9 @@
 +++
 title = "Emacs 技巧分享：dired-mode 批量修改文件名"
-date = 2023-03-04T21:34:00+08:00
-lastmod = 2023-03-04T21:45:59+08:00
+date = 2023-03-04T21:34:00-08:00
+lastmod = 2025-01-09T19:18:24-08:00
 tags = ["emacs"]
-categories = ["emacs"]
+categories = ["Emacs技巧"]
 draft = false
 toc = true
 +++
@@ -20,6 +20,6 @@ toc = true
     -   使用 `rectangle-command`: `C-x r t` `string-rectangle`
 4.  `C-c C-c` 提交修改或 `C-c C-k` 放弃修改
 
-{{< figure src="/ox-hugo/dired_rename_multi_files.gif" caption="<span class=\"figure-number\">Figure 1: </span>使用 `rectangle-command` 进行批量修改" link="/ox-hugo/dired_rename_multi_files.gif" >}}
+{{< figure src="~/btsync/org/blog/2023/技巧分享-dired批量修改文件名/img/dired_rename_multi_files.gif" caption="<span class=\"figure-number\">Figure 1: </span>使用 `rectangle-command` 进行批量修改" link="/ox-hugo/dired_rename_multi_files.gif" >}}
 
-{{< figure src="/ox-hugo/dired_rename_multi_files_2.gif" caption="<span class=\"figure-number\">Figure 2: </span>使用 evil的多行编辑模式进行批量修改" link="/ox-hugo/dired_rename_multi_files_2.gif" >}}
+{{< figure src="~/btsync/org/blog/2023/技巧分享-dired批量修改文件名/img/dired_rename_multi_files_2.gif" caption="<span class=\"figure-number\">Figure 2: </span>使用 evil的多行编辑模式进行批量修改" link="/ox-hugo/dired_rename_multi_files_2.gif" >}}

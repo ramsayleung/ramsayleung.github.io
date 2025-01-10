@@ -1,10 +1,10 @@
 +++
-title = "关于工具,关于折腾"
+title = "关于工具, 关于折腾"
 description = "An discussion about tool and tweak"
 date = 2017-03-24T00:00:00-07:00
-lastmod = 2025-01-05T15:47:40-08:00
+lastmod = 2025-01-09T20:52:24-08:00
 tags = ["linux", "tool", "tweak"]
-categories = ["linux", "tool"]
+categories = ["得失感悟"]
 draft = false
 +++
 

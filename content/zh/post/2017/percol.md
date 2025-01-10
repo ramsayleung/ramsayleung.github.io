@@ -2,9 +2,9 @@
 title = "Linux/Unix Shell 二三事之神器percol"
 description = "An introduction about percol"
 date = 2017-02-13T00:00:00-08:00
-lastmod = 2024-12-31T12:18:10-08:00
+lastmod = 2025-01-09T17:36:15-08:00
 tags = ["linux", "shell"]
-categories = ["linux"]
+categories = ["Linux/Unix Shell 二三事"]
 draft = false
 toc = true
 +++

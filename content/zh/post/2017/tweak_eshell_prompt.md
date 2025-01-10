@@ -1,17 +1,17 @@
 +++
 title = "Eshell提示符优化"
 description = "Tweak with Emacs shell prompt"
-date = 2017-06-07T00:00:00+08:00
-lastmod = 2022-02-24T15:37:40+08:00
-tags = ["emacs", "eshell"]
-categories = ["emacs"]
+date = 2017-06-07T00:00:00-07:00
+lastmod = 2025-01-09T18:06:46-08:00
+tags = ["emacs", "eshell", "tool"]
+categories = ["Emacs技巧"]
 draft = false
 toc = true
 +++
 
 ## <span class="section-num">1</span> 发现帅气的提示符 {#发现帅气的提示符}
 
-近日，笔者在浏览 [Reddit](https://www.reddit.com/r/emacs/comments/6f0rkz/my_fancy_eshell_prompt/) 的时候，发现了一位 Emacs 用户把他的 Eshell 提示符修改得很帅，如图：
+近日，我在浏览 [Reddit](https://www.reddit.com/r/emacs/comments/6f0rkz/my_fancy_eshell_prompt/) 的时候，发现了一位 Emacs 用户把他的 Eshell 提示符修改得很帅，如图：
 
 [![](/ox-hugo/eshell_prompt.png)](/ox-hugo/eshell_prompt.png)
 本着拿来主义的想法，我就直接把这位小哥的代码添加到了我的配置文件里面：
@@ -19,19 +19,19 @@ toc = true
 ```elisp
 (setq eshell-prompt-function
       (lambda ()
-	(concat
-	 (propertize "┌─[" 'face `(:foreground "green"))
-	 (propertize (user-login-name) 'face `(:foreground "red"))
-	 (propertize "@" 'face `(:foreground "green"))
-	 (propertize (system-name) 'face `(:foreground "blue"))
-	 (propertize "]──[" 'face `(:foreground "green"))
-	 (propertize (format-time-string "%H:%M" (current-time)) 'face `(:foreground "yellow"))
-	 (propertize "]──[" 'face `(:foreground "green"))
-	 (propertize (concat (eshell/pwd)) 'face `(:foreground "white"))
-	 (propertize "]\n" 'face `(:foreground "green"))
-	 (propertize "└─>" 'face `(:foreground "green"))
-	 (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "green"))
-	 )))
+        (concat
+         (propertize "┌─[" 'face `(:foreground "green"))
+         (propertize (user-login-name) 'face `(:foreground "red"))
+         (propertize "@" 'face `(:foreground "green"))
+         (propertize (system-name) 'face `(:foreground "blue"))
+         (propertize "]──[" 'face `(:foreground "green"))
+         (propertize (format-time-string "%H:%M" (current-time)) 'face `(:foreground "yellow"))
+         (propertize "]──[" 'face `(:foreground "green"))
+         (propertize (concat (eshell/pwd)) 'face `(:foreground "white"))
+         (propertize "]\n" 'face `(:foreground "green"))
+         (propertize "└─>" 'face `(:foreground "green"))
+         (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "green"))
+         )))
 ```
 
 效果自然是很 sexy.
@@ -57,13 +57,13 @@ toc = true
   :ensure t
   :load-path "~/Code/github/eshell-prompt-extras"
   :config (progn
-	    (with-eval-after-load "esh-opt"
-	      (use-package virtualenvwrapper :ensure t)
-	      (venv-initialize-eshell)
-	      (autoload 'epe-theme-lambda "eshell-prompt-extras")
-	      (setq eshell-highlight-prompt nil
-		    eshell-prompt-function 'epe-theme-lambda))
-	    ))
+            (with-eval-after-load "esh-opt"
+              (use-package virtualenvwrapper :ensure t)
+              (venv-initialize-eshell)
+              (autoload 'epe-theme-lambda "eshell-prompt-extras")
+              (setq eshell-highlight-prompt nil
+                    eshell-prompt-function 'epe-theme-lambda))
+            ))
 ```
 
 而 `epe-theme-lambda` 的代码如下：
@@ -81,26 +81,26 @@ toc = true
    (when epe-show-python-info
      (when (fboundp 'epe-venv-p)
        (when (and (epe-venv-p) venv-current-name)
-	 (epe-colorize-with-face
-	  (concat "(" venv-current-name ") ") 'epe-venv-face))))
+         (epe-colorize-with-face
+          (concat "(" venv-current-name ") ") 'epe-venv-face))))
    (let ((f (cond ((eq epe-path-style 'fish) 'epe-fish-path)
-		  ((eq epe-path-style 'single) 'epe-abbrev-dir-name)
-		  ((eq epe-path-style 'full) 'abbreviate-file-name))))
+                  ((eq epe-path-style 'single) 'epe-abbrev-dir-name)
+                  ((eq epe-path-style 'full) 'abbreviate-file-name))))
      (epe-colorize-with-face (funcall f (eshell/pwd)) 'epe-dir-face))
    (when (epe-git-p)
      (concat
       (epe-colorize-with-face ":" 'epe-dir-face)
       (epe-colorize-with-face
        (concat (epe-git-branch)
-	       (epe-git-dirty)
-	       (epe-git-untracked)
-	       (let ((unpushed (epe-git-unpushed-number)))
-		 (unless (= unpushed 0)
-		   (concat ":" (number-to-string unpushed)))))
+               (epe-git-dirty)
+               (epe-git-untracked)
+               (let ((unpushed (epe-git-unpushed-number)))
+                 (unless (= unpushed 0)
+                   (concat ":" (number-to-string unpushed)))))
        'epe-git-face)))
    (epe-colorize-with-face " λ" 'epe-symbol-face)
    (epe-colorize-with-face (if (= (user-uid) 0) "#" "")
-			   'epe-sudo-symbol-face)
+                           'epe-sudo-symbol-face)
    " "))
 ```
 
@@ -144,23 +144,23 @@ toc = true
   (concat
    (if (epe-remote-p)
        (progn
-	 (concat
-	  (epe-colorize-with-face "┌─[" 'epe-pipeline-delimiter-face)
-	  (epe-colorize-with-face (epe-remote-user) 'epe-pipeline-user-face)
-	  (epe-colorize-with-face "@" 'epe-pipeline-delimiter-face)
-	  (epe-colorize-with-face (epe-remote-host) 'epe-pipeline-host-face))
-	 )
+         (concat
+          (epe-colorize-with-face "┌─[" 'epe-pipeline-delimiter-face)
+          (epe-colorize-with-face (epe-remote-user) 'epe-pipeline-user-face)
+          (epe-colorize-with-face "@" 'epe-pipeline-delimiter-face)
+          (epe-colorize-with-face (epe-remote-host) 'epe-pipeline-host-face))
+         )
      (progn
        (concat
-	(epe-colorize-with-face "┌─[" 'epe-pipeline-delimiter-face)
-	(epe-colorize-with-face (user-login-name) 'epe-pipeline-user-face)
-	(epe-colorize-with-face "@" 'epe-pipeline-delimiter-face)
-	(epe-colorize-with-face (system-name) 'epe-pipeline-host-face)))
+        (epe-colorize-with-face "┌─[" 'epe-pipeline-delimiter-face)
+        (epe-colorize-with-face (user-login-name) 'epe-pipeline-user-face)
+        (epe-colorize-with-face "@" 'epe-pipeline-delimiter-face)
+        (epe-colorize-with-face (system-name) 'epe-pipeline-host-face)))
      )
    (concat
     (epe-colorize-with-face "]──[" 'epe-pipeline-delimiter-face)
     (epe-colorize-with-face (format-time-string "%H:%M" (current-time))
-			    'epe-pipeline-time-face)
+                            'epe-pipeline-time-face)
     (epe-colorize-with-face "]──[" 'epe-pipeline-delimiter-face)
     (epe-colorize-with-face (concat (eshell/pwd)) 'epe-dir-face)
     (epe-colorize-with-face  "]\n" 'epe-pipeline-delimiter-face)
@@ -169,22 +169,22 @@ toc = true
    (when epe-show-python-info
      (when (fboundp 'epe-venv-p)
        (when (and (epe-venv-p) venv-current-name)
-	 (epe-colorize-with-face
-	  (concat "(" venv-current-name ") ") 'epe-venv-face))))
+         (epe-colorize-with-face
+          (concat "(" venv-current-name ") ") 'epe-venv-face))))
    (when (epe-git-p)
      (concat
       (epe-colorize-with-face ":" 'epe-dir-face)
       (epe-colorize-with-face
        (concat (epe-git-branch)
-	       (epe-git-dirty)
-	       (epe-git-untracked)
-	       (let ((unpushed (epe-git-unpushed-number)))
-		 (unless (= unpushed 0)
-		   (concat ":" (number-to-string unpushed)))))
+               (epe-git-dirty)
+               (epe-git-untracked)
+               (let ((unpushed (epe-git-unpushed-number)))
+                 (unless (= unpushed 0)
+                   (concat ":" (number-to-string unpushed)))))
        'epe-git-face)))
    (epe-colorize-with-face " λ" 'epe-symbol-face)
    (epe-colorize-with-face (if (= (user-uid) 0) "#" "")
-			   'epe-sudo-symbol-face)
+                           'epe-sudo-symbol-face)
    " "))
 ```
 

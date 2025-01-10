@@ -1,9 +1,8 @@
 +++
 title = "Rust通过Trait扩展已有类型"
-date = 2024-12-04T18:04:00+08:00
-lastmod = 2024-12-04T19:21:59+08:00
+date = 2024-12-04T18:04:00-08:00
+lastmod = 2025-01-09T20:19:21-08:00
 tags = ["rust", "programming"]
-categories = ["rust", "programming"]
 draft = false
 toc = true
 +++

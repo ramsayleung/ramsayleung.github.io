@@ -1,9 +1,9 @@
 +++
 title = "(笔记)Distributed Systems for fun and profit"
 date = 2021-06-12T13:08:54
-lastmod = 2024-12-30T22:17:29-08:00
+lastmod = 2025-01-09T19:09:33-08:00
 tags = ["distributed_system", "book"]
-categories = ["distributed_system", "book"]
+categories = ["读书感悟"]
 draft = false
 toc = true
 +++

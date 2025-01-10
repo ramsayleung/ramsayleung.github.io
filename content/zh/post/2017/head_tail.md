@@ -2,9 +2,9 @@
 title = "Linux/Unix Shell 二三事之过滤器head+tail"
 description = "An introduction about head and tail"
 date = 2017-02-17T00:00:00-08:00
-lastmod = 2024-12-31T12:18:30-08:00
+lastmod = 2025-01-09T17:36:26-08:00
 tags = ["shell", "linux", "command_line"]
-categories = ["linux"]
+categories = ["Linux/Unix Shell 二三事"]
 draft = false
 toc = true
 +++

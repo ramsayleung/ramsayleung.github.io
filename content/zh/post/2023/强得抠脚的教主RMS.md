@@ -1,9 +1,8 @@
 +++
 title = "黑客列传：强得抠脚的教主RMS"
 date = 2023-07-16T22:58:00-07:00
-lastmod = 2023-07-17T22:32:50-07:00
+lastmod = 2025-01-09T19:21:34-08:00
 tags = ["biography", "history"]
-categories = ["biography", "history"]
 draft = false
 toc = true
 +++

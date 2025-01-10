@@ -2,9 +2,8 @@
 title = "Python多线程端口扫描器"
 description = "An introduction about port scan"
 date = 2017-03-19T00:00:00-07:00
-lastmod = 2024-12-30T22:35:12-08:00
+lastmod = 2025-01-09T20:02:08-08:00
 tags = ["python", "network", "tool"]
-categories = ["network"]
 draft = false
 toc = true
 +++

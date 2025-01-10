@@ -3,9 +3,9 @@ title = "(翻译)Mastering Eshell"
 description = "An complete instroduction about Eshell"
 date = 2017-02-28T00:00:00-08:00
 keywords = ["eshell", [",", "emacs"]]
-lastmod = 2024-12-30T23:10:56-08:00
+lastmod = 2025-01-09T19:20:26-08:00
 tags = ["eshell", "emacs"]
-categories = ["emacs"]
+categories = ["翻译"]
 draft = false
 +++
 

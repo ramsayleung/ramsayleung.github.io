@@ -1,9 +1,9 @@
 +++
 title = "100 Days of SwiftUI"
 date = 2024-04-09T19:04:00-07:00
-lastmod = 2024-04-09T23:49:12-07:00
+lastmod = 2025-01-09T20:04:57-08:00
 tags = ["swift", "swiftui", "ios"]
-categories = ["swift", "swiftui", "ios"]
+categories = ["IOS开发"]
 draft = false
 toc = true
 +++

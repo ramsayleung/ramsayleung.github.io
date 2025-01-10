@@ -1,10 +1,10 @@
 +++
 title = "Linux/Unix Shell 二三事之过滤器diff"
 description = "An introduction about diff"
-date = 2017-02-28T00:00:00+08:00
-lastmod = 2022-02-23T18:56:31+08:00
+date = 2017-02-28T00:00:00-08:00
+lastmod = 2025-01-09T17:38:42-08:00
 tags = ["linux", "shell", "command_line"]
-categories = ["linux"]
+categories = ["Linux/Unix Shell 二三事"]
 draft = false
 toc = true
 +++

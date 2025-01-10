@@ -3,16 +3,16 @@ title = "在Emacs中使用Ipython"
 description = "Use Ipython in Emasc"
 date = 2016-08-03T00:00:00-07:00
 keywords = ["emacs", "ipython"]
-lastmod = 2024-12-31T11:48:36-08:00
+lastmod = 2025-01-09T18:04:14-08:00
 tags = ["emacs", "python"]
-categories = ["emacs"]
+categories = ["Emacs技巧"]
 draft = false
 toc = true
 +++
 
 ## <span class="section-num">1</span> Emacs Ipython 输出错误 {#emacs-ipython-输出错误}
 
-在Emacs 运行 **run-python** 的时候，报错了，如下
+在Emacs 运行 `run-python` 的时候，报错了，如下
 
 ```emacs-lisp
 [?12l[?25h2+2
@@ -34,7 +34,7 @@ toc = true
 
 ### <span class="section-num">1.1</span> Update 2017-3-15 {#update-2017-3-15}
 
-在添加了 **--simple-promp -i** 参数以后，虽说乱码的问题解决了，但是新的问题又出现了
+在添加了 `--simple-promp -i` 参数以后，虽说乱码的问题解决了，但是新的问题又出现了
 在Ipython 里面是没法无法输入多行内容的，即使是一个简单的循环，详情查看这条issue
 <https://github.com/ipython/ipython/issues/9816>. 现在Ipython 开发社区还没有解决这个
 问题，所以现在的权宜之计就是使用 Ipython4,等到社区解决了这个问题在升级为 Ipython5
@@ -49,11 +49,12 @@ pip install --force-reinstall ipython==4.2.1
 
 ### <span class="section-num">2.1</span> python-pop {#python-pop}
 
-因为我之前使用Emacs的时候，是使用Spacemacs的配置的，但是后来觉得还是自己的
-配置用的更舒服，所以又切换回自己的配置，但是我还是很想念Spacemacs的一些绑定
-例如shell在底下弹出，或者是关闭，然后找到了[Shell-pop](https://github.com/kyagi/shell-pop-el) 这package,就可以用回
-Spacemacs的shell使用习惯。然后我觉得，Ipython shell也可以这样配置，只不过
-我没有发现类似的package,又因为Emacs Lisp的强大，所以我自己写了一段小函数实现
+因为我之前使用Emacs的时候，是使用Spacemacs的配置的，但是后来觉得还是自己的 配置用的更舒服，所以又切换回自己的配置。
+
+但是我还是很想念Spacemacs的一些绑定， 例如shell在底下弹出，或者是关闭，然后找到了[Shell-pop](https://github.com/kyagi/shell-pop-el) 这package,就可以用回
+Spacemacs的shell使用习惯。
+
+然后我觉得，Ipython shell也可以这样配置，只不过我没有发现类似的package,又因为Emacs Lisp的强大，所以我自己写了一段小函数实现
 shell-pop 的功能
 
 ```emacs-lisp
@@ -78,16 +79,16 @@ similar to shell-pop"
       (evil-insert-state))))
 ```
 
-如果没有使用Evil,可以把 \*(evil-insert-state)\*去掉
+如果没有使用Evil,可以把 `(evil-insert-state)` 去掉
 
 
 ### <span class="section-num">2.2</span> Ipython History {#ipython-history}
 
 我在普通的Shell使用Ipython的时候，很自然地使用上下方向键翻到上一条/下一条
-执行的命令，因为shell的使用习惯就是这样滴，但是在Emacs里面使用Ipython,上下
-方向键是去到上一行/下一行，就好像 vim 的 **j** **k**,如果要翻到上一条命令，快捷键
-是 **M-p**,实在很不习惯，所以在查了一下Emacs manual 后，我改了一下按键绑定就实现了
-我想要的效果
+执行的命令，因为shell的使用习惯就是这样滴。
+
+但是在Emacs里面使用Ipython,上下 方向键是去到上一行/下一行，就好像 vim 的 `j` `k`,如果要翻到上一条命令，快捷键
+是 `M-p`,实在很不习惯，所以在查了一下Emacs manual 后，我改了一下按键绑定就实现了我想要的效果
 
 ```emacs-lisp
 (define-key comint-mode-map (kbd "<up>") 'comint-previous-input)

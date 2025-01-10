@@ -1,9 +1,9 @@
 +++
 title = "测试技能进阶(三): Property Based Testing"
 date = 2024-10-14T09:37:00-07:00
-lastmod = 2024-10-14T15:28:08-07:00
+lastmod = 2025-01-09T01:14:46-08:00
 tags = ["testing", "rust"]
-categories = ["testing", "rust"]
+categories = ["测试技能进阶"]
 draft = false
 toc = true
 +++

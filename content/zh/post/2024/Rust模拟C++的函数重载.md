@@ -1,9 +1,8 @@
 +++
 title = "Rust模拟C++的函数重载"
 date = 2024-08-30T22:23:00-07:00
-lastmod = 2024-08-30T23:00:10-07:00
+lastmod = 2025-01-09T20:05:50-08:00
 tags = ["rust", "c++"]
-categories = ["rust", "c++"]
 draft = false
 toc = true
 +++

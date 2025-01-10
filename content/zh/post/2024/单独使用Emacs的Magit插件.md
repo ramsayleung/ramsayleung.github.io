@@ -1,9 +1,9 @@
 +++
 title = "单独使用Emacs的Magit插件"
-date = 2024-12-11T16:00:00+08:00
-lastmod = 2024-12-11T17:12:06+08:00
+date = 2024-12-11T16:00:00-08:00
+lastmod = 2025-01-09T18:08:11-08:00
 tags = ["emacs", "magit"]
-categories = ["emacs", "magit"]
+categories = ["Emacs技巧"]
 draft = false
 toc = true
 +++

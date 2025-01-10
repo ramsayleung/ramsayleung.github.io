@@ -1,9 +1,8 @@
 +++
 title = "两个鲜为人知的Gmail地址技巧"
 date = 2023-06-24T20:15:00-07:00
-lastmod = 2023-06-24T21:07:58-07:00
+lastmod = 2025-01-09T20:06:06-08:00
 tags = ["tool", "productivity", "gmail"]
-categories = ["tool", "productivity", "gmail"]
 draft = false
 toc = true
 +++

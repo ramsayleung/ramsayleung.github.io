@@ -1,9 +1,9 @@
 +++
 title = "Guava探究系列之二: 优雅校验数据"
-date = 2019-07-04T10:16:00+08:00
-lastmod = 2022-02-25T22:20:19+08:00
+date = 2019-07-04T10:16:00-07:00
+lastmod = 2025-01-09T18:45:25-08:00
 tags = ["java", "guava"]
-categories = ["guava"]
+categories = ["Guava探究"]
 draft = false
 toc = true
 +++
@@ -24,9 +24,9 @@ Guava 提供了一系列的静态方法用于校验函数和类的构造器是�
 
 ## <span class="section-num">2</span> 前置函数特征 {#前置函数特征}
 
-目前的前置校验方法有如下特征: 须需要, 下面例子中的`checkArgument`函数可以替换成任何一个前置条件校验函数
+目前的前置校验方法有如下特征: 须需要, 下面例子中的=checkArgument=函数可以替换成任何一个前置条件校验函数
 
-1.  这些前置方法一般接受一个布尔表达式作为入参，并判断表达是否为`true`,
+1.  这些前置方法一般接受一个布尔表达式作为入参，并判断表达是否为=true=,
     格式如:
 
 <!--listend-->
@@ -37,8 +37,8 @@ Preconditions.checkArgument(a>1)
 ```
 
 2.  除了用于判断的布尔表达式之外,
-    前置方法可以接受一个额外的`Object`作为入参, 在抛出异常的时候,
-    把`Object.toString()`作为异常信息, 如:
+    前置方法可以接受一个额外的=Object=作为入参, 在抛出异常的时候,
+    把=Object.toString()=作为异常信息, 如:
 
 <!--listend-->
 
@@ -48,7 +48,7 @@ public enum ErrorDetail {
     // 省略部分内容
     @Override
     public String toString() {
-	return "ErrorDetail{" + "code='" + code + '\'' + ", description='" + description + '\'' + '}';
+        return "ErrorDetail{" + "code='" + code + '\'' + ", description='" + description + '\'' + '}';
     }
 }
 
@@ -61,8 +61,8 @@ public void testCheckArgument() {
 // java.lang.IllegalArgumentException: ErrorDetail{code='404', description='Resource could not be fount'}
 ```
 
-3.  Guava的前置表达式还支持类似`printf`函数那样的格式化输出错误信息,
-    只不过出于兼容性和性能的考虑, 只支持使用`%s`指示符格式化字符串,
+3.  Guava的前置表达式还支持类似=printf=函数那样的格式化输出错误信息,
+    只不过出于兼容性和性能的考虑, 只支持使用=%s=指示符格式化字符串,
     不支持其他类型. 如:
 
 <!--listend-->
@@ -77,10 +77,10 @@ checkArgument(i >= 0, "Argument was %s but expected nonnegative", i);
 
 ## <span class="section-num">3</span> 前置条件函数介绍 {#前置条件函数介绍}
 
-须注意的是, 下面介绍的`checkArgument`, `checkArgument`,
-`checkState`函数都有三个对应的重载函数，分别对应前文所述的三种特征,
+须注意的是, 下面介绍的=checkArgument=, `checkArgument`,
+=checkState=函数都有三个对应的重载函数，分别对应前文所述的三种特征,
 下文不会三种函数都介绍, 只介绍标准格式的前置条件函数.
-以`checkArgument`函数为例, 三个重载函数分别是(忽略函数体):
+以=checkArgument=函数为例, 三个重载函数分别是(忽略函数体):
 
 ```java
 public static void checkArgument(boolean expression);
@@ -97,8 +97,8 @@ public static void checkArgument(boolean expression,@Nullable String errorMessag
 public static void checkArgument(boolean expression);
 ```
 
-入参是一个布尔表达式, 函数校验这个表达式是否为`true`, 如果为`false`,
-抛出`IllegalArgumentException`. 例子如下:
+入参是一个布尔表达式, 函数校验这个表达式是否为=true=, 如果为=false=,
+抛出=IllegalArgumentException=. 例子如下:
 
 ```java
 @Test
@@ -116,9 +116,9 @@ public void testCheckArgument() {
 public static <T> T checkNotNull(T reference);
 ```
 
-入参是个任意类型的对象, 函数校验这个对象是否为`null`, 如果为空,
-抛出`NullPointerException`, 否则直接返回该对象,
-所以`checkNotNull`的用法就比较有趣, 可以在调用`setter`方法前作前置校验.
+入参是个任意类型的对象, 函数校验这个对象是否为=null=, 如果为空,
+抛出=NullPointerException=, 否则直接返回该对象,
+所以=checkNotNull=的用法就比较有趣, 可以在调用=setter=方法前作前置校验.
 例子如下:
 
 ```java
@@ -136,20 +136,20 @@ public static void checkState(boolean expression);
 ```
 
 看着这个函数, 我个人感觉很奇怪:
-这个函数和`checkNotNull`函数功能非常相似, 实现也基本一样,
-都是判断表达式是否为`true`, 只是抛出的异常不一样而已,
+这个函数和=checkNotNull=函数功能非常相似, 实现也基本一样,
+都是判断表达式是否为=true=, 只是抛出的异常不一样而已,
 是否有必要开发这个函数. 两个函数的实现如下:
 
 ```java
 public static void checkArgument(boolean expression) {
     if (!expression) {
-	throw new IllegalArgumentException();
+        throw new IllegalArgumentException();
     }
 }
 
 public static void checkState(boolean expression) {
     if (!expression) {
-	throw new IllegalStateException();
+        throw new IllegalStateException();
     }
 }
 ```
@@ -165,11 +165,11 @@ public static void checkState(boolean expression) {
 public static int checkElementIndex(int index, int size);
 ```
 
-这个函数用于判断指定数组, 列表, 字符串的下标是否越界, `index`是下标,
-`size`是数组, 列表或字符串的长度, 下标的有效范围是`[0,数组长度)` 即
-`0<=index<size`. 如果数组下标越界(即`index=<0 或者 =index=>==size`),
-那么抛出`IndexOutOfBoundsException`异常, 否则返回数组的下标,
-也就是`index`. 例子如下:
+这个函数用于判断指定数组, 列表, 字符串的下标是否越界, `index=是下标,
+    =size=是数组, 列表或字符串的长度, 下标的有效范围是`[0,数组长度)= 即
+`0<=index<size`. 如果数组下标越界(即=index=&lt;0 或者 `index=>==size`),
+那么抛出=IndexOutOfBoundsException=异常, 否则返回数组的下标,
+也就是=index=. 例子如下:
 
 ```java
 Preconditions.checkElementIndex("test".length(), "test".length());
@@ -190,10 +190,10 @@ Assert.assertEquals(3, Preconditions.checkElementIndex("test".length() - 1, "tes
 public static int checkPositionIndex(int index, int size);
 ```
 
-这个函数和`checkElementIndex`非常类似, 连Guava wiki的说明也基本一致(只有一个单词不同).
+这个函数和=checkElementIndex=非常类似, 连Guava wiki的说明也基本一致(只有一个单词不同).
 
-除了一点, `checkElementIndex`函数的下标有效范围是`[0, 数组长度)`, 而`checkPositionIndex`函数的下标有有效范围是`[0, 数组长度]`,
-即`0<=index<=size`. 例子如下:
+除了一点, `checkElementIndex=函数的下标有效范围是`[0, 数组长度)=, 而=checkPositionIndex=函数的下标有有效范围是=[0, 数组长度]=,
+即=0&lt;=index&lt;=size=. 例子如下:
 
 ```java
 Preconditions.checkPositionIndex("test".length() + 1, "test".length());
@@ -214,8 +214,8 @@ Assert.assertEquals(4, Preconditions.checkPositionIndex("test".length(), "test".
 public static void checkPositionIndexes(int start, int end, int size);
 ```
 
-这个函数是用于判断`[start,end]`这个范围是否是个有效范围, 即`[start, end]` 是否在`[0, size]` 范围内(如果`[start, end]`
-和`[0, size]`相同, 也认为在范围内), 如果不在, 则抛出`IndexOutOfBoundsException`异常. 例子如下:
+这个函数是用于判断=[start,end]=这个范围是否是个有效范围, 即=[start, end]= 是否在=[0, size]= 范围内(如果=[start, end]=
+和=[0, size]=相同, 也认为在范围内), 如果不在, 则抛出=IndexOutOfBoundsException=异常. 例子如下:
 
 ```java
 Preconditions.checkPositionIndexes(1, 3, 2);
@@ -231,12 +231,12 @@ Preconditions.checkPositionIndexes(0, 2, 2);
 ## <span class="section-num">5</span> 前置条件在实际项目的应用 {#前置条件在实际项目的应用}
 
 前置条件在检验条件不成交的时候抛的异常类型虽说是合情合理(比如,
-`checkArgument`函数抛出`IllegalArgumentException`),
+`checkArgument=函数抛出=IllegalArgumentException`),
 
-但是对于业务系统来说, 你抛出个`IllegalArgumentException`或者`NullPointerException`, 接口调用方对于这个异常摸不着头脑, 虽说只是正常的数据问题,
+但是对于业务系统来说, 你抛出个=IllegalArgumentException=或者=NullPointerException=, 接口调用方对于这个异常摸不着头脑, 虽说只是正常的数据问题,
 还是很容易觉得接口提供方服务出了问题, 甚至还会被质疑技术不过硬.
 
-咱们又不是底层组件, 抛个`NPE`, 着实是不成体统. 基于各种有的没的的原因,
+咱们又不是底层组件, 抛个=NPE=, 着实是不成体统. 基于各种有的没的的原因,
 我们的业务系统在使用前置条件的时候进行了封装,
 将前置条件抛出的异常进行了转换, 换成正常的业务异常, 提供完整的异常信息,
 代码如下:
@@ -254,12 +254,12 @@ public final class AssertUtils {
      * @throws BkmpException 条件表达式结果为假
      */
     public static void checkArgument(boolean expression, ErrDetailEnum errDetailEnum, String msgTemplate,
-				     Object... vars) {
-	try {
-	    Preconditions.checkArgument(expression);
-	} catch (IllegalArgumentException e) {
-	    throw new BkmpException(errDetailEnum, msgTemplate, vars);
-	}
+                                     Object... vars) {
+        try {
+            Preconditions.checkArgument(expression);
+        } catch (IllegalArgumentException e) {
+            throw new BkmpException(errDetailEnum, msgTemplate, vars);
+        }
     }
 
     /**
@@ -272,12 +272,12 @@ public final class AssertUtils {
      * @throws BkmpException 条件表达式结果为假
      */
     public static void checkArgumentNotTrue(boolean expression, ErrDetailEnum errDetailEnum, String msgTemplate,
-					    Object... vars) {
-	try {
-	    Preconditions.checkArgument(!expression);
-	} catch (IllegalArgumentException e) {
-	    throw new BkmpException(errDetailEnum, msgTemplate, vars);
-	}
+                                            Object... vars) {
+        try {
+            Preconditions.checkArgument(!expression);
+        } catch (IllegalArgumentException e) {
+            throw new BkmpException(errDetailEnum, msgTemplate, vars);
+        }
     }
 }
 // 省略其他部分的封装

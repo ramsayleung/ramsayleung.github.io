@@ -1,9 +1,9 @@
 +++
 title = "guava 探究系列之五：新类型容器"
-date = 2019-12-12T15:45:00+08:00
-lastmod = 2022-02-25T20:16:37+08:00
+date = 2019-12-12T15:45:00-08:00
+lastmod = 2025-01-09T18:44:55-08:00
 tags = ["java", "guava"]
-categories = ["java"]
+categories = ["Guava探究"]
 draft = false
 toc = true
 +++
@@ -35,9 +35,9 @@ Map<String, Integer> counts = new HashMap<String, Integer>();
 for (String book : bookNames) {
     Integer count = counts.get(book);
     if (count == null) {
-	counts.put(book, 1);
+        counts.put(book, 1);
     } else {
-	counts.put(book, count + 1);
+        counts.put(book, count + 1);
     }
 }
 ```
@@ -59,19 +59,19 @@ value 都加起来?
 
 我们可以从两个角度来分析 `multisets` :
 
--   `multisets` 就好像一个`ArrayList<E>`, 只不过是无序的.
-    当把它当作`ArrayList<E>`时:
-    -   调用`add(E)`函数, 增加给定元素的出现次数
-    -   调用`iterator()`函数, 获取一个 `multisets` 的迭代器,
+-   `multisets` 就好像一个=ArrayList&lt;E&gt;=, 只不过是无序的.
+    当把它当作=ArrayList&lt;E&gt;=时:
+    -   调用=add(E)=函数, 增加给定元素的出现次数
+    -   调用=iterator()=函数, 获取一个 `multisets` 的迭代器,
         用来迭代每个元素
-    -   调用`size()`函数, 获取所有元素出现次数之和
+    -   调用=size()=函数, 获取所有元素出现次数之和
 
--   `multisets` 就好象一个`Map<E, Integer>`, 包含元素和对应的数量,
-    只不过数量只能为正数. 当把它当作`Map<E, Integer>`的时候:
-    -   调用`count(Object)`函数获取某个特定元素的出现次数.
-    -   调用`entrySet()`函数返回一个`Set<Multiset.Entry<E>>`, 大概类似一个
+-   `multisets` 就好象一个=Map&lt;E, Integer&gt;=, 包含元素和对应的数量,
+    只不过数量只能为正数. 当把它当作=Map&lt;E, Integer&gt;=的时候:
+    -   调用=count(Object)=函数获取某个特定元素的出现次数.
+    -   调用=entrySet()=函数返回一个=Set&lt;Multiset.Entry&lt;E&gt;&gt;=, 大概类似一个
         `Map` 返回 `entrySet` .
-    -   调用 `elementSet` 函数返回一个`Set<E>`对象,
+    -   调用 `elementSet` 函数返回一个=Set&lt;E&gt;=对象,
         返回所有的元素(去掉重复的元素)
 
 
@@ -103,26 +103,26 @@ public void testMultiset() {
 
 ### <span class="section-num">2.2</span> Multiset 并不是一个 Map {#multiset-并不是一个-map}
 
-需要注意的是, `Multiset` 虽然与`Map<E, Integer>`类似, 但 `Multiset`
-并不是一个`Map<E, Integer>`, 请不要混淆它们两个.
+需要注意的是, `Multiset` 虽然与=Map&lt;E, Integer&gt;=类似, 但 `Multiset`
+并不是一个=Map&lt;E, Integer&gt;=, 请不要混淆它们两个.
 
 最大的差别是, `Multiset` 实现了 `Collection` 接口, 完全遵守 `Collection`
 接口需要满足的协议, 而 `Map` 和 `Collection` 是完全不同的接口,
 这点需要牢记于心. 还有其他的差别, 诸如:
 
-1.  `Multiset<E>`出现的次数只能是正数, 没有任何元素的出现次数会是负数的,
+1.  =Multiset&lt;E&gt;=出现的次数只能是正数, 没有任何元素的出现次数会是负数的,
     出现次数为 0 的元素会被认为不存在,
-    这样的元素是不会出现在`elementSet()`和`entrySet()`的返回结果中的.
-    而`Map<E, Integer>`肯定不会有这样的限制.
-2.  `multiset.size()`返回所有元素出现次数之和,
-    如果想要知道有多少个不重复的元素, 可以使用`elementSet().size()`,
-    例如`{a,a,b}`, `elementSet.size()`返回结果是 2,
-    `multiset.size()`返回结果是 3.
-3.  `multiset.iterator()`用于迭代每个出现的元素,
-    所以迭代次数和`multiset.size()`的值一样的.
-4.  `Multiset<E>`支持增加元素, 删减元素, 或者通过 `setCount`
-    函数直接设置元素的出现次数, `setCount(a, 0)`的意思等于将删除所有的
-    `a` 元素.
+    这样的元素是不会出现在=elementSet()=和=entrySet()=的返回结果中的.
+    而=Map&lt;E, Integer&gt;=肯定不会有这样的限制.
+2.  `multiset.size()=返回所有元素出现次数之和,
+          如果想要知道有多少个不重复的元素, 可以使用=elementSet().size()`,
+    例如={a,a,b}=, =elementSet.size()=返回结果是 2,
+    =multiset.size()=返回结果是 3.
+3.  =multiset.iterator()=用于迭代每个出现的元素,
+    所以迭代次数和=multiset.size()=的值一样的.
+4.  `Multiset<E>=支持增加元素, 删减元素, 或者通过 =setCount`
+    函数直接设置元素的出现次数, `setCount(a, 0)=的意思等于将删除所有的
+          =a` 元素.
 5.  `multiset.count(elem)`: 如果元素 `elem` 不存在, 那么返回值总是 0. 而
     `Map` 对于不存在的元素, 返回的是 `null` .
 
@@ -166,7 +166,7 @@ studentScores.add(studentScore);
 
 一个学生考试要考多个科目, 自然就会有多个学科成绩, 也就出现了一个 key
 需要对应多个 value 的情况.
-使用`Map<K, List<V>>`或者`Map<K, Set<V>>`这样的方式构建 key-values
+使用=Map&lt;K, List&lt;V&gt;&gt;=或者=Map&lt;K, Set&lt;V&gt;&gt;=这样的方式构建 key-values
 自然可以, 只不过显得不甚优雅.
 
 为此, Guava 提供了新的容器类型来应对一个
@@ -196,15 +196,15 @@ c -> [5]
 ```
 
 通常来说, 最好以第一种方式来理解 `Multimap` 接口,
-不过你也可以以第二种方式来获取数据: `asMap()`函数, 返回一个
-`Map<K, Collection<V>>` 对象.
+不过你也可以以第二种方式来获取数据: `asMap()=函数, 返回一个
+  =Map<K, Collection<V>>` 对象.
 
 需要注意的是, 不存在 1 个 `key` 对应 0 个 `value` 的情况, 不会有空的值列表这样的说法, 要不一个 `key` 对应至少一个
 `value` , 要不就是这个 `key` 不存在于这个 `Multimap` .
 
 一般来说, 我们不会直接使用 `Multimap` 接口, 使用的是它的子接口; `Multimap`
 接口提供了两个子接口: `ListMultimap` 和 `SetMultimap` , 大致类似于
-`Map<K, List<V>>`和 `Map<K, Set<V>>`.
+`Map<K, List<V>>=和 =Map<K, Set<V>>`.
 
 
 ### <span class="section-num">3.1</span> Multimap 的例子 {#multimap-的例子}
@@ -233,17 +233,17 @@ Assert.assertEquals(0, studentScoresMap.get(alan).size());
 #### <span class="section-num">3.1.1</span> 构造 {#构造}
 
 细心的同学可能会发现, 上面创建 `ListMultimap`
-的方式不是直接调用实现类的`.create()`函数, 而是使用 `MultimapBuilder` .
+的方式不是直接调用实现类的=.create()=函数, 而是使用 `MultimapBuilder` .
 
-并不是 `Multimap` 的实现没有提供`.create()`方法, 是通过
+并不是 `Multimap` 的实现没有提供=.create()=方法, 是通过
 `MultimapBuilder` 创建 `Multimap` 实现会更加便利一点,
-使用`hashKeys()`函数创建的就是一个 `HashMap` ,
-使用`treeKeys()`函数创建的就是一个 `TreeMap` .
+使用=hashKeys()=函数创建的就是一个 `HashMap` ,
+使用=treeKeys()=函数创建的就是一个 `TreeMap` .
 
 
 #### <span class="section-num">3.1.2</span> 修改 {#修改}
 
-`Multimap.get(key)`返回的就是特定 `key` 关联的集合, 对于一个
+`Multimap.get(key)=返回的就是特定 =key` 关联的集合, 对于一个
 `ListMultimap` , 返回的就是一个 `List` ; 对于一个 `SetMultimap` ,
 返回的就是一个 `Set` .
 
@@ -358,7 +358,7 @@ idToName.put("0001", "Linus");
 即增加了心理负担, 又容易出 bug.
 
 幸运的是, Guava 有一个名为 `BiMap` 类库, 提供了通过 `value` 也反查 `key` 的特性.
-一个`BiMap<K,V>`是一个`Map<K,V>`, 提供了如下功能:
+一个=BiMap&lt;K,V&gt;=是一个=Map&lt;K,V&gt;=, 提供了如下功能:
 
 1.  允许通过 `inverse()` 函数调转 key-value, 从 `Map<K,V>` 变成
     `Map<V,K>`
@@ -420,7 +420,7 @@ for (Map.Entry<String, Map<String, Integer>> element : studentScores.entrySet())
     String id = element.getKey();
     Map<String, Integer> nameScores = element.getValue();
     if (nameScores.containsKey("Linus")) {
-	Integer score = nameScores.get("Linus");
+        Integer score = nameScores.get("Linus");
     }
 }
 ```
@@ -472,12 +472,12 @@ idNameScoreTranscript.column("RMS");
 一往常, `Table` 也提供了若干个视图:
 
 1.  `rowMap()`, 把 `Table<R, C, V>` 看作一个 `Map<R, Map<C, V>>`, 同样的,
-    `rowKeySet()`返回一个`Set<R>`.
+    `rowKeySet()=返回一个=Set<R>`.
 2.  `row(r)` 返回一个非空的 `Map<C, V>` 的引用, 对返回的 Map
     的修改也会反馈给持有该引用 `Table`.
 3.  类似地, `column(c)` 返回一个非空的 `Map<R, V>` 的引用, 对返回的 Map
     的修改也会反馈给持有该引用 `Table`.
-4.  `cellSet()` 把`Table<R, C, V>`看作一个 `Table.Cell<R, C, V>`, `Cell`
+4.  `cellSet()` 把=Table&lt;R, C, V&gt;=看作一个 `Table.Cell<R, C, V>`, `Cell`
     与 `Map.Entry` 十分类似, 只不过它有两个 key, 形式是 `(r,c)=v`, 而
     `Map.Entry` 是 `key = value`.
 
@@ -614,7 +614,7 @@ Assert.assertFalse(rangeSet.contains(LocalDate.parse("2019-10-20")));
 // [2019-11-10,2019-11-25] 在 `{[2019-10-10,2019-10-20), (2019-10-30, 2019-12-30)}`的区间包围内
 Assert.assertTrue(rangeSet.encloses(Range.closed(LocalDate.parse("2019-11-11"), LocalDate.parse("2019-11-20"))));
 Assert.assertEquals(Range.closedOpen(LocalDate.parse("2019-10-10"), LocalDate.parse("2019-10-20")),
-		    rangeSet.rangeContaining(LocalDate.parse("2019-10-19")));
+                    rangeSet.rangeContaining(LocalDate.parse("2019-10-19")));
 // {[2019-10-10, 2019-12-30)}
 Range<LocalDate> span = rangeSet.span();
 Assert.assertEquals(LocalDate.parse("2019-10-10"), span.lowerEndpoint());
@@ -714,7 +714,7 @@ Assert.assertEquals("foo", subRangeMap.get(12));
 -   `subRangeMap(Range<K>)`, 返回某个 `RangeMap`
     相关区间的子区间以及对应的 `value`, 如有 `RangeMap`:
     `{[1, 3] => "foo", (3, 5) => "bar", (11, 20) => "foo"`, 取子区间
-    `[12,15]`, 返回结果就是 `{[12, 15]} => "foo"`; 如果取子区间`[4,12]`,
+    `[12,15]`, 返回结果就是 `{[12, 15]} => "foo"`; 如果取子区间=[4,12]=,
     返回结果就是: `{[4,5) => bar, (11, 12] => foo}`
 
 

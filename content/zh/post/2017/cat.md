@@ -1,10 +1,10 @@
 +++
 title = "Linux/Unix Shell 二三事之过滤器cat"
 description = "An introduction about cat"
-date = 2017-02-22T00:00:00+08:00
-lastmod = 2022-02-23T18:51:24+08:00
+date = 2017-02-22T00:00:00-08:00
+lastmod = 2025-01-09T17:37:17-08:00
 tags = ["linux", "shell", "command_line"]
-categories = ["linux"]
+categories = ["Linux/Unix Shell 二三事"]
 draft = false
 toc = true
 +++

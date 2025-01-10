@@ -3,9 +3,9 @@ title = "提高Emacs启动速度"
 description = "Tips to reduce emacs startup time"
 date = 2016-10-22T00:00:00-07:00
 keywords = ["emacs"]
-lastmod = 2024-12-31T11:57:41-08:00
+lastmod = 2025-01-09T18:05:22-08:00
 tags = ["emacs"]
-categories = ["emacs"]
+categories = ["Emacs技巧"]
 draft = false
 toc = true
 +++

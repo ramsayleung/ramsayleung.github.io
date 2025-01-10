@@ -1,9 +1,8 @@
 +++
 title = "TamperMonkey userscript在 Single Page Application 跳转链接后不运行问题分析"
 date = 2023-08-26T09:29:00-07:00
-lastmod = 2023-08-26T11:41:17-07:00
+lastmod = 2025-01-09T20:05:21-08:00
 tags = ["javascript", "userscript", "debug"]
-categories = ["javascript", "userscript", "debug"]
 draft = false
 toc = true
 +++
