@@ -203,10 +203,10 @@ languages:
           name: "我的工作流"
           url: /zh/categories/工作流/
           weight: 4
-        - identifier: emacs_tips
+        - identifier: adventure_in_canada
           parent: series
-          name: "Emacs技巧"
-          url: /zh/categories/Emacs技巧
+          name: "旅加经历"
+          url: /zh/categories/旅加经历
           weight: 5
 
 markup:
