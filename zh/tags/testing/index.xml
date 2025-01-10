@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Mon, 14 Oct 2024 15:28:08 -0700</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jan 2025 01:17:56 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/testing/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>测试技能进阶(三): Property Based Testing</title>
@@ -960,7 +960,7 @@
 </div>
 </div><p>但是这样的做法一般是不推荐的，Best Practice是一个 test case 只测一种情况，因为如果一个 test case 包含多个测试条件，如果 test case fail 了，那么不看源码或者堆栈，一般还看不出是什么 case 失败了，不好排查。</p>
 <h3 id="多个-test-case"><span class="section-num">2.2</span> 多个 test case</h3>
-<p>推荐做法就是每个测试条件定个单独的 test case。</p>
+<p>推荐做法就是每个测试条件一个单独的 test case。</p>
 <p>另外我们通过test case发现上面的代码没有处理异常情况，我们现在要优化下我们的代码，增加异常处理逻辑(这个就是TDD所推崇的开发哲学, test case 先行，通过test case发现问题，让test case fail掉，然后修正业务逻辑，test case再运行通过).</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">

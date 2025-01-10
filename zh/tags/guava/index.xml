@@ -12,12 +12,12 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Fri, 25 Feb 2022 22:20:19 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jan 2025 18:49:30 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/guava/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>guava 探究系列之五：新类型容器</title>
       <link>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E6%96%B0%E7%B1%BB%E5%9E%8B%E5%AE%B9%E5%99%A8/</link>
-      <pubDate>Thu, 12 Dec 2019 15:45:00 +0800</pubDate>
+      <pubDate>Thu, 12 Dec 2019 15:45:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E6%96%B0%E7%B1%BB%E5%9E%8B%E5%AE%B9%E5%99%A8/</guid>
       <description>1 前言 JDK 提供了各种功能强大的工具类, 宛如装备齐全的军火库, 而容器就是其中一项内置的利器, 提供了包括诸多常用的数据结构, 下图对 JDK 已有容器进行了</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
@@ -57,9 +57,9 @@ JDK 的 <code>Collection</code> 接口, 保证 Guava 的容器类能够与 JDK
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">book</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">bookNames</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Integer</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">counts</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">book</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">counts</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">book</span><span class="p">,</span><span class="w"> </span><span class="n">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">counts</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">book</span><span class="p">,</span><span class="w"> </span><span class="n">1</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">counts</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">book</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">counts</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">book</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">1</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
@@ -79,23 +79,23 @@ value 都加起来?</p>
 <p>我们可以从两个角度来分析 <code>multisets</code> :</p>
 <ul>
 <li>
-<p><code>multisets</code> 就好像一个<code>ArrayList&lt;E&gt;</code>, 只不过是无序的.
-当把它当作<code>ArrayList&lt;E&gt;</code>时:</p>
+<p><code>multisets</code> 就好像一个=ArrayList&lt;E&gt;=, 只不过是无序的.
+当把它当作=ArrayList&lt;E&gt;=时:</p>
 <ul>
-<li>调用<code>add(E)</code>函数, 增加给定元素的出现次数</li>
-<li>调用<code>iterator()</code>函数, 获取一个 <code>multisets</code> 的迭代器,
+<li>调用=add(E)=函数, 增加给定元素的出现次数</li>
+<li>调用=iterator()=函数, 获取一个 <code>multisets</code> 的迭代器,
 用来迭代每个元素</li>
-<li>调用<code>size()</code>函数, 获取所有元素出现次数之和</li>
+<li>调用=size()=函数, 获取所有元素出现次数之和</li>
 </ul>
 </li>
 <li>
-<p><code>multisets</code> 就好象一个<code>Map&lt;E, Integer&gt;</code>, 包含元素和对应的数量,
-只不过数量只能为正数. 当把它当作<code>Map&lt;E, Integer&gt;</code>的时候:</p>
+<p><code>multisets</code> 就好象一个=Map&lt;E, Integer&gt;=, 包含元素和对应的数量,
+只不过数量只能为正数. 当把它当作=Map&lt;E, Integer&gt;=的时候:</p>
 <ul>
-<li>调用<code>count(Object)</code>函数获取某个特定元素的出现次数.</li>
-<li>调用<code>entrySet()</code>函数返回一个<code>Set&lt;Multiset.Entry&lt;E&gt;&gt;</code>, 大概类似一个
+<li>调用=count(Object)=函数获取某个特定元素的出现次数.</li>
+<li>调用=entrySet()=函数返回一个=Set&lt;Multiset.Entry&lt;E&gt;&gt;=, 大概类似一个
 <code>Map</code> 返回 <code>entrySet</code> .</li>
-<li>调用 <code>elementSet</code> 函数返回一个<code>Set&lt;E&gt;</code>对象,
+<li>调用 <code>elementSet</code> 函数返回一个=Set&lt;E&gt;=对象,
 返回所有的元素(去掉重复的元素)</li>
 </ul>
 </li>
@@ -142,25 +142,23 @@ value 都加起来?</p>
 </div>
 </div><p><code>multisets</code> 完美满足了我们的需求.</p>
 <h3 id="multiset-并不是一个-map"><span class="section-num">2.2</span> Multiset 并不是一个 Map</h3>
-<p>需要注意的是, <code>Multiset</code> 虽然与<code>Map&lt;E, Integer&gt;</code>类似, 但 <code>Multiset</code>
-并不是一个<code>Map&lt;E, Integer&gt;</code>, 请不要混淆它们两个.</p>
+<p>需要注意的是, <code>Multiset</code> 虽然与=Map&lt;E, Integer&gt;=类似, 但 <code>Multiset</code>
+并不是一个=Map&lt;E, Integer&gt;=, 请不要混淆它们两个.</p>
 <p>最大的差别是, <code>Multiset</code> 实现了 <code>Collection</code> 接口, 完全遵守 <code>Collection</code>
 接口需要满足的协议, 而 <code>Map</code> 和 <code>Collection</code> 是完全不同的接口,
 这点需要牢记于心. 还有其他的差别, 诸如:</p>
 <ol>
-<li><code>Multiset&lt;E&gt;</code>出现的次数只能是正数, 没有任何元素的出现次数会是负数的,
+<li>=Multiset&lt;E&gt;=出现的次数只能是正数, 没有任何元素的出现次数会是负数的,
 出现次数为 0 的元素会被认为不存在,
-这样的元素是不会出现在<code>elementSet()</code>和<code>entrySet()</code>的返回结果中的.
-而<code>Map&lt;E, Integer&gt;</code>肯定不会有这样的限制.</li>
-<li><code>multiset.size()</code>返回所有元素出现次数之和,
-如果想要知道有多少个不重复的元素, 可以使用<code>elementSet().size()</code>,
-例如<code>{a,a,b}</code>, <code>elementSet.size()</code>返回结果是 2,
-<code>multiset.size()</code>返回结果是 3.</li>
-<li><code>multiset.iterator()</code>用于迭代每个出现的元素,
-所以迭代次数和<code>multiset.size()</code>的值一样的.</li>
-<li><code>Multiset&lt;E&gt;</code>支持增加元素, 删减元素, 或者通过 <code>setCount</code>
-函数直接设置元素的出现次数, <code>setCount(a, 0)</code>的意思等于将删除所有的
-<code>a</code> 元素.</li>
+这样的元素是不会出现在=elementSet()=和=entrySet()=的返回结果中的.
+而=Map&lt;E, Integer&gt;=肯定不会有这样的限制.</li>
+<li><code>multiset.size()=返回所有元素出现次数之和, 如果想要知道有多少个不重复的元素, 可以使用=elementSet().size()</code>,
+例如={a,a,b}=, =elementSet.size()=返回结果是 2,
+=multiset.size()=返回结果是 3.</li>
+<li>=multiset.iterator()=用于迭代每个出现的元素,
+所以迭代次数和=multiset.size()=的值一样的.</li>
+<li><code>Multiset&lt;E&gt;=支持增加元素, 删减元素, 或者通过 =setCount</code>
+函数直接设置元素的出现次数, <code>setCount(a, 0)=的意思等于将删除所有的 =a</code> 元素.</li>
 <li><code>multiset.count(elem)</code>: 如果元素 <code>elem</code> 不存在, 那么返回值总是 0. 而
 <code>Map</code> 对于不存在的元素, 返回的是 <code>null</code> .</li>
 </ol>
@@ -244,7 +242,7 @@ value 都加起来?</p>
 </div>
 </div><p>一个学生考试要考多个科目, 自然就会有多个学科成绩, 也就出现了一个 key
 需要对应多个 value 的情况.
-使用<code>Map&lt;K, List&lt;V&gt;&gt;</code>或者<code>Map&lt;K, Set&lt;V&gt;&gt;</code>这样的方式构建 key-values
+使用=Map&lt;K, List&lt;V&gt;&gt;=或者=Map&lt;K, Set&lt;V&gt;&gt;=这样的方式构建 key-values
 自然可以, 只不过显得不甚优雅.</p>
 <p>为此, Guava 提供了新的容器类型来应对一个
 key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
@@ -286,13 +284,12 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>通常来说, 最好以第一种方式来理解 <code>Multimap</code> 接口,
-不过你也可以以第二种方式来获取数据: <code>asMap()</code>函数, 返回一个
-<code>Map&lt;K, Collection&lt;V&gt;&gt;</code> 对象.</p>
+不过你也可以以第二种方式来获取数据: <code>asMap()=函数, 返回一个 =Map&lt;K, Collection&lt;V&gt;&gt;</code> 对象.</p>
 <p>需要注意的是, 不存在 1 个 <code>key</code> 对应 0 个 <code>value</code> 的情况, 不会有空的值列表这样的说法, 要不一个 <code>key</code> 对应至少一个
 <code>value</code> , 要不就是这个 <code>key</code> 不存在于这个 <code>Multimap</code> .</p>
 <p>一般来说, 我们不会直接使用 <code>Multimap</code> 接口, 使用的是它的子接口; <code>Multimap</code>
 接口提供了两个子接口: <code>ListMultimap</code> 和 <code>SetMultimap</code> , 大致类似于
-<code>Map&lt;K, List&lt;V&gt;&gt;</code>和 <code>Map&lt;K, Set&lt;V&gt;&gt;</code>.</p>
+<code>Map&lt;K, List&lt;V&gt;&gt;=和 =Map&lt;K, Set&lt;V&gt;&gt;</code>.</p>
 <h3 id="multimap-的例子"><span class="section-num">3.1</span> Multimap 的例子</h3>
 <p>现在让我们用 <code>Multimap</code> 重新实现一次学生不同科目的成绩单:</p>
 <div class="highlight"><div class="chroma">
@@ -333,13 +330,13 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </div>
 </div><h4 id="构造"><span class="section-num">3.1.1</span> 构造</h4>
 <p>细心的同学可能会发现, 上面创建 <code>ListMultimap</code>
-的方式不是直接调用实现类的<code>.create()</code>函数, 而是使用 <code>MultimapBuilder</code> .</p>
-<p>并不是 <code>Multimap</code> 的实现没有提供<code>.create()</code>方法, 是通过
+的方式不是直接调用实现类的=.create()=函数, 而是使用 <code>MultimapBuilder</code> .</p>
+<p>并不是 <code>Multimap</code> 的实现没有提供=.create()=方法, 是通过
 <code>MultimapBuilder</code> 创建 <code>Multimap</code> 实现会更加便利一点,
-使用<code>hashKeys()</code>函数创建的就是一个 <code>HashMap</code> ,
-使用<code>treeKeys()</code>函数创建的就是一个 <code>TreeMap</code> .</p>
+使用=hashKeys()=函数创建的就是一个 <code>HashMap</code> ,
+使用=treeKeys()=函数创建的就是一个 <code>TreeMap</code> .</p>
 <h4 id="修改"><span class="section-num">3.1.2</span> 修改</h4>
-<p><code>Multimap.get(key)</code>返回的就是特定 <code>key</code> 关联的集合, 对于一个
+<p><code>Multimap.get(key)=返回的就是特定 =key</code> 关联的集合, 对于一个
 <code>ListMultimap</code> , 返回的就是一个 <code>List</code> ; 对于一个 <code>SetMultimap</code> ,
 返回的就是一个 <code>Set</code> .</p>
 <p>实际返回的是集合的引用, 所以对这个返回集合的操作,
@@ -496,7 +493,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </div><p>不得不说, 通过两个 Map 和实现 <code>value</code> 反查 <code>key</code> 的传统做法并不优雅,
 即增加了心理负担, 又容易出 bug.</p>
 <p>幸运的是, Guava 有一个名为 <code>BiMap</code> 类库, 提供了通过 <code>value</code> 也反查 <code>key</code> 的特性.
-一个<code>BiMap&lt;K,V&gt;</code>是一个<code>Map&lt;K,V&gt;</code>, 提供了如下功能:</p>
+一个=BiMap&lt;K,V&gt;=是一个=Map&lt;K,V&gt;=, 提供了如下功能:</p>
 <ol>
 <li>允许通过 <code>inverse()</code> 函数调转 key-value, 从 <code>Map&lt;K,V&gt;</code> 变成
 <code>Map&lt;V,K&gt;</code></li>
@@ -608,7 +605,7 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element</span><span class="p">.</span><span class="na">getKey</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">nameScores</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element</span><span class="p">.</span><span class="na">getValue</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nameScores</span><span class="p">.</span><span class="na">containsKey</span><span class="p">(</span><span class="s">&#34;Linus&#34;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">Integer</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nameScores</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&#34;Linus&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Integer</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nameScores</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&#34;Linus&#34;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
@@ -680,12 +677,12 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 <p>一往常, <code>Table</code> 也提供了若干个视图:</p>
 <ol>
 <li><code>rowMap()</code>, 把 <code>Table&lt;R, C, V&gt;</code> 看作一个 <code>Map&lt;R, Map&lt;C, V&gt;&gt;</code>, 同样的,
-<code>rowKeySet()</code>返回一个<code>Set&lt;R&gt;</code>.</li>
+<code>rowKeySet()=返回一个=Set&lt;R&gt;</code>.</li>
 <li><code>row(r)</code> 返回一个非空的 <code>Map&lt;C, V&gt;</code> 的引用, 对返回的 Map
 的修改也会反馈给持有该引用 <code>Table</code>.</li>
 <li>类似地, <code>column(c)</code> 返回一个非空的 <code>Map&lt;R, V&gt;</code> 的引用, 对返回的 Map
 的修改也会反馈给持有该引用 <code>Table</code>.</li>
-<li><code>cellSet()</code> 把<code>Table&lt;R, C, V&gt;</code>看作一个 <code>Table.Cell&lt;R, C, V&gt;</code>, <code>Cell</code>
+<li><code>cellSet()</code> 把=Table&lt;R, C, V&gt;=看作一个 <code>Table.Cell&lt;R, C, V&gt;</code>, <code>Cell</code>
 与 <code>Map.Entry</code> 十分类似, 只不过它有两个 key, 形式是 <code>(r,c)=v</code>, 而
 <code>Map.Entry</code> 是 <code>key = value</code>.</li>
 </ol>
@@ -885,7 +882,7 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// [2019-11-10,2019-11-25] 在 `{[2019-10-10,2019-10-20), (2019-10-30, 2019-12-30)}`的区间包围内</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="n">rangeSet</span><span class="p">.</span><span class="na">encloses</span><span class="p">(</span><span class="n">Range</span><span class="p">.</span><span class="na">closed</span><span class="p">(</span><span class="n">LocalDate</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">&#34;2019-11-11&#34;</span><span class="p">),</span><span class="w"> </span><span class="n">LocalDate</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">&#34;2019-11-20&#34;</span><span class="p">))));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="n">Range</span><span class="p">.</span><span class="na">closedOpen</span><span class="p">(</span><span class="n">LocalDate</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">&#34;2019-10-10&#34;</span><span class="p">),</span><span class="w"> </span><span class="n">LocalDate</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">&#34;2019-10-20&#34;</span><span class="p">)),</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">		    </span><span class="n">rangeSet</span><span class="p">.</span><span class="na">rangeContaining</span><span class="p">(</span><span class="n">LocalDate</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">&#34;2019-10-19&#34;</span><span class="p">)));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">rangeSet</span><span class="p">.</span><span class="na">rangeContaining</span><span class="p">(</span><span class="n">LocalDate</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">&#34;2019-10-19&#34;</span><span class="p">)));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// {[2019-10-10, 2019-12-30)}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Range</span><span class="o">&lt;</span><span class="n">LocalDate</span><span class="o">&gt;</span><span class="w"> </span><span class="n">span</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rangeSet</span><span class="p">.</span><span class="na">span</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="n">LocalDate</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">&#34;2019-10-10&#34;</span><span class="p">),</span><span class="w"> </span><span class="n">span</span><span class="p">.</span><span class="na">lowerEndpoint</span><span class="p">());</span><span class="w">
@@ -1005,7 +1002,7 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 <li><code>subRangeMap(Range&lt;K&gt;)</code>, 返回某个 <code>RangeMap</code>
 相关区间的子区间以及对应的 <code>value</code>, 如有 <code>RangeMap</code>:
 <code>{[1, 3] =&gt; &quot;foo&quot;, (3, 5) =&gt; &quot;bar&quot;, (11, 20) =&gt; &quot;foo&quot;</code>, 取子区间
-<code>[12,15]</code>, 返回结果就是 <code>{[12, 15]} =&gt; &quot;foo&quot;</code>; 如果取子区间<code>[4,12]</code>,
+<code>[12,15]</code>, 返回结果就是 <code>{[12, 15]} =&gt; &quot;foo&quot;</code>; 如果取子区间=[4,12]=,
 返回结果就是: <code>{[4,5) =&gt; bar, (11, 12] =&gt; foo}</code></li>
 </ul>
 <h3 id="rangemap-实现"><span class="section-num">9.2</span> RangeMap 实现</h3>
@@ -1039,11 +1036,11 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
     <item>
       <title>guava探究系列之四：不可变容器</title>
       <link>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AE%B9%E5%99%A8/</link>
-      <pubDate>Thu, 05 Sep 2019 15:36:00 +0800</pubDate>
+      <pubDate>Thu, 05 Sep 2019 15:36:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AE%B9%E5%99%A8/</guid>
-      <description>1 前言 先此声明, 个人倾向于将Collection翻译成容器, 将Set翻译成集合. 已经许久没有更新Guava研读系列的文章, 今天要介绍的是Gu</description>
+      <description>1 前言 先此声明, 个人倾向于将 Collection 翻译成容器, 将 Set 翻译成集合. 已经许久没有更新Guava研读系列的文章, 今天要介绍的是Guava的不可变容器. 2</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
-<p>先此声明, 个人倾向于将<code>Collection</code>翻译成容器, 将<code>Set</code>翻译成集合.</p>
+<p>先此声明, 个人倾向于将 <code>Collection</code> 翻译成容器, 将 <code>Set</code> 翻译成集合.</p>
 <p>已经许久没有更新Guava研读系列的文章, 今天要介绍的是Guava的不可变容器.</p>
 <h2 id="关于不可变对象"><span class="section-num">2</span> 关于不可变对象</h2>
 <p>不可变的对象有许多的优点, 如下:</p>
@@ -1054,9 +1051,9 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 <li>可用作常量使用</li>
 </ol>
 <p>使用对象的不可变拷贝是一项良好的编程防御策略, 为此,
-Guava提供了许多简单易用的, 实现了标准库<code>Collection</code>接口的不可变容器,
-当然也包括实现了他们自家<code>Collection</code>接口的不可变容器.</p>
-<p>虽然通过JDK的静态方法<code>Collection.unmodifiableXXX</code>可以使用内置不可变容器,
+Guava提供了许多简单易用的, 实现了标准库 <code>Collection</code> 接口的不可变容器,
+当然也包括实现了他们自家 <code>Collection</code> 接口的不可变容器.</p>
+<p>虽然通过JDK的静态方法 <code>Collection.unmodifiableXXX</code> 可以使用内置不可变容器,
 但是在Guava团队的同学看来,
 它们有若干的不足(又到了喜闻乐见的黑JDK的环节):</p>
 <ol>
@@ -1064,8 +1061,8 @@ Guava提供了许多简单易用的, 实现了标准库<code>Collection</code>�
 <li>不安全;
 上述静态方法返回的容器只有在没有对象持有原来容器的情况下才是真正不可变的.
 例如,
-当想要通过可变Map=ids=来生成一个不可变Map的时候,=Collections.unmodifiableMap(ids)=,
-如果有多个对象持有<code>ids</code>时, 静态方法返回的对象就不是真正的不可变.
+当想要通过可变Map <code>ids</code> 来生成一个不可变Map的时候, <code>Collections.unmodifiableMap(ids)</code>,
+如果有多个对象持有 <code>ids</code> 时, 静态方法返回的对象就不是真正的不可变.
 具体的分析可以参考<a href="https://stackoverflow.com/questions/22636575/unmodifiablemap-java-collections-vs-immutablemap-google/22636674">StackOverFlow关于unmodifiableMap和ImmutableMap的讨论</a></li>
 <li>低效; 静态方法生成的不可变容器和可变容器有着同样的性能开销,
 包括并发修改, 动态扩容等(对于真正的不可变容器而言,
@@ -1094,27 +1091,27 @@ Guava的类库对于空指针都是快速失败的, Guava的不可变容器也�
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">ImmutableSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">COLOR_NAMES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ImmutableSet</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">								       </span><span class="s">&#34;red&#34;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">								       </span><span class="s">&#34;orange&#34;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">								       </span><span class="s">&#34;purple&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                                                       </span><span class="s">&#34;red&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                                                       </span><span class="s">&#34;orange&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                                                       </span><span class="s">&#34;purple&#34;</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">Foo</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">ImmutableSet</span><span class="o">&lt;</span><span class="n">Bar</span><span class="o">&gt;</span><span class="w"> </span><span class="n">bars</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Foo</span><span class="p">(</span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Bar</span><span class="o">&gt;</span><span class="w"> </span><span class="n">bars</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">this</span><span class="p">.</span><span class="na">bars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ImmutableSet</span><span class="p">.</span><span class="na">copyOf</span><span class="p">(</span><span class="n">bars</span><span class="p">);</span><span class="w"> </span><span class="c1">// defensive copy!</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">bars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ImmutableSet</span><span class="p">.</span><span class="na">copyOf</span><span class="p">(</span><span class="n">bars</span><span class="p">);</span><span class="w"> </span><span class="c1">// defensive copy!</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>前文提到的, <code>Collections.unmodifiableXXX(mutableXXX)</code>,
+</div><p>前文提到的, <code>Collections.unmodifiableXXX(mutableXXX)</code> ,
 Collections方法不能提供真正的不可变容器,
-除非没有对象持有可变对象<code>mutableXXX</code>的引用</p>
-<p>那么Guava的不可变容器又是否是真正的不可变呢? 以<code>ImmutableSet</code>为例,
-发现所有可以修改<code>ImmutableSet</code>对象的操作函数,
-包括<code>add</code>, <code>remove</code>, <code>addAll</code>, <code>removeAll</code>等函数都被重载,
-然后标注成<code>@Deprecated</code>,
-重载函数的内容就是抛出<code>UnsupportedOperationException</code>异常,
-所以不可能修改<code>ImmutableSet</code>对象的内容:</p>
+除非没有对象持有可变对象 <code>mutableXXX</code> 的引用</p>
+<p>那么Guava的不可变容器又是否是真正的不可变呢? 以 <code>ImmutableSet</code> 为例,
+发现所有可以修改 <code>ImmutableSet</code> 对象的操作函数,
+包括 <code>add</code> , <code>remove</code> , <code>addAll</code> , <code>removeAll</code> 等函数都被重载,
+然后标注成 <code>@Deprecated</code> ,
+重载函数的内容就是抛出 <code>UnsupportedOperationException</code> 异常,
+所以不可能修改 <code>ImmutableSet</code> 对象的内容:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1143,8 +1140,8 @@ Collections方法不能提供真正的不可变容器,
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>至于持有<code>mutableXXX</code>对象引用,
-修改<code>mutableXXX</code>对象内容导致不可变内容发生改变的情况也不会发生:</p>
+</div><p>至于持有 <code>mutableXXX</code> 对象引用,
+修改 <code>mutableXXX</code> 对象内容导致不可变内容发生改变的情况也不会发生:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1183,9 +1180,9 @@ Collections方法不能提供真正的不可变容器,
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>查看<code>ImmutableSet.copyOf(Set&lt;T&gt;)</code>函数的源码,
+</div><p>查看 <code>ImmutableSet.copyOf(Set&lt;T&gt;)</code> 函数的源码,
 发现不可变集合的实现逻辑和在构造函数新建对象实现对象引用拷贝的逻辑一致,
-即和<code>Collections.unmodifiableSet(new HashSet&lt;&gt;(colors))</code>的逻辑一样的:</p>
+即和 <code>Collections.unmodifiableSet(new HashSet&lt;&gt;(colors))</code> 的逻辑一样的:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1214,14 +1211,14 @@ Collections方法不能提供真正的不可变容器,
 </span></span></span><span class="line"><span class="cl"><span class="cm">     * TODO(lowasser): consider checking for Multiset here
 </span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">elements</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">ImmutableSet</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="p">(</span><span class="n">elements</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">ImmutableSortedSet</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nd">@SuppressWarnings</span><span class="p">(</span><span class="s">&#34;unchecked&#34;</span><span class="p">)</span><span class="w"> </span><span class="c1">// all supported methods are covariant</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="c1">// 新建对象, 拷贝对象引用</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="n">ImmutableSet</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">ImmutableSet</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="n">elements</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">set</span><span class="p">.</span><span class="na">isPartialView</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="k">return</span><span class="w"> </span><span class="n">set</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nd">@SuppressWarnings</span><span class="p">(</span><span class="s">&#34;unchecked&#34;</span><span class="p">)</span><span class="w"> </span><span class="c1">// all supported methods are covariant</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 新建对象, 拷贝对象引用</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">ImmutableSet</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">ImmutableSet</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="n">elements</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">set</span><span class="p">.</span><span class="na">isPartialView</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">set</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">elements</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">EnumSet</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="n">copyOfEnumSet</span><span class="p">((</span><span class="n">EnumSet</span><span class="p">)</span><span class="w"> </span><span class="n">elements</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">copyOfEnumSet</span><span class="p">((</span><span class="n">EnumSet</span><span class="p">)</span><span class="w"> </span><span class="n">elements</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Object</span><span class="o">[]</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">elements</span><span class="p">.</span><span class="na">toArray</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">construct</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="na">length</span><span class="p">,</span><span class="w"> </span><span class="n">array</span><span class="p">);</span><span class="w">
@@ -1233,12 +1230,12 @@ Collections方法不能提供真正的不可变容器,
 <h3 id="构造不可变容器"><span class="section-num">4.1</span> 构造不可变容器</h3>
 <p>关于如何构造一个不可变容器, Guava提供的手段是多种多样的:</p>
 <ol>
-<li>使用<code>copyOf</code>静态方法, 例如<code>ImmutableSet.copyOf(set)</code>,
-这种构造方法与JDK不可变容器的构造方式类似<code>Collections.unmodifiableXXX(mutableXXX)</code></li>
-<li>使用<code>of</code>静态方法,
-例如<code>ImmutableSet.of(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)</code>或者<code>ImmutableMap.of(&quot;a&quot;, 1, &quot;b&quot;, 2)</code>,
+<li>使用 <code>copyOf</code> 静态方法, 例如 <code>ImmutableSet.copyOf(set)</code> ,
+这种构造方法与JDK不可变容器的构造方式类似 <code>Collections.unmodifiableXXX(mutableXXX)</code></li>
+<li>使用 <code>of</code> 静态方法,
+例如 <code>ImmutableSet.of(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)=或者=ImmutableMap.of(&quot;a&quot;, 1, &quot;b&quot;, 2)</code>,
 前文已经介绍过, 在此就不赘言</li>
-<li>使用<code>Builder</code>构造不可变容器, 例如:</li>
+<li>使用 <code>Builder</code> 构造不可变容器, 例如:</li>
 </ol>
 <!--listend-->
 <div class="highlight"><div class="chroma">
@@ -1258,7 +1255,7 @@ Collections方法不能提供真正的不可变容器,
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>不过某些不可变容器的builder方法废弃了,
-如<code>ImmutableSortedSet</code>的<code>builder</code>方法就被替换成了<code>naturalOrder</code>.</p>
+如 <code>ImmutableSortedSet</code> 的 <code>builder</code> 方法就被替换成了 <code>naturalOrder</code>.</p>
 <p>此外, 对于有序容器(sorted collections)而言,
 容器内的元素的顺序是按照构造时元素的插入顺序排列的, 例如如下代码</p>
 <div class="highlight"><div class="chroma">
@@ -1273,9 +1270,9 @@ Collections方法不能提供真正的不可变容器,
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 结果为 a b c d</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="aslist-函数"><span class="section-num">4.2</span> <code>asList</code>函数</h3>
-<p>所有的不可变容器都提供了一个<code>asList</code>方法来返回一个不可变列表<code>ImmutableList</code>,
-所以即使你把数据存在一个不可变有序集合<code>ImmutableSortedSet</code>,
+</div><h3 id="aslist-函数"><span class="section-num">4.2</span> <code>asList</code> 函数</h3>
+<p>所有的不可变容器都提供了一个 <code>asList</code> 方法来返回一个不可变列表 <code>ImmutableList</code>,
+所以即使你把数据存在一个不可变有序集合 <code>ImmutableSortedSet</code>,
 你也可以通过下标索引获取最小的元素或者第n小的元素, 如:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1293,10 +1290,10 @@ Collections方法不能提供真正的不可变容器,
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="n">结果为1</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="智能的-copyof-函数"><span class="section-num">4.3</span> 智能的<code>copyOf</code>函数</h3>
+</div><h3 id="智能的-copyof-函数"><span class="section-num">4.3</span> 智能的 <code>copyOf</code> 函数</h3>
 <p>前文提到,
-不可变容器都提供了一个<code>copyOf</code>方法用于从另外一个容器构造出一个不可变容器.
-值得指出的是不可变容器的<code>copyOf</code>方法在不需要拷贝数据的时候就会尽量避免拷贝数据,
+不可变容器都提供了一个 <code>copyOf</code> 方法用于从另外一个容器构造出一个不可变容器.
+值得指出的是不可变容器的 <code>copyOf</code> 方法在不需要拷贝数据的时候就会尽量避免拷贝数据,
 但这是什么意思呢? 假如有如下的代码:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1315,18 +1312,18 @@ Collections方法不能提供真正的不可变容器,
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kt">void</span><span class="w"> </span><span class="nf">thingamajig</span><span class="p">(</span><span class="n">Collection</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">collection</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">defensiveCopy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ImmutableList</span><span class="p">.</span><span class="na">copyOf</span><span class="p">(</span><span class="n">collection</span><span class="p">);</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">...</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>在上面的代码调用<code>ImmutableList.copyOf(foobar)</code>函数的时候,
+</div><p>在上面的代码调用 <code>ImmutableList.copyOf(foobar)</code> 函数的时候,
 函数的内部实现不会逐个拷贝,
-而会直接通过<code>foobar.asList()</code>函数返回一个不可变值列表,
-这样实现的算法时间复杂度就是<code>O(1)</code>, 而不是<code>O(n)</code>, 实现性能消耗的最小化,
+而会直接通过 <code>foobar.asList()</code> 函数返回一个不可变值列表,
+这样实现的算法时间复杂度就是 <code>O(1)</code> , 而不是 <code>O(n)</code> , 实现性能消耗的最小化,
 这也就是小标题智能指的意思.</p>
 <p>但是需要注意的是,
-并不是所有的不可变容器之间的转换都能实现<code>O(1)</code>时间复杂度,
-例如<code>ImmutableSet.copyOf(ImmutableList)</code>就只能逐个元素拷贝,
-时间复杂度退化到<code>O(n)</code>.</p>
+并不是所有的不可变容器之间的转换都能实现 <code>O(1)</code> 时间复杂度,
+例如 <code>ImmutableSet.copyOf(ImmutableList)</code> 就只能逐个元素拷贝,
+时间复杂度退化到 <code>O(n)</code> .</p>
 <h2 id="jdk容器与guava不可变容器"><span class="section-num">5</span> JDK容器与Guava不可变容器</h2>
 <p>对于JDK提供的标准容器, Guava提供了相应的不可变容器实现,
 对于Guava自家的容器, Guava也提供了对应的不可变容器, 具体实现对比如下:</p>
@@ -1425,7 +1422,7 @@ Collections</a></li>
     <item>
       <title>Guava探究系列之二: 优雅校验数据</title>
       <link>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BC%98%E9%9B%85%E6%A0%A1%E9%AA%8C%E6%95%B0%E6%8D%AE/</link>
-      <pubDate>Thu, 04 Jul 2019 10:16:00 +0800</pubDate>
+      <pubDate>Thu, 04 Jul 2019 10:16:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BC%98%E9%9B%85%E6%A0%A1%E9%AA%8C%E6%95%B0%E6%8D%AE/</guid>
       <description>1 前言 根据防御式编程的要求, 在日常的开发中, 总少不了对函数的各种入参做校验, 以便保证函数能按照预期的流程执行下去. 比如各种费率的值就没可能是</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
@@ -1438,9 +1435,9 @@ Collections</a></li>
 并称其为前置条件(preconditions). 如果前置条件校验失败,
 就会抛出一个指定的异常.</p>
 <h2 id="前置函数特征"><span class="section-num">2</span> 前置函数特征</h2>
-<p>目前的前置校验方法有如下特征: 须需要, 下面例子中的<code>checkArgument</code>函数可以替换成任何一个前置条件校验函数</p>
+<p>目前的前置校验方法有如下特征: 须需要, 下面例子中的=checkArgument=函数可以替换成任何一个前置条件校验函数</p>
 <ol>
-<li>这些前置方法一般接受一个布尔表达式作为入参，并判断表达是否为<code>true</code>,
+<li>这些前置方法一般接受一个布尔表达式作为入参，并判断表达是否为=true=,
 格式如:</li>
 </ol>
 <!--listend-->
@@ -1456,8 +1453,8 @@ Collections</a></li>
 </div>
 </div><ol start="2">
 <li>除了用于判断的布尔表达式之外,
-前置方法可以接受一个额外的<code>Object</code>作为入参, 在抛出异常的时候,
-把<code>Object.toString()</code>作为异常信息, 如:</li>
+前置方法可以接受一个额外的=Object=作为入参, 在抛出异常的时候,
+把=Object.toString()=作为异常信息, 如:</li>
 </ol>
 <!--listend-->
 <div class="highlight"><div class="chroma">
@@ -1485,7 +1482,7 @@ Collections</a></li>
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 省略部分内容</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toString</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="s">&#34;ErrorDetail{&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;code=&#39;&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sc">&#39;\&#39;&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;, description=&#39;&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">description</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sc">&#39;\&#39;&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sc">&#39;}&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;ErrorDetail{&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;code=&#39;&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sc">&#39;\&#39;&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;, description=&#39;&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">description</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sc">&#39;\&#39;&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sc">&#39;}&#39;</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -1499,8 +1496,8 @@ Collections</a></li>
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="3">
-<li>Guava的前置表达式还支持类似<code>printf</code>函数那样的格式化输出错误信息,
-只不过出于兼容性和性能的考虑, 只支持使用<code>%s</code>指示符格式化字符串,
+<li>Guava的前置表达式还支持类似=printf=函数那样的格式化输出错误信息,
+只不过出于兼容性和性能的考虑, 只支持使用=%s=指示符格式化字符串,
 不支持其他类型. 如:</li>
 </ol>
 <!--listend-->
@@ -1519,10 +1516,10 @@ Collections</a></li>
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="前置条件函数介绍"><span class="section-num">3</span> 前置条件函数介绍</h2>
-<p>须注意的是, 下面介绍的<code>checkArgument</code>, <code>checkArgument</code>,
-<code>checkState</code>函数都有三个对应的重载函数，分别对应前文所述的三种特征,
+<p>须注意的是, 下面介绍的=checkArgument=, <code>checkArgument</code>,
+=checkState=函数都有三个对应的重载函数，分别对应前文所述的三种特征,
 下文不会三种函数都介绍, 只介绍标准格式的前置条件函数.
-以<code>checkArgument</code>函数为例, 三个重载函数分别是(忽略函数体):</p>
+以=checkArgument=函数为例, 三个重载函数分别是(忽略函数体):</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1545,8 +1542,8 @@ Collections</a></li>
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkArgument</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">expression</span><span class="p">);</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>入参是一个布尔表达式, 函数校验这个表达式是否为<code>true</code>, 如果为<code>false</code>,
-抛出<code>IllegalArgumentException</code>. 例子如下:</p>
+</div><p>入参是一个布尔表达式, 函数校验这个表达式是否为=true=, 如果为=false=,
+抛出=IllegalArgumentException=. 例子如下:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1571,9 +1568,9 @@ Collections</a></li>
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">checkNotNull</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">reference</span><span class="p">);</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>入参是个任意类型的对象, 函数校验这个对象是否为<code>null</code>, 如果为空,
-抛出<code>NullPointerException</code>, 否则直接返回该对象,
-所以<code>checkNotNull</code>的用法就比较有趣, 可以在调用<code>setter</code>方法前作前置校验.
+</div><p>入参是个任意类型的对象, 函数校验这个对象是否为=null=, 如果为空,
+抛出=NullPointerException=, 否则直接返回该对象,
+所以=checkNotNull=的用法就比较有趣, 可以在调用=setter=方法前作前置校验.
 例子如下:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1596,8 +1593,8 @@ Collections</a></li>
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>看着这个函数, 我个人感觉很奇怪:
-这个函数和<code>checkNotNull</code>函数功能非常相似, 实现也基本一样,
-都是判断表达式是否为<code>true</code>, 只是抛出的异常不一样而已,
+这个函数和=checkNotNull=函数功能非常相似, 实现也基本一样,
+都是判断表达式是否为=true=, 只是抛出的异常不一样而已,
 是否有必要开发这个函数. 两个函数的实现如下:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1616,13 +1613,13 @@ Collections</a></li>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkArgument</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">expression</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">expression</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkState</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">expression</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">expression</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalStateException</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalStateException</span><span class="p">();</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
@@ -1638,11 +1635,10 @@ Collections</a></li>
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">checkElementIndex</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">);</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>这个函数用于判断指定数组, 列表, 字符串的下标是否越界, <code>index</code>是下标,
-<code>size</code>是数组, 列表或字符串的长度, 下标的有效范围是<code>[0,数组长度)</code> 即
-<code>0&lt;=index&lt;size</code>. 如果数组下标越界(即<code>index=&lt;0 或者 =index=&gt;==size</code>),
-那么抛出<code>IndexOutOfBoundsException</code>异常, 否则返回数组的下标,
-也就是<code>index</code>. 例子如下:</p>
+</div><p>这个函数用于判断指定数组, 列表, 字符串的下标是否越界, <code>index=是下标, =size=是数组, 列表或字符串的长度, 下标的有效范围是</code>[0,数组长度)= 即
+<code>0&lt;=index&lt;size</code>. 如果数组下标越界(即=index=&lt;0 或者 <code>index=&gt;==size</code>),
+那么抛出=IndexOutOfBoundsException=异常, 否则返回数组的下标,
+也就是=index=. 例子如下:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1673,9 +1669,9 @@ Collections</a></li>
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">checkPositionIndex</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">);</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>这个函数和<code>checkElementIndex</code>非常类似, 连Guava wiki的说明也基本一致(只有一个单词不同).</p>
-<p>除了一点, <code>checkElementIndex</code>函数的下标有效范围是<code>[0, 数组长度)</code>, 而<code>checkPositionIndex</code>函数的下标有有效范围是<code>[0, 数组长度]</code>,
-即<code>0&lt;=index&lt;=size</code>. 例子如下:</p>
+</div><p>这个函数和=checkElementIndex=非常类似, 连Guava wiki的说明也基本一致(只有一个单词不同).</p>
+<p>除了一点, <code>checkElementIndex=函数的下标有效范围是</code>[0, 数组长度)=, 而=checkPositionIndex=函数的下标有有效范围是=[0, 数组长度]=,
+即=0&lt;=index&lt;=size=. 例子如下:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1706,8 +1702,8 @@ Collections</a></li>
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkPositionIndexes</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">end</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">);</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>这个函数是用于判断<code>[start,end]</code>这个范围是否是个有效范围, 即<code>[start, end]</code> 是否在<code>[0, size]</code> 范围内(如果<code>[start, end]</code>
-和<code>[0, size]</code>相同, 也认为在范围内), 如果不在, 则抛出<code>IndexOutOfBoundsException</code>异常. 例子如下:</p>
+</div><p>这个函数是用于判断=[start,end]=这个范围是否是个有效范围, 即=[start, end]= 是否在=[0, size]= 范围内(如果=[start, end]=
+和=[0, size]=相同, 也认为在范围内), 如果不在, 则抛出=IndexOutOfBoundsException=异常. 例子如下:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1730,10 +1726,10 @@ Collections</a></li>
 </div>
 </div><h2 id="前置条件在实际项目的应用"><span class="section-num">5</span> 前置条件在实际项目的应用</h2>
 <p>前置条件在检验条件不成交的时候抛的异常类型虽说是合情合理(比如,
-<code>checkArgument</code>函数抛出<code>IllegalArgumentException</code>),</p>
-<p>但是对于业务系统来说, 你抛出个<code>IllegalArgumentException</code>或者<code>NullPointerException</code>, 接口调用方对于这个异常摸不着头脑, 虽说只是正常的数据问题,
+<code>checkArgument=函数抛出=IllegalArgumentException</code>),</p>
+<p>但是对于业务系统来说, 你抛出个=IllegalArgumentException=或者=NullPointerException=, 接口调用方对于这个异常摸不着头脑, 虽说只是正常的数据问题,
 还是很容易觉得接口提供方服务出了问题, 甚至还会被质疑技术不过硬.</p>
-<p>咱们又不是底层组件, 抛个<code>NPE</code>, 着实是不成体统. 基于各种有的没的的原因,
+<p>咱们又不是底层组件, 抛个=NPE=, 着实是不成体统. 基于各种有的没的的原因,
 我们的业务系统在使用前置条件的时候进行了封装,
 将前置条件抛出的异常进行了转换, 换成正常的业务异常, 提供完整的异常信息,
 代码如下:</p>
@@ -1795,12 +1791,12 @@ Collections</a></li>
 </span></span></span><span class="line"><span class="cl"><span class="cm">     * @throws BkmpException 条件表达式结果为假
 </span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkArgument</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">expression</span><span class="p">,</span><span class="w"> </span><span class="n">ErrDetailEnum</span><span class="w"> </span><span class="n">errDetailEnum</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">msgTemplate</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">				     </span><span class="n">Object</span><span class="p">...</span><span class="w"> </span><span class="n">vars</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="n">Preconditions</span><span class="p">.</span><span class="na">checkArgument</span><span class="p">(</span><span class="n">expression</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IllegalArgumentException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BkmpException</span><span class="p">(</span><span class="n">errDetailEnum</span><span class="p">,</span><span class="w"> </span><span class="n">msgTemplate</span><span class="p">,</span><span class="w"> </span><span class="n">vars</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                     </span><span class="n">Object</span><span class="p">...</span><span class="w"> </span><span class="n">vars</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Preconditions</span><span class="p">.</span><span class="na">checkArgument</span><span class="p">(</span><span class="n">expression</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IllegalArgumentException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BkmpException</span><span class="p">(</span><span class="n">errDetailEnum</span><span class="p">,</span><span class="w"> </span><span class="n">msgTemplate</span><span class="p">,</span><span class="w"> </span><span class="n">vars</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/**
@@ -1813,12 +1809,12 @@ Collections</a></li>
 </span></span></span><span class="line"><span class="cl"><span class="cm">     * @throws BkmpException 条件表达式结果为假
 </span></span></span><span class="line"><span class="cl"><span class="cm">     */</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkArgumentNotTrue</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">expression</span><span class="p">,</span><span class="w"> </span><span class="n">ErrDetailEnum</span><span class="w"> </span><span class="n">errDetailEnum</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">msgTemplate</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">					    </span><span class="n">Object</span><span class="p">...</span><span class="w"> </span><span class="n">vars</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="n">Preconditions</span><span class="p">.</span><span class="na">checkArgument</span><span class="p">(</span><span class="o">!</span><span class="n">expression</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IllegalArgumentException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BkmpException</span><span class="p">(</span><span class="n">errDetailEnum</span><span class="p">,</span><span class="w"> </span><span class="n">msgTemplate</span><span class="p">,</span><span class="w"> </span><span class="n">vars</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                            </span><span class="n">Object</span><span class="p">...</span><span class="w"> </span><span class="n">vars</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Preconditions</span><span class="p">.</span><span class="na">checkArgument</span><span class="p">(</span><span class="o">!</span><span class="n">expression</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IllegalArgumentException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BkmpException</span><span class="p">(</span><span class="n">errDetailEnum</span><span class="p">,</span><span class="w"> </span><span class="n">msgTemplate</span><span class="p">,</span><span class="w"> </span><span class="n">vars</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 省略其他部分的封装</span><span class="w">
@@ -1852,7 +1848,7 @@ Guava wiki 还提了两点最佳实践(best practice):</p>
     <item>
       <title>Guava探究系列之一: 使用和避免使用空指针</title>
       <link>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BD%BF%E7%94%A8%E5%92%8C%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E7%A9%BA%E6%8C%87%E9%92%88/</link>
-      <pubDate>Tue, 02 Jul 2019 19:25:00 +0800</pubDate>
+      <pubDate>Tue, 02 Jul 2019 19:25:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BD%BF%E7%94%A8%E5%92%8C%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E7%A9%BA%E6%8C%87%E9%92%88/</guid>
       <description>1 前言 To be, or not to be, that is the question: 先来看看奆佬们关于空指针的看法: Null sucks - Doug Lea(JCP,Java并发编程实战作者, Java巨佬) I call it my billion-dollar mistake. - Sir C.</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
@@ -1865,19 +1861,18 @@ Guava wiki 还提了两点最佳实践(best practice):</p>
 <p>I call it my billion-dollar mistake. - <a href="https://en.wikipedia.org/wiki/C._A._R._Hoare">Sir C. A. R. Hoare</a>, 空指针的发明者</p>
 </blockquote>
 <p>按照Guava wiki的说法,
-大部分的Google代码都是不支持使用空指针(下文用<code>null</code>表示空指针)的,</p>
-<p>如接近95%的集合类都不支持使用<code>null</code>作为集合元素.
-像Google这样的大公司明确不建议使用<code>null</code>自然是有其原由的, 不会无的放矢.
+大部分的Google代码都是不支持使用空指针(下文用=null=表示空指针)的,</p>
+<p>如接近95%的集合类都不支持使用=null=作为集合元素.
+像Google这样的大公司明确不建议使用=null=自然是有其原由的, 不会无的放矢.
 那具体原因是什么呢？待下文为你细细道来;</p>
 <h2 id="空指针的问题"><span class="section-num">2</span> 空指针的问题</h2>
 <h3 id="空指针语意隐晦不明"><span class="section-num">2.1</span> 空指针语意隐晦不明</h3>
-<p><code>null</code>的语意并不了然明确, 即当一个函数返回<code>null</code>, 我们并不知道<code>null</code>的意思是指返回结果理应为空? 还是指函数没有达到预期结果, 返回<code>null</code>表示失败?</p>
-<p>举个常见的例子, 当调用<code>Map.get(key)</code>获取key对应的value的时候, 返回结果为<code>null</code>; <code>null</code>是指找不到这个key对应的value?
-还是说这个key对应的value本身就是<code>null</code>, 原来是通过<code>Map.put(key,value)</code>赋值的呢? <code>null</code>甚至可以是代表其他东西!</p>
-<p>老实说, 当我们获得一个<code>null</code>, 我们并不清楚它究竟指的是啥,
+<p><code>null=的语意并不了然明确, 即当一个函数返回=null</code>, 我们并不知道=null=的意思是指返回结果理应为空? 还是指函数没有达到预期结果, 返回=null=表示失败?</p>
+<p>举个常见的例子, 当调用=Map.get(key)=获取key对应的value的时候, 返回结果为=null=; <code>null=是指找不到这个key对应的value? 还是说这个key对应的value本身就是=null</code>, 原来是通过=Map.put(key,value)=赋值的呢? =null=甚至可以是代表其他东西!</p>
+<p>老实说, 当我们获得一个=null=, 我们并不清楚它究竟指的是啥,
 除非有对应的javadoc 进行了说明.</p>
 <h3 id="空指针-暗藏杀机"><span class="section-num">2.2</span> 空指针”暗藏杀机”</h3>
-<p><code>null</code>除了语意不明外, 还非常容易在不经意间挖坑坑人. 例如有下面的代码:</p>
+<p>=null=除了语意不明外, 还非常容易在不经意间挖坑坑人. 例如有下面的代码:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1897,9 +1892,9 @@ Guava wiki 还提了两点最佳实践(best practice):</p>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">testNull</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">input</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="na">nextInt</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="n">input</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">input</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -1911,33 +1906,32 @@ Guava wiki 还提了两点最佳实践(best practice):</p>
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>可能你会说，这样的明显有坑的代码, 程序员理所当然会注意,
-并对<code>null</code>指针进行校验的.</p>
-<p>但事实并非如此, 因为<code>null</code>是一个特殊类型,
+并对=null=指针进行校验的.</p>
+<p>但事实并非如此, 因为=null=是一个特殊类型,
 它可以表示一切的类型, 所以上面的代码是肯定可以编译通过的.
-没有了编译器的约束, 只要使用<code>testNull</code>函数的时候没有查看源码,
+没有了编译器的约束, 只要使用=testNull=函数的时候没有查看源码,
 或者源码非常复杂, 一下子理不清思路, 防御式编程落实不到,
-就会忽略了<code>null</code>, 运行时就有可能抛出<code>NullPointException</code>, 导致程序crash.
+就会忽略了=null=, 运行时就有可能抛出=NullPointException=, 导致程序crash.
 这种情况真的防不胜防.</p>
 <h2 id="guava对于空指针的态度"><span class="section-num">3</span> Guava对于空指针的态度</h2>
 <p>因为上文提到或者隐藏但没提到的种种问题,
-Guava的诸多类库在设计时就不支持<code>null</code>.</p>
-<p>如果检测到<code>null</code>的存在, Guava的类库就会快速失败(fail fast),一般的处理策略是抛出异常.
-虽说<code>null</code>存在种种的坑, 但<code>null</code>依旧是Java的一项关键特性,
-因此Guava的类库也不能将<code>null</code>彻底拒之门外.</p>
-<p>此外, Guava秉承既然不能消灭<code>null</code>, 那就把<code>null</code>建设得更好用的理念,
-除了提供了一些工具可以让开发者避免使用<code>null</code>,
-还提供了可以让开发者更易于使用<code>null</code>的工具.</p>
+Guava的诸多类库在设计时就不支持=null=.</p>
+<p>如果检测到=null=的存在, Guava的类库就会快速失败(fail fast),一般的处理策略是抛出异常.
+虽说=null=存在种种的坑, 但=null=依旧是Java的一项关键特性,
+因此Guava的类库也不能将=null=彻底拒之门外.</p>
+<p>此外, Guava秉承既然不能消灭=null=, 那就把=null=建设得更好用的理念,
+除了提供了一些工具可以让开发者避免使用=null=,
+还提供了可以让开发者更易于使用=null=的工具.</p>
 <h2 id="optional"><span class="section-num">4</span> Optional</h2>
-<p>在很多情况下, 程序员使用<code>null</code>是为了表示有些值可能存在或者不存在.
-我们又可以用熟悉的<code>Map.get(key)</code>函数来举例,
-如果规定<code>null</code>不能作为<code>value</code>值使用(但事实并非如此),
-那么当这个函数返回<code>null</code>时就代表没有找到这个<code>key</code>对应的<code>value</code>.</p>
-<p>为了应对这种使用<code>null</code>的情况, Guava团队参考其他语言(例如Scala)应对<code>null</code>的实践, 开发了<code>Optional&lt;T&gt;</code>类.
-<code>Optional</code>类表示那些可能为空的值, 一个<code>Optional</code>类要不包含一个非空的<code>T</code>类型的对象引用(这种情况下,
-我们称引用对象是存在的-&ldquo;present&rdquo;), 要不什么东西都不包含(这种情况被, 我们说引用对象是不存在的-&ldquo;absent&rdquo;), 除此之外, <code>Optional</code>不存在其他情况, 更没有可能是<code>null</code>.</p>
+<p>在很多情况下, 程序员使用=null=是为了表示有些值可能存在或者不存在.
+我们又可以用熟悉的=Map.get(key)=函数来举例,
+如果规定=null=不能作为=value=值使用(但事实并非如此),
+那么当这个函数返回=null=时就代表没有找到这个=key=对应的=value=.</p>
+<p>为了应对这种使用=null=的情况, Guava团队参考其他语言(例如Scala)应对=null=的实践, 开发了=Optional&lt;T&gt;=类.
+<code>Optional=类表示那些可能为空的值, 一个=Optional=类要不包含一个非空的=T=类型的对象引用(这种情况下, 我们称引用对象是存在的-&quot;present&quot;), 要不什么东西都不包含(这种情况被, 我们说引用对象是不存在的-&quot;absent&quot;), 除此之外, =Optional=不存在其他情况, 更没有可能是=null</code>.</p>
 <h3 id="java8的optional"><span class="section-num">4.1</span> Java8的Optional</h3>
-<p>鉴于我对<code>Optional</code>类的兴趣,
-我用下面这条命令找了一个Guava库<code>Optional</code>开发的最初提交历史:</p>
+<p>鉴于我对=Optional=类的兴趣,
+我用下面这条命令找了一个Guava库=Optional=开发的最初提交历史:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1952,23 +1946,23 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p>
 </span></span><span class="line"><span class="cl"><span class="c1"># 2009-06-18 18:11:55 +0000-(no author)-Initial directory structure.</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>从Guava的commit历史中, 我们可以知道<code>Optional</code>最开始是在2009年开始开发的,
+</div><p>从Guava的commit历史中, 我们可以知道=Optional=最开始是在2009年开始开发的,
 而10年前还是Java6的时代, Java7都尚未发布.</p>
-<p>在那个”远古年代”, 是Guava的<code>Optional</code>一直引领着Java的抗击<code>null</code>重任,
+<p>在那个”远古年代”, 是Guava的=Optional=一直引领着Java的抗击=null=重任,
 为众多的蒙受”空指针之苦”的Java的程序员带来希望之光.</p>
 <p>而当时光的脚步终于来到2014年3月18号, 在这一天, Java程序员迎来了Java8,
 这是自Java5发布以来最激动人心的发布. 这天之后, 尘埃落定, <code>Optional</code>,
-<code>Stream</code>, <code>Lambda</code>等诸多令人期待已久的特性终于成为Java的标准库的一部分,
-而这也意味, Guava的<code>Optional</code>已经完成了自己的使命, 成为历史.</p>
-<p>Guava的<code>Optional</code>类与JDK的<code>Optional</code>功能类似,
-既然JDK的<code>Optional</code>已成为正统,
-那么下面我就不再介绍Guava的<code>Optional=(Guava的wiki本来是有较大篇幅介绍自家的=Optional</code>,
-个人感觉已经意义不大), 转而介绍JDK的<code>Optional=(下文通称为=Optional</code>).</p>
+<code>Stream</code>, =Lambda=等诸多令人期待已久的特性终于成为Java的标准库的一部分,
+而这也意味, Guava的=Optional=已经完成了自己的使命, 成为历史.</p>
+<p>Guava的=Optional=类与JDK的=Optional=功能类似,
+既然JDK的=Optional=已成为正统,
+那么下面我就不再介绍Guava的=Optional=(Guava的wiki本来是有较大篇幅介绍自家的=Optional=,
+个人感觉已经意义不大), 转而介绍JDK的=Optional=(下文通称为=Optional=).</p>
 <h3 id="optional构造方式"><span class="section-num">4.2</span> Optional构造方式</h3>
-<p>在使用<code>Optional</code>之前, 首先需要了解如果构造<code>Optional</code>对象,
+<p>在使用=Optional=之前, 首先需要了解如果构造=Optional=对象,
 方式有如下几种:</p>
-<h4 id="声明一个空的-optional-对象"><span class="section-num">4.2.1</span> 声明一个空的<code>Optional</code>对象</h4>
-<p>可以通过静态工厂方法<code>Optional.empty</code>, 创建一个空的<code>Optional</code>对象:</p>
+<h4 id="声明一个空的-optional-对象"><span class="section-num">4.2.1</span> 声明一个空的=Optional=对象</h4>
+<p>可以通过静态工厂方法=Optional.empty=, 创建一个空的=Optional=对象:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1978,8 +1972,8 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p>
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="根据一个非空值创建optional"><span class="section-num">4.2.2</span> 根据一个非空值创建Optional</h4>
-<p>还可以使用静态工厂方法<code>Optional.of</code>,
-依据一个非空值创建一个<code>Optional</code>对象:</p>
+<p>还可以使用静态工厂方法=Optional.of=,
+依据一个非空值创建一个=Optional=对象:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1988,8 +1982,9 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p>
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Optional</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">optional</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Optional</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">objectT</span><span class="p">);</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>需要注意的是, 按照<code>Optional</code>的源码声明, 如果传入的<code>objectT</code>为<code>null</code>,
-那么<code>Optional</code>就会立刻抛出<code>NullPointException=(这就是快速失败-fail fast), 而还是等到访问=optional</code>属性时才返回一个错误.</p>
+</div><p>需要注意的是, 按照=Optional=的源码声明, 如果传入的=objectT=为=null=,
+那么=Optional=就会立刻抛出=NullPointException=(这就是快速失败-fail
+fast), 而还是等到访问=optional=属性时才返回一个错误.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -2019,8 +2014,8 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p>
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="可接受null的optional"><span class="section-num">4.2.3</span> 可接受null的Optional</h4>
-<p>最后, 使用静态工厂方法<code>Optional.ofNullable</code>,
-我们可以创建一个允许<code>null</code>的<code>Optional</code>的对象:</p>
+<p>最后, 使用静态工厂方法=Optional.ofNullable=,
+我们可以创建一个允许=null=的=Optional=的对象:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -2029,16 +2024,16 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p>
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Optional</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">optional</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Optional</span><span class="p">.</span><span class="na">ofNullable</span><span class="p">(</span><span class="n">objectT</span><span class="p">);</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>如果<code>objectT</code>为<code>null</code>, 那么得到的<code>Optional</code>对象就是个空对象.</p>
+</div><p>如果=objectT=为=null=, 那么得到的=Optional=对象就是个空对象.</p>
 <h3 id="optional的消费方式"><span class="section-num">4.3</span> Optional的消费方式</h3>
 <h4 id="optional与stream的邂逅"><span class="section-num">4.3.1</span> Optional与Stream的邂逅</h4>
-<p>既然<code>Optional</code>在Oracle的文档中被定性为一个容器(container),</p>
+<p>既然=Optional=在Oracle的文档中被定性为一个容器(container),</p>
 <p>那么对于一个容器,
-我们关注的点无非是这个容器如何<strong>存*(对于<code>Optional</code>来说是构造)和如何</strong>取*这两件事而已(也就是消费).
-在谈<code>Optional</code>的消费接口之前,
-先来回顾一下Java8引进的<code>Stream</code>操作(关于Java8
-<code>Stream</code>操作的说明已经汗牛充栋了, 既然珠玉在前, 我就不赘言了),
-常用的<code>Stream</code>操作函数有如下几个:</p>
+我们关注的点无非是这个容器如何*存*(对于=Optional=来说是构造)和如何*取*这两件事而已(也就是消费).
+在谈=Optional=的消费接口之前,
+先来回顾一下Java8引进的=Stream=操作(关于Java8
+=Stream=操作的说明已经汗牛充栋了, 既然珠玉在前, 我就不赘言了),
+常用的=Stream=操作函数有如下几个:</p>
 <ul>
 <li>filter</li>
 <li>map</li>
@@ -2047,14 +2042,14 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p>
 <li>reduce</li>
 <li>更多的函数可以参考<a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html">Oracle文档</a></li>
 </ul>
-<p>因为前文已经说过<code>Optional</code>是容器类, 那么按理来说,
-正常容器类支持的<code>Stream</code>操作, <code>Optional</code>也支持.</p>
-<p>只不过在Java8的时候, <code>Optional</code>只支持<code>filter</code>,=map=和<code>flatmap</code>这三个<code>Stream</code>操作.</p>
-<p>可能是因为Java委员会的奆佬们也觉得<code>Optional</code>身为一个容器类只支持三个<code>Stream</code>操作有点丢人,
+<p>因为前文已经说过=Optional=是容器类, 那么按理来说,
+正常容器类支持的=Stream=操作, =Optional=也支持.</p>
+<p>只不过在Java8的时候, <code>Optional=只支持=filter</code>,=map=和=flatmap=这三个=Stream=操作.</p>
+<p>可能是因为Java委员会的奆佬们也觉得=Optional=身为一个容器类只支持三个=Stream=操作有点丢人,
 所以在Java9,
-<code>Optional</code>增加了一个<code>Optional.stream()</code>这样一个可以返回<code>Stream</code>对象的函数,
-让<code>Optional</code>拥有了容器类操作<code>Stream</code>的所有能力,
-重振了身为一个容器的荣光. <code>Optional</code>与<code>Stream</code>结合使用的示例如下:</p>
+=Optional=增加了一个=Optional.stream()=这样一个可以返回=Stream=对象的函数,
+让=Optional=拥有了容器类操作=Stream=的所有能力,
+重振了身为一个容器的荣光. =Optional=与=Stream=结合使用的示例如下:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -2067,45 +2062,44 @@ Guava的诸多类库在设计时就不支持<code>null</code>.</p>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getCarInsuranceName</span><span class="p">(</span><span class="n">Optional</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="w"> </span><span class="n">person</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">person</span><span class="p">.</span><span class="na">flatMap</span><span class="p">(</span><span class="n">Person</span><span class="p">::</span><span class="n">getCar</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">car</span><span class="o">-&gt;</span><span class="n">car</span><span class="p">.</span><span class="na">getName</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="s">&#34;Spaceship&#34;</span><span class="p">))</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="na">flatMap</span><span class="p">(</span><span class="n">Car</span><span class="p">::</span><span class="n">getInsurance</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">Insurance</span><span class="p">::</span><span class="n">getName</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="na">orElse</span><span class="p">(</span><span class="s">&#34;Unknown&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">car</span><span class="o">-&gt;</span><span class="n">car</span><span class="p">.</span><span class="na">getName</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="s">&#34;Spaceship&#34;</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">.</span><span class="na">flatMap</span><span class="p">(</span><span class="n">Car</span><span class="p">::</span><span class="n">getInsurance</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">Insurance</span><span class="p">::</span><span class="n">getName</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">.</span><span class="na">orElse</span><span class="p">(</span><span class="s">&#34;Unknown&#34;</span><span class="p">);</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="默认行为及解引用optional对象"><span class="section-num">4.3.2</span> 默认行为及解引用Optional对象</h4>
-<p>除了使用<code>Stream</code>来消费<code>Optional</code>对象,
-还可以使用解引用读取<code>Optional</code>实例中的变量值以及定义默认行为,
+<p>除了使用=Stream=来消费=Optional=对象,
+还可以使用解引用读取=Optional=实例中的变量值以及定义默认行为,
 具体函数说明如下:</p>
 <ol>
-<li><code>get()</code>是这些方法中最简单但又最不安全的方法. 如果变量存在,
-它直接返回封闭的变量值. 否则就抛出一个<code>NoSuchElementException</code>异常.
-所以, 除非是非常确定<code>Optional</code>变量一定包含值,
+<li>=get()=是这些方法中最简单但又最不安全的方法. 如果变量存在,
+它直接返回封闭的变量值. 否则就抛出一个=NoSuchElementException=异常.
+所以, 除非是非常确定=Optional=变量一定包含值,
 否则使用这个函数就相当容易踩坑. 此外,
-使用这个函数和直接进行<code>null</code>检查差别并不大.</li>
+使用这个函数和直接进行=null=检查差别并不大.</li>
 <li><code>orElse(T other)</code>
-该函数允许在<code>Optional</code>对象不存在的时候提供一个默认值(也是我个人最常用的使用方式之一)</li>
-<li><code>orElseGet(Supplier&lt;? extends T&gt; other)</code>是<code>orElse</code>函数的延迟调用版,
-<code>Supplier</code>方法只有在<code>Optional</code>对象不含值的时候才执行.
+该函数允许在=Optional=对象不存在的时候提供一个默认值(也是我个人最常用的使用方式之一)</li>
+<li>=orElseGet(Supplier&lt;? extends T&gt; other)=是=orElse=函数的延迟调用版,
+=Supplier=方法只有在=Optional=对象不含值的时候才执行.
 如果创建默认值是件耗时操作, 那么可以使用这种方式来提升性能,
-又或者某个函数仅在<code>Optional</code>为空的时候才调用, 也可以使用这种方式</li>
+又或者某个函数仅在=Optional=为空的时候才调用, 也可以使用这种方式</li>
 <li><code>orElseThrow(Supplier&lt;? extends X&gt; exceptionSupplier)</code>
-和<code>get</code>方法非常类似, 这两个函数都会在<code>Optional</code>对象为空时, 抛出异常,
-但差别在于<code>orElseThrow</code>可以指定抛出的异常类型</li>
-<li><code>ifPresent(Consumer&lt;? super T&gt;)</code>和<code>orElseGet</code>函数类似,
+和=get=方法非常类似, 这两个函数都会在=Optional=对象为空时, 抛出异常,
+但差别在于=orElseThrow=可以指定抛出的异常类型</li>
+<li>=ifPresent(Consumer&lt;? super T&gt;)=和=orElseGet=函数类似,
 可以在变量存在的时候执行传入的函数, 否则就不进行任何操作.</li>
 </ol>
 <h4 id="optional-实战示例"><span class="section-num">4.3.3</span> Optional 实战示例</h4>
-<p>在啰啰嗦嗦介绍了一系列<code>Optional</code>的概念之后,
-是时候来看一下<code>Option</code>的实例了. 现存的Java
+<p>在啰啰嗦嗦介绍了一系列=Optional=的概念之后,
+是时候来看一下=Option=的实例了. 现存的Java
 API几乎都是通过返回一个null的方式表示所需的值的缺失,
 或者由于某些原因计算无法得到所需的值.</p>
-<p>在上文, 我们已经给<code>null</code>盖棺定论了, <code>null</code>是有坑的, 甚至是有害的,
-所以要尽量少用<code>null</code>. 而现存的海量Java API都已经使用<code>null</code>作为返回结果,
-我们没可能把这些API都重构成返回一个<code>Optional</code>对象的, 但眼看着<code>Optional</code>这样一个设计更完善无法在已有的Java API中使用未免令人心有不甘.</p>
-<p>现实中, 可能我们无法修改这些API的签名, 但是我们却可以很轻易地用<code>Optional</code>对象对这些API的返回值进行封装.
-现在还是用熟悉的<code>Map</code>举例, 假设有一个<code>Map&lt;String, Object&gt;</code>的对象, 在查询<code>key</code>对应的<code>value</code>时, 如果<code>value</code>不存在,
-那么调用<code>Map.get(key)</code>就会返回一个<code>null</code>:</p>
+<p>在上文, 我们已经给=null=盖棺定论了, <code>null=是有坑的, 甚至是有害的, 所以要尽量少用=null</code>. 而现存的海量Java API都已经使用=null=作为返回结果,
+我们没可能把这些API都重构成返回一个=Optional=对象的, 但眼看着=Optional=这样一个设计更完善无法在已有的Java API中使用未免令人心有不甘.</p>
+<p>现实中, 可能我们无法修改这些API的签名, 但是我们却可以很轻易地用=Optional=对象对这些API的返回值进行封装.
+现在还是用熟悉的=Map=举例, 假设有一个=Map&lt;String, Object&gt;=的对象, 在查询=key=对应的=value=时, 如果=value=不存在,
+那么调用=Map.get(key)=就会返回一个=null=:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -2114,8 +2108,8 @@ API几乎都是通过返回一个null的方式表示所需的值的缺失,
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Object</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">map</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">key</span><span class="p">);</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>现在, 每次使用<code>value</code>都需要进行空指针判断, 着实是太繁琐.
-为了解决这个问题, 可以使用<code>Optional.ofNullable</code>函数进行优化:</p>
+</div><p>现在, 每次使用=value=都需要进行空指针判断, 着实是太繁琐.
+为了解决这个问题, 可以使用=Optional.ofNullable=函数进行优化:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -2128,13 +2122,13 @@ API几乎都是通过返回一个null的方式表示所需的值的缺失,
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">String</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Optional</span><span class="p">.</span><span class="na">ofNullable</span><span class="p">(</span><span class="n">map</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&#34;foo&#34;</span><span class="p">)).</span><span class="na">map</span><span class="p">(</span><span class="n">Object</span><span class="p">::</span><span class="n">toString</span><span class="p">).</span><span class="na">orElse</span><span class="p">(</span><span class="s">&#34;helloworld&#34;</span><span class="p">);</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>这样, 每次使用<code>value</code>都不会再有<code>NullPointException</code>的忧虑.</p>
+</div><p>这样, 每次使用=value=都不会再有=NullPointException=的忧虑.</p>
 <h2 id="结语"><span class="section-num">5</span> 结语</h2>
 <p>本文最开始只是想阐述Guava类库使用空指针和避免使用空指针的设计理念,
-只是因为Guava大部分类库都是不支持<code>null</code>,
-因此使用Guava自家的<code>Optional</code>类来代替<code>null</code>的大部分应用场景,
-而Guava自家的<code>Optional</code>无可避免地被JDK的<code>Optional</code>取代,</p>
-<p>所以本文大部份的内容也变成对JDK的<code>Optional</code>的探讨.
+只是因为Guava大部分类库都是不支持=null=,
+因此使用Guava自家的=Optional=类来代替=null=的大部分应用场景,
+而Guava自家的=Optional=无可避免地被JDK的=Optional=取代,</p>
+<p>所以本文大部份的内容也变成对JDK的=Optional=的探讨.
 相信下篇文章会有所改观, 总不可能Guava所有的工具类, 都有JDK对应的竞品,
 如果真是这样的话, JDK应该改名为GDK :)</p>
 <h2 id="参考"><span class="section-num">6</span> 参考</h2>

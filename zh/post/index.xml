@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Mon, 30 Dec 2024 17:11:53 -0800</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jan 2025 21:10:06 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>编程十年的感悟</title>
@@ -246,7 +246,7 @@
     <item>
       <title>单独使用Emacs的Magit插件</title>
       <link>https://ramsayleung.github.io/zh/post/2024/%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8emacs%E7%9A%84magit%E6%8F%92%E4%BB%B6/</link>
-      <pubDate>Wed, 11 Dec 2024 16:00:00 +0800</pubDate>
+      <pubDate>Wed, 11 Dec 2024 16:00:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2024/%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8emacs%E7%9A%84magit%E6%8F%92%E4%BB%B6/</guid>
       <description>1 Emacs 与 Magit 不知不觉，我已经使用Emacs 快10年了，在我使用过的编辑器中，Emacs是扩展性最强的编辑器，毕竟Emacs是个披着编辑器外衣的L</description>
       <content:encoded><![CDATA[<h2 id="emacs-与-magit"><span class="section-num">1</span> Emacs 与 Magit</h2>
@@ -293,9 +293,9 @@
     </item>
     <item>
       <title>Rust通过Trait扩展已有类型</title>
-      <link>https://ramsayleung.github.io/zh/post/2024/rust%E7%94%A8trait%E6%89%A9%E5%B1%95%E5%B7%B2%E6%9C%89%E7%B1%BB%E5%9E%8B/</link>
-      <pubDate>Wed, 04 Dec 2024 18:04:00 +0800</pubDate>
-      <guid>https://ramsayleung.github.io/zh/post/2024/rust%E7%94%A8trait%E6%89%A9%E5%B1%95%E5%B7%B2%E6%9C%89%E7%B1%BB%E5%9E%8B/</guid>
+      <link>https://ramsayleung.github.io/zh/post/2024/rust%E9%80%9A%E8%BF%87trait%E6%89%A9%E5%B1%95%E5%B7%B2%E6%9C%89%E7%B1%BB%E5%9E%8B/</link>
+      <pubDate>Wed, 04 Dec 2024 18:04:00 -0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2024/rust%E9%80%9A%E8%BF%87trait%E6%89%A9%E5%B1%95%E5%B7%B2%E6%9C%89%E7%B1%BB%E5%9E%8B/</guid>
       <description>1 Swift extension 可扩展性是一个语言非常关键的特性，以Swift 为例，它有一个相当好用的特性，名为 extension, 它可以非常便利地扩展已有的类型, 例如给已有类型增加 computed</description>
       <content:encoded><![CDATA[<h2 id="swift-extension"><span class="section-num">1</span> Swift extension</h2>
 <p>可扩展性是一个语言非常关键的特性，以Swift 为例，它有一个相当好用的特性，名为 <a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/extensions/">extension</a>, 它可以非常便利地扩展已有的类型, 例如给已有类型增加 computed property, 实例方法, 新增构造器又或是实现新的 Protocol.</p>
@@ -584,7 +584,7 @@
     <item>
       <title>Hugo评论系统自适应博客主题: 支持dark与light theme</title>
       <link>https://ramsayleung.github.io/zh/post/2024/hugo%E8%AF%84%E8%AE%BA%E7%BB%84%E4%BB%B6%E8%87%AA%E9%80%82%E5%BA%94%E5%8D%9A%E5%AE%A2%E6%9A%97%E9%BB%91%E4%B8%BB%E9%A2%98/</link>
-      <pubDate>Wed, 04 Dec 2024 13:25:00 +0800</pubDate>
+      <pubDate>Wed, 04 Dec 2024 13:25:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2024/hugo%E8%AF%84%E8%AE%BA%E7%BB%84%E4%BB%B6%E8%87%AA%E9%80%82%E5%BA%94%E5%8D%9A%E5%AE%A2%E6%9A%97%E9%BB%91%E4%B8%BB%E9%A2%98/</guid>
       <description>1 问题 评论系统是博客的关键组件，Hugo 支持若干个评论系统，包括流行的 Disqus, 基于 GitHub 的 Giscus 和 Utteranc, 以及其他评论系统 我博客使用的评论系统是 Utteranc, 主题是 PaperMod, PaperMod 支持</description>
       <content:encoded><![CDATA[<h2 id="问题"><span class="section-num">1</span> 问题</h2>
@@ -710,7 +710,7 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">loadUtterances</span><span class="p">(</span><span class="nx">darkMode</span><span class="o">=</span><span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">commentContainer</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;comments-giscus&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">commentContainer</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;comments-utteranc&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">commentContainer</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="nx">commentContainer</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 </span></span><span class="line"><span class="cl">        <span class="kr">const</span> <span class="nx">commentScript</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&#34;script&#34;</span><span class="p">);</span>
@@ -1862,7 +1862,7 @@
 </div>
 </div><p>但是这样的做法一般是不推荐的，Best Practice是一个 test case 只测一种情况，因为如果一个 test case 包含多个测试条件，如果 test case fail 了，那么不看源码或者堆栈，一般还看不出是什么 case 失败了，不好排查。</p>
 <h3 id="多个-test-case"><span class="section-num">2.2</span> 多个 test case</h3>
-<p>推荐做法就是每个测试条件定个单独的 test case。</p>
+<p>推荐做法就是每个测试条件一个单独的 test case。</p>
 <p>另外我们通过test case发现上面的代码没有处理异常情况，我们现在要优化下我们的代码，增加异常处理逻辑(这个就是TDD所推崇的开发哲学, test case 先行，通过test case发现问题，让test case fail掉，然后修正业务逻辑，test case再运行通过).</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">

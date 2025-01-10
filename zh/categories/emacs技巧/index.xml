@@ -1,0 +1,1014 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Emacs技巧 on 自由庄园</title>
+    <link>https://ramsayleung.github.io/zh/categories/emacs%E6%8A%80%E5%B7%A7/</link>
+    <description>Recent content in Emacs技巧 on 自由庄园</description>
+    <image>
+      <title>自由庄园</title>
+      <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- 0.120.4</generator>
+    <language>zh</language>
+    <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
+    <lastBuildDate>Thu, 09 Jan 2025 19:18:24 -0800</lastBuildDate>
+    <atom:link href="https://ramsayleung.github.io/zh/categories/emacs%E6%8A%80%E5%B7%A7/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>单独使用Emacs的Magit插件</title>
+      <link>https://ramsayleung.github.io/zh/post/2024/%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8emacs%E7%9A%84magit%E6%8F%92%E4%BB%B6/</link>
+      <pubDate>Wed, 11 Dec 2024 16:00:00 -0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2024/%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8emacs%E7%9A%84magit%E6%8F%92%E4%BB%B6/</guid>
+      <description>1 Emacs 与 Magit 不知不觉，我已经使用Emacs 快10年了，在我使用过的编辑器中，Emacs是扩展性最强的编辑器，毕竟Emacs是个披着编辑器外衣的L</description>
+      <content:encoded><![CDATA[<h2 id="emacs-与-magit"><span class="section-num">1</span> Emacs 与 Magit</h2>
+<p>不知不觉，我已经使用Emacs 快10年了，在我使用过的编辑器中，Emacs是扩展性最强的编辑器，毕竟Emacs是个披着编辑器外衣的Lisp虚拟机。</p>
+<p>在Emacs无所不能的扩展性之下，诞生了非常多强大的插件，
+也让Emacs有了「伪装成操作系统的编辑器」的美名，而Emacs公认的杀手锏插件有两个，一个是 <a href="https://orgmode.org/">org-mode</a>，另一个是 <a href="https://magit.vc/">magit</a>. (我个人觉得还有个 <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html">dired</a>)</p>
+<p>Orgmode是类似Markdown，与Emacs深度绑定优化的标记语言，使用Emacs来编写org-mode 文档就有下笔有神，文思泉涌，如丝般顺滑(这篇文章也是用org-mode写的)。</p>
+<p>因为org-mode 与Emacs 深度结合，自然无法脱离Emacs单独使用，而其他编辑器模仿org-mode 开发的插件，如 <a href="https://github.com/jceb/vim-orgmode">vim-orgmode</a>, <a href="https://github.com/nvim-orgmode/orgmode">nvim-orgmode</a> 和 <a href="https://github.com/vscode-org-mode/vscode-org-mode">vscode-orgmode</a>, 难免只得其形，未得其神，还不如用Markdown.</p>
+<p>而 Magit 是 Git的Emacs图形化客户端, 也是我用过的最好用的Git 客户端软件，既直观又易用(看看Emacs 道友们夸 Magit 的<a href="https://emacs-china.org/t/magit/22521/5">帖子</a>):</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/magit_dashboard.jpg"/> 
+</figure>
+
+<p>虽然我已经用了Emacs很多年，但是已经过了Live with Emacs的境界, 不会用Emacs处理所有事情, 比如用VSCode 写Rust, 用Intellij Idea写Java, 既然 Magit 那么好用，有没可能独立于Emacs使用呢?</p>
+<h2 id="emacs-daemon"><span class="section-num">2</span> Emacs daemon</h2>
+<p>作为无所不能的「操作系统」, Emacs 作为<a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Emacs-Server.html">server</a> 一直在后台运行，然后再使用 <code>emacsclient</code> 连接 server:</p>
+<p>前文提到, Emacs 是批着编辑器外衣的Lisp VM, 而 Magit 本质也只是一个 lisp function, 只要在启动emacsclient的时候，再调用 magit的函数, 那么就可以启动 Magit:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">magit</span><span class="o">=</span><span class="s2">&#34;emacsclient -nw -eval &#39;(magit-status)&#39;&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure>
+    <img loading="lazy" src="/ox-hugo/magit.gif"/> 
+</figure>
+
+<p>这样就可以在VSCode和Idea里面愉快地使用 magit了.</p>
+<h2 id="总结"><span class="section-num">3</span> 总结</h2>
+<p>在Emacs-China 论坛搜索Magit的时候, 发现了也有一个帖子讨论把 <a href="https://emacs-china.org/t/magit/25527/6">magit当作的单独的工具</a>, 没想到有个回复的思路和我一样，使用Emacs作为daemon 来启用.</p>
+<p>只是没有想到他更evil, 在Nvim 里面使用Magit, 我也学习一下 Nvim+Emacs 的组合 :)</p>
+<h2 id="参考"><span class="section-num">4</span> 参考</h2>
+<ul>
+<li><a href="https://orgmode.org/">https://orgmode.org/</a></li>
+<li><a href="https://magit.vc/">https://magit.vc/</a></li>
+<li><a href="https://emacs-china.org/t/magit/22521/5">https://emacs-china.org/t/magit/22521/5</a></li>
+<li><a href="https://emacs-china.org/t/magit/25527/6">https://emacs-china.org/t/magit/25527/6</a></li>
+<li><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Emacs-Server.html">https://www.gnu.org/software/emacs/manual/html_node/emacs/Emacs-Server.html</a></li>
+<li><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html">https://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html</a></li>
+</ul>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Emacs技巧分享: 使用eww打开在线org-mode文档</title>
+      <link>https://ramsayleung.github.io/zh/post/2023/emacs%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_%E4%BD%BF%E7%94%A8eww%E6%89%93%E5%BC%80%E5%9C%A8%E7%BA%BForg-mode%E6%96%87%E6%A1%A3/</link>
+      <pubDate>Sat, 04 Mar 2023 21:55:00 -0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2023/emacs%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_%E4%BD%BF%E7%94%A8eww%E6%89%93%E5%BC%80%E5%9C%A8%E7%BA%BForg-mode%E6%96%87%E6%A1%A3/</guid>
+      <description>1 技巧 对于使用org-mode 格式的文本，例如Emacs官方 tree-sitter 的使用教程 在线阅读不是很易读，相当于人脑解析 org-mode. 我的个人习惯是使用 eww 浏览器来阅读</description>
+      <content:encoded><![CDATA[<h2 id="技巧"><span class="section-num">1</span> 技巧</h2>
+<p>对于使用org-mode 格式的文本，例如Emacs官方<a href="https://git.savannah.gnu.org/cgit/emacs.git/plain/admin/notes/tree-sitter/starter-guide?h=feature/tree-sitter"> tree-sitter 的使用教程</a></p>
+<p>在线阅读不是很易读，相当于人脑解析 <code>org-mode</code>. 我的个人习惯是使用 <code>eww</code> 浏览器来阅读:</p>
+<figure><a href="/ox-hugo/tree-sitter-doc.png">
+    <img loading="lazy" src="/ox-hugo/tree-sitter-doc.png"/> </a>
+</figure>
+
+<ol>
+<li>复制网页链接</li>
+<li>使用 <code>eww</code> 打开链接</li>
+<li><code>major-mode</code> 切换到 <code>org-mode</code>, 就可以愉快地使用 Emacs 来阅读 <code>org-mode</code> 文本.</li>
+</ol>
+<figure><a href="/ox-hugo/eww.gif">
+    <img loading="lazy" src="/ox-hugo/eww.gif"/> </a>
+</figure>
+
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Emacs 技巧分享：dired-mode 批量修改文件名</title>
+      <link>https://ramsayleung.github.io/zh/post/2023/%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_dired%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8D/</link>
+      <pubDate>Sat, 04 Mar 2023 21:34:00 -0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2023/%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_dired%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8D/</guid>
+      <description>1 技巧 分享一下平时使用 dired-mode 批量修改文件名的技巧: C-x C-f 指定的文件目录，进入 dired-mode C-x C-q dired-toggle-read-only: Edit Dired buffer with Wdired. 批量修改，手段有 使用 query-replace 批量修改文件名 使用evil的多</description>
+      <content:encoded><![CDATA[<h2 id="技巧"><span class="section-num">1</span> 技巧</h2>
+<p>分享一下平时使用 <code>dired-mode</code> 批量修改文件名的技巧:</p>
+<ol>
+<li><code>C-x C-f</code> 指定的文件目录，进入 <code>dired-mode</code></li>
+<li><code>C-x C-q</code> <code>dired-toggle-read-only</code>: Edit Dired buffer with Wdired.</li>
+<li>批量修改，手段有
+<ul>
+<li>使用 <code>query-replace</code> 批量修改文件名</li>
+<li>使用evil的多行编辑模式</li>
+<li>使用 <code>rectangle-command</code>: <code>C-x r t</code> <code>string-rectangle</code></li>
+</ul>
+</li>
+<li><code>C-c C-c</code> 提交修改或 <code>C-c C-k</code> 放弃修改</li>
+</ol>
+<figure><a href="/ox-hugo/dired_rename_multi_files.gif">
+    <img loading="lazy" src="~/btsync/org/blog/2023/%e6%8a%80%e5%b7%a7%e5%88%86%e4%ba%ab-dired%e6%89%b9%e9%87%8f%e4%bf%ae%e6%94%b9%e6%96%87%e4%bb%b6%e5%90%8d/img/dired_rename_multi_files.gif"
+         alt="Figure 1: 使用 rectangle-command 进行批量修改"/> </a><figcaption>
+            <p><span class="figure-number">Figure 1: </span>使用 <code>rectangle-command</code> 进行批量修改</p>
+        </figcaption>
+</figure>
+
+<figure><a href="/ox-hugo/dired_rename_multi_files_2.gif">
+    <img loading="lazy" src="~/btsync/org/blog/2023/%e6%8a%80%e5%b7%a7%e5%88%86%e4%ba%ab-dired%e6%89%b9%e9%87%8f%e4%bf%ae%e6%94%b9%e6%96%87%e4%bb%b6%e5%90%8d/img/dired_rename_multi_files_2.gif"
+         alt="Figure 2: 使用 evil的多行编辑模式进行批量修改"/> </a><figcaption>
+            <p><span class="figure-number">Figure 2: </span>使用 evil的多行编辑模式进行批量修改</p>
+        </figcaption>
+</figure>
+
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Eshell实现fzf的历史命令搜索功能</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/search_eshell_history_like_fzf/</link>
+      <pubDate>Sun, 17 Dec 2017 15:46:00 -0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2017/search_eshell_history_like_fzf/</guid>
+      <description>1 前言 目标: 在=Eshell=中像在bash/zsh中使用=fzf=那般搜索历史命令 2 fzf 我的主力Shell 是Eshell, 但是平时我也会用Z</description>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
+<p>目标: 在=Eshell=中像在bash/zsh中使用=fzf=那般搜索历史命令</p>
+<h2 id="fzf"><span class="section-num">2</span> fzf</h2>
+<p>我的主力Shell 是Eshell, 但是平时我也会用Zsh, 而<a href="https://github.com/junegunn/fzf">fzf</a> 是一个非常好用的命令行工具，用了=fzf=搜索历史命令:</p>
+<figure>
+    <img loading="lazy" src="https://i.imgur.com/pPMxauw.gif"
+         alt="Figure 1: fzf"/> <figcaption>
+            <p><span class="figure-number">Figure 1: </span>fzf</p>
+        </figcaption>
+</figure>
+
+<h2 id="eshell"><span class="section-num">3</span> Eshell</h2>
+<p>我日常的操作基本都是在 Eshell 上面进行的，不过 Eshell 是没办法直接像 Bash 那样调用 =fzf=来查找命令历史的，所以我希望把这个功能迁移到到Eshell 上面来。</p>
+<p>我在 Emacs 使用的补全框架是 <code>Ivy/Counsel</code>,它有一个 <code>counsel-esh-history=的命令可以使用 =Ivy</code> 来搜索命令，但是没办法使用用户已经输入的内容来过滤命令，所以我就在自己折腾了一个</p>
+<p><code>counsel-esh-history</code> 命令。效果如下：</p>
+<figure>
+    <img loading="lazy" src="https://i.imgur.com/3tvGDzW.gif"
+         alt="Figure 2: 感觉很不错嘛 :)"/> <figcaption>
+            <p><span class="figure-number">Figure 2: </span>感觉很不错嘛 :)</p>
+        </figcaption>
+</figure>
+
+<h2 id="源代码"><span class="section-num">4</span> 源代码</h2>
+<p>得益于 =Ivy=强大的内置函数, 功能实现起来相当便利，完整代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lisp" data-lang="lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">samray/esh-history</span> <span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="s">&#34;Interactive search eshell history.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;em-hist</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nv">save-excursion</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">start-pos</span> <span class="p">(</span><span class="nv">eshell-bol</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">           <span class="p">(</span><span class="nv">end-pos</span> <span class="p">(</span><span class="nv">point-at-eol</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">           <span class="p">(</span><span class="nv">input</span> <span class="p">(</span><span class="nv">buffer-substring-no-properties</span> <span class="nv">start-pos</span> <span class="nv">end-pos</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">command</span> <span class="p">(</span><span class="nv">ivy-read</span> <span class="s">&#34;Command: &#34;</span>
+</span></span><span class="line"><span class="cl">                                <span class="p">(</span><span class="nv">delete-dups</span>
+</span></span><span class="line"><span class="cl">                                 <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nf">&gt;</span> <span class="p">(</span><span class="nv">ring-size</span> <span class="nv">eshell-history-ring</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                                   <span class="p">(</span><span class="nv">ring-elements</span> <span class="nv">eshell-history-ring</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">                                <span class="ss">:preselect</span> <span class="nv">input</span>
+</span></span><span class="line"><span class="cl">                                <span class="ss">:action</span> <span class="nf">#&#39;</span><span class="nv">ivy-completion-in-region-action</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">             <span class="p">(</span><span class="nv">cursor-move</span> <span class="p">(</span><span class="nf">length</span> <span class="nv">command</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nv">kill-region</span> <span class="p">(</span><span class="nf">+</span> <span class="nv">start-pos</span> <span class="nv">cursor-move</span><span class="p">)</span> <span class="p">(</span><span class="nf">+</span> <span class="nv">end-pos</span> <span class="nv">cursor-move</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)))</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">;; move cursor to eol</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nv">end-of-line</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>代码不是很复杂, 主要功能是获取用户输入的命令, 然后把所有的历史命令读取出来,最后使用=ivy-read=内置的=ivy-completion-in-region-action=功能, 用用户的输入的命令与历史命令进行匹配, 由用户选择最终的命令.</p>
+<p>=ivy-read=是Emacs内置=completing-read=的函数的强化, 关于=ivy-read=具体用法可以参考文档<a href="https://oremacs.com/swiper/#getting-started">ivy-read</a>.</p>
+<h2 id="总结"><span class="section-num">5</span> 总结</h2>
+<p>最后, 我也顺便把代码分享到 <a href="https://www.reddit.com/r/emacs/comments/7k54px/snippet_share_make_eshell_search_command_history/">Emacs社区</a>, 而 <a href="https://github.com/manateelazycat">manateelazycat</a>也把这段代码的功能加入到<a href="https://github.com/manateelazycat/aweshell/commit/ecaddac98b87f881910dbee8b51a98f00b6d9d5d">aweshell</a>, Oh yeah !</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Eshell提示符优化</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/tweak_eshell_prompt/</link>
+      <pubDate>Wed, 07 Jun 2017 00:00:00 -0700</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2017/tweak_eshell_prompt/</guid>
+      <description>Tweak with Emacs shell prompt</description>
+      <content:encoded><![CDATA[<h2 id="发现帅气的提示符"><span class="section-num">1</span> 发现帅气的提示符</h2>
+<p>近日，我在浏览 <a href="https://www.reddit.com/r/emacs/comments/6f0rkz/my_fancy_eshell_prompt/">Reddit</a> 的时候，发现了一位 Emacs 用户把他的 Eshell 提示符修改得很帅，如图：</p>
+<p><a href="/ox-hugo/eshell_prompt.png"><img loading="lazy" src="/ox-hugo/eshell_prompt.png" alt=""  />
+</a>
+本着拿来主义的想法，我就直接把这位小哥的代码添加到了我的配置文件里面：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">setq</span> <span class="nv">eshell-prompt-function</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nb">lambda</span> <span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nf">concat</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;┌─[&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nf">user-login-name</span><span class="p">)</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;red&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;@&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nf">system-name</span><span class="p">)</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;blue&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;]──[&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nf">format-time-string</span> <span class="s">&#34;%H:%M&#34;</span> <span class="p">(</span><span class="nf">current-time</span><span class="p">))</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;yellow&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;]──[&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nv">eshell/pwd</span><span class="p">))</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;white&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;]\n&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;└─&gt;&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">=</span> <span class="p">(</span><span class="nf">user-uid</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="s">&#34; # &#34;</span> <span class="s">&#34; $ &#34;</span><span class="p">)</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">)))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>效果自然是很 sexy.</p>
+<h2 id="与原有提示符冲突"><span class="section-num">2</span> 与原有提示符冲突</h2>
+<p>但是我原来使用的 <a href="https://github.com/kaihaosw/eshell-prompt-extras">eshell-prompt-extra</a> 的效果就被覆盖了。而 <code>eshell_prompt_extra</code> 可以提供的额外信息非常多，包括：git, python virtualenv, 以及远程登录时的主机信息，如图：</p>
+<figure><a href="/ox-hugo/eshell_extra_prompt.png">
+    <img loading="lazy" src="/ox-hugo/eshell_extra_prompt.png"/> </a>
+</figure>
+
+<p>如果用上这个 sexy 的提示符，eshell-extra-prompt 的额外的信息就不能显示，感觉好亏:(</p>
+<p>鱼和熊掌我都想要，似乎太贪心了？怎么办，自己去修改 <code>eshell_prompt_extra</code> 的<a href="https://github.com/kaihaosw/eshell-prompt-extras/blob/master/eshell-prompt-extras.el">源码</a> :).</p>
+<h2 id="折腾源码"><span class="section-num">3</span> 折腾源码</h2>
+<p><code>eshell_prompt_extra</code> 这个包注释加上全部代码也只是 400 行，代码也写得很清晰. 其中大部份是辅助函数，而 Eshell 的提示符效果是通过两个 eshell-theme 函数来实现的。use-package 的配置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">eshell-prompt-extras</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:ensure</span> <span class="no">t</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:load-path</span> <span class="s">&#34;~/Code/github/eshell-prompt-extras&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:config</span> <span class="p">(</span><span class="nb">progn</span>
+</span></span><span class="line"><span class="cl">            <span class="p">(</span><span class="nb">with-eval-after-load</span> <span class="s">&#34;esh-opt&#34;</span>
+</span></span><span class="line"><span class="cl">              <span class="p">(</span><span class="nb">use-package</span> <span class="nv">virtualenvwrapper</span> <span class="nb">:ensure</span> <span class="no">t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">              <span class="p">(</span><span class="nv">venv-initialize-eshell</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">              <span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;epe-theme-lambda</span> <span class="s">&#34;eshell-prompt-extras&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">              <span class="p">(</span><span class="nb">setq</span> <span class="nv">eshell-highlight-prompt</span> <span class="no">nil</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">eshell-prompt-function</span> <span class="ss">&#39;epe-theme-lambda</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>而 <code>epe-theme-lambda</code> 的代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">epe-theme-lambda</span> <span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="s">&#34;A eshell-prompt lambda theme.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">setq</span> <span class="nv">eshell-prompt-regexp</span> <span class="s">&#34;^[^#\nλ]*[#λ] &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nf">concat</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nv">epe-remote-p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">     <span class="p">(</span><span class="nv">epe-colorize-with-face</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nv">epe-remote-user</span><span class="p">)</span> <span class="s">&#34;@&#34;</span> <span class="p">(</span><span class="nv">epe-remote-host</span><span class="p">)</span> <span class="s">&#34; &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="ss">&#39;epe-remote-face</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nb">when</span> <span class="nv">epe-show-python-info</span>
+</span></span><span class="line"><span class="cl">     <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nf">fboundp</span> <span class="ss">&#39;epe-venv-p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">       <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nv">epe-venv-p</span><span class="p">)</span> <span class="nv">venv-current-name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nv">epe-colorize-with-face</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;(&#34;</span> <span class="nv">venv-current-name</span> <span class="s">&#34;) &#34;</span><span class="p">)</span> <span class="ss">&#39;epe-venv-face</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nb">let</span> <span class="p">((</span><span class="nv">f</span> <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nf">eq</span> <span class="nv">epe-path-style</span> <span class="ss">&#39;fish</span><span class="p">)</span> <span class="ss">&#39;epe-fish-path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                  <span class="p">((</span><span class="nf">eq</span> <span class="nv">epe-path-style</span> <span class="ss">&#39;single</span><span class="p">)</span> <span class="ss">&#39;epe-abbrev-dir-name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                  <span class="p">((</span><span class="nf">eq</span> <span class="nv">epe-path-style</span> <span class="ss">&#39;full</span><span class="p">)</span> <span class="ss">&#39;abbreviate-file-name</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl">     <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nf">funcall</span> <span class="nv">f</span> <span class="p">(</span><span class="nv">eshell/pwd</span><span class="p">))</span> <span class="ss">&#39;epe-dir-face</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nv">epe-git-p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">     <span class="p">(</span><span class="nf">concat</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;:&#34;</span> <span class="ss">&#39;epe-dir-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">epe-colorize-with-face</span>
+</span></span><span class="line"><span class="cl">       <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nv">epe-git-branch</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nv">epe-git-dirty</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nv">epe-git-untracked</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nb">let</span> <span class="p">((</span><span class="nv">unpushed</span> <span class="p">(</span><span class="nv">epe-git-unpushed-number</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">                 <span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nf">=</span> <span class="nv">unpushed</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                   <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;:&#34;</span> <span class="p">(</span><span class="nf">number-to-string</span> <span class="nv">unpushed</span><span class="p">)))))</span>
+</span></span><span class="line"><span class="cl">       <span class="ss">&#39;epe-git-face</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34; λ&#34;</span> <span class="ss">&#39;epe-symbol-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">=</span> <span class="p">(</span><span class="nf">user-uid</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="s">&#34;#&#34;</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                           <span class="ss">&#39;epe-sudo-symbol-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="s">&#34; &#34;</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>代码主要逻辑是调用之前定义的辅助函数，判断是否需要显示 git, python, 远程主机等信息，然后对相应的提示符进行拼接。</p>
+<p>而其中出现得比较频繁的 <code>epe-colorize-with-face</code> 就是作者定义的一个宏(macro), 用来显示字符串以及对应的 face(其实就是不同的颜色啦). 看懂了代码就好办了，现在就可以自己添加一个 Eshell 主题。</p>
+<h3 id="定义所需的-face"><span class="section-num">3.1</span> 定义所需的 face</h3>
+<p>因为我需要显示的 face(颜色), <code>eshell-extra-prompt</code> 并没有定义，所以就只好自己动手啦：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defface</span> <span class="nv">epe-pipeline-delimiter-face</span>
+</span></span><span class="line"><span class="cl">  <span class="o">&#39;</span><span class="p">((</span><span class="no">t</span> <span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="s">&#34;Face for pipeline theme delimiter.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:group</span> <span class="ss">&#39;epe</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defface</span> <span class="nv">epe-pipeline-user-face</span>
+</span></span><span class="line"><span class="cl">  <span class="o">&#39;</span><span class="p">((</span><span class="no">t</span> <span class="nb">:foreground</span> <span class="s">&#34;red&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="s">&#34;Face for user in pipeline theme.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:group</span> <span class="ss">&#39;epe</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defface</span> <span class="nv">epe-pipeline-host-face</span>
+</span></span><span class="line"><span class="cl">  <span class="o">&#39;</span><span class="p">((</span><span class="no">t</span> <span class="nb">:foreground</span> <span class="s">&#34;blue&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="s">&#34;Face for host in pipeline theme.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:group</span> <span class="ss">&#39;epe</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defface</span> <span class="nv">epe-pipeline-time-face</span>
+</span></span><span class="line"><span class="cl">  <span class="o">&#39;</span><span class="p">((</span><span class="no">t</span> <span class="nb">:foreground</span> <span class="s">&#34;yellow&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="s">&#34;Face for time in pipeline theme.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:group</span> <span class="ss">&#39;epe</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后就是按着原有的 Eshell 提示符来组装一个新的 Eshell 主题了，然后把这个主题定义成 pipeline (其实是我自己也没想出比较新颖的名字啦):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">epe-theme-pipeline</span> <span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="s">&#34;A eshell-prompt theme with full path, smiliar to oh-my-zsh theme.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">setq</span> <span class="nv">eshell-prompt-regexp</span> <span class="s">&#34;^[^#\nλ]* λ[#]* &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nf">concat</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nv">epe-remote-p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">       <span class="p">(</span><span class="nb">progn</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">concat</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;┌─[&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nv">epe-remote-user</span><span class="p">)</span> <span class="ss">&#39;epe-pipeline-user-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;@&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nv">epe-remote-host</span><span class="p">)</span> <span class="ss">&#39;epe-pipeline-host-face</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">)</span>
+</span></span><span class="line"><span class="cl">     <span class="p">(</span><span class="nb">progn</span>
+</span></span><span class="line"><span class="cl">       <span class="p">(</span><span class="nf">concat</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;┌─[&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nf">user-login-name</span><span class="p">)</span> <span class="ss">&#39;epe-pipeline-user-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;@&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nf">system-name</span><span class="p">)</span> <span class="ss">&#39;epe-pipeline-host-face</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">     <span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nf">concat</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;]──[&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nf">format-time-string</span> <span class="s">&#34;%H:%M&#34;</span> <span class="p">(</span><span class="nf">current-time</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">                            <span class="ss">&#39;epe-pipeline-time-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;]──[&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nv">eshell/pwd</span><span class="p">))</span> <span class="ss">&#39;epe-dir-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">epe-colorize-with-face</span>  <span class="s">&#34;]\n&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;└─&gt;&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nb">when</span> <span class="nv">epe-show-python-info</span>
+</span></span><span class="line"><span class="cl">     <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nf">fboundp</span> <span class="ss">&#39;epe-venv-p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">       <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nv">epe-venv-p</span><span class="p">)</span> <span class="nv">venv-current-name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nv">epe-colorize-with-face</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;(&#34;</span> <span class="nv">venv-current-name</span> <span class="s">&#34;) &#34;</span><span class="p">)</span> <span class="ss">&#39;epe-venv-face</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nv">epe-git-p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">     <span class="p">(</span><span class="nf">concat</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;:&#34;</span> <span class="ss">&#39;epe-dir-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">epe-colorize-with-face</span>
+</span></span><span class="line"><span class="cl">       <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nv">epe-git-branch</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nv">epe-git-dirty</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nv">epe-git-untracked</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nb">let</span> <span class="p">((</span><span class="nv">unpushed</span> <span class="p">(</span><span class="nv">epe-git-unpushed-number</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">                 <span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nf">=</span> <span class="nv">unpushed</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                   <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;:&#34;</span> <span class="p">(</span><span class="nf">number-to-string</span> <span class="nv">unpushed</span><span class="p">)))))</span>
+</span></span><span class="line"><span class="cl">       <span class="ss">&#39;epe-git-face</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34; λ&#34;</span> <span class="ss">&#39;epe-symbol-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">=</span> <span class="p">(</span><span class="nf">user-uid</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="s">&#34;#&#34;</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                           <span class="ss">&#39;epe-sudo-symbol-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="s">&#34; &#34;</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="总结"><span class="section-num">4</span> 总结</h2>
+<p>这样一个新的 Eshell 主题就完工了，然后我给 <code>eshell-extra-prompt</code> 发了一个<a href="https://github.com/kaihaosw/eshell-prompt-extras/pull/16">Pull Request</a>, 最终效果如下：</p>
+<figure><a href="/ox-hugo/epe.png">
+    <img loading="lazy" src="/ox-hugo/epe.png"/> </a>
+</figure>
+
+<p>Enjoy Emacs, Enjor Tweaking :)</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Shell神器fasd与Eshell的不期而遇</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/fasd-meet-eshell/</link>
+      <pubDate>Thu, 02 Mar 2017 00:00:00 -0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2017/fasd-meet-eshell/</guid>
+      <description>An introduction about tweaking eshell with fasd</description>
+      <content:encoded><![CDATA[<blockquote>
+<p>fasd - quick access to files and directory</p>
+</blockquote>
+<p>之前一位 Windows 用户看到我在 Shell 下面的操作，他很奇怪，觉得明明已经有图形化界面，为什么还要用这种命令行呢，直接用鼠标点击不就很好了么。</p>
+<p>我觉得很难直接跟他解释，因为他没有用过Linux/Unix,完全不熟悉命令行，不知道其强大之处，其高效率是图形化界面完全无法比拟的(当然，命令行的学习成本和学习曲线肯定比图型化界面高), So I live in terminal.</p>
+<p>而今天我要介绍的神器 fasd 就是可以让命令行操作变得更加高效</p>
+<h2 id="fasd"><span class="section-num">1</span> Fasd</h2>
+<p>在 Shell 下面有非常多的命令操作是与文件和目录相关的，如果你要进入到另外一个目 录你可以使用相对或者绝对路径来访问该目录，但是如果这是一个与当前目录不相关的目 录你就只能通过绝对路径来访问。</p>
+<p>以我自己的目录为例，当前目录是 <strong><em>home/samray</em>.emacs.d/elisp/</strong> ,我希望访问 <strong>Document</strong> 目录下一个的子目录 <strong>Python</strong>, 我可以通过下面的命令来访问：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> ~/Document/Programming/Python
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> /home/samray/Document/Programming/Python
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这就是我需要的命令，虽然可以通过 <strong>tab</strong> 进行目录名的补全，但是我还是觉得要输入的东西太多了(正如 Larry Wall 所说，懒惰是程序员的美德). 然后，我发现了 <a href="https://github.com/clvv/fasd">Fasd </a>这个神器。它可以让我只输入 <strong>Python</strong> 就进入到我想访问的 <strong>Python</strong> 目录，</p>
+<p>神奇吧！:)</p>
+<hr>
+<p>Fasd以访问的频繁程度和最近是否有访问对文件和目录分配优先级，然后通过判断已访问的文件以及其优先级来切换目录或者打开文件，所以如果你之前已经访问过某个目录.</p>
+<p>那么 你很容易就可以切换到那个目录</p>
+<h3 id="常用选项"><span class="section-num">1.1</span> 常用选项</h3>
+<ul>
+<li>
+<p><strong>-a(any)</strong>: 匹配文件和目录</p>
+</li>
+<li>
+<p><strong>-i(interactive)</strong>: 以交互的方式选择文件或者目录</p>
+</li>
+<li>
+<p><strong>-s(show/search)</strong>: 按照优先级展示文件或者目录</p>
+</li>
+<li>
+<p><strong>-e &lt;cmd&gt;</strong>:对匹配的文件调用命令&lt;cmd&gt;</p>
+</li>
+<li>
+<p><strong>-d</strong>:只匹配目录</p>
+</li>
+<li>
+<p><strong>-f</strong>:只匹配文件
+Fasd 文档还建议你为 fasd的命令选项设置别名</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">a</span><span class="o">=</span><span class="s1">&#39;fasd -a&#39;</span>        <span class="c1"># any</span>
+</span></span><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">s</span><span class="o">=</span><span class="s1">&#39;fasd -si&#39;</span>       <span class="c1"># show / search / select</span>
+</span></span><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">d</span><span class="o">=</span><span class="s1">&#39;fasd -d&#39;</span>        <span class="c1"># directory</span>
+</span></span><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">f</span><span class="o">=</span><span class="s1">&#39;fasd -f&#39;</span>        <span class="c1"># file</span>
+</span></span><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">sd</span><span class="o">=</span><span class="s1">&#39;fasd -sid&#39;</span>     <span class="c1"># interactive directory selection</span>
+</span></span><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">sf</span><span class="o">=</span><span class="s1">&#39;fasd -sif&#39;</span>     <span class="c1"># interactive file selection</span>
+</span></span><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">z</span><span class="o">=</span><span class="s1">&#39;fasd_cd -d&#39;</span>     <span class="c1"># cd, same functionality as j in autojump</span>
+</span></span><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">zz</span><span class="o">=</span><span class="s1">&#39;fasd_cd -d -i&#39;</span> <span class="c1"># cd with interactive selection</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样你就可以通过 <strong>z some-dir</strong> 直接进入到某个目录或者 <strong>zz some-dir</strong> 选择进入有多个匹配的特定目录。</p>
+<p>Fasd 还会判断应该显示所有的匹配选项或者是直接选择最佳匹配. 例如你也可以将fasd配合 <em>subshell</em> 使用，例如打开 <strong>foo</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">vim <span class="sb">`</span>f foo<span class="sb">`</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>又或者打开  <strong>/etc/rc.conf</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">vim <span class="sb">`</span>f rc conf<span class="sb">`</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="例子"><span class="section-num">1.2</span> 例子</h3>
+<p>你可以将fasd 配合正则表达式使用，例如列举以 <em>py</em> 结尾的最近访问的文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">f py$
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>又或者使用Emacs 打开最近频繁访问的文件 <em>bar</em></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">f -e emacs bar
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="fasd-plus-eshell"><span class="section-num">2</span> Fasd +Eshell</h2>
+<p>fasd 真的可以大幅度提高效率，但是我有点不太满意的是，我是个 Emacser, 我的操作基本是在 Emacs 里完成的，而我在 Emacs里面使用的 shell 是 Eshell,Eshell 似乎不能与 fasd 无缝结合，似乎可以折腾一下。</p>
+<hr>
+<p><strong>z</strong> 和 <strong>zz</strong> 命令是无法在Eshell 里面运行，因为 <strong>z</strong> 是 <strong>fasd_cd</strong> 的别名，而*fasd_cd* 是一个shell script 函数，Eshell无法运行该函数，代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">fasd_cd <span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="nv">$#</span> -le <span class="m">1</span> <span class="o">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        fasd <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">local</span> <span class="nv">_fasd_ret</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>fasd -e <span class="s1">&#39;printf %s&#39;</span> <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$_fasd_ret</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="k">return</span>
+</span></span><span class="line"><span class="cl">        <span class="o">[</span> -d <span class="s2">&#34;</span><span class="nv">$_fasd_ret</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="s2">&#34;</span><span class="nv">$_fasd_ret</span><span class="s2">&#34;</span> <span class="o">||</span> <span class="nb">printf</span> %s<span class="se">\n</span> <span class="s2">&#34;</span><span class="nv">$_fasd_ret</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Eshell无法运行该函数，因为Eshell文档的匮乏，我也不知道如何编写跟上面代码等价的 &ldquo;Eshell script&rdquo;,所以就用 elisp 写一段同样功能的函数好了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">samray/eshell-fasd-z</span> <span class="p">(</span><span class="kp">&amp;rest</span> <span class="nv">args</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="s">&#34;Use fasd to change directory more effectively by passing ARGS.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">setq</span> <span class="nv">args</span> <span class="p">(</span><span class="nv">eshell-flatten-list</span> <span class="nv">args</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">let*</span> <span class="p">((</span><span class="nv">fasd</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;fasd &#34;</span> <span class="p">(</span><span class="nf">car</span> <span class="nv">args</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nv">fasd-result</span> <span class="p">(</span><span class="nv">shell-command-to-string</span> <span class="nv">fasd</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nv">path</span> <span class="p">(</span><span class="nv">replace-regexp-in-string</span> <span class="s">&#34;\n$&#34;</span> <span class="s">&#34;&#34;</span> <span class="nv">fasd-result</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">eshell/cd</span> <span class="nv">path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">eshell/echo</span> <span class="nv">path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>函数功能很快就写好了，实现了 <strong>z</strong> 的功能，但是原来的代码一直不能正常运行，折腾了一个多小时都没解决，输出什么都正常，最后 debug 发现是因为显示的路径后面多了一个换行符即 <strong>/home/samray</strong> 变成了 <strong>/home/samray\n</strong>,而输出换行符又不会显示，真
+的坑。</p>
+<p>最后为命令赋予别名就可以像在 <strong>zsh</strong> 下那样工作了：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">alias</span> z <span class="s1">&#39;samray/shell-fasd-z $1&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<p>更多的用法就要查阅官方文档了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">man fasd
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Enjoy Emacs and Shell :)</p>
+<p>参考：
+<a href="https://github.com/clvv/fasd">https://github.com/clvv/fasd</a></p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>提高Emacs启动速度</title>
+      <link>https://ramsayleung.github.io/zh/post/2016/emacs_startup/</link>
+      <pubDate>Sat, 22 Oct 2016 00:00:00 -0700</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2016/emacs_startup/</guid>
+      <description>Tips to reduce emacs startup time</description>
+      <content:encoded><![CDATA[<p>之前看到个笑话：</p>
+<blockquote>
+<ul>
+<li>A: 在等待emacs 加载的时间里，你会干什么？</li>
+<li>B: 打开Vim,修改代码，保存，退出</li>
+</ul>
+</blockquote>
+<p>有时候，经常看到社区里面有人吐嘈Emacs 什么都好，就是启动时间太长了，其实是存在一些技巧来缩短加载时间的</p>
+<h2 id="技巧1"><span class="section-num">1</span> 技巧1</h2>
+<p>在你的 <code>.emacs</code> 或者相应的初始化文件里面添加如下代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="err">#</span> <span class="nv">Increase</span> <span class="nv">the</span> <span class="nv">garbage</span> <span class="nv">collection</span> <span class="nv">threshold</span> <span class="nv">to</span> <span class="mi">128</span> <span class="nv">MB</span> <span class="nv">to</span> <span class="nv">ease</span> <span class="nv">startup</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">setq</span> <span class="nv">gc-cons-threshold</span> <span class="p">(</span><span class="nf">*</span> <span class="mi">128</span> <span class="mi">1024</span> <span class="mi">1024</span> <span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="err">#</span> <span class="nv">your</span> <span class="nv">configuration</span> <span class="nv">code</span>
+</span></span><span class="line"><span class="cl"><span class="err">#</span> <span class="o">......</span>
+</span></span><span class="line"><span class="cl"><span class="err">#</span> <span class="nv">Garbage</span> <span class="nv">collector-decrease</span> <span class="nv">threshold</span> <span class="nv">to</span> <span class="mi">5</span> <span class="nv">MB</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;after-init-hook</span> <span class="p">(</span><span class="nb">lambda</span> <span class="p">()</span> <span class="p">(</span><span class="nb">setq</span> <span class="nv">gc-cons-threshold</span> <span class="p">(</span><span class="nf">*</span> <span class="mi">5</span> <span class="mi">1024</span> <span class="mi">1024</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl"><span class="err">#</span> <span class="nv">init.el</span> <span class="nv">ends</span> <span class="nv">here</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>gc-cons-threshold</code> 指定了emacs 进行垃圾回收的阀值，默认值是 <code>800000byte</code>,实在是太小了，所以Emacs 会在启动期间进行非常多次的垃圾回收，启动时间自然长了。</p>
+<p>在加载完以后，再把 <code>gc-cons-threshold</code> 的值调低，当然，如果你的内存很大，也可以不改回来</p>
+<h2 id="技巧2"><span class="section-num">2</span> 技巧2</h2>
+<p><code>(let((file-name-hander-alist nil))init.file)</code> 包裹(wrap)你的初始化文件，即：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">setq</span> <span class="nv">gc-cons-threshold</span> <span class="p">(</span><span class="nf">*</span> <span class="mi">500</span> <span class="mi">1024</span> <span class="mi">1024</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">let</span> <span class="p">((</span><span class="nv">file-name-handler-alist</span> <span class="no">nil</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="o">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nv">**</span> <span class="nv">your</span> <span class="nv">config</span> <span class="nv">goes</span> <span class="nv">here</span> <span class="nv">**</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="o">...</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;after-init-hook</span> <span class="p">(</span><span class="nb">lambda</span> <span class="p">()</span> <span class="p">(</span><span class="nb">setq</span> <span class="nv">gc-cons-threshold</span> <span class="p">(</span><span class="nf">*</span> <span class="mi">5</span> <span class="mi">1024</span> <span class="mi">1024</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">provide</span> <span class="ss">&#39;init</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">;;; init.el ends here</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为 <code>file-name-handler-alist</code> 的默认值是一些正则表达式，也就是说Emacs 在启动过程中加载el和elc 文件都会将文件名和正则表达式进行匹配</p>
+<h2 id="技巧3"><span class="section-num">3</span> 技巧3</h2>
+<p>Emacs lisp 有一项auto-load 的技术，类似延迟加载，合理运用延迟，让笔者的Emacs启动加载时间减少一半，因为笔者用 <code>use-package</code> 这个macro,而 <code>use-package</code> 又集成了延迟加载的功能，所以笔者就直接拿自己的代码举例了</p>
+<h3 id="after"><span class="section-num">3.1</span> :after</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="c1">;;; Export to twitter bootstrap</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">ox-twbs</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:after</span> <span class="nv">org</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:ensure</span> <span class="nv">ox-twbs</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>:after</code> 关键字的作用基本跟 <code>with-eval-after-load</code> 的作用是相同的，所以笔者所
+有类似的org-mode 插件包都会在org-mode 加载以后才会加载</p>
+<h3 id="commands"><span class="section-num">3.2</span> :commands</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">avy</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:commands</span> <span class="p">(</span><span class="nv">avy-goto-char</span> <span class="nv">avy-goto-line</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:ensure</span> <span class="no">t</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里就贴上<a href="https://github.com/jwiegley/use-package">use-package</a>文档 的说明了</p>
+<blockquote>
+<p>When you use the :commands keyword, it creates autoloads for those commands
+and defers loading of the module until they are used</p>
+</blockquote>
+<p>也就是 <code>:commands</code> 关键字就创建了后面所接的命令的 <code>autoloads</code> 机制了</p>
+<h3 id="bind-mode"><span class="section-num">3.3</span> :bind :mode</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">hi-lock</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:bind</span> <span class="p">((</span><span class="s">&#34;M-o l&#34;</span> <span class="o">.</span> <span class="nv">highlight-lines-matching-regexp</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="s">&#34;M-o r&#34;</span> <span class="o">.</span> <span class="nv">highlight-regexp</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="s">&#34;M-o w&#34;</span> <span class="o">.</span> <span class="nv">highlight-phrase</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">vue-mode</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:ensure</span> <span class="no">t</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:mode</span> <span class="p">(</span><span class="s">&#34;\\.vue\\&#39;&#34;</span> <span class="o">.</span> <span class="nv">vue-mode</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:config</span> <span class="p">(</span><span class="nb">progn</span>
+</span></span><span class="line"><span class="cl">            <span class="p">(</span><span class="nb">setq</span> <span class="nv">mmm-submode-decoration-level</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>附上文档说明</p>
+<blockquote>
+<p>In almost all cases you don&rsquo;t need to manually specify :defer t. This is implied
+whenever :bind or :mode or :interpreter is used</p>
+</blockquote>
+<p>也就是说，当你使用了 <code>:bind</code> 或者 <code>:mode</code> 关键字的时候，不用明确指定 <code>:defer</code> 也可以实现延迟加载机制。</p>
+<p>当然你也可以，直接使用 <code>:defer</code> 关键字来指定延迟加载. 不过前提是，你要明确它加载的时机</p>
+<blockquote>
+<p>Typically, you only need to specify :defer if you know for a fact that some
+other package will do something to cause your package to load at the appropriate
+time, and thus you would like to defer loading even though use-package isn&rsquo;t
+creating any autoloads for you.</p>
+</blockquote>
+<p>贴上笔者自己的代码，可以更加清晰</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">anaconda-mode</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:defer</span> <span class="no">t</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:ensure</span> <span class="no">t</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:init</span><span class="p">(</span><span class="nb">progn</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;python-mode-hook</span> <span class="ss">&#39;anaconda-mode</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;python-mode-hook</span> <span class="ss">&#39;anaconda-eldoc-mode</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样 <code>anaconda-mode</code> 就会在 <code>python-mode</code> 加载以后被加载</p>
+<p>Enjoy Emacs :)</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>在Emacs中使用Ipython</title>
+      <link>https://ramsayleung.github.io/zh/post/2016/emacs_ipython/</link>
+      <pubDate>Wed, 03 Aug 2016 00:00:00 -0700</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2016/emacs_ipython/</guid>
+      <description>Use Ipython in Emasc</description>
+      <content:encoded><![CDATA[<h2 id="emacs-ipython-输出错误"><span class="section-num">1</span> Emacs Ipython 输出错误</h2>
+<p>在Emacs 运行 <code>run-python</code> 的时候，报错了，如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">[</span><span class="sc">?1</span><span class="nv">2l</span><span class="p">[</span><span class="sc">?2</span><span class="nv">5h2+2</span>
+</span></span><span class="line"><span class="cl">      <span class="p">[</span><span class="nv">J</span><span class="p">[</span><span class="sc">?7</span><span class="nv">h</span><span class="p">[</span><span class="sc">?1</span><span class="nv">2l</span><span class="p">[</span><span class="sc">?2</span><span class="nv">5h</span><span class="p">[</span><span class="sc">?2</span><span class="nv">004l</span><span class="p">[</span><span class="sc">?7</span><span class="nv">hOut</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">:</span> <span class="mi">4</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为我的版本时Ipython5,查阅文档<a href="http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1">http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1</a>
+之后，发现Ipython5 有了新的terminal 接口，和Emacs 继承的shell 不兼容，所以
+会出现上述的错误，只要给Ipython 加上运行参数就能解决了，所以只要在 <strong>.emacs</strong>
+或者对应的初始化文件加上下面语句</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">setq</span> <span class="nv">python-shell-interpreter</span> <span class="s">&#34;ipython&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="nv">python-shell-interpreter-args</span> <span class="s">&#34;--simple-prompt -i&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="update-2017-3-15"><span class="section-num">1.1</span> Update 2017-3-15</h3>
+<p>在添加了 <code>--simple-promp -i</code> 参数以后，虽说乱码的问题解决了，但是新的问题又出现了
+在Ipython 里面是没法无法输入多行内容的，即使是一个简单的循环，详情查看这条issue
+<a href="https://github.com/ipython/ipython/issues/9816">https://github.com/ipython/ipython/issues/9816</a>. 现在Ipython 开发社区还没有解决这个
+问题，所以现在的权宜之计就是使用 Ipython4,等到社区解决了这个问题在升级为 Ipython5</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pip install --force-reinstall <span class="nv">ipython</span><span class="o">==</span>4.2.1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="emacs-ipython-的使用优化"><span class="section-num">2</span> Emacs Ipython 的使用优化</h2>
+<h3 id="python-pop"><span class="section-num">2.1</span> python-pop</h3>
+<p>因为我之前使用Emacs的时候，是使用Spacemacs的配置的，但是后来觉得还是自己的 配置用的更舒服，所以又切换回自己的配置。</p>
+<p>但是我还是很想念Spacemacs的一些绑定， 例如shell在底下弹出，或者是关闭，然后找到了<a href="https://github.com/kyagi/shell-pop-el">Shell-pop</a> 这package,就可以用回
+Spacemacs的shell使用习惯。</p>
+<p>然后我觉得，Ipython shell也可以这样配置，只不过我没有发现类似的package,又因为Emacs Lisp的强大，所以我自己写了一段小函数实现
+shell-pop 的功能</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">samray/python-pop</span> <span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="s">&#34;Run python and switch to the python buffer.
+</span></span></span><span class="line"><span class="cl"><span class="s">similar to shell-pop&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">interactive</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">get-buffer</span> <span class="s">&#34;*Python*&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nv">string=</span> <span class="p">(</span><span class="nf">buffer-name</span><span class="p">)</span> <span class="s">&#34;*Python*&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nv">not</span> <span class="p">(</span><span class="nv">one-window-p</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">              <span class="p">(</span><span class="nb">progn</span> <span class="p">(</span><span class="nv">bury-buffer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                     <span class="p">(</span><span class="nv">delete-window</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nb">progn</span> <span class="p">(</span><span class="nv">switch-to-buffer-other-window</span> <span class="s">&#34;*Python*&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nv">end-of-buffer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nv">evil-insert-state</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nb">progn</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">run-python</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">switch-to-buffer-other-window</span> <span class="s">&#34;*Python*&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">end-of-buffer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">evil-insert-state</span><span class="p">))))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果没有使用Evil,可以把 <code>(evil-insert-state)</code> 去掉</p>
+<h3 id="ipython-history"><span class="section-num">2.2</span> Ipython History</h3>
+<p>我在普通的Shell使用Ipython的时候，很自然地使用上下方向键翻到上一条/下一条
+执行的命令，因为shell的使用习惯就是这样滴。</p>
+<p>但是在Emacs里面使用Ipython,上下 方向键是去到上一行/下一行，就好像 vim 的 <code>j</code> <code>k</code>,如果要翻到上一条命令，快捷键
+是 <code>M-p</code>,实在很不习惯，所以在查了一下Emacs manual 后，我改了一下按键绑定就实现了我想要的效果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nf">define-key</span> <span class="nv">comint-mode-map</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&#34;&lt;up&gt;&#34;</span><span class="p">)</span> <span class="ss">&#39;comint-previous-input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nf">define-key</span> <span class="nv">comint-mode-map</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&#34;&lt;down&gt;&#34;</span><span class="p">)</span> <span class="ss">&#39;comint-next-input</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Enjoy Emacs :)</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

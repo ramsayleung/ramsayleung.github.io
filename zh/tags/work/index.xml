@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sun, 05 Jan 2025 20:09:54 -0800</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jan 2025 20:54:12 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/work/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>寒冬怎么过</title>
@@ -751,7 +751,7 @@
     <item>
       <title>为什么我们要996</title>
       <link>https://ramsayleung.github.io/zh/post/2020/996%E6%88%90%E5%9B%A0/</link>
-      <pubDate>Wed, 14 Oct 2020 23:52:00 +0800</pubDate>
+      <pubDate>Wed, 14 Oct 2020 23:52:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2020/996%E6%88%90%E5%9B%A0/</guid>
       <description>局中人的思考 1 前言 最近深圳的特殊工时制度搞得甚嚣尘上, 兼之有位与互联网行业完全无交集的朋友咨询我, 为什么你们程序员要996呢? 有感于此, 写下</description>
       <content:encoded><![CDATA[<p>局中人的思考</p>
@@ -824,11 +824,11 @@
     <item>
       <title>应届生如何写好技术简历</title>
       <link>https://ramsayleung.github.io/zh/post/2020/%E5%BA%94%E5%B1%8A%E7%94%9F%E5%A6%82%E4%BD%95%E5%86%99%E5%A5%BD%E6%8A%80%E6%9C%AF%E7%AE%80%E5%8E%86/</link>
-      <pubDate>Sat, 14 Mar 2020 13:07:00 +0800</pubDate>
+      <pubDate>Sat, 14 Mar 2020 13:07:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2020/%E5%BA%94%E5%B1%8A%E7%94%9F%E5%A6%82%E4%BD%95%E5%86%99%E5%A5%BD%E6%8A%80%E6%9C%AF%E7%AE%80%E5%8E%86/</guid>
-      <description>1 背景介绍 笔者目前在蚂蚁金服-网商银行做后端开发, 因为在组内毕业时间最短(2年), 所以经常会被Leader当成免费的HR去找校招简历, 所以见</description>
+      <description>1 背景介绍 我目前在蚂蚁金服-网商银行做后端开发, 因为在组内毕业时间最短(2年), 所以经常会被Leader当成免费的HR去找校招简历, 所以见过</description>
       <content:encoded><![CDATA[<h2 id="背景介绍"><span class="section-num">1</span> 背景介绍</h2>
-<p>笔者目前在蚂蚁金服-网商银行做后端开发, 因为在组内毕业时间最短(2年),
+<p>我目前在蚂蚁金服-网商银行做后端开发, 因为在组内毕业时间最短(2年),
 所以经常会被Leader当成免费的HR去找校招简历, 所以见过不少的简历(&gt;100份),
 把收到简历之后, 有时会给简历打分, 然后再给到老板.</p>
 <p>因为见过不少的简历,
@@ -906,9 +906,9 @@ Tomcat源码, Netty源码, 记录在自己blog上.</li>
 <li>了解/使用多种语言, Java/C++/C/Python/Go/Rust/Sql/Shell,
 这个就不一一列举了.</li>
 </ol>
-<p>总而言之, 自己的思考_动手折腾_新鲜事物的探索, 都可以像亮点.</p>
+<p>总而言之, 自己的思考/动手折腾/新鲜事物的探索, 都可以像亮点.</p>
 <h2 id="个人评价-兴趣爱好"><span class="section-num">7</span> 个人评价/兴趣爱好</h2>
-<p>公司招聘是选择<strong>有能力</strong>, 并且合适的同学, 并不是相亲, 所以老板并不关心你的兴趣爱好和个人评价; 在面试中, 你应该是由面试官评价,
+<p>公司招聘是选择*有能力*, 并且合适的同学, 并不是相亲, 所以老板并不关心你的兴趣爱好和个人评价; 在面试中, 你应该是由面试官评价,
 自我评价并没有什么用处, 写上去还占空间.</p>
 <h2 id="细节"><span class="section-num">8</span> 细节</h2>
 <p>需要明确的一点, 在面试官面试你之前, 你的简历就是你最大的推销手段,
@@ -925,7 +925,7 @@ Tomcat源码, Netty源码, 记录在自己blog上.</li>
 <li>简历篇幅: 应届生的简历最好一页写完, 如果一页没写完,
 第二页只多了一点内容, 就会显得很难受.</li>
 <li>简历命名: 发送简历给面试官, 或者简历收集同学的时候,
-请不要用”个人简历_我的简历”这类的名字, 谁知道”个人_我”指的是谁,
+请不要用”个人简历/我的简历”这类的名字, 谁知道”个人/我”指的是谁,
 推荐命名: 学校_学历_姓名_求职意愿.pdf 如:
 xx大学_硕士_宫xx_后端开发.pdf</li>
 <li>技术熟悉程度: 精通, 熟悉, 了解; 这些用词请注意, 按我的理解,
@@ -960,7 +960,7 @@ add/git commit/git push, 连git bisect都没听过, 那就&hellip;</li>
     <item>
       <title>2019年总结: 人生如逆旅, 我亦是行人</title>
       <link>https://ramsayleung.github.io/zh/post/2019/2019%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Thu, 26 Dec 2019 21:12:00 +0800</pubDate>
+      <pubDate>Thu, 26 Dec 2019 21:12:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2019/2019%E6%80%BB%E7%BB%93/</guid>
       <description>1 前言 人总是健忘的, 所以在行走一段人生旅途之后, 总要不自觉地停下来, 整理下前段时间的得与失, 得大于失证明这段时间没有浪费, 欣喜之余, 准备下一</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
@@ -1072,7 +1072,7 @@ Tyrion Lannister所说的那般, 好脑筋需要书本, 就如同宝剑需要磨
     <item>
       <title>工作一年记</title>
       <link>https://ramsayleung.github.io/zh/post/2019/%E5%B7%A5%E4%BD%9C%E4%B8%80%E5%91%A8%E5%B9%B4%E8%AE%B0/</link>
-      <pubDate>Fri, 28 Jun 2019 14:18:00 +0800</pubDate>
+      <pubDate>Fri, 28 Jun 2019 14:18:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2019/%E5%B7%A5%E4%BD%9C%E4%B8%80%E5%91%A8%E5%B9%B4%E8%AE%B0/</guid>
       <description>1 前言 转眼间, 我已经工作一年了 去年的6月28日, 我到了杭州, 入职了的一家全国闻名的金融科技公司, 开始了自己的职业生涯. 2 关于工作 2.1 工作后 工作</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
@@ -1143,7 +1143,7 @@ Tyrion Lannister所说的那般, 好脑筋需要书本, 就如同宝剑需要磨
     <item>
       <title>迟来的2018年总结</title>
       <link>https://ramsayleung.github.io/zh/post/2019/2018%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Wed, 23 Jan 2019 01:48:00 +0800</pubDate>
+      <pubDate>Wed, 23 Jan 2019 01:48:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2019/2018%E6%80%BB%E7%BB%93/</guid>
       <description>一晃，2018年已经过去了 6月25日，拖着行李，从广州来了杭州 告别了学校，从学生变成了一个社会人 既然选择了远方, 便只顾风雨兼程 &amp;ndash; 汪国真 1 工作</description>
       <content:encoded><![CDATA[<p>一晃，2018年已经过去了</p>

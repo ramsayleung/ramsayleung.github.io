@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sun, 05 Jan 2025 15:47:40 -0800</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jan 2025 20:52:24 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/tool/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>我的搜索流：高效搜索经验分享</title>
@@ -427,14 +427,14 @@
 </figure>
  <br/></p>
 <h2 id="总结"><span class="section-num">4</span> 总结</h2>
-<p>突然意识到，收听播客和小时候通过收音机收听各种电台节目，如「评书讲古」似乎是异曲同工。 <br/></p>
+<p>突然意识到，收听播客和小时候通过收音机收听各种电台节目，如「评书讲古」本质上并无差别。 <br/></p>
 <p>虽然媒介在改变，但是对好内容的需求却是一直不变的。 <br/></p>
 ]]></content:encoded>
     </item>
     <item>
       <title>OpenAI-translator: 基于ChatGPT的划词翻译及润色应用</title>
       <link>https://ramsayleung.github.io/zh/post/2023/openai-translator/</link>
-      <pubDate>Sun, 12 Mar 2023 10:20:00 +0800</pubDate>
+      <pubDate>Sun, 12 Mar 2023 10:20:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2023/openai-translator/</guid>
       <description>1 前言 因为ChatGPT 的爆红，最近基于在 ChatGPT 的工具如雨后春笋般冒出来，在 Twitter 上，基本每周都可以看到开发者发布基于 ChatGPT 的新应用（这些人不用上班的么</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
@@ -583,7 +583,7 @@
     <item>
       <title>我的画图流：画图工具与技巧分享</title>
       <link>https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E7%94%BB%E5%9B%BE%E6%B5%81/</link>
-      <pubDate>Mon, 30 Jan 2023 19:22:00 +0800</pubDate>
+      <pubDate>Mon, 30 Jan 2023 19:22:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E7%94%BB%E5%9B%BE%E6%B5%81/</guid>
       <description>1 前言 古人云：「一图胜千言」。 一幅合适的图片可以清晰地向读者表达我们的意图，又因为我们人脑的作用机制，阅读一张图片所耗费的脑力要远少于一段文</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
@@ -741,12 +741,12 @@
     <img loading="lazy" src="/ox-hugo/digraph.png"/> 
 </figure>
 
-<p>命名规范与C家族的编程语言类似：图形关系定义在花括号<code>{}</code> 中；每条语句以 <code>;</code> 结尾; <code>//</code> 表示单行注释, <code>/**/</code>表示多行注释</p>
+<p>命名规范与C家族的编程语言类似：图形关系定义在花括号={}= 中；每条语句以 <code>;</code> 结尾; <code>//</code> 表示单行注释, =/**/=表示多行注释</p>
 <h4 id="节点--node"><span class="section-num">3.1.2</span> 节点(node)</h4>
-<p><code>mydigraph</code> 是图形名，<code>1</code>, <code>2</code> 是节点名(node), 两个节点构成一条边(edge)。在图的定义中，相同的名称就代表同一个节点。</p>
+<p><code>mydigraph</code> 是图形名，=1=, <code>2</code> 是节点名(node), 两个节点构成一条边(edge)。在图的定义中，相同的名称就代表同一个节点。</p>
 <p>当dot 编译器遇到一个新的名称，就认为是新的节点</p>
 <h4 id="属性--property"><span class="section-num">3.1.3</span> 属性(property)</h4>
-<p>属性可以设置在节点和边上，通过「方括号 <code>[]</code>」来定义属性，属性之间用英文逗号分隔。</p>
+<p>属性可以设置在节点和边上，通过「方括号 =[]=」来定义属性，属性之间用英文逗号分隔。</p>
 <p>属性的定义采用如下的格式：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1057,7 +1057,7 @@
 <p>学过UML规范的同学应该都知道这些图应该怎么画，我就拿几个常见的图来举个例子。</p>
 <h3 id="时序图"><span class="section-num">4.1</span> 时序图</h3>
 <p>plantuml 提供不同的组件供时序图使用。不同的组件有不同的形状，默认情况下，组件的声明顺序就是他们的展示顺序。</p>
-<p>使用<code>-&gt;</code> 来表示在两个组件/参与者(participant) 之间传递消息，<code>&lt;--</code> 表示回包信息。</p>
+<p>使用=-&gt;= 来表示在两个组件/参与者(participant) 之间传递消息，=&lt;&ndash;= 表示回包信息。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1128,10 +1128,10 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@startuml
 </span></span><span class="line"><span class="cl">start
 </span></span><span class="line"><span class="cl">repeat
-</span></span><span class="line"><span class="cl">	:Test something;
-</span></span><span class="line"><span class="cl">	if (Something went wrong?) then (no)
-</span></span><span class="line"><span class="cl">	#palegreen:OK;
-</span></span><span class="line"><span class="cl">	break
+</span></span><span class="line"><span class="cl">        :Test something;
+</span></span><span class="line"><span class="cl">        if (Something went wrong?) then (no)
+</span></span><span class="line"><span class="cl">        #palegreen:OK;
+</span></span><span class="line"><span class="cl">        break
 </span></span><span class="line"><span class="cl">endif
 </span></span><span class="line"><span class="cl">-&gt;NOK;
 </span></span><span class="line"><span class="cl">:Alert &#34;Error with long text&#34;;
@@ -1264,91 +1264,91 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Location</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">	<span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">Location</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">xc</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">yc</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">Location</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">xc</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">yc</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">getCoords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">getDist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">	<span class="n">ox</span><span class="p">,</span> <span class="n">oy</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">getCoords</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="n">xDist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">ox</span>
-</span></span><span class="line"><span class="cl">	<span class="n">yDist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">oy</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">xDist</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">yDist</span> <span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ox</span><span class="p">,</span> <span class="n">oy</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">getCoords</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">xDist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">ox</span>
+</span></span><span class="line"><span class="cl">        <span class="n">yDist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">oy</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">xDist</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">yDist</span> <span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">CompassPt</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="n">possibles</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;W&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pt</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="n">pt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">possibles</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">	    <span class="bp">self</span><span class="o">.</span><span class="n">pt</span> <span class="o">=</span> <span class="n">pt</span>
-</span></span><span class="line"><span class="cl">	<span class="k">else</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;in CompassPt.__init__&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">pt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">possibles</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">pt</span> <span class="o">=</span> <span class="n">pt</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;in CompassPt.__init__&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dist</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pt</span> <span class="o">==</span> <span class="s2">&#34;N&#34;</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dist</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pt</span> <span class="o">==</span> <span class="s2">&#34;S&#34;</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">dist</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pt</span> <span class="o">==</span>  <span class="s2">&#34;E&#34;</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">return</span> <span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pt</span> <span class="o">==</span> <span class="s2">&#34;W&#34;</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="n">dist</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">else</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;in CompassPt.move&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pt</span> <span class="o">==</span> <span class="s2">&#34;N&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dist</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pt</span> <span class="o">==</span> <span class="s2">&#34;S&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">dist</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pt</span> <span class="o">==</span>  <span class="s2">&#34;E&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pt</span> <span class="o">==</span> <span class="s2">&#34;W&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="n">dist</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;in CompassPt.move&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Field</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">drunk</span><span class="p">,</span> <span class="n">loc</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">	<span class="bp">self</span><span class="o">.</span><span class="n">drunk</span> <span class="o">=</span> <span class="n">drunk</span>
-</span></span><span class="line"><span class="cl">	<span class="bp">self</span><span class="o">.</span><span class="n">loc</span> <span class="o">=</span> <span class="n">loc</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">drunk</span> <span class="o">=</span> <span class="n">drunk</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">loc</span> <span class="o">=</span> <span class="n">loc</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cp</span><span class="p">,</span> <span class="n">dist</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">	<span class="n">oldLoc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span>
-</span></span><span class="line"><span class="cl">	<span class="n">xc</span><span class="p">,</span> <span class="n">yc</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="bp">self</span><span class="o">.</span><span class="n">loc</span> <span class="o">=</span> <span class="n">oldLoc</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span><span class="n">yc</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">oldLoc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span>
+</span></span><span class="line"><span class="cl">        <span class="n">xc</span><span class="p">,</span> <span class="n">yc</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">loc</span> <span class="o">=</span> <span class="n">oldLoc</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span><span class="n">yc</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">getLoc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">getDrunk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">drunk</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">drunk</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Drunk</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">	<span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">time</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">getDrunk</span><span class="p">()</span> <span class="o">!=</span> <span class="bp">self</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;Drunk.move called with drunk not in field&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">getDrunk</span><span class="p">()</span> <span class="o">!=</span> <span class="bp">self</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;Drunk.move called with drunk not in field&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">pt</span> <span class="o">=</span> <span class="n">CompassPt</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">CompassPt</span><span class="o">.</span><span class="n">possibles</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	    <span class="n">field</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">pt</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pt</span> <span class="o">=</span> <span class="n">CompassPt</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">CompassPt</span><span class="o">.</span><span class="n">possibles</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="n">field</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">pt</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">performTrial</span><span class="p">(</span><span class="n">time</span><span class="p">,</span><span class="n">f</span> <span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="n">start</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">getLoc</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    <span class="n">distances</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">time</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">	<span class="n">f</span><span class="o">.</span><span class="n">getDrunk</span><span class="p">()</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="n">newLoc</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">getLoc</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="n">distance</span> <span class="o">=</span> <span class="n">newLoc</span><span class="o">.</span><span class="n">getDist</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="n">distances</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">f</span><span class="o">.</span><span class="n">getDrunk</span><span class="p">()</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">newLoc</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">getLoc</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">distance</span> <span class="o">=</span> <span class="n">newLoc</span><span class="o">.</span><span class="n">getDist</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">distances</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">distances</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">firstTest</span><span class="p">():</span>
 </span></span><span class="line"><span class="cl">    <span class="n">drunk</span><span class="o">=</span> <span class="n">Drunk</span><span class="p">(</span><span class="s2">&#34;Homser Simpson&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">	<span class="n">f</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">drunk</span><span class="p">,</span> <span class="n">Location</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	<span class="n">distances</span> <span class="o">=</span> <span class="n">performTrial</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&#34;Homer&#39;s random Walk&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&#34;Time&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&#34;Distance from origin&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="n">fname</span> <span class="o">=</span> <span class="s2">&#34;images/mit6.00/simulation_random_walk_trail1.png&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">f</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">drunk</span><span class="p">,</span> <span class="n">Location</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">distances</span> <span class="o">=</span> <span class="n">performTrial</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&#34;Homer&#39;s random Walk&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&#34;Time&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&#34;Distance from origin&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">fname</span> <span class="o">=</span> <span class="s2">&#34;images/mit6.00/simulation_random_walk_trail1.png&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">fname</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="n">firstTest</span><span class="p">()</span>
@@ -1360,7 +1360,7 @@
 </figure>
 
 <h3 id="再话org-mode"><span class="section-num">5.1</span> 再话org-mode</h3>
-<p>在<a href="https://mp.weixin.qq.com/s/mid3TpmXJMM7xWm5rfl7qg">《我的写作流》</a>里面，我有提到过，我使用Emacs + org-mode 来编写文章，对比markdown 或者其他的标记语言，<code>org-mode</code> 有一个巨大的优势，就是<code>org-mode</code> 借助内置的<a href="https://orgmode.org/worg/org-contrib/babel/"><code>org-babel</code></a> 组件，可以直接运行代码。</p>
+<p>在<a href="https://mp.weixin.qq.com/s/mid3TpmXJMM7xWm5rfl7qg">《我的写作流》</a>里面，我有提到过，我使用Emacs + org-mode 来编写文章，对比markdown 或者其他的标记语言，=org-mode= 有一个巨大的优势，就是=org-mode= 借助内置的<a href="https://orgmode.org/worg/org-contrib/babel/"><code>org-babel</code></a> 组件，可以直接运行代码。</p>
 <p>在markdown 里面，下面的代码块的用处仅仅是语法高亮：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1374,7 +1374,7 @@
 </span></span><span class="line"><span class="cl"><span class="s">```</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>但在 <code>org-mode</code>, 下面的代码块是可运行的，我只要在Emacs中按下<code>C-c C-c</code>，就会运行代码，并输出<code>helloword</code>。</p>
+</div><p>但在 <code>org-mode</code>, 下面的代码块是可运行的，我只要在Emacs中按下=C-c C-c=，就会运行代码，并输出=helloword=。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1387,7 +1387,7 @@
 </span></span><span class="line"><span class="cl"><span class="c">#+end_src</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>看起来作用不大，但是和 <code>graphviz</code>, <code>plantuml</code>, <code>matplotlib</code> 结合，就会产生无穷的威力：<strong><strong>只要我把绘图源码写好，然后再按下 <code>C-c C-c</code>，就能自动生成图片，并自动插入到当前这篇文章中(当然，如果代码写错了，是编译生成不出图片的)</strong></strong>。</p>
+</div><p>看起来作用不大，但是和 <code>graphviz</code>, <code>plantuml</code>, <code>matplotlib</code> 结合，就会产生无穷的威力：**只要我把绘图源码写好，然后再按下 =C-c C-c=，就能自动生成图片，并自动插入到当前这篇文章中(当然，如果代码写错了，是编译生成不出图片的)**。</p>
 <p>根本不需要手动编译，生成图片，然后再把图片以markdown格式手动插入: <code>![图片](链接)</code> 。</p>
 <p>上面的概率统计模拟图也是这样生成出来的，写好Python 代码，然后按下 <code>C-c C-c</code></p>
 <p>一切都浑然天成。</p>
@@ -1415,15 +1415,334 @@
 ]]></content:encoded>
     </item>
     <item>
+      <title>Eshell提示符优化</title>
+      <link>https://ramsayleung.github.io/zh/post/2017/tweak_eshell_prompt/</link>
+      <pubDate>Wed, 07 Jun 2017 00:00:00 -0700</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2017/tweak_eshell_prompt/</guid>
+      <description>Tweak with Emacs shell prompt</description>
+      <content:encoded><![CDATA[<h2 id="发现帅气的提示符"><span class="section-num">1</span> 发现帅气的提示符</h2>
+<p>近日，我在浏览 <a href="https://www.reddit.com/r/emacs/comments/6f0rkz/my_fancy_eshell_prompt/">Reddit</a> 的时候，发现了一位 Emacs 用户把他的 Eshell 提示符修改得很帅，如图：</p>
+<p><a href="/ox-hugo/eshell_prompt.png"><img loading="lazy" src="/ox-hugo/eshell_prompt.png" alt=""  />
+</a>
+本着拿来主义的想法，我就直接把这位小哥的代码添加到了我的配置文件里面：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">setq</span> <span class="nv">eshell-prompt-function</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nb">lambda</span> <span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nf">concat</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;┌─[&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nf">user-login-name</span><span class="p">)</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;red&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;@&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nf">system-name</span><span class="p">)</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;blue&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;]──[&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nf">format-time-string</span> <span class="s">&#34;%H:%M&#34;</span> <span class="p">(</span><span class="nf">current-time</span><span class="p">))</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;yellow&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;]──[&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nv">eshell/pwd</span><span class="p">))</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;white&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;]\n&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;└─&gt;&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">=</span> <span class="p">(</span><span class="nf">user-uid</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="s">&#34; # &#34;</span> <span class="s">&#34; $ &#34;</span><span class="p">)</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">)))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>效果自然是很 sexy.</p>
+<h2 id="与原有提示符冲突"><span class="section-num">2</span> 与原有提示符冲突</h2>
+<p>但是我原来使用的 <a href="https://github.com/kaihaosw/eshell-prompt-extras">eshell-prompt-extra</a> 的效果就被覆盖了。而 <code>eshell_prompt_extra</code> 可以提供的额外信息非常多，包括：git, python virtualenv, 以及远程登录时的主机信息，如图：</p>
+<figure><a href="/ox-hugo/eshell_extra_prompt.png">
+    <img loading="lazy" src="/ox-hugo/eshell_extra_prompt.png"/> </a>
+</figure>
+
+<p>如果用上这个 sexy 的提示符，eshell-extra-prompt 的额外的信息就不能显示，感觉好亏:(</p>
+<p>鱼和熊掌我都想要，似乎太贪心了？怎么办，自己去修改 <code>eshell_prompt_extra</code> 的<a href="https://github.com/kaihaosw/eshell-prompt-extras/blob/master/eshell-prompt-extras.el">源码</a> :).</p>
+<h2 id="折腾源码"><span class="section-num">3</span> 折腾源码</h2>
+<p><code>eshell_prompt_extra</code> 这个包注释加上全部代码也只是 400 行，代码也写得很清晰. 其中大部份是辅助函数，而 Eshell 的提示符效果是通过两个 eshell-theme 函数来实现的。use-package 的配置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">use-package</span> <span class="nv">eshell-prompt-extras</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:ensure</span> <span class="no">t</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:load-path</span> <span class="s">&#34;~/Code/github/eshell-prompt-extras&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:config</span> <span class="p">(</span><span class="nb">progn</span>
+</span></span><span class="line"><span class="cl">            <span class="p">(</span><span class="nb">with-eval-after-load</span> <span class="s">&#34;esh-opt&#34;</span>
+</span></span><span class="line"><span class="cl">              <span class="p">(</span><span class="nb">use-package</span> <span class="nv">virtualenvwrapper</span> <span class="nb">:ensure</span> <span class="no">t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">              <span class="p">(</span><span class="nv">venv-initialize-eshell</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">              <span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;epe-theme-lambda</span> <span class="s">&#34;eshell-prompt-extras&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">              <span class="p">(</span><span class="nb">setq</span> <span class="nv">eshell-highlight-prompt</span> <span class="no">nil</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">eshell-prompt-function</span> <span class="ss">&#39;epe-theme-lambda</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>而 <code>epe-theme-lambda</code> 的代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">epe-theme-lambda</span> <span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="s">&#34;A eshell-prompt lambda theme.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">setq</span> <span class="nv">eshell-prompt-regexp</span> <span class="s">&#34;^[^#\nλ]*[#λ] &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nf">concat</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nv">epe-remote-p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">     <span class="p">(</span><span class="nv">epe-colorize-with-face</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nv">epe-remote-user</span><span class="p">)</span> <span class="s">&#34;@&#34;</span> <span class="p">(</span><span class="nv">epe-remote-host</span><span class="p">)</span> <span class="s">&#34; &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="ss">&#39;epe-remote-face</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nb">when</span> <span class="nv">epe-show-python-info</span>
+</span></span><span class="line"><span class="cl">     <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nf">fboundp</span> <span class="ss">&#39;epe-venv-p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">       <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nv">epe-venv-p</span><span class="p">)</span> <span class="nv">venv-current-name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nv">epe-colorize-with-face</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;(&#34;</span> <span class="nv">venv-current-name</span> <span class="s">&#34;) &#34;</span><span class="p">)</span> <span class="ss">&#39;epe-venv-face</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nb">let</span> <span class="p">((</span><span class="nv">f</span> <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nf">eq</span> <span class="nv">epe-path-style</span> <span class="ss">&#39;fish</span><span class="p">)</span> <span class="ss">&#39;epe-fish-path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                  <span class="p">((</span><span class="nf">eq</span> <span class="nv">epe-path-style</span> <span class="ss">&#39;single</span><span class="p">)</span> <span class="ss">&#39;epe-abbrev-dir-name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                  <span class="p">((</span><span class="nf">eq</span> <span class="nv">epe-path-style</span> <span class="ss">&#39;full</span><span class="p">)</span> <span class="ss">&#39;abbreviate-file-name</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl">     <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nf">funcall</span> <span class="nv">f</span> <span class="p">(</span><span class="nv">eshell/pwd</span><span class="p">))</span> <span class="ss">&#39;epe-dir-face</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nv">epe-git-p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">     <span class="p">(</span><span class="nf">concat</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;:&#34;</span> <span class="ss">&#39;epe-dir-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">epe-colorize-with-face</span>
+</span></span><span class="line"><span class="cl">       <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nv">epe-git-branch</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nv">epe-git-dirty</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nv">epe-git-untracked</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nb">let</span> <span class="p">((</span><span class="nv">unpushed</span> <span class="p">(</span><span class="nv">epe-git-unpushed-number</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">                 <span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nf">=</span> <span class="nv">unpushed</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                   <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;:&#34;</span> <span class="p">(</span><span class="nf">number-to-string</span> <span class="nv">unpushed</span><span class="p">)))))</span>
+</span></span><span class="line"><span class="cl">       <span class="ss">&#39;epe-git-face</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34; λ&#34;</span> <span class="ss">&#39;epe-symbol-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">=</span> <span class="p">(</span><span class="nf">user-uid</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="s">&#34;#&#34;</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                           <span class="ss">&#39;epe-sudo-symbol-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="s">&#34; &#34;</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>代码主要逻辑是调用之前定义的辅助函数，判断是否需要显示 git, python, 远程主机等信息，然后对相应的提示符进行拼接。</p>
+<p>而其中出现得比较频繁的 <code>epe-colorize-with-face</code> 就是作者定义的一个宏(macro), 用来显示字符串以及对应的 face(其实就是不同的颜色啦). 看懂了代码就好办了，现在就可以自己添加一个 Eshell 主题。</p>
+<h3 id="定义所需的-face"><span class="section-num">3.1</span> 定义所需的 face</h3>
+<p>因为我需要显示的 face(颜色), <code>eshell-extra-prompt</code> 并没有定义，所以就只好自己动手啦：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defface</span> <span class="nv">epe-pipeline-delimiter-face</span>
+</span></span><span class="line"><span class="cl">  <span class="o">&#39;</span><span class="p">((</span><span class="no">t</span> <span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="s">&#34;Face for pipeline theme delimiter.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:group</span> <span class="ss">&#39;epe</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defface</span> <span class="nv">epe-pipeline-user-face</span>
+</span></span><span class="line"><span class="cl">  <span class="o">&#39;</span><span class="p">((</span><span class="no">t</span> <span class="nb">:foreground</span> <span class="s">&#34;red&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="s">&#34;Face for user in pipeline theme.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:group</span> <span class="ss">&#39;epe</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defface</span> <span class="nv">epe-pipeline-host-face</span>
+</span></span><span class="line"><span class="cl">  <span class="o">&#39;</span><span class="p">((</span><span class="no">t</span> <span class="nb">:foreground</span> <span class="s">&#34;blue&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="s">&#34;Face for host in pipeline theme.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:group</span> <span class="ss">&#39;epe</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defface</span> <span class="nv">epe-pipeline-time-face</span>
+</span></span><span class="line"><span class="cl">  <span class="o">&#39;</span><span class="p">((</span><span class="no">t</span> <span class="nb">:foreground</span> <span class="s">&#34;yellow&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="s">&#34;Face for time in pipeline theme.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">:group</span> <span class="ss">&#39;epe</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后就是按着原有的 Eshell 提示符来组装一个新的 Eshell 主题了，然后把这个主题定义成 pipeline (其实是我自己也没想出比较新颖的名字啦):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">epe-theme-pipeline</span> <span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="s">&#34;A eshell-prompt theme with full path, smiliar to oh-my-zsh theme.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">setq</span> <span class="nv">eshell-prompt-regexp</span> <span class="s">&#34;^[^#\nλ]* λ[#]* &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nf">concat</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nv">epe-remote-p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">       <span class="p">(</span><span class="nb">progn</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">concat</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;┌─[&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nv">epe-remote-user</span><span class="p">)</span> <span class="ss">&#39;epe-pipeline-user-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;@&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nv">epe-remote-host</span><span class="p">)</span> <span class="ss">&#39;epe-pipeline-host-face</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">)</span>
+</span></span><span class="line"><span class="cl">     <span class="p">(</span><span class="nb">progn</span>
+</span></span><span class="line"><span class="cl">       <span class="p">(</span><span class="nf">concat</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;┌─[&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nf">user-login-name</span><span class="p">)</span> <span class="ss">&#39;epe-pipeline-user-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;@&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nf">system-name</span><span class="p">)</span> <span class="ss">&#39;epe-pipeline-host-face</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">     <span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nf">concat</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;]──[&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nf">format-time-string</span> <span class="s">&#34;%H:%M&#34;</span> <span class="p">(</span><span class="nf">current-time</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">                            <span class="ss">&#39;epe-pipeline-time-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;]──[&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nv">eshell/pwd</span><span class="p">))</span> <span class="ss">&#39;epe-dir-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">epe-colorize-with-face</span>  <span class="s">&#34;]\n&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;└─&gt;&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nb">when</span> <span class="nv">epe-show-python-info</span>
+</span></span><span class="line"><span class="cl">     <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nf">fboundp</span> <span class="ss">&#39;epe-venv-p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">       <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nv">epe-venv-p</span><span class="p">)</span> <span class="nv">venv-current-name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nv">epe-colorize-with-face</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;(&#34;</span> <span class="nv">venv-current-name</span> <span class="s">&#34;) &#34;</span><span class="p">)</span> <span class="ss">&#39;epe-venv-face</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nv">epe-git-p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">     <span class="p">(</span><span class="nf">concat</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;:&#34;</span> <span class="ss">&#39;epe-dir-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">epe-colorize-with-face</span>
+</span></span><span class="line"><span class="cl">       <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nv">epe-git-branch</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nv">epe-git-dirty</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nv">epe-git-untracked</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nb">let</span> <span class="p">((</span><span class="nv">unpushed</span> <span class="p">(</span><span class="nv">epe-git-unpushed-number</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">                 <span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nf">=</span> <span class="nv">unpushed</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                   <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;:&#34;</span> <span class="p">(</span><span class="nf">number-to-string</span> <span class="nv">unpushed</span><span class="p">)))))</span>
+</span></span><span class="line"><span class="cl">       <span class="ss">&#39;epe-git-face</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34; λ&#34;</span> <span class="ss">&#39;epe-symbol-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">=</span> <span class="p">(</span><span class="nf">user-uid</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="s">&#34;#&#34;</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                           <span class="ss">&#39;epe-sudo-symbol-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="s">&#34; &#34;</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="总结"><span class="section-num">4</span> 总结</h2>
+<p>这样一个新的 Eshell 主题就完工了，然后我给 <code>eshell-extra-prompt</code> 发了一个<a href="https://github.com/kaihaosw/eshell-prompt-extras/pull/16">Pull Request</a>, 最终效果如下：</p>
+<figure><a href="/ox-hugo/epe.png">
+    <img loading="lazy" src="/ox-hugo/epe.png"/> </a>
+</figure>
+
+<p>Enjoy Emacs, Enjor Tweaking :)</p>
+]]></content:encoded>
+    </item>
+    <item>
       <title>脚本分享</title>
       <link>https://ramsayleung.github.io/zh/post/2017/share_shell_script/</link>
-      <pubDate>Sat, 22 Apr 2017 00:00:00 +0800</pubDate>
+      <pubDate>Sat, 22 Apr 2017 00:00:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/share_shell_script/</guid>
       <description>share of my shell script snippet</description>
       <content:encoded><![CDATA[<p>分享一下平时工作生活中编写的一些脚本片段(一直更新). 适用于 OS X 和 Linux</p>
 <h2 id="准备工作"><span class="section-num">1</span> 准备工作</h2>
 <p>因为我比较多的脚本都是基于 <code>percol</code> 这个神器，所以需要先安装 <code>percol</code>, 如果 不了解 <code>percol</code> 的话，可以翻看一下我之前的文章 <a href="https://ramsayleung.github.io/post/2017/percol/">Linux/Unix Shell 二三事之神器percol</a> .</p>
-<p>我一般将写好的函数 source 命令添加到 Shell. 例如脚本函数都在一个叫<code>tool_function.sh</code> 的文件里面，而我使用 Zsh, 则只需要在 <code>.zshrc</code> 添加一句语句：</p>
+<p>我一般将写好的函数 source 命令添加到 Shell. 例如脚本函数都在一个叫 <code>tool_function.sh</code> 的文件里面，而我使用 Zsh, 则只需要在 <code>.zshrc</code> 添加一句语句：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1484,35 +1803,35 @@
 </span></span><span class="line"><span class="cl">    <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">       <span class="c1">#if public/private key doesn&#39;t exist ,generate public/private key</span>
 </span></span><span class="line"><span class="cl">       <span class="k">if</span> <span class="o">[</span> -f ~/.ssh/id_rsa <span class="o">]</span><span class="p">;</span><span class="k">then</span>
-</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;public/private key exists&#34;</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">	      ssh-keygen -t rsa
+</span></span><span class="line"><span class="cl">          <span class="nb">echo</span> <span class="s2">&#34;public/private key exists&#34;</span>
+</span></span><span class="line"><span class="cl">          <span class="k">else</span>
+</span></span><span class="line"><span class="cl">              ssh-keygen -t rsa
 </span></span><span class="line"><span class="cl">       <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">while</span> <span class="nb">getopts</span> :u:h:p: option
-</span></span><span class="line"><span class="cl">	  <span class="k">do</span>
-</span></span><span class="line"><span class="cl">	      <span class="k">case</span> <span class="s2">&#34;</span><span class="nv">$option</span><span class="s2">&#34;</span> in
-</span></span><span class="line"><span class="cl">		  u<span class="o">)</span> <span class="nv">user</span><span class="o">=</span><span class="nv">$OPTARG</span><span class="p">;;</span>
-</span></span><span class="line"><span class="cl">		  h<span class="o">)</span> <span class="nv">hostname</span><span class="o">=</span><span class="nv">$OPTARG</span><span class="p">;;</span>
-</span></span><span class="line"><span class="cl">		  p<span class="o">)</span> <span class="nv">port</span><span class="o">=</span><span class="nv">$OPTARG</span><span class="p">;;</span>
-</span></span><span class="line"><span class="cl">		  *<span class="o">)</span> <span class="nb">echo</span> <span class="s2">&#34;Unknown option:</span><span class="nv">$option</span><span class="s2">&#34;</span><span class="p">;;</span>
-</span></span><span class="line"><span class="cl">	      <span class="k">esac</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">done</span>
+</span></span><span class="line"><span class="cl">          <span class="k">while</span> <span class="nb">getopts</span> :u:h:p: option
+</span></span><span class="line"><span class="cl">          <span class="k">do</span>
+</span></span><span class="line"><span class="cl">              <span class="k">case</span> <span class="s2">&#34;</span><span class="nv">$option</span><span class="s2">&#34;</span> in
+</span></span><span class="line"><span class="cl">                  u<span class="o">)</span> <span class="nv">user</span><span class="o">=</span><span class="nv">$OPTARG</span><span class="p">;;</span>
+</span></span><span class="line"><span class="cl">                  h<span class="o">)</span> <span class="nv">hostname</span><span class="o">=</span><span class="nv">$OPTARG</span><span class="p">;;</span>
+</span></span><span class="line"><span class="cl">                  p<span class="o">)</span> <span class="nv">port</span><span class="o">=</span><span class="nv">$OPTARG</span><span class="p">;;</span>
+</span></span><span class="line"><span class="cl">                  *<span class="o">)</span> <span class="nb">echo</span> <span class="s2">&#34;Unknown option:</span><span class="nv">$option</span><span class="s2">&#34;</span><span class="p">;;</span>
+</span></span><span class="line"><span class="cl">              <span class="k">esac</span>
+</span></span><span class="line"><span class="cl">          <span class="k">done</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$port</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
-</span></span><span class="line"><span class="cl">	     <span class="nv">port</span><span class="o">=</span><span class="m">22</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">	     <span class="c1">#check whether it is the first time to run this script and whether authorized_keys exists</span>
-</span></span><span class="line"><span class="cl">	     <span class="c1"># ssh_host_and_user=&#34;$1@$2&#34;</span>
-</span></span><span class="line"><span class="cl">	     <span class="nv">authorized_keys</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.ssh/authorized_keys&#34;</span>
-</span></span><span class="line"><span class="cl">	     <span class="nb">read</span> -r -s -p <span class="s2">&#34;</span><span class="nv">$user</span><span class="s2">@</span><span class="nv">$hostname</span><span class="s2">&#39;s password:&#34;</span> password
-</span></span><span class="line"><span class="cl">	     <span class="k">if</span> sshpass -pv <span class="nv">$password</span> ssh -p <span class="s2">&#34;</span><span class="nv">$port</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="nv">$user</span><span class="s2">@</span><span class="nv">$hostname</span><span class="s2">&#34;</span> <span class="nb">test</span> -e <span class="s2">&#34;</span><span class="nv">$authorized_keys</span><span class="s2">&#34;</span><span class="p">;</span><span class="k">then</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;authorized key exists&#34;</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">kill</span> -INT <span class="nv">$$</span>
-</span></span><span class="line"><span class="cl">		<span class="k">else</span>
-</span></span><span class="line"><span class="cl">		    sshpass -p <span class="nv">$password</span> ssh  <span class="nv">$user</span>@<span class="nv">$hostname</span> -p <span class="nv">$port</span> <span class="s2">&#34;mkdir -p ~/.ssh;chmod 0700 .ssh&#34;</span>
-</span></span><span class="line"><span class="cl">		    sshpass -p <span class="nv">$password</span> scp -P <span class="nv">$port</span>  ~/.ssh/id_rsa.pub <span class="nv">$user</span>@<span class="nv">$hostname</span>:~/.ssh/authorized_keys
-</span></span><span class="line"><span class="cl">		    <span class="c1"># ssh-copy-id &#34;$user@$hostname -p $port&#34;</span>
-</span></span><span class="line"><span class="cl">	     <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">          <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$port</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+</span></span><span class="line"><span class="cl">             <span class="nv">port</span><span class="o">=</span><span class="m">22</span>
+</span></span><span class="line"><span class="cl">          <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">             <span class="c1">#check whether it is the first time to run this script and whether authorized_keys exists</span>
+</span></span><span class="line"><span class="cl">             <span class="c1"># ssh_host_and_user=&#34;$1@$2&#34;</span>
+</span></span><span class="line"><span class="cl">             <span class="nv">authorized_keys</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.ssh/authorized_keys&#34;</span>
+</span></span><span class="line"><span class="cl">             <span class="nb">read</span> -r -s -p <span class="s2">&#34;</span><span class="nv">$user</span><span class="s2">@</span><span class="nv">$hostname</span><span class="s2">&#39;s password:&#34;</span> password
+</span></span><span class="line"><span class="cl">             <span class="k">if</span> sshpass -pv <span class="nv">$password</span> ssh -p <span class="s2">&#34;</span><span class="nv">$port</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="nv">$user</span><span class="s2">@</span><span class="nv">$hostname</span><span class="s2">&#34;</span> <span class="nb">test</span> -e <span class="s2">&#34;</span><span class="nv">$authorized_keys</span><span class="s2">&#34;</span><span class="p">;</span><span class="k">then</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">echo</span> <span class="s2">&#34;authorized key exists&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">kill</span> -INT <span class="nv">$$</span>
+</span></span><span class="line"><span class="cl">                <span class="k">else</span>
+</span></span><span class="line"><span class="cl">                    sshpass -p <span class="nv">$password</span> ssh  <span class="nv">$user</span>@<span class="nv">$hostname</span> -p <span class="nv">$port</span> <span class="s2">&#34;mkdir -p ~/.ssh;chmod 0700 .ssh&#34;</span>
+</span></span><span class="line"><span class="cl">                    sshpass -p <span class="nv">$password</span> scp -P <span class="nv">$port</span>  ~/.ssh/id_rsa.pub <span class="nv">$user</span>@<span class="nv">$hostname</span>:~/.ssh/authorized_keys
+</span></span><span class="line"><span class="cl">                    <span class="c1"># ssh-copy-id &#34;$user@$hostname -p $port&#34;</span>
+</span></span><span class="line"><span class="cl">             <span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
@@ -1560,13 +1879,13 @@
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> -n <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
 </span></span><span class="line"><span class="cl">       <span class="nb">local</span> <span class="nv">length</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">       <span class="k">else</span>
-</span></span><span class="line"><span class="cl">	   <span class="nb">local</span> <span class="nv">length</span><span class="o">=</span><span class="m">32</span>
+</span></span><span class="line"><span class="cl">           <span class="nb">local</span> <span class="nv">length</span><span class="o">=</span><span class="m">32</span>
 </span></span><span class="line"><span class="cl">    <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">       <span class="nv">OS_NAME</span><span class="o">=</span><span class="k">$(</span>uname<span class="k">)</span>
 </span></span><span class="line"><span class="cl">       <span class="k">if</span> <span class="o">[</span> <span class="nv">$OS_NAME</span> <span class="o">=</span> <span class="s2">&#34;Darwin&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	   <span class="nv">LC_CTYPE</span><span class="o">=</span>C cat /dev/urandom <span class="p">|</span>tr -cd <span class="s2">&#34;[:alnum:]&#34;</span><span class="p">|</span>head -c <span class="s2">&#34;</span><span class="nv">$length</span><span class="s2">&#34;</span><span class="p">;</span><span class="nb">echo</span>
+</span></span><span class="line"><span class="cl">           <span class="nv">LC_CTYPE</span><span class="o">=</span>C cat /dev/urandom <span class="p">|</span>tr -cd <span class="s2">&#34;[:alnum:]&#34;</span><span class="p">|</span>head -c <span class="s2">&#34;</span><span class="nv">$length</span><span class="s2">&#34;</span><span class="p">;</span><span class="nb">echo</span>
 </span></span><span class="line"><span class="cl">       <span class="k">else</span>
-</span></span><span class="line"><span class="cl">	   cat /dev/urandom <span class="p">|</span>tr -cd <span class="s2">&#34;[:alnum:]&#34;</span><span class="p">|</span>head -c <span class="s2">&#34;</span><span class="nv">$length</span><span class="s2">&#34;</span><span class="p">;</span><span class="nb">echo</span>
+</span></span><span class="line"><span class="cl">           cat /dev/urandom <span class="p">|</span>tr -cd <span class="s2">&#34;[:alnum:]&#34;</span><span class="p">|</span>head -c <span class="s2">&#34;</span><span class="nv">$length</span><span class="s2">&#34;</span><span class="p">;</span><span class="nb">echo</span>
 </span></span><span class="line"><span class="cl">       <span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></td></tr></table>
@@ -1608,19 +1927,19 @@
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nv">OS_NAME</span><span class="o">=</span><span class="k">$(</span>uname<span class="k">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">function</span> pclip<span class="o">()</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="nv">$OS_NAME</span> <span class="o">=</span> <span class="s2">&#34;CYGWIN&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	putclip <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        putclip <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">[</span> <span class="nv">$OS_NAME</span> <span class="o">=</span> <span class="s2">&#34;Darwin&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	pbcopy <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        pbcopy <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">else</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[</span> -x /usr/bin/xsel <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	    xsel -ib <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">else</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">if</span> <span class="o">[</span> -x /usr/bin/xclip <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">		xclip -selection c <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">else</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;Neither xsel or xclip is installed!&#34;</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">[</span> -x /usr/bin/xsel <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">            xsel -ib <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">[</span> -x /usr/bin/xclip <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">                xclip -selection c <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">echo</span> <span class="s2">&#34;Neither xsel or xclip is installed!&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">    <span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></td></tr></table>
@@ -1728,57 +2047,57 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1"># Figure out which vendor we are</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[[</span> -x <span class="s2">&#34;`which sw_vers 2&gt;/dev/null`&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># OS/X</span>
-</span></span><span class="line"><span class="cl">	<span class="nv">os_VENDOR</span><span class="o">=</span><span class="sb">`</span>sw_vers -productName<span class="sb">`</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># OS/X</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">os_VENDOR</span><span class="o">=</span><span class="sb">`</span>sw_vers -productName<span class="sb">`</span>
 </span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">[[</span> -x <span class="k">$(</span>which lsb_release 2&gt;/dev/null<span class="k">)</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="nv">os_VENDOR</span><span class="o">=</span><span class="k">$(</span>lsb_release -i -s<span class="k">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;Debian,Ubuntu,LinuxMint&#34;</span> <span class="o">=</span>~ <span class="nv">$os_VENDOR</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	    <span class="nv">os_PACKAGE</span><span class="o">=</span><span class="s2">&#34;deb&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">elif</span> <span class="o">[[</span> <span class="s2">&#34;SUSE LINUX&#34;</span> <span class="o">=</span>~ <span class="nv">$os_VENDOR</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	    lsb_release -d -s <span class="p">|</span> grep -q openSUSE
-</span></span><span class="line"><span class="cl">	    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">		<span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;openSUSE&#34;</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">	<span class="k">elif</span> <span class="o">[[</span> <span class="nv">$os_VENDOR</span> <span class="o">==</span> <span class="s2">&#34;openSUSE project&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	    <span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;openSUSE&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">elif</span> <span class="o">[[</span> <span class="nv">$os_VENDOR</span> <span class="o">=</span>~ Red.*Hat <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	    <span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;Red Hat&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
-</span></span><span class="line"><span class="cl">	<span class="nv">os_CODENAME</span><span class="o">=</span><span class="k">$(</span>lsb_release -c -s<span class="k">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">os_VENDOR</span><span class="o">=</span><span class="k">$(</span>lsb_release -i -s<span class="k">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;Debian,Ubuntu,LinuxMint&#34;</span> <span class="o">=</span>~ <span class="nv">$os_VENDOR</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">os_PACKAGE</span><span class="o">=</span><span class="s2">&#34;deb&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="o">[[</span> <span class="s2">&#34;SUSE LINUX&#34;</span> <span class="o">=</span>~ <span class="nv">$os_VENDOR</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">            lsb_release -d -s <span class="p">|</span> grep -q openSUSE
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">[[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;openSUSE&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="o">[[</span> <span class="nv">$os_VENDOR</span> <span class="o">==</span> <span class="s2">&#34;openSUSE project&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;openSUSE&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="o">[[</span> <span class="nv">$os_VENDOR</span> <span class="o">=</span>~ Red.*Hat <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;Red Hat&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">os_CODENAME</span><span class="o">=</span><span class="k">$(</span>lsb_release -c -s<span class="k">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">[[</span> -r /etc/redhat-release <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># Red Hat Enterprise Linux Server release 5.5 (Tikanga)</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># Red Hat Enterprise Linux Server release 7.0 Beta (Maipo)</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># CentOS release 5.5 (Final)</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># CentOS Linux release 6.0 (Final)</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># Fedora release 16 (Verne)</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># XenServer release 6.2.0-70446c (xenenterprise)</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># Oracle Linux release 7</span>
-</span></span><span class="line"><span class="cl">	<span class="nv">os_CODENAME</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">for</span> r in <span class="s2">&#34;Red Hat&#34;</span> CentOS Fedora XenServer<span class="p">;</span> <span class="k">do</span>
-</span></span><span class="line"><span class="cl">	    <span class="nv">os_VENDOR</span><span class="o">=</span><span class="nv">$r</span>
-</span></span><span class="line"><span class="cl">	<span class="k">done</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$os_VENDOR</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;Red Hat&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[[</span> -r /etc/oracle-release <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	    <span class="nv">os_VENDOR</span><span class="o">=</span>OracleLinux
-</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Red Hat Enterprise Linux Server release 5.5 (Tikanga)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Red Hat Enterprise Linux Server release 7.0 Beta (Maipo)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># CentOS release 5.5 (Final)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># CentOS Linux release 6.0 (Final)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Fedora release 16 (Verne)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># XenServer release 6.2.0-70446c (xenenterprise)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Oracle Linux release 7</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">os_CODENAME</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> r in <span class="s2">&#34;Red Hat&#34;</span> CentOS Fedora XenServer<span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">os_VENDOR</span><span class="o">=</span><span class="nv">$r</span>
+</span></span><span class="line"><span class="cl">        <span class="k">done</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$os_VENDOR</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;Red Hat&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[[</span> -r /etc/oracle-release <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">os_VENDOR</span><span class="o">=</span>OracleLinux
+</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">[[</span> -r /etc/SuSE-release <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="k">for</span> r in openSUSE <span class="s2">&#34;SUSE Linux&#34;</span><span class="p">;</span> <span class="k">do</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$r</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;SUSE Linux&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">		<span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;SUSE LINUX&#34;</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">else</span>
-</span></span><span class="line"><span class="cl">		<span class="nv">os_VENDOR</span><span class="o">=</span><span class="nv">$r</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">	    <span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">done</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># If lsb_release is not installed, we should be able to detect Debian OS</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> r in openSUSE <span class="s2">&#34;SUSE Linux&#34;</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$r</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;SUSE Linux&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;SUSE LINUX&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">os_VENDOR</span><span class="o">=</span><span class="nv">$r</span>
+</span></span><span class="line"><span class="cl">            <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">done</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># If lsb_release is not installed, we should be able to detect Debian OS</span>
 </span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">[[</span> -f /etc/debian_version <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="o">[[</span> <span class="k">$(</span>cat /proc/version<span class="k">)</span> <span class="o">=</span>~ <span class="s2">&#34;Debian&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;Debian&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;Debian&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">export</span> os_VENDOR
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="根据不同的发行版本安装软件"><span class="section-num">2.6</span> 根据不同的发行版本安装软件</h3>
-<p>刚刚上面的脚本是为了准确判断出所有的 *nix 系统的，但是方便起见，也可以直接使用<code>uname</code> 命令</p>
+<p>刚刚上面的脚本是为了准确判断出所有的 *nix 系统的，但是方便起见，也可以直接使用=uname= 命令</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
@@ -1942,8 +2261,8 @@
 </span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;This is mac os&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="c1"># check if brew exists</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">type</span> brew&gt;/dev/null 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="o">||</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> &gt;<span class="p">&amp;</span><span class="m">2</span> <span class="s2">&#34; require brew but it&#39;s not installed.  Aborting.&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="nb">exit</span> 1<span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> &gt;<span class="p">&amp;</span><span class="m">2</span> <span class="s2">&#34; require brew but it&#39;s not installed.  Aborting.&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">exit</span> 1<span class="p">;</span> <span class="o">}</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;install htop&#34;</span>
 </span></span><span class="line"><span class="cl">    brew install htop
 </span></span><span class="line"><span class="cl">
@@ -1980,109 +2299,109 @@
 </span></span><span class="line"><span class="cl">    <span class="c1"># Do something under GNU/Linux platform</span>
 </span></span><span class="line"><span class="cl">    GetOSVersion
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$os_VENDOR</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;Ubuntu&#34;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$os_VENDOR</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;Debian&#34;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$os_VENDOR</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;LinuxMint&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># install htop</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install htop -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install httpie</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install httpie -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install ag</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install  silversearcher-ag -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install zeal</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install zeal -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install ncdu</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install ncdu -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install i3</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install i3 -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install emacs (i could die without it)</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install emacs -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install vim</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install vim -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install tree</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install tree -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install shellcheck</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install shellcheck -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install guile (scheme compiler)</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install guile -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install source code pro font</span>
-</span></span><span class="line"><span class="cl">	<span class="o">[</span> -d /usr/share/fonts/opentype <span class="o">]</span> <span class="o">||</span> sudo mkdir /usr/share/fonts/opentype
-</span></span><span class="line"><span class="cl">	sudo git clone https://github.com/adobe-fonts/source-code-pro.git /usr/share/fonts/opentype/scp
-</span></span><span class="line"><span class="cl">	sudo fc-cache -f -v
-</span></span><span class="line"><span class="cl">	<span class="c1"># install proxychains-ng</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install proxychains-ng -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install pandoc</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install pandoc -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install htop</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install htop -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install httpie</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install httpie -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install ag</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install  silversearcher-ag -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install zeal</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install zeal -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install ncdu</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install ncdu -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install i3</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install i3 -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install emacs (i could die without it)</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install emacs -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install vim</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install vim -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install tree</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install tree -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install shellcheck</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install shellcheck -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install guile (scheme compiler)</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install guile -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install source code pro font</span>
+</span></span><span class="line"><span class="cl">        <span class="o">[</span> -d /usr/share/fonts/opentype <span class="o">]</span> <span class="o">||</span> sudo mkdir /usr/share/fonts/opentype
+</span></span><span class="line"><span class="cl">        sudo git clone https://github.com/adobe-fonts/source-code-pro.git /usr/share/fonts/opentype/scp
+</span></span><span class="line"><span class="cl">        sudo fc-cache -f -v
+</span></span><span class="line"><span class="cl">        <span class="c1"># install proxychains-ng</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install proxychains-ng -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install pandoc</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install pandoc -y
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	sudo apt-get install markdown -y
+</span></span><span class="line"><span class="cl">        sudo apt-get install markdown -y
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	sudo apt-get install cloc -y
+</span></span><span class="line"><span class="cl">        sudo apt-get install cloc -y
 </span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">[</span>  <span class="s2">&#34;</span><span class="nv">$os_VENDOR</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;Fedora&#34;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$os_VENDOR</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;CentOS&#34;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$os_VENDOR</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;Korora&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># install ag</span>
-</span></span><span class="line"><span class="cl">	sudo yum install -y the_silver_searcher
-</span></span><span class="line"><span class="cl">	<span class="c1"># install zeal</span>
-</span></span><span class="line"><span class="cl">	sudo yum install -y zeal
-</span></span><span class="line"><span class="cl">	<span class="c1"># install httpie</span>
-</span></span><span class="line"><span class="cl">	sudo yum install -y httpie
-</span></span><span class="line"><span class="cl">	<span class="c1"># install htop</span>
-</span></span><span class="line"><span class="cl">	sudo yum install -y htop
-</span></span><span class="line"><span class="cl">	<span class="c1"># install ncdu</span>
-</span></span><span class="line"><span class="cl">	sudo yum install -y ncdu
-</span></span><span class="line"><span class="cl">	<span class="c1"># install vim</span>
-</span></span><span class="line"><span class="cl">	sudo yum install -y vim
-</span></span><span class="line"><span class="cl">	<span class="c1"># install emacs</span>
-</span></span><span class="line"><span class="cl">	sudo yum install -y emacs
-</span></span><span class="line"><span class="cl">	<span class="c1"># install i3</span>
-</span></span><span class="line"><span class="cl">	sudo yum install -y i3
-</span></span><span class="line"><span class="cl">	<span class="c1"># install tree</span>
-</span></span><span class="line"><span class="cl">	sudo yum install -y tree
-</span></span><span class="line"><span class="cl">	<span class="c1"># install shellcheck</span>
-</span></span><span class="line"><span class="cl">	sudo yum install ShellCheck -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install guile</span>
-</span></span><span class="line"><span class="cl">	sudo yum install guile -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install source  code pro font</span>
-</span></span><span class="line"><span class="cl">	sudo yum install adobe-source-code-pro-fonts -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install proxychains-ng</span>
-</span></span><span class="line"><span class="cl">	sudo yum install proxychains-ng -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install ag</span>
+</span></span><span class="line"><span class="cl">        sudo yum install -y the_silver_searcher
+</span></span><span class="line"><span class="cl">        <span class="c1"># install zeal</span>
+</span></span><span class="line"><span class="cl">        sudo yum install -y zeal
+</span></span><span class="line"><span class="cl">        <span class="c1"># install httpie</span>
+</span></span><span class="line"><span class="cl">        sudo yum install -y httpie
+</span></span><span class="line"><span class="cl">        <span class="c1"># install htop</span>
+</span></span><span class="line"><span class="cl">        sudo yum install -y htop
+</span></span><span class="line"><span class="cl">        <span class="c1"># install ncdu</span>
+</span></span><span class="line"><span class="cl">        sudo yum install -y ncdu
+</span></span><span class="line"><span class="cl">        <span class="c1"># install vim</span>
+</span></span><span class="line"><span class="cl">        sudo yum install -y vim
+</span></span><span class="line"><span class="cl">        <span class="c1"># install emacs</span>
+</span></span><span class="line"><span class="cl">        sudo yum install -y emacs
+</span></span><span class="line"><span class="cl">        <span class="c1"># install i3</span>
+</span></span><span class="line"><span class="cl">        sudo yum install -y i3
+</span></span><span class="line"><span class="cl">        <span class="c1"># install tree</span>
+</span></span><span class="line"><span class="cl">        sudo yum install -y tree
+</span></span><span class="line"><span class="cl">        <span class="c1"># install shellcheck</span>
+</span></span><span class="line"><span class="cl">        sudo yum install ShellCheck -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install guile</span>
+</span></span><span class="line"><span class="cl">        sudo yum install guile -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install source  code pro font</span>
+</span></span><span class="line"><span class="cl">        sudo yum install adobe-source-code-pro-fonts -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install proxychains-ng</span>
+</span></span><span class="line"><span class="cl">        sudo yum install proxychains-ng -y
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	sudo yum install pandoc -y
+</span></span><span class="line"><span class="cl">        sudo yum install pandoc -y
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	sudo yum install markdown -y
+</span></span><span class="line"><span class="cl">        sudo yum install markdown -y
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="c1"># count line and space in code</span>
-</span></span><span class="line"><span class="cl">	sudo yum install cloc  -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># count line and space in code</span>
+</span></span><span class="line"><span class="cl">        sudo yum install cloc  -y
 </span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">[</span>  <span class="s2">&#34;</span><span class="nv">$os_VENDOR</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;Arch&#34;</span> <span class="o">]</span> <span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># install ag</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S -y the_silver_searcher
-</span></span><span class="line"><span class="cl">	<span class="c1"># install zeal</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S -y zeal
-</span></span><span class="line"><span class="cl">	<span class="c1"># install httpie</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S -y httpie
-</span></span><span class="line"><span class="cl">	<span class="c1"># install htop</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S -y htop
-</span></span><span class="line"><span class="cl">	<span class="c1"># install ncdu</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S -y ncdu
-</span></span><span class="line"><span class="cl">	<span class="c1"># install vim</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S -y vim
-</span></span><span class="line"><span class="cl">	<span class="c1"># install emacs</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S -y emacs
-</span></span><span class="line"><span class="cl">	<span class="c1"># install i3</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S -y i3
-</span></span><span class="line"><span class="cl">	<span class="c1"># install tree</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S -y tree
-</span></span><span class="line"><span class="cl">	<span class="c1"># install shellcheck</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S ShellCheck -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install guile</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S guile -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install source-code-pro font</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S adobe-source-code-pro-fonts -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install proxychains-ng</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S proxychains-ng -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install ag</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S -y the_silver_searcher
+</span></span><span class="line"><span class="cl">        <span class="c1"># install zeal</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S -y zeal
+</span></span><span class="line"><span class="cl">        <span class="c1"># install httpie</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S -y httpie
+</span></span><span class="line"><span class="cl">        <span class="c1"># install htop</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S -y htop
+</span></span><span class="line"><span class="cl">        <span class="c1"># install ncdu</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S -y ncdu
+</span></span><span class="line"><span class="cl">        <span class="c1"># install vim</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S -y vim
+</span></span><span class="line"><span class="cl">        <span class="c1"># install emacs</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S -y emacs
+</span></span><span class="line"><span class="cl">        <span class="c1"># install i3</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S -y i3
+</span></span><span class="line"><span class="cl">        <span class="c1"># install tree</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S -y tree
+</span></span><span class="line"><span class="cl">        <span class="c1"># install shellcheck</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S ShellCheck -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install guile</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S guile -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install source-code-pro font</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S adobe-source-code-pro-fonts -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install proxychains-ng</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S proxychains-ng -y
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	sudo pacman -S pandoc -y
+</span></span><span class="line"><span class="cl">        sudo pacman -S pandoc -y
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	sudo pacman -S markdown -y
+</span></span><span class="line"><span class="cl">        sudo pacman -S markdown -y
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	sudo pacman -S ripgrep -y
+</span></span><span class="line"><span class="cl">        sudo pacman -S ripgrep -y
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	sudo pacman -S cloc  -y
+</span></span><span class="line"><span class="cl">        sudo pacman -S cloc  -y
 </span></span><span class="line"><span class="cl">    <span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="k">elif</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>expr substr <span class="k">$(</span>uname -s<span class="k">)</span> <span class="m">1</span> 10<span class="k">)</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;MINGW32_NT&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">    <span class="c1"># Do something under 32 bits Windows NT platform</span>
@@ -2119,7 +2438,7 @@
 </div>]]></content:encoded>
     </item>
     <item>
-      <title>关于工具,关于折腾</title>
+      <title>关于工具, 关于折腾</title>
       <link>https://ramsayleung.github.io/zh/post/2017/about_tool_about_tweak/</link>
       <pubDate>Fri, 24 Mar 2017 00:00:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/about_tool_about_tweak/</guid>

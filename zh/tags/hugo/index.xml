@@ -12,12 +12,12 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Wed, 04 Dec 2024 14:33:02 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jan 2025 20:12:43 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Hugo评论系统自适应博客主题: 支持dark与light theme</title>
       <link>https://ramsayleung.github.io/zh/post/2024/hugo%E8%AF%84%E8%AE%BA%E7%BB%84%E4%BB%B6%E8%87%AA%E9%80%82%E5%BA%94%E5%8D%9A%E5%AE%A2%E6%9A%97%E9%BB%91%E4%B8%BB%E9%A2%98/</link>
-      <pubDate>Wed, 04 Dec 2024 13:25:00 +0800</pubDate>
+      <pubDate>Wed, 04 Dec 2024 13:25:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2024/hugo%E8%AF%84%E8%AE%BA%E7%BB%84%E4%BB%B6%E8%87%AA%E9%80%82%E5%BA%94%E5%8D%9A%E5%AE%A2%E6%9A%97%E9%BB%91%E4%B8%BB%E9%A2%98/</guid>
       <description>1 问题 评论系统是博客的关键组件，Hugo 支持若干个评论系统，包括流行的 Disqus, 基于 GitHub 的 Giscus 和 Utteranc, 以及其他评论系统 我博客使用的评论系统是 Utteranc, 主题是 PaperMod, PaperMod 支持</description>
       <content:encoded><![CDATA[<h2 id="问题"><span class="section-num">1</span> 问题</h2>
@@ -143,7 +143,7 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">loadUtterances</span><span class="p">(</span><span class="nx">darkMode</span><span class="o">=</span><span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">commentContainer</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;comments-giscus&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">commentContainer</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;comments-utteranc&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">commentContainer</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="nx">commentContainer</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 </span></span><span class="line"><span class="cl">        <span class="kr">const</span> <span class="nx">commentScript</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&#34;script&#34;</span><span class="p">);</span>

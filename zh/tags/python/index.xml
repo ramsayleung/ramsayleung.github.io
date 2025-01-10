@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Tue, 31 Dec 2024 11:48:36 -0800</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jan 2025 20:02:08 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>测试技能进阶(二): Parameterized Tests</title>
@@ -65,7 +65,7 @@
 </div>
 </div><p>但是这样的做法一般是不推荐的，Best Practice是一个 test case 只测一种情况，因为如果一个 test case 包含多个测试条件，如果 test case fail 了，那么不看源码或者堆栈，一般还看不出是什么 case 失败了，不好排查。</p>
 <h3 id="多个-test-case"><span class="section-num">2.2</span> 多个 test case</h3>
-<p>推荐做法就是每个测试条件定个单独的 test case。</p>
+<p>推荐做法就是每个测试条件一个单独的 test case。</p>
 <p>另外我们通过test case发现上面的代码没有处理异常情况，我们现在要优化下我们的代码，增加异常处理逻辑(这个就是TDD所推崇的开发哲学, test case 先行，通过test case发现问题，让test case fail掉，然后修正业务逻辑，test case再运行通过).</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -2308,7 +2308,7 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
       <guid>https://ramsayleung.github.io/zh/post/2016/emacs_ipython/</guid>
       <description>Use Ipython in Emasc</description>
       <content:encoded><![CDATA[<h2 id="emacs-ipython-输出错误"><span class="section-num">1</span> Emacs Ipython 输出错误</h2>
-<p>在Emacs 运行 <strong>run-python</strong> 的时候，报错了，如下</p>
+<p>在Emacs 运行 <code>run-python</code> 的时候，报错了，如下</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -2335,7 +2335,7 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 </div>
 </div><hr>
 <h3 id="update-2017-3-15"><span class="section-num">1.1</span> Update 2017-3-15</h3>
-<p>在添加了 <strong>&ndash;simple-promp -i</strong> 参数以后，虽说乱码的问题解决了，但是新的问题又出现了
+<p>在添加了 <code>--simple-promp -i</code> 参数以后，虽说乱码的问题解决了，但是新的问题又出现了
 在Ipython 里面是没法无法输入多行内容的，即使是一个简单的循环，详情查看这条issue
 <a href="https://github.com/ipython/ipython/issues/9816">https://github.com/ipython/ipython/issues/9816</a>. 现在Ipython 开发社区还没有解决这个
 问题，所以现在的权宜之计就是使用 Ipython4,等到社区解决了这个问题在升级为 Ipython5</p>
@@ -2349,11 +2349,10 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 </div>
 </div><h2 id="emacs-ipython-的使用优化"><span class="section-num">2</span> Emacs Ipython 的使用优化</h2>
 <h3 id="python-pop"><span class="section-num">2.1</span> python-pop</h3>
-<p>因为我之前使用Emacs的时候，是使用Spacemacs的配置的，但是后来觉得还是自己的
-配置用的更舒服，所以又切换回自己的配置，但是我还是很想念Spacemacs的一些绑定
-例如shell在底下弹出，或者是关闭，然后找到了<a href="https://github.com/kyagi/shell-pop-el">Shell-pop</a> 这package,就可以用回
-Spacemacs的shell使用习惯。然后我觉得，Ipython shell也可以这样配置，只不过
-我没有发现类似的package,又因为Emacs Lisp的强大，所以我自己写了一段小函数实现
+<p>因为我之前使用Emacs的时候，是使用Spacemacs的配置的，但是后来觉得还是自己的 配置用的更舒服，所以又切换回自己的配置。</p>
+<p>但是我还是很想念Spacemacs的一些绑定， 例如shell在底下弹出，或者是关闭，然后找到了<a href="https://github.com/kyagi/shell-pop-el">Shell-pop</a> 这package,就可以用回
+Spacemacs的shell使用习惯。</p>
+<p>然后我觉得，Ipython shell也可以这样配置，只不过我没有发现类似的package,又因为Emacs Lisp的强大，所以我自己写了一段小函数实现
 shell-pop 的功能</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -2399,13 +2398,12 @@ shell-pop 的功能</p>
 </span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">evil-insert-state</span><span class="p">))))</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>如果没有使用Evil,可以把 *(evil-insert-state)*去掉</p>
+</div><p>如果没有使用Evil,可以把 <code>(evil-insert-state)</code> 去掉</p>
 <h3 id="ipython-history"><span class="section-num">2.2</span> Ipython History</h3>
 <p>我在普通的Shell使用Ipython的时候，很自然地使用上下方向键翻到上一条/下一条
-执行的命令，因为shell的使用习惯就是这样滴，但是在Emacs里面使用Ipython,上下
-方向键是去到上一行/下一行，就好像 vim 的 <strong>j</strong> <strong>k</strong>,如果要翻到上一条命令，快捷键
-是 <strong>M-p</strong>,实在很不习惯，所以在查了一下Emacs manual 后，我改了一下按键绑定就实现了
-我想要的效果</p>
+执行的命令，因为shell的使用习惯就是这样滴。</p>
+<p>但是在Emacs里面使用Ipython,上下 方向键是去到上一行/下一行，就好像 vim 的 <code>j</code> <code>k</code>,如果要翻到上一条命令，快捷键
+是 <code>M-p</code>,实在很不习惯，所以在查了一下Emacs manual 后，我改了一下按键绑定就实现了我想要的效果</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1

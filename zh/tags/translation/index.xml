@@ -12,12 +12,12 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Wed, 23 Feb 2022 19:41:32 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jan 2025 19:18:56 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/translation/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>(翻译)从Helm到Ivy</title>
       <link>https://ramsayleung.github.io/zh/post/2017/from-helm-to-ivy/</link>
-      <pubDate>Sun, 05 Mar 2017 00:00:00 +0800</pubDate>
+      <pubDate>Sun, 05 Mar 2017 00:00:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/from-helm-to-ivy/</guid>
       <description>An Translated Post about switch from helm to ivy</description>
       <content:encoded><![CDATA[<p>最近，我发现很多Emacs 用户对Ivy 很感兴趣；而且大部份用户都是已经了解过Helm 或者Ido的
@@ -32,7 +32,7 @@
 <p>例如Helm 有一个命令(<strong>helm-google-suggest</strong>)可以模拟Goole 的搜索框，并在你输入时给出相应的google 提示</p>
 <p>Ivy 和Helm 都有相同的目标，但是它们实现的方法却是迥然不同</p>
 <p>现在我想站在用户的角度来比较一下这两个工具。我这里指的用户观点是我在不需要了解Helm 和Ivy 的内部工作原理的前提下对这两个工具进行比较。</p>
-<p>其实，因为我对 <strong>elisp</strong>还谈不上精通，所以也没办法就两者实现细节来进行比较。但是这两个工具我都使用过，所以我可以从用户的角度，跟你分享我使用它们的不同感受。最后，我从Helm 切换到了Ivy</p>
+<p>其实，因为我对 *elisp*还谈不上精通，所以也没办法就两者实现细节来进行比较。但是这两个工具我都使用过，所以我可以从用户的角度，跟你分享我使用它们的不同感受。最后，我从Helm 切换到了Ivy</p>
 <p>我想先谈Helm.当我使用Spacemacs 的时候，我学会了怎么使用Helm,以Helm 的方式思考, 如何自定义Helm,怎么把Helm 配置得称心如意。</p>
 <p>我想我应该算得上是一个中级的Helm 用户吧。我有读过<a href="http://tuhdo.github.io/helm-intro.html">这篇文章</a> 还有<a href="http://tuhdo.github.io/helm-projectile.html">这篇文章</a> 以及<a href="https://github.com/emacs-helm/helm/wiki">Wiki</a> 此外，在长达一年的时间里，我每天都是使用Helm的</p>
 <p><strong>Helm 是一个非常成熟的工具</strong>.根据git 的提交历史，Helm 的开发工作是在2009年左右开始的。
@@ -134,7 +134,7 @@ Counsel 也只有7500 行代码</p>
 </span></span><span class="line"><span class="cl">  <span class="nb">:diminish</span> <span class="p">(</span><span class="nv">ivy-mode</span> <span class="o">.</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:bind</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">:map</span> <span class="nv">ivy-mode-map</span>
-</span></span><span class="line"><span class="cl">	<span class="p">(</span><span class="s">&#34;C-&#39;&#34;</span> <span class="o">.</span> <span class="nv">ivy-avy</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="s">&#34;C-&#39;&#34;</span> <span class="o">.</span> <span class="nv">ivy-avy</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:config</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nv">ivy-mode</span> <span class="mi">1</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="c1">;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.</span>
@@ -147,8 +147,8 @@ Counsel 也只有7500 行代码</p>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">setq</span> <span class="nv">ivy-initial-inputs-alist</span> <span class="no">nil</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="c1">;; configure regexp engine.</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">setq</span> <span class="nv">ivy-re-builders-alist</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">;; allow input not in order</span>
-</span></span><span class="line"><span class="cl">	<span class="o">&#39;</span><span class="p">((</span><span class="no">t</span>   <span class="o">.</span> <span class="nv">ivy--regex-ignore-order</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">;; allow input not in order</span>
+</span></span><span class="line"><span class="cl">        <span class="o">&#39;</span><span class="p">((</span><span class="no">t</span>   <span class="o">.</span> <span class="nv">ivy--regex-ignore-order</span><span class="p">))))</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Ivy 是很低调的；它不想让你把一切都整合到Ivy去。它仅仅是提供你必需的补全。你不能像Helm 那样用Ivy 来做任何事；那为什么我还要切换到Ivy 去呢？</p>
@@ -260,9 +260,9 @@ Counsel 也只有7500 行代码</p>
 <pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nv">helm</span>
 </span></span><span class="line"><span class="cl"> <span class="nb">:sources</span>
 </span></span><span class="line"><span class="cl"> <span class="p">(</span><span class="nv">helm-build-sync-source</span> <span class="s">&#34;one-to-ten&#34;</span>
-</span></span><span class="line"><span class="cl">			 <span class="nb">:candidates</span>
-</span></span><span class="line"><span class="cl">			 <span class="p">(</span><span class="nf">mapcar</span> <span class="nf">#&#39;number-to-string</span> <span class="p">(</span><span class="nv">number-sequence</span> <span class="mi">1</span> <span class="mi">10</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">			 <span class="nb">:fuzzy-match</span> <span class="no">t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                         <span class="nb">:candidates</span>
+</span></span><span class="line"><span class="cl">                         <span class="p">(</span><span class="nf">mapcar</span> <span class="nf">#&#39;number-to-string</span> <span class="p">(</span><span class="nv">number-sequence</span> <span class="mi">1</span> <span class="mi">10</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">                         <span class="nb">:fuzzy-match</span> <span class="no">t</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"> <span class="nb">:buffer</span>
 </span></span><span class="line"><span class="cl"> <span class="s">&#34;*helm one-to-ten*&#34;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>

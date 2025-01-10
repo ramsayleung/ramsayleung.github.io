@@ -12,18 +12,18 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Tue, 31 Dec 2024 12:18:30 -0800</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jan 2025 20:51:33 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/command_line/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>脚本分享</title>
       <link>https://ramsayleung.github.io/zh/post/2017/share_shell_script/</link>
-      <pubDate>Sat, 22 Apr 2017 00:00:00 +0800</pubDate>
+      <pubDate>Sat, 22 Apr 2017 00:00:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/share_shell_script/</guid>
       <description>share of my shell script snippet</description>
       <content:encoded><![CDATA[<p>分享一下平时工作生活中编写的一些脚本片段(一直更新). 适用于 OS X 和 Linux</p>
 <h2 id="准备工作"><span class="section-num">1</span> 准备工作</h2>
 <p>因为我比较多的脚本都是基于 <code>percol</code> 这个神器，所以需要先安装 <code>percol</code>, 如果 不了解 <code>percol</code> 的话，可以翻看一下我之前的文章 <a href="https://ramsayleung.github.io/post/2017/percol/">Linux/Unix Shell 二三事之神器percol</a> .</p>
-<p>我一般将写好的函数 source 命令添加到 Shell. 例如脚本函数都在一个叫<code>tool_function.sh</code> 的文件里面，而我使用 Zsh, 则只需要在 <code>.zshrc</code> 添加一句语句：</p>
+<p>我一般将写好的函数 source 命令添加到 Shell. 例如脚本函数都在一个叫 <code>tool_function.sh</code> 的文件里面，而我使用 Zsh, 则只需要在 <code>.zshrc</code> 添加一句语句：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -84,35 +84,35 @@
 </span></span><span class="line"><span class="cl">    <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">       <span class="c1">#if public/private key doesn&#39;t exist ,generate public/private key</span>
 </span></span><span class="line"><span class="cl">       <span class="k">if</span> <span class="o">[</span> -f ~/.ssh/id_rsa <span class="o">]</span><span class="p">;</span><span class="k">then</span>
-</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> <span class="s2">&#34;public/private key exists&#34;</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">	      ssh-keygen -t rsa
+</span></span><span class="line"><span class="cl">          <span class="nb">echo</span> <span class="s2">&#34;public/private key exists&#34;</span>
+</span></span><span class="line"><span class="cl">          <span class="k">else</span>
+</span></span><span class="line"><span class="cl">              ssh-keygen -t rsa
 </span></span><span class="line"><span class="cl">       <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">while</span> <span class="nb">getopts</span> :u:h:p: option
-</span></span><span class="line"><span class="cl">	  <span class="k">do</span>
-</span></span><span class="line"><span class="cl">	      <span class="k">case</span> <span class="s2">&#34;</span><span class="nv">$option</span><span class="s2">&#34;</span> in
-</span></span><span class="line"><span class="cl">		  u<span class="o">)</span> <span class="nv">user</span><span class="o">=</span><span class="nv">$OPTARG</span><span class="p">;;</span>
-</span></span><span class="line"><span class="cl">		  h<span class="o">)</span> <span class="nv">hostname</span><span class="o">=</span><span class="nv">$OPTARG</span><span class="p">;;</span>
-</span></span><span class="line"><span class="cl">		  p<span class="o">)</span> <span class="nv">port</span><span class="o">=</span><span class="nv">$OPTARG</span><span class="p">;;</span>
-</span></span><span class="line"><span class="cl">		  *<span class="o">)</span> <span class="nb">echo</span> <span class="s2">&#34;Unknown option:</span><span class="nv">$option</span><span class="s2">&#34;</span><span class="p">;;</span>
-</span></span><span class="line"><span class="cl">	      <span class="k">esac</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">done</span>
+</span></span><span class="line"><span class="cl">          <span class="k">while</span> <span class="nb">getopts</span> :u:h:p: option
+</span></span><span class="line"><span class="cl">          <span class="k">do</span>
+</span></span><span class="line"><span class="cl">              <span class="k">case</span> <span class="s2">&#34;</span><span class="nv">$option</span><span class="s2">&#34;</span> in
+</span></span><span class="line"><span class="cl">                  u<span class="o">)</span> <span class="nv">user</span><span class="o">=</span><span class="nv">$OPTARG</span><span class="p">;;</span>
+</span></span><span class="line"><span class="cl">                  h<span class="o">)</span> <span class="nv">hostname</span><span class="o">=</span><span class="nv">$OPTARG</span><span class="p">;;</span>
+</span></span><span class="line"><span class="cl">                  p<span class="o">)</span> <span class="nv">port</span><span class="o">=</span><span class="nv">$OPTARG</span><span class="p">;;</span>
+</span></span><span class="line"><span class="cl">                  *<span class="o">)</span> <span class="nb">echo</span> <span class="s2">&#34;Unknown option:</span><span class="nv">$option</span><span class="s2">&#34;</span><span class="p">;;</span>
+</span></span><span class="line"><span class="cl">              <span class="k">esac</span>
+</span></span><span class="line"><span class="cl">          <span class="k">done</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$port</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
-</span></span><span class="line"><span class="cl">	     <span class="nv">port</span><span class="o">=</span><span class="m">22</span>
-</span></span><span class="line"><span class="cl">	  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">	     <span class="c1">#check whether it is the first time to run this script and whether authorized_keys exists</span>
-</span></span><span class="line"><span class="cl">	     <span class="c1"># ssh_host_and_user=&#34;$1@$2&#34;</span>
-</span></span><span class="line"><span class="cl">	     <span class="nv">authorized_keys</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.ssh/authorized_keys&#34;</span>
-</span></span><span class="line"><span class="cl">	     <span class="nb">read</span> -r -s -p <span class="s2">&#34;</span><span class="nv">$user</span><span class="s2">@</span><span class="nv">$hostname</span><span class="s2">&#39;s password:&#34;</span> password
-</span></span><span class="line"><span class="cl">	     <span class="k">if</span> sshpass -pv <span class="nv">$password</span> ssh -p <span class="s2">&#34;</span><span class="nv">$port</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="nv">$user</span><span class="s2">@</span><span class="nv">$hostname</span><span class="s2">&#34;</span> <span class="nb">test</span> -e <span class="s2">&#34;</span><span class="nv">$authorized_keys</span><span class="s2">&#34;</span><span class="p">;</span><span class="k">then</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;authorized key exists&#34;</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">kill</span> -INT <span class="nv">$$</span>
-</span></span><span class="line"><span class="cl">		<span class="k">else</span>
-</span></span><span class="line"><span class="cl">		    sshpass -p <span class="nv">$password</span> ssh  <span class="nv">$user</span>@<span class="nv">$hostname</span> -p <span class="nv">$port</span> <span class="s2">&#34;mkdir -p ~/.ssh;chmod 0700 .ssh&#34;</span>
-</span></span><span class="line"><span class="cl">		    sshpass -p <span class="nv">$password</span> scp -P <span class="nv">$port</span>  ~/.ssh/id_rsa.pub <span class="nv">$user</span>@<span class="nv">$hostname</span>:~/.ssh/authorized_keys
-</span></span><span class="line"><span class="cl">		    <span class="c1"># ssh-copy-id &#34;$user@$hostname -p $port&#34;</span>
-</span></span><span class="line"><span class="cl">	     <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">          <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$port</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+</span></span><span class="line"><span class="cl">             <span class="nv">port</span><span class="o">=</span><span class="m">22</span>
+</span></span><span class="line"><span class="cl">          <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">             <span class="c1">#check whether it is the first time to run this script and whether authorized_keys exists</span>
+</span></span><span class="line"><span class="cl">             <span class="c1"># ssh_host_and_user=&#34;$1@$2&#34;</span>
+</span></span><span class="line"><span class="cl">             <span class="nv">authorized_keys</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.ssh/authorized_keys&#34;</span>
+</span></span><span class="line"><span class="cl">             <span class="nb">read</span> -r -s -p <span class="s2">&#34;</span><span class="nv">$user</span><span class="s2">@</span><span class="nv">$hostname</span><span class="s2">&#39;s password:&#34;</span> password
+</span></span><span class="line"><span class="cl">             <span class="k">if</span> sshpass -pv <span class="nv">$password</span> ssh -p <span class="s2">&#34;</span><span class="nv">$port</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="nv">$user</span><span class="s2">@</span><span class="nv">$hostname</span><span class="s2">&#34;</span> <span class="nb">test</span> -e <span class="s2">&#34;</span><span class="nv">$authorized_keys</span><span class="s2">&#34;</span><span class="p">;</span><span class="k">then</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">echo</span> <span class="s2">&#34;authorized key exists&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">kill</span> -INT <span class="nv">$$</span>
+</span></span><span class="line"><span class="cl">                <span class="k">else</span>
+</span></span><span class="line"><span class="cl">                    sshpass -p <span class="nv">$password</span> ssh  <span class="nv">$user</span>@<span class="nv">$hostname</span> -p <span class="nv">$port</span> <span class="s2">&#34;mkdir -p ~/.ssh;chmod 0700 .ssh&#34;</span>
+</span></span><span class="line"><span class="cl">                    sshpass -p <span class="nv">$password</span> scp -P <span class="nv">$port</span>  ~/.ssh/id_rsa.pub <span class="nv">$user</span>@<span class="nv">$hostname</span>:~/.ssh/authorized_keys
+</span></span><span class="line"><span class="cl">                    <span class="c1"># ssh-copy-id &#34;$user@$hostname -p $port&#34;</span>
+</span></span><span class="line"><span class="cl">             <span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
@@ -160,13 +160,13 @@
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> -n <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
 </span></span><span class="line"><span class="cl">       <span class="nb">local</span> <span class="nv">length</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">       <span class="k">else</span>
-</span></span><span class="line"><span class="cl">	   <span class="nb">local</span> <span class="nv">length</span><span class="o">=</span><span class="m">32</span>
+</span></span><span class="line"><span class="cl">           <span class="nb">local</span> <span class="nv">length</span><span class="o">=</span><span class="m">32</span>
 </span></span><span class="line"><span class="cl">    <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">       <span class="nv">OS_NAME</span><span class="o">=</span><span class="k">$(</span>uname<span class="k">)</span>
 </span></span><span class="line"><span class="cl">       <span class="k">if</span> <span class="o">[</span> <span class="nv">$OS_NAME</span> <span class="o">=</span> <span class="s2">&#34;Darwin&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	   <span class="nv">LC_CTYPE</span><span class="o">=</span>C cat /dev/urandom <span class="p">|</span>tr -cd <span class="s2">&#34;[:alnum:]&#34;</span><span class="p">|</span>head -c <span class="s2">&#34;</span><span class="nv">$length</span><span class="s2">&#34;</span><span class="p">;</span><span class="nb">echo</span>
+</span></span><span class="line"><span class="cl">           <span class="nv">LC_CTYPE</span><span class="o">=</span>C cat /dev/urandom <span class="p">|</span>tr -cd <span class="s2">&#34;[:alnum:]&#34;</span><span class="p">|</span>head -c <span class="s2">&#34;</span><span class="nv">$length</span><span class="s2">&#34;</span><span class="p">;</span><span class="nb">echo</span>
 </span></span><span class="line"><span class="cl">       <span class="k">else</span>
-</span></span><span class="line"><span class="cl">	   cat /dev/urandom <span class="p">|</span>tr -cd <span class="s2">&#34;[:alnum:]&#34;</span><span class="p">|</span>head -c <span class="s2">&#34;</span><span class="nv">$length</span><span class="s2">&#34;</span><span class="p">;</span><span class="nb">echo</span>
+</span></span><span class="line"><span class="cl">           cat /dev/urandom <span class="p">|</span>tr -cd <span class="s2">&#34;[:alnum:]&#34;</span><span class="p">|</span>head -c <span class="s2">&#34;</span><span class="nv">$length</span><span class="s2">&#34;</span><span class="p">;</span><span class="nb">echo</span>
 </span></span><span class="line"><span class="cl">       <span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></td></tr></table>
@@ -208,19 +208,19 @@
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nv">OS_NAME</span><span class="o">=</span><span class="k">$(</span>uname<span class="k">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">function</span> pclip<span class="o">()</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="nv">$OS_NAME</span> <span class="o">=</span> <span class="s2">&#34;CYGWIN&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	putclip <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        putclip <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">[</span> <span class="nv">$OS_NAME</span> <span class="o">=</span> <span class="s2">&#34;Darwin&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	pbcopy <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        pbcopy <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">else</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[</span> -x /usr/bin/xsel <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	    xsel -ib <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">else</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">if</span> <span class="o">[</span> -x /usr/bin/xclip <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">		xclip -selection c <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">else</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">echo</span> <span class="s2">&#34;Neither xsel or xclip is installed!&#34;</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">[</span> -x /usr/bin/xsel <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">            xsel -ib <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">[</span> -x /usr/bin/xclip <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">                xclip -selection c <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">echo</span> <span class="s2">&#34;Neither xsel or xclip is installed!&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">    <span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></td></tr></table>
@@ -328,57 +328,57 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1"># Figure out which vendor we are</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[[</span> -x <span class="s2">&#34;`which sw_vers 2&gt;/dev/null`&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># OS/X</span>
-</span></span><span class="line"><span class="cl">	<span class="nv">os_VENDOR</span><span class="o">=</span><span class="sb">`</span>sw_vers -productName<span class="sb">`</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># OS/X</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">os_VENDOR</span><span class="o">=</span><span class="sb">`</span>sw_vers -productName<span class="sb">`</span>
 </span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">[[</span> -x <span class="k">$(</span>which lsb_release 2&gt;/dev/null<span class="k">)</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="nv">os_VENDOR</span><span class="o">=</span><span class="k">$(</span>lsb_release -i -s<span class="k">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;Debian,Ubuntu,LinuxMint&#34;</span> <span class="o">=</span>~ <span class="nv">$os_VENDOR</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	    <span class="nv">os_PACKAGE</span><span class="o">=</span><span class="s2">&#34;deb&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">elif</span> <span class="o">[[</span> <span class="s2">&#34;SUSE LINUX&#34;</span> <span class="o">=</span>~ <span class="nv">$os_VENDOR</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	    lsb_release -d -s <span class="p">|</span> grep -q openSUSE
-</span></span><span class="line"><span class="cl">	    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">		<span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;openSUSE&#34;</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">	<span class="k">elif</span> <span class="o">[[</span> <span class="nv">$os_VENDOR</span> <span class="o">==</span> <span class="s2">&#34;openSUSE project&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	    <span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;openSUSE&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">elif</span> <span class="o">[[</span> <span class="nv">$os_VENDOR</span> <span class="o">=</span>~ Red.*Hat <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	    <span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;Red Hat&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
-</span></span><span class="line"><span class="cl">	<span class="nv">os_CODENAME</span><span class="o">=</span><span class="k">$(</span>lsb_release -c -s<span class="k">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">os_VENDOR</span><span class="o">=</span><span class="k">$(</span>lsb_release -i -s<span class="k">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;Debian,Ubuntu,LinuxMint&#34;</span> <span class="o">=</span>~ <span class="nv">$os_VENDOR</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">os_PACKAGE</span><span class="o">=</span><span class="s2">&#34;deb&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="o">[[</span> <span class="s2">&#34;SUSE LINUX&#34;</span> <span class="o">=</span>~ <span class="nv">$os_VENDOR</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">            lsb_release -d -s <span class="p">|</span> grep -q openSUSE
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">[[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;openSUSE&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="o">[[</span> <span class="nv">$os_VENDOR</span> <span class="o">==</span> <span class="s2">&#34;openSUSE project&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;openSUSE&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="o">[[</span> <span class="nv">$os_VENDOR</span> <span class="o">=</span>~ Red.*Hat <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;Red Hat&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">os_CODENAME</span><span class="o">=</span><span class="k">$(</span>lsb_release -c -s<span class="k">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">[[</span> -r /etc/redhat-release <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># Red Hat Enterprise Linux Server release 5.5 (Tikanga)</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># Red Hat Enterprise Linux Server release 7.0 Beta (Maipo)</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># CentOS release 5.5 (Final)</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># CentOS Linux release 6.0 (Final)</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># Fedora release 16 (Verne)</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># XenServer release 6.2.0-70446c (xenenterprise)</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># Oracle Linux release 7</span>
-</span></span><span class="line"><span class="cl">	<span class="nv">os_CODENAME</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">for</span> r in <span class="s2">&#34;Red Hat&#34;</span> CentOS Fedora XenServer<span class="p">;</span> <span class="k">do</span>
-</span></span><span class="line"><span class="cl">	    <span class="nv">os_VENDOR</span><span class="o">=</span><span class="nv">$r</span>
-</span></span><span class="line"><span class="cl">	<span class="k">done</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$os_VENDOR</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;Red Hat&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[[</span> -r /etc/oracle-release <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	    <span class="nv">os_VENDOR</span><span class="o">=</span>OracleLinux
-</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Red Hat Enterprise Linux Server release 5.5 (Tikanga)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Red Hat Enterprise Linux Server release 7.0 Beta (Maipo)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># CentOS release 5.5 (Final)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># CentOS Linux release 6.0 (Final)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Fedora release 16 (Verne)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># XenServer release 6.2.0-70446c (xenenterprise)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Oracle Linux release 7</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">os_CODENAME</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> r in <span class="s2">&#34;Red Hat&#34;</span> CentOS Fedora XenServer<span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">os_VENDOR</span><span class="o">=</span><span class="nv">$r</span>
+</span></span><span class="line"><span class="cl">        <span class="k">done</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$os_VENDOR</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;Red Hat&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[[</span> -r /etc/oracle-release <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">os_VENDOR</span><span class="o">=</span>OracleLinux
+</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">[[</span> -r /etc/SuSE-release <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="k">for</span> r in openSUSE <span class="s2">&#34;SUSE Linux&#34;</span><span class="p">;</span> <span class="k">do</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$r</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;SUSE Linux&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">		<span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;SUSE LINUX&#34;</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">else</span>
-</span></span><span class="line"><span class="cl">		<span class="nv">os_VENDOR</span><span class="o">=</span><span class="nv">$r</span>
-</span></span><span class="line"><span class="cl">	    <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">	    <span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">done</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># If lsb_release is not installed, we should be able to detect Debian OS</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> r in openSUSE <span class="s2">&#34;SUSE Linux&#34;</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$r</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;SUSE Linux&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;SUSE LINUX&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">os_VENDOR</span><span class="o">=</span><span class="nv">$r</span>
+</span></span><span class="line"><span class="cl">            <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">done</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># If lsb_release is not installed, we should be able to detect Debian OS</span>
 </span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">[[</span> -f /etc/debian_version <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="o">[[</span> <span class="k">$(</span>cat /proc/version<span class="k">)</span> <span class="o">=</span>~ <span class="s2">&#34;Debian&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;Debian&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">os_VENDOR</span><span class="o">=</span><span class="s2">&#34;Debian&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">fi</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">export</span> os_VENDOR
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="根据不同的发行版本安装软件"><span class="section-num">2.6</span> 根据不同的发行版本安装软件</h3>
-<p>刚刚上面的脚本是为了准确判断出所有的 *nix 系统的，但是方便起见，也可以直接使用<code>uname</code> 命令</p>
+<p>刚刚上面的脚本是为了准确判断出所有的 *nix 系统的，但是方便起见，也可以直接使用=uname= 命令</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
@@ -542,8 +542,8 @@
 </span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;This is mac os&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="c1"># check if brew exists</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">type</span> brew&gt;/dev/null 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="o">||</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> &gt;<span class="p">&amp;</span><span class="m">2</span> <span class="s2">&#34; require brew but it&#39;s not installed.  Aborting.&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="nb">exit</span> 1<span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> &gt;<span class="p">&amp;</span><span class="m">2</span> <span class="s2">&#34; require brew but it&#39;s not installed.  Aborting.&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">exit</span> 1<span class="p">;</span> <span class="o">}</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;install htop&#34;</span>
 </span></span><span class="line"><span class="cl">    brew install htop
 </span></span><span class="line"><span class="cl">
@@ -580,109 +580,109 @@
 </span></span><span class="line"><span class="cl">    <span class="c1"># Do something under GNU/Linux platform</span>
 </span></span><span class="line"><span class="cl">    GetOSVersion
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$os_VENDOR</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;Ubuntu&#34;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$os_VENDOR</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;Debian&#34;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$os_VENDOR</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;LinuxMint&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># install htop</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install htop -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install httpie</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install httpie -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install ag</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install  silversearcher-ag -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install zeal</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install zeal -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install ncdu</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install ncdu -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install i3</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install i3 -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install emacs (i could die without it)</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install emacs -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install vim</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install vim -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install tree</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install tree -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install shellcheck</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install shellcheck -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install guile (scheme compiler)</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install guile -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install source code pro font</span>
-</span></span><span class="line"><span class="cl">	<span class="o">[</span> -d /usr/share/fonts/opentype <span class="o">]</span> <span class="o">||</span> sudo mkdir /usr/share/fonts/opentype
-</span></span><span class="line"><span class="cl">	sudo git clone https://github.com/adobe-fonts/source-code-pro.git /usr/share/fonts/opentype/scp
-</span></span><span class="line"><span class="cl">	sudo fc-cache -f -v
-</span></span><span class="line"><span class="cl">	<span class="c1"># install proxychains-ng</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install proxychains-ng -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install pandoc</span>
-</span></span><span class="line"><span class="cl">	sudo apt-get install pandoc -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install htop</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install htop -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install httpie</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install httpie -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install ag</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install  silversearcher-ag -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install zeal</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install zeal -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install ncdu</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install ncdu -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install i3</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install i3 -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install emacs (i could die without it)</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install emacs -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install vim</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install vim -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install tree</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install tree -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install shellcheck</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install shellcheck -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install guile (scheme compiler)</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install guile -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install source code pro font</span>
+</span></span><span class="line"><span class="cl">        <span class="o">[</span> -d /usr/share/fonts/opentype <span class="o">]</span> <span class="o">||</span> sudo mkdir /usr/share/fonts/opentype
+</span></span><span class="line"><span class="cl">        sudo git clone https://github.com/adobe-fonts/source-code-pro.git /usr/share/fonts/opentype/scp
+</span></span><span class="line"><span class="cl">        sudo fc-cache -f -v
+</span></span><span class="line"><span class="cl">        <span class="c1"># install proxychains-ng</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install proxychains-ng -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install pandoc</span>
+</span></span><span class="line"><span class="cl">        sudo apt-get install pandoc -y
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	sudo apt-get install markdown -y
+</span></span><span class="line"><span class="cl">        sudo apt-get install markdown -y
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	sudo apt-get install cloc -y
+</span></span><span class="line"><span class="cl">        sudo apt-get install cloc -y
 </span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">[</span>  <span class="s2">&#34;</span><span class="nv">$os_VENDOR</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;Fedora&#34;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$os_VENDOR</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;CentOS&#34;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$os_VENDOR</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;Korora&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># install ag</span>
-</span></span><span class="line"><span class="cl">	sudo yum install -y the_silver_searcher
-</span></span><span class="line"><span class="cl">	<span class="c1"># install zeal</span>
-</span></span><span class="line"><span class="cl">	sudo yum install -y zeal
-</span></span><span class="line"><span class="cl">	<span class="c1"># install httpie</span>
-</span></span><span class="line"><span class="cl">	sudo yum install -y httpie
-</span></span><span class="line"><span class="cl">	<span class="c1"># install htop</span>
-</span></span><span class="line"><span class="cl">	sudo yum install -y htop
-</span></span><span class="line"><span class="cl">	<span class="c1"># install ncdu</span>
-</span></span><span class="line"><span class="cl">	sudo yum install -y ncdu
-</span></span><span class="line"><span class="cl">	<span class="c1"># install vim</span>
-</span></span><span class="line"><span class="cl">	sudo yum install -y vim
-</span></span><span class="line"><span class="cl">	<span class="c1"># install emacs</span>
-</span></span><span class="line"><span class="cl">	sudo yum install -y emacs
-</span></span><span class="line"><span class="cl">	<span class="c1"># install i3</span>
-</span></span><span class="line"><span class="cl">	sudo yum install -y i3
-</span></span><span class="line"><span class="cl">	<span class="c1"># install tree</span>
-</span></span><span class="line"><span class="cl">	sudo yum install -y tree
-</span></span><span class="line"><span class="cl">	<span class="c1"># install shellcheck</span>
-</span></span><span class="line"><span class="cl">	sudo yum install ShellCheck -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install guile</span>
-</span></span><span class="line"><span class="cl">	sudo yum install guile -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install source  code pro font</span>
-</span></span><span class="line"><span class="cl">	sudo yum install adobe-source-code-pro-fonts -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install proxychains-ng</span>
-</span></span><span class="line"><span class="cl">	sudo yum install proxychains-ng -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install ag</span>
+</span></span><span class="line"><span class="cl">        sudo yum install -y the_silver_searcher
+</span></span><span class="line"><span class="cl">        <span class="c1"># install zeal</span>
+</span></span><span class="line"><span class="cl">        sudo yum install -y zeal
+</span></span><span class="line"><span class="cl">        <span class="c1"># install httpie</span>
+</span></span><span class="line"><span class="cl">        sudo yum install -y httpie
+</span></span><span class="line"><span class="cl">        <span class="c1"># install htop</span>
+</span></span><span class="line"><span class="cl">        sudo yum install -y htop
+</span></span><span class="line"><span class="cl">        <span class="c1"># install ncdu</span>
+</span></span><span class="line"><span class="cl">        sudo yum install -y ncdu
+</span></span><span class="line"><span class="cl">        <span class="c1"># install vim</span>
+</span></span><span class="line"><span class="cl">        sudo yum install -y vim
+</span></span><span class="line"><span class="cl">        <span class="c1"># install emacs</span>
+</span></span><span class="line"><span class="cl">        sudo yum install -y emacs
+</span></span><span class="line"><span class="cl">        <span class="c1"># install i3</span>
+</span></span><span class="line"><span class="cl">        sudo yum install -y i3
+</span></span><span class="line"><span class="cl">        <span class="c1"># install tree</span>
+</span></span><span class="line"><span class="cl">        sudo yum install -y tree
+</span></span><span class="line"><span class="cl">        <span class="c1"># install shellcheck</span>
+</span></span><span class="line"><span class="cl">        sudo yum install ShellCheck -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install guile</span>
+</span></span><span class="line"><span class="cl">        sudo yum install guile -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install source  code pro font</span>
+</span></span><span class="line"><span class="cl">        sudo yum install adobe-source-code-pro-fonts -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install proxychains-ng</span>
+</span></span><span class="line"><span class="cl">        sudo yum install proxychains-ng -y
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	sudo yum install pandoc -y
+</span></span><span class="line"><span class="cl">        sudo yum install pandoc -y
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	sudo yum install markdown -y
+</span></span><span class="line"><span class="cl">        sudo yum install markdown -y
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="c1"># count line and space in code</span>
-</span></span><span class="line"><span class="cl">	sudo yum install cloc  -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># count line and space in code</span>
+</span></span><span class="line"><span class="cl">        sudo yum install cloc  -y
 </span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="o">[</span>  <span class="s2">&#34;</span><span class="nv">$os_VENDOR</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;Arch&#34;</span> <span class="o">]</span> <span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># install ag</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S -y the_silver_searcher
-</span></span><span class="line"><span class="cl">	<span class="c1"># install zeal</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S -y zeal
-</span></span><span class="line"><span class="cl">	<span class="c1"># install httpie</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S -y httpie
-</span></span><span class="line"><span class="cl">	<span class="c1"># install htop</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S -y htop
-</span></span><span class="line"><span class="cl">	<span class="c1"># install ncdu</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S -y ncdu
-</span></span><span class="line"><span class="cl">	<span class="c1"># install vim</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S -y vim
-</span></span><span class="line"><span class="cl">	<span class="c1"># install emacs</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S -y emacs
-</span></span><span class="line"><span class="cl">	<span class="c1"># install i3</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S -y i3
-</span></span><span class="line"><span class="cl">	<span class="c1"># install tree</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S -y tree
-</span></span><span class="line"><span class="cl">	<span class="c1"># install shellcheck</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S ShellCheck -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install guile</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S guile -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install source-code-pro font</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S adobe-source-code-pro-fonts -y
-</span></span><span class="line"><span class="cl">	<span class="c1"># install proxychains-ng</span>
-</span></span><span class="line"><span class="cl">	sudo pacman -S proxychains-ng -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install ag</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S -y the_silver_searcher
+</span></span><span class="line"><span class="cl">        <span class="c1"># install zeal</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S -y zeal
+</span></span><span class="line"><span class="cl">        <span class="c1"># install httpie</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S -y httpie
+</span></span><span class="line"><span class="cl">        <span class="c1"># install htop</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S -y htop
+</span></span><span class="line"><span class="cl">        <span class="c1"># install ncdu</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S -y ncdu
+</span></span><span class="line"><span class="cl">        <span class="c1"># install vim</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S -y vim
+</span></span><span class="line"><span class="cl">        <span class="c1"># install emacs</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S -y emacs
+</span></span><span class="line"><span class="cl">        <span class="c1"># install i3</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S -y i3
+</span></span><span class="line"><span class="cl">        <span class="c1"># install tree</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S -y tree
+</span></span><span class="line"><span class="cl">        <span class="c1"># install shellcheck</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S ShellCheck -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install guile</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S guile -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install source-code-pro font</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S adobe-source-code-pro-fonts -y
+</span></span><span class="line"><span class="cl">        <span class="c1"># install proxychains-ng</span>
+</span></span><span class="line"><span class="cl">        sudo pacman -S proxychains-ng -y
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	sudo pacman -S pandoc -y
+</span></span><span class="line"><span class="cl">        sudo pacman -S pandoc -y
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	sudo pacman -S markdown -y
+</span></span><span class="line"><span class="cl">        sudo pacman -S markdown -y
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	sudo pacman -S ripgrep -y
+</span></span><span class="line"><span class="cl">        sudo pacman -S ripgrep -y
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	sudo pacman -S cloc  -y
+</span></span><span class="line"><span class="cl">        sudo pacman -S cloc  -y
 </span></span><span class="line"><span class="cl">    <span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="k">elif</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>expr substr <span class="k">$(</span>uname -s<span class="k">)</span> <span class="m">1</span> 10<span class="k">)</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;MINGW32_NT&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">    <span class="c1"># Do something under 32 bits Windows NT platform</span>
@@ -721,7 +721,7 @@
     <item>
       <title>Linux/Unix Shell 二三事之过滤器grep</title>
       <link>https://ramsayleung.github.io/zh/post/2017/grep/</link>
-      <pubDate>Mon, 13 Mar 2017 00:00:00 +0800</pubDate>
+      <pubDate>Mon, 13 Mar 2017 00:00:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/grep/</guid>
       <description>an introduction about grep</description>
       <content:encoded><![CDATA[<p>文本三剑客之 Grep</p>
@@ -729,7 +729,7 @@
 <p>grep - print  lines matching a pattern</p>
 </blockquote>
 <p>今天我想聊聊 <strong>grep</strong> 这个命令；据说，有Unix/Linux 的地方就会有 <strong>grep</strong>, 这个可能是安装得最广泛的命令之一；那么 <strong>grep</strong> 是用来干什么的呢？</p>
-<p>grep 其实是用来在文件中搜索特定内容或者模式的工具(配合正则表达式“食用”，味道更佳 :))现在就来一起看看<strong>grep</strong> 的用法</p>
+<p>grep 其实是用来在文件中搜索特定内容或者模式的工具(配合正则表达式“食用”，味道更佳 :))现在就来一起看看*grep* 的用法</p>
 <h2 id="基本用法"><span class="section-num">1</span> 基本用法</h2>
 <h3 id="基础用法"><span class="section-num">1.1</span> 基础用法</h3>
 <p>现在假设有一个简单的文本文件(双城记开头)tinytale.txt,内容如下</p>
@@ -780,7 +780,7 @@ IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div></blockquote>
-<p>可以看到，正则表达式匹配了 <strong>epoch</strong> 这个单词。正则表达式的威力无与伦比的，把 <strong>grep</strong>和正则表达式结合起来可以更好地发挥 <strong>grep</strong> 这个工具的潜力；而本文主要是介绍 <strong>grep</strong>, 更多有关正则表达式的用法不细讲了</p>
+<p>可以看到，正则表达式匹配了 <strong>epoch</strong> 这个单词。正则表达式的威力无与伦比的，把 <strong>grep*和正则表达式结合起来可以更好地发挥 *grep</strong> 这个工具的潜力；而本文主要是介绍 <strong>grep</strong>, 更多有关正则表达式的用法不细讲了</p>
 <h3 id="统计出现的次数"><span class="section-num">1.3</span> 统计出现的次数</h3>
 <p>有时，如果你需要统计某种模式或者某个单词出现的个数，你会发现 <strong>grep</strong> 非常有用；</p>
 <p>要实现该功能，只需给 <strong>grep</strong> 添加 <strong>-c</strong> 参数；例如统计单词 <strong>the</strong> 出现的个数：</p>
@@ -882,7 +882,7 @@ IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE</p>
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">grep belief /tmp/*.txt
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>输出结果也会跟上面一致 (假设你 <strong><em>tmp</em></strong> 目录下只有两个文本文件); 我告诉<strong>grep</strong> 搜索**/tmp** 下所有的 <strong>.txt</strong> 文件。</p>
+</div><p>输出结果也会跟上面一致 (假设你 <strong><em>tmp</em></strong> 目录下只有两个文本文件); 我告诉*grep* 搜索*/tmp* 下所有的 <strong>.txt</strong> 文件。</p>
 <h3 id="递归搜索"><span class="section-num">2.1</span> 递归搜索</h3>
 <p>你也可以使用 <strong>grep</strong> 递归搜索目录；你只需在指定目录后，添加 <strong>-R</strong> , <strong>grep</strong> 就会
 递归搜索指定目录的所有子目录。我已经把当前目录切换到 <strong>/tmp</strong>:</p>
@@ -1408,7 +1408,7 @@ IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE</p>
     <item>
       <title>Linux/Unix Shell 二三事之过滤器diff</title>
       <link>https://ramsayleung.github.io/zh/post/2017/diff/</link>
-      <pubDate>Tue, 28 Feb 2017 00:00:00 +0800</pubDate>
+      <pubDate>Tue, 28 Feb 2017 00:00:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/diff/</guid>
       <description>An introduction about diff</description>
       <content:encoded><![CDATA[<blockquote>
@@ -1625,7 +1625,7 @@ address1 包含：</p>
     <item>
       <title>Linux/Unix Shell 二三事之过滤器cat</title>
       <link>https://ramsayleung.github.io/zh/post/2017/cat/</link>
-      <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
+      <pubDate>Wed, 22 Feb 2017 00:00:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/cat/</guid>
       <description>An introduction about cat</description>
       <content:encoded><![CDATA[<blockquote>

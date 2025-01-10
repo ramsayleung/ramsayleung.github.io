@@ -12,12 +12,12 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Tue, 31 Dec 2024 11:57:41 -0800</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jan 2025 19:20:26 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/emacs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>单独使用Emacs的Magit插件</title>
       <link>https://ramsayleung.github.io/zh/post/2024/%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8emacs%E7%9A%84magit%E6%8F%92%E4%BB%B6/</link>
-      <pubDate>Wed, 11 Dec 2024 16:00:00 +0800</pubDate>
+      <pubDate>Wed, 11 Dec 2024 16:00:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2024/%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8emacs%E7%9A%84magit%E6%8F%92%E4%BB%B6/</guid>
       <description>1 Emacs 与 Magit 不知不觉，我已经使用Emacs 快10年了，在我使用过的编辑器中，Emacs是扩展性最强的编辑器，毕竟Emacs是个披着编辑器外衣的L</description>
       <content:encoded><![CDATA[<h2 id="emacs-与-magit"><span class="section-num">1</span> Emacs 与 Magit</h2>
@@ -65,7 +65,7 @@
     <item>
       <title>Emacs技巧分享: 使用eww打开在线org-mode文档</title>
       <link>https://ramsayleung.github.io/zh/post/2023/emacs%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_%E4%BD%BF%E7%94%A8eww%E6%89%93%E5%BC%80%E5%9C%A8%E7%BA%BForg-mode%E6%96%87%E6%A1%A3/</link>
-      <pubDate>Sat, 04 Mar 2023 21:55:00 +0800</pubDate>
+      <pubDate>Sat, 04 Mar 2023 21:55:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2023/emacs%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_%E4%BD%BF%E7%94%A8eww%E6%89%93%E5%BC%80%E5%9C%A8%E7%BA%BForg-mode%E6%96%87%E6%A1%A3/</guid>
       <description>1 技巧 对于使用org-mode 格式的文本，例如Emacs官方 tree-sitter 的使用教程 在线阅读不是很易读，相当于人脑解析 org-mode. 我的个人习惯是使用 eww 浏览器来阅读</description>
       <content:encoded><![CDATA[<h2 id="技巧"><span class="section-num">1</span> 技巧</h2>
@@ -89,7 +89,7 @@
     <item>
       <title>Emacs 技巧分享：dired-mode 批量修改文件名</title>
       <link>https://ramsayleung.github.io/zh/post/2023/%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_dired%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8D/</link>
-      <pubDate>Sat, 04 Mar 2023 21:34:00 +0800</pubDate>
+      <pubDate>Sat, 04 Mar 2023 21:34:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2023/%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_dired%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8D/</guid>
       <description>1 技巧 分享一下平时使用 dired-mode 批量修改文件名的技巧: C-x C-f 指定的文件目录，进入 dired-mode C-x C-q dired-toggle-read-only: Edit Dired buffer with Wdired. 批量修改，手段有 使用 query-replace 批量修改文件名 使用evil的多</description>
       <content:encoded><![CDATA[<h2 id="技巧"><span class="section-num">1</span> 技巧</h2>
@@ -107,14 +107,14 @@
 <li><code>C-c C-c</code> 提交修改或 <code>C-c C-k</code> 放弃修改</li>
 </ol>
 <figure><a href="/ox-hugo/dired_rename_multi_files.gif">
-    <img loading="lazy" src="/ox-hugo/dired_rename_multi_files.gif"
+    <img loading="lazy" src="~/btsync/org/blog/2023/%e6%8a%80%e5%b7%a7%e5%88%86%e4%ba%ab-dired%e6%89%b9%e9%87%8f%e4%bf%ae%e6%94%b9%e6%96%87%e4%bb%b6%e5%90%8d/img/dired_rename_multi_files.gif"
          alt="Figure 1: 使用 rectangle-command 进行批量修改"/> </a><figcaption>
             <p><span class="figure-number">Figure 1: </span>使用 <code>rectangle-command</code> 进行批量修改</p>
         </figcaption>
 </figure>
 
 <figure><a href="/ox-hugo/dired_rename_multi_files_2.gif">
-    <img loading="lazy" src="/ox-hugo/dired_rename_multi_files_2.gif"
+    <img loading="lazy" src="~/btsync/org/blog/2023/%e6%8a%80%e5%b7%a7%e5%88%86%e4%ba%ab-dired%e6%89%b9%e9%87%8f%e4%bf%ae%e6%94%b9%e6%96%87%e4%bb%b6%e5%90%8d/img/dired_rename_multi_files_2.gif"
          alt="Figure 2: 使用 evil的多行编辑模式进行批量修改"/> </a><figcaption>
             <p><span class="figure-number">Figure 2: </span>使用 evil的多行编辑模式进行批量修改</p>
         </figcaption>
@@ -125,13 +125,13 @@
     <item>
       <title>Eshell实现fzf的历史命令搜索功能</title>
       <link>https://ramsayleung.github.io/zh/post/2017/search_eshell_history_like_fzf/</link>
-      <pubDate>Sun, 17 Dec 2017 15:46:00 +0800</pubDate>
+      <pubDate>Sun, 17 Dec 2017 15:46:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/search_eshell_history_like_fzf/</guid>
-      <description>1 前言 目标: 在Eshell中像在bash/zsh中使用fzf那般搜索历史命令 2 fzf 我的主力Shell 是Eshell, 但是平时我也会用Zsh, 而</description>
+      <description>1 前言 目标: 在=Eshell=中像在bash/zsh中使用=fzf=那般搜索历史命令 2 fzf 我的主力Shell 是Eshell, 但是平时我也会用Z</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
-<p>目标: 在<code>Eshell</code>中像在bash/zsh中使用<code>fzf</code>那般搜索历史命令</p>
+<p>目标: 在=Eshell=中像在bash/zsh中使用=fzf=那般搜索历史命令</p>
 <h2 id="fzf"><span class="section-num">2</span> fzf</h2>
-<p>我的主力Shell 是Eshell, 但是平时我也会用Zsh, 而<a href="https://github.com/junegunn/fzf">fzf</a> 是一个非常好用的命令行工具，用了<code>fzf</code>搜索历史命令:</p>
+<p>我的主力Shell 是Eshell, 但是平时我也会用Zsh, 而<a href="https://github.com/junegunn/fzf">fzf</a> 是一个非常好用的命令行工具，用了=fzf=搜索历史命令:</p>
 <figure>
     <img loading="lazy" src="https://i.imgur.com/pPMxauw.gif"
          alt="Figure 1: fzf"/> <figcaption>
@@ -140,8 +140,8 @@
 </figure>
 
 <h2 id="eshell"><span class="section-num">3</span> Eshell</h2>
-<p>我日常的操作基本都是在 Eshell 上面进行的，不过 Eshell 是没办法直接像 Bash 那样调用 <code>fzf</code>来查找命令历史的，所以我希望把这个功能迁移到到Eshell 上面来。</p>
-<p>我在 Emacs 使用的补全框架是 <code>Ivy/Counsel</code>,它有一个 <code>counsel-esh-history</code>的命令可以使用 <code>Ivy</code> 来搜索命令，但是没办法使用用户已经输入的内容来过滤命令，所以我就在自己折腾了一个</p>
+<p>我日常的操作基本都是在 Eshell 上面进行的，不过 Eshell 是没办法直接像 Bash 那样调用 =fzf=来查找命令历史的，所以我希望把这个功能迁移到到Eshell 上面来。</p>
+<p>我在 Emacs 使用的补全框架是 <code>Ivy/Counsel</code>,它有一个 <code>counsel-esh-history=的命令可以使用 =Ivy</code> 来搜索命令，但是没办法使用用户已经输入的内容来过滤命令，所以我就在自己折腾了一个</p>
 <p><code>counsel-esh-history</code> 命令。效果如下：</p>
 <figure>
     <img loading="lazy" src="https://i.imgur.com/3tvGDzW.gif"
@@ -151,7 +151,7 @@
 </figure>
 
 <h2 id="源代码"><span class="section-num">4</span> 源代码</h2>
-<p>得益于 <code>Ivy</code>强大的内置函数, 功能实现起来相当便利，完整代码如下：</p>
+<p>得益于 =Ivy=强大的内置函数, 功能实现起来相当便利，完整代码如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -182,24 +182,24 @@
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;em-hist</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nv">save-excursion</span>
 </span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">start-pos</span> <span class="p">(</span><span class="nv">eshell-bol</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	   <span class="p">(</span><span class="nv">end-pos</span> <span class="p">(</span><span class="nv">point-at-eol</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	   <span class="p">(</span><span class="nv">input</span> <span class="p">(</span><span class="nv">buffer-substring-no-properties</span> <span class="nv">start-pos</span> <span class="nv">end-pos</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">           <span class="p">(</span><span class="nv">end-pos</span> <span class="p">(</span><span class="nv">point-at-eol</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">           <span class="p">(</span><span class="nv">input</span> <span class="p">(</span><span class="nv">buffer-substring-no-properties</span> <span class="nv">start-pos</span> <span class="nv">end-pos</span><span class="p">)))</span>
 </span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">command</span> <span class="p">(</span><span class="nv">ivy-read</span> <span class="s">&#34;Command: &#34;</span>
-</span></span><span class="line"><span class="cl">				<span class="p">(</span><span class="nv">delete-dups</span>
-</span></span><span class="line"><span class="cl">				 <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nf">&gt;</span> <span class="p">(</span><span class="nv">ring-size</span> <span class="nv">eshell-history-ring</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">				   <span class="p">(</span><span class="nv">ring-elements</span> <span class="nv">eshell-history-ring</span><span class="p">)))</span>
-</span></span><span class="line"><span class="cl">				<span class="ss">:preselect</span> <span class="nv">input</span>
-</span></span><span class="line"><span class="cl">				<span class="ss">:action</span> <span class="nf">#&#39;</span><span class="nv">ivy-completion-in-region-action</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	     <span class="p">(</span><span class="nv">cursor-move</span> <span class="p">(</span><span class="nf">length</span> <span class="nv">command</span><span class="p">)))</span>
-</span></span><span class="line"><span class="cl">	<span class="p">(</span><span class="nv">kill-region</span> <span class="p">(</span><span class="nf">+</span> <span class="nv">start-pos</span> <span class="nv">cursor-move</span><span class="p">)</span> <span class="p">(</span><span class="nf">+</span> <span class="nv">end-pos</span> <span class="nv">cursor-move</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	<span class="p">)))</span>
+</span></span><span class="line"><span class="cl">                                <span class="p">(</span><span class="nv">delete-dups</span>
+</span></span><span class="line"><span class="cl">                                 <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nf">&gt;</span> <span class="p">(</span><span class="nv">ring-size</span> <span class="nv">eshell-history-ring</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                                   <span class="p">(</span><span class="nv">ring-elements</span> <span class="nv">eshell-history-ring</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">                                <span class="ss">:preselect</span> <span class="nv">input</span>
+</span></span><span class="line"><span class="cl">                                <span class="ss">:action</span> <span class="nf">#&#39;</span><span class="nv">ivy-completion-in-region-action</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">             <span class="p">(</span><span class="nv">cursor-move</span> <span class="p">(</span><span class="nf">length</span> <span class="nv">command</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nv">kill-region</span> <span class="p">(</span><span class="nf">+</span> <span class="nv">start-pos</span> <span class="nv">cursor-move</span><span class="p">)</span> <span class="p">(</span><span class="nf">+</span> <span class="nv">end-pos</span> <span class="nv">cursor-move</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)))</span>
 </span></span><span class="line"><span class="cl">  <span class="c1">;; move cursor to eol</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nv">end-of-line</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>代码不是很复杂, 主要功能是获取用户输入的命令, 然后把所有的历史命令读取出来,最后使用<code>ivy-read</code>内置的<code>ivy-completion-in-region-action</code>功能, 用用户的输入的命令与历史命令进行匹配, 由用户选择最终的命令.</p>
-<p><code>ivy-read</code>是Emacs内置<code>completing-read</code>的函数的强化, 关于<code>ivy-read</code>具体用法可以参考文档<a href="https://oremacs.com/swiper/#getting-started">ivy-read</a>.</p>
+</div><p>代码不是很复杂, 主要功能是获取用户输入的命令, 然后把所有的历史命令读取出来,最后使用=ivy-read=内置的=ivy-completion-in-region-action=功能, 用用户的输入的命令与历史命令进行匹配, 由用户选择最终的命令.</p>
+<p>=ivy-read=是Emacs内置=completing-read=的函数的强化, 关于=ivy-read=具体用法可以参考文档<a href="https://oremacs.com/swiper/#getting-started">ivy-read</a>.</p>
 <h2 id="总结"><span class="section-num">5</span> 总结</h2>
 <p>最后, 我也顺便把代码分享到 <a href="https://www.reddit.com/r/emacs/comments/7k54px/snippet_share_make_eshell_search_command_history/">Emacs社区</a>, 而 <a href="https://github.com/manateelazycat">manateelazycat</a>也把这段代码的功能加入到<a href="https://github.com/manateelazycat/aweshell/commit/ecaddac98b87f881910dbee8b51a98f00b6d9d5d">aweshell</a>, Oh yeah !</p>
 ]]></content:encoded>
@@ -207,11 +207,11 @@
     <item>
       <title>Eshell提示符优化</title>
       <link>https://ramsayleung.github.io/zh/post/2017/tweak_eshell_prompt/</link>
-      <pubDate>Wed, 07 Jun 2017 00:00:00 +0800</pubDate>
+      <pubDate>Wed, 07 Jun 2017 00:00:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/tweak_eshell_prompt/</guid>
       <description>Tweak with Emacs shell prompt</description>
       <content:encoded><![CDATA[<h2 id="发现帅气的提示符"><span class="section-num">1</span> 发现帅气的提示符</h2>
-<p>近日，笔者在浏览 <a href="https://www.reddit.com/r/emacs/comments/6f0rkz/my_fancy_eshell_prompt/">Reddit</a> 的时候，发现了一位 Emacs 用户把他的 Eshell 提示符修改得很帅，如图：</p>
+<p>近日，我在浏览 <a href="https://www.reddit.com/r/emacs/comments/6f0rkz/my_fancy_eshell_prompt/">Reddit</a> 的时候，发现了一位 Emacs 用户把他的 Eshell 提示符修改得很帅，如图：</p>
 <p><a href="/ox-hugo/eshell_prompt.png"><img loading="lazy" src="/ox-hugo/eshell_prompt.png" alt=""  />
 </a>
 本着拿来主义的想法，我就直接把这位小哥的代码添加到了我的配置文件里面：</p>
@@ -236,19 +236,19 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">setq</span> <span class="nv">eshell-prompt-function</span>
 </span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nb">lambda</span> <span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="p">(</span><span class="nf">concat</span>
-</span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;┌─[&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nf">user-login-name</span><span class="p">)</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;red&#34;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;@&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nf">system-name</span><span class="p">)</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;blue&#34;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;]──[&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nf">format-time-string</span> <span class="s">&#34;%H:%M&#34;</span> <span class="p">(</span><span class="nf">current-time</span><span class="p">))</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;yellow&#34;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;]──[&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nv">eshell/pwd</span><span class="p">))</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;white&#34;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;]\n&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;└─&gt;&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">=</span> <span class="p">(</span><span class="nf">user-uid</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="s">&#34; # &#34;</span> <span class="s">&#34; $ &#34;</span><span class="p">)</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	 <span class="p">)))</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nf">concat</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;┌─[&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nf">user-login-name</span><span class="p">)</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;red&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;@&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nf">system-name</span><span class="p">)</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;blue&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;]──[&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nf">format-time-string</span> <span class="s">&#34;%H:%M&#34;</span> <span class="p">(</span><span class="nf">current-time</span><span class="p">))</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;yellow&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;]──[&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nv">eshell/pwd</span><span class="p">))</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;white&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;]\n&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="s">&#34;└─&gt;&#34;</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">propertize</span> <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">=</span> <span class="p">(</span><span class="nf">user-uid</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="s">&#34; # &#34;</span> <span class="s">&#34; $ &#34;</span><span class="p">)</span> <span class="ss">&#39;face</span> <span class="o">`</span><span class="p">(</span><span class="nb">:foreground</span> <span class="s">&#34;green&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">)))</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>效果自然是很 sexy.</p>
@@ -281,13 +281,13 @@
 </span></span><span class="line"><span class="cl">  <span class="nb">:ensure</span> <span class="no">t</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:load-path</span> <span class="s">&#34;~/Code/github/eshell-prompt-extras&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:config</span> <span class="p">(</span><span class="nb">progn</span>
-</span></span><span class="line"><span class="cl">	    <span class="p">(</span><span class="nb">with-eval-after-load</span> <span class="s">&#34;esh-opt&#34;</span>
-</span></span><span class="line"><span class="cl">	      <span class="p">(</span><span class="nb">use-package</span> <span class="nv">virtualenvwrapper</span> <span class="nb">:ensure</span> <span class="no">t</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	      <span class="p">(</span><span class="nv">venv-initialize-eshell</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	      <span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;epe-theme-lambda</span> <span class="s">&#34;eshell-prompt-extras&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	      <span class="p">(</span><span class="nb">setq</span> <span class="nv">eshell-highlight-prompt</span> <span class="no">nil</span>
-</span></span><span class="line"><span class="cl">		    <span class="nv">eshell-prompt-function</span> <span class="ss">&#39;epe-theme-lambda</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	    <span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="p">(</span><span class="nb">with-eval-after-load</span> <span class="s">&#34;esh-opt&#34;</span>
+</span></span><span class="line"><span class="cl">              <span class="p">(</span><span class="nb">use-package</span> <span class="nv">virtualenvwrapper</span> <span class="nb">:ensure</span> <span class="no">t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">              <span class="p">(</span><span class="nv">venv-initialize-eshell</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">              <span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;epe-theme-lambda</span> <span class="s">&#34;eshell-prompt-extras&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">              <span class="p">(</span><span class="nb">setq</span> <span class="nv">eshell-highlight-prompt</span> <span class="no">nil</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">eshell-prompt-function</span> <span class="ss">&#39;epe-theme-lambda</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="p">))</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>而 <code>epe-theme-lambda</code> 的代码如下：</p>
@@ -340,26 +340,26 @@
 </span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nb">when</span> <span class="nv">epe-show-python-info</span>
 </span></span><span class="line"><span class="cl">     <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nf">fboundp</span> <span class="ss">&#39;epe-venv-p</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">       <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nv">epe-venv-p</span><span class="p">)</span> <span class="nv">venv-current-name</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nv">epe-colorize-with-face</span>
-</span></span><span class="line"><span class="cl">	  <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;(&#34;</span> <span class="nv">venv-current-name</span> <span class="s">&#34;) &#34;</span><span class="p">)</span> <span class="ss">&#39;epe-venv-face</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nv">epe-colorize-with-face</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;(&#34;</span> <span class="nv">venv-current-name</span> <span class="s">&#34;) &#34;</span><span class="p">)</span> <span class="ss">&#39;epe-venv-face</span><span class="p">))))</span>
 </span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nb">let</span> <span class="p">((</span><span class="nv">f</span> <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nf">eq</span> <span class="nv">epe-path-style</span> <span class="ss">&#39;fish</span><span class="p">)</span> <span class="ss">&#39;epe-fish-path</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		  <span class="p">((</span><span class="nf">eq</span> <span class="nv">epe-path-style</span> <span class="ss">&#39;single</span><span class="p">)</span> <span class="ss">&#39;epe-abbrev-dir-name</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		  <span class="p">((</span><span class="nf">eq</span> <span class="nv">epe-path-style</span> <span class="ss">&#39;full</span><span class="p">)</span> <span class="ss">&#39;abbreviate-file-name</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl">                  <span class="p">((</span><span class="nf">eq</span> <span class="nv">epe-path-style</span> <span class="ss">&#39;single</span><span class="p">)</span> <span class="ss">&#39;epe-abbrev-dir-name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                  <span class="p">((</span><span class="nf">eq</span> <span class="nv">epe-path-style</span> <span class="ss">&#39;full</span><span class="p">)</span> <span class="ss">&#39;abbreviate-file-name</span><span class="p">))))</span>
 </span></span><span class="line"><span class="cl">     <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nf">funcall</span> <span class="nv">f</span> <span class="p">(</span><span class="nv">eshell/pwd</span><span class="p">))</span> <span class="ss">&#39;epe-dir-face</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nv">epe-git-p</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">     <span class="p">(</span><span class="nf">concat</span>
 </span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;:&#34;</span> <span class="ss">&#39;epe-dir-face</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">epe-colorize-with-face</span>
 </span></span><span class="line"><span class="cl">       <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nv">epe-git-branch</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	       <span class="p">(</span><span class="nv">epe-git-dirty</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	       <span class="p">(</span><span class="nv">epe-git-untracked</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	       <span class="p">(</span><span class="nb">let</span> <span class="p">((</span><span class="nv">unpushed</span> <span class="p">(</span><span class="nv">epe-git-unpushed-number</span><span class="p">)))</span>
-</span></span><span class="line"><span class="cl">		 <span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nf">=</span> <span class="nv">unpushed</span> <span class="mi">0</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		   <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;:&#34;</span> <span class="p">(</span><span class="nf">number-to-string</span> <span class="nv">unpushed</span><span class="p">)))))</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nv">epe-git-dirty</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nv">epe-git-untracked</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nb">let</span> <span class="p">((</span><span class="nv">unpushed</span> <span class="p">(</span><span class="nv">epe-git-unpushed-number</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">                 <span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nf">=</span> <span class="nv">unpushed</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                   <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;:&#34;</span> <span class="p">(</span><span class="nf">number-to-string</span> <span class="nv">unpushed</span><span class="p">)))))</span>
 </span></span><span class="line"><span class="cl">       <span class="ss">&#39;epe-git-face</span><span class="p">)))</span>
 </span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34; λ&#34;</span> <span class="ss">&#39;epe-symbol-face</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">=</span> <span class="p">(</span><span class="nf">user-uid</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="s">&#34;#&#34;</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">			   <span class="ss">&#39;epe-sudo-symbol-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                           <span class="ss">&#39;epe-sudo-symbol-face</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">   <span class="s">&#34; &#34;</span><span class="p">))</span>
 </span></span></code></pre></td></tr></table>
 </div>
@@ -470,23 +470,23 @@
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nf">concat</span>
 </span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nv">epe-remote-p</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">       <span class="p">(</span><span class="nb">progn</span>
-</span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nf">concat</span>
-</span></span><span class="line"><span class="cl">	  <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;┌─[&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	  <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nv">epe-remote-user</span><span class="p">)</span> <span class="ss">&#39;epe-pipeline-user-face</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	  <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;@&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	  <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nv">epe-remote-host</span><span class="p">)</span> <span class="ss">&#39;epe-pipeline-host-face</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	 <span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nf">concat</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;┌─[&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nv">epe-remote-user</span><span class="p">)</span> <span class="ss">&#39;epe-pipeline-user-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;@&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nv">epe-remote-host</span><span class="p">)</span> <span class="ss">&#39;epe-pipeline-host-face</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">)</span>
 </span></span><span class="line"><span class="cl">     <span class="p">(</span><span class="nb">progn</span>
 </span></span><span class="line"><span class="cl">       <span class="p">(</span><span class="nf">concat</span>
-</span></span><span class="line"><span class="cl">	<span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;┌─[&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nf">user-login-name</span><span class="p">)</span> <span class="ss">&#39;epe-pipeline-user-face</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;@&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nf">system-name</span><span class="p">)</span> <span class="ss">&#39;epe-pipeline-host-face</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;┌─[&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nf">user-login-name</span><span class="p">)</span> <span class="ss">&#39;epe-pipeline-user-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;@&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nf">system-name</span><span class="p">)</span> <span class="ss">&#39;epe-pipeline-host-face</span><span class="p">)))</span>
 </span></span><span class="line"><span class="cl">     <span class="p">)</span>
 </span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nf">concat</span>
 </span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;]──[&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nf">format-time-string</span> <span class="s">&#34;%H:%M&#34;</span> <span class="p">(</span><span class="nf">current-time</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">			    <span class="ss">&#39;epe-pipeline-time-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                            <span class="ss">&#39;epe-pipeline-time-face</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;]──[&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nv">eshell/pwd</span><span class="p">))</span> <span class="ss">&#39;epe-dir-face</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">epe-colorize-with-face</span>  <span class="s">&#34;]\n&#34;</span> <span class="ss">&#39;epe-pipeline-delimiter-face</span><span class="p">)</span>
@@ -495,22 +495,22 @@
 </span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nb">when</span> <span class="nv">epe-show-python-info</span>
 </span></span><span class="line"><span class="cl">     <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nf">fboundp</span> <span class="ss">&#39;epe-venv-p</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">       <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nv">epe-venv-p</span><span class="p">)</span> <span class="nv">venv-current-name</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nv">epe-colorize-with-face</span>
-</span></span><span class="line"><span class="cl">	  <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;(&#34;</span> <span class="nv">venv-current-name</span> <span class="s">&#34;) &#34;</span><span class="p">)</span> <span class="ss">&#39;epe-venv-face</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nv">epe-colorize-with-face</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;(&#34;</span> <span class="nv">venv-current-name</span> <span class="s">&#34;) &#34;</span><span class="p">)</span> <span class="ss">&#39;epe-venv-face</span><span class="p">))))</span>
 </span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nv">epe-git-p</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">     <span class="p">(</span><span class="nf">concat</span>
 </span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34;:&#34;</span> <span class="ss">&#39;epe-dir-face</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nv">epe-colorize-with-face</span>
 </span></span><span class="line"><span class="cl">       <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nv">epe-git-branch</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	       <span class="p">(</span><span class="nv">epe-git-dirty</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	       <span class="p">(</span><span class="nv">epe-git-untracked</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	       <span class="p">(</span><span class="nb">let</span> <span class="p">((</span><span class="nv">unpushed</span> <span class="p">(</span><span class="nv">epe-git-unpushed-number</span><span class="p">)))</span>
-</span></span><span class="line"><span class="cl">		 <span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nf">=</span> <span class="nv">unpushed</span> <span class="mi">0</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		   <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;:&#34;</span> <span class="p">(</span><span class="nf">number-to-string</span> <span class="nv">unpushed</span><span class="p">)))))</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nv">epe-git-dirty</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nv">epe-git-untracked</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">(</span><span class="nb">let</span> <span class="p">((</span><span class="nv">unpushed</span> <span class="p">(</span><span class="nv">epe-git-unpushed-number</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">                 <span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nf">=</span> <span class="nv">unpushed</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                   <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;:&#34;</span> <span class="p">(</span><span class="nf">number-to-string</span> <span class="nv">unpushed</span><span class="p">)))))</span>
 </span></span><span class="line"><span class="cl">       <span class="ss">&#39;epe-git-face</span><span class="p">)))</span>
 </span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="s">&#34; λ&#34;</span> <span class="ss">&#39;epe-symbol-face</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nv">epe-colorize-with-face</span> <span class="p">(</span><span class="nb">if</span> <span class="p">(</span><span class="nf">=</span> <span class="p">(</span><span class="nf">user-uid</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="s">&#34;#&#34;</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">			   <span class="ss">&#39;epe-sudo-symbol-face</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                           <span class="ss">&#39;epe-sudo-symbol-face</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">   <span class="s">&#34; &#34;</span><span class="p">))</span>
 </span></span></code></pre></td></tr></table>
 </div>
@@ -526,7 +526,7 @@
     <item>
       <title>(翻译)从Helm到Ivy</title>
       <link>https://ramsayleung.github.io/zh/post/2017/from-helm-to-ivy/</link>
-      <pubDate>Sun, 05 Mar 2017 00:00:00 +0800</pubDate>
+      <pubDate>Sun, 05 Mar 2017 00:00:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/from-helm-to-ivy/</guid>
       <description>An Translated Post about switch from helm to ivy</description>
       <content:encoded><![CDATA[<p>最近，我发现很多Emacs 用户对Ivy 很感兴趣；而且大部份用户都是已经了解过Helm 或者Ido的
@@ -541,7 +541,7 @@
 <p>例如Helm 有一个命令(<strong>helm-google-suggest</strong>)可以模拟Goole 的搜索框，并在你输入时给出相应的google 提示</p>
 <p>Ivy 和Helm 都有相同的目标，但是它们实现的方法却是迥然不同</p>
 <p>现在我想站在用户的角度来比较一下这两个工具。我这里指的用户观点是我在不需要了解Helm 和Ivy 的内部工作原理的前提下对这两个工具进行比较。</p>
-<p>其实，因为我对 <strong>elisp</strong>还谈不上精通，所以也没办法就两者实现细节来进行比较。但是这两个工具我都使用过，所以我可以从用户的角度，跟你分享我使用它们的不同感受。最后，我从Helm 切换到了Ivy</p>
+<p>其实，因为我对 *elisp*还谈不上精通，所以也没办法就两者实现细节来进行比较。但是这两个工具我都使用过，所以我可以从用户的角度，跟你分享我使用它们的不同感受。最后，我从Helm 切换到了Ivy</p>
 <p>我想先谈Helm.当我使用Spacemacs 的时候，我学会了怎么使用Helm,以Helm 的方式思考, 如何自定义Helm,怎么把Helm 配置得称心如意。</p>
 <p>我想我应该算得上是一个中级的Helm 用户吧。我有读过<a href="http://tuhdo.github.io/helm-intro.html">这篇文章</a> 还有<a href="http://tuhdo.github.io/helm-projectile.html">这篇文章</a> 以及<a href="https://github.com/emacs-helm/helm/wiki">Wiki</a> 此外，在长达一年的时间里，我每天都是使用Helm的</p>
 <p><strong>Helm 是一个非常成熟的工具</strong>.根据git 的提交历史，Helm 的开发工作是在2009年左右开始的。
@@ -643,7 +643,7 @@ Counsel 也只有7500 行代码</p>
 </span></span><span class="line"><span class="cl">  <span class="nb">:diminish</span> <span class="p">(</span><span class="nv">ivy-mode</span> <span class="o">.</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:bind</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">:map</span> <span class="nv">ivy-mode-map</span>
-</span></span><span class="line"><span class="cl">	<span class="p">(</span><span class="s">&#34;C-&#39;&#34;</span> <span class="o">.</span> <span class="nv">ivy-avy</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="s">&#34;C-&#39;&#34;</span> <span class="o">.</span> <span class="nv">ivy-avy</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">:config</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nv">ivy-mode</span> <span class="mi">1</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="c1">;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.</span>
@@ -656,8 +656,8 @@ Counsel 也只有7500 行代码</p>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">setq</span> <span class="nv">ivy-initial-inputs-alist</span> <span class="no">nil</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="c1">;; configure regexp engine.</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">setq</span> <span class="nv">ivy-re-builders-alist</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">;; allow input not in order</span>
-</span></span><span class="line"><span class="cl">	<span class="o">&#39;</span><span class="p">((</span><span class="no">t</span>   <span class="o">.</span> <span class="nv">ivy--regex-ignore-order</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">;; allow input not in order</span>
+</span></span><span class="line"><span class="cl">        <span class="o">&#39;</span><span class="p">((</span><span class="no">t</span>   <span class="o">.</span> <span class="nv">ivy--regex-ignore-order</span><span class="p">))))</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Ivy 是很低调的；它不想让你把一切都整合到Ivy去。它仅仅是提供你必需的补全。你不能像Helm 那样用Ivy 来做任何事；那为什么我还要切换到Ivy 去呢？</p>
@@ -769,9 +769,9 @@ Counsel 也只有7500 行代码</p>
 <pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nv">helm</span>
 </span></span><span class="line"><span class="cl"> <span class="nb">:sources</span>
 </span></span><span class="line"><span class="cl"> <span class="p">(</span><span class="nv">helm-build-sync-source</span> <span class="s">&#34;one-to-ten&#34;</span>
-</span></span><span class="line"><span class="cl">			 <span class="nb">:candidates</span>
-</span></span><span class="line"><span class="cl">			 <span class="p">(</span><span class="nf">mapcar</span> <span class="nf">#&#39;number-to-string</span> <span class="p">(</span><span class="nv">number-sequence</span> <span class="mi">1</span> <span class="mi">10</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">			 <span class="nb">:fuzzy-match</span> <span class="no">t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                         <span class="nb">:candidates</span>
+</span></span><span class="line"><span class="cl">                         <span class="p">(</span><span class="nf">mapcar</span> <span class="nf">#&#39;number-to-string</span> <span class="p">(</span><span class="nv">number-sequence</span> <span class="mi">1</span> <span class="mi">10</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">                         <span class="nb">:fuzzy-match</span> <span class="no">t</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"> <span class="nb">:buffer</span>
 </span></span><span class="line"><span class="cl"> <span class="s">&#34;*helm one-to-ten*&#34;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
@@ -795,11 +795,11 @@ Counsel 也只有7500 行代码</p>
     <item>
       <title>(翻译)An Introduction to Magit</title>
       <link>https://ramsayleung.github.io/zh/post/2017/magit/</link>
-      <pubDate>Fri, 03 Mar 2017 00:00:00 +0800</pubDate>
+      <pubDate>Fri, 03 Mar 2017 00:00:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/magit/</guid>
       <description>An introduction to Magit</description>
-      <content:encoded><![CDATA[<p>如果你足够幸运(或者不幸运，取决于你怎么看待了)可以使用 <em>git</em> 作为你工作流的一部分。</p>
-<p>你可能已经 <strong>邂逅</strong> 过 <em>magit</em> 这个Emacs 的git接口了。 <em>magit</em> 是Emacs 上的非常优秀的git 接口，它假定你是了解你正在对 <em>magit</em> 或者 <em>git</em> 做的种种操作的 <strong>注意</strong> ：该文章是针对 magit 1.x 的，对 magit 2.x 并不适用 Magit 有非常完整的文档，包含了Magit 的各种操作，但是和大多数的文档一样，Magit 的文档并没有介绍如何将Magit 和你的工作流结合；</p>
+      <content:encoded><![CDATA[<p>如果你足够幸运(或者不幸运，取决于你怎么看待了)可以使用 <code>git</code> 作为你工作流的一部分。</p>
+<p>你可能已经 <strong>邂逅</strong> 过 <code>magit</code> 这个Emacs 的git接口了。 <code>magit</code> 是Emacs 上的非常优秀的git 接口，它假定你是了解你正在对 <code>magit</code> 或者 <code>git</code> 做的种种操作的 <strong>注意</strong> ：该文章是针对 magit 1.x 的，对 magit 2.x 并不适用 Magit 有非常完整的文档，包含了Magit 的各种操作，但是和大多数的文档一样，Magit 的文档并没有介绍如何将Magit 和你的工作流结合；</p>
 <p>Magit 假定你是熟悉Magit 并且了解如何合理地使用Magit(但大多数情况并不是这样).</p>
 <p>Magit 现在还是处于活跃的开发中。在2013年12月，增加了很多很多新的很有用特性的一次 release, 让Magit 变得比以前更强大了，所以本教程是基于比较新的Magit 版本的，并且 假定你也已经安装了新的版本</p>
 <p>如果想安装处于 <code>master</code> 分支的Magit,我建议你使用 <code>Melpa</code> 来安装；此外你也可以选择直接拉取<a href="https://github.com/magit/magit">magit github</a> 仓库的最新版本，然后按照README 上面的指导来构建 <code>magit</code></p>
@@ -815,7 +815,8 @@ Counsel 也只有7500 行代码</p>
     <img loading="lazy" src="https://www.masteringemacs.org/static/uploads/Screenshot-from-2013-12-06-114511.png"/> 
 </figure>
 
-<p>你首先会注意到关于Magit的事情应该就是当你打开Magit 的状态窗口时，Magit 的状态窗口是可以与你的Emacs 窗口配置配合工作的，你也可以像在其他Emacs 窗口那样，通过按下 <code>q</code>
+<p>你首先会注意到关于Magit的事情应该就是当你打开Magit 的状态窗口时，Magit 的状态窗口
+是可以与你的Emacs 窗口配置配合工作的，你也可以像在其他Emacs 窗口那样，通过按下 <code>q</code>
 来关闭窗口。</p>
 <p>几乎你在Magit 执行的所有操作都是通过在底部打开一个 <code>command console</code> 窗口，然后按下对应的单字符指令执行；你也可以重新定义你自己的指令。</p>
 <p>这种交互的方式真的非常好用，可能正是这么强大的特性让Magit变得如此优秀吧。</p>
@@ -824,9 +825,11 @@ Counsel 也只有7500 行代码</p>
 <p>即使是现在，也并不是所有的操作都有注解说明了；有一些命令
 (对于我的工作流来说很重要的命令)依然是没有说明的，特别是用来重新定位的 <code>E</code>.</p>
 <h2 id="staging-and-unstaging-items"><span class="section-num">3</span> Staging and Unstaging Items</h2>
-<p>把你的文件放到git下面是你经常需要完成工作之一，Magit 有一系列的按键绑定和工具可以帮助你更好地完成工作。</p>
+<p>把你的文件放到git下面是你经常需要完成工作之一，Magit 有一系列的按键绑定和工具
+可以帮助你更好地完成工作。</p>
 <p>Magit 操作不仅可以暂存文件，还可以暂存在 <strong>diff</strong> 中选定 的代码块。</p>
-<p>Magit&quot;杀手级&quot;特性之一就是它使用不同的等级来显示相关的信息。Magit 可以让你通过 <code>tab</code> 展开或者折叠已经暂存或者未暂存文件。</p>
+<p>Magit&quot;杀手级&quot;特性之一就是它使用不同的等级来显示相关的信息。Magit 可以
+让你通过 <code>tab</code> 展开或者折叠已经暂存或者未暂存文件。</p>
 <p>如果你想更加细颗粒度地暂存或者未暂存文件，你可以使用 <strong>M-1</strong> 到 <strong>M-4</strong> 来操作所有的文件；此外，也可以使用 <strong>1</strong> 到 <strong>4</strong>
 操作选定的文件</p>
 <figure>
@@ -846,26 +849,29 @@ Counsel 也只有7500 行代码</p>
 </li>
 </ol>
 <p>生活变得更加美好的按键绑定，例如： <code>n</code> 和 <code>p</code> 可以在你前一个单元和后一个单元(通常以代码块为单元)
-之间移动；<code>M-n</code> 和 <code>M-p</code> 可以在相邻单元之间移动，例如在等级4中的每个文件间移动。</p>
+之间移动；~M-n~ 和 <code>M-p</code> 可以在相邻单元之间移动，例如在等级4中的每个文件间移动。</p>
 <p>你也可以使用 <code>+</code> 或者 <code>-</code> 放大或者缩小每段代码，使用 <code>0</code> 可以恢复默认设置。此外你也可以按下 <code>H</code> 给代码块 添加额外的代码高亮。</p>
 <p>最后，你按下回车 <code>RET</code> 可以打开你修改的文件，代码块或者文件都适用该操作。</p>
 <hr>
-<p>你可以通过按下 <code>s</code> 或者 <code>u</code> 来暂存或者撤销暂存文件(或者代码块),此外，奉送一个很有用的小提示：如果你选定某部分的代码，然后按下暂存(撤销暂存)按键，Magit 会自动暂存(撤销)你选定的那部分代码。</p>
-<p>当你发现 <em>diff</em> 选定的代码块不符合你的要求的时候，你会发现这种细颗粒度的操作真的非常有用</p>
+<p>你可以通过按下 <code>s</code> 或者 <code>u</code> 来暂存或者撤销暂存文件(或者代码块),此外，奉送一个很有用的小提示：
+如果你选定某部分的代码，然后按下暂存(撤销暂存)按键，Magit 会自动暂存(撤销)你选定的那部分代码。</p>
+<p>当你发现 <code>diff</code> 选定的代码块不符合你的要求的时候，你会发现这种细颗粒度的操作真的非常有用</p>
 <hr>
 <p>有时候你对某些修改并不在意，你也不关心这部分修改是否已经提交；你可以像上面的暂存(撤销暂存)操作一样，通过按下按键 <code>K</code> 来忽略选定的代码块和文件，并且从你的电脑删除未提交到暂存区(untracked)的文件；</p>
 <p>这个命令可以比暂存(撤销暂存)命令完成更多的操作，例如，删除已保存的文件或目录(stash)</p>
 <h2 id="committing-changes"><span class="section-num">4</span> Committing Changes</h2>
 <p>如果你想打开提交菜单，只需按下 <code>c</code>,然后你就会看到琳罗满目的选项，不过大部份选项 你都是用不上的了。你真正有用的操作，不仅可以让你提交已暂存的修改，还可以完成更多的任务：</p>
 <ul>
-<li>你可以扩展(extend <code>e</code>) <em>HEAD</em> 所指向的提交</li>
+<li>你可以扩展(extend <code>e</code>) <code>HEAD</code> 所指向的提交</li>
 <li>你可以修改(amend <code>a</code>) 有关的提交信息</li>
 <li>如果你不喜欢现在的提交信息，你可以重写(reword <code>r</code>)提交信息</li>
-<li>你同时也可以修整(fixup <code>f</code>)和压缩(squash <code>s</code>)当前这次的提交。如果你之前用 <code>.</code> 标记了一次提交，那么今次使用的就是被标记的那次提交。</li>
+<li>你同时也可以修整(fixup <code>f</code>)和压缩(squash <code>s</code>)当前这次的提交。如果你之前用 <code>.</code> 标记了
+一次提交，那么今次使用的就是被标记的那次提交。</li>
 </ul>
-<p>扩展一次提交其实就是在当前提交上附加修改，所以，如果你忘记了提交本属于此次提交的东西你可以使用 <em>扩展</em> 选项。</p>
-<p>如果你想修改当前的提交信息，那就使用 <em>修改</em> 选项吧</p>
-<p>重写可以重写你的提交信息但是无需提交你已暂存的修改；如果你不小心按错了选项，想重写你的提交信息，<em>重写</em> 选项就是你最好的选择</p>
+<p>扩展一次提交其实就是在当前提交上附加修改，所以，如果你忘记了提交本属于此次提交的东西
+你可以使用 <code>扩展</code> 选项。</p>
+<p>如果你想修改当前的提交信息，那就使用 <code>修改</code> 选项吧</p>
+<p>重写可以重写你的提交信息但是无需提交你已暂存的修改；如果你不小心按错了选项，想重写你的提交信息，=重写= 选项就是你最好的选择</p>
 <p>如果你想在最新一次提交下创建一个 <code>fixup</code> 或者 <code>squash</code> 提交的话，使用修整或压缩命令 可以重整或者 <code>--(自动压缩)autosquash</code> 最新一次提交。</p>
 <p>如果你不会去重写你的git历史或者你未使用过重整，你可能觉得这两个命令不是很有用</p>
 <h2 id="logging"><span class="section-num">5</span> Logging</h2>
@@ -878,7 +884,8 @@ Counsel 也只有7500 行代码</p>
 <p>你应该知道的第一个有用的按键就是 <code>l l</code>, 这个 按键会为你展示缩略的日志信息：你会看到单行的提交信息, 作者的名字, 修改提交距今的时间, 树状结构的git 日志, 各种的标签信息，例如 <code>HEAD</code> 指针的位置或者分支标记的位置</p>
 <p>如果你不小心玩坏了git 的提交信息，命令 <code>git reflog</code> 会是你的救星；此外，对于magit 的引用日志(reflog)机制(<code>l h</code>)，它也有很友好稳定的UI界面支持。</p>
 <hr>
-<p>引用日志和普通的日志都有非常丰富的按键绑定。在日志里，你对单个的提交可以进行非常多的操作：</p>
+<p>引用日志和普通的日志都有非常丰富的按键绑定。在日志里，你对单个的提交可以进行
+非常多的操作：</p>
 <ul>
 <li><code>.</code>: 为此次提交作标记以便进行后续的操作例如提交修整 (<code>c f</code>)或者提交压缩 (<code>c s</code>)</li>
 <li><code>x</code>: 重置你的 <code>HEAD</code> 指针到选定的提交</li>
@@ -890,13 +897,15 @@ Counsel 也只有7500 行代码</p>
 <li><code>C-w</code>: 复制你此次提交的hash值</li>
 <li><code>SPC</code>: 展示完整的提交历史</li>
 </ul>
-<p>需要注意的是：即使你关闭了日志的窗口，标记的命令还是会继续作用的；标记是非常有用的工具，但是你很容易忘记你是否曾经作过标记。如果你在magit 使用 <code>M-n</code> 或者 <code>N-p</code> 向上或者向下浏览日志，
+<p>需要注意的是：即使你关闭了日志的窗口，标记的命令还是会继续作用的；标记是非常有用的工具，但是
+你很容易忘记你是否曾经作过标记。如果你在magit 使用 <code>M-n</code> 或者 <code>N-p</code> 向上或者向下浏览日志，
 maigt 会自动为你在另外一个窗口显示提交信息</p>
 <h2 id="conclusion"><span class="section-num">6</span> Conclusion</h2>
 <p>对于有经验的Git 用户来说，Magit 是一个非常好的工具；此外，如果你是Git 的新手， Magit可以帮助你了解Git 是怎么工作的，但是它永远不会教你使用Git.</p>
 <p>在我看来，阻碍 你使用Magit 最大的障碍就是Magit缺乏对选项的描述说明；即使Magit 包含了成千上万 Git的选项，参数和操作，但是它并没有教你如何找到并使用这些命令。</p>
 <p>我发现Git 的命令行真的无可替代(不是因为我喜欢git 的命令行我才这么说，事实是它真的很棒)因为我 想要完成的操作真的隐藏得很深，没有那么容易在Magit找到。</p>
-<p>不过最新版本的改进真的很好，你可以通过按下 <code>?</code> 查看一系列带有注解说明的命令(但不是全部命令，不过这也已经是一个很大的改进了).</p>
+<p>不过最新版本的改进真的很好，你可以通过按下 <code>?</code> 查看一系列带有注解说明的命令(但不是全部命令，不过这也
+已经是一个很大的改进了).</p>
 <p>如果你曾被Magit 的学习曲线所吓倒，抑或者你已经尝试Magit, 却无奈放弃；我建议你再试一次。我打算写更多关于Magit 的博文</p>
 <hr>
 <p>原文地址 <a href="https://www.masteringemacs.org/article/introduction-magit-emacs-mode-git">https://www.masteringemacs.org/article/introduction-magit-emacs-mode-git</a>
@@ -906,7 +915,7 @@ maigt 会自动为你在另外一个窗口显示提交信息</p>
     <item>
       <title>Shell神器fasd与Eshell的不期而遇</title>
       <link>https://ramsayleung.github.io/zh/post/2017/fasd-meet-eshell/</link>
-      <pubDate>Thu, 02 Mar 2017 00:00:00 +0800</pubDate>
+      <pubDate>Thu, 02 Mar 2017 00:00:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/fasd-meet-eshell/</guid>
       <description>An introduction about tweaking eshell with fasd</description>
       <content:encoded><![CDATA[<blockquote>
@@ -1018,7 +1027,7 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 </div><h2 id="fasd-plus-eshell"><span class="section-num">2</span> Fasd +Eshell</h2>
 <p>fasd 真的可以大幅度提高效率，但是我有点不太满意的是，我是个 Emacser, 我的操作基本是在 Emacs 里完成的，而我在 Emacs里面使用的 shell 是 Eshell,Eshell 似乎不能与 fasd 无缝结合，似乎可以折腾一下。</p>
 <hr>
-<p><strong>z</strong> 和 <strong>zz</strong> 命令是无法在Eshell 里面运行，因为 <strong>z</strong> 是 <strong>fasd_cd</strong> 的别名，而<strong>fasd_cd</strong> 是一个shell script 函数，Eshell无法运行该函数，代码如下：</p>
+<p><strong>z</strong> 和 <strong>zz</strong> 命令是无法在Eshell 里面运行，因为 <strong>z</strong> 是 <strong>fasd_cd</strong> 的别名，而*fasd_cd* 是一个shell script 函数，Eshell无法运行该函数，代码如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1036,11 +1045,11 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">fasd_cd <span class="o">()</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> <span class="nv">$#</span> -le <span class="m">1</span> <span class="o">]</span>
 </span></span><span class="line"><span class="cl">    <span class="k">then</span>
-</span></span><span class="line"><span class="cl">	fasd <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">        fasd <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">else</span>
-</span></span><span class="line"><span class="cl">	<span class="nb">local</span> <span class="nv">_fasd_ret</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>fasd -e <span class="s1">&#39;printf %s&#39;</span> <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$_fasd_ret</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="k">return</span>
-</span></span><span class="line"><span class="cl">	<span class="o">[</span> -d <span class="s2">&#34;</span><span class="nv">$_fasd_ret</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="s2">&#34;</span><span class="nv">$_fasd_ret</span><span class="s2">&#34;</span> <span class="o">||</span> <span class="nb">printf</span> %s<span class="se">\n</span> <span class="s2">&#34;</span><span class="nv">$_fasd_ret</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">local</span> <span class="nv">_fasd_ret</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>fasd -e <span class="s1">&#39;printf %s&#39;</span> <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$_fasd_ret</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="k">return</span>
+</span></span><span class="line"><span class="cl">        <span class="o">[</span> -d <span class="s2">&#34;</span><span class="nv">$_fasd_ret</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="s2">&#34;</span><span class="nv">$_fasd_ret</span><span class="s2">&#34;</span> <span class="o">||</span> <span class="nb">printf</span> %s<span class="se">\n</span> <span class="s2">&#34;</span><span class="nv">$_fasd_ret</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></td></tr></table>
@@ -1064,9 +1073,9 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 </span></span><span class="line"><span class="cl">  <span class="s">&#34;Use fasd to change directory more effectively by passing ARGS.&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">setq</span> <span class="nv">args</span> <span class="p">(</span><span class="nv">eshell-flatten-list</span> <span class="nv">args</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">let*</span> <span class="p">((</span><span class="nv">fasd</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;fasd &#34;</span> <span class="p">(</span><span class="nf">car</span> <span class="nv">args</span><span class="p">)))</span>
-</span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nv">fasd-result</span> <span class="p">(</span><span class="nv">shell-command-to-string</span> <span class="nv">fasd</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	 <span class="p">(</span><span class="nv">path</span> <span class="p">(</span><span class="nv">replace-regexp-in-string</span> <span class="s">&#34;\n$&#34;</span> <span class="s">&#34;&#34;</span> <span class="nv">fasd-result</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	 <span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nv">fasd-result</span> <span class="p">(</span><span class="nv">shell-command-to-string</span> <span class="nv">fasd</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">(</span><span class="nv">path</span> <span class="p">(</span><span class="nv">replace-regexp-in-string</span> <span class="s">&#34;\n$&#34;</span> <span class="s">&#34;&#34;</span> <span class="nv">fasd-result</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">eshell/cd</span> <span class="nv">path</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">eshell/echo</span> <span class="nv">path</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">))</span>
