@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Thu, 09 Jan 2025 17:44:07 -0800</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jan 2025 23:38:03 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/categories/%E5%B7%A5%E4%BD%9C%E6%B5%81/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>我的搜索流：高效搜索经验分享</title>
@@ -1131,12 +1131,43 @@
 可能过个10年，可能该软件不再流行，你甚至无法打开自己的文章。</p>
 <p>对于笔记服务，你的文章数据甚至不掌握在你手里，该服务停用，你的数据就会全部丢失。</p>
 <p>所以我倾向于「本地化储存」+「文本格式」 + 「易于同步」的写作方案</p>
-<p>最后我选择的写作工具是 <code>Emacs</code> + <code>org-mode=，不熟悉=org-mode</code> 的读者可能不知道 <code>org-mode</code> 是什么，可能理解成类似是=markdown= 的标记语言，但是和=Emacs= 结合后，易用性与扩展性比=markdown= 提高了一个数量级。</p>
+<p>最后我选择的写作工具是 <code>Emacs</code> + <code>org-mode=，不熟悉 =org-mode</code> 的读者可能不知道 <code>org-mode</code> 是什么，可能理解成类似是 <code>markdown</code> 的标记语言，但是和=Emacs= 结合后，易用性与扩展性比=markdown= 提高了一个数量级。</p>
 <p>这篇文章就是使用 <code>Emacs</code> + <code>org-mode</code> 写出来的:</p>
 <figure><a href="/ox-hugo/emacs_org_mode.png">
     <img loading="lazy" src="/ox-hugo/emacs_org_mode.png"/> </a>
 </figure>
 
+<h3 id="图片"><span class="section-num">2.1</span> 图片</h3>
+<p>在<a href="https://ramsayleung.github.io/zh/post/2017/blog/">《写博客的动机》</a>一文我提到，我之前是自建了博客，但是后来又迁移到了ox-hugo + Hugo 的GitHub Page上，其中最大的一个痛点就是插入图片.</p>
+<p>插入图片流程一般是分为两步：</p>
+<ol>
+<li>上传图片到云端存储，一般就是各种图床，如国外的Imgur, Cloudflare, 国内的七牛，又拍云，腾讯云对象存储等等</li>
+<li>将上传的图片插入文章，如果使用 Markdown, 就是 <code>![]()</code> 的格式插入</li>
+</ol>
+<p>最初我是手动上传到 Imgur，再把生成的链接插入到Markdown，每次图片操作下来大概耗费1-2分钟，尤其是Imgur还在国外，网络不好，经常失败。</p>
+<p>后来用上了<a href="https://github.com/Molunerfinn/PicGo">PicGo</a> 这个图片上传工具，稍微好些，但是依旧不方便，因为手动拖拉图片上传，图片还不好管理。</p>
+<p>后面遇到 <code>ox-hugo</code> 这个插件之后，就完全没有插入文件的困扰了。</p>
+<p>得益于Emacs各种强大的文件交互功能，我只需要做：</p>
+<ol>
+<li>打开本地图片, <code>Ctrl-c l</code> 触发 <code>org-store-link</code> 函数, 将文件名保存起来</li>
+<li><code>Ctrl-c Ctrl-l</code> 触发 <code>org-insert-link</code> 函数, 选择刚刚指定的文件, 点击回车即可.</li>
+</ol>
+<p>我现在管理图片的方式是将每篇文章相关的文章都放到 <code>文章名/img</code> 的目录下, 所以我只需要打开 <code>img</code>, <code>Ctrl-c l</code> 选择图片, 再回到文章 <code>Ctrl-c Ctrl-l</code> 插入即可.</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/ox-hugo-link-image.gif"/> 
+</figure>
+
+<p>又得益于Emacs org-mode 无可比拟的export 功能, 我可以通过ox-hugo 将 org-mode 文件导出成 Hugo 兼容的Markdown 文件, 然后再自动将文章中所有的图片复制到 Hugo 博客下的 <code>static/ox-hugo</code> 目录下.</p>
+<p>假如我本地路径为 <code>/home/ramsay/blog/2023/我的写作流/img/emacs_org_mode.png</code> 的图片，在按下 <code>Ctrl-c Ctrl-e H h</code> 之后，导出到 Hugo Markdown 之后，图片路径就会变成:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">{{\&lt; figure src=&#34;https://ramsayleung.github.io/ox-hugo/emacs_org_mode.png&#34; link=&#34;/ox-hugo/emacs_org_mode.png&#34; &gt;}}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>只需要将复制到 <code>ox-hugo</code> 目录的图片和文章的Markdown 文件一起提交到Git, 并上传到GitHub 就相当于把GitHub 当作图床，但是其他操作都由ox-hugo 和 GitHub 代劳了.</p>
 <h2 id="写作平台"><span class="section-num">3</span> 写作平台</h2>
 <h3 id="博客"><span class="section-num">3.1</span> 博客</h3>
 <p>在大学时期，我使用的是 <a href="https://github.com/emacsorphanage/org-page"><code>org-page</code></a> + <code>org-mode</code> 来自建博客在 <a href="https://pages.github.com/"><code>Github Pages</code></a>, 写了大概一年的博客文章。</p>
@@ -1145,11 +1176,11 @@
 <p>大概是2018年，我当时学习了Rust，打算找个机会来练手，然后就使用Rust搭建了个人的博客，开源在<a href="https://github.com/ramsayleung/blog">Github</a>上，还有100+的star，就这样，在自己的博客上又写了几年文章。</p>
 <p>直到2022年，因为工作太忙碌，没有太多时间来维护博客的代码以及运维博客的服务。
 自建博客的初衷只是为了有个地方可以承载我写的内容，只是因为年轻，有精力折腾，就自己写代码，搭建服务。</p>
-<p>但总体而言，写作的流程并不顺手: 因为我一直都是使用=org-mode= 来写作，而我自己的博客只支持=markdown= 格式，这就意味着我必须每次写作完成后，需要将=org-mode= 转换成=markdown= , 然后再在博客后台发布。</p>
-<p>如果涉及到图片就更麻烦，需要将图片逐张上传到图床，然后再插入到=org-mode=中, 而博客使用的=markdown= 编辑器过了5年后，开发者已经不维护了，所以免不了又会有各种小问题。</p>
-<p>我又尝试了=Emacs= + <code>org-mode</code> + <code>hugo</code> 的博客方案，发现使用起来非常舒心，发布文章几乎无成本。正好碰上博客服务器到期，就干脆切换回=Github Pages=.</p>
-<p><code>hugo</code> 是使用=markdown= 来构建网站的框架，而我使用的=org-mode=，所以还需要一个工具将=org-mode= 转换为=hugo markdown=，这个就是=Emacs= 插件<a href="https://ox-hugo.scripter.co/"><code>ox-hugo</code></a>。当然， <code>hugo</code> 原生也支持=org-mode=, 只是功能支持不完整， 不及=ox-hugo=.</p>
-<p><code>ox-hugo</code> 只需要将在=org-mode= 内容的最开始插入标记：</p>
+<p>但总体而言，写作的流程并不顺手: 因为我一直都是使用=org-mode= 来写作，而我自己的博客只支持 <code>Markdown</code> 格式，这就意味着我必须每次写作完成后，需要将=org-mode= 转换成 <code>markdown</code> , 然后再在博客后台发布。</p>
+<p>如果涉及到图片就更麻烦，需要将图片逐张上传到图床，然后再插入到 <code>org-mode=中, 而博客使用的=markdown</code> 编辑器过了5年后，开发者已经不维护了，所以免不了又会有各种小问题。</p>
+<p>我又尝试了 <code>Emacs</code> + <code>org-mode</code> + <code>hugo</code> 的博客方案，发现使用起来非常舒心，发布文章几乎无成本。正好碰上博客服务器到期，就干脆切换回=Github Pages=.</p>
+<p><code>hugo</code> 是使用 <code>markdown</code> 来构建网站的框架，而我使用的 <code>org-mode=，所以还需要一个工具将 =org-mode</code> 转换为 <code>Hugo markdown=，这个就是 =Emacs</code> 插件 <a href="https://ox-hugo.scripter.co/"><code>ox-hugo</code></a>。当然， <code>hugo</code> 原生也支持 <code>org-mode</code>, 只是功能支持不完整， 远不及 <code>ox-hugo</code>.</p>
+<p><code>ox-hugo</code> 只需要将在 <code>org-mode</code> 内容的最开始插入标记：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1174,13 +1205,12 @@
 </span></span><span class="line"><span class="cl"><span class="cs">#+HUGO_CATEGORIES</span><span class="c">: writing</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>Emacs一个快捷键 <code>C-c C-e H h</code> 就可以将=org-mode= 转换成=hugo= 格式的=markdown=:</p>
+</div><p>Emacs一个快捷键 <code>C-c C-e H h</code> 就可以将 <code>org-mode</code> 转换成 <code>Hugo</code> 格式的 <code>Markdown</code>:</p>
 <figure><a href="/ox-hugo/one-post-per-subtree.png">
     <img loading="lazy" src="/ox-hugo/one-post-per-subtree.png"/> </a>
 </figure>
 
 <p>结合<a href="https://github.com/ramsayleung/ramsayleung.github.io/blob/master/.github/workflows/gh-pages.yml">Github Action</a>，就可以自动把导出的markdown 博文部署到Github Pages，称得上是一键部署。</p>
-<p>不过，说出来有点心酸，我在博客写的文章，读者大多是我自己。</p>
 <h3 id="公众号"><span class="section-num">3.2</span> 公众号</h3>
 <p>在过新年的时候，闲来无事，新开了一个公众号「宫孙说」，用来「一鱼多吃」，将自己文章也转到公众号。</p>
 <p>因为Richard Stallman的影响，我一直是倾向于开放，自由的软件与生态，所以对于公众号这样仅限于「微信」封闭生态的平台不感冒。</p>
@@ -1193,17 +1223,161 @@
 <h3 id="km"><span class="section-num">3.4</span> KM</h3>
 <p>这是公司内部的知识交流创作平台，算是私域流量。有点难以置信的是，在这个读者数量远不如外部的平台，我写的文章有最多的阅读与收藏.
 或许是因为我写的内容贴近业务，是同事比较感兴趣的。</p>
-<h3 id="一鱼多吃的问题"><span class="section-num">3.5</span> 一鱼多吃的问题</h3>
+<h3 id="格式兼容多个平台"><span class="section-num">3.5</span> 格式兼容多个平台</h3>
 <p>将同一篇文章分发到多个平台，就难免会有不同平台格式不通的问题。</p>
-<p>上面这些平台，都是不支持 <code>org-mode</code> 这种相对小众的文本格式，所以 <code>markdown</code> 算是比较理想的中间格式，可以先把=org-mode= 转换成=hugo markdown=，再将=hugo markdown= 转换成=markdown=:</p>
-<figure><a href="/ox-hugo/%e5%86%99%e4%bd%9c%e6%b5%81%e7%a8%8b.png">
-    <img loading="lazy" src="/ox-hugo/%e5%86%99%e4%bd%9c%e6%b5%81%e7%a8%8b.png"/> </a>
+<p>因为Markdown 是通用文档，所以我倾向于把我的文章发布在其他的平台，如上文提到的知乎，公众号。</p>
+<p>但是这些平台都是使用专有的编辑器，并不支持直接解析Markdown，所以我会把文章复制到 <a href="https://markdown.com.cn/editor/">https://markdown.com.cn/editor/</a> 的在线编辑，它提供了一键复制格式到公众号，知乎, 掘金的功能.</p>
+<p>新的问题又来了, 我使用 <code>ox-hugo</code> 导出的是Hugo Markdown，又不是标准的Markdown， markdown.com.cn的编辑器无法解析部分标签, 如:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">+++
+</span></span><span class="line"><span class="cl">title = &#34;我的写作流&#34;
+</span></span><span class="line"><span class="cl">date = 2023-01-25T14:25:00-08:00
+</span></span><span class="line"><span class="cl">lastmod = 2025-01-09T17:40:36-08:00
+</span></span><span class="line"><span class="cl">tags = [&#34;writing&#34;]
+</span></span><span class="line"><span class="cl">categories = [&#34;工作流&#34;]
+</span></span><span class="line"><span class="cl">draft = false
+</span></span><span class="line"><span class="cl">toc = true
+</span></span><span class="line"><span class="cl">+++
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># ## &lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言 {#前言} =&gt; ## &lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">{{\&lt; figure src=&#34;https://ramsayleung.github.io/ox-hugo/emacs_org_mode.png&#34; link=&#34;/ox-hugo/emacs_org_mode.png&#34; &gt;}}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>既然编辑器不支持Hugo语法，那么把Hugo特有的语法去掉就行了嘛，所以我写了一个 shell script 用来把Hugo Markdown 转换回标准 Markdown:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">remove_heading_tag <span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># ## &lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言 {#前言} =&gt; ## &lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 删除 {#前言}</span>
+</span></span><span class="line"><span class="cl">    sed <span class="s1">&#39;s/{#.*}//&#39;</span> <span class="nv">$1</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">remove_meta_info <span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 删除下列信息</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># +++</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># title = &#34;为什么梦想买不起，故乡回不去&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># date = 2023-01-14T23:21:00+08:00</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># lastmod = 2023-01-25T09:00:47+08:00</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># tags = [&#34;book&#34;, &#34;history&#34;, &#34;economy&#34;]</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># categories = [&#34;book&#34;]</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># draft = false</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># toc = true</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># +++</span>
+</span></span><span class="line"><span class="cl">    sed <span class="s1">&#39;/+++/,/+++/d&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>又因为Emacs 本身就是个Lisp解析器, 我在运行时修改了一下导出成 Hugo Markdown 的函数, 在导出完之后，再调用上面的shell 脚本, 根据Hugo Markdown 再生成一份标准的Markdown.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">ramsay/org-hugo-export-to-std-md</span> <span class="p">(</span><span class="nv">orig-fun</span> <span class="kp">&amp;rest</span> <span class="nv">args</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="s">&#34;Generate standard markdown file base on the exported hugo markdown.&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">let</span> <span class="p">((</span><span class="nv">res</span> <span class="p">(</span><span class="nf">apply</span> <span class="nv">orig-fun</span> <span class="nv">args</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nf">message</span> <span class="s">&#34;Generate the standard markdown from %S&#34;</span> <span class="nv">res</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">ramsay/hugo2md-base</span> <span class="s">&#34;~/code/shell/hugomd2md-gitea.sh&#34;</span> <span class="nv">res</span> <span class="s">&#34;gitea&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">res</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nv">advice-add</span> <span class="ss">&#39;org-hugo-export-to-md</span> <span class="nb">:around</span> <span class="nf">#&#39;</span><span class="nv">ramsay/org-hugo-export-to-std-md</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>回到图片的问题上, 虽然GitHub 可以作为图床，但是因为墙不间断阻断 GitHub, 导致国内访问 GitHub 并不稳定，图片可能无法下载下来.</p>
+<p>既然 GitHub 无法稳定访问, 那么就挑个能在国内稳定访问的 Git 服务呗。</p>
+<p>一番调研之后，最后选定了 <a href="https://about.gitea.com/">Gitea</a>。</p>
+<p>需要做的事情也很简单，只需要在 Gitea 上新建一个仓库，然后再给我的博客增加一个远程仓库即可:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">&gt; git remote -v
+</span></span><span class="line"><span class="cl">gitea   git@gitea.com:myusername/store.git <span class="o">(</span>fetch<span class="o">)</span>
+</span></span><span class="line"><span class="cl">gitea   git@gitea.com:myusername/store.git <span class="o">(</span>push<span class="o">)</span>
+</span></span><span class="line"><span class="cl">origin  git@github.com:ramsayleung/ramsayleung.github.io.git <span class="o">(</span>fetch<span class="o">)</span>
+</span></span><span class="line"><span class="cl">origin  git@github.com:ramsayleung/ramsayleung.github.io.git <span class="o">(</span>push<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后需要做的就是再更新一下Shell 脚本，在把Hugo Markdown转换成标准Markdown的时候，再把图片链接修改为GitTea 链接:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">replace_link <span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># hugo的图片链接，转换成markdown 标准链接</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># {{\&lt; figure src=&#34;https://ramsayleung.github.io/ox-hugo/土地金融-政府债务.png&#34; link=&#34;/ox-hugo/土地金融-政府债务.png&#34; &gt;}}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># =&gt; ![](https://gitea.com/myusername/store/raw/branch/master/static/ox-hugo/土地金融-政府债务.png)</span>
+</span></span><span class="line"><span class="cl">    sed <span class="s1">&#39;s/{{\&lt; figure src=&#34;\(.*\)&#34; link=.*&gt;}}/!\[\](https:\/\/gitea.com\/myusername\/store\/raw\/branch\/master\/static\1)/&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后的效果就是，在我把 Org-mode 文件导出成 Hugo Markdown 后，会自己再生成一份替换了图片链接地址的标准Markdown.</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/ox-hugo-export.gif"/> 
 </figure>
 
-<p>使用 <code>ox-hugo=，可以将=org-mode</code> 转换成=hugo markdown= , 至于将=hugo markdown= 转换成=markdown=, 我写了个脚本 <a href="https://gist.github.com/ramsayleung/4b408dddc9ac1b4ef3464f5e9df1a9ef#file-hugomd2md-sh"><code>hugomd2md.sh</code></a>来处理：</p>
-<p>除了将=hugo markdown= 转换成=markdown=，使用Github Pages 当作图床，还在最后插入一个公众号广告。</p>
+<p>因为我太懒了，所以我再写了个小函数，导出完成之后，自动复制标准 Markdown 的内容到 clipboard, 这样就可以直接粘贴到 markdown.com.cn了（算下来，我每次操作都省了10来秒）</p>
 <h2 id="写在最后"><span class="section-num">4</span> 写在最后</h2>
-<p>因为使用=Emacs= + <code>org-mode</code> 写文章非常顺手，所以我写下了很多的文稿，只是思绪杂乱，不方便都发布出来.</p>
+<p>完整的写作流如图:
+<a href="/ox-hugo/%E5%86%99%E4%BD%9C%E6%B5%81%E7%A8%8B.png"><img loading="lazy" src="/ox-hugo/%e5%86%99%e4%bd%9c%e6%b5%81%e7%a8%8b.png" alt=""  />
+</a></p>
+<p>因为使用 <code>Emacs</code> + <code>org-mode</code> 写文章非常顺手，所以我写下了很多的文稿，只是思绪杂乱，不方便都发布出来.</p>
 <p>现在正逐步将存稿往公众号平台上迁移，只是公众号有诸多限制，其中一条是一天只能群发一篇文章，只能「小刀锯大树」，慢慢来了。</p>
 ]]></content:encoded>
     </item>
