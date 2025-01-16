@@ -19,9 +19,7 @@
       <link>https://ramsayleung.github.io/zh/post/2022/topological_sorting/</link>
       <pubDate>Sun, 22 May 2022 10:34:00 +0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2022/topological_sorting/</guid>
-      <description>1 Definition In computer science, a topological sort or topological ordering of a directed graph is a linear ordering of its vertices such that for every directed edge uv from vertex u to vertx v, u comes before v in the ordering.
-It sounds pretty academic, but I am sure you are using topological sort unconsciously every single day.
-2 Application Many real world situations can be modeled as a graph with directed edges where some events must occur before others.</description>
+      <description>1 Definition In computer science, a topological sort or topological ordering of a directed graph is a linear ordering of its vertices such that for every directed edge uv from vertex u to vertx v, u comes before v in the ordering. It sounds pretty academic, but I am sure you are using topological sort unconsciously every single day. 2 Application Many real world situations can be modeled as a</description>
       <content:encoded><![CDATA[<h2 id="definition"><span class="section-num">1</span> Definition</h2>
 <p>In computer science, a topological sort or topological ordering of a directed graph is a linear ordering of its vertices such that for every directed edge <code>uv</code> from vertex <code>u</code> to vertx <code>v</code>, <code>u</code> comes before <code>v</code> in the ordering.</p>
 <p>It sounds pretty academic, but I am sure you are using topological sort unconsciously every single day.</p>
@@ -228,6 +226,10 @@ It sounds pretty academic, but I am sure you are using topological sort unconsci
 <li><a href="https://gertjanvandenburg.com/files/talk/make.html">Hands-on Tutorial on Make</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Topological_sorting">Topological sorting</a></li>
 </ul>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
   </channel>

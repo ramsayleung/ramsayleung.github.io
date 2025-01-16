@@ -660,6 +660,10 @@ WAL(write-ahead-log, 预写日志),较长时间无法写入日志，最终导致
 <p>在Hbase 宕机的时候， 参考日志和详细的监控，比如连接数，CPU 使用率，内存，集群负载情况，每个节点情况。不然再遇到一次宕机，还是只能看日志，猜原因。</p>
 <p>话分两头，现在的分析主要是基于Hbase 和ZooKeeper 的日志进行分析，简而言之就是捞日 志，查看信息; 捞日志，查看信息；通过工具找出日志中隐藏的关键时机，然后对时机前后发生的事情进行分析，这也是一个有趣的过程。</p>
 <p>只是从1G 多的日志里面找出想要的内容，也不是一个容易的过程。</p>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
     <item>
@@ -844,6 +848,10 @@ WAL(write-ahead-log, 预写日志),较长时间无法写入日志，最终导致
 </div><p>然后Hadoop 就会启动一个 MapReduce 的Job来运行这个 <code>CopyTable</code>任务。而我要复制所 有的数据，就需要把列族和表都列出来</p>
 <h2 id="结语"><span class="section-num">3</span> 结语</h2>
 <p>折腾一波之后，终于把环境弄好。如果目标机房和源机房不同的话，也可以尝试使用 Hbase 的 <code>Exporter</code> 和 <code>Importer</code></p>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
     <item>
@@ -1819,6 +1827,10 @@ wget <a href="http://archive.cloudera.com/cdh5/cdh/5/hbase-1.2.0-cdh5.7.1.tar.gz
 <li><a href="https://yq.aliyun.com/articles/26415">https://yq.aliyun.com/articles/26415</a></li>
 <li><a href="https://linode.com/docs/databases/hadoop/how-to-install-and-set-up-hadoop-cluster/">https://linode.com/docs/databases/hadoop/how-to-install-and-set-up-hadoop-cluster/</a></li>
 </ul>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
   </channel>

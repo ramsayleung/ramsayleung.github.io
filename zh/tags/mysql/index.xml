@@ -196,6 +196,10 @@
 </div><p>然后Hadoop 就会启动一个 MapReduce 的Job来运行这个 <code>CopyTable</code>任务。而我要复制所 有的数据，就需要把列族和表都列出来</p>
 <h2 id="结语"><span class="section-num">3</span> 结语</h2>
 <p>折腾一波之后，终于把环境弄好。如果目标机房和源机房不同的话，也可以尝试使用 Hbase 的 <code>Exporter</code> 和 <code>Importer</code></p>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
     <item>
@@ -1171,6 +1175,10 @@ wget <a href="http://archive.cloudera.com/cdh5/cdh/5/hbase-1.2.0-cdh5.7.1.tar.gz
 <li><a href="https://yq.aliyun.com/articles/26415">https://yq.aliyun.com/articles/26415</a></li>
 <li><a href="https://linode.com/docs/databases/hadoop/how-to-install-and-set-up-hadoop-cluster/">https://linode.com/docs/databases/hadoop/how-to-install-and-set-up-hadoop-cluster/</a></li>
 </ul>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
   </channel>

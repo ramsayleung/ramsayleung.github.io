@@ -521,6 +521,10 @@ code to figure out who&rsquo;s calling them.</p>
 <li><a href="https://youtu.be/4tEi86h8-TM?t=32m30s">NightHacking with Venkat Subramaniam</a></li>
 <li><a href="https://stackoverflow.com/questions/43937160/designing-tail-recursion-using-java-8">Designing tail recursion using java 8</a></li>
 </ul>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
     <item>
@@ -1540,6 +1544,10 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 </table>
 <h2 id="总结"><span class="section-num">10</span> 总结</h2>
 <p>介绍完新类型的容器之后, 希望大家对这些新类型容器熟悉起来, 应对需求来也能得心应手 :)</p>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
     <item>
@@ -1926,6 +1934,10 @@ Collections方法不能提供真正的不可变容器,
 <li><a href="https://github.com/google/guava/wiki/ImmutableCollectionsExplained">Immutable
 Collections</a></li>
 </ul>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
     <item>
@@ -2225,6 +2237,10 @@ JDK也推出了一个=Objects.hash(field1, field2,&hellip;,fieldn)=的方法,
 <h2 id="总结"><span class="section-num">5</span> 总结</h2>
 <p>到本文为止, Guava提供的基本工具类就已经介绍完了，暂时告一段落了,
 接下来就要介绍Guava最常用的工具之一: 各种容器(Collections)</p>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
     <item>
@@ -2651,6 +2667,10 @@ Guava wiki 还提了两点最佳实践(best practice):</p>
 <ul>
 <li><a href="https://github.com/google/guava/wiki/PreconditionsExplained">PreconditionsExplained</a></li>
 </ul>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
     <item>
@@ -2945,6 +2965,10 @@ API几乎都是通过返回一个null的方式表示所需的值的缺失,
 <li><a href="https://book.douban.com/subject/25912747/">Java8 in Action</a></li>
 <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Oracle java doc about Optional</a></li>
 </ul>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
     <item>
@@ -3202,6 +3226,10 @@ A、B、C，每个线程将自己的 输出在屏幕上打印 10
 <p>写一条面试题的答案都写得是问题多多的，不禁令人沮丧，说明自己对Java的并发模型理解还有很大的提高。
 不过在排查问题的过程中，通过实践有体感地理解了Java的内存模型，发现Java内存模型并不是那么地曲高和寡，在日常的开发中也是很常见的.</p>
 <p>费了一番工夫排查之后，终究是有新的收获的</p>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
     <item>
@@ -3546,6 +3574,10 @@ Wall 说的</li>
 (可以看出我这次的变更主要是新增模型和工具类，这样反射才能调用规律性代码)</li>
 <li>Java大法好，Java世界那么大，还需要我好好探索.</li>
 </ol>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
     <item>
@@ -4103,6 +4135,10 @@ Wall 说的</li>
 <p>不得不说，入职的时候，遇上了各种jar 包冲突的问题，排包都排出心得. 在此推荐个排包神器, Intellij Idea 的插件：<a href="https://plugins.jetbrains.com/plugin/7179-maven-helper">maven helper</a>, 比手动<code>-verbose:class</code> + <code>mvn dependency:tree</code>排包方便多了</p>
 <h2 id="总结"><span class="section-num">8</span> 总结</h2>
 <p>的确，写到这里，必须再次承认 Maven 是怪兽级的 构建工具，但是同样无可否认的是，它出色的构建和依赖管理功能。写go 语言的时候，我多希望有个 Maven 可以用呢 ╥﹏╥&hellip;</p>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
     <item>
@@ -4648,6 +4684,10 @@ Wall 说的</li>
 <li><a href="https://docs.rs/error-chain">error chain</a></li>
 <li><a href="https://doc.rust-lang.org/book/second-edition/ch09-00-error-handling.html">error handle</a></li>
 </ul>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
   </channel>

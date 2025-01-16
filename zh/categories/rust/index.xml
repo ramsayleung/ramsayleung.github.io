@@ -337,6 +337,10 @@
 <ul>
 <li>Programming Rust, 2nd edition <br/></li>
 </ul>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
     <item>
@@ -344,10 +348,7 @@
       <link>https://ramsayleung.github.io/zh/post/2021/iterate_through_pagination_api/</link>
       <pubDate>Thu, 29 Apr 2021 11:48:00 +0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2021/iterate_through_pagination_api/</guid>
-      <description>Iterate through pagination in the Rest API
-1 Preface About 4 months ago, icewind1991 created an exciting PR that adding Stream/Iterator based versions of methods with paginated results, which makes enpoints in Rspotify more much ergonomic to use, and Mario completed this PR.
-In order to know what this PR brought to us, we have to go back to the orignal story, the paginated results in Spotify&amp;rsquo;s Rest API.
-2 Orignal Story Taking the artist_albums as example, it gets Spotify catalog information about an artist&amp;rsquo;s albums.</description>
+      <description>Iterate through pagination in the Rest API 1 Preface About 4 months ago, icewind1991 created an exciting PR that adding Stream/Iterator based versions of methods with paginated results, which makes enpoints in Rspotify more much ergonomic to use, and Mario completed this PR. In order to know what this PR brought to us, we have to go back to the orignal story, the paginated results in Spotify&amp;rsquo;s Rest API. 2</description>
       <content:encoded><![CDATA[<p>Iterate through pagination in the Rest API</p>
 <h2 id="preface"><span class="section-num">1</span> Preface</h2>
 <p>About 4 months ago, <a href="https://github.com/icewind1991">icewind1991</a> created an exciting <a href="https://github.com/ramsayleung/rspotify/pull/166">PR</a> that adding <code>Stream/Iterator</code> based versions of methods with paginated results, which makes enpoints in <a href="https://github.com/ramsayleung/rspotify">Rspotify</a> more much ergonomic to use, and <a href="https://github.com/marioortizmanero">Mario</a> completed this PR.</p>
@@ -664,6 +665,10 @@ to the <code>Iterator</code> trait.</p>
 <p>Whew! It took more than I expected. Since iterators is the Rust features inspired by functional programming language ideas, which contributes to Rust&rsquo;s capability to clearly express high-level ideas at low-level performance.</p>
 <p>It&rsquo;s good to leverage iterators wherever possible, now we can be thrilled to say that all endpoints don&rsquo;t need to manuallly loop over anymore, they are all iterable and rusty.</p>
 <p>Thanks Mario and icewind1991 again for their works :)</p>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
     <item>
@@ -671,10 +676,7 @@ to the <code>Iterator</code> trait.</p>
       <link>https://ramsayleung.github.io/zh/post/2020/serde_lesson/</link>
       <pubDate>Sun, 13 Dec 2020 22:29:00 +0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2020/serde_lesson/</guid>
-      <description>The lesson learned from refactoring rspotify
-1 Preface Recently, I and Mario are working on refactoring rspotify, trying to improve performance, documentation, error-handling, data model and reduce compile time, to make it easier to use. (For those who has never heard about rspotify, it is a Spotify HTTP SDK implemented in Rust).
-I am partly focusing on polishing the data model, based on the issue created by Koxiaet.
-Since rspotify is API client for Spotify, it has to handle the request and response from Spotify HTTP API.</description>
+      <description>The lesson learned from refactoring rspotify 1 Preface Recently, I and Mario are working on refactoring rspotify, trying to improve performance, documentation, error-handling, data model and reduce compile time, to make it easier to use. (For those who has never heard about rspotify, it is a Spotify HTTP SDK implemented in Rust). I am partly focusing on polishing the data model, based on the issue created by Koxiaet. Since rspotify</description>
       <content:encoded><![CDATA[<p>The lesson learned from refactoring rspotify</p>
 <h2 id="preface"><span class="section-num">1</span> Preface</h2>
 <p>Recently, I and <a href="https://github.com/marioortizmanero">Mario</a> are working on refactoring <a href="https://github.com/ramsayleung/rspotify"><code>rspotify</code></a>, trying to improve performance, documentation, error-handling, data model and reduce compile time, to make it easier to use. (For those who has never heard about <code>rspotify</code>, it is a Spotify HTTP SDK implemented in Rust).</p>
@@ -1484,6 +1486,10 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 <li><a href="https://github.com/ramsayleung/rspotify/pull/145">PR: Refactor model</a></li>
 <li><a href="https://github.com/ramsayleung/rspotify/pull/177">PR: Deserialize enum from number</a></li>
 </ul>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
     <item>
@@ -1491,9 +1497,7 @@ construction. And it turns out that there is a way to construct <code>DateTime</
       <link>https://ramsayleung.github.io/zh/post/2020/async_await_for_rspotify/</link>
       <pubDate>Fri, 28 Feb 2020 01:27:00 +0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2020/async_await_for_rspotify/</guid>
-      <description>1 Preface Today, I am exited to introduce you the v0.9 release I have been continued to work on it for the past few weeks that adds async/await support now!
-2 The road to async/await What is rspotify: &amp;gt; For those who has never heared about rspotify before, rspotify is a Spotify web Api wrapper implemented in Rust.
-With async/await&amp;rsquo;s forthcoming stabilization and reqwest adds async/await support now, I think it&amp;rsquo;s time to let rspotify leverage power from async/await.</description>
+      <description>1 Preface Today, I am exited to introduce you the v0.9 release I have been continued to work on it for the past few weeks that adds async/await support now! 2 The road to async/await What is rspotify: &amp;gt; For those who has never heared about rspotify before, rspotify is a Spotify web Api wrapper implemented in Rust. With async/await&amp;rsquo;s forthcoming stabilization and reqwest adds async/await support now, I think</description>
       <content:encoded><![CDATA[<h2 id="preface"><span class="section-num">1</span> Preface</h2>
 <p>Today, I am exited to introduce you the <a href="https://github.com/ramsayleung/rspotify/releases/tag/v0.9">v0.9</a> release I have been continued to work on it for the past few weeks that
 adds <code>async/await</code> support now!</p>
@@ -1609,6 +1613,10 @@ the import path:</p>
 tracker!</p>
 <p>Please provide any feedback, as I would love to improve this library any way I can! Thanks <a href="https://github.com/Rigellute">@Alexander</a> so much for actively participate in the refactor work for support
 <code>async/await</code>.</p>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
     <item>
@@ -1867,6 +1875,10 @@ tracker!</p>
 <p>后来在<a href="https://www.reddit.com/r/rust/comments/7yrofg/rspotify_is_published_to_cratesio/">社区</a> 同学的提醒下， 我才发现我踩到了 Rust 编译器的一个bug, 最后我就顺手提交了一个 <a href="https://github.com/rust-lang/rust/issues/48368">issue</a>, 虽说这个问题已经在 <code>nightly</code> 里面修复了。</p>
 <h2 id="结语"><span class="section-num">3</span> 结语</h2>
 <p>前后两个月的时间，终于发布了 rspotify. 项目不大，但是也是我花费时间，精力去开发的，也得到其他同学的肯定，喔耶 :)</p>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
     <item>
@@ -2412,6 +2424,10 @@ tracker!</p>
 <li><a href="https://docs.rs/error-chain">error chain</a></li>
 <li><a href="https://doc.rust-lang.org/book/second-edition/ch09-00-error-handling.html">error handle</a></li>
 </ul>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
     <item>
@@ -2738,6 +2754,10 @@ not try to catch. Most such errors are abnormal conditions.</p>
 <li><a href="https://doc.rust-lang.org/book/second-edition/">Rust book</a></li>
 <li><a href="https://doc.rust-lang.org/stable/std/io/type.Result.html">IO Result</a></li>
 </ul>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
   </channel>

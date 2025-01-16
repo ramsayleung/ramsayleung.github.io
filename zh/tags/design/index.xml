@@ -146,6 +146,10 @@
 <p>突然意识到, 本书的PDF 版本的排版和字段, 图片也是相当舒服的</p>
 <h2 id="design-with-type"><span class="section-num">2</span> Design with Type</h2>
 <p>接下来大部分内容都关于Type, 关于印刷, 关于字体种类, 不是很感兴趣, 所以就草草涉猎过.</p>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
     <item>
@@ -493,6 +497,10 @@ flake 算法生成的是 128 位的 ID, 略长；所以最后我选择了 Snowfl
 <h2 id="小结"><span class="section-num">3</span> 小结</h2>
 <p>算法虽然简单，但是在找到 Snowflake 算法之前，我尝试了挺多的算法，但是都是因为不符合要求而被一一否决， 而 Snowflake 算法虽然简单，但是胜在实用。</p>
 <p>最后附上我写的 snowflake 算法的 Python 实现： <a href="https://github.com/ramsayleung/snowflake">Snowfloke</a></p>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
 ]]></content:encoded>
     </item>
   </channel>
