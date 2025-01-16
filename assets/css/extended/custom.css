@@ -39,3 +39,17 @@
     background-color: #e0e0e0;
     color: #333;
 }
+
+.qr-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.qr-container > image {
+  width: 150px;
+  height: 150px;
+  display: block;
+}
