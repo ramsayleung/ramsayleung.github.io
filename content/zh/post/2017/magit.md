@@ -168,3 +168,9 @@ maigt 会自动为你在另外一个窗口显示提交信息
 
 原文地址 <https://www.masteringemacs.org/article/introduction-magit-emacs-mode-git>
 在下翻译水平有限，如有错误，还请指出
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

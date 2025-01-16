@@ -648,3 +648,9 @@ reported by the followers)
 ## <span class="section-num">6</span> 5. Replication: Accepting Diveragence {#5-dot-replication-accepting-diveragence}
 
 笔记待续
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

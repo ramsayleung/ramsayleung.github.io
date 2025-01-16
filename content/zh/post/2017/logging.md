@@ -384,3 +384,9 @@ message 1 >>> {"fnum": 123.456, "num": 123, "bar": "baz", "foo": "bar"}
 虽然这次的日志阐述是以 Python 的日志模块举例，但是绝大部分的语言都内置或者是有第三方的日志支持，所以我分享的技巧还是可以应用到其他的语言的。
 
 这些都是我在日常项目中的一点体会，与诸君共赏罢。Enjoy :)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

@@ -216,6 +216,12 @@ func loadImage() {
 
 想要支持低版本的IOS，就只能走UIKit和Objective-C这条历史老路，我对此着实是望而生畏，有空还是学习点其他有趣的东西。 <br/>
 
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+
 [^fn:1]: <https://docs.swift.org/swift-book/documentation/the-swift-programming-language/guidedtour/> <br/>
 [^fn:2]: <https://www.hackingwithswift.com/100/swiftui> <br/>
 [^fn:3]: <https://github.com/ramsayleung?tab=repositories&q=&type=&language=swift&sort>= <br/>

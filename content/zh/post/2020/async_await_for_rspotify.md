@@ -109,3 +109,9 @@ tracker!
 
 Please provide any feedback, as I would love to improve this library any way I can! Thanks [@Alexander](<https://github.com/Rigellute>) so much for actively participate in the refactor work for support
 `async/await`.
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

@@ -56,3 +56,9 @@ alias magit="emacsclient -nw -eval '(magit-status)'"
 -   <https://emacs-china.org/t/magit/25527/6>
 -   <https://www.gnu.org/software/emacs/manual/html_node/emacs/Emacs-Server.html>
 -   <https://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html>
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

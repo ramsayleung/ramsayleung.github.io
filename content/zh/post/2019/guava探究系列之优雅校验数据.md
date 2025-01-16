@@ -314,3 +314,9 @@ Guava wiki 还提了两点最佳实践(best practice):
 ## <span class="section-num">8</span> 参考 {#参考}
 
 -   [PreconditionsExplained](https://github.com/google/guava/wiki/PreconditionsExplained)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

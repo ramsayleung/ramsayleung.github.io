@@ -167,3 +167,9 @@ ChatGPT 向我们展示了 GPT 模型的伟大之处。但模型虽强，阳春�
 -   [bob-plugin-openai-translator](https://github.com/yetone/bob-plugin-openai-translator)
 -   [openai-translator](https://github.com/yetone/openai-translator)
 -   [@yetone](https://twitter.com/yetone)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

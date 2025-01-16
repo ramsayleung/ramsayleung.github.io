@@ -138,3 +138,9 @@ Emacs lisp 有一项auto-load 的技术，类似延迟加载，合理运用延�
 这样 `anaconda-mode` 就会在 `python-mode` 加载以后被加载
 
 Enjoy Emacs :)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

@@ -119,3 +119,9 @@ toc = true
 -   [Understanding Merkle Trees](https://medium.com/geekculture/understanding-merkle-trees-f48732772199) <br/>
 -   [Explain Merkle Trees for use in Eventual Consistency](https://stackoverflow.com/questions/5486304/explain-merkle-trees-for-use-in-eventual-consistency) <br/>
 
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

@@ -66,3 +66,9 @@ toc = true
 ## <span class="section-num">5</span> 总结 {#总结}
 
 最后, 我也顺便把代码分享到 [Emacs社区](https://www.reddit.com/r/emacs/comments/7k54px/snippet_share_make_eshell_search_command_history/), 而 [manateelazycat](https://github.com/manateelazycat)也把这段代码的功能加入到[aweshell](https://github.com/manateelazycat/aweshell/commit/ecaddac98b87f881910dbee8b51a98f00b6d9d5d), Oh yeah !
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

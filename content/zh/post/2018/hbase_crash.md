@@ -387,3 +387,9 @@ WAL(write-ahead-log, 预写日志),较长时间无法写入日志，最终导致
 话分两头，现在的分析主要是基于Hbase 和ZooKeeper 的日志进行分析，简而言之就是捞日 志，查看信息; 捞日志，查看信息；通过工具找出日志中隐藏的关键时机，然后对时机前后发生的事情进行分析，这也是一个有趣的过程。
 
 只是从1G 多的日志里面找出想要的内容，也不是一个容易的过程。
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

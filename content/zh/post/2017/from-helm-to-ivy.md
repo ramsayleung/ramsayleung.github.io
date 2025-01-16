@@ -195,3 +195,9 @@ Helm 为用户作了非常多的决定，Ivy 让用户按需求进行定制；He
 原文地址 <https://sam217pa.github.io/2016/09/13/from-helm-to-ivy/>
 
 在下翻译水平有限，如有错误，还请指出
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

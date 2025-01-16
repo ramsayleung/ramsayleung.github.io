@@ -263,3 +263,9 @@ thread 'main' panicked at 'Failed to open hello.txt: Error { repr: Os { code:
 -   [propagating exceptions](http://tutorials.jenkov.com/exception-handling-strategies/propagating-exceptions.html)
 -   [Rust book](https://doc.rust-lang.org/book/second-edition/)
 -   [IO Result](https://doc.rust-lang.org/stable/std/io/type.Result.html)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

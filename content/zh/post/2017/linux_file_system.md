@@ -155,3 +155,9 @@ Linux 的文件系统还有很多，每一种都有自己的特点；但是如�
 -   <https://en.wikipedia.org/wiki/ZFS>
 -   <https://en.wikipedia.org/wiki/XFS>
 -   <https://wiki.archlinux.org/index.php/file_systems>
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

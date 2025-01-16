@@ -91,3 +91,9 @@ toc = true
 感觉这次开发公众号，笔者就是用 flask 编写 restful api, 然后做的其他事情就是编写爬虫。
 
 [项目github地址](https://github.com/ramsayleung/SamrayJustForFun)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

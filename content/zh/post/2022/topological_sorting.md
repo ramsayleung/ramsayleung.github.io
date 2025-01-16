@@ -172,3 +172,9 @@ After reading the demonstration of topological ordering, you (and I) too should 
 -   [Directed Acyclic Graph](https://docs.gitlab.com/ee/ci/directed_acyclic_graph/)
 -   [Hands-on Tutorial on Make](https://gertjanvandenburg.com/files/talk/make.html)
 -   [Topological sorting](https://en.wikipedia.org/wiki/Topological_sorting)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

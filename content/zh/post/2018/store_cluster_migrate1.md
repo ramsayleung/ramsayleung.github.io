@@ -670,3 +670,9 @@ start-hbase.sh
 -   <http://blog.csdn.net/u010824591/article/details/51174099>
 -   <https://yq.aliyun.com/articles/26415>
 -   <https://linode.com/docs/databases/hadoop/how-to-install-and-set-up-hadoop-cluster/>
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

@@ -68,3 +68,9 @@ highlighted = true
 
 每个人总会有不同的想法，不同的际遇，如果你想和他人分享而不知从何言起，与何人言？
 何不付诸博客呢？
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

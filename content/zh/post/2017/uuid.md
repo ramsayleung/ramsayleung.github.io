@@ -322,3 +322,9 @@ UUID 一般用来生成全局唯一标识符，那么 UUID 是否能保证唯一
 如果你生成的是 128 bit 长的 UUID 的话，理论上是 2的14x8=114次方才会有一次重复。这是个什么概念的呢？ 即你每秒能 生成 10 亿个 UUID, 在100年以后，你就有 50%的可能性产生一个重复的 UUID了，是不是很开心呢？
 
 即使你使用 `UUID.randomUUID.getLeastSignificant()` 生成长整型的ID, 你理论上需要生成 2的56次方个 ID 后才会产生一个重复的 ID, 所以你可以放心地使用 UUID 了 :)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

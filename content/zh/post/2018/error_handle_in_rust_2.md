@@ -337,3 +337,9 @@ fn main() {
 -   [handling errors in rust](https://vincent.is/handling-errors-in-rust/)
 -   [error chain](https://docs.rs/error-chain)
 -   [error handle](https://doc.rust-lang.org/book/second-edition/ch09-00-error-handling.html)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

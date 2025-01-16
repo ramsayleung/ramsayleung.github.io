@@ -295,3 +295,9 @@ String value = Optional.ofNullable(map.get("foo")).map(Object::toString).orElse(
 -   [Using and avoiding](https://github.com/google/guava/wiki/UsingAndAvoidingNullExplained)
 -   [Java8 in Action](https://book.douban.com/subject/25912747/)
 -   [Oracle java doc about Optional](https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

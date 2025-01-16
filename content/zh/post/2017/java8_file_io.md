@@ -227,3 +227,9 @@ Enjoy Java :)
 -   <http://winterbe.com/posts/2015/03/25/java8-examples-string-number-math-files/>
 -   <http://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html#lines-java.nio.file.Path->
 -   <https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html>
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

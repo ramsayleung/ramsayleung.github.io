@@ -218,3 +218,9 @@ public class ComparisonChainPerson implements Comparable<ComparisonChainPerson> 
 
 到本文为止, Guava提供的基本工具类就已经介绍完了，暂时告一段落了,
 接下来就要介绍Guava最常用的工具之一: 各种容器(Collections)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

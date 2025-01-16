@@ -134,3 +134,9 @@ well, 这个也很难回答，毕竟每个人能力不一样，但一般来说�
 就我所知，无论你是写 Javascript/Java/C++/C/Python/Ruby/Assembly 还是Lisp,
 
 只要你能通过面试即可，使用什么语言都没关系。
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

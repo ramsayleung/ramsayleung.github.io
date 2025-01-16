@@ -222,3 +222,9 @@ Whew! It took more than I expected. Since iterators is the Rust features inspire
 It's good to leverage iterators wherever possible, now we can be thrilled to say that all endpoints don't need to manuallly loop over anymore, they are all iterable and rusty.
 
 Thanks Mario and icewind1991 again for their works :)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

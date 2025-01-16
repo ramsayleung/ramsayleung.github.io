@@ -134,3 +134,9 @@ themeObserver.observe(document.body, {
 {{< figure src="/ox-hugo/responsive_comment_theme_2.jpg" >}}
 
 {{< figure src="/ox-hugo/responsive_comment_theme_3.jpg" >}}
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

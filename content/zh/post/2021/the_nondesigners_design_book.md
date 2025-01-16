@@ -123,3 +123,9 @@ There is one more general guiding principle of Design(and of Life):
 ## <span class="section-num">2</span> Design with Type {#design-with-type}
 
 接下来大部分内容都关于Type, 关于印刷, 关于字体种类, 不是很感兴趣, 所以就草草涉猎过.
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

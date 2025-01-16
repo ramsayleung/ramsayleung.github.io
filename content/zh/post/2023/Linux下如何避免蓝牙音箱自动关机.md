@@ -96,3 +96,9 @@ echo $(date) # 打印日期，主要是为了方便排查
 -   [求问如何避免蓝牙音箱自动关机？](https://www.zhihu.com/question/41682642) <br/>
 -   [Can I use cron to chime at top of hour like a grandfather clock?](https://askubuntu.com/questions/832072/can-i-use-cron-to-chime-at-top-of-hour-like-a-grandfather-clock/832266#832266) <br/>
 
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

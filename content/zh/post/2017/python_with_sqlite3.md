@@ -585,3 +585,9 @@ with sqlite3.connect(db_filename) as conn:
 -   [sqlite](http://www.sqlite.org/)
 -   [sqlite3](https://docs.python.org/3.5/library/sqlite3.html)
 -   [python3 module of week](https://pymotw.com/3/index.html)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

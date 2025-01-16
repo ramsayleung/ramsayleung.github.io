@@ -323,3 +323,9 @@ Java 绝佳的工程性，优秀的 OOP 范式，以及大量的类库，框架 
 ## <span class="section-num">4</span> 参考 {#参考}
 
 -   <https://projectlombok.org/index.html>
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

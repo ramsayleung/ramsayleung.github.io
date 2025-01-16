@@ -236,3 +236,9 @@ if (lastTimestamp == timestamp) {
 算法虽然简单，但是在找到 Snowflake 算法之前，我尝试了挺多的算法，但是都是因为不符合要求而被一一否决， 而 Snowflake 算法虽然简单，但是胜在实用。
 
 最后附上我写的 snowflake 算法的 Python 实现： [Snowfloke](https://github.com/ramsayleung/snowflake)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

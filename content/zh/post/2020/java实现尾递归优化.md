@@ -344,3 +344,9 @@ public class TailCallTest {
 -   [Functional Programming in Java](https://book.douban.com/subject/26981273/)
 -   [NightHacking with Venkat Subramaniam](https://youtu.be/4tEi86h8-TM?t=32m30s)
 -   [Designing tail recursion using java 8](https://stackoverflow.com/questions/43937160/designing-tail-recursion-using-java-8)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

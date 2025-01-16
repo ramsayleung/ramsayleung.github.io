@@ -193,3 +193,9 @@ pub fn convert_result<'a, T: Deserialize<'a>>(&self, input: &'a str) -> Result<T
 ## <span class="section-num">3</span> 结语 {#结语}
 
 前后两个月的时间，终于发布了 rspotify. 项目不大，但是也是我花费时间，精力去开发的，也得到其他同学的肯定，喔耶 :)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

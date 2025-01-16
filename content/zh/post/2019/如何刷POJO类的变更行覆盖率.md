@@ -212,3 +212,9 @@ public class ModelUtils {
 3.  加了其他两个类似功能的反射测试类，我的变更行覆盖率暴增30%
     (可以看出我这次的变更主要是新增模型和工具类，这样反射才能调用规律性代码)
 4.  Java大法好，Java世界那么大，还需要我好好探索.
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

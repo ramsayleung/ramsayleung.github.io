@@ -168,3 +168,9 @@ PS:
 -   [The Feynman Van](http://www.feynman.com/fun/the-feynman-van/)
 -   [费曼是一个什么样的人](https://www.zhihu.com/question/31311463)
 -   [如何【系统性学习】——从“媒介形态”聊到“DIKW 模型”](https://program-think.blogspot.com/2019/10/Systematic-Learning.html#head-5)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

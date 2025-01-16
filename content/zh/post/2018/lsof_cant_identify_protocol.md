@@ -482,3 +482,9 @@ Caused by: java.io.EOFException: Can not read response from server. Expected to 
 
 -   [tcp-socket文件句柄泄漏/](http://mdba.cn/2015/03/10/tcp-socket%E6%96%87%E4%BB%B6%E5%8F%A5%E6%9F%84%E6%B3%84%E6%BC%8F/)
 -   [lsof-cant-identify-protocol/](https://idea.popcount.org/2012-12-09-lsof-cant-identify-protocol/)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

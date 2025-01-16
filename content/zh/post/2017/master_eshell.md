@@ -597,3 +597,9 @@ Eshell 可以很好地支持TRAMP,这意味着如果Eshell 所在的目录是在
 Eshell 有TRAMP支持，自定义伪设备，袖珍的elisp REPL和很多非常有用的命令，例如对你打开的文件或者目录，调用 `find-file` 或者 `dired`.正是这种种有用的特性， 让Eshell 成为我工具箱里面一个非常可靠的工具。
 
 原文地址 [Mastering Eshell](https://www.masteringemacs.org/article/complete-guide-mastering-eshell) ,在下翻译水平有限，如有错误，还望指出
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

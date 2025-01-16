@@ -489,3 +489,9 @@ boot, 和 Restful service 测试等。更多的用法，就要查阅官方文档
 
 -   [Java Testing with Spock](https://www.amazon.com/Java-Testing-Spock-Konstantinos-Kapelonis/dp/1617292532)
 -   [Spock Framework Reference Documentation](http://spockframework.org/spock/docs/1.1-rc-3/index.html)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

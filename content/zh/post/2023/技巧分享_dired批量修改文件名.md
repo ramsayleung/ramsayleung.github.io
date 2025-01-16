@@ -23,3 +23,9 @@ toc = true
 {{< figure src="~/btsync/org/blog/2023/技巧分享-dired批量修改文件名/img/dired_rename_multi_files.gif" caption="<span class=\"figure-number\">Figure 1: </span>使用 `rectangle-command` 进行批量修改" link="/ox-hugo/dired_rename_multi_files.gif" >}}
 
 {{< figure src="~/btsync/org/blog/2023/技巧分享-dired批量修改文件名/img/dired_rename_multi_files_2.gif" caption="<span class=\"figure-number\">Figure 2: </span>使用 evil的多行编辑模式进行批量修改" link="/ox-hugo/dired_rename_multi_files_2.gif" >}}
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

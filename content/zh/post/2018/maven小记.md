@@ -459,3 +459,9 @@ public class MyMain{
 ## <span class="section-num">8</span> 总结 {#总结}
 
 的确，写到这里，必须再次承认 Maven 是怪兽级的 构建工具，但是同样无可否认的是，它出色的构建和依赖管理功能。写go 语言的时候，我多希望有个 Maven 可以用呢 ╥﹏╥...
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

@@ -313,3 +313,9 @@ crates.io 的统计，总计被下载23w次，当然包括很多CI的重复下�
 
 -   [Spotify is first music streaming service to surpass 200M paid subscribers](https://www.theverge.com/2023/1/31/23577499/spotify-q4-2022-earnings-release-subscriber-growth-layoffs)
 -   [RSpotify](https://github.com/ramsayleung/rspotify)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

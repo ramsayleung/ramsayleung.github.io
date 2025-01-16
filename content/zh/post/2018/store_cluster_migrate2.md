@@ -140,3 +140,9 @@ bin/hbase org.apache.hadoop.hbase.mapreduce.CopyTable --starttime=1265875194289 
 ## <span class="section-num">3</span> 结语 {#结语}
 
 折腾一波之后，终于把环境弄好。如果目标机房和源机房不同的话，也可以尝试使用 Hbase 的 `Exporter` 和 `Importer`
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

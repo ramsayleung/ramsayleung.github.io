@@ -105,3 +105,9 @@ function pwdf()
 更多的用法就要查看官方文档[ percol](https://github.com/mooz/percol)
 
 Enjoy Shell :)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

@@ -282,3 +282,9 @@ RMS 回复，当然是不可以。我估计老爷子心想，防的就是你这�
 -   <https://stallman.org/> <br/>
 -   <https://usesthis.com/interviews/richard.stallman/> <br/>
 
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

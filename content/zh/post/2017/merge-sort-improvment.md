@@ -190,3 +190,9 @@ public static void sort(Comparable[] a,Comparable[] aux,int lo,int hi){
 ### <span class="section-num">1.3</span> 参考 {#参考}
 
 <http://algs4.cs.princeton.edu/home/h>
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

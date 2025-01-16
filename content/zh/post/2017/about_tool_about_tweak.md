@@ -192,3 +192,9 @@ i3wm, 在折腾过炫酷的 KDE, Gnome, xfce, 而我最后选择的是 i3这个�
 编程随想也发一篇文章来说明[聊聊【折腾】的重要性](https://program-think.blogspot.com/2017/04/The-Importance-of-Zheteng.html), 来阐述「折腾」对自学与提高的重要性。
 
 -   Enjoy tweaking;Enjoy Linux :)
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+

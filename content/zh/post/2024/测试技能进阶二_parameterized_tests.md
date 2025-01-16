@@ -203,6 +203,12 @@ Rust 也有对Parameterized Test支持的库，一个就是 [`rstest`](https://g
 -   [测试技能进阶(二): Parameterized Tests](https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/)
 -   [测试技能进阶(三): Property Based Testing](https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%89_property_based_testing/)
 
+
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+
 [^fn:1]: <https://www.baeldung.com/parameterized-tests-junit-5>
 [^fn:2]: <https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests>
 [^fn:3]: <https://github.com/la10736/rstest>
