@@ -147,6 +147,9 @@ languages:
         - name: About
           url: /about_me
           weight: 40
+        - name: RSS
+          url: /en/index.xml
+          weight: 50
   zh:
     title: "花生地"
     languageName: "中文"
@@ -168,7 +171,7 @@ languages:
       main:
         - name: "归档"
           url: zh/archives/
-          weight: 1
+          weight: 9
         - name: "搜索"
           url: zh/search/
           weight: 10
@@ -178,6 +181,9 @@ languages:
         - name: "关于"
           url: zh/about_me_zh/
           weight: 40
+        - name: RSS
+          url: "/zh/index.xml"
+          weight: 50
         - identifier: series
           name: "系列 "
           url: /zh/categories/
