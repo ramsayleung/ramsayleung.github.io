@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Thu, 09 Jan 2025 20:52:24 -0800</lastBuildDate>
+    <lastBuildDate>Sun, 19 Jan 2025 13:38:32 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/tool/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>我的搜索流：高效搜索经验分享</title>
@@ -1073,7 +1073,7 @@
 <p>学过UML规范的同学应该都知道这些图应该怎么画，我就拿几个常见的图来举个例子。</p>
 <h3 id="时序图"><span class="section-num">4.1</span> 时序图</h3>
 <p>plantuml 提供不同的组件供时序图使用。不同的组件有不同的形状，默认情况下，组件的声明顺序就是他们的展示顺序。</p>
-<p>使用=-&gt;= 来表示在两个组件/参与者(participant) 之间传递消息，=&lt;&ndash;= 表示回包信息。</p>
+<p>使用 <code>-&gt;</code> 来表示在两个组件/参与者(participant) 之间传递消息， <code>&lt;--</code> 表示回包信息。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
