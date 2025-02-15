@@ -12,8 +12,610 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Wed, 15 Jan 2025 08:24:24 -0800</lastBuildDate>
+    <lastBuildDate>Sat, 15 Feb 2025 01:10:22 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>杂谈AI取代程序员</title>
+      <link>https://ramsayleung.github.io/zh/post/2025/%E6%9D%82%E8%B0%88ai%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98/</link>
+      <pubDate>Fri, 14 Feb 2025 21:15:00 -0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2025/%E6%9D%82%E8%B0%88ai%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98/</guid>
+      <description>1 前言 最近国产的DeepSeek 模型的爆火，让「AI取代程序员」的说法又甚嚣尘上, 比如在国内著名的程序员社区 V2ex 搜索「AI取代程序员」1，可以</description>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
+<p>最近国产的DeepSeek 模型的爆火，让「AI取代程序员」的说法又甚嚣尘上, 比如在国内著名的程序员社区 V2ex 搜索「<a href="https://www.sov2ex.com/?q=AI%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98">AI取代程序员</a>」<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>，可以搜索出 69627 条结果(截止2025-02-15):</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/v2ex_ai_replace_programmer.jpg"/> 
+</figure>
+
+<p>以至于我的一位非程序员朋友才来关心我，问我是否有被取代的担忧。</p>
+<p>在感谢朋友的关心之后，我也开始静下心来思考这个问题，以及形成这种想法背后可能的原因，然后就有了这篇文章。</p>
+<h2 id="ai取代程序员"><span class="section-num">2</span> AI取代程序员</h2>
+<p>在谈论AI能否真的取代程序员之前，我想先聊一下程序员的工作是什么, 毕竟定义好了问题才会分析.</p>
+<h3 id="研发流程"><span class="section-num">2.1</span> 研发流程</h3>
+<p>既然是程序员，那工作肯定是写代码嘛, 但是就我个人经验来说，我真正花费在写代码的时间可能连我工作时间30%都占不到.</p>
+<p>一个新功能大体的研发流程如下：
+当产品经理或者老板提出一个新需求的时候，程序员需要评估需求的可行性，然后撰写设计文档，评审设计方案，而后编码，测试再灰度上线功能，最后对新功能增加新监控告警，提供各项数据指标。</p>
+<p>由此可知, 产品经理只会跟你说他/她想要什么(what), 但是产品经理肯定不知道如何实现这个功能的(how), 需要程序员把模糊又朦胧的问题具体化和细致化，然后再根据方案来编码。</p>
+<p>遇到不合理的需求时，还需要告知产品经理，你的想法是不切实际的，比如经典的「根据手机壳颜色切换壁纸」需求</p>
+<p>但是我们在使用AI的时候，更多是一个具体而明确的任务，并且是我们针对的需求已经拆分好的任务，
+所以AI在做的只是将具体的设计方案翻译成代码的步骤。</p>
+<p>这不禁让我想起自己当年在微信支付7级晋升8级的答辩项目：一个研发提效的代码生成框架。</p>
+<p>我当时可谓信心满满，我的项目可以根据模板直接生成代码，不再需要手写CRUD的代码，以此来给工程师提效。</p>
+<p>评委就询问我：</p>
+<blockquote>
+<p>你有对项目开发的各个环节的耗时和阻塞时间做量化分析么？</p>
+<p>编码是整个研发流程效能最低的部分么？</p>
+<p>从拿到需求到开发上线，只有编码可以提效么?</p>
+</blockquote>
+<p>评委这么一顿批头盖脸的输出，直接把我的信心给浇没了。</p>
+<p>虽然我写的代码生成工具远不如大模型加持的AI强大，但看起来都只局限于解决编码问题，研发流程的其他问题并没有解决。</p>
+<h3 id="功能性与非功能性需求"><span class="section-num">2.2</span> 功能性与非功能性需求</h3>
+<p>在程序开发中，除了有功能性需求，还需要非功能性需求.</p>
+<p>而功能性需求恰恰是其中最简单直接的，是满足「又不是不能用」的最基本要求。</p>
+<p>比如我需要实现加法，这个就是功能性需求，AI就需要帮我把加法实现出来。</p>
+<p>而所谓的非功能性需求，比较常见的是可扩展性(scalability)，可维护性(maintainability) 和性能(performance).</p>
+<p>还是以加法为例, 我可能需要后面扩展到乘法和除法, 或者扩展到复数或者矩阵加法，要怎么易于扩展呢？</p>
+<p>这些都是AI生成代码是没有考虑到的因素，AI比较擅长的可能是给它一个需求，它生成一段代码给我们。</p>
+<p>但是在软件研发的生命周期中，有大概80%的时间，都是维护已有的系统，谁家没有个已经在跑的系统呢。</p>
+<p>而给已有的系统上增加功能，就需要考虑各种奇怪的兼容性，相当于带着锁链来跳舞，并不能像从无到有，什么都不用考虑的那般洒脱。</p>
+<p>而这样的限制，又是AI生成代码时未曾考虑的。所以从零开始的日抛型，不需要考虑维护成本的项目，很适合由AI来生成.</p>
+<p>但即使功能性的需求，有时候AI也会做不好。</p>
+<p>我之前在工作中需要根据已有的Schema, 使用Rust 写入Parquet数据，Rust本来就新，加之操作Parquet的库就更少了, 所以ChatGPT, Claude或者Gemini 都没有给出我满意能跑的结果，最后还是靠自己去读 Parquet库的源码找出的解决办法。</p>
+<p>无论模型怎么变，AI现阶段还需要预训练数据的投喂，所以没有相关的预处理数据，AI也只能胡扯。</p>
+<p>所以总结下来，在真实项目中，AI还没有办法取代程序员。</p>
+<h3 id="ai取代论背后的动机"><span class="section-num">2.3</span> AI取代论背后的动机</h3>
+<p>既然你说AI现阶段还没有办法取代程序员，为什么我看到各种各样程序员要被AI取代的新闻，甚至有公司用AI来替代员工了？</p>
+<p>除去真的担心自己被AI取代的从业者外，我觉得看到两种扯着AI大旗的人。</p>
+<p>一种就是懂程序开发，装不懂程序开发，然后贩卖焦虑的人，最近非常火的就是，「我用Cursor从0 xx 天开发了一个App」 (Cursor是最近一个很火的AI编辑器，可以通过输入的指令生成代码).</p>
+<p>大体都是说自己完全不懂程序开发，借助AI/Cursor, xx天内开发出了一个App, 并且冲到了苹果App Store热门榜第一.</p>
+<p>普通程序员看到这种说法，一个小白从无到有都能开发出一个App, 难免会焦虑,不得不说，这种反向装弱再变强真的令人防不胜防， 想着不能被落下，就斥资加入各种付费群或者购买各种课程。</p>
+<p>神智清明，的你可能在心平气和下很难做出这样的决定嘛。</p>
+<p>另外一种就是要用AI来取代程序的公司，说要通过AI来增效，裁撤工程师，比如国外的 <a href="https://apnews.com/article/workday-layoffs-job-cuts-ai-investments-437581ad79d6e1cef2de7b300015dfbb?utm_source=t.me/mtfront">Workday 裁员说要再招人做 AI 的新闻</a> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>, 还有2023年 <a href="https://www.bwpeople.in/article/google-contemplates-30000-layoffs-due-to-ai-job-impact-503670">Google 因为AI裁员而30000 名员工的新闻 </a><sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
+<p>怎么说呢，AI这块牌子太好用了, 什么都可以往里面套，裁撤工程师降本是真，AI增效大概是假。</p>
+<p>裁员就裁员呗，为什么还要说是用AI来取代程序员呢？</p>
+<p>因为说是AI取代了程序员，被毕业的员工们和待毕业的员工们都只会把裁员的原因归罪到AI上，
+管理层的无所作为，墨守成规，决策失误，无序扩张这些失误都不需要承诺后果了，反正背锅有AI。</p>
+<p>苦一苦员工，骂名AI来担。
+<img loading="lazy" src="/ox-hugo/ai_bear_the_infamy.jpg" alt=""  />
+</p>
+<h2 id="ai一无用处"><span class="section-num">3</span> AI一无用处</h2>
+<p>当然凡事都有例外，有人觉得AI会取代程序员，也有人觉得AI一无用处，不值一提。</p>
+<p>我对此也是持反对态度了，虽然AI无法取代程序员，但是它的确在很多方面可以给我提升相当大的效率，其效率跃升堪比计算机连上互联网。</p>
+<p>所以我也藉此来分享下我的AI用法</p>
+<h2 id="我的ai用法"><span class="section-num">4</span> 我的AI用法</h2>
+<p>我使用对AI的定位把它当作一位非常耐心，能力全面的助理，所以我给它分配的都是明确而繁琐的任务，并且我有能力对其输出进行评判的情景。
+(也就是让它干脏活累活)</p>
+<p>先声明一下我使用的AI 模型，日常事务我会使用ChatGPT, 响应速度快，量大够饱； 编码我会使用Claude 3.5 Sonnet，目前是我使用过效果最好的; 中文相关会使用DeepSeek, 但是经常服务器繁忙，体验不好。</p>
+<h3 id="生成测试用例"><span class="section-num">4.1</span> 生成测试用例</h3>
+<p>测试用例太适合让AI来写了，毕竟任务是非常明确的，需要被测的函数也是非常明确的，你只需要使用把测试的场景说清楚。</p>
+<p>我觉得都可以把这个内容扩展写成 <a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%80_%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E8%AE%A4%E7%9F%A5/">测试技能进阶系列</a> 的第四篇了</p>
+<p>假设我需要测试一个计算字符串中元音数量的函数 <code>count_vowels(s: str) -&gt; int</code>, 我的指示是:</p>
+<blockquote>
+<p>请为以下函数 `count_vowels(s: str) -&gt; int` 生成pytest测试用例：</p>
+<ol>
+<li>正常输入包含大小写元音的情况</li>
+<li>空字符串边界条件</li>
+<li>全元音字符的特殊情况</li>
+<li>不含元音的字符串</li>
+<li>非法输入类型校验</li>
+</ol>
+</blockquote>
+<p>AI生成结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytest</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_count_vowels_normal_cases</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 混合大小写元音测试</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">count_vowels</span><span class="p">(</span><span class="s2">&#34;Hello World&#34;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">count_vowels</span><span class="p">(</span><span class="s2">&#34;AEiou&#34;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_count_vowels_edge_cases</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 空字符串/全元音测试</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">count_vowels</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">count_vowels</span><span class="p">(</span><span class="s2">&#34;aei&#34;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_count_vowels_special_cases</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 无元音字符串测试</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">count_vowels</span><span class="p">(</span><span class="s2">&#34;rhythm&#34;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">count_vowels</span><span class="p">(</span><span class="s2">&#34;12345!@#&#34;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_count_vowels_invalid_input</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 类型校验测试</span>
+</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">count_vowels</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">count_vowels</span><span class="p">([</span><span class="s2">&#34;hello&#34;</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="语言学习"><span class="section-num">4.2</span> 语言学习</h3>
+<p>AI的多语言翻译功能对比其他传统基于单词的翻译软件简直是降维打击bb，毕竟Google的科学家最初做 Transform 模型就是为了做翻译的。</p>
+<p>记得我之前考雅思的时候，口语和写作考前复习就是把题库的复制给AI，然后让他来给我答题，我就把思路背下来，做题这方面，AI实在是太擅长了。</p>
+<blockquote>
+<p>Given the following IELTS Speaking Part1, you are an examinee, could you give me some band 9 answer:</p>
+<p>Ielts Speaking 3 Practice 5 (Change)</p>
+<ol>
+<li>Do you think change is good?</li>
+<li>What are some of the major changes that occur to people throughout their lives?</li>
+<li>Is your country changing rapidly?</li>
+<li>In what ways have changes in technology changed people&rsquo;s lives?</li>
+<li>Why do old people not accept change?</li>
+</ol>
+</blockquote>
+<!--quoteend-->
+<blockquote>
+<p>Here are some Band 9 answers for the IELTS Speaking Part 1 topic &ldquo;Change&rdquo;, with a natural, fluent style and advanced vocabulary.</p>
+<ol>
+<li>Do you think change is good?</li>
+</ol>
+<p>Absolutely. Change is an inevitable part of life, and in most cases, it drives progress and personal growth. While change can be daunting at first, it often leads to new opportunities and valuable experiences. Without change, we would stagnate, both individually and as a society.</p>
+<ol>
+<li>What are some of the major changes that occur to people throughout their lives?</li>
+</ol>
+<p>People go through numerous transformative phases in life. Some of the most significant changes include education and career transitions, moving to a new place, or starting a family. As people age, their priorities shift, and they may experience physical, emotional, and psychological changes. Financial stability, personal relationships, and health also evolve over time, shaping their overall outlook on life.
+&hellip;</p>
+</blockquote>
+<p>让AI做词典, 帮我解释和翻译我不懂的单词，或者做中译英方便交流:</p>
+<blockquote>
+<p>You are a professional translator. Translate all input Chinese paragraphs into English and all input English into Chinese, and help me explain its meaning</p>
+</blockquote>
+<p>而后我输入中文，它就会给我英文翻译；输入英文，它会给我中文翻译:</p>
+<blockquote>
+<p>&ldquo;爱哭的孩子有奶喝&rdquo;</p>
+<hr>
+<p>&ldquo;The crying baby gets the milk.&rdquo;
+Meaning:</p>
+<p>This Chinese proverb &ldquo;爱哭的孩子有奶喝&rdquo; (ài kū de háizi yǒu nǎi hē) means that those who complain, express their needs, or fight for their interests are more likely to get attention and benefits. It suggests that speaking up and advocating for oneself can lead to better outcomes, similar to how a baby who cries gets fed first.</p>
+<p>This phrase is often used in various contexts, such as in workplaces or negotiations, to encourage people to voice their concerns rather than staying silent.</p>
+</blockquote>
+<!--quoteend-->
+<blockquote>
+<p>illiterate</p>
+<hr>
+<p>&ldquo;Illiterate&rdquo; 的中文翻译是 “文盲” 或 “不识字”。
+含义：</p>
+<ol>
+<li>
+<p>基本含义：指一个人 不识字或无法阅读和书写。</p>
+<ul>
+<li>例如：Many people in the past were illiterate because they had no access to education.（过去，许多人因为无法接受教育而是文盲。）</li>
+</ul>
+</li>
+<li>
+<p>引申含义：在某个领域缺乏基本知识或技能。</p>
+<ul>
+<li>例如：&ldquo;He is financially illiterate.&quot;（他在财务方面一窍不通。）</li>
+<li>在科技、法律、文化等方面，也可以用 illiterate 来形容缺乏基础知识的人，例如 &ldquo;technologically illiterate&rdquo;（科技文盲）。</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<p>还有一个就是让AI 给我写的内容纠错，这个也比传统的语法工具类如 Grammarly 好用.</p>
+<blockquote>
+<p>You are a professional and seasoned translator, correct me if I am wrong.</p>
+</blockquote>
+<h3 id="代码审计"><span class="section-num">4.3</span> 代码审计</h3>
+<p>有时候我会查看一些智能合约的代码或者TG bot的代码，在实际交互前，我一般会把代码丢给AI，让它检查一下是否有可疑的代码片段，类如窃取用户的私钥，把资金转到可疑账户等等。</p>
+<p>或者把我自己写的代码丢给AI，让它看下是否有安全漏洞:</p>
+<blockquote>
+<p>Given the following code, help me spot if there is any vulnerability here:</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/search&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">search</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">query</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;q&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cursor</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;SELECT * FROM products WHERE name LIKE &#39;%</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">%&#39;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;results.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">())</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>Yes, there are several serious security vulnerabilities in this code. Let me break them down:</p>
+<ul>
+<li>SQL Injection Vulnerability (Critical):</li>
+</ul>
+<p>The most severe issue is that the code uses string formatting (f-string) to directly insert user input into the SQL query. This allows SQL injection attacks. For example, a malicious user could input:</p>
+<p>This could expose sensitive data from other tables.</p>
+<ul>
+<li>No Input Validation:</li>
+</ul>
+<p>The code accepts user input without any sanitization or validation. Attackers could send malformed queries or excessive amounts of data.</p>
+<ul>
+<li>No Query Parameterization:</li>
+</ul>
+<p>The query isn&rsquo;t using parameterized statements, which is the recommended way to prevent SQL injection.</p>
+<p>Here&rsquo;s a secure version of the code:</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/search&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">search</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">query</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;q&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">query</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;results.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Using parameterized query with placeholders</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cursor</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;SELECT * FROM products WHERE name LIKE ?&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="s1">&#39;%&#39;</span> <span class="o">+</span> <span class="n">query</span> <span class="o">+</span> <span class="s1">&#39;%&#39;</span><span class="p">,)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;results.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">())</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="反编译"><span class="section-num">4.4</span> 反编译</h3>
+<p>现代前端基本都会使用类似webpack 的打包工具进行打包压缩, 甚至还会进行代码混淆，所以F12 查看源码，并不能查出端倪.</p>
+<p>因此我一般都是让AI 来帮我反编译和还原, 这样就免去了复杂的人工转译的过程:</p>
+<blockquote>
+<p>Given the obfuscated and compressed code, could you reverse it back to the original source code?</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">_0x3f2a</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;\x48\x65\x6c\x6c\x6f&#39;</span><span class="p">,</span> <span class="s1">&#39;\x6c\x6f\x67&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">_0x12d3f0</span><span class="p">,</span> <span class="nx">_0x3f2a8c</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">_0x553e8f</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">_0x5e7a28</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="p">(</span><span class="o">--</span><span class="nx">_0x5e7a28</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">_0x12d3f0</span><span class="p">[</span><span class="s1">&#39;push&#39;</span><span class="p">](</span><span class="nx">_0x12d3f0</span><span class="p">[</span><span class="s1">&#39;shift&#39;</span><span class="p">]());</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">_0x553e8f</span><span class="p">(</span><span class="o">++</span><span class="nx">_0x3f2a8c</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}(</span><span class="nx">_0x3f2a</span><span class="p">,</span> <span class="mh">0x1a4</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">_0x553e</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">_0x12d3f0</span><span class="p">,</span> <span class="nx">_0x3f2a8c</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">_0x12d3f0</span> <span class="o">=</span> <span class="nx">_0x12d3f0</span> <span class="o">-</span> <span class="mh">0x0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">_0x553e8f</span> <span class="o">=</span> <span class="nx">_0x3f2a</span><span class="p">[</span><span class="nx">_0x12d3f0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">_0x553e8f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">_ax342</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">_0x5e7a28</span> <span class="o">=</span> <span class="nx">_0x553e</span><span class="p">(</span><span class="s1">&#39;0x0&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">[</span><span class="nx">_0x553e</span><span class="p">(</span><span class="s1">&#39;0x1&#39;</span><span class="p">)](</span><span class="nx">_0x5e7a28</span> <span class="o">+</span> <span class="s1">&#39; World!&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">_ax342</span><span class="p">();</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>Let me help you deobfuscate this code. Based on the patterns and structure, this appears to be JavaScript code that has been obfuscated using common techniques like array-based string storage and variable name mangling.
+The original source code would be:</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">greet</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;Hello World!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">greet</span><span class="p">();</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>着实有点东西</p>
+<h3 id="排查问题"><span class="section-num">4.5</span> 排查问题</h3>
+<p>在出现大模型AI之前，当遇到某个工具或者库的错误信息时，我一般的做法是：</p>
+<ol>
+<li>复制错误信息</li>
+<li>粘贴到Google</li>
+<li>点击排名最靠前的Stackoverflow 链接</li>
+<li>扫一下是否是我想问的问题，如果不是就再回到2</li>
+<li>按照最高赞的解决方案尝试下</li>
+<li>如果还不行，再回到2</li>
+</ol>
+<p>有了AI之后，我一般的做法是:</p>
+<ol>
+<li>复制错误信息</li>
+<li>问AI &ldquo;How to fix this erro&rdquo;, 粘贴上错误信息</li>
+<li>按照AI的建议一步步尝试</li>
+<li>如果不行，把最新的错误信息复制粘贴给AI, 告诉它这不管用.</li>
+</ol>
+<p>与Google 的方案相比，我现在有了个再反馈的过程, 可以把最新的结果再告知AI, 这样更方便AI基于上下文做出解答.</p>
+<h3 id="数据处理"><span class="section-num">4.6</span> 数据处理</h3>
+<p>非结构化数据转换成结构化数据，如JSON, 相当于让AI做了数据清洗的脏活:</p>
+<blockquote>
+<p>Given the following output of ls command, could you convert it to JSON?</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-&gt; % ls -alrt
+</span></span><span class="line"><span class="cl">total <span class="m">828</span>
+</span></span><span class="line"><span class="cl">-rw-rw----+   <span class="m">1</span> ramsay ramsay   <span class="m">4672</span> Mar <span class="m">21</span>  <span class="m">2019</span> abbrev_defs
+</span></span><span class="line"><span class="cl">-rw-rw----+   <span class="m">1</span> ramsay ramsay  <span class="m">10079</span> Mar <span class="m">21</span>  <span class="m">2019</span> recentf~
+</span></span><span class="line"><span class="cl">drwxr-xr-x    <span class="m">2</span> ramsay ramsay   <span class="m">4096</span> Apr <span class="m">16</span>  <span class="m">2021</span> images
+</span></span><span class="line"><span class="cl">drwxrw----+  <span class="m">44</span> ramsay ramsay   <span class="m">4096</span> Apr <span class="m">16</span>  <span class="m">2021</span> snippets
+</span></span><span class="line"><span class="cl">-rw-rw----+   <span class="m">1</span> ramsay ramsay   <span class="m">3740</span> Dec <span class="m">10</span>  <span class="m">2021</span> projectile-bookmarks.eld
+</span></span><span class="line"><span class="cl">-rw-rw----+   <span class="m">1</span> ramsay ramsay <span class="m">241501</span> May <span class="m">27</span>  <span class="m">2022</span> company-statistics-cache.el
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>Here is the JSON representation of the given ls -alrt output:
+Explanation:</p>
+<ul>
+<li>Each file/directory is represented as an object inside the &ldquo;files&rdquo; array.</li>
+<li>&ldquo;name&rdquo; is the file/directory name.</li>
+<li>&ldquo;permissions&rdquo; is the file permissions.</li>
+<li>&ldquo;links&rdquo; is the number of hard links.</li>
+<li>&ldquo;owner&rdquo; is the owner of the file.</li>
+<li>&ldquo;group&rdquo; is the group the file belongs to.</li>
+<li>&ldquo;size&rdquo; is the size of the file in bytes.</li>
+<li>&ldquo;modified&rdquo; is the date of the last modification.</li>
+</ul>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl">     <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;files&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;abbrev_defs&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;permissions&#34;</span><span class="p">:</span> <span class="s2">&#34;-rw-rw----+&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;links&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;owner&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;size&#34;</span><span class="p">:</span> <span class="mi">4672</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;modified&#34;</span><span class="p">:</span> <span class="s2">&#34;Mar 21 2019&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;recentf~&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;permissions&#34;</span><span class="p">:</span> <span class="s2">&#34;-rw-rw----+&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;links&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;owner&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;size&#34;</span><span class="p">:</span> <span class="mi">10079</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;modified&#34;</span><span class="p">:</span> <span class="s2">&#34;Mar 21 2019&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;images&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;permissions&#34;</span><span class="p">:</span> <span class="s2">&#34;drwxr-xr-x&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;links&#34;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;owner&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;size&#34;</span><span class="p">:</span> <span class="mi">4096</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;modified&#34;</span><span class="p">:</span> <span class="s2">&#34;Apr 16 2021&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;snippets&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;permissions&#34;</span><span class="p">:</span> <span class="s2">&#34;drwxrw----+&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;links&#34;</span><span class="p">:</span> <span class="mi">44</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;owner&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;size&#34;</span><span class="p">:</span> <span class="mi">4096</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;modified&#34;</span><span class="p">:</span> <span class="s2">&#34;Apr 16 2021&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;projectile-bookmarks.eld&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;permissions&#34;</span><span class="p">:</span> <span class="s2">&#34;-rw-rw----+&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;links&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;owner&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;size&#34;</span><span class="p">:</span> <span class="mi">3740</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;modified&#34;</span><span class="p">:</span> <span class="s2">&#34;Dec 10 2021&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;company-statistics-cache.el&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;permissions&#34;</span><span class="p">:</span> <span class="s2">&#34;-rw-rw----+&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;links&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;owner&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;size&#34;</span><span class="p">:</span> <span class="mi">241501</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;modified&#34;</span><span class="p">:</span> <span class="s2">&#34;May 27 2022&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于非结构化的数据，或者缺失格式的数据, AI都能处理.</p>
+<h2 id="总结"><span class="section-num">5</span> 总结</h2>
+<p>这是我用即梦AI生成的一张街舞海报，我注明了地址，联系电话，以及价格，生成出来的结果是这样的</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/genai_cover_image.jpg"/> 
+</figure>
+
+<p>远看是那么一回事！细看是什么回事?</p>
+<p>AI现阶段还是无法取代程序员的，未来AI我也觉得很难取代程序员(当然，取代把需求翻译成代码的人肉翻译器还是有可能的)，因为程序员虽然是和机器打交道，但是本质上还是解决人的问题。</p>
+<p>担忧程序员被AI取代的人可能只看到了测试场景里面的 happy path, 也就是AI能生成老板们想要的代码，没有看到unhappy path, 也就是老板们想要的代码, AI生成不出来要怎么办?</p>
+<p>毕竟人可以根据已有的经验进行归纳总结，把已有的经验应用在未踏足的领域，且持续学习，但是AI还是受限于预训练数据，做不出来就是做不出来。</p>
+<p>但是对程序员而言，AI不失为一个好用且提效的工具，好用的工具就应该多学多用多玩，而不是担忧被其取代。</p>
+<p>AI无法取代持续精进者, 傲慢自满方为淘汰之源</p>
+<p>(什么，你问我当初的答辩结果？自然是</p>
+<hr>
+<p>挂了)</p>
+<h3 id="推荐阅读">推荐阅读</h3>
+<ul>
+<li>旅加经历
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E8%BF%99%E4%BA%9B%E5%B9%B4%E8%B5%B0%E8%BF%87%E7%9A%84%E8%B7%AF_%E4%BB%8E%E5%B9%BF%E5%B7%9E%E5%88%B0%E6%B8%A9%E5%93%A5%E5%8D%8E/">这些年走过的路：从广州到温哥华</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B9%8B%E5%88%9D%E4%BD%93%E9%AA%8C/">加拿大之初体验</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%99%BB%E9%99%86%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B8%80%E5%B9%B4%E7%9A%84%E4%BD%93%E4%BC%9A/">登陆加拿大一年后的体会</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E5%A4%8F%E6%97%A5%E6%8D%95%E8%9F%B9%E8%AE%B0/">夏日捕蟹记</a></li>
+</ul>
+</li>
+<li>历史思考
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E7%BD%AE%E8%BA%AB%E4%BA%8B%E5%86%85/">为什么梦想买不起，故乡回不去</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E9%97%B2%E8%81%8A%E5%86%99%E4%BD%9C/">闲聊写作的好处</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E9%87%91%E6%A6%9C%E9%A2%98%E5%90%8D%E4%B9%8B%E5%90%8E/">金榜题名之后</a></li>
+</ul>
+</li>
+<li>工具流分享
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%AE%80%E6%98%8E%E5%86%99%E4%BD%9C%E6%8C%87%E5%8D%97/">简明写作指南</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E5%86%99%E4%BD%9C%E6%B5%81/">我的写作流</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E7%94%BB%E5%9B%BE%E6%B5%81/">我的画图流：画图工具与技巧分享</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E6%90%9C%E7%B4%A2%E6%B5%81/">我的搜索流：高效搜索经验分享</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2022/feynman_technique/">最好的学习方式：费曼学习法(Feynman Technique)</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2021/%E7%B3%BB%E7%BB%9F%E6%80%9D%E8%80%83/">系统思考：既见树木，又见森林</a></li>
+</ul>
+</li>
+<li>职场思考
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%BC%96%E7%A8%8B%E5%8D%81%E5%B9%B4%E7%9A%84%E6%84%9F%E6%82%9F/">编程十年的感悟</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E4%BB%8E%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E7%A6%BB%E7%BA%BF_%E6%88%91%E5%B8%A6%E8%B5%B0%E4%BA%86%E4%BB%80%E4%B9%88/">那些年，我从微信支付学到的东西</a></li>
+</ul>
+</li>
+<li>软件工程
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%80_%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E8%AE%A4%E7%9F%A5/">测试技能进阶(一): 软件质量认知</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/">测试技能进阶(二): Parameterized Tests</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%89_property_based_testing/">测试技能进阶(三): Property Based Testing</a></li>
+</ul>
+</li>
+</ul>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://www.sov2ex.com/?q=AI%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98">https://www.sov2ex.com/?q=AI%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://apnews.com/article/workday-layoffs-job-cuts-ai-investments-437581ad79d6e1cef2de7b300015dfbb?utm_source=t.me/mtfront">https://apnews.com/article/workday-layoffs-job-cuts-ai-investments-437581ad79d6e1cef2de7b300015dfbb?utm_source=t.me/mtfront</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://www.bwpeople.in/article/google-contemplates-30000-layoffs-due-to-ai-job-impact-503670">https://www.bwpeople.in/article/google-contemplates-30000-layoffs-due-to-ai-job-impact-503670</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+]]></content:encoded>
+    </item>
     <item>
       <title>编程十年的感悟</title>
       <link>https://ramsayleung.github.io/zh/post/2024/%E7%BC%96%E7%A8%8B%E5%8D%81%E5%B9%B4%E7%9A%84%E6%84%9F%E6%82%9F/</link>
@@ -2290,81 +2892,6 @@
 <p><a href="https://book.douban.com/subject/35838155/">https://book.douban.com/subject/35838155/</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</div>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>悼念我家的狗</title>
-      <link>https://ramsayleung.github.io/zh/post/2024/%E6%82%BC%E5%BF%B5%E6%88%91%E5%AE%B6%E7%9A%84%E7%8B%97/</link>
-      <pubDate>Wed, 02 Oct 2024 11:54:00 -0700</pubDate>
-      <guid>https://ramsayleung.github.io/zh/post/2024/%E6%82%BC%E5%BF%B5%E6%88%91%E5%AE%B6%E7%9A%84%E7%8B%97/</guid>
-      <description>1 缘起 老家是在广东农村，现在还会有养狗看家护院的习俗，虽然看家的作用有多大尚且未知，但是终归是聊胜于无，半是护院，半是陪伴。 一般是有其他养狗</description>
-      <content:encoded><![CDATA[<h2 id="缘起"><span class="section-num">1</span> 缘起</h2>
-<p>老家是在广东农村，现在还会有养狗看家护院的习俗，虽然看家的作用有多大尚且未知，但是终归是聊胜于无，半是护院，半是陪伴。 <br/></p>
-<p>一般是有其他养狗人家的狗产崽之后，然后拿回来家里开始养，所以养的自然是不会是宠物狗，是所谓的土狗，戏称为「田园犬」. <br/></p>
-<p>也不会有专门的狗粮，而是给它们喂米粮，或是和人吃一样的米饭，或是专门去买稍次一些的米，煮给它们吃。 <br/></p>
-<h2 id="经过"><span class="section-num">2</span> 经过</h2>
-<p>昨天和妈妈视频聊天，闲谈间就聊到了我家的狗子，妈妈说现在不用煮多少米给它们吃了，我问为什么? <br/></p>
-<p>毕竟我记得家里一只狗一顿都差不多要吃半斤米饭. <br/></p>
-<p>妈妈说，有两只狗被人偷狗不成，被毒死了, 一只是不到一年大的狗，另外一只是养了好多年的白色母狗. <br/></p>
-<p>在凌晨时段，偷狗贼来我家附近偷狗, 狗声大作，我爸出去查看，灯光和声音吓走了贼人, 他没来得及带走狗. <br/></p>
-<p>我爸前去查看狗的状况，母狗很快就瘫软在地，不一会就生机全无了; 另外一只狗不见踪影，我妈一直在寻觅，几天后, 对狗仍抱有希望的我妈在附近找到了尸体. <br/></p>
-<h2 id="印记"><span class="section-num">3</span> 印记</h2>
-<h3 id="贪吃"><span class="section-num">3.1</span> 贪吃</h3>
-<p>常年离家的我对那只一年大的狗，脑海没有留下太多印象, 没有过太多交集，而另外一只白色母狗， <br/>
-我已经记不清养了多久年，大概是我大学时期就已经在我家了，它给我留下最大的特点就是贪吃。 <br/></p>
-<p>农村的土狗都贪吃嘛，因为总是吃不饱，这有什么新奇的? <br/></p>
-<p>不过我家的狗一般都有一日两餐，我妈有时候还会把去村宴打包回来的饭菜给它们吃，所以我家的狗终究还是能落个饱腹的, 妈妈甚至有时会责怪它们吃腻了，给它们米饭都不吃了。 <br/></p>
-<p>而这白色的母狗贪吃的最大特点就是爱吃零食，尤其喜欢吃甜食，听起来有点难而置信，一只狗会喜欢吃甜食. <br/></p>
-<p>但是事实的确如此, 无论零食还是水果，它都喜欢。 <br/></p>
-<p>屋子旁边有棵十几年树龄的龙眼树，前些年收成好的时候，树上都挂满龙眼，核小肉实还很甘甜，甚至品质比水果摊的还要好. <br/></p>
-<p>家人夏天收获龙眼的时候，有时朋友也会过来，大家就坐在屋旁围坐着吃刚摘下来的龙眼， <br/>
-它也喜欢过来湊热闹，家人就会开玩笑地帮忙把壳剥了，把果肉放在地上，它究竟就上来吃，还知道把核吐出来, 大家才开始知道它真的吃水果。 <br/></p>
-<p>它甚至还知道怎么吃小块甘蔗, 把汁水在嘴里吮吸完之后，还会把渣吐出来。 <br/></p>
-<p>以前在深圳打工的时候，妈妈和我聊天的时候还会聊到这只贪吃的狗，说它又凑过来想要吃的. <br/></p>
-<p>电话那头的我自然是不信的, 只会觉得这是妈妈和我聊天的谈资. <br/></p>
-<h3 id="饼干"><span class="section-num">3.2</span> 饼干</h3>
-<p>我家这边的吃席习俗，比如红白事或者是生日宴，客人带些饼干水果作为贺礼， <br/>
-主人家一般会把散席前给客人人手一袋礼品作为回礼，里面基本会有饼干, 坚果, 花生. <br/></p>
-<p>因为我爸人缘比较好，总会有朋友邀请他参加村宴，所以他总能带些回礼回家，被妈妈放在蓝罐曲奇的铁皮盒子. <br/>
-只是他们都不是很喜欢吃这些零食，这些饼干就在敞开的曲奇盒子放着，静静地在茶桌上躺着。 <br/></p>
-<p>当我回家，百无聊赖的时候，就会拿起一两包盒中的饼干，就着电视中播着的抗日神剧，消磨着闲暇的时光. <br/></p>
-<p>白色的母狗它就会湊过, 也不叫，也不闹，也不会像宠物狗那样把爪子搭到我身上， <br/>
-只是用它的大眼睛静静地看着我，我被它看得有点不好意思，想起妈妈给我说起过的，关于它贪吃的事，寻思着它不会也想吃饼干嘛？ <br/></p>
-<p>我试探着把一块饼干抽出来，放在地上，它走过去，朝着饼干低下头, 嗅了嗅，又抬头看了下正在吃饼干的我，然后我看它把饼干叼到一边，叼着饼干时, 就抬起头把饼干向嘴里送. <br/></p>
-<p>原来妈妈说得是真的，它是真的贪吃. <br/></p>
-<h3 id="花生"><span class="section-num">3.3</span> 花生</h3>
-<p>我很喜欢吃花生，尤其是农家的盐水花生，就着电视剧或者视频，可以一两个小时不停嘴。 <br/></p>
-<p>妈妈知道我有这么个小嗜好，就会去市场上买些花生回来，只用盐水煮熟，不加其他香料， 然后晒干，等我回家的时候可以吃，或者在我回深圳时，让我装一大包带回去。 <br/></p>
-<p>有一次在家，我照例在桌上剥着花生吃，然后它又走过来，看着我，我在想，花生你也吃么？ <br/></p>
-<p>就把一枚花生剥开，里面有两粒仁，我吃了一粒，然后把另外一粒放在凳子上，它走过来, 把头侧转, 贴着凳子，伸出舌头一卷，就把花生卷走了. <br/></p>
-<p>从此之后，我吃花生总是喊上它，我来剥花生，我和它一起吃；有一粒花生仁，我自己吃；有两粒花生仁，我和它一人一粒; 有三粒仁，我吃两个粒, 它吃一粒，毕竟我动手剥花生了. <br/></p>
-<p>后面发现，它不但吃花生，连月饼也吃，去年中秋的时候，家人分食月饼时，也给了它一小块. <br/></p>
-<p>当你吃东西，它也想吃的时候, 它不会吵，也不会闹，就是静静地看着你; <br/></p>
-<p>而当你东西吃完，开始收拾时，跟它说，没有了，吃完啦。 <br/></p>
-<p>它也不会缠着你不走, 期望索求更多，而是会静静地走开。 <br/></p>
-<p>所以我有时候看到它，我会在想，我不知道我人生追求的是什么，但是它肯定是追求好吃的, 和去码头整点薯条的海鸥是一样的，简单又容易满足。 <br/></p>
-<h2 id="现实"><span class="section-num">4</span> 现实</h2>
-<p>它虽然贪吃，但是也非常谨慎，并不是谁给的东西都吃，我姐姐给它的食物，它就基本不吃，可能是我姐姐曾经呵斥过它. <br/></p>
-<p>即使我给它东西吃，它也要见我吃过，它才会下嘴. <br/></p>
-<p>谨慎如它，陌生人给的东西，它自然是不会吃的. <br/></p>
-<p>自我有记忆起，家里就一直有养狗，挥之不去的就是觊觎将狗换成钱财的偷狗贼. <br/></p>
-<p>之前偷狗的方式大概是两种，一种是强行虏走, 一般两人作案，一人驾车，一人在后座带有绳套，当狗靠近吠叫时，后座之人将绳索套在狗上，另一人快速驾车逃离, 但如果狗不靠近就难以成行. <br/></p>
-<p>另外一种就是投铒，就是把抹有迷药的熟肉投给狗，如果狗不慎吃了就会被带走, 如果狗不吃就自然无法上钩 <br/></p>
-<p>随着时代发展，现在出现新的偷狗方式，用类似弓弩射毒针，然后再捡尸体, 即使谨慎如它，也难以幸免. <br/></p>
-<p>虽然这已经不知道是我家失去的第几只狗了，但是我还是难忍悲伤. <br/></p>
-<p>我才意识到，因为家里的狗总是在身边，父母也不像养宠物那样有给它们起名的习惯，只是以特征代称，它甚至没有名字. <br/></p>
-<p>想起之前有人描述悲伤的感觉, 亲朋离去的那一瞬间通常不会使人感到悲伤，而真正会让你感到悲痛的是打开冰箱的那半盒牛奶、 <br/>
-那窗台上随风微曳的绿萝、那安静折叠在床上的绒被，还有那深夜里洗衣机传来的阵阵喧哗。 <br/></p>
-<p>想来，当我再回到家中，看着敞开的饼干盒，我一定会止不住想起那个在树下和它吃饼干的午后. <br/></p>
-<p>谨以此文悼念它吧. <br/></p>
-<p><video width="320" height="240" controls><source src="/ox-hugo/my_family_dog1.mp4" type="video/mp4">
-Your browser does not support the video tag.</video></p>
-<p><video width="320" height="240" controls><source src="/ox-hugo/my_family_dog2.mp4" type="video/mp4">
-Your browser does not support the video tag.</video></p>
-<div center class="qr-container">
-<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
-公号同步更新，欢迎关注👻
 </div>
 ]]></content:encoded>
     </item>
