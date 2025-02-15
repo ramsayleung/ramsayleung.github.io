@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sat, 15 Feb 2025 01:18:44 -0800</lastBuildDate>
+    <lastBuildDate>Sat, 15 Feb 2025 01:28:56 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/programmer/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>杂谈AI取代程序员</title>
@@ -68,7 +68,7 @@
 <p>一种就是懂程序开发，装不懂程序开发，然后贩卖焦虑的人，最近非常火的就是，「我用Cursor从0 xx 天开发了一个App」 (Cursor是最近一个很火的AI编辑器，可以通过输入的指令生成代码).</p>
 <p>大体都是说自己完全不懂程序开发，借助AI/Cursor, xx天内开发出了一个App, 并且冲到了苹果App Store热门榜第一.</p>
 <p>普通程序员看到这种说法，一个小白从无到有都能开发出一个App, 难免会焦虑,不得不说，这种反向装弱再变强真的令人防不胜防， 想着不能被落下，就斥资加入各种付费群或者购买各种课程。</p>
-<p>神智清明，的你可能在心平气和下很难做出这样的决定嘛。</p>
+<p>神智清明的你可能在心平气和下很难做出这样的决定嘛。</p>
 <p>另外一种就是要用AI来取代程序的公司，说要通过AI来增效，裁撤工程师，比如国外的 <a href="https://apnews.com/article/workday-layoffs-job-cuts-ai-investments-437581ad79d6e1cef2de7b300015dfbb?utm_source=t.me/mtfront">Workday 裁员说要再招人做 AI 的新闻</a> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>, 还有2023年 <a href="https://www.bwpeople.in/article/google-contemplates-30000-layoffs-due-to-ai-job-impact-503670">Google 因为AI裁员而30000 名员工的新闻 </a><sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
 <p>怎么说呢，AI这块牌子太好用了, 什么都可以往里面套，裁撤工程师降本是真，AI增效大概是假。</p>
 <p>裁员就裁员呗，为什么还要说是用AI来取代程序员呢？</p>
@@ -172,11 +172,7 @@
 <ol>
 <li>Do you think change is good?</li>
 </ol>
-<p>Absolutely. Change is an inevitable part of life, and in most cases, it drives progress and personal growth. While change can be daunting at first, it often leads to new opportunities and valuable experiences. Without change, we would stagnate, both individually and as a society.</p>
-<ol>
-<li>What are some of the major changes that occur to people throughout their lives?</li>
-</ol>
-<p>People go through numerous transformative phases in life. Some of the most significant changes include education and career transitions, moving to a new place, or starting a family. As people age, their priorities shift, and they may experience physical, emotional, and psychological changes. Financial stability, personal relationships, and health also evolve over time, shaping their overall outlook on life.
+<p>Absolutely. Change is an inevitable part of life, and in most cases, it drives progress and personal growth. While change can be daunting at first, it often leads to new opportunities and valuable experiences. Without change, we would stagnate, both individually and as a society.
 &hellip;</p>
 </blockquote>
 <p>让AI做词典, 帮我解释和翻译我不懂的单词，或者做中译英方便交流:</p>
@@ -190,7 +186,6 @@
 <p>&ldquo;The crying baby gets the milk.&rdquo;
 Meaning:</p>
 <p>This Chinese proverb &ldquo;爱哭的孩子有奶喝&rdquo; (ài kū de háizi yǒu nǎi hē) means that those who complain, express their needs, or fight for their interests are more likely to get attention and benefits. It suggests that speaking up and advocating for oneself can lead to better outcomes, similar to how a baby who cries gets fed first.</p>
-<p>This phrase is often used in various contexts, such as in workplaces or negotiations, to encourage people to voice their concerns rather than staying silent.</p>
 </blockquote>
 <!--quoteend-->
 <blockquote>
@@ -246,15 +241,6 @@ Meaning:</p>
 <li>SQL Injection Vulnerability (Critical):</li>
 </ul>
 <p>The most severe issue is that the code uses string formatting (f-string) to directly insert user input into the SQL query. This allows SQL injection attacks. For example, a malicious user could input:</p>
-<p>This could expose sensitive data from other tables.</p>
-<ul>
-<li>No Input Validation:</li>
-</ul>
-<p>The code accepts user input without any sanitization or validation. Attackers could send malformed queries or excessive amounts of data.</p>
-<ul>
-<li>No Query Parameterization:</li>
-</ul>
-<p>The query isn&rsquo;t using parameterized statements, which is the recommended way to prevent SQL injection.</p>
 <p>Here&rsquo;s a secure version of the code:</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
