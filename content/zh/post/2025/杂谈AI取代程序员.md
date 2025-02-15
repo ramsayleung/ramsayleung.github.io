@@ -1,7 +1,7 @@
 +++
 title = "杂谈AI取代程序员"
 date = 2025-02-14T21:15:00-08:00
-lastmod = 2025-02-15T01:18:44-08:00
+lastmod = 2025-02-15T01:28:56-08:00
 tags = ["ai", "programmer"]
 draft = false
 toc = true
@@ -95,7 +95,7 @@ toc = true
 
 普通程序员看到这种说法，一个小白从无到有都能开发出一个App, 难免会焦虑,不得不说，这种反向装弱再变强真的令人防不胜防， 想着不能被落下，就斥资加入各种付费群或者购买各种课程。
 
-神智清明，的你可能在心平气和下很难做出这样的决定嘛。
+神智清明的你可能在心平气和下很难做出这样的决定嘛。
 
 另外一种就是要用AI来取代程序的公司，说要通过AI来增效，裁撤工程师，比如国外的 [Workday 裁员说要再招人做 AI 的新闻](https://apnews.com/article/workday-layoffs-job-cuts-ai-investments-437581ad79d6e1cef2de7b300015dfbb?utm_source=t.me/mtfront)&nbsp;[^fn:2], 还有2023年 [Google 因为AI裁员而30000 名员工的新闻 ](https://www.bwpeople.in/article/google-contemplates-30000-layoffs-due-to-ai-job-impact-503670)[^fn:3]
 
@@ -195,10 +195,6 @@ AI的多语言翻译功能对比其他传统基于单词的翻译软件简直是
 > 1.  Do you think change is good?
 >
 > Absolutely. Change is an inevitable part of life, and in most cases, it drives progress and personal growth. While change can be daunting at first, it often leads to new opportunities and valuable experiences. Without change, we would stagnate, both individually and as a society.
->
-> 1.  What are some of the major changes that occur to people throughout their lives?
->
-> People go through numerous transformative phases in life. Some of the most significant changes include education and career transitions, moving to a new place, or starting a family. As people age, their priorities shift, and they may experience physical, emotional, and psychological changes. Financial stability, personal relationships, and health also evolve over time, shaping their overall outlook on life.
 > ...
 
 让AI做词典, 帮我解释和翻译我不懂的单词，或者做中译英方便交流:
@@ -215,8 +211,6 @@ AI的多语言翻译功能对比其他传统基于单词的翻译软件简直是
 > Meaning:
 >
 > This Chinese proverb "爱哭的孩子有奶喝" (ài kū de háizi yǒu nǎi hē) means that those who complain, express their needs, or fight for their interests are more likely to get attention and benefits. It suggests that speaking up and advocating for oneself can lead to better outcomes, similar to how a baby who cries gets fed first.
->
-> This phrase is often used in various contexts, such as in workplaces or negotiations, to encourage people to voice their concerns rather than staying silent.
 
 <!--quoteend-->
 
@@ -260,16 +254,6 @@ def search():
 > -   SQL Injection Vulnerability (Critical):
 >
 > The most severe issue is that the code uses string formatting (f-string) to directly insert user input into the SQL query. This allows SQL injection attacks. For example, a malicious user could input:
->
-> This could expose sensitive data from other tables.
->
-> -   No Input Validation:
->
-> The code accepts user input without any sanitization or validation. Attackers could send malformed queries or excessive amounts of data.
->
-> -   No Query Parameterization:
->
-> The query isn't using parameterized statements, which is the recommended way to prevent SQL injection.
 >
 > Here's a secure version of the code:
 
