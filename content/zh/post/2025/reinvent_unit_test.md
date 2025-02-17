@@ -1,7 +1,7 @@
 +++
 title = "重新造轮子系列(一)：从0开发单元测试框架"
 date = 2025-02-16T22:27:00-08:00
-lastmod = 2025-02-17T11:19:56-08:00
+lastmod = 2025-02-17T11:31:32-08:00
 tags = ["reinvent"]
 categories = ["ReInvent: 重新造轮子系列"]
 draft = false
@@ -48,27 +48,6 @@ Javascript 比较流行的测试框架是 [Mocha](https://mochajs.org/) 和 [Jes
 -   Error: 运行测试过程中出现错误，我们不确定测试结果是否与预期一致
 
 我们用以下的状态机来判断测试的结果:
-
-```plantuml
-@startuml
-
-start
-
-if (是否抛出异常) then (yes)
-        if (异常是否是assert.AssertionError) then (yes)
-                #yellow:Fail;
-        else (no)
-                #red:Error;
-        endif
-else (no)
-        #palegreen:Pass;
-
-endif
-
-stop
-
-@enduml
-```
 
 {{< figure src="/ox-hugo/unit_test_result_state.png" >}}
 
@@ -201,7 +180,8 @@ export default new Hope()
 2.  那么是否意味着，每个 `import` 语句都会运行一下 `new Hope()` 呢? 并不是，Node会缓存导入的 `module` ，也就是说无论一个 `module` 被导入多少次, 它也只会执行一次代码。
 
 只要导入 `hope.ts` 之后, 就可以使用 `hope.test()` 会注册单元测试用例，以便后续执行:
-![](/ox-hugo/unit_test_hope_structure.svg)
+
+{{< figure src="/ox-hugo/unit_test_hope_structure.svg" >}}
 
 最后， 我们只需要再实现下输出测试结果的功能，既支持输出一行的简短结果，又可以支持详尽的输出. 如果需要的话，后续还可以支持输出JSON, CSV, 或者HTML 格式的结果:
 
@@ -298,20 +278,6 @@ main(process.argv.slice(2))
 
 整个框架的工作流程如下:
 
-```plantuml
-@startuml
-pray.ts -> hope.ts: 1. import
-hope.ts -> hope.ts: 2. 创建hope实例
-pray.ts -> pray.ts: 3. 扫描所有的测试文件
-pray.ts -> test_add.ts: 4  import
-test_add.ts -> hope.ts: 5. import
-test_add.ts -> hope.ts: 6. 注册测试case
-pray.ts -> hope.ts: 7. run(), 运行注册的测试case
-pray.ts -> hope.ts: 8. 输出测试结果
-@enduml
-
-```
-
 {{< figure src="/ox-hugo/unit_test_workflow.png" >}}
 
 大功告成，现在就来运行下我们的单元测试:
@@ -330,7 +296,7 @@ errors:
 
 #### <span class="section-num">3.4.1</span> 增加运行时间 {#增加运行时间}
 
-我们还可以记录每个测试用例的运行时间:
+我们还可以记录每个测试用例的运行时间, 纳秒有点太小了，就精确到微秒即可:
 
 ```js
 run() {
@@ -338,8 +304,8 @@ run() {
     try {
       const now = process.hrtime.bigint();
       test();
-      const elapsedInMacro = (process.hrtime.bigint() - now) / (BigInt(1000));
-      this.passes.push(comment + `, execution time: ${elapsedInMacro}us`);
+      const elapsedInMicro = (process.hrtime.bigint() - now) / (BigInt(1000));
+      this.passes.push(comment + `, execution time: ${elapsedInMicro}us`);
     } catch (e) {
       if (e instanceof assert.AssertionError) {
         this.fails.push(comment);
@@ -635,8 +601,8 @@ class Hope {
 
           const now = microtime.now();
           test();
-          const elapsedInMacro = microtime.now() - now;
-          this.passes.push(comment + `, execution time: ${elapsedInMacro}us`);
+          const elapsedInMicro = microtime.now() - now;
+          this.passes.push(comment + `, execution time: ${elapsedInMicro}us`);
 
           if (this.teardownFn) {
             this.teardownFn();
@@ -726,8 +692,8 @@ class Hope {
                 test();
             }
 
-            const elapsedInMacro = (process.hrtime.bigint() - now) / (BigInt(1000));
-            this.passes.push(comment + `, execution time: ${elapsedInMacro}us`);
+            const elapsedInMicro = (process.hrtime.bigint() - now) / (BigInt(1000));
+            this.passes.push(comment + `, execution time: ${elapsedInMicro}us`);
 
             if (this.teardownFn) {
                 if (this.isAsync(this.teardownFn)) {
