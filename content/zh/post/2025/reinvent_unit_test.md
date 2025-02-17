@@ -1,7 +1,7 @@
 +++
 title = "重新造轮子系列(一)：从0开发单元测试框架"
 date = 2025-02-16T22:27:00-08:00
-lastmod = 2025-02-17T11:07:56-08:00
+lastmod = 2025-02-17T11:19:56-08:00
 tags = ["reinvent"]
 categories = ["ReInvent: 重新造轮子系列"]
 draft = false
@@ -72,7 +72,7 @@ stop
 
 {{< figure src="/ox-hugo/unit_test_result_state.png" >}}
 
-我们把要实现的单元测试框架命名为 =Hope=， 根据上面的状态机，我们很快就可以写出一个原型：
+我们把要实现的单元测试框架命名为 `Hope`, 根据上面的状态机，我们很快就可以写出一个原型：
 
 单元测试用例接收一个函数作为参数，然后又集中运行所有的测试用例，并根据是否抛出异常以及异常的类型来判断结果:
 
@@ -198,7 +198,7 @@ export default new Hope()
 上面的代码又是如何实现单例模式的呢？依靠的是 Node 的两个运行机制:
 
 1.  在加载一个 `module` 的时候, 它就会解释并执行 `module` 的代码，这意味着它会运行 `new Hope()` 并且导出新创建的实例
-2.  那么是否意味着，每个 `import` 语句都会运行一下 `new Hope()` 呢? 并不是，Node会缓存导入的 `module=，也就是说无论一个 =module` 被导入多少次, 它也只会执行一次代码。
+2.  那么是否意味着，每个 `import` 语句都会运行一下 `new Hope()` 呢? 并不是，Node会缓存导入的 `module` ，也就是说无论一个 `module` 被导入多少次, 它也只会执行一次代码。
 
 只要导入 `hope.ts` 之后, 就可以使用 `hope.test()` 会注册单元测试用例，以便后续执行:
 ![](/ox-hugo/unit_test_hope_structure.svg)
