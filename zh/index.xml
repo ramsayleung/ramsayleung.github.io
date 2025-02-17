@@ -12,8 +12,1403 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sat, 15 Feb 2025 01:28:56 -0800</lastBuildDate>
+    <lastBuildDate>Mon, 17 Feb 2025 11:12:38 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>重新造轮子系列(一)：从0开发单元测试框架</title>
+      <link>https://ramsayleung.github.io/zh/post/2025/reinvent_unit_test/</link>
+      <pubDate>Sun, 16 Feb 2025 22:27:00 -0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2025/reinvent_unit_test/</guid>
+      <description>1 前言 单元测试的重要性无须多言，它是保证项目质量的基石. 如果没有单元测试，根本没有信心说自己开发的功能是符合要求的，更没法在没有测试的保证进</description>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
+<p>单元测试的重要性无须多言，它是保证项目质量的基石.</p>
+<p>如果没有单元测试，根本没有信心说自己开发的功能是符合要求的，更没法在没有测试的保证进行项目的重构。</p>
+<p>既然单元测试如此重要，今天就用Typescript来写一个简单但五脏俱全的单元测试框架。</p>
+<h2 id="历史"><span class="section-num">2</span> 历史</h2>
+<p>Javascript 比较流行的测试框架是 <a href="https://mochajs.org/">Mocha</a> 和 <a href="https://jestjs.io/">Jest</a> , Java 具有统治地位的单元测试框架就是 <a href="https://junit.org/junit5/">JUnit</a>, 现在做单元测试的框架, 一般称为 xUnit 家族, 而 xUnit 家族最早的成员, 不是 JUnit, 而是 SUnit(Smalltalk Unit), SUnit 的历史比 Junit 悠久得多, 大约在1994年的时候, <a href="https://en.wikipedia.org/wiki/Kent_Beck">Kent Beck</a>, 也就是 Junit 的作者之一, 写了 <a href="https://sunit.sourceforge.net/">SUnit</a>, 而后才有了 JUnit (1998).</p>
+<p>所以, 在 <a href="https://sunit.sourceforge.net/">SUnit</a> 的网站上, 极其显摆的写着”一切单元测试框架之母” (The mother of all unit testing frameworks).</p>
+<p>事实上这是大实话 — 所有单元测试框架里面的名词术语, 都从 Sunit 来的, 如 TestCase, Fixture 等等.</p>
+<h2 id="实现"><span class="section-num">3</span> 实现</h2>
+<h3 id="需求"><span class="section-num">3.1</span> 需求</h3>
+<p>先定义需求, 一个单元测试框架应该可以做到下面的事:</p>
+<ol>
+<li>找到包含测试的文件</li>
+<li>找到上述文件的测试 case</li>
+<li>运行测试case</li>
+<li>捕获测试运行结果，并输出所有的测试的运行总结</li>
+</ol>
+<h3 id="原型"><span class="section-num">3.2</span> 原型</h3>
+<p>一条 <code>assert</code> 语句就可以看作是最简单的测试 case, 对于测试case, 我们会有以下三种结果：</p>
+<ul>
+<li>Pass: 运行成功, 测试结果与预期一致</li>
+<li>Fail: 运行失败, 测试结果与预期不一致</li>
+<li>Error: 运行测试过程中出现错误，我们不确定测试结果是否与预期一致</li>
+</ul>
+<p>我们用以下的状态机来判断测试的结果:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@startuml
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">start
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">if (是否抛出异常) then (yes)
+</span></span><span class="line"><span class="cl">        if (异常是否是assert.AssertionError) then (yes)
+</span></span><span class="line"><span class="cl">                #yellow:Fail;
+</span></span><span class="line"><span class="cl">        else (no)
+</span></span><span class="line"><span class="cl">                #red:Error;
+</span></span><span class="line"><span class="cl">        endif
+</span></span><span class="line"><span class="cl">else (no)
+</span></span><span class="line"><span class="cl">        #palegreen:Pass;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">endif
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">stop
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@enduml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure>
+    <img loading="lazy" src="/ox-hugo/unit_test_result_state.png"/> 
+</figure>
+
+<p>我们把要实现的单元测试框架命名为 =Hope=， 根据上面的状态机，我们很快就可以写出一个原型：</p>
+<p>单元测试用例接收一个函数作为参数，然后又集中运行所有的测试用例，并根据是否抛出异常以及异常的类型来判断结果:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">assert</span> <span class="nx">from</span> <span class="s1">&#39;assert&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">HopeTests</span><span class="o">:</span> <span class="p">[</span><span class="nx">string</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="k">void</span><span class="p">][]</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">HopePass</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">HopeFail</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">HopeError</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Record a single test for running later.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">hopeThat</span> <span class="o">=</span> <span class="p">(</span><span class="nx">message</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">callback</span><span class="o">:</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="k">void</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">HopeTests</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="nx">message</span><span class="p">,</span> <span class="nx">callback</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">main</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">HopeTests</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(([</span><span class="nx">message</span><span class="p">,</span> <span class="nx">test</span><span class="p">])</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">test</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">HopePass</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">e</span> <span class="k">instanceof</span> <span class="nx">assert</span><span class="p">.</span><span class="nx">AssertionError</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">HopeFail</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">HopeError</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`pass </span><span class="si">${</span><span class="nx">HopePass</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`fail </span><span class="si">${</span><span class="nx">HopeFail</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`error </span><span class="si">${</span><span class="nx">HopeError</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>让我们编写点代码来测试下我们的「单元测试框架」:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// Something to test(doesn&#39;t handle zero properly)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">sign</span> <span class="o">=</span> <span class="p">(</span><span class="nx">value</span><span class="o">:</span> <span class="nx">number</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// These two should pass
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">hopeThat</span><span class="p">(</span><span class="s1">&#39;Sign of negative is -1&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">assert</span><span class="p">(</span><span class="nx">sign</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="nx">hopeThat</span><span class="p">(</span><span class="s1">&#39;Sign of positive is 1&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">assert</span><span class="p">(</span><span class="nx">sign</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">===</span> <span class="mi">1</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// This one should fail.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">hopeThat</span><span class="p">(</span><span class="s1">&#39;Sign of zero is 0&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">assert</span><span class="p">(</span><span class="nx">sign</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">===</span> <span class="mi">0</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// This one is an error.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">hopeThat</span><span class="p">(</span><span class="s1">&#39;Sign mispelled is erorr&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">assert</span><span class="p">(</span><span class="nx">sign</span><span class="p">(</span><span class="nx">sgn</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">===</span> <span class="mi">1</span><span class="p">)));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Call the main driver
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">main</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输出的结果是:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">-&gt; npx tsx dry_run.ts
+</span></span><span class="line"><span class="cl">pass <span class="m">2</span>
+</span></span><span class="line"><span class="cl">fail <span class="m">1</span>
+</span></span><span class="line"><span class="cl">error <span class="m">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们的第一版单元测试框架 <code>Hope</code> 能正常运行了，不过它有几个问题：</p>
+<ol>
+<li>它只是输出结果，但没有告诉我们是哪个单元测试成功了，哪个失败了，哪个报错，没法 debug</li>
+<li>可变全局变量通常是有很大副作用的，我们应该把它封装起来</li>
+<li>如果我们要测的函数里面，预期是要抛出 <code>assert.AssertionError</code>, 那么这个函数对应的测试用例就会被识别成失败的测试用例，也就是意味着我们不应该依赖 <code>assert.AssertError</code> 来作运行结果判断。</li>
+</ol>
+<h3 id="单例版本"><span class="section-num">3.3</span> 单例版本</h3>
+<p>我们可以将上面的测试代码地址封装在一个类里，然后通过单例设计模式(<a href="https://refactoring.guru/design-patterns/singleton">Singleton pattern</a>)来确保只初始化出一个实例，这样就可以模拟出全局变量的效果，以此来解决前面的两个问题。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">assert</span> <span class="nx">from</span> <span class="s2">&#34;assert&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">caller</span> <span class="nx">from</span> <span class="s1">&#39;caller&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">class</span> <span class="nx">Hope</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">private</span> <span class="nx">todo</span><span class="o">:</span> <span class="p">[</span><span class="nx">string</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="k">void</span><span class="p">][]</span> <span class="o">=</span> <span class="p">[];</span> <span class="c1">// 记录所有需要运行的测试case.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kr">private</span> <span class="nx">passes</span><span class="o">:</span> <span class="nx">string</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">private</span> <span class="nx">fails</span><span class="o">:</span> <span class="nx">string</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">private</span> <span class="nx">errors</span><span class="o">:</span> <span class="nx">string</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">constructor</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">todo</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">passes</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">fails</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">errors</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">test</span><span class="p">(</span><span class="nx">comment</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">callback</span><span class="o">:</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="k">void</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// 通过caller 获取单元测试用例对应的文件名
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">this</span><span class="p">.</span><span class="nx">todo</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="sb">`</span><span class="si">${</span><span class="nx">caller</span><span class="p">()</span><span class="si">}</span><span class="sb">::</span><span class="si">${</span><span class="nx">comment</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span> <span class="nx">callback</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">run</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">todo</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(([</span><span class="nx">comment</span><span class="p">,</span> <span class="nx">test</span><span class="p">])</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">test</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="p">.</span><span class="nx">passes</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">comment</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">e</span> <span class="k">instanceof</span> <span class="nx">assert</span><span class="p">.</span><span class="nx">AssertionError</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="k">this</span><span class="p">.</span><span class="nx">fails</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">comment</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="k">this</span><span class="p">.</span><span class="nx">errors</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">comment</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="k">new</span> <span class="nx">Hope</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上面的代码又是如何实现单例模式的呢？依靠的是 Node 的两个运行机制:</p>
+<ol>
+<li>在加载一个 <code>module</code> 的时候, 它就会解释并执行 <code>module</code> 的代码，这意味着它会运行 <code>new Hope()</code> 并且导出新创建的实例</li>
+<li>那么是否意味着，每个 <code>import</code> 语句都会运行一下 <code>new Hope()</code> 呢? 并不是，Node会缓存导入的 <code>module=，也就是说无论一个 =module</code> 被导入多少次, 它也只会执行一次代码。</li>
+</ol>
+<p>只要导入 <code>hope.ts</code> 之后, 就可以使用 <code>hope.test()</code> 会注册单元测试用例，以便后续执行:
+<img loading="lazy" src="/ox-hugo/unit_test_hope_structure.svg" alt=""  />
+</p>
+<p>最后， 我们只需要再实现下输出测试结果的功能，既支持输出一行的简短结果，又可以支持详尽的输出. 如果需要的话，后续还可以支持输出JSON, CSV, 或者HTML 格式的结果:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="nx">terse</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">cases</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="nx">map</span><span class="p">(([</span><span class="nx">title</span><span class="p">,</span> <span class="nx">results</span><span class="p">])</span> <span class="p">=&gt;</span> <span class="sb">`</span><span class="si">${</span><span class="nx">title</span><span class="si">}</span><span class="sb">: </span><span class="si">${</span><span class="nx">results</span><span class="p">.</span><span class="nx">length</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">verbose</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">let</span> <span class="nx">report</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">let</span> <span class="nx">prefix</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kr">const</span> <span class="p">[</span><span class="nx">title</span><span class="p">,</span> <span class="nx">results</span><span class="p">]</span> <span class="k">of</span> <span class="k">this</span><span class="p">.</span><span class="nx">cases</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">report</span> <span class="o">+=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">prefix</span><span class="si">}${</span><span class="nx">title</span><span class="si">}</span><span class="sb">:`</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">prefix</span> <span class="o">=</span> <span class="s1">&#39;\n&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kr">const</span> <span class="nx">r</span> <span class="k">of</span> <span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">report</span> <span class="o">+=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">prefix</span><span class="si">}</span><span class="sb"> </span><span class="si">${</span><span class="nx">r</span><span class="si">}</span><span class="sb">`</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">report</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">cases</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;passes&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">passes</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;fails&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">fails</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;errors&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">errors</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>万事具备，接下来就让我们写个函数验证下 <code>Hope</code> 框架:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">assert</span> <span class="nx">from</span> <span class="s2">&#34;assert&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">hope</span> <span class="nx">from</span> <span class="s2">&#34;./hope&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">hope</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;Sum of 1 and 2&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">assert</span><span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="o">===</span> <span class="mi">3</span><span class="p">));</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>看起来挺不错，但是要怎么运行这个测试case 呢? 总不能每个测试文件都调用下 <code>hope.run()</code> 嘛? 人家 <code>Jest</code> 都可以自动扫描并运行测试用例。</p>
+<p>让我们参考 Jest, 实现一个 <code>Runner</code>, 也实现动态加载测试文件.</p>
+<p><code>import</code> 不仅可以用来导入其他的模块，它可以当作是一个 async 函数，加载指定路径的文件, 如:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">await</span> <span class="kr">import</span><span class="p">(</span><span class="nx">module_path</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>为了更好地控制我们的单元测试, 我们可以给 <code>Hope</code> 框架增加上一些命令行参数以控制其行为, CLI + Runner 的实现如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">minimist</span> <span class="nx">from</span> <span class="s1">&#39;minimist&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">glob</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;glob&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">hope</span> <span class="nx">from</span> <span class="s1">&#39;./hope&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">fileURLToPath</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;url&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">parse</span> <span class="o">=</span> <span class="p">(</span><span class="nx">args</span><span class="o">:</span> <span class="nx">string</span><span class="p">[])</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">parsed</span> <span class="o">=</span> <span class="nx">minimist</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// Default root directory is current directory if not specified
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">root</span><span class="o">:</span> <span class="nx">parsed</span><span class="p">.</span><span class="nx">root</span> <span class="o">||</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Output format can be &#39;terse&#39; or &#39;verbose&#39; (default)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">output</span><span class="o">:</span> <span class="nx">parsed</span><span class="p">.</span><span class="nx">output</span> <span class="o">||</span> <span class="s1">&#39;verbose&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Array of test filenames if explicitly provided
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">filenames</span><span class="o">:</span> <span class="nx">parsed</span><span class="p">.</span><span class="nx">_</span> <span class="o">||</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">main</span> <span class="o">=</span> <span class="kr">async</span> <span class="p">(</span><span class="nx">args</span><span class="o">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">string</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">options</span> <span class="o">=</span> <span class="nx">parse</span><span class="p">(</span><span class="nx">args</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">filenames</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">options</span><span class="p">.</span><span class="nx">filenames</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">glob</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">options</span><span class="p">.</span><span class="nx">root</span><span class="si">}</span><span class="sb">/**/test*.{ts,js}`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kr">const</span> <span class="nx">f</span> <span class="k">of</span> <span class="nx">options</span><span class="p">.</span><span class="nx">filenames</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">absolutePath</span> <span class="o">=</span> <span class="nx">fileURLToPath</span><span class="p">(</span><span class="k">new</span> <span class="nx">URL</span><span class="p">(</span><span class="nx">f</span><span class="p">,</span> <span class="kr">import</span><span class="p">.</span><span class="nx">meta</span><span class="p">.</span><span class="nx">url</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">await</span> <span class="kr">import</span><span class="p">(</span><span class="nx">absolutePath</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">hope</span><span class="p">.</span><span class="nx">run</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">output</span> <span class="o">===</span> <span class="s1">&#39;terse&#39;</span><span class="p">)</span> <span class="o">?</span> <span class="nx">hope</span><span class="p">.</span><span class="nx">terse</span><span class="p">()</span> <span class="o">:</span> <span class="nx">hope</span><span class="p">.</span><span class="nx">verbose</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">main</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">argv</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们默认会匹配所有以 <code>test</code> 为前缀的 ts 和 js 文件, 然后通过 <code>import</code> 导入, 因为 <code>hope</code> 是单例模式，所以所有的测试文件用的都是同一个实例, <code>hope.run</code> 就将注册的所有单元测试运行.</p>
+<p>整个框架的工作流程如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@startuml
+</span></span><span class="line"><span class="cl">pray.ts -&gt; hope.ts: 1. import
+</span></span><span class="line"><span class="cl">hope.ts -&gt; hope.ts: 2. 创建hope实例
+</span></span><span class="line"><span class="cl">pray.ts -&gt; pray.ts: 3. 扫描所有的测试文件
+</span></span><span class="line"><span class="cl">pray.ts -&gt; test_add.ts: 4  import
+</span></span><span class="line"><span class="cl">test_add.ts -&gt; hope.ts: 5. import
+</span></span><span class="line"><span class="cl">test_add.ts -&gt; hope.ts: 6. 注册测试case
+</span></span><span class="line"><span class="cl">pray.ts -&gt; hope.ts: 7. run(), 运行注册的测试case
+</span></span><span class="line"><span class="cl">pray.ts -&gt; hope.ts: 8. 输出测试结果
+</span></span><span class="line"><span class="cl">@enduml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure>
+    <img loading="lazy" src="/ox-hugo/unit_test_workflow.png"/> 
+</figure>
+
+<p>大功告成，现在就来运行下我们的单元测试:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">&gt; npx tsx pray.ts
+</span></span><span class="line"><span class="cl">passes:
+</span></span><span class="line"><span class="cl"> file:///private/tmp/reinvent/unit_test/test_add.ts::Sum of <span class="m">1</span> and <span class="m">2</span>
+</span></span><span class="line"><span class="cl">fails:
+</span></span><span class="line"><span class="cl">errors:
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="优化"><span class="section-num">3.4</span> 优化</h3>
+<h4 id="增加运行时间"><span class="section-num">3.4.1</span> 增加运行时间</h4>
+<p>我们还可以记录每个测试用例的运行时间:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">run</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">this</span><span class="p">.</span><span class="nx">todo</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(([</span><span class="nx">comment</span><span class="p">,</span> <span class="nx">test</span><span class="p">])</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="nx">now</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">hrtime</span><span class="p">.</span><span class="nx">bigint</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">test</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="nx">elapsedInMacro</span> <span class="o">=</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">hrtime</span><span class="p">.</span><span class="nx">bigint</span><span class="p">()</span> <span class="o">-</span> <span class="nx">now</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nx">BigInt</span><span class="p">(</span><span class="mi">1000</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">      <span class="k">this</span><span class="p">.</span><span class="nx">passes</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">comment</span> <span class="o">+</span> <span class="sb">`, execution time: </span><span class="si">${</span><span class="nx">elapsedInMacro</span><span class="si">}</span><span class="sb">us`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="nx">e</span> <span class="k">instanceof</span> <span class="nx">assert</span><span class="p">.</span><span class="nx">AssertionError</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="p">.</span><span class="nx">fails</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">comment</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="p">.</span><span class="nx">errors</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">comment</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">&gt; npx tsx pray.ts
+</span></span><span class="line"><span class="cl">passes:
+</span></span><span class="line"><span class="cl"> file:///private/tmp/reinvent/unit_test/test_add.ts::Sum of <span class="m">1</span> and 2, execution time: 5us
+</span></span><span class="line"><span class="cl">fails:
+</span></span><span class="line"><span class="cl">errors:
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="增加-assert-函数"><span class="section-num">3.4.2</span> 增加 assert 函数</h4>
+<p>内置的 <code>assert</code> 函数只支持比较输入值是否为 True, 现代的测试框架都有很多的 <code>helper</code> 函数来简化 <code>assert</code> 语句，就让我们来实现下 <code>assertEqual</code>, <code>assertThrows</code>, <code>assertMapEqual</code>, <code>assertSetEqual</code>, <code>assertArraySame</code> 这几个函数:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * assert 抛出指定的异常
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kd">function</span> <span class="nx">assertThrows</span><span class="o">&lt;</span><span class="nx">T</span> <span class="kr">extends</span> <span class="nb">Error</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">expectedType</span><span class="o">:</span> <span class="k">new</span> <span class="p">(...</span><span class="nx">args</span><span class="o">:</span> <span class="nx">any</span><span class="p">[])</span> <span class="p">=&gt;</span> <span class="nx">T</span><span class="p">,</span> <span class="nx">func</span><span class="o">:</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="k">void</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// expected to throw exception
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">func</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// unreachable
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">assert</span><span class="p">(</span><span class="kc">false</span><span class="p">,</span> <span class="sb">`Expected function to throw </span><span class="si">${</span><span class="nx">expectedType</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="sb"> but it did not throw`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">assert</span><span class="p">(</span><span class="nx">error</span> <span class="k">instanceof</span> <span class="nx">expectedType</span><span class="p">,</span> <span class="sb">`Expected function to throw </span><span class="si">${</span><span class="nx">expectedType</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="sb"> but it threw </span><span class="si">${</span><span class="nx">error</span> <span class="k">instanceof</span> <span class="nb">Error</span> <span class="o">?</span> <span class="nx">error</span><span class="p">.</span><span class="nx">constructor</span><span class="p">.</span><span class="nx">name</span> <span class="o">:</span> <span class="k">typeof</span> <span class="nx">error</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * assert 两个元素相等
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kd">function</span> <span class="nx">assertEqual</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">actual</span><span class="o">:</span> <span class="nx">T</span><span class="p">,</span> <span class="nx">expected</span><span class="o">:</span> <span class="nx">T</span><span class="p">,</span> <span class="nx">message</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">assert</span><span class="p">(</span><span class="nx">actual</span> <span class="o">===</span> <span class="nx">expected</span><span class="p">,</span> <span class="nx">message</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * assert 两个 Set 相同
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kd">function</span> <span class="nx">assertSetEqual</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">actual</span><span class="o">:</span> <span class="nx">Set</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="nx">expected</span><span class="o">:</span> <span class="nx">Set</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="nx">message</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">assert</span><span class="p">(</span><span class="nx">actual</span><span class="p">.</span><span class="nx">size</span> <span class="o">==</span> <span class="nx">expected</span><span class="p">.</span><span class="nx">size</span><span class="p">,</span> <span class="nx">message</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kr">const</span> <span class="nx">element</span> <span class="k">of</span> <span class="nx">actual</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">assert</span><span class="p">(</span><span class="nx">expected</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">element</span><span class="p">),</span> <span class="nx">message</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * assert 两个 Map 相同
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kd">function</span> <span class="nx">assertMapEqual</span><span class="o">&lt;</span><span class="nx">K</span> <span class="kr">extends</span> <span class="nx">string</span> <span class="o">|</span> <span class="nx">number</span> <span class="o">|</span> <span class="nx">symbol</span><span class="p">,</span> <span class="nx">V</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">actual</span><span class="o">:</span> <span class="nx">Record</span><span class="o">&lt;</span><span class="nx">K</span><span class="p">,</span> <span class="nx">V</span><span class="o">&gt;</span><span class="p">,</span> <span class="nx">expected</span><span class="o">:</span> <span class="nx">Record</span><span class="o">&lt;</span><span class="nx">K</span><span class="p">,</span> <span class="nx">V</span><span class="o">&gt;</span><span class="p">,</span> <span class="nx">message</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">actualKeys</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">actual</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">K</span><span class="p">[];</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">expectedKeys</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">expected</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">K</span><span class="p">[];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">assert</span><span class="p">(</span><span class="nx">actualKeys</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="nx">expectedKeys</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">message</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kr">const</span> <span class="nx">actualKey</span> <span class="k">of</span> <span class="nx">actualKeys</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">assert</span><span class="p">(</span><span class="nx">expected</span><span class="p">[</span><span class="nx">actualKey</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">actual</span><span class="p">[</span><span class="nx">actualKey</span><span class="p">]</span> <span class="o">==</span> <span class="nx">expected</span><span class="p">[</span><span class="nx">actualKey</span><span class="p">],</span> <span class="nx">message</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * assert两个列举的值相等，如元素相等，但是顺序不同也被视为相同
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kd">function</span> <span class="nx">assertArraySame</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">actual</span><span class="o">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="nx">expected</span><span class="o">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="nx">message</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">assert</span><span class="p">(</span><span class="nx">actual</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="nx">expected</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">message</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">assertSetEqual</span><span class="p">(</span><span class="k">new</span> <span class="nx">Set</span><span class="p">(</span><span class="nx">actual</span><span class="p">),</span> <span class="k">new</span> <span class="nx">Set</span><span class="p">(</span><span class="nx">expected</span><span class="p">),</span> <span class="nx">message</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>针对上述函数的测试:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">assert</span> <span class="nx">from</span> <span class="s2">&#34;assert&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">hope</span><span class="p">,</span> <span class="p">{</span> <span class="nx">assertArraySame</span><span class="p">,</span> <span class="nx">assertMapEqual</span><span class="p">,</span> <span class="nx">assertSetEqual</span><span class="p">,</span> <span class="nx">assertThrows</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;./hope&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">hope</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;test assertSetEqual happy path&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">setA</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">setB</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Set</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">assertSetEqual</span><span class="p">(</span><span class="nx">setA</span><span class="p">,</span> <span class="nx">setB</span><span class="p">,</span> <span class="s1">&#39;Set supposed to be equal&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">assertSetEqual</span><span class="p">(</span><span class="k">new</span> <span class="nx">Set</span><span class="p">([]),</span> <span class="k">new</span> <span class="nx">Set</span><span class="p">([]),</span> <span class="s1">&#39;Empty Set&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">hope</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;test assertMapEqual unhappy path&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">assertThrows</span><span class="p">(</span><span class="nx">assert</span><span class="p">.</span><span class="nx">AssertionError</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">setA</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">setB</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">assertSetEqual</span><span class="p">(</span><span class="nx">setA</span><span class="p">,</span> <span class="nx">setB</span><span class="p">,</span> <span class="s1">&#39;Set supposed to be equal&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">hope</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;test assertMapEqual happy path&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">mapA</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;a&#39;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;b&#39;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">mapB</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;b&#39;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;a&#39;</span><span class="o">:</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">assertMapEqual</span><span class="p">(</span><span class="nx">mapA</span><span class="p">,</span> <span class="nx">mapB</span><span class="p">,</span> <span class="s1">&#39;Map supposed to be map&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">hope</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;test assertMapEqual unhappy path&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">mapA</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;a&#39;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;b&#39;</span><span class="o">:</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">mapB</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;b&#39;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;a&#39;</span><span class="o">:</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">assertThrows</span><span class="p">(</span><span class="nx">assert</span><span class="p">.</span><span class="nx">AssertionError</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">assertMapEqual</span><span class="p">(</span><span class="nx">mapA</span><span class="p">,</span> <span class="nx">mapB</span><span class="p">,</span> <span class="s1">&#39;Map supposed to be map&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">hope</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;test assertArraySame happy path&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">arr1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">arr2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">assertArraySame</span><span class="p">(</span><span class="nx">arr1</span><span class="p">,</span> <span class="nx">arr2</span><span class="p">,</span> <span class="s2">&#34;Arrays should have same elements&#34;</span><span class="p">);</span> <span class="c1">// Passe
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">hope</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;test assertArraySame unhappy path&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">arr1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">arr2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">assertThrows</span><span class="p">(</span><span class="nx">assert</span><span class="p">.</span><span class="nx">AssertionError</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">assertArraySame</span><span class="p">(</span><span class="nx">arr1</span><span class="p">,</span> <span class="nx">arr2</span><span class="p">,</span> <span class="s2">&#34;Arrays should have same elements&#34;</span><span class="p">);</span> <span class="c1">// Passe
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="增加-s-select-参数指定测试文件"><span class="section-num">3.4.3</span> 增加 -s/&ndash;select 参数指定测试文件</h4>
+<p>我们的 <code>Runner</code> 默认匹配的是以 <code>test</code> 为前缀的测试文件, 我们可以增加一个 <code>-s/--select</code> 参数，用来指定需要匹配的测试文件名：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">parse</span> <span class="o">=</span> <span class="p">(</span><span class="nx">args</span><span class="o">:</span> <span class="nx">string</span><span class="p">[])</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">parsed</span> <span class="o">=</span> <span class="nx">minimist</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">...</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">select</span><span class="o">:</span> <span class="nx">parsed</span><span class="p">.</span><span class="nx">select</span> <span class="o">||</span> <span class="nx">parsed</span><span class="p">.</span><span class="nx">s</span> <span class="c1">// 增加select 参数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">main</span> <span class="o">=</span> <span class="kr">async</span> <span class="p">(</span><span class="nx">args</span><span class="o">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">string</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">options</span> <span class="o">=</span> <span class="nx">parse</span><span class="p">(</span><span class="nx">args</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">filenames</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">namePattern</span> <span class="o">=</span> <span class="nx">options</span><span class="p">.</span><span class="nx">select</span> <span class="o">??</span> <span class="s1">&#39;test*&#39;</span><span class="p">;</span> <span class="c1">// 使用传入的模式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">options</span><span class="p">.</span><span class="nx">filenames</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">glob</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">options</span><span class="p">.</span><span class="nx">root</span><span class="si">}</span><span class="sb">/**/</span><span class="si">${</span><span class="nx">namePattern</span><span class="si">}</span><span class="sb">.{ts,js}`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>运行结果:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">&gt; ls -al test*
+</span></span><span class="line"><span class="cl">-rw-r--r--@ <span class="m">1</span> ramsayleung  wheel   <span class="m">115</span> <span class="m">17</span> Feb 10:01 test_add.ts
+</span></span><span class="line"><span class="cl">-rw-r--r--@ <span class="m">1</span> ramsayleung  wheel   <span class="m">762</span> <span class="m">17</span> Feb 10:01 test_approx_equal.ts
+</span></span><span class="line"><span class="cl">-rw-r--r--@ <span class="m">1</span> ramsayleung  wheel  <span class="m">1536</span> <span class="m">17</span> Feb 10:38 test_assert.ts
+</span></span><span class="line"><span class="cl">-rw-r--r--@ <span class="m">1</span> ramsayleung  wheel   <span class="m">187</span> <span class="m">17</span> Feb 10:38 test_async.ts
+</span></span><span class="line"><span class="cl">-rw-r--r--@ <span class="m">1</span> ramsayleung  wheel   <span class="m">275</span> <span class="m">17</span> Feb 10:38 test_setup_teardown.ts
+</span></span><span class="line"><span class="cl">-rw-r--r--@ <span class="m">1</span> ramsayleung  wheel   <span class="m">140</span> <span class="m">17</span> Feb 10:38 test_tag.ts
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt; npx tsx pray.ts -s <span class="s2">&#34;test_a*&#34;</span>
+</span></span><span class="line"><span class="cl">passes:
+</span></span><span class="line"><span class="cl"> file:///private/tmp/reinvent/unit_test/test_async.ts::delayed test, execution time: 412us
+</span></span><span class="line"><span class="cl"> file:///private/tmp/reinvent/unit_test/test_assert.ts::test assertSetEqual happy path, execution time: 31us
+</span></span><span class="line"><span class="cl"> file:///private/tmp/reinvent/unit_test/test_assert.ts::test assertMapEqual unhappy path, execution time: 1175us
+</span></span><span class="line"><span class="cl"> file:///private/tmp/reinvent/unit_test/test_assert.ts::test assertMapEqual happy path, execution time: 32us
+</span></span><span class="line"><span class="cl"> file:///private/tmp/reinvent/unit_test/test_assert.ts::test assertMapEqual unhappy path, execution time: 85us
+</span></span><span class="line"><span class="cl"> file:///private/tmp/reinvent/unit_test/test_assert.ts::test assertArraySame happy path, execution time: 17us
+</span></span><span class="line"><span class="cl"> file:///private/tmp/reinvent/unit_test/test_assert.ts::test assertArraySame unhappy path, execution time: 54us
+</span></span><span class="line"><span class="cl"> file:///private/tmp/reinvent/unit_test/test_approx_equal.ts::Default margin throws exception, execution time: 111us
+</span></span><span class="line"><span class="cl"> file:///private/tmp/reinvent/unit_test/test_approx_equal.ts::Large margin not throws exception, execution time: 6us
+</span></span><span class="line"><span class="cl"> file:///private/tmp/reinvent/unit_test/test_approx_equal.ts::Relative error throw exception, execution time: 51us
+</span></span><span class="line"><span class="cl"> file:///private/tmp/reinvent/unit_test/test_approx_equal.ts::Default Relative error not throw exception: , execution time: 5us
+</span></span><span class="line"><span class="cl"> file:///private/tmp/reinvent/unit_test/test_add.ts::Sum of <span class="m">1</span> and 2, execution time: 4us
+</span></span><span class="line"><span class="cl">fails:
+</span></span><span class="line"><span class="cl">errors:
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="增加-t-tag-参数按标签运行测试case"><span class="section-num">3.4.4</span> 增加 -t/&ndash;tag 参数按标签运行测试case</h4>
+<p>对于 <code>hope.test</code> 函数，我们还可以提供一个额外的参数，用于给这个test case 打标签:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">hope</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;Difference of 1 and 2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">assert</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">          <span class="p">[</span><span class="s1">&#39;math&#39;</span><span class="p">,</span> <span class="s1">&#39;fast&#39;</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后通过 <code>-t/--tag</code> 按指定的tag来运行测试用例, 实现起来很容易:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">test</span><span class="p">(</span><span class="nx">comment</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">callback</span><span class="o">:</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="k">void</span><span class="p">,</span> <span class="nx">tags</span><span class="o">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">string</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">todo</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="sb">`</span><span class="si">${</span><span class="nx">caller</span><span class="p">()</span><span class="si">}</span><span class="sb">::</span><span class="si">${</span><span class="nx">comment</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span> <span class="nx">callback</span><span class="p">,</span> <span class="nx">tags</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">run</span><span class="p">(</span><span class="nx">tag</span><span class="o">:</span> <span class="nx">string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">todo</span>
+</span></span><span class="line"><span class="cl">        <span class="p">.</span><span class="nx">filter</span><span class="p">(([</span><span class="nx">comment</span><span class="p">,</span> <span class="nx">test</span><span class="p">,</span> <span class="nx">tags</span><span class="p">])</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">tag</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">true</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nx">tags</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">tag</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">})</span>
+</span></span><span class="line"><span class="cl">        <span class="p">.</span><span class="nx">forEach</span><span class="p">(([</span><span class="nx">comment</span><span class="p">,</span> <span class="nx">test</span><span class="p">,</span> <span class="nx">tags</span><span class="p">])</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// run the test, nothing change
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">parse</span> <span class="o">=</span> <span class="p">(</span><span class="nx">args</span><span class="o">:</span> <span class="nx">string</span><span class="p">[])</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">parsed</span> <span class="o">=</span> <span class="nx">minimist</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="p">...</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">tag</span><span class="o">:</span> <span class="nx">parsed</span><span class="p">.</span><span class="nx">tag</span> <span class="o">||</span> <span class="nx">parsed</span><span class="p">.</span><span class="nx">t</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">main</span> <span class="o">=</span> <span class="kr">async</span> <span class="p">(</span><span class="nx">args</span><span class="o">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">string</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="p">...</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">hope</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">tag</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">...</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>test_tag.ts</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">assert</span> <span class="nx">from</span> <span class="s2">&#34;assert&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">hope</span> <span class="nx">from</span> <span class="s2">&#34;./hope&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">hope</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;Differene of 1 and 2&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">assert</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;math&#39;</span><span class="p">,</span> <span class="s1">&#39;fast&#39;</span><span class="p">]);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">&gt; npx tsx pray.ts -t <span class="s2">&#34;math&#34;</span>
+</span></span><span class="line"><span class="cl">passes:
+</span></span><span class="line"><span class="cl"> file:///private/tmp/reinvent/unit_test/test_tag.ts::Differene of <span class="m">1</span> and 2, execution time: 5us
+</span></span><span class="line"><span class="cl">fails:
+</span></span><span class="line"><span class="cl">errors:
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="setup与teardown"><span class="section-num">3.4.5</span> setup与teardown</h4>
+<p>正常的测试框架都是有 <code>setup</code> 与 <code>teardown</code> 函数的，可以指定在每个测试case 运行之前或之后的函数，比如运行测试case 前的数据准备，以为运行结束时的数据清理，我们的测试框架也可以支持这个功能：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">type</span> <span class="nx">CallbackType</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="k">void</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">class</span> <span class="nx">Hope</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="p">...</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">private</span> <span class="nx">setupFn</span><span class="o">:</span> <span class="nx">CallbackType</span> <span class="o">|</span> <span class="kc">null</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">private</span> <span class="nx">teardownFn</span><span class="o">:</span> <span class="nx">CallbackType</span> <span class="o">|</span> <span class="kc">null</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">setup</span><span class="p">(</span><span class="nx">setupFn</span><span class="o">:</span> <span class="nx">CallbackType</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">setupFn</span> <span class="o">=</span> <span class="nx">setupFn</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">teardown</span><span class="p">(</span><span class="nx">teardownFn</span><span class="o">:</span> <span class="nx">CallbackType</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">teardownFn</span> <span class="o">=</span> <span class="nx">teardownFn</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">run</span><span class="p">(</span><span class="nx">tag</span><span class="o">:</span> <span class="nx">string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">todo</span>
+</span></span><span class="line"><span class="cl">      <span class="p">.</span><span class="nx">filter</span><span class="p">(([</span><span class="nx">comment</span><span class="p">,</span> <span class="nx">test</span><span class="p">,</span> <span class="nx">tags</span><span class="p">])</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">tag</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">true</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">tags</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">tag</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">})</span>
+</span></span><span class="line"><span class="cl">      <span class="p">.</span><span class="nx">forEach</span><span class="p">(([</span><span class="nx">comment</span><span class="p">,</span> <span class="nx">test</span><span class="p">,</span> <span class="nx">tags</span><span class="p">])</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">setupFn</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">this</span><span class="p">.</span><span class="nx">setupFn</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">          <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">          <span class="kr">const</span> <span class="nx">now</span> <span class="o">=</span> <span class="nx">microtime</span><span class="p">.</span><span class="nx">now</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">test</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">          <span class="kr">const</span> <span class="nx">elapsedInMacro</span> <span class="o">=</span> <span class="nx">microtime</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="o">-</span> <span class="nx">now</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">          <span class="k">this</span><span class="p">.</span><span class="nx">passes</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">comment</span> <span class="o">+</span> <span class="sb">`, execution time: </span><span class="si">${</span><span class="nx">elapsedInMacro</span><span class="si">}</span><span class="sb">us`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">          <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">teardownFn</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">this</span><span class="p">.</span><span class="nx">teardownFn</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">          <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="k">if</span> <span class="p">(</span><span class="nx">e</span> <span class="k">instanceof</span> <span class="nx">assert</span><span class="p">.</span><span class="nx">AssertionError</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">this</span><span class="p">.</span><span class="nx">fails</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">comment</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">          <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">this</span><span class="p">.</span><span class="nx">errors</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">comment</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">          <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="p">})</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>针对上述函数的测试:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">hope</span><span class="p">,</span> <span class="p">{</span> <span class="nx">assertEqual</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;./hope&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">createFixtures</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">hope</span><span class="p">.</span><span class="nx">setup</span><span class="p">(</span><span class="nx">createFixtures</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">hope</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;Validate x should be 1&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">assertEqual</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;X should be 1&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">cleanUp</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">hope</span><span class="p">.</span><span class="nx">teardown</span><span class="p">(</span><span class="nx">cleanUp</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="增加对-async-测试case-的支持"><span class="section-num">3.4.6</span> 增加对 async 测试case 的支持</h4>
+<p>目前我们的test case 都只支持同步的函数, 我们可以增加上对 <code>Promise</code> 的支持, 这样我们可以使用以下的语法:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">hope</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;delayed test&#39;</span><span class="p">,</span> <span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{...})</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>实现方式也很直接: 一种就是判断传入函数的类型, 如果是同步函数则直接调用，如果是 async 函数, 那么就加上 <code>await</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">type</span> <span class="nx">SyncCallbackType</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="k">void</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">type</span> <span class="nx">AsyncCallbackType</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">type</span> <span class="nx">CallbackType</span> <span class="o">=</span> <span class="nx">SyncCallbackType</span> <span class="o">|</span> <span class="nx">AsyncCallbackType</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">class</span> <span class="nx">Hope</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">private</span> <span class="nx">todo</span><span class="o">:</span> <span class="p">[</span><span class="nx">string</span><span class="p">,</span> <span class="nx">CallbackType</span><span class="p">,</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">string</span><span class="o">&gt;</span><span class="p">][]</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">private</span> <span class="nx">setupFn</span><span class="o">:</span> <span class="nx">CallbackType</span> <span class="o">|</span> <span class="kc">null</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">private</span> <span class="nx">teardownFn</span><span class="o">:</span> <span class="nx">CallbackType</span> <span class="o">|</span> <span class="kc">null</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">setup</span><span class="p">(</span><span class="nx">setupFn</span><span class="o">:</span> <span class="nx">CallbackType</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="p">.</span><span class="nx">setupFn</span> <span class="o">=</span> <span class="nx">setupFn</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">teardown</span><span class="p">(</span><span class="nx">teardownFn</span><span class="o">:</span> <span class="nx">CallbackType</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="p">.</span><span class="nx">teardownFn</span> <span class="o">=</span> <span class="nx">teardownFn</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">test</span><span class="p">(</span><span class="nx">comment</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">callback</span><span class="o">:</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="k">void</span><span class="p">,</span> <span class="nx">tags</span><span class="o">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">string</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="p">.</span><span class="nx">todo</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="sb">`</span><span class="si">${</span><span class="nx">caller</span><span class="p">()</span><span class="si">}</span><span class="sb">::</span><span class="si">${</span><span class="nx">comment</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span> <span class="nx">callback</span><span class="p">,</span> <span class="nx">tags</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kr">private</span> <span class="kr">async</span> <span class="nx">runTest</span><span class="p">(</span><span class="nx">comment</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">test</span><span class="o">:</span> <span class="nx">CallbackType</span><span class="p">,</span> <span class="nx">tags</span><span class="o">:</span> <span class="nx">string</span><span class="p">[])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">setupFn</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">isAsync</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">setupFn</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="kr">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">setupFn</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">this</span><span class="p">.</span><span class="nx">setupFn</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="kr">const</span> <span class="nx">now</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">hrtime</span><span class="p">.</span><span class="nx">bigint</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">isAsync</span><span class="p">(</span><span class="nx">test</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="kr">await</span> <span class="nx">test</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">test</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="kr">const</span> <span class="nx">elapsedInMacro</span> <span class="o">=</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">hrtime</span><span class="p">.</span><span class="nx">bigint</span><span class="p">()</span> <span class="o">-</span> <span class="nx">now</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nx">BigInt</span><span class="p">(</span><span class="mi">1000</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">            <span class="k">this</span><span class="p">.</span><span class="nx">passes</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">comment</span> <span class="o">+</span> <span class="sb">`, execution time: </span><span class="si">${</span><span class="nx">elapsedInMacro</span><span class="si">}</span><span class="sb">us`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">teardownFn</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">isAsync</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">teardownFn</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="kr">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">teardownFn</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">this</span><span class="p">.</span><span class="nx">teardownFn</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">e</span> <span class="k">instanceof</span> <span class="nx">assert</span><span class="p">.</span><span class="nx">AssertionError</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">this</span><span class="p">.</span><span class="nx">fails</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">comment</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">this</span><span class="p">.</span><span class="nx">errors</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">comment</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kr">async</span> <span class="nx">run</span><span class="p">(</span><span class="nx">tag</span><span class="o">:</span> <span class="nx">string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kr">const</span> <span class="nx">tests</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">todo</span>
+</span></span><span class="line"><span class="cl">              <span class="p">.</span><span class="nx">filter</span><span class="p">(([</span><span class="nx">comment</span><span class="p">,</span> <span class="nx">test</span><span class="p">,</span> <span class="nx">tags</span><span class="p">])</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                  <span class="k">if</span> <span class="p">(</span><span class="nx">tag</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">true</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                  <span class="k">return</span> <span class="nx">tags</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">tag</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">              <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="kr">const</span> <span class="p">[</span><span class="nx">comment</span><span class="p">,</span> <span class="nx">test</span><span class="p">,</span> <span class="nx">tags</span><span class="p">]</span> <span class="k">of</span> <span class="nx">tests</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="kr">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">runTest</span><span class="p">(</span><span class="nx">comment</span><span class="p">,</span> <span class="nx">test</span><span class="p">,</span> <span class="nx">tags</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kr">private</span> <span class="nx">isAsync</span><span class="p">(</span><span class="nx">fn</span><span class="o">:</span> <span class="nx">CallbackType</span><span class="p">)</span><span class="o">:</span> <span class="nx">fn</span> <span class="nx">is</span> <span class="nx">AsyncCallbackType</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">fn</span><span class="p">.</span><span class="nx">constructor</span><span class="p">.</span><span class="nx">name</span> <span class="o">===</span> <span class="s1">&#39;AsyncFunction&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>pray.ts</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">main</span> <span class="o">=</span> <span class="kr">async</span> <span class="p">(</span><span class="nx">args</span><span class="o">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">string</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">options</span> <span class="o">=</span> <span class="nx">parse</span><span class="p">(</span><span class="nx">args</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">filenames</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">namePattern</span> <span class="o">=</span> <span class="nx">options</span><span class="p">.</span><span class="nx">select</span> <span class="o">??</span> <span class="s1">&#39;test*&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">options</span><span class="p">.</span><span class="nx">filenames</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">glob</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">options</span><span class="p">.</span><span class="nx">root</span><span class="si">}</span><span class="sb">/**/</span><span class="si">${</span><span class="nx">namePattern</span><span class="si">}</span><span class="sb">.{ts,js}`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kr">const</span> <span class="nx">f</span> <span class="k">of</span> <span class="nx">options</span><span class="p">.</span><span class="nx">filenames</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">absolutePath</span> <span class="o">=</span> <span class="nx">fileURLToPath</span><span class="p">(</span><span class="k">new</span> <span class="nx">URL</span><span class="p">(</span><span class="nx">f</span><span class="p">,</span> <span class="kr">import</span><span class="p">.</span><span class="nx">meta</span><span class="p">.</span><span class="nx">url</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">await</span> <span class="kr">import</span><span class="p">(</span><span class="nx">absolutePath</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kr">await</span> <span class="nx">hope</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">tag</span><span class="p">);</span> <span class="c1">// 增加上await
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">output</span> <span class="o">===</span> <span class="s1">&#39;terse&#39;</span><span class="p">)</span> <span class="o">?</span> <span class="nx">hope</span><span class="p">.</span><span class="nx">terse</span><span class="p">()</span> <span class="o">:</span> <span class="nx">hope</span><span class="p">.</span><span class="nx">verbose</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="kr">await</span> <span class="nx">hope</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">tag</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="参考"><span class="section-num">4</span> 参考</h2>
+<ul>
+<li><a href="https://third-bit.com/sdxjs/unit-test/">https://third-bit.com/sdxjs/unit-test/</a></li>
+<li><a href="https://blog.youxu.info/2008/11/30/pearl-in-smalltal/">https://blog.youxu.info/2008/11/30/pearl-in-smalltal/</a></li>
+</ul>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>ReInvent: 重新造轮子系列(序言)</title>
+      <link>https://ramsayleung.github.io/zh/post/2025/reinvent_project/</link>
+      <pubDate>Sun, 16 Feb 2025 22:10:00 -0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2025/reinvent_project/</guid>
+      <description>1 起因与动机 最近在看 System Design By Example 这本书，主旨是通过设计和实现各种日常开发中常见的软件，以理解和提高系统设计(System Design)的能力。 每</description>
+      <content:encoded><![CDATA[<h2 id="起因与动机"><span class="section-num">1</span> 起因与动机</h2>
+<p>最近在看 <a href="https://third-bit.com/sdxjs/unit-test/">System Design By Example</a> 这本书，主旨是通过设计和实现各种日常开发中常见的软件，以理解和提高系统设计(System Design)的能力。</p>
+<p>每个章节都会实现一个软件，然后还会有大量的习题来完善这个软件，以练带学。</p>
+<p>而我最推崇，并且认为最好的学习方法就是：<a href="https://ramsayleung.github.io/zh/post/2022/feynman_technique/">费曼学习法(Feynman Technique)</a>, 其核心理念就是:</p>
+<p><strong>学习一种新事物最好的方法是，用你的话讲给别人听。</strong></p>
+<p><strong>通过向别人清楚的解说某一事物，来确认自己是否真的弄懂了这件事。</strong></p>
+<p>所以说，学习最好的方式，是把你学到的东西教给别人。</p>
+<p>因此，这个项目就是我在学习和理解 System Design By Example 这本书后，结合参考的论文和个人经验内化出来的学习成果。</p>
+<p>也希望其他人也可以从中受益。</p>
+<h2 id="目录"><span class="section-num">2</span> 目录</h2>
+<p>原书是用 node + Javascript 编写的，部分代码因API变更而变得不可用，因此本项目也做了对应修改，并将 Javascript 替换成 Typescript, 通过类型系统来降低维护成本。</p>
+<ol>
+<li><a href="/zh/post/2025/reinvent_unit_test/">单元测试框架</a></li>
+</ol>
+]]></content:encoded>
+    </item>
     <item>
       <title>杂谈AI取代程序员</title>
       <link>https://ramsayleung.github.io/zh/post/2025/%E6%9D%82%E8%B0%88ai%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98/</link>
@@ -2713,169 +4108,6 @@ Explanation:</p>
 </li>
 <li id="fn:4">
 <p><a href="https://github.com/frondeus/test-case">https://github.com/frondeus/test-case</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>区块链的完整性校验方案: Merkle Tree</title>
-      <link>https://ramsayleung.github.io/zh/post/2024/%E5%8C%BA%E5%9D%97%E9%93%BE%E7%9A%84%E5%AE%8C%E6%95%B4%E6%80%A7%E6%A0%A1%E9%AA%8C%E6%96%B9%E6%A1%88_merkle_tree/</link>
-      <pubDate>Sat, 12 Oct 2024 18:22:00 -0700</pubDate>
-      <guid>https://ramsayleung.github.io/zh/post/2024/%E5%8C%BA%E5%9D%97%E9%93%BE%E7%9A%84%E5%AE%8C%E6%95%B4%E6%80%A7%E6%A0%A1%E9%AA%8C%E6%96%B9%E6%A1%88_merkle_tree/</guid>
-      <description>1 前言 最近通过 Solidity-103 课程在学习 Solidity, 看到第36课 Merkle Tree 的时候着实头疼, 即使我已经了解 Merkle Tree 这数据结构，但是课程还是看得不明所以。 所以写下这篇文章，梳理我</description>
-      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
-<p>最近通过 <a href="https://www.wtf.academy/docs/solidity-103">Solidity-103</a> 课程在学习 Solidity, 看到<a href="https://www.wtf.academy/docs/solidity-103/MerkleTree/">第36课</a> Merkle Tree 的时候着实头疼, 即使我已经了解 Merkle Tree 这数据结构，但是课程还是看得不明所以。 <br/></p>
-<p>所以写下这篇文章，梳理我所理解的 Merkle Tree 及其用途，既加深自己的理解，又践行了<a href="https://ramsayleung.github.io/zh/post/2022/feynman_technique/">费曼学习法</a> <br/></p>
-<h2 id="区块链与交易"><span class="section-num">2</span> 区块链与交易</h2>
-<p>关于区块链的资料有非常多，我也不赘述了. <br/></p>
-<p>简单理解，区块链是由一个一个区块构成的有序链表，每一个区块都记录了一系列交易，并且，每个区块都指向前一个区块，从而形成一个链条。区块链听起来很高级，其实就是个单链表。 <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/blockchain.jpg"/> 
-</figure>
- <br/></p>
-<p>每个区块都会保存对应的交易信息，也会包含元数据信息在头部，包括前一个区块的 hash, 包含的交易数，merkle tree 的根节点 hash,时间戳等信息. <br/>
-<img loading="lazy" src="/ox-hugo/block_detail.jpg" alt=""  />
- <br/></p>
-<p>我们总说区块链是不可窜改，那么它究竟是怎么不可窜改的? <br/></p>
-<p>如果用户想要验证某个区块的某笔交易是否被窜改，他要怎么做？ <br/>
-最简单的方式自然是把整个区块的交易都下载下来，平均每个区块有1M的数据，验证起来肯定很费时间. <br/></p>
-<p>是否有一个验证方案，可以使用很小的数据集就完成验证? <br/></p>
-<p>有的，那就是 Merkle Tree. <br/></p>
-<h2 id="merkle-tree"><span class="section-num">3</span> Merkle Tree</h2>
-<p>那什么是 Merkle Tree? <br/></p>
-<p>假如我们有8笔交易被包含在区块中, 每笔交易都可以通过 hash 函数计算出一个 hash 值: <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/8transactions.jpg"/> 
-</figure>
- <br/></p>
-<p>哈希值也可以看做数据，所以可以把 <code>h1</code> 和 <code>h2</code> 拼起来， <code>h3</code> 和 <code>h4</code> 拼起来, 依此类推，再计算出哈希值 <code>b1</code> 和 <code>b2</code> <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/merkle_tree_layer_two.jpg"/> 
-</figure>
- <br/></p>
-<p>递归计算下去，直到计算结果只有一个 hash 值，这个就是所谓的 merkle root, 而 h1-h8 就是所谓的 <code>leaf node</code>, 两者之间的就是 <code>non-leaf node</code>. <br/></p>
-<p>交易数量恰好是偶数能这么算，如果是奇数，那要怎么算呢？这个时侯，只需要把最后一个 hash 值复制一份，也能算出最终的 merkle root： <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/odd_leaf_merkle_tree.jpg"/> 
-</figure>
- <br/></p>
-<h2 id="merkle-tree-validation"><span class="section-num">4</span> Merkle tree validation</h2>
-<p>现在有了 Merkle Tree, 如果我们要验证区块中的交易是否被修改，要怎么算呢？ <br/></p>
-<p>最简单粗暴的方式肯定是把区块所有的交易下载下来，从头重组整棵 Merkle Tree, 8笔交易计算起来还可以，如果是几千笔呢？几百万笔呢？甚至几亿笔交易呢？ <br/></p>
-<p>重组 Merkle Tree 的时间复杂度是 O(N), 如果是1亿笔交易，这意味着你要计算1亿次，太慢了。 <br/></p>
-<p>但是，如果我们利用 Merkle Tree 的特性，从数学的角度，我们只需要少量的Merkle Proof(你可以理解成需要提供的验证数据集), 就可以完成验证. <br/></p>
-<p>回到上文的 Merkle Tree, 假如我们要验证 <code>tx2</code> 是否被窜改，我们需要有 Merkle Tree Root 和 Merkle Proof: <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/merkle_proof.jpg"/> 
-</figure>
- <br/></p>
-<p>假设现在我们有 <code>tx2</code> 的交易数据，我们只需要 Merkle Proof 提供3个hash 值(图中的绿色部分)，然后我们只计算4次（橙色部分），就会算出 Merkle Root Tree 的值，用来和区块头部的 Merkle root 值进行比对。 <br/></p>
-<p>通过 Merkle Proof 提供的数据集，我们就可以把下载8笔交易，计算15次hash，优化成只需3个 hash 值，以及计算4次hash，需要的 Merkle Proof 数量等于Merkle Tree的高度，而Merkle Tree就是一棵完美的平衡二叉树, 树的高度就是 <code>log₂(N)</code>, 所以时间复杂度从O(N)降低成O(logN). <br/></p>
-<p>这个比对似乎不明显，但是以1亿交易为例的话，log(1_000_000_000) ~= 27, 也就是只需要 Merkle Proof 提供27个 hash 值即可, 巨大的性能提升. <br/></p>
-<h2 id="区块链的不可窜改性"><span class="section-num">5</span> 区块链的不可窜改性</h2>
-<p>通过Merkle tree root可以保证交易的不可窜改性，而区块 hash 又能保证区块头部的元数据不被窜改. <br/></p>
-<p>因为每个区块都有区块 hash, 区块hash是通过计算头部元数据信息计算出来的: <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/block_hash.jpg"/> 
-</figure>
- <br/></p>
-<p>只要修改了其中一个元数据值，那么 block hash 就会发生变化，而区块链就是一个单链表，通过后一个区块通过 <code>prev_hash</code> 指向前一个区块，如果 block hash 发生变化，那么后一个区块就无法正确指向前一个区块了，这个链就断了. <br/></p>
-<p>如果一个恶意的攻击者修改了一个区块中的某个交易，那么Merkle Hash验证就不会通过。 <br/></p>
-<p>所以，他只能重新计算Merkle Hash，然后把区块头的Merkle Hash也修改了。 <br/></p>
-<p>这时，我们就会发现，这个区块本身的Block Hash就变了，所以，下一个区块指向它的链接就断掉了, 他就要把后续所有区块全部重新计算并且伪造出来，才能够修改整个区块链； <br/></p>
-<p>而要修改后续所有区块，这个攻击者必须掌握全网51%以上的算力才行。 <br/></p>
-<p>理论上可行，但是实操难度非常非常非常大. <br/></p>
-<h2 id="merkle-tree-版本管理中的应用"><span class="section-num">6</span> Merkle Tree 版本管理中的应用</h2>
-<p>除去区块链，Merkle Tree还被应用于类似 Git 和 Mercurial 这样的版本管理系统中，以Git为例, 假如我们Git项目内有4个文件: <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/git_merkle_tree.jpg"/> 
-</figure>
- <br/></p>
-<p>当你push 代码到远程分支或者从远程分支 pull 代码的时候，Git就计算你的Merkle Tree Root 的值, 比较远程分支的Merkle Tree Root和本地分支的Merkle Tree Root 是否相同: <br/></p>
-<p>如果相同，那就不用更新了；如果不同的话它就会检查左节点或者右节点，并且递归下去， <br/>
-直到找到是哪些文件发生了修改，只通过网络传输修改部分的内容, 以提高传输效率. <br/></p>
-<p>不过Git实际用的是Merkle Tree的变体，并不是直接使用Merkle Tree. <br/></p>
-<p>除些之外, Merkle Tree 还在 Cassandra, DynamoDB 这样的NoSQL数据库中被用于检查不同节点数据的一致性, 细节可以看下这个 <a href="https://stackoverflow.com/questions/5486304/explain-merkle-trees-for-use-in-eventual-consistency">Stackoverflow 问题</a>。 <br/></p>
-<h2 id="参考"><span class="section-num">7</span> 参考</h2>
-<ul>
-<li><a href="https://alexromanov.github.io/2022/06/19/bchain-test-7-merkle-tree/">Blockchain for Test Engineers: Merkle Trees</a> <br/></li>
-<li><a href="https://medium.com/geekculture/understanding-merkle-trees-f48732772199">Understanding Merkle Trees</a> <br/></li>
-<li><a href="https://stackoverflow.com/questions/5486304/explain-merkle-trees-for-use-in-eventual-consistency">Explain Merkle Trees for use in Eventual Consistency</a> <br/></li>
-</ul>
-<div center class="qr-container">
-<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
-公号同步更新，欢迎关注👻
-</div>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>测试技能进阶(一): 软件质量认知</title>
-      <link>https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%80_%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E8%AE%A4%E7%9F%A5/</link>
-      <pubDate>Sat, 12 Oct 2024 10:30:00 -0700</pubDate>
-      <guid>https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%80_%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E8%AE%A4%E7%9F%A5/</guid>
-      <description>1 前言 最近几个月都在赶个非常重要项目，基本每天或每几天都要提交CR，而因为每个CR都要附上对应的 test case, 所以这段时间写了非常多的 test case, 又在坐我旁边</description>
-      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
-<p>最近几个月都在赶个非常重要项目，基本每天或每几天都要提交CR，而因为每个CR都要附上对应的 test case, 所以这段时间写了非常多的 test case, 又在坐我旁边的 Principal Engineer 巨佬身上学到了很多有用的测试技巧，所以就想写个系列文章总结和分享我所学到的新技能。</p>
-<h2 id="why"><span class="section-num">2</span> Why</h2>
-<p>有个很著名的思考方式，叫黄金圈法则, 简而言之，就是对于某件事找到Why，How，What：</p>
-<p>我为什么要做，我怎么做，做这件事的结果是什么？</p>
-<p>所以我就先来聊聊为什么要写测试case，或者说为什么是软件开发写测试case，后续的文章再来聊聊How.</p>
-<h2 id="软件质量文化"><span class="section-num">3</span> 软件质量文化</h2>
-<p>关于软件工程师来写测试 case, 最有名的应该是Google，他们就是推崇由软件工程师来写测试case，而他们的测试文化已经成为谷歌的工程文化的重要组成部分。</p>
-<p>Google的工程师也前后写了两本书来布道他们的测试文化/工程文化, 也非常推荐阅读:</p>
-<ul>
-<li><a href="https://book.douban.com/subject/25742200/">Google软件测试之道</a> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></li>
-<li><a href="https://book.douban.com/subject/35838155/">Google软件工程</a> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></li>
-</ul>
-<p>毕业以后待过几家大公司，这几家公司的文化各有不同，但就我所供职过的部门而言，对于测试，他们都有着相同的观点：
-不应该也不会有所谓的测试工程师，每个软件开发都应该为自己的代码编写测试，并保证质量.</p>
-<p>其中微信支付基本就是在践行《Google软件测试之道》的理念，推广微信支付自己的测试文化，强调测试左称，面向测试设计等等。</p>
-<p>Amazon 内部的测试文化也是和Google 相当类似，只是远没有Google出名.</p>
-<p>不知道是因为Amazon的测试文化是受Google所影响, 讲究先来后到, 主客分明; 还是Amazon的开源项目或者技术影响力没有Google高，导致Amazon 工程文化没有Google出名，又或是因为Amazon工程师在血汗工厂打工，忙着赶需求，没有时间写书布道, 所以不为人所知呢.</p>
-<p>这种文化背后，是对软件开发与质量测试密不可分的认知：</p>
-<h3 id="职责"><span class="section-num">3.1</span> 职责</h3>
-<p>首先，每个工程师，都应该为他们的代码编写测试用例，
-这个工作本身就是研发流程的一部分，而质量保障又是软件开发生命周期非常关键的一步，
-如果写出来的功能充满问题，这样的功能再多，开发得再快又有什么意义呢。</p>
-<h3 id="ci-cd"><span class="section-num">3.2</span> CI/CD</h3>
-<p>所以我现在所在S3部门而言，要求每个CR都要有对应的测试用例来保证CR代码的质量，因为代码合并到主干之后，
-就会被 Continuous Deployment 自动部署上线，所以要求每个提到的CR都是 production-ready的</p>
-<p>软件工程师自己编写测试配合CI/CD就可以更早更快地发现问题，并且由软件工程师快速完成修复, 降低反馈周期, 提高开发效率.</p>
-<h3 id="成本"><span class="section-num">3.3</span> 成本</h3>
-<p>其次，沟通是有成本的，如果存在测试工程师，软件工程师就要给测试工程师交待清楚业务功能是什么，
-这次的改动要测什么功能，预期结果是什么，沟通成本就相当高，你可能还需要通过文档或者工单将测试内容呈现给测试工程师。</p>
-<p>如果软件工程师都能把这些东西解释清楚，那为什么不自己把测试用例写完呢, 何必劳心劳力去写工单呢？</p>
-<h3 id="面向测试设计"><span class="section-num">3.4</span> 面向测试设计</h3>
-<p>虽然Test-Driven Development(TDD)的开发理念不一定所有人都认同, 但是让软件开发工程师来编写测试用例，能让软件工程师有测试先行，设计测试友好接口的认知, 反过来又会对其接口设计能力有新的要求.</p>
-<h3 id="敏捷开发"><span class="section-num">3.5</span> 敏捷开发</h3>
-<p>总结下来，让软件工程师对质量负责，自己编写测试用例, 是确保团队能敏捷开发(move fast), 又能确保软件质量的关键手段</p>
-<h2 id="总结"><span class="section-num">4</span> 总结</h2>
-<p>每个人对于测试技巧的认知并不一样，像单元测试，集成测试这类测试，
-在我个人认知里，是属于每个软件工程师都需要掌握的基础技能，就不在「进阶」之列。</p>
-<p>而像混沌测试(Chaos Monkey) 这样的测试, 自然属于进阶测试的一部分，但是因为其与公司的基础架构强耦合;</p>
-<p>在微信支付的时候，同组的一位同事就专项负责先驱搞整个微信支付的混沌测试，
-前后搞了1年半还在开发，都是和运维团队以及基础组件团队密切合作来开发混沌测试功能的，
-无法用示例代码来直观呈现，所以也不会列入这个系列。</p>
-<p>这系列文章更专注于日常开发中，每个软件工程师都有机会用上的测试技巧.</p>
-<p>系列文章:</p>
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%80_%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E8%AE%A4%E7%9F%A5/">测试技能进阶(一): 软件质量认知</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/">测试技能进阶(二): Parameterized Tests</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%89_property_based_testing/">测试技能进阶(三): Property Based Testing</a></li>
-</ul>
-<div center class="qr-container">
-<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
-公号同步更新，欢迎关注👻
-</div>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p><a href="https://book.douban.com/subject/25742200/">https://book.douban.com/subject/25742200/</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p><a href="https://book.douban.com/subject/35838155/">https://book.douban.com/subject/35838155/</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
