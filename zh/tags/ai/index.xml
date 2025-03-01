@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sat, 15 Feb 2025 01:28:56 -0800</lastBuildDate>
+    <lastBuildDate>Sat, 01 Mar 2025 13:56:35 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/ai/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>杂谈AI取代程序员</title>
@@ -48,27 +48,54 @@
 </blockquote>
 <p>评委这么一顿批头盖脸的输出，直接把我的信心给浇没了。</p>
 <p>虽然我写的代码生成工具远不如大模型加持的AI强大，但看起来都只局限于解决编码问题，研发流程的其他问题并没有解决。</p>
-<h3 id="功能性与非功能性需求"><span class="section-num">2.2</span> 功能性与非功能性需求</h3>
+<h3 id="冰山之下"><span class="section-num">2.2</span> 冰山之下</h3>
+<blockquote>
+<p>冰山运动之所以雄伟壮观，是因为它只有八分之一在水面上</p>
+<p>《午后之死》 海明威</p>
+</blockquote>
+<figure>
+    <img loading="lazy" src="/ox-hugo/iceberg.jpg"/> 
+</figure>
+
+<p>如同只有只有八分之一在水面上的冰山一样, 很多程序员都可能没有意识到，写代码只是工作的一小部分，甚至可能是其中最轻松的部分, 维护才是工作中最繁琐且具有挑战性的部分。</p>
+<p>维护工作包含测试，debug, 修bug, 性能优化, 更新以适应其它改变，代码重构，客户支持，写文档并随时间修改文档.</p>
+<p>以我自己的经历为例，之前组里面有不少近10年的历史服务，但是还在发光发热，作为核心组件给客户提供服务.</p>
+<p>这些服务基本都是用Java写的, Java 以「Write once, run everywhere」且优秀的向后兼容能力而闻名, 因此还有不少公司还在使用JDK8, 仿佛被封印在 Java8 一样了。</p>
+<p>不久前, 在公司内部推行了一个要求将JDK升级到JDK17的全公司范围的项目:</p>
+<p>而升级JDK的动机，一方面是因为可以使用最新的语言特性，此外JDK8也马上要被停止支持了，另外一方面是性能优化, 各种评测都显示，从JDK8升级到JDK17，升级后JVM的系统资源使用量平均下降约10%~15%, 对于公司而言，更少的系统资源，就可以使用更少的服务器，通过升级JDK 就可实现无痛「降本增效」。</p>
+<p>但即使兼容能力优秀如Java，我也花费了近3周才把组里使用 JDK8/JDK11 的老服务切换到 JDK17，</p>
+<p>期间还出现了各种奇怪的问题，比如JVM参数名或者选项在升级之后被废弃了, 新版本JVM 无法识别，又或者是出于安全的考虑，部分JDK内部的 class 无法通过反射访问，会导致运行时异常，服务需要回滚.</p>
+<p>AI 也没法帮我们一键升级或维护, 而这些枯燥且繁琐的工作才是那未被人所见的「八分之七」.</p>
+<h3 id="功能性与非功能性需求"><span class="section-num">2.3</span> 功能性与非功能性需求</h3>
 <p>在程序开发中，除了有功能性需求，还需要非功能性需求.</p>
 <p>而功能性需求恰恰是其中最简单直接的，是满足「又不是不能用」的最基本要求。</p>
 <p>比如我需要实现加法，这个就是功能性需求，AI就需要帮我把加法实现出来。</p>
 <p>而所谓的非功能性需求，比较常见的是可扩展性(scalability)，可维护性(maintainability) 和性能(performance).</p>
+<h4 id="非功能性需求"><span class="section-num">2.3.1</span> 非功能性需求</h4>
 <p>还是以加法为例, 我可能需要后面扩展到乘法和除法, 或者扩展到复数或者矩阵加法，要怎么易于扩展呢？</p>
 <p>这些都是AI生成代码是没有考虑到的因素，AI比较擅长的可能是给它一个需求，它生成一段代码给我们。</p>
-<p>但是在软件研发的生命周期中，有大概80%的时间，都是维护已有的系统，谁家没有个已经在跑的系统呢。</p>
+<p>但是在软件研发的生命周期中，有大概80%的时间，都是维护已有的系统。</p>
 <p>而给已有的系统上增加功能，就需要考虑各种奇怪的兼容性，相当于带着锁链来跳舞，并不能像从无到有，什么都不用考虑的那般洒脱。</p>
-<p>而这样的限制，又是AI生成代码时未曾考虑的。所以从零开始的日抛型，不需要考虑维护成本的项目，很适合由AI来生成.</p>
+<p>而这样的限制，又是AI生成代码时未曾考虑的。</p>
+<p>所以从零开始的日抛型，不需要考虑维护成本的项目，很适合由AI来生成.</p>
+<h4 id="已解问题"><span class="section-num">2.3.2</span> 已解问题</h4>
 <p>但即使功能性的需求，有时候AI也会做不好。</p>
 <p>我之前在工作中需要根据已有的Schema, 使用Rust 写入Parquet数据，Rust本来就新，加之操作Parquet的库就更少了, 所以ChatGPT, Claude或者Gemini 都没有给出我满意能跑的结果，最后还是靠自己去读 Parquet库的源码找出的解决办法。</p>
 <p>无论模型怎么变，AI现阶段还需要预训练数据的投喂，所以没有相关的预处理数据，AI也只能胡扯。</p>
+<p>换而言之，所限于当前的AI模型，AI是只 <strong>善于处理已经被解决过的问题</strong></p>
 <p>所以总结下来，在真实项目中，AI还没有办法取代程序员。</p>
-<h3 id="ai取代论背后的动机"><span class="section-num">2.3</span> AI取代论背后的动机</h3>
+<h3 id="ai取代论背后的动机"><span class="section-num">2.4</span> AI取代论背后的动机</h3>
 <p>既然你说AI现阶段还没有办法取代程序员，为什么我看到各种各样程序员要被AI取代的新闻，甚至有公司用AI来替代员工了？</p>
 <p>除去真的担心自己被AI取代的从业者外，我觉得看到两种扯着AI大旗的人。</p>
 <p>一种就是懂程序开发，装不懂程序开发，然后贩卖焦虑的人，最近非常火的就是，「我用Cursor从0 xx 天开发了一个App」 (Cursor是最近一个很火的AI编辑器，可以通过输入的指令生成代码).</p>
 <p>大体都是说自己完全不懂程序开发，借助AI/Cursor, xx天内开发出了一个App, 并且冲到了苹果App Store热门榜第一.</p>
 <p>普通程序员看到这种说法，一个小白从无到有都能开发出一个App, 难免会焦虑,不得不说，这种反向装弱再变强真的令人防不胜防， 想着不能被落下，就斥资加入各种付费群或者购买各种课程。</p>
 <p>神智清明的你可能在心平气和下很难做出这样的决定嘛。</p>
+<p>制造焦虑才能更好地贩卖自己的产品，毕竟到现在为止，靠AI盈利主要有两种方式:</p>
+<ol>
+<li>AI 公司靠产品融资，拉风投</li>
+<li>制造AI焦虑，借机卖课卖书卖文档</li>
+</ol>
 <p>另外一种就是要用AI来取代程序的公司，说要通过AI来增效，裁撤工程师，比如国外的 <a href="https://apnews.com/article/workday-layoffs-job-cuts-ai-investments-437581ad79d6e1cef2de7b300015dfbb?utm_source=t.me/mtfront">Workday 裁员说要再招人做 AI 的新闻</a> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>, 还有2023年 <a href="https://www.bwpeople.in/article/google-contemplates-30000-layoffs-due-to-ai-job-impact-503670">Google 因为AI裁员而30000 名员工的新闻 </a><sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
 <p>怎么说呢，AI这块牌子太好用了, 什么都可以往里面套，裁撤工程师降本是真，AI增效大概是假。</p>
 <p>裁员就裁员呗，为什么还要说是用AI来取代程序员呢？</p>
@@ -88,7 +115,7 @@
 <h3 id="生成测试用例"><span class="section-num">4.1</span> 生成测试用例</h3>
 <p>测试用例太适合让AI来写了，毕竟任务是非常明确的，需要被测的函数也是非常明确的，你只需要使用把测试的场景说清楚。</p>
 <p>我觉得都可以把这个内容扩展写成 <a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%80_%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E8%AE%A4%E7%9F%A5/">测试技能进阶系列</a> 的第四篇了</p>
-<p>假设我需要测试一个计算字符串中元音数量的函数 <code>count_vowels(s: str) -&gt; int</code>, 我的指示是:</p>
+<p>假设我需要测试一个计算字符串中元音数量的函数 <code>count_vowels(s: str) -&gt; int</code>, 我的指令是:</p>
 <blockquote>
 <p>请为以下函数 `count_vowels(s: str) -&gt; int` 生成pytest测试用例：</p>
 <ol>
