@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sun, 02 Mar 2025 21:15:29 -0800</lastBuildDate>
+    <lastBuildDate>Sun, 02 Mar 2025 21:34:27 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/reinvent/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>重新造轮子系列(二)：文件备份</title>
@@ -104,7 +104,8 @@
     <img loading="lazy" src="/ox-hugo/reivent_file_backup_mock_fs.jpg"/> 
 </figure>
 
-<p>我们就可以在每个单元测试运行时，任意构造任何想要的文件目录，并且保证文件操作都是在操纵内存对象，而不会直接作用到文件系统，保证单元测试的相互隔离。</p>
+<p>我们就可以在每个单元测试运行时，任意构造任何想要的文件目录，并且保证文件操作都是在操纵内存对象，
+而不会直接作用到文件系统，保证单元测试的相互隔离。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -297,7 +298,7 @@
 <h2 id="总结"><span class="section-num">4</span> 总结</h2>
 <p>我们就完成了一个文件备份软件的开发，功能当然还非常简单，还有非常多优化的空间，比如现在 <code>src</code> 目录的所有文件都会被平铺到 <code>dst</code> 目录，如果我们可以保存目录结构，那么就更好用了。</p>
 <p>另外，使用哈希函数值作为文件名的确很巧妙，但是对于用户而已，如果不逐个打开文件，根本不知道哪个文件是对应哪个源文件等等。</p>
-<p>如果想要实现一个更健壮易用的备份文件，可以参考下关于这 <a href="https://michael.stapelberg.ch/posts/2022-06-18-rsync-overview/"><code>rsync</code> 系列的文章</a>, <code>rsync</code> 是Linux 上非常流行的增量备份的文件，不仅可以备份本地文件，更可以把文件备份把远程服务器，非常强大。</p>
+<p>如果想要实现一个更健壮易用的备份文件，可以参考下关于这 <a href="https://michael.stapelberg.ch/posts/2022-06-18-rsync-overview/">rsync 系列的文章</a> , <code>rsync</code> 是Linux 上非常流行的增量备份的文件，不仅可以备份本地文件，更可以把文件备份把远程服务器，非常强大。</p>
 <h2 id="参考"><span class="section-num">5</span> 参考</h2>
 <ul>
 <li><a href="https://third-bit.com/sdxjs/file-backup/">https://third-bit.com/sdxjs/file-backup/</a></li>
@@ -1634,6 +1635,7 @@
 <p>原书是用 node + Javascript 编写的，部分代码因API变更而变得不可用，因此本项目也做了对应修改，并将 Javascript 替换成 Typescript, 通过类型系统来降低维护成本。</p>
 <ol>
 <li><a href="/zh/post/2025/reinvent_unit_test/">单元测试框架</a></li>
+<li><a href="/zh/post/2025/reinvent_file_backup/">文件备份</a></li>
 </ol>
 ]]></content:encoded>
     </item>
