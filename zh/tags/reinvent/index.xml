@@ -12,10 +12,303 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Mon, 17 Feb 2025 11:31:32 -0800</lastBuildDate>
+    <lastBuildDate>Sun, 02 Mar 2025 21:15:29 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/reinvent/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>重新造轮子系列(一)：从0开发单元测试框架</title>
+      <title>重新造轮子系列(二)：文件备份</title>
+      <link>https://ramsayleung.github.io/zh/post/2025/reinvent_file_backup/</link>
+      <pubDate>Sun, 02 Mar 2025 11:57:00 -0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2025/reinvent_file_backup/</guid>
+      <description>1 前言 既然我们已经有单元测试框架来测试软件了，我们肯定不想已经写好的代码丢失掉。 对于重要的文件，一个必不可少的功能肯定是备份, 这样在丢失文件</description>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
+<p>既然我们已经有<a href="/zh/post/2025/reinvent_unit_test/">单元测试</a>框架来测试软件了，我们肯定不想已经写好的代码丢失掉。</p>
+<p>对于重要的文件，一个必不可少的功能肯定是备份, 这样在丢失文件之后可以重新恢复。</p>
+<p>今天我们就来写个简单的文件备份软件，类似 Git 这样的版本系统可以当作是高级版本的文件系统，因为它还支持切换到不同版本，对比版本间的差异等等功能，而我们不打算实现一个版本管理系统，只实现基础的文件备份功能。</p>
+<h2 id="实现思路"><span class="section-num">2</span> 实现思路</h2>
+<figure>
+    <img loading="lazy" src="/ox-hugo/reinvent_file_backup_design.png"/> 
+</figure>
+
+<h3 id="校验文件是否变更"><span class="section-num">2.1</span> 校验文件是否变更</h3>
+<p>我们不可能备份都将所有的文件备份一次，这样做效率太低了，我们应该只备份发生变更的文件，那么如何高效地判断文件是否发生变更呢？</p>
+<p>最简单粗暴的方式是把文件读取出来，然后与以备份的文件作对比，但是这样的效率太低，并且算法复杂度是: O(N), 即运行时间是随着文件内容增长而增长的，文件越长，对比越慢。</p>
+<p>最优算法的复杂度是 <code>O(1)</code>, 我们希望可以通过常数时间内比较完文件内容。</p>
+<p>我们可以使用 <a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">密码哈希算法(Cryptographic hash algorithms)</a>, 来实现判断文件是否发生变更，它有两个显著的特征:</p>
+<ol>
+<li>hash 函数的结果是定长，不会因输入变化而增加或减少</li>
+<li>只要输入的任意bit生成变更， hash 函数生成的结果都会不一样</li>
+</ol>
+<p>因此我们可以将文件的内容使用密码哈希函数如 <code>sha1</code> 来hash, 通过比较两次的哈希结果是否一致来判断文件是否发生变更。</p>
+<h3 id="判断文件是否被备份"><span class="section-num">2.2</span> 判断文件是否被备份</h3>
+<p>判断文件是否被备份就很直接了，只需要看下当前文件是否在目标路径存在。</p>
+<p>再结合上文提到的，只备份内容发生变更的文件，那么我们可以使用哈希函数的结果作为目标路径的备份文件名。</p>
+<p>假设有文件 <code>src/a.txt</code>, 它的文件内容的哈希结果是 <code>86f7e437faa5a7fce15d1ddcb9eaeaea377667b8</code>, 那么我们使用哈希值作为文件名备份到 <code>dst</code>, 即 <code>dst/86f7e437faa5a7fce15d1ddcb9eaeaea377667b8</code>.</p>
+<p>对于文件 <code>a.txt</code>, 只需要判断 <code>dst</code> 是否存在 <code>86f7e437faa5a7fce15d1ddcb9eaeaea377667b8</code>, 就知道 <code>a.txt</code> 是否被备份;</p>
+<p>更巧妙的是，如果的 <code>a.txt</code> 文件内容发生变化，那么它的哈希值就一定不再会是 <code>86f7e437faa5a7fce15d1ddcb9eaeaea377667b8</code> 那么查找文件不存在，也可以当作是未备份，直接重新备份。</p>
+<p>下面的序列图就是low level design:</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/reinvent_file_backup_lowlevel_design.png"/> 
+</figure>
+
+<h3 id="性能优化"><span class="section-num">2.3</span> 性能优化</h3>
+<p>备份涉及到非常多的文件IO操作，而IO恰恰就是 Nodejs 最擅长的领域, 毕竟曾经的 NodeJS 还有个项目叫做 <code>io.js</code>.</p>
+<p>NodeJS 的异步IO是基于 <a href="https://github.com/libuv/libuv">libuv</a>, 但是我们不需要支持使用 <code>libuv</code> 的API, 只需要把文件相关的操作封装在 <code>Promise</code> 里面，NodeJS就会帮我们在处理底层的 IO 调度, 尽可能地并发处理IO, 避免阻塞.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">hashExisting</span> <span class="o">=</span> <span class="p">(</span><span class="nx">rootDir</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">PathHashPair</span><span class="p">[]</span><span class="o">&gt;</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">pattern</span> <span class="o">=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">rootDir</span><span class="si">}</span><span class="sb">/**/*`</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">glob</span><span class="p">(</span><span class="nx">pattern</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">matches</span> <span class="p">=&gt;</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">matches</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">path</span> <span class="p">=&gt;</span> <span class="nx">statPath</span><span class="p">(</span><span class="nx">path</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">pairs</span><span class="o">:</span> <span class="nx">PathStatPair</span><span class="p">[])</span> <span class="p">=&gt;</span> <span class="nx">pairs</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="p">([</span><span class="nx">path</span><span class="p">,</span> <span class="nx">stat</span><span class="p">])</span> <span class="p">=&gt;</span> <span class="nx">stat</span><span class="p">.</span><span class="nx">isFile</span><span class="p">()))</span>
+</span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">pairs</span><span class="o">:</span> <span class="nx">PathStatPair</span><span class="p">[])</span> <span class="p">=&gt;</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">pairs</span><span class="p">.</span><span class="nx">map</span><span class="p">(([</span><span class="nx">path</span><span class="p">,</span> <span class="nx">stat</span><span class="p">])</span> <span class="p">=&gt;</span> <span class="nx">readPath</span><span class="p">(</span><span class="nx">path</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">pairs</span><span class="o">:</span> <span class="nx">PathContentPair</span><span class="p">[])</span> <span class="p">=&gt;</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">pairs</span><span class="p">.</span><span class="nx">map</span><span class="p">(([</span><span class="nx">path</span><span class="p">,</span> <span class="nx">content</span><span class="p">])</span> <span class="p">=&gt;</span> <span class="nx">hashPath</span><span class="p">(</span><span class="nx">path</span><span class="p">,</span> <span class="nx">content</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">pairs</span><span class="o">:</span> <span class="nx">PathHashPair</span><span class="p">[])</span> <span class="p">=&gt;</span> <span class="nx">resolve</span><span class="p">(</span><span class="nx">pairs</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="p">=&gt;</span> <span class="nx">reject</span><span class="p">(</span><span class="nx">err</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>更多关于 <code>Promise</code> 的内容，可以查看<a href="https://javascript.info/async">这本书</a>，它的解释非常到位.</p>
+<h3 id="测试文件系统"><span class="section-num">2.4</span> 测试文件系统</h3>
+<p>备份文件的设计我们已经分析和实现完了，接下来肯定是需要编写单元测试来测试我们的函数的，我们的文件备份涉及到非常多的文件操作，免不了要和文件系统打交道，包括创建文件，查找文件等等。</p>
+<p>单元测试的其中一个原则就是要尽量屏蔽掉外部系统的依赖，以保证我们只聚焦在测试功能本身，文件系统的读写更像是集成测试需要做的事情, 各种操作也很容易把文件目录结构给搞乱，导致单元测试失败。</p>
+<p>所以我们希望可以使用一个 mock object 来把文件系统 mock 掉，<a href="https://github.com/tschaub/mock-fs"><code>mock-fs</code></a> 这个库做的就是这样的事情, 它可以把程序中的文件操作都 mock 掉，实际操作的是内存对象而非文件系统.</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/reivent_file_backup_mock_fs.jpg"/> 
+</figure>
+
+<p>我们就可以在每个单元测试运行时，任意构造任何想要的文件目录，并且保证文件操作都是在操纵内存对象，而不会直接作用到文件系统，保证单元测试的相互隔离。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">mock</span> <span class="nx">from</span> <span class="s1">&#39;mock-fs&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;checks for pre-existing hashes using mock filesystem&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">beforeEach</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">mock</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;bck-0-csv-0&#39;</span><span class="o">:</span> <span class="p">{},</span>
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;bck-1-csv-1&#39;</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;0001.csv&#39;</span><span class="o">:</span> <span class="s1">&#39;alpha.js,abcd1234&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;abcd1234.bck&#39;</span><span class="o">:</span> <span class="s1">&#39;alpha.js content&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;bck-4-csv-2&#39;</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;0001.csv&#39;</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;alpha.js,abcd1234&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                             <span class="s1">&#39;beta.txt,bcde2345&#39;</span><span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;\n&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;3024.csv&#39;</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;alpha.js,abcd1234&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                             <span class="s1">&#39;gamma.png,3456cdef&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                             <span class="s1">&#39;subdir/renamed.txt,bcde2345&#39;</span><span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;\n&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;3456cdef.bck&#39;</span><span class="o">:</span> <span class="s1">&#39;gamma.png content&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;abcd1234.bck&#39;</span><span class="o">:</span> <span class="s1">&#39;alpha content&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;bcde2345.bck&#39;</span><span class="o">:</span> <span class="s1">&#39;beta.txt became subdir/renamed.txt&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">afterEach</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">mock</span><span class="p">.</span><span class="nx">restore</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上面的代码就构造出下如下的文件目录：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">├── bck-0-csv-0
+</span></span><span class="line"><span class="cl">├── bck-1-csv-1
+</span></span><span class="line"><span class="cl">│   ├── 0001.csv
+</span></span><span class="line"><span class="cl">│   └── abcd1234.bck
+</span></span><span class="line"><span class="cl">└── bck-4-csv-2
+</span></span><span class="line"><span class="cl">├── 0001.csv
+</span></span><span class="line"><span class="cl">├── 3028.csv
+</span></span><span class="line"><span class="cl">├── 3456cdef.bck
+</span></span><span class="line"><span class="cl">├── abcd1234.bck
+</span></span><span class="line"><span class="cl">└── bcde2345.bck
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="使用示例"><span class="section-num">3</span> 使用示例</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">&gt; tree .
+</span></span><span class="line"><span class="cl">.
+</span></span><span class="line"><span class="cl">├── backup.ts
+</span></span><span class="line"><span class="cl">├── check-existing-files.ts
+</span></span><span class="line"><span class="cl">├── hash-existing-promise.ts
+</span></span><span class="line"><span class="cl">├── main.ts
+</span></span><span class="line"><span class="cl">├── manifest.ts
+</span></span><span class="line"><span class="cl">├── reinvent_file_backup.org
+</span></span><span class="line"><span class="cl">├── run-hash-existing-promise.ts
+</span></span><span class="line"><span class="cl">├── stream-copy.ts
+</span></span><span class="line"><span class="cl">└── <span class="nb">test</span>
+</span></span><span class="line"><span class="cl">    ├── bck-0-csv-0
+</span></span><span class="line"><span class="cl">    ├── bck-1-csv-1
+</span></span><span class="line"><span class="cl">    │   ├── 0001.csv
+</span></span><span class="line"><span class="cl">    │   └── abcd1234.bck
+</span></span><span class="line"><span class="cl">    ├── bck-4-csv-2
+</span></span><span class="line"><span class="cl">    │   ├── 0001.csv
+</span></span><span class="line"><span class="cl">    │   ├── 3028.csv
+</span></span><span class="line"><span class="cl">    │   ├── 3456cdef.bck
+</span></span><span class="line"><span class="cl">    │   ├── abcd1234.bck
+</span></span><span class="line"><span class="cl">    │   └── bcde2345.bck
+</span></span><span class="line"><span class="cl">    ├── test-backup.js
+</span></span><span class="line"><span class="cl">    ├── test-find-mock.js
+</span></span><span class="line"><span class="cl">    └── test-find.js
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="m">5</span> directories, <span class="m">18</span> files
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt; npx tsx main.ts -s . -d /tmp/backup -f json -v
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO<span class="o">]</span> Destination directory ensured: /tmp/backup
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO<span class="o">]</span> Starting backup from <span class="s1">&#39;.&#39;</span> to <span class="s1">&#39;/tmp/backup&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO<span class="o">]</span> Copied <span class="m">8</span> files from /Users/ramsayleung/code/javascript/reinvent/file_backup to /tmp/backup
+</span></span><span class="line"><span class="cl">Backup completed in: 15.96ms
+</span></span><span class="line"><span class="cl">Backup completed successfully!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt; ls -alrt /tmp/backup
+</span></span><span class="line"><span class="cl">total <span class="m">88</span>
+</span></span><span class="line"><span class="cl">drwxrwxrwt  <span class="m">23</span> root         wheel   <span class="m">736</span>  <span class="m">2</span> Mar 17:06 ..
+</span></span><span class="line"><span class="cl">-rw-r--r--@  <span class="m">1</span> ramsayleung  wheel  <span class="m">1056</span>  <span class="m">2</span> Mar 21:02 6bd385393bd0e4a4f9a3b68eea500b88165033b1.bck
+</span></span><span class="line"><span class="cl">-rw-r--r--@  <span class="m">1</span> ramsayleung  wheel  <span class="m">1649</span>  <span class="m">2</span> Mar 21:02 8b0bc65c42ca2ae9095bb1c340844080f2f054da.bck
+</span></span><span class="line"><span class="cl">-rw-r--r--@  <span class="m">1</span> ramsayleung  wheel  <span class="m">9795</span>  <span class="m">2</span> Mar 21:02 464240b6ef1f03652fefc56152039c0f8d105cfe.bck
+</span></span><span class="line"><span class="cl">-rw-r--r--@  <span class="m">1</span> ramsayleung  wheel   <span class="m">636</span>  <span class="m">2</span> Mar 21:02 d0f548d134e99f1fcc2d1c81e1371f48d9f3ca0c.bck
+</span></span><span class="line"><span class="cl">-rw-r--r--@  <span class="m">1</span> ramsayleung  wheel   <span class="m">182</span>  <span class="m">2</span> Mar 21:02 7fa1b33f68d734b406ddb58e3f85f199851393db.bck
+</span></span><span class="line"><span class="cl">-rw-r--r--@  <span class="m">1</span> ramsayleung  wheel   <span class="m">666</span>  <span class="m">2</span> Mar 21:02 369034de6e5b7ee0e867c6cfca66eab59f834447.bck
+</span></span><span class="line"><span class="cl">-rw-r--r--@  <span class="m">1</span> ramsayleung  wheel  <span class="m">2533</span>  <span class="m">2</span> Mar 21:02 02d5c238d29f9e49d2a1f525e7db5f420a654a3f.bck
+</span></span><span class="line"><span class="cl">-rw-r--r--@  <span class="m">1</span> ramsayleung  wheel  <span class="m">3512</span>  <span class="m">2</span> Mar 21:02 964c0245a5d8cb217d64d794952c80ddf2aecca8.bck
+</span></span><span class="line"><span class="cl">drwxr-xr-x@ <span class="m">11</span> ramsayleung  wheel   <span class="m">352</span>  <span class="m">2</span> Mar 21:02 .
+</span></span><span class="line"><span class="cl">-rw-r--r--@  <span class="m">1</span> ramsayleung  wheel  <span class="m">1030</span>  <span class="m">2</span> Mar 21:02 0000000000.json
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>为什么 <code>file_backup</code> 目录里面有 18 个文件，只备份了8个文件呢？因为 <code>test</code> 目录里面所有的文件都是空的，所以备份时就跳过了。</p>
+<h2 id="总结"><span class="section-num">4</span> 总结</h2>
+<p>我们就完成了一个文件备份软件的开发，功能当然还非常简单，还有非常多优化的空间，比如现在 <code>src</code> 目录的所有文件都会被平铺到 <code>dst</code> 目录，如果我们可以保存目录结构，那么就更好用了。</p>
+<p>另外，使用哈希函数值作为文件名的确很巧妙，但是对于用户而已，如果不逐个打开文件，根本不知道哪个文件是对应哪个源文件等等。</p>
+<p>如果想要实现一个更健壮易用的备份文件，可以参考下关于这 <a href="https://michael.stapelberg.ch/posts/2022-06-18-rsync-overview/"><code>rsync</code> 系列的文章</a>, <code>rsync</code> 是Linux 上非常流行的增量备份的文件，不仅可以备份本地文件，更可以把文件备份把远程服务器，非常强大。</p>
+<h2 id="参考"><span class="section-num">5</span> 参考</h2>
+<ul>
+<li><a href="https://third-bit.com/sdxjs/file-backup/">https://third-bit.com/sdxjs/file-backup/</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">https://en.wikipedia.org/wiki/Cryptographic_hash_function</a></li>
+<li><a href="https://michael.stapelberg.ch/posts/2022-06-18-rsync-overview/">https://michael.stapelberg.ch/posts/2022-06-18-rsync-overview/</a></li>
+<li><a href="https://javascript.info/async">https://javascript.info/async</a></li>
+</ul>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>重新造轮子系列(一)：单元测试框架</title>
       <link>https://ramsayleung.github.io/zh/post/2025/reinvent_unit_test/</link>
       <pubDate>Sun, 16 Feb 2025 22:27:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2025/reinvent_unit_test/</guid>
