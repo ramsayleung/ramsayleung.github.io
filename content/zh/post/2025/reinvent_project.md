@@ -1,7 +1,7 @@
 +++
 title = "ReInvent: 重新造轮子系列(序言)"
 date = 2025-02-16T22:10:00-08:00
-lastmod = 2025-02-17T11:20:03-08:00
+lastmod = 2025-03-02T21:34:27-08:00
 tags = ["reinvent"]
 categories = ["ReInvent: 重新造轮子系列"]
 draft = false
@@ -34,3 +34,4 @@ GitHub: <https://github.com/ramsayleung/reinvent>
 原书是用 node + Javascript 编写的，部分代码因API变更而变得不可用，因此本项目也做了对应修改，并将 Javascript 替换成 Typescript, 通过类型系统来降低维护成本。
 
 1.  [单元测试框架]({{< relref "reinvent_unit_test" >}})
+2.  [文件备份]({{< relref "reinvent_file_backup" >}})
