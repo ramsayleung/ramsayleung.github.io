@@ -228,7 +228,7 @@ markup:
     codeFences: true
     guessSyntax: true
     lineNos: true
-    style: 'trac'
+    # style: modus-operandi # useless, need to set custom css
   goldmark:
     renderer:
       unsafe: true
