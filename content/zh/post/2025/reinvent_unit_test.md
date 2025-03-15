@@ -1,12 +1,15 @@
 +++
 title = "重新造轮子系列(一)：单元测试框架"
 date = 2025-02-16T22:27:00-08:00
-lastmod = 2025-03-02T21:15:29-08:00
+lastmod = 2025-03-03T17:57:56-08:00
 tags = ["reinvent"]
 categories = ["ReInvent: 重新造轮子系列"]
 draft = false
 toc = true
 +++
+
+项目 GitHub 地址: [Unit Test](https://github.com/ramsayleung/reinvent/tree/master/unit_test)
+
 
 ## <span class="section-num">1</span> 前言 {#前言}
 
@@ -753,6 +756,8 @@ const main = async (args: Array<string>) => {
 
 
 ## <span class="section-num">4</span> 参考 {#参考}
+
+[回到本系列的目录]({{< relref "reinvent_project" >}})
 
 -   <https://third-bit.com/sdxjs/unit-test/>
 -   <https://blog.youxu.info/2008/11/30/pearl-in-smalltal/>

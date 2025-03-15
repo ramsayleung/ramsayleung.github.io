@@ -1,12 +1,15 @@
 +++
 title = "重新造轮子系列(二)：文件备份"
 date = 2025-03-02T11:57:00-08:00
-lastmod = 2025-03-02T21:24:24-08:00
+lastmod = 2025-03-03T17:58:39-08:00
 tags = ["reinvent"]
 categories = ["ReInvent: 重新造轮子系列"]
 draft = false
 toc = true
 +++
+
+项目 GitHub 地址: [File Backup](https://github.com/ramsayleung/reinvent/tree/master/file_backup)
+
 
 ## <span class="section-num">1</span> 前言 {#前言}
 
@@ -206,6 +209,8 @@ drwxr-xr-x@ 11 ramsayleung  wheel   352  2 Mar 21:02 .
 另外，使用哈希函数值作为文件名的确很巧妙，但是对于用户而已，如果不逐个打开文件，根本不知道哪个文件是对应哪个源文件等等。
 
 如果想要实现一个更健壮易用的备份文件，可以参考下关于这 [rsync 系列的文章](https://michael.stapelberg.ch/posts/2022-06-18-rsync-overview/) , `rsync` 是Linux 上非常流行的增量备份的文件，不仅可以备份本地文件，更可以把文件备份把远程服务器，非常强大。
+
+[回到本系列的目录]({{< relref "reinvent_project" >}})
 
 
 ## <span class="section-num">5</span> 参考 {#参考}
