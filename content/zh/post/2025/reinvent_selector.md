@@ -1,7 +1,7 @@
 +++
 title = "重新造轮子系列(三): HTML Selector"
 date = 2025-03-15T10:53:00-07:00
-lastmod = 2025-03-15T14:31:01-07:00
+lastmod = 2025-04-04T00:16:01-07:00
 tags = ["reinvent"]
 categories = ["ReInvent: 重新造轮子系列"]
 draft = false
@@ -183,7 +183,7 @@ describe('HTML selector testsuite', () => {
 
 使用 Jest 框架编写了如上的单元测试用例， unit test 都通过了，完工.
 
-值得一提的是，这种相同的验证逻辑, 但是输入多个不同的参数以验证不同case的做法，叫做 `Parameterized Test`
+顺便一提的是，这种相同的验证逻辑, 但是输入多个不同的参数以验证不同case的做法，叫做 `Parameterized Test`
 
 我在《[测试技能进阶系列](https://ramsayleung.github.io/zh/categories/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6/)》的第二篇也曾经介绍过： [Parameterized Tests](https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/)
 
