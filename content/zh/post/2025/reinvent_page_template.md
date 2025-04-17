@@ -1,7 +1,7 @@
 +++
 title = "重新造轮子系列(五)：模板引擎"
 date = 2025-04-14T22:59:00-07:00
-lastmod = 2025-04-16T22:59:59-07:00
+lastmod = 2025-04-16T23:10:01-07:00
 tags = ["reinvent"]
 categories = ["ReInvent: 重新造轮子系列"]
 draft = false
@@ -580,11 +580,13 @@ const vars = {
 
 ## <span class="section-num">5</span> 总结 {#总结}
 
-模板引擎的本质，是帮我们把重复的页面结构抽出来，只填变化的内容。这是程序员对「Don't Repeat Yourself」原则最直观的践行。
+模板引擎的本质，是帮我们把重复的页面结构抽离出来，而内容与表现的分离(Separation of content and presentation)，可以让我们以数据来填充变化的内容。
+
+这是程序员对「Don't Repeat Yourself」原则最直观的践行。
 
 三十年来，开发者们创造了无数种实现方案，但核心思路始终围绕着前文提到的三种基本模式。
 
-如今即便在最流行的 Vue 或 React 框架中，当你写下JSX或是 `v-*` 指令时，背后的思路仍万变不离其宗，本质上仍在沿用模板引擎的思想。
+如今即便在最流行的 Vue 或 React 框架中，无论你写的是 `JSX` 或是 `v-*` 指令，背后的思路仍万变不离其宗，本质上仍在沿用模板引擎的思想。
 
 而这种「结构复用，数据驱动」的理念，也早已成为Web开发的根基。
 
@@ -595,3 +597,4 @@ const vars = {
 
 -   <https://refactoring.guru/design-patterns/visitor>
 -   <https://serde.rs/impl-deserialize.html>
+-   <https://third-bit.com/sdxjs/page-templates/>
