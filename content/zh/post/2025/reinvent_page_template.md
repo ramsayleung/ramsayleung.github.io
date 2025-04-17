@@ -1,7 +1,7 @@
 +++
 title = "重新造轮子系列(五)：模板引擎"
 date = 2025-04-14T22:59:00-07:00
-lastmod = 2025-04-16T23:10:01-07:00
+lastmod = 2025-04-16T23:34:36-07:00
 tags = ["reinvent"]
 categories = ["ReInvent: 重新造轮子系列"]
 draft = false
@@ -167,12 +167,12 @@ PHP 可以算是 Web时代的王者之一，凭借着 `LAMP(Linux, Apache, MySql
 
 我们可以先支持以下的指令集:
 
-| 指令集   | 含义                         |
-|-------|----------------------------|
-| `z-loop` | 遍历一个数组的数据，每个数据元素对应一个 HTML 元素 |
-| `z-if`   | 在变量为 `True` 时显示 HTML 元素 |
-| `z-var`  | 将变量替换成对应的值，并显示在 HTML 元素上 |
-| `z-num`  | 将数字显示在对应的 HTML 元素上 |
+| 指令集   | 含义              |
+|-------|-----------------|
+| `z-loop` | 循环遍历数组生成元素内容 |
+| `z-if`   | 条件渲染，值为false时移除元素 |
+| `z-var`  | 将变量值输出到元素内容 |
+| `z-num`  | 直接输出数字值到元素内容 |
 
 
 ## <span class="section-num">3</span> 设计思路 {#设计思路}
@@ -416,17 +416,17 @@ export interface NodeHandler {
 
 不同的指令集的差别只是如何实现 `open` 和 `close` 逻辑，我就不一一赘述了，已支持的指令集及实现列表如下：
 
-| 指令          | 实现                                                                                                |
-|-------------|---------------------------------------------------------------------------------------------------|
-| `z-if`        | [z-if.ts](https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-if.ts)               |
-| `z-include`   | [z-include.ts](https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-include.ts)     |
-| `z-iteration` | [z-iteration.ts](https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-iteration.ts) |
-| `z-literal`   | [z-literal.ts](https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-literal.ts)     |
-| `z-loop`      | [z-loop.ts](https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-loop.ts)           |
-| `z-num`       | [z-num.ts](https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-num.ts)             |
-| `z-snippet`   | [z-snippet.ts](https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-snippet.ts)     |
-| `z-trace`     | [z-trace.ts](https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-trace.ts)         |
-| `z-var`       | [z-var.ts](https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-var.ts)             |
+| 指令          | 作用              | 实现                                                                                                |
+|-------------|-----------------|---------------------------------------------------------------------------------------------------|
+| `z-if`        | 条件渲染，值为false时移除元素 | [z-if.ts](https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-if.ts)               |
+| `z-include`   | 引入外部HTML文件内容 | [z-include.ts](https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-include.ts)     |
+| `z-iteration` | 数字迭代，生成序列内容 | [z-iteration.ts](https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-iteration.ts) |
+| `z-literal`   | 保留元素原始属性不解析 | [z-literal.ts](https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-literal.ts)     |
+| `z-loop`      | 循环遍历数组生成元素内容 | [z-loop.ts](https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-loop.ts)           |
+| `z-num`       | 直接输出数字值到元素内容 | [z-num.ts](https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-num.ts)             |
+| `z-snippet`   | 定义可复用的HTML片段 | [z-snippet.ts](https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-snippet.ts)     |
+| `z-trace`     | 打印变量值到控制台（调试用） | [z-trace.ts](https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-trace.ts)         |
+| `z-var`       | 将变量值输出到元素内容 | [z-var.ts](https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-var.ts)             |
 
 
 ### <span class="section-num">4.2</span> 示例 {#示例}
