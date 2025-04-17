@@ -12,8 +12,923 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Thu, 10 Apr 2025 23:43:35 -0700</lastBuildDate>
+    <lastBuildDate>Wed, 16 Apr 2025 23:34:36 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>重新造轮子系列(五)：模板引擎</title>
+      <link>https://ramsayleung.github.io/zh/post/2025/reinvent_page_template/</link>
+      <pubDate>Mon, 14 Apr 2025 22:59:00 -0700</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2025/reinvent_page_template/</guid>
+      <description>项目 GitHub 地址: Page Template 1 前言 在现代网站开发里，内容与表现的分离已经成为基本准则(Separation of content and presentation), 比如 HTML 就是负责内容展现，而 CSS 就是负责页</description>
+      <content:encoded><![CDATA[<p>项目 GitHub 地址: <a href="https://github.com/ramsayleung/reinvent/tree/master/page_templates">Page Template</a></p>
+<h2 id="前言"><span class="section-num">1</span> 前言</h2>
+<p>在现代网站开发里，内容与表现的分离已经成为基本准则(Separation of content and presentation),
+比如 HTML 就是负责内容展现，而 CSS 就是负责页面的样式。</p>
+<p>而手动更新和编写 HTML 也是一件费时费力并且容易出错的工作，尤其是需要同时修改多个页面的时候，
+因此有聪明的程序员就发明了名为静态网页生成器(static site generator)的技术，可以按需生成网页。</p>
+<p>事实上，互联网上的大多数页面都是通过某种形式的静态网页生成器生成出来的。</p>
+<p>而静态网页生成器的核心就是「模板引擎」，在过去三十年，诞生过无数的模板引擎，
+甚至有位加拿大的程序员为了更方便记录谁访问了他的简历，他还发明了一门编程语言来做模板引擎的活，这就是「世界上最好的编程语言：PHP」。</p>
+<p>PHP 可以算是 Web时代的王者之一，凭借着 <code>LAMP(Linux, Apache, MySql, PHP)</code> 架构不断开疆扩土，攻城掠地，而PHP本身也不断有新的框架被造出来，为谁是最好的「模板引擎」打得头破血流。</p>
+<p>虽然关于「模板引擎」的战争至今仍未停歇，但细分下来，「模板引擎」可以分成三个主要的流派：</p>
+<h3 id="嵌入式语法"><span class="section-num">1.1</span> 嵌入式语法</h3>
+<p>在 Markdown/HTML 这样的标识语言里面嵌入编程语言，使用 <code>&lt;% %&gt;</code> 等符号来标记代码与文本内容，其中的代表包括 Javascript 的 <a href="https://ejs.co/">EJS</a>, Ruby 的 <a href="https://docs.ruby-lang.org/en/2.3.0/ERB.html">ERB</a>, 以及 Python 的 <a href="https://jinja.palletsprojects.com/en/stable/">Jinja</a>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c">&lt;!--</span> <span class="nx">用特殊标记混合JavaScript与HTML</span> <span class="o">--&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;%</span> <span class="k">if</span> <span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="p">{</span> <span class="o">%&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;&lt;%=</span> <span class="nx">user</span><span class="p">.</span><span class="nx">name</span> <span class="o">%&gt;&lt;</span><span class="err">/h1&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;%</span> <span class="p">}</span> <span class="o">%&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其优点就是可以直接使用嵌入的编程语言，功能强大，学习成本低，缺点就是模板很容易变成混杂内容和逻辑的「屎山」代码</p>
+<h3 id="自定义语法"><span class="section-num">1.2</span> 自定义语法</h3>
+<p>不嵌入现成的编程语言，而是自己开发一套 mini 编程语言，或者叫 DSL(domain specifc language), 代表有 <a href="https://pages.github.com/">GitHub Page</a> 用到的 <a href="https://jekyllrb.com/">Jekyll</a>, 还有 Golang 开发的著名静态网页生成器 <a href="https://gohugo.io/">Hugo</a>, 都是使用自定义的语法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">comment</span> <span class="o">%</span><span class="p">}</span> <span class="nx">自创模板语法</span> <span class="p">{</span><span class="o">%</span> <span class="nx">endcomment</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="nx">post</span> <span class="nx">in</span> <span class="nx">posts</span> <span class="o">%</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{{</span> <span class="nx">post</span><span class="p">.</span><span class="nx">title</span> <span class="p">|</span> <span class="nx">truncate</span><span class="p">:</span> <span class="mi">30</span> <span class="p">}}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="o">%</span> <span class="nx">endfor</span> <span class="o">%</span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>优点就是语法简洁，缺点就是发展下去，可以又是自己造了一个新的编程语言，功能还不如通用的编程语言强大</p>
+<h3 id="html指令"><span class="section-num">1.3</span> HTML指令</h3>
+<p>不再在 HTML 中嵌入编程语言或DSL，取而代之的是直接给 HTML 定义特定的属性，不同的属性代表不同的含义，但是使用的还是标准 HTML.</p>
+<p>最著名的就是 <a href="https://vuejs.org/">Vuejs</a>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="c">&lt;!-- 用特殊属性实现逻辑 --&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">v-if</span><span class="o">=</span><span class="s">&#34;user&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>{{ user.name }}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>优点是保持HTML的合法性与简洁，不需要额外的 parser, 缺点就是指令功能受限，不如内嵌编程语言强大，生态工具较少, 灵活性差。</p>
+<p>本文的模板引擎就会以这个流派为范式进行开发。</p>
+<h3 id="特例之php"><span class="section-num">1.4</span> 特例之PHP</h3>
+<p>分析完三种流派，就会奇怪 PHP 究竟是属于哪个流派呢？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;&lt;?</span><span class="nx">php</span> <span class="k">echo</span> <span class="nv">$title</span><span class="p">;</span> <span class="cp">?&gt;</span><span class="err">&lt;/h1&gt;
+</span></span></span><span class="line"><span class="cl"><span class="err">&lt;ul&gt;
+</span></span></span><span class="line"><span class="cl"><span class="err">  &lt;?php foreach ($items as $item) { ?&gt;
+</span></span></span><span class="line"><span class="cl"><span class="err">    &lt;li&gt;&lt;?php echo $item; ?&gt;&lt;/li&gt;
+</span></span></span><span class="line"><span class="cl"><span class="err">  &lt;?php } ?&gt;
+</span></span></span><span class="line"><span class="cl"><span class="err">&lt;/ul&gt;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>其实 PHP 本质就是流派二，只是这门专门用于「模板引擎」的 mini 语言，最后演化成了一门专门的编程语言，只是这个编程语言最擅长的还是网页开发，即是做「模板引擎」。</p>
+<p>所以 PHP 是从流派二演化成流派一。</p>
+<h2 id="目标"><span class="section-num">2</span> 目标</h2>
+<p>可能不是所有的朋友都了解 Vue，所以在设计我们的模板引擎之前，先来明确一下需求与目标(scope).</p>
+<p>假设我们有如下的 JSON 数据:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">names</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;Johnson&#39;</span><span class="p">,</span> <span class="s1">&#39;Vaughan&#39;</span><span class="p">,</span> <span class="s1">&#39;Jackson&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果有如下的模板:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Expect three items<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">z-loop</span><span class="o">=</span><span class="s">&#34;item:names&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">z-var</span><span class="o">=</span><span class="s">&#34;item&#34;</span><span class="p">/&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>那么 <code>names</code> 就会被赋值给 <code>item</code>, 然后每一个变量都会被展开成 <code>&lt;span&gt;{item}&lt;/span&gt;</code>, 所以上面的模板就会被展开成:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Expect three items<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">span</span><span class="p">&gt;</span>Johnson<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">span</span><span class="p">&gt;</span>Vaughan<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">span</span><span class="p">&gt;</span>Jackson<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>而不同的指令会有不同的效果，如上的 <code>z-loop</code> 就是遍历一个数组，而 <code>z-if</code> 就是判断一个变量是否为 <code>true</code>, 为 <code>true</code> 则输出，否则则不输出.</p>
+<p>如有数据:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;showThis&#34;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;doNotShowThis&#34;</span><span class="o">:</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>和模板:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">z-if</span><span class="o">=</span><span class="s">&#34;showThis&#34;</span><span class="p">&gt;</span>This should be shown.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">z-if</span><span class="o">=</span><span class="s">&#34;doNotShowThis&#34;</span><span class="p">&gt;</span>This should <span class="p">&lt;</span><span class="nt">em</span><span class="p">&gt;</span>not<span class="p">&lt;/</span><span class="nt">em</span><span class="p">&gt;</span> be shown.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>就会被渲染成:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>This should be shown.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们可以先支持以下的指令集:</p>
+<table>
+<thead>
+<tr>
+<th>指令集</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>z-loop</code></td>
+<td>循环遍历数组生成元素内容</td>
+</tr>
+<tr>
+<td><code>z-if</code></td>
+<td>条件渲染，值为false时移除元素</td>
+</tr>
+<tr>
+<td><code>z-var</code></td>
+<td>将变量值输出到元素内容</td>
+</tr>
+<tr>
+<td><code>z-num</code></td>
+<td>直接输出数字值到元素内容</td>
+</tr>
+</tbody>
+</table>
+<h2 id="设计思路"><span class="section-num">3</span> 设计思路</h2>
+<h3 id="stack-frame"><span class="section-num">3.1</span> stack frame</h3>
+<p>模板引擎的核心是将「数据」+「模板」渲染成页面，那么数据要如何保存呢？以什么数据结构和变量形式来处理呢？</p>
+<p>最简单的方式肯定就是使用全局变量的 HashMap 来保存所有的变量，但是如果存在两个同名的变量，那么 HashMap 这种数据结构就不适用。</p>
+<p>更何况，可变的全局变量可谓是万恶之源，不知道有多少 bug 都是源自可变的全局变量。</p>
+<p>在编译原理，保存变量的标准做法就是使用 stack frame, 每次进入一个函数就创建一个新的栈(<code>stack</code>), 每次函数调用都有自己的独立的栈，可以理解成每个栈就是一个 <code>HashMap</code>, 而每创建一个栈就是向 <code>List</code> 里面 <code>push</code> 一个新的 <code>HashMap</code>, 同一个函数里面不能有同名的变量，那能保证栈里面的值是唯一。</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/reinvent_stack_frame.jpg"/> 
+</figure>
+
+<p>谈及变量和 stack frame, 编程语言中有个 <code>作用域(scoping)</code> 的概念, 定义了变量会怎么被程序访问到。</p>
+<p>主要有两种作用域，分别被称为：</p>
+<p>词法作用域(<a href="https://en.wikipedia.org/wiki/Scope_(computer_science)">Lexical/Static Scoping</a>): 在编译时就将变量给解析确定了下来，大部分编程语言使用的都是语法作用域，比如 Javascript, C/C++, Rust, Golang, Swift, Java 这个名单还可以很长.</p>
+<p>因为其性能更优，并且行为是相当明确的，不需要分析运行时代码再来确定，如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="c1">// 全局变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span> <span class="c1">// 词法作用域，问题绑定全局变量 x
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">bar</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="c1">// 局部变量，不会影响 foo 中的 x
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">foo</span><span class="p">();</span> <span class="c1">// 调用 foo(), 仍然需要访问全局变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">foo</span><span class="p">();</span> <span class="c1">// 输出: 10 (全局变量)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">bar</span><span class="p">();</span> <span class="c1">// 输出: 10 (还是全局变量，而非局部变量)
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>另外一种作用域是动态作用域(Dynamic Scoping): 在运行时通过遍历调用栈来确定变量的值，现在已经很少有编程语言使用了，比如是 Perl4, Bash, 或者是 Emacs Lisp:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="nv">x</span><span class="o">=</span><span class="s2">&#34;global&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">foo<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$x</span><span class="s2">&#34;</span>  <span class="c1"># x 的值取决于谁来调用 `foo`, 运行时决定</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">bar<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">local</span> <span class="nv">x</span><span class="o">=</span><span class="s2">&#34;local&#34;</span>  <span class="c1"># 动态作用域: 会影响 foo 的值</span>
+</span></span><span class="line"><span class="cl">  foo
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">foo  <span class="c1"># 输出: &#34;global&#34; (x 是全局变量)</span>
+</span></span><span class="line"><span class="cl">bar  <span class="c1"># 输出: &#34;local&#34;  (x 是 bar 函数的局部变量)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>也就是 <code>foo</code> 中 <code>x</code> 的值还取决于调用方的栈，因为在 <code>bar</code> 里面调用 <code>foo</code> 时， bash 解释器会把 <code>bar</code> 的栈一并传给 <code>foo</code>, 所以 <code>foo</code> 就以最近栈中 <code>x</code> 的值为准。</p>
+<p>这种作用域实现方式虽然简单，但是对于程序员 debug 来说简直是噩梦，所以在现代编程语言基本绝迹了。</p>
+<p>话虽如此，但是对于模板引擎而言，动态作用域却是主流选择，主要是因为：</p>
+<ol>
+<li>模板的特性需求：循环/条件语句需要运行时创建临时变量</li>
+<li>隔离性要求：避免不同模板间的变量污染</li>
+<li>异常处理：未定义变量可返回 <code>undefined/null</code> 而非报错</li>
+</ol>
+<p>因此我们的模板引擎也会使用动态作用域来保存变量，即 <code>List&lt;HashMap&lt;String, String&gt;&gt;</code> 的数据结构.</p>
+<h3 id="vistor-pattern"><span class="section-num">3.2</span> vistor pattern</h3>
+<p>确定好如何保存变量之后，下一个问题就是如何遍历并且生成模板。</p>
+<p>解析HTML之后生成的是 DOM(Document Object Model) 结构, 本质是多叉树遍历，按照指令处理栈的变量，然后再把 HTML 输出, 如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">traverse</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s1">&#39;text&#39;</span><span class="p">)</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`&lt;</span><span class="si">${</span><span class="nx">node</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="sb">&gt;`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">node</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">traverse</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`&lt;/</span><span class="si">${</span><span class="nx">node</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="sb">&gt;`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>实现是很简单，但是我们把「遍历逻辑」和「不同指令对应的逻辑」耦合在一起了，很难维护。</p>
+<p>并且我们现在只支持4个指令，或者未来要增加其他指令，只要在 <code>traverse</code> 里面再增加 if-else 逻辑，基本没有扩展性。</p>
+<p>所以我们需要优化的点就是，把「遍历逻辑」和「指令逻辑」分开，这样就易于我们扩展新指令。</p>
+<p>要解耦，想想有啥设计模式合适，遍寻23种设计模式，<a href="https://refactoring.guru/design-patterns/visitor">访问者(Vistor)模式 </a>就很合适用来做解耦遍历逻辑和指令逻辑.</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/reinvent_vistor_pattern.jpg"/> 
+</figure>
+
+<p>不了解 Vistor 模式的同学可以先看下这篇<a href="https://refactoring.guru/design-patterns/visitor">文章</a>, 而Rust 非常著名的序列化框架 <a href="https://serde.rs">Serde</a> 就通过 <a href="https://serde.rs/impl-deserialize.html">Vistor</a> 模式可以让用户自定义如何序列化或反序列化某种类型的数据。</p>
+<h3 id="接口设计"><span class="section-num">3.3</span> 接口设计</h3>
+<p>既然选定了 <code>Vistor</code> 模式，那么就让我们来设计具体的接口。</p>
+<p><code>Vistor</code> 接口类，接受某个 DOM 元素作为根节点，然后通过 <code>walk</code> 函数遍历给定的节点，或者节点为空则遍历根节点:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">Node</span><span class="p">,</span> <span class="nx">NodeWithChildren</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;domhandler&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">abstract</span> <span class="kr">class</span> <span class="nx">Visitor</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">private</span> <span class="nx">root</span><span class="o">:</span> <span class="nx">Node</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">constructor</span><span class="p">(</span><span class="nx">root</span><span class="o">:</span> <span class="nx">Node</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">root</span> <span class="o">=</span> <span class="nx">root</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">walk</span><span class="p">(</span><span class="nx">node</span><span class="o">:</span> <span class="nx">Node</span> <span class="o">=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">node</span> <span class="o">===</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">node</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">root</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">node</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">node</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">child</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="p">.</span><span class="nx">walk</span><span class="p">(</span><span class="nx">child</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">close</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// handler to be called when first arrive at a node
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kr">abstract</span> <span class="nx">open</span><span class="p">(</span><span class="nx">node</span><span class="o">:</span> <span class="nx">Node</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// handler to be called when finished with a node
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kr">abstract</span> <span class="nx">close</span><span class="p">(</span><span class="nx">node</span><span class="o">:</span> <span class="nx">Node</span><span class="p">)</span><span class="o">:</span> <span class="k">void</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中的 <code>open</code> 函数用于在进入一个节点时被调用，相当于是在前序位置被调用，返回值来表现是否需要遍历其子节点；而 <code>close</code> 函数在离开一个节点前，即相当于后序位置被调用。</p>
+<p>关于二叉树的前序位置和后序位置，可见这篇讲解二叉树算法的<a href="https://labuladong.online/algo/essential-technique/binary-tree-summary/#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7">文章</a></p>
+<p><code>Vistor</code> 算法里面的关键即是实现「遍历逻辑」与「每个节点处理逻辑」的解耦，遍历逻辑我们已经实现在 <code>Vistor</code> 基类了，现在就需要实现一个具体的子类来表示节点的处理逻辑:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">enum</span> <span class="nx">HandlerType</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">If</span> <span class="o">=</span> <span class="s1">&#39;z-if&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Loop</span> <span class="o">=</span> <span class="s1">&#39;z-loop&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Num</span> <span class="o">=</span> <span class="s1">&#39;z-num&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Var</span> <span class="o">=</span> <span class="s1">&#39;z-var&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">HANDLERS</span><span class="o">:</span> <span class="nx">Record</span><span class="o">&lt;</span><span class="nx">HandlerType</span><span class="p">,</span> <span class="nx">NodeHandler</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="nx">HandlerType</span><span class="p">.</span><span class="nx">If</span><span class="p">]</span><span class="o">:</span> <span class="k">new</span> <span class="nx">IfHandler</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="nx">HandlerType</span><span class="p">.</span><span class="nx">Loop</span><span class="p">]</span><span class="o">:</span> <span class="k">new</span> <span class="nx">LoopHandler</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="nx">HandlerType</span><span class="p">.</span><span class="nx">Num</span><span class="p">]</span><span class="o">:</span> <span class="k">new</span> <span class="nx">NumHandler</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="nx">HandlerType</span><span class="p">.</span><span class="nx">Var</span><span class="p">]</span><span class="o">:</span> <span class="k">new</span> <span class="nx">VarHandler</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">class</span> <span class="nx">Expander</span> <span class="kr">extends</span> <span class="nx">Visitor</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">public</span> <span class="nx">env</span><span class="o">:</span> <span class="nx">Env</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">private</span> <span class="nx">handlers</span><span class="o">:</span> <span class="nx">Record</span><span class="o">&lt;</span><span class="nx">HandlerType</span><span class="p">,</span> <span class="nx">NodeHandler</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">private</span> <span class="nx">result</span><span class="o">:</span> <span class="nx">string</span><span class="p">[]</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">constructor</span><span class="p">(</span><span class="nx">root</span><span class="o">:</span> <span class="nx">Node</span><span class="p">,</span> <span class="nx">vars</span><span class="o">:</span> <span class="nb">Object</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">super</span><span class="p">(</span><span class="nx">root</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">env</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Env</span><span class="p">(</span><span class="nx">vars</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">handlers</span> <span class="o">=</span> <span class="nx">HANDLERS</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">result</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">open</span><span class="p">(</span><span class="nx">node</span><span class="o">:</span> <span class="nx">Node</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s1">&#39;text&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="nx">textNode</span> <span class="o">=</span> <span class="nx">node</span> <span class="nx">as</span> <span class="nx">Text</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">this</span><span class="p">.</span><span class="nx">output</span><span class="p">(</span><span class="nx">textNode</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">hasHandler</span><span class="p">(</span><span class="nx">node</span> <span class="nx">as</span> <span class="nx">Element</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">getHandler</span><span class="p">(</span><span class="nx">node</span> <span class="nx">as</span> <span class="nx">Element</span><span class="p">).</span><span class="nx">open</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">node</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">this</span><span class="p">.</span><span class="nx">showTag</span><span class="p">(</span><span class="nx">node</span> <span class="nx">as</span> <span class="nx">Element</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">close</span><span class="p">(</span><span class="nx">node</span><span class="o">:</span> <span class="nx">Node</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s1">&#39;text&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s1">&#39;tag&#39;</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">hasHandler</span><span class="p">(</span><span class="nx">node</span> <span class="nx">as</span> <span class="nx">Element</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">this</span><span class="p">.</span><span class="nx">getHandler</span><span class="p">(</span><span class="nx">node</span> <span class="nx">as</span> <span class="nx">Element</span><span class="p">).</span><span class="nx">close</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">node</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">this</span><span class="p">.</span><span class="nx">showTag</span><span class="p">(</span><span class="nx">node</span> <span class="nx">as</span> <span class="nx">Element</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// 判断是否有 z-* 属性对应的指令处理器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">hasHandler</span><span class="p">(</span><span class="nx">node</span><span class="o">:</span> <span class="nx">Element</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kr">const</span> <span class="nx">name</span> <span class="k">in</span> <span class="nx">node</span><span class="p">.</span><span class="nx">attribs</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="nx">name</span> <span class="k">in</span> <span class="k">this</span><span class="p">.</span><span class="nx">handlers</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">getHandler</span><span class="p">(</span><span class="nx">node</span><span class="o">:</span> <span class="nx">Element</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">possible</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">attribs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">name</span> <span class="p">=&gt;</span> <span class="nx">name</span> <span class="k">in</span> <span class="k">this</span><span class="p">.</span><span class="nx">handlers</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">assert</span><span class="p">(</span><span class="nx">possible</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Should be exactly one handler&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">handlers</span><span class="p">[</span><span class="nx">possible</span><span class="p">[</span><span class="mi">0</span><span class="p">]];</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// 将 tag 标签及属性输出到 output 去，但排除 `z-` 开头的指令
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">showTag</span><span class="p">(</span><span class="nx">node</span><span class="o">:</span> <span class="nx">Element</span><span class="p">,</span> <span class="nx">closing</span><span class="o">:</span> <span class="kr">boolean</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">output</span><span class="p">(</span><span class="nx">text</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">((</span><span class="nx">text</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="o">?</span> <span class="s1">&#39;UNDEF&#39;</span> <span class="o">:</span> <span class="nx">text</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>Expander</code> 的逻辑也并不复杂，每次遍历到一个 <code>DOM</code> 元素的时候，通过元素类似执行对应的操作，如果是 <code>z-</code> 开头的指令，就看下能否找到对应指令的处理器:</p>
+<figure>
+    <img loading="lazy" src="/ox-hugo/reinvent_expander_design.png"/> 
+</figure>
+
+<p>仔细观察代码会发现，不同的指令对应的处理器实现了 <code>NodeHandler</code> 接口，定义在前序位置和后序位置处理节点的逻辑，并按指令名保存在 <code>HANDLER</code> 中：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">interface</span> <span class="nx">NodeHandler</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">open</span><span class="p">(</span><span class="nx">expander</span><span class="o">:</span> <span class="nx">Expander</span><span class="p">,</span> <span class="nx">node</span><span class="o">:</span> <span class="nx">Element</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">close</span><span class="p">(</span><span class="nx">expander</span><span class="o">:</span> <span class="nx">Expander</span><span class="p">,</span> <span class="nx">node</span><span class="o">:</span> <span class="nx">Element</span><span class="p">)</span><span class="o">:</span> <span class="k">void</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这就意味着，如果需要增加一个新的指令，该指令处理器只需要实现 <code>NodeHandler</code> 接口，并添加到 <code>HANDLER</code> 即可，不需要改动其他的已有代码，我们就实现了「遍历逻辑」与「指令逻辑」的解耦。</p>
+<h2 id="实现"><span class="section-num">4</span> 实现</h2>
+<h3 id="支持的指令集"><span class="section-num">4.1</span> 支持的指令集</h3>
+<p>不同的指令集的差别只是如何实现 <code>open</code> 和 <code>close</code> 逻辑，我就不一一赘述了，已支持的指令集及实现列表如下：</p>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>作用</th>
+<th>实现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>z-if</code></td>
+<td>条件渲染，值为false时移除元素</td>
+<td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-if.ts">z-if.ts</a></td>
+</tr>
+<tr>
+<td><code>z-include</code></td>
+<td>引入外部HTML文件内容</td>
+<td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-include.ts">z-include.ts</a></td>
+</tr>
+<tr>
+<td><code>z-iteration</code></td>
+<td>数字迭代，生成序列内容</td>
+<td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-iteration.ts">z-iteration.ts</a></td>
+</tr>
+<tr>
+<td><code>z-literal</code></td>
+<td>保留元素原始属性不解析</td>
+<td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-literal.ts">z-literal.ts</a></td>
+</tr>
+<tr>
+<td><code>z-loop</code></td>
+<td>循环遍历数组生成元素内容</td>
+<td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-loop.ts">z-loop.ts</a></td>
+</tr>
+<tr>
+<td><code>z-num</code></td>
+<td>直接输出数字值到元素内容</td>
+<td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-num.ts">z-num.ts</a></td>
+</tr>
+<tr>
+<td><code>z-snippet</code></td>
+<td>定义可复用的HTML片段</td>
+<td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-snippet.ts">z-snippet.ts</a></td>
+</tr>
+<tr>
+<td><code>z-trace</code></td>
+<td>打印变量值到控制台（调试用）</td>
+<td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-trace.ts">z-trace.ts</a></td>
+</tr>
+<tr>
+<td><code>z-var</code></td>
+<td>将变量值输出到元素内容</td>
+<td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-var.ts">z-var.ts</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="示例"><span class="section-num">4.2</span> 示例</h3>
+<p>假设有数据如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">vars</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;firstVariable&#34;</span><span class="o">:</span> <span class="s2">&#34;firstValue&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;secondVariable&#34;</span><span class="o">:</span> <span class="s2">&#34;secondValue&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;variableName&#34;</span><span class="o">:</span> <span class="s2">&#34;variableValue&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;showThis&#34;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;doNotShowThis&#34;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;names&#34;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;Johnson&#34;</span><span class="p">,</span> <span class="s2">&#34;Vaughan&#34;</span><span class="p">,</span> <span class="s2">&#34;Jackson&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="z-num"><span class="section-num">4.2.1</span> z-num</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">z-num</span><span class="o">=</span><span class="s">&#34;123&#34;</span><span class="p">/&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>模板展开如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">span</span><span class="p">&gt;</span>123<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="z-var"><span class="section-num">4.2.2</span> z-var</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">z-var</span><span class="o">=</span><span class="s">&#34;variableName&#34;</span><span class="p">/&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>模板展开如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">span</span><span class="p">&gt;</span>variableValue<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="z-if"><span class="section-num">4.2.3</span> z-if</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">z-if</span><span class="o">=</span><span class="s">&#34;showThis&#34;</span><span class="p">&gt;</span>This should be shown.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">z-if</span><span class="o">=</span><span class="s">&#34;doNotShowThis&#34;</span><span class="p">&gt;</span>This should <span class="p">&lt;</span><span class="nt">em</span><span class="p">&gt;</span>not<span class="p">&lt;/</span><span class="nt">em</span><span class="p">&gt;</span> be shown.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>模板展开如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>This should be shown.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="z-loop"><span class="section-num">4.2.4</span> z-loop</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Expect three items<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">z-loop</span><span class="o">=</span><span class="s">&#34;item:names&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">z-var</span><span class="o">=</span><span class="s">&#34;item&#34;</span><span class="p">/&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>模板展开如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Expect three items<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">span</span><span class="p">&gt;</span>Johnson<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">span</span><span class="p">&gt;</span>Vaughan<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">span</span><span class="p">&gt;</span>Jackson<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="z-include"><span class="section-num">4.2.5</span> z-include</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">z-var</span><span class="o">=</span><span class="s">&#34;variableName&#34;</span><span class="p">/&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">z-include</span><span class="o">=</span><span class="s">&#34;simple.html&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>simple.html</code> :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>First<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Second<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>模板展开如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">span</span><span class="p">&gt;</span>variableValue<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>First<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Second<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>更多的<a href="https://github.com/ramsayleung/reinvent/blob/master/__tests__/page_template/expander-test.ts">示例可见</a></p>
+<h2 id="总结"><span class="section-num">5</span> 总结</h2>
+<p>模板引擎的本质，是帮我们把重复的页面结构抽离出来，而内容与表现的分离(Separation of content and presentation)，可以让我们以数据来填充变化的内容。</p>
+<p>这是程序员对「Don&rsquo;t Repeat Yourself」原则最直观的践行。</p>
+<p>三十年来，开发者们创造了无数种实现方案，但核心思路始终围绕着前文提到的三种基本模式。</p>
+<p>如今即便在最流行的 Vue 或 React 框架中，无论你写的是 <code>JSX</code> 或是 <code>v-*</code> 指令，背后的思路仍万变不离其宗，本质上仍在沿用模板引擎的思想。</p>
+<p>而这种「结构复用，数据驱动」的理念，也早已成为Web开发的根基。</p>
+<p><a href="/zh/post/2025/reinvent_project/">回到本系列的目录</a></p>
+<h2 id="参考"><span class="section-num">6</span> 参考</h2>
+<ul>
+<li><a href="https://refactoring.guru/design-patterns/visitor">https://refactoring.guru/design-patterns/visitor</a></li>
+<li><a href="https://serde.rs/impl-deserialize.html">https://serde.rs/impl-deserialize.html</a></li>
+<li><a href="https://third-bit.com/sdxjs/page-templates/">https://third-bit.com/sdxjs/page-templates/</a></li>
+</ul>
+]]></content:encoded>
+    </item>
     <item>
       <title>《过河卒》: 比特币雏形之父之父的故事</title>
       <link>https://ramsayleung.github.io/zh/post/2025/%E8%BF%87%E6%B2%B3%E5%8D%92/</link>
@@ -4406,58 +5321,6 @@ Explanation:</p>
 <p><a href="https://www.interpals.net/">https://www.interpals.net/</a>&#160;<a href="#fnref:10" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</div>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>单独使用Emacs的Magit插件</title>
-      <link>https://ramsayleung.github.io/zh/post/2024/%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8emacs%E7%9A%84magit%E6%8F%92%E4%BB%B6/</link>
-      <pubDate>Wed, 11 Dec 2024 16:00:00 -0800</pubDate>
-      <guid>https://ramsayleung.github.io/zh/post/2024/%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8emacs%E7%9A%84magit%E6%8F%92%E4%BB%B6/</guid>
-      <description>1 Emacs 与 Magit 不知不觉，我已经使用Emacs 快10年了，在我使用过的编辑器中，Emacs是扩展性最强的编辑器，毕竟Emacs是个披着编辑器外衣的L</description>
-      <content:encoded><![CDATA[<h2 id="emacs-与-magit"><span class="section-num">1</span> Emacs 与 Magit</h2>
-<p>不知不觉，我已经使用Emacs 快10年了，在我使用过的编辑器中，Emacs是扩展性最强的编辑器，毕竟Emacs是个披着编辑器外衣的Lisp虚拟机。</p>
-<p>在Emacs无所不能的扩展性之下，诞生了非常多强大的插件，
-也让Emacs有了「伪装成操作系统的编辑器」的美名，而Emacs公认的杀手锏插件有两个，一个是 <a href="https://orgmode.org/">org-mode</a>，另一个是 <a href="https://magit.vc/">magit</a>. (我个人觉得还有个 <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html">dired</a>)</p>
-<p>Orgmode是类似Markdown，与Emacs深度绑定优化的标记语言，使用Emacs来编写org-mode 文档就有下笔有神，文思泉涌，如丝般顺滑(这篇文章也是用org-mode写的)。</p>
-<p>因为org-mode 与Emacs 深度结合，自然无法脱离Emacs单独使用，而其他编辑器模仿org-mode 开发的插件，如 <a href="https://github.com/jceb/vim-orgmode">vim-orgmode</a>, <a href="https://github.com/nvim-orgmode/orgmode">nvim-orgmode</a> 和 <a href="https://github.com/vscode-org-mode/vscode-org-mode">vscode-orgmode</a>, 难免只得其形，未得其神，还不如用Markdown.</p>
-<p>而 Magit 是 Git的Emacs图形化客户端, 也是我用过的最好用的Git 客户端软件，既直观又易用(看看Emacs 道友们夸 Magit 的<a href="https://emacs-china.org/t/magit/22521/5">帖子</a>):</p>
-<figure>
-    <img loading="lazy" src="/ox-hugo/magit_dashboard.jpg"/> 
-</figure>
-
-<p>虽然我已经用了Emacs很多年，但是已经过了Live with Emacs的境界, 不会用Emacs处理所有事情, 比如用VSCode 写Rust, 用Intellij Idea写Java, 既然 Magit 那么好用，有没可能独立于Emacs使用呢?</p>
-<h2 id="emacs-daemon"><span class="section-num">2</span> Emacs daemon</h2>
-<p>作为无所不能的「操作系统」, Emacs 作为<a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Emacs-Server.html">server</a> 一直在后台运行，然后再使用 <code>emacsclient</code> 连接 server:</p>
-<p>前文提到, Emacs 是批着编辑器外衣的Lisp VM, 而 Magit 本质也只是一个 lisp function, 只要在启动emacsclient的时候，再调用 magit的函数, 那么就可以启动 Magit:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">magit</span><span class="o">=</span><span class="s2">&#34;emacsclient -nw -eval &#39;(magit-status)&#39;&#34;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><figure>
-    <img loading="lazy" src="/ox-hugo/magit.gif"/> 
-</figure>
-
-<p>这样就可以在VSCode和Idea里面愉快地使用 magit了.</p>
-<h2 id="总结"><span class="section-num">3</span> 总结</h2>
-<p>在Emacs-China 论坛搜索Magit的时候, 发现了也有一个帖子讨论把 <a href="https://emacs-china.org/t/magit/25527/6">magit当作的单独的工具</a>, 没想到有个回复的思路和我一样，使用Emacs作为daemon 来启用.</p>
-<p>只是没有想到他更evil, 在Nvim 里面使用Magit, 我也学习一下 Nvim+Emacs 的组合 :)</p>
-<h2 id="参考"><span class="section-num">4</span> 参考</h2>
-<ul>
-<li><a href="https://orgmode.org/">https://orgmode.org/</a></li>
-<li><a href="https://magit.vc/">https://magit.vc/</a></li>
-<li><a href="https://emacs-china.org/t/magit/22521/5">https://emacs-china.org/t/magit/22521/5</a></li>
-<li><a href="https://emacs-china.org/t/magit/25527/6">https://emacs-china.org/t/magit/25527/6</a></li>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Emacs-Server.html">https://www.gnu.org/software/emacs/manual/html_node/emacs/Emacs-Server.html</a></li>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html">https://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html</a></li>
-</ul>
-<div center class="qr-container">
-<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
-公号同步更新，欢迎关注👻
 </div>
 ]]></content:encoded>
     </item>
