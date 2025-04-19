@@ -24,21 +24,61 @@
 <p>我花了半年多的时间，在闲暇时间，学习了苹果的Swift语言和SwiftUI框架，想体验下IOS开发，再看下有没有机会通过写软件来做点副业。 <br/></p>
 <p>先花了大概3个月时间，通过阅读 <a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/guidedtour/">The Swift Programming Language</a> 这本官方电子书<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>来学习Swift这门语言，又花了接近4个月的时候来学习 <a href="https://www.hackingwithswift.com/100/swiftui">100 Days of SwiftUI</a> 这门课程<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>，每天花费1到2小时来学习一课，总共100课，所以顾名思义叫 100 Days of SwiftUI, 课程非常新且好，讲师功力深厚，课讲得深入浅出，娓娓道来。 <br/></p>
 <p>每完成一课，就在Twitter上发一条推文，今天刚好把第100天的推文发了. <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/tweet_day_100.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-b75d4" hidden>
+    <label for="zoomCheck-b75d4">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/tweet_day_100.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/tweet_day_99.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-3f0eb" hidden>
+    <label for="zoomCheck-3f0eb">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/tweet_day_99.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/tweet_day_96.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-f8912" hidden>
+    <label for="zoomCheck-f8912">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/tweet_day_96.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>今天是结课之日，我通过了结课的考试，总分100分，考了91分，喜提课程证书一枚. <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/100_days_of_swiftui_certificate.jpg"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-8d00c" hidden>
+    <label for="zoomCheck-8d00c">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/100_days_of_swiftui_certificate.jpg"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>在整个课程中，我写了19个IOS App(虽说大部分是功能简单的App), 源码也基本放在<a href="https://github.com/ramsayleung?tab=repositories&amp;q=&amp;type=&amp;language=swift&amp;sort="> GitHub</a> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>上了，不过所有的App都没有上架App Store，因为我还没有给苹果交税(99美刀的开发者注册费). <br/></p>
@@ -123,8 +163,18 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><figure>
-    <img loading="lazy" src="/ox-hugo/zstack_rectangle.png"/> 
+</div><p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-5ea04" hidden>
+    <label for="zoomCheck-5ea04">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/zstack_rectangle.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>除了声明式语法之外，SwiftUI让人赏心悦目的就是动画。好的动画在App里面绝对能起到画龙点睛的作用，而SwiftUI的内置动画已经非常强大了，下面就是使用内置动画实现的动画效果: <br/></p>
@@ -186,8 +236,18 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><figure>
-    <img loading="lazy" src="/ox-hugo/drag_animation.gif"/> 
+</div><p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-fd3d7" hidden>
+    <label for="zoomCheck-fd3d7">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/drag_animation.gif"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <div class="highlight"><div class="chroma">
@@ -240,13 +300,33 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><figure>
-    <img loading="lazy" src="/ox-hugo/hearbeat.gif"/> 
+</div><p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-88844" hidden>
+    <label for="zoomCheck-88844">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/hearbeat.gif"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>而Xcode 15新增的预览功能也很好用，可以让开发者不需要启动iPhone模拟器就能预览页面效果，节省了非常多的等待时间。 <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/xcode_preview.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-1442d" hidden>
+    <label for="zoomCheck-1442d">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/xcode_preview.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <h2 id="问题"><span class="section-num">4</span> 问题</h2>

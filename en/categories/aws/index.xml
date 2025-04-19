@@ -34,8 +34,18 @@
 <p>For instance, this box could include all the resources required to run an application or Lambda service, such as S3 Buckets (storage), Roles (authorization), Lambda Function (computing), API Gateway (access point), Alarm, Monitoring, etc.</p>
 <h2 id="problem"><span class="section-num">2</span> Problem</h2>
 <p>I am currently working on a project which requires to set up two stacks, one stack( <code>GlueStack</code> ) for defining a list of AWS Glue tables and the other stack( <code>ServiceStack</code> ) for definition of Lambda service and associated resources.</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/two_stacks.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-1a0ae" hidden>
+    <label for="zoomCheck-1a0ae">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/two_stacks.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>In fact, S3 bucket names have to be globally unique within a partition, which means crossing the whole AWS customer base.</p>
@@ -43,14 +53,34 @@
 <p>So it&rsquo;s safer to let CloudFormation generate a random bucket name for a developer when he need to initialize a S3 bucket.</p>
 <p>However, there is new a problem I face: since the S3 bucket name is randomly generated characters, if <code>GlueStack</code> need to read the bucket created by <code>ServiceStack</code>, how could I share the bucket name between two stacks?</p>
 <p>While these two stacks are isolated and separated, resources collection.</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/s3_bucket_problem.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-cc2ab" hidden>
+    <label for="zoomCheck-cc2ab">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/s3_bucket_problem.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <h2 id="solution"><span class="section-num">3</span> Solution</h2>
 <p>Fortunately, CDK offers a facility named <code>CfnOutput</code> to export a deployed resource, so that the consumer of the resource is able to <code>Import</code> required resource.</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/export.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-f615d" hidden>
+    <label for="zoomCheck-f615d">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/export.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <ol>

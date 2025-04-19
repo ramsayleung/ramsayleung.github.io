@@ -69,9 +69,19 @@
 <li>客户端再向服务器发送ACK确认码，服务器接收到以后也变成ESTABLISHED。然后服务器客户端开始数据传输</li>
 </ol>
 <p>如图：</p>
+
 <figure>
-    <img loading="lazy" src="https://sites.google.com/a/javainterview.net/question/_/rsrc/1425457816649/misc/tcp-ip/3-way-handshake-Intro-to-transport-layer-The-internetworking-Part2.gif"
-         alt="Figure 1: 图来源于Google"/> <figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-61b3c" hidden>
+    <label for="zoomCheck-61b3c">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://sites.google.com/a/javainterview.net/question/_/rsrc/1425457816649/misc/tcp-ip/3-way-handshake-Intro-to-transport-layer-The-internetworking-Part2.gif"
+         alt="Figure 1: 图来源于Google"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 1: </span>图来源于Google</p>
         </figcaption>
 </figure>
@@ -82,8 +92,18 @@
 <li>
 <p>SYN+ACK</p>
 <p>那么现在再回到SYN扫描上来.如果在发送第一次握手的 <code>SYN</code> flag 时，目标机器回复了=SYN+ACK=,这不就说明笔者发送的TCP包中的目标端口是开放的么！如果不开放，服务器就不会期待第三次握手了，也不会给笔者发送 <code>SYN+ACK</code> 了；如图：</p>
-<figure>
-        <img loading="lazy" src="http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/uploads/101613_1123_PortScannin3.jpg"/> 
+
+    <figure>
+        
+        
+        <input type="checkbox" id="zoomCheck-69283" hidden>
+        <label for="zoomCheck-69283">
+        
+        
+        <img class="zoomCheck" loading="lazy" src="http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/uploads/101613_1123_PortScannin3.jpg"/> 
+        
+        
+        </label>
     </figure>
 
 <p>图来自 <a href="http://resources.infosecinstitute.com/port-scanning-using-scapy/">http://resources.infosecinstitute.com/port-scanning-using-scapy/</a></p>
@@ -94,8 +114,18 @@
 <li>
 <p>RST</p>
 <p>如果第二次握手的时候，目标机器回复的不是 <code>SYN+ACK</code>, 而是 <code>RST</code>, 就说明TCP包中的目标端口在目标机器上是关闭的；如图</p>
-<figure>
-        <img loading="lazy" src="http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/uploads/101613_1123_PortScannin4.jpg"/> 
+
+    <figure>
+        
+        
+        <input type="checkbox" id="zoomCheck-6b7be" hidden>
+        <label for="zoomCheck-6b7be">
+        
+        
+        <img class="zoomCheck" loading="lazy" src="http://2we26u4fam7n16rz3a44uhbe1bq2.wpengine.netdna-cdn.com/wp-content/uploads/101613_1123_PortScannin4.jpg"/> 
+        
+        
+        </label>
     </figure>
 
 <p>图来自 <a href="http://resources.infosecinstitute.com/port-scanning-using-scapy/">http://resources.infosecinstitute.com/port-scanning-using-scapy/</a></p>

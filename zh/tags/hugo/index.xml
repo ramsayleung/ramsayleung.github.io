@@ -44,8 +44,18 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>但是 theme 在初始化时就指定好了，那么在博客切换到 dark theme 的时候， Utteranc 也不会自适应 dark theme，博客的theme与评论theme就不一致：</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/responsive_comment_theme.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-381e2" hidden>
+    <label for="zoomCheck-381e2">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/responsive_comment_theme.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <h2 id="解决思路"><span class="section-num">2</span> 解决思路</h2>
@@ -201,12 +211,32 @@
 </div>
 </div><h2 id="总结"><span class="section-num">3</span> 总结</h2>
 <p>自适应评论系统的代码<a href="https://github.com/ramsayleung/ramsayleung.github.io/blob/master/layouts/partials/comments.html">在这里</a>, 实现的效果如下:</p>
-<figure>
-    <img loading="lazy" src="/ox-hugo/responsive_comment_theme_2.jpg"/> 
-</figure>
 
 <figure>
-    <img loading="lazy" src="/ox-hugo/responsive_comment_theme_3.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-bb368" hidden>
+    <label for="zoomCheck-bb368">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/responsive_comment_theme_2.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-81ea8" hidden>
+    <label for="zoomCheck-81ea8">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/responsive_comment_theme_3.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <div center class="qr-container">

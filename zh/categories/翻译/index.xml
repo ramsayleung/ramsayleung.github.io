@@ -59,9 +59,19 @@
 <p>你可以用Helm 来完成任何事。</p>
 <p>基于 <strong>tuhdo</strong> 对我在<a href="https://www.reddit.com/r/emacs/comments/52lnad/from_helm_to_ivy_a_user_perspective/d7lypeu/">Reddit</a> 上面问题的回复，我想指出的一个特性就是Helm 是不使用 <em>minibuffer</em>,但是Ivy 是使用的。</p>
 <p>所以它可以被配置成总是在当前打开的窗口展示。对于那些大屏幕显示器的用户而言，这个特性真的非常有用，因为你的目光不用在 <em>minibuffer</em> 来回切换：</p>
+
 <figure>
-    <img loading="lazy" src="http://i.imgur.com/g1Oz9JY.png"
-         alt="Figure 1: 补全结果总是显示在同一个窗口"/> <figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-2b760" hidden>
+    <label for="zoomCheck-2b760">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="http://i.imgur.com/g1Oz9JY.png"
+         alt="Figure 1: 补全结果总是显示在同一个窗口"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 1: </span>补全结果总是显示在同一个窗口</p>
         </figcaption>
 </figure>
@@ -306,8 +316,18 @@ Counsel 也只有7500 行代码</p>
 <p>你是通过 <code>magit-status</code> 这个接口来使用Magit 的。此外，如果你是使用 Emacs VC的，你需要知道的是，Magit是没有集成到Emacs VC(Version Control)的 抽象层。</p>
 <p>虽然你没法在VC 使用Magit,不过你还是可以在大多数版本控制工具使用Magit 的，Magit 为这些版本控制工具都提供了统一的接口；你如果想调用Magit,你只需要 <code>M-x magit-status</code></p>
 <h2 id="the-magit-status"><span class="section-num">2</span> The Magit Status</h2>
+
 <figure>
-    <img loading="lazy" src="https://www.masteringemacs.org/static/uploads/Screenshot-from-2013-12-06-114511.png"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-e3368" hidden>
+    <label for="zoomCheck-e3368">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://www.masteringemacs.org/static/uploads/Screenshot-from-2013-12-06-114511.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p>你首先会注意到关于Magit的事情应该就是当你打开Magit 的状态窗口时，Magit 的状态窗口
@@ -327,8 +347,18 @@ Counsel 也只有7500 行代码</p>
 让你通过 <code>tab</code> 展开或者折叠已经暂存或者未暂存文件。</p>
 <p>如果你想更加细颗粒度地暂存或者未暂存文件，你可以使用 <strong>M-1</strong> 到 <strong>M-4</strong> 来操作所有的文件；此外，也可以使用 <strong>1</strong> 到 <strong>4</strong>
 操作选定的文件</p>
+
 <figure>
-    <img loading="lazy" src="https://www.masteringemacs.org/static/uploads/diff-hunk-refined-level-4.png"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-a2b5c" hidden>
+    <label for="zoomCheck-a2b5c">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://www.masteringemacs.org/static/uploads/diff-hunk-refined-level-4.png"/> 
+    
+    
+    </label>
 </figure>
 
 <ol>
@@ -370,8 +400,18 @@ Counsel 也只有7500 行代码</p>
 <p>如果你想在最新一次提交下创建一个 <code>fixup</code> 或者 <code>squash</code> 提交的话，使用修整或压缩命令 可以重整或者 <code>--(自动压缩)autosquash</code> 最新一次提交。</p>
 <p>如果你不会去重写你的git历史或者你未使用过重整，你可能觉得这两个命令不是很有用</p>
 <h2 id="logging"><span class="section-num">5</span> Logging</h2>
+
 <figure>
-    <img loading="lazy" src="https://www.masteringemacs.org/static/uploads/Screenshot-from-2013-12-06-142317.png"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-cb202" hidden>
+    <label for="zoomCheck-cb202">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://www.masteringemacs.org/static/uploads/Screenshot-from-2013-12-06-142317.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p>我觉得Magit非常强大的特性之一就是它有不计其数的选项可以用来对你的git 历史进行 过滤，排序，查找。</p>

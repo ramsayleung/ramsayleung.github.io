@@ -31,18 +31,48 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 <p>而使用布隆过滤器判重可以实现常数级的时间复杂度(检索时间不随元素增长而增加).那么布隆过滤器又是怎样实现的呢</p>
 <h3 id="布隆过滤器实现原理"><span class="section-num">1.1</span> 布隆过滤器实现原理</h3>
 <p>一个Bloom Filter是基于一个m位的位向量（Bit Vector），这些位向量的初始值为0, 并且有一系列的 hash 函数，hash 函数值域为1-m.在下面例子中，是15位的位向量，初始值为0以空白表示，为1以颜色填充</p>
+
 <figure><a href="/ox-hugo/bit_vector.png">
-    <img loading="lazy" src="/ox-hugo/bit_vector.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-a88b8" hidden>
+    <label for="zoomCheck-a88b8">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/bit_vector.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>现在有两个简单的 hash 函数：fnv,murmur.现在我输入一个字符串 &ldquo;whatever&rdquo; ,然后分别使用两个 hash 函数对 &ldquo;whatever&rdquo; 进行散列计算并且映射到上面的位向量。</p>
+
 <figure><a href="/ox-hugo/whatever.png">
-    <img loading="lazy" src="/ox-hugo/whatever.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-395b7" hidden>
+    <label for="zoomCheck-395b7">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/whatever.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>可知，使用 fnv 函数计算出的 hash 值是11,使用 murmur 函数计算出的 hash 值是4. 然后映射到位向量上：</p>
+
 <figure><a href="/ox-hugo/bit_vector1.png">
-    <img loading="lazy" src="/ox-hugo/bit_vector1.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-05bbd" hidden>
+    <label for="zoomCheck-05bbd">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/bit_vector1.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>如果下一次，笔者要判断 <strong>whatever</strong> 是否在字符串中，只需使用 fnv 和 murmur 两个 hash 函数对 <strong>whatever</strong> 进行散列值计算，然后与位向量做 &ldquo;与运算&rdquo;，如果结果为0, 那么说明 <strong>whatever</strong> 是不在集合中的，因为同样的元素使用同一个 hash 函数产生的值每次都是相同的，不相同就说明不是同一个元素。</p>

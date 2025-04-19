@@ -21,13 +21,33 @@
       <guid>https://ramsayleung.github.io/en/post/2024/git_blame_with_following/</guid>
       <description>Developers usually use git blame in GUI tools like GitHub Blame or using GitLens blame in VSCode: Even though GUI tools is intuitive, but the Git CLI has much more powerful tooling for finding something closer to the real story behind your code. There are many scenarios that CLI is valuable, the first is ignoring the whitespace changes. For example, if you formatted your C++ codebase with clang-format or Javascript codebase with prettier, you haven&amp;rsquo;t actually changed the codebase, but you&amp;rsquo;re the owner of tons of lines of code.</description>
       <content:encoded><![CDATA[<p>Developers usually use <code>git blame</code> in GUI tools like GitHub Blame <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/github_blame.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-68df0" hidden>
+    <label for="zoomCheck-68df0">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/github_blame.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>or using GitLens blame in VSCode: <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/git_blame_git_lens_vscode.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-7f082" hidden>
+    <label for="zoomCheck-7f082">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/git_blame_git_lens_vscode.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>Even though GUI tools is intuitive, but the Git CLI has much more powerful tooling for finding something closer to the real story behind your code. <br/></p>
@@ -64,17 +84,37 @@
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git blame activemodel/lib/active_model/access.rb
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><figure>
-    <img loading="lazy" src="/ox-hugo/normal_git_blame.png"
-         alt="Figure 1: Vanilla git blame"/> <figcaption>
+</div><p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-b230f" hidden>
+    <label for="zoomCheck-b230f">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/normal_git_blame.png"
+         alt="Figure 1: Vanilla git blame"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 1: </span>Vanilla git blame</p>
         </figcaption>
 </figure>
  <br/></p>
 <p>Ok, it looks like Jonathan Hefner wrote all of this code it appears, let&rsquo;s look at the same code with <code>git blame -w -C -C -C activemodel/lib/active_model/access.rb</code> <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/git_blame_-w_-C_-C_-C.png"
-         alt="Figure 2: git blame -w -C -C -C"/> <figcaption>
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-dab9e" hidden>
+    <label for="zoomCheck-dab9e">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/git_blame_-w_-C_-C_-C.png"
+         alt="Figure 2: git blame -w -C -C -C"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 2: </span>git blame -w -C -C -C</p>
         </figcaption>
 </figure>
@@ -147,8 +187,18 @@
 </div><p>Then Git will look in the <code>~/.gitconfig-oss</code> files for values only if the project you are currently working on matches <code>~/projects/oss/</code>. <br/></p>
 <p><strong><strong>Caution</strong></strong>: If you forget to specify the &ldquo;/&rdquo; at the end of the git dir, e.g. &ldquo;~/projects/oss&rdquo;, Conditional Config won&rsquo;t work! <br/></p>
 <p>Therefore, you could have a &ldquo;work&rdquo; directory and work-specific config here and an &ldquo;oss&rdquo; directory with values for your open source projects, etc. <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/conditional_config.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-d0b28" hidden>
+    <label for="zoomCheck-d0b28">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/conditional_config.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>Git also supports other filters more than <code>gitdir</code>, you could specify a branch name as an include filter with <code>onbranch</code> <br/></p>

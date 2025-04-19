@@ -32,8 +32,18 @@
 <p><code>hacker</code> 一词又是从 <code>hacking</code> 衍生而来的，将 <code>hacking</code> 翻译成成中文网络语中的「整，搞，开干」可能会更贴切，  而最初的「黑客」指的就是一群富有创造力和兴趣的爱好者，只是比较具有代表性的是在计算机领域。 <br/></p>
 <p>国外有个很有名的科技相关的聚合网站，叫做「Hacker News」, 其中的「Hacker」, 也是沿用黑客最初的含义。 <br/></p>
 <p>既然提到黑客，那么有一个无法绕过去的人物，那就是今天的主角，黑客文化的领军人物：Richard Stallman <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/rms_avatar.jpg"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-19e76" hidden>
+    <label for="zoomCheck-19e76">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/rms_avatar.jpg"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <h2 id="unix"><span class="section-num">3</span> UNIX</h2>
@@ -49,14 +59,34 @@
 <p>后来，AT&amp;T公司的贝尔实验室也加入到这个操作系统的研发中，但是项目目标过于庞大，特性太多，性能又很低, AT&amp;T见项目前景不妙，就把资源都撤了，退出了这个项目。 <br/></p>
 <h3 id="玩游戏玩出来的unix"><span class="section-num">3.2</span> 玩游戏玩出来的UNIX</h3>
 <p>贝尔实验室的一位工程师，名叫Ken Thompson, 刚加入 MULTICS 项目不久，公司就准备退出了，但是通用公司为了项目而准备的机器 GE-645 就还保留在贝尔实验室，Ken 就打算用这些机器写个太空旅行的游戏。 <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/ge-645.jpg"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-514a1" hidden>
+    <label for="zoomCheck-514a1">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/ge-645.jpg"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>然而，Ken 写出来的游戏跑得很慢，每次运行还要75美刀，更难受的是，GE-645 这批机器，不久后就被搬回去通用公司了。 <br/></p>
 <p>所以Ken 只好在实验室角落找了几台没人用的PDP-7, 在同事 Dennis Ritchie 的帮助下，再重写了一次游戏。 <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/pdp-7.jpeg"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-d21d7" hidden>
+    <label for="zoomCheck-d21d7">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/pdp-7.jpeg"/> 
+    
+    
+    </label>
 </figure>
   <br/></p>
 <p>这次的游戏开发经历，加上之前的 MULTICS 项目经验，让Ken 开始研究如何使用 PDP-7 开发一个分时多任务操作系统。 <br/></p>
@@ -87,18 +117,48 @@
 <p>想象一下，有人跟你说要开发一个 Android 操作系统，用来替换掉 Google 的Android 系统，这工作量和难度可想而知，这就是现实中的想要移山的愚公，大战风车的堂吉诃德。 <br/></p>
 <p>但是 RMS 并未被眼前的困难所吓退，而是一步一步，从0开始构建他心中的类Unix操作系统. <br/></p>
 <p>1984年, RMS 开发并发布GNU Emacs 这个著名的文本编辑器, 方便程序员进行代码开发; <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/gnu_emacs.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-79645" hidden>
+    <label for="zoomCheck-79645">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/gnu_emacs.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>1986年, RMS 开发并发布GNU Debugger(gdb) 调试器, 方便程序员来调试程序; Emacs + gdb 就是他那个时代的IDE <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/gdb_screenshot.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-b4c76" hidden>
+    <label for="zoomCheck-b4c76">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/gdb_screenshot.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>1987年, RMS 开发并发布GNU Compiler Collection(gcc) 编译器套件; 所谓的编译器，即将人写的代码，转换成机器可以运行的二进制代码。 <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/gcc_logo.svg"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-75616" hidden>
+    <label for="zoomCheck-75616">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/gcc_logo.svg"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>开发出一个这样的软件就足以在计算机史上留名，RMS 在这3年间，还一口气开发出了3个，这样的技术水平和生产效率，只能让人叹服，影响力堪比盗火的普罗米修斯。 <br/></p>
@@ -125,8 +185,18 @@
 <p>有点离谱的是, GNU Hurd 已经开发超过30年了，还没有发布1.0(稳定可用版本). <br/></p>
 <p>更离谱的是，最近还有更新: <br/></p>
 <p>2023年6月份，还发布了2023年 <a href="https://lists.gnu.org/archive/html/bug-hurd/2023-06/msg00038.html">版本更新</a>: <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/gnu_hurd_2023_release.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-05214" hidden>
+    <label for="zoomCheck-05214">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/gnu_hurd_2023_release.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <h2 id="轶事"><span class="section-num">6</span> 轶事</h2>
@@ -137,12 +207,32 @@
 <p>既然 RMS 是Emacs 的创始人，自然被使用 Emacs的人尊称为「教主」。 <br/></p>
 <p>而这场争论已经持续近四十年，依旧没有分出胜负。 <br/></p>
 <p>像 Google 这样浓眉大眼的家伙，还在不时地给这场战争拱火: <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/google_emacs.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-d4526" hidden>
+    <label for="zoomCheck-d4526">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_emacs.png"/> 
+    
+    
+    </label>
 </figure>
   <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/google_vi.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-16c3d" hidden>
+    <label for="zoomCheck-16c3d">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_vi.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <h3 id="教主与教主"><span class="section-num">6.2</span> 教主与教主</h3>
@@ -174,12 +264,32 @@
 <h3 id="抠脚"><span class="section-num">6.4</span> 抠脚</h3>
 <p>菜的抠脚就听说过，强得抠脚又是什么呢？ <br/></p>
 <p>因为他真的抠脚（字面意思），还吃回去了。 <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/koujiao_1.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-cc552" hidden>
+    <label for="zoomCheck-cc552">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/koujiao_1.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/koujiao2.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-306fb" hidden>
+    <label for="zoomCheck-306fb">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/koujiao2.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <h2 id="总结"><span class="section-num">7</span> 总结</h2>

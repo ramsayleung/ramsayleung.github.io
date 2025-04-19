@@ -256,8 +256,18 @@
 <p>最简单的方式肯定就是使用全局变量的 HashMap 来保存所有的变量，但是如果存在两个同名的变量，那么 HashMap 这种数据结构就不适用。</p>
 <p>更何况，可变的全局变量可谓是万恶之源，不知道有多少 bug 都是源自可变的全局变量。</p>
 <p>在编译原理，保存变量的标准做法就是使用 stack frame, 每次进入一个函数就创建一个新的栈(<code>stack</code>), 每次函数调用都有自己的独立的栈，可以理解成每个栈就是一个 <code>HashMap</code>, 而每创建一个栈就是向 <code>List</code> 里面 <code>push</code> 一个新的 <code>HashMap</code>, 同一个函数里面不能有同名的变量，那能保证栈里面的值是唯一。</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/reinvent_stack_frame.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-338dd" hidden>
+    <label for="zoomCheck-338dd">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_stack_frame.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>谈及变量和 stack frame, 编程语言中有个 <code>作用域(scoping)</code> 的概念, 定义了变量会怎么被程序访问到。</p>
@@ -371,8 +381,18 @@
 <p>并且我们现在只支持4个指令，或者未来要增加其他指令，只要在 <code>traverse</code> 里面再增加 if-else 逻辑，基本没有扩展性。</p>
 <p>所以我们需要优化的点就是，把「遍历逻辑」和「指令逻辑」分开，这样就易于我们扩展新指令。</p>
 <p>要解耦，想想有啥设计模式合适，遍寻23种设计模式，<a href="https://refactoring.guru/design-patterns/visitor">访问者(Vistor)模式 </a>就很合适用来做解耦遍历逻辑和指令逻辑.</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/reinvent_vistor_pattern.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-9802c" hidden>
+    <label for="zoomCheck-9802c">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_vistor_pattern.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>不了解 Vistor 模式的同学可以先看下这篇<a href="https://refactoring.guru/design-patterns/visitor">文章</a>, 而Rust 非常著名的序列化框架 <a href="https://serde.rs">Serde</a> 就通过 <a href="https://serde.rs/impl-deserialize.html">Vistor</a> 模式可以让用户自定义如何序列化或反序列化某种类型的数据。</p>
@@ -591,8 +611,18 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>Expander</code> 的逻辑也并不复杂，每次遍历到一个 <code>DOM</code> 元素的时候，通过元素类似执行对应的操作，如果是 <code>z-</code> 开头的指令，就看下能否找到对应指令的处理器:</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/reinvent_expander_design.png"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-e5861" hidden>
+    <label for="zoomCheck-e5861">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_expander_design.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p>仔细观察代码会发现，不同的指令对应的处理器实现了 <code>NodeHandler</code> 接口，定义在前序位置和后序位置处理节点的逻辑，并按指令名保存在 <code>HANDLER</code> 中：</p>
@@ -1107,8 +1137,18 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>实现思路如下图:</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/reinvent_simple_regex_design.png"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-26048" hidden>
+    <label for="zoomCheck-26048">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_simple_regex_design.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p>好的，我们的正则表达式引擎完工了，正则表达式看起来也没有那么难嘛。</p>
@@ -1313,8 +1353,18 @@
 </div>
 </div><p>实现很简单, 但 <code>rest</code> 又是什么呢?</p>
 <p>还是以 <code>^c</code> 为例, 现在改复杂一点, 模式变成 <code>^cd</code> 来匹配 <code>cde</code> ，模式 <code>^c</code> 匹配完 <code>c</code> 之后, 就要使用剩下的模式(<code>rest</code>) <code>d</code> 来匹配剩下的文本 <code>de</code>, 剩下的模式可能也会再包含剩下的模式，用来匹配再被剩下的文本，依此类推.</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/reinvent_regex_rest_pointer.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-2d2c9" hidden>
+    <label for="zoomCheck-2d2c9">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_regex_rest_pointer.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>相当于 <code>rest</code> 就是指向下一个模式类的单向指针，用来表示下一个模式需要匹配剩余的文本，直到所有的模式匹配完成，即 <code>rest</code> 指针指向 <code>null</code></p>
@@ -1424,8 +1474,18 @@
 <li>然后匹配 rest(b 在位置 <code>2-&gt;3</code>): 成功！</li>
 <li>返回 3</li>
 </ul>
-<figure>
-        <img loading="lazy" src="/ox-hugo/reinvent_regex_match_aab.png"/> 
+
+    <figure>
+        
+        
+        <input type="checkbox" id="zoomCheck-c2c3c" hidden>
+        <label for="zoomCheck-c2c3c">
+        
+        
+        <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_regex_match_aab.png"/> 
+        
+        
+        </label>
     </figure>
 
 </li>
@@ -1596,8 +1656,18 @@
 <p>虽然我们已经完成了一个正则表达式引擎，只不过我们平时用表达式是 <code>a*bc</code> ，现在要写成 <code>Any(Lit('a'), Lib('b', Lib('c')))</code> 多个类的实例也太烦琐了。</p>
 <p>让我们再来分析下正则表达式，以 <code>^(a|b|$)*z$</code> 为例，以任意数量的 <code>a</code>, <code>b</code>, 或 <code>$</code> 开头, 再紧接一个 <code>z</code>, 然后结束。</p>
 <p>我们可以创建一个树来表达这个表达式:</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/reinvent_regex_express_as_tree.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-4379e" hidden>
+    <label for="zoomCheck-4379e">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_regex_express_as_tree.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>在考虑如何把表达式变成上面那棵树之前，我们可以先从最简单的步骤开始：分割字符串</p>
@@ -1783,23 +1853,53 @@
 </div><h2 id="组装抽象语法树"><span class="section-num">6</span> 组装抽象语法树</h2>
 <p><code>tokenize</code> 的结果是一个包含 Token 的列表，我们要如何组装成树状数据结构呢？</p>
 <p>顺带一提，这树状数据结构全称是抽象语法树(Abstract syntax tree, AST), 是一种用来表示程序结构的数据结构，如:</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/Abstract_syntax_tree_for_Euclidean_algorithm.svg.png"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-7b55c" hidden>
+    <label for="zoomCheck-7b55c">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/Abstract_syntax_tree_for_Euclidean_algorithm.svg.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p>我们可以分情况来讨论，因为不同的模式有不同的组装方式，组装完之后的 AST 的输出是一个 <code>output</code>, 包含组装后的 <code>token</code> 列表:</p>
 <p>对于表达式 <code>a</code>, 我们可以创建一个 <code>Lit</code> 类型的 <code>token</code> (为了便于理解，「创建」指创建一个 <code>token</code>, 然后插入到 <code>output</code>.)</p>
 <p>对于表达式 <code>a*</code> 呢？我们可以先创建一个 <code>Lit('a')</code> 的 <code>token</code>, 当遇到 <code>*</code> 时，因为 <code>*</code> 表示匹配0至任意的前一个字符, 所以我们可以创建一个 <code>Any</code> 类型的 token, 然后把 <code>output</code> 最后一个元素 <code>pop</code> 出来，作为 <code>Any</code> 的 <code>child</code> 元素.</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/reinvent_regex_construct_ast_any.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-63031" hidden>
+    <label for="zoomCheck-63031">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_regex_construct_ast_any.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>对于表达式 <code>(ab)</code>, 情况就变得复杂一些:
 当遇到 <code>(</code> 括号的时候，我们可以创建一个 <code>Group</code> ，但是问题在于，我们不知道这个 <code>Group</code> 什么时候结束，即不知道什么时候才会遇上 <code>)</code>.</p>
 <p>所以我们需要换种解决思路：当遇到 <code>(</code>, 创建一个 <code>GroupStart</code> 类型的 <code>token</code>, 然后再继续处理 <code>a</code>, <code>b</code>, 当遇到 <code>)</code> 时，创建一个 <code>Group</code> 类型的 <code>token</code>, 然后一直调用 <code>pop</code> 函数直到把 <code>GroupStart</code> 也 <code>pop</code> 出来, 然后把过程中 <code>pop</code> 出来的 <code>token</code> 都当作是 <code>Group</code> 的 <code>children</code> 列表，而 <code>GroupStart</code> 相当于起到一个标记符的作用。</p>
 <p>这种思路就自动处理了 <code>(a*)</code> 和 <code>(a(b*)c)</code> 的差异:</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/reinvent_regex_ast_group.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-49c57" hidden>
+    <label for="zoomCheck-49c57">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_regex_ast_group.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>对于表达式 <code>a|b</code>, 我们是否可以参考 <code>Any</code> 的做法呢?</p>
@@ -1814,8 +1914,18 @@
 <li>创建一个 <code>Any</code> token, 并将 <code>Lit('b')</code> pop 出来作为 <code>child</code> 节点.</li>
 <li>当解析完所有字符后, 再遍历一次 <code>output</code>, 如果遇到 <code>Alt</code> token, 那么就把它的下一个 <code>token</code> (即 <code>Any</code>) 作为它的 <code>right</code> 节点.</li>
 </ol>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/reinvent_regex_ast_alt.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-11542" hidden>
+    <label for="zoomCheck-11542">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_regex_ast_alt.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>实现代码如下:</p>
@@ -2183,8 +2293,18 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>浏览器会将其进行解析，并生成名为 <a href="//developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model">Document Object Model</a>(DOM) 的数据结构，听着好像很玄乎，但本质就是一棵多叉树 (Multiway Tree):</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/reinvent_dom_tree.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-6910d" hidden>
+    <label for="zoomCheck-6910d">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_dom_tree.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>知道 <code>DOM</code> 是多叉树, 我们就可以写出简化版本 <code>DOM</code> 的数据结构了：</p>
@@ -2225,8 +2345,18 @@
 <h2 id="bfs-vs-dfs"><span class="section-num">3</span> BFS vs DFS</h2>
 <p>理解到 <code>DOM</code> 的本质是个多叉树之后，我们很快就能意识到， <code>selector</code> 本质也就是遍历多叉树，找到符合要求的所有节点, 比如按 <code>tag</code> 名来匹配，按 <code>id</code> 来匹配，按 <code>class</code> 来匹配等等。</p>
 <p>而用于遍历多叉树的常用算法就是广度优先搜索(Breadth First Search, BFS)和深度优先搜索(Depth First Search, DFS)</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/reinvent_dfs_vs_bfs.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-93592" hidden>
+    <label for="zoomCheck-93592">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_dfs_vs_bfs.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>通常来说，BFS 和 DFS 都能完成多叉树遍历，时间复杂度也是相同的，BFS通常使用一个 <code>queue</code> 来记录遍历待节点，所以会使用更多的内存，但是能找到最短路径；而 DFS 通常使用递归，如果遇到个循环图，就会 StackOverflow，无法找到结果。</p>
@@ -2463,8 +2593,18 @@
 <p>对于重要的文件，一个必不可少的功能肯定是备份, 这样在丢失文件之后可以重新恢复。</p>
 <p>今天我们就来写个简单的文件备份软件，类似 Git 这样的版本系统可以当作是高级版本的文件系统，因为它还支持切换到不同版本，对比版本间的差异等等功能，而我们不打算实现一个版本管理系统，只实现基础的文件备份功能。</p>
 <h2 id="实现思路"><span class="section-num">2</span> 实现思路</h2>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/reinvent_file_backup_design.png"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-05fa5" hidden>
+    <label for="zoomCheck-05fa5">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_file_backup_design.png"/> 
+    
+    
+    </label>
 </figure>
 
 <h3 id="校验文件是否变更"><span class="section-num">2.1</span> 校验文件是否变更</h3>
@@ -2484,8 +2624,18 @@
 <p>对于文件 <code>a.txt</code>, 只需要判断 <code>dst</code> 是否存在 <code>86f7e437faa5a7fce15d1ddcb9eaeaea377667b8</code>, 就知道 <code>a.txt</code> 是否被备份;</p>
 <p>更巧妙的是，如果的 <code>a.txt</code> 文件内容发生变化，那么它的哈希值就一定不再会是 <code>86f7e437faa5a7fce15d1ddcb9eaeaea377667b8</code> 那么查找文件不存在，也可以当作是未备份，直接重新备份。</p>
 <p>下面的序列图就是low level design:</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/reinvent_file_backup_lowlevel_design.png"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-5040e" hidden>
+    <label for="zoomCheck-5040e">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_file_backup_lowlevel_design.png"/> 
+    
+    
+    </label>
 </figure>
 
 <h3 id="性能优化"><span class="section-num">2.3</span> 性能优化</h3>
@@ -2538,8 +2688,18 @@
 <p>备份文件的设计我们已经分析和实现完了，接下来肯定是需要编写单元测试来测试我们的函数的，我们的文件备份涉及到非常多的文件操作，免不了要和文件系统打交道，包括创建文件，查找文件等等。</p>
 <p>单元测试的其中一个原则就是要尽量屏蔽掉外部系统的依赖，以保证我们只聚焦在测试功能本身，文件系统的读写更像是集成测试需要做的事情, 各种操作也很容易把文件目录结构给搞乱，导致单元测试失败。</p>
 <p>所以我们希望可以使用一个 mock object 来把文件系统 mock 掉，<a href="https://github.com/tschaub/mock-fs"><code>mock-fs</code></a> 这个库做的就是这样的事情, 它可以把程序中的文件操作都 mock 掉，实际操作的是内存对象而非文件系统.</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/reivent_file_backup_mock_fs.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-28fbb" hidden>
+    <label for="zoomCheck-28fbb">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reivent_file_backup_mock_fs.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>我们就可以在每个单元测试运行时，任意构造任何想要的文件目录，并且保证文件操作都是在操纵内存对象，
@@ -2779,8 +2939,18 @@
 <li>Error: 运行测试过程中出现错误，我们不确定测试结果是否与预期一致</li>
 </ul>
 <p>我们用以下的状态机来判断测试的结果:</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/unit_test_result_state.png"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-44b21" hidden>
+    <label for="zoomCheck-44b21">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/unit_test_result_state.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p>我们把要实现的单元测试框架命名为 <code>Hope</code>, 根据上面的状态机，我们很快就可以写出一个原型：</p>
@@ -3009,8 +3179,18 @@
 <li>那么是否意味着，每个 <code>import</code> 语句都会运行一下 <code>new Hope()</code> 呢? 并不是，Node会缓存导入的 <code>module</code> ，也就是说无论一个 <code>module</code> 被导入多少次, 它也只会执行一次代码。</li>
 </ol>
 <p>只要导入 <code>hope.ts</code> 之后, 就可以使用 <code>hope.test()</code> 会注册单元测试用例，以便后续执行:</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/unit_test_hope_structure.svg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-5712b" hidden>
+    <label for="zoomCheck-5712b">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/unit_test_hope_structure.svg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>最后， 我们只需要再实现下输出测试结果的功能，既支持输出一行的简短结果，又可以支持详尽的输出. 如果需要的话，后续还可以支持输出JSON, CSV, 或者HTML 格式的结果:</p>
@@ -3179,8 +3359,18 @@
 </div>
 </div><p>我们默认会匹配所有以 <code>test</code> 为前缀的 ts 和 js 文件, 然后通过 <code>import</code> 导入, 因为 <code>hope</code> 是单例模式，所以所有的测试文件用的都是同一个实例, <code>hope.run</code> 就将注册的所有单元测试运行.</p>
 <p>整个框架的工作流程如下:</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/unit_test_workflow.png"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-d335a" hidden>
+    <label for="zoomCheck-d335a">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/unit_test_workflow.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p>大功告成，现在就来运行下我们的单元测试:</p>

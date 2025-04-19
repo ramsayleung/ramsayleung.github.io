@@ -117,8 +117,18 @@
 <p>原来这个是feature, 不是bug. <br/></p>
 <p>对于 Single Page Application, Tampermonkey 无法判断页面的 DOM 是否发生变化，是否访问到新的页面了，所以不会重复执行。 <br/></p>
 <p>分析下来，之前脚本能直接生效的原因是, 我在Chrome正常模式下打开 Youtube 首页, 右键对想要看的视频，点击&quot;Open link in incognito window&quot;, 因为页面是首次打开，所以就能正常运行。 <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/youtube_open_link_in_incognito_window.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-5ab73" hidden>
+    <label for="zoomCheck-5ab73">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/youtube_open_link_in_incognito_window.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>但当通过Chrome 匿名模式打开 Youtube 首页，然后再点击视频播放，无法运行脚本。 <br/></p>

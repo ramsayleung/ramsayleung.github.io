@@ -437,8 +437,18 @@ you would to get the data of the next page, you have to parse a URL:</p>
 </div>
 </div><p>You have to parse the URL and extract <code>limit</code> and <code>offset</code> parameters, and recall the <code>artist_albums</code> endpoint with setting <code>limit</code> to 20 and <code>offset</code> to 2.</p>
 <p>We have to manually fetch the data again and again until all datas have been consumed. It is not elegant, but works.</p>
+
 <figure>
-    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210429172938.png"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-fe459" hidden>
+    <label for="zoomCheck-fe459">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210429172938.png"/> 
+    
+    
+    </label>
 </figure>
 
 <h2 id="iterator-story"><span class="section-num">3</span> Iterator Story</h2>
@@ -467,8 +477,18 @@ you would to get the data of the next page, you have to parse a URL:</p>
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>By implementing the <code>Iterator</code> trait on our own types, we could have iterators that do anything we want. Then working mechanism we want to iterate over paginated result will look like this:</p>
+
 <figure>
-    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/sync_iterator_iterate.png"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-19c48" hidden>
+    <label for="zoomCheck-19c48">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/sync_iterator_iterate.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p>Now let&rsquo;s dive deep into the code, we need to implement <code>Iterator</code> for our own types, the pseudocode looks like:</p>
@@ -2441,9 +2461,19 @@ tracker!</p>
 <p>每个语言都会有异常处理机制（没有异常处理机制的语言估计也没有人会用了），Rust 自然也不例外，所以今天我就来谈Rust 的异常处理，因为 Rust 的异常处理跟常见的语言 （Java/Python 等）的处理机制差异略大，所以打算拉个上个语言，对比着解释. 没错，这 个光荣的任务就落到了 Java 身上</p>
 <h2 id="java-的异常处理"><span class="section-num">2</span> Java 的异常处理</h2>
 <p>在谈 Rust 的异常处理之前，为了把它们之前的差异讲清楚，先来聊一下 Java 的异常处理。</p>
+
 <figure>
-    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/java_exception_hierarchy.png"
-         alt="Figure 1: Java exception hierarchy"/> <figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-4ffb2" hidden>
+    <label for="zoomCheck-4ffb2">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/java_exception_hierarchy.png"
+         alt="Figure 1: Java exception hierarchy"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 1: </span>Java exception hierarchy</p>
         </figcaption>
 </figure>
@@ -2457,9 +2487,19 @@ that indicates serious problems that a reasonable application should
 not try to catch. Most such errors are abnormal conditions.</p>
 </blockquote>
 <p>比如虚拟机挂了，或者JRE 出了问题就可能是 <code>Error</code>，前几天我就遇到一个JRE 的 Bug, 整个项目都挂 了：</p>
+
 <figure>
-    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191104104407.png"
-         alt="Figure 2: JRE fatal error"/> <figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-ac0ab" hidden>
+    <label for="zoomCheck-ac0ab">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191104104407.png"
+         alt="Figure 2: JRE fatal error"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 2: </span>JRE fatal error</p>
         </figcaption>
 </figure>

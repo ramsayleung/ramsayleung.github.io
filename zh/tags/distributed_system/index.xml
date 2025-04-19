@@ -67,8 +67,18 @@
 <li>partitioning: data set can be split over multiple nodes to allow for more parallel processing.</li>
 <li>replication: data set can be copied or cached on different nodes to reduce the distance between the client and the server and for greater fault tolerence.</li>
 </ul>
+
 <figure><a href="/ox-hugo/part-repl.png">
-    <img loading="lazy" src="/ox-hugo/part-repl.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-485b8" hidden>
+    <label for="zoomCheck-485b8">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/part-repl.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <ul>
@@ -124,8 +134,18 @@
 <p>communication links 不知道应该怎么翻译, 通讯链路? 不译也罢</p>
 <p>communication links 用于沟通不同的节点, 允许信息在双向流动. 部分算法假设网络是可靠的: 消息永不丢失并且永不延迟. 虽说这样假设有些许道理, 但是通常我们都是假设网络是不可靠, 因此消息可能丢失或者延迟.</p>
 <p>节点故障 vs 网络分区故障:</p>
+
 <figure><a href="/ox-hugo/system-of-2.png">
-    <img loading="lazy" src="/ox-hugo/system-of-2.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-1450a" hidden>
+    <label for="zoomCheck-1450a">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/system-of-2.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <h4 id="timing-ordering-assumptions"><span class="section-num">3.2.3</span> Timing/ordering assumptions</h4>
@@ -158,8 +178,18 @@
 <li>Partition tolerance: the system continues to operate despite message loss due to network and/or node failure.</li>
 </ul>
 <p>最多只能有两个属性被满足, 如下图:</p>
+
 <figure><a href="/ox-hugo/CAP.png">
-    <img loading="lazy" src="/ox-hugo/CAP.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-5b74d" hidden>
+    <label for="zoomCheck-5b74d">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/CAP.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>同时满足三个属性情况是无法实现的, 即中间交集处. 而满足两个属性的系统模型有如下三个:</p>
@@ -268,8 +298,18 @@
 </ul>
 <h4 id="time-with-a-global-clock-assumption"><span class="section-num">4.3.1</span> Time with a &ldquo;Global-clock&rdquo; assumption</h4>
 <p>全局时钟(Global clock)模型假设有一个完美的全局时钟, 并且所有节点都与这个时钟通信, 且每个节点都精确同步, 且没有时间漂移:</p>
+
 <figure><a href="/ox-hugo/global-clock.png">
-    <img loading="lazy" src="/ox-hugo/global-clock.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-9830d" hidden>
+    <label for="zoomCheck-9830d">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/global-clock.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>但是实际不存在这样的时钟, 任何的时钟都会有一定的精度损失, 并且时钟很难避免出现问题: 有人误修改了时钟; 或者有台过时的机器加入集群, 或者时钟因硬件故障而出现漂移.</p>
@@ -280,8 +320,18 @@
 </ul>
 <h4 id="time-with-a-local-clock-assumption"><span class="section-num">4.3.2</span> Time with a &ldquo;Local-clock&rdquo; assumption</h4>
 <p>每台机器有自己的时钟, 但是没有全局时钟, 这意味着你不能使用时间戳来比较两台不同机器操作的顺序.</p>
+
 <figure><a href="/ox-hugo/local-clock.png">
-    <img loading="lazy" src="/ox-hugo/local-clock.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-bf89f" hidden>
+    <label for="zoomCheck-bf89f">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/local-clock.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>此模型更接近于真实世界, 它指定一个偏序关系: 节点内是有序的, 但是无法仅通过时间戳来进行跨节点排序.</p>
@@ -315,8 +365,18 @@
 </ul>
 </li>
 </ul>
+
 <figure><a href="/ox-hugo/vector_clock.svg.png">
-    <img loading="lazy" src="/ox-hugo/vector_clock.svg.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-aa326" hidden>
+    <label for="zoomCheck-aa326">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/vector_clock.svg.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <h3 id="failure-detector--time-for-cutoff"><span class="section-num">4.5</span> Failure detector(time for cutoff)</h3>
@@ -331,8 +391,18 @@
 <p>完整性比准确性更容易实现, 避免错付没有问题的进程是很难的, 除非可以假设消息延迟的上限, 但是这样的假设只能在同步模型中实现, 所以failure detector在同步模型中可以达到相当的高精度.
 而对于没有延迟上限的系统(异步模型), failure detector能做到的极限就是最终准确.</p>
 <p>下面的图阐述了系统模型与问题可解决性之间的关系:</p>
+
 <figure><a href="/ox-hugo/chandra_failure_detectors.png">
-    <img loading="lazy" src="/ox-hugo/chandra_failure_detectors.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-bac48" hidden>
+    <label for="zoomCheck-bac48">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/chandra_failure_detectors.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>理想情况下, 我们希望failure detector可以根据网络条件动态调整检测阈值, 以此避免硬编码阈值, 例如TCP的动态超时计算算法那样. Cassandra 使用的是 <a href="https://www.google.com/search?q=The+Phi+accrual+failure+detector">accrual failure detector</a>, 输出结果是一个故障的可疑度(0到1之间值), 而不是简单的 <code>挂/没挂</code>, 以此为应用根据可疑度自行决断, 提供更高的灵活度.</p>
@@ -340,15 +410,35 @@
 <p>使用全序关系也是可能的, 但是为了协调全局顺序, 会付出高昂的性能代价.</p>
 <p>如果你对时间/顺序/同步性要求没有那么高, 你可以获得相当的性能提升. 那么, 什么时候需要顺序来保证正确性呢? 后面提到 <code>CALM定理</code> 会为你提供答案.</p>
 <p>说到底, 又是取舍的话题, 下面的情景只存在电影中:</p>
+
 <figure><a href="/ox-hugo/i_want_them_all.png">
-    <img loading="lazy" src="/ox-hugo/i_want_them_all.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-082b9" hidden>
+    <label for="zoomCheck-082b9">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/i_want_them_all.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <h2 id="4-dot-replication-preventing-divergence"><span class="section-num">5</span> 4. Replication: Preventing Divergence</h2>
 <p>复制(replication)是分布式系统需要考虑的诸多问题中的其中一项, 但是却非常关键, 并与选主(leader election), 失败检测(failure detection), 共识(consensus)和原子广播(atomic broadcast)等问题息息相关.</p>
 <p>现在让我们先来看复制长什么样, 假设有某个数据库, 存储初始状态的数据, 客户端请求修改数据状态:</p>
+
 <figure><a href="/ox-hugo/replication-both.png">
-    <img loading="lazy" src="/ox-hugo/replication-both.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-989ed" hidden>
+    <label for="zoomCheck-989ed">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/replication-both.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>复制的模式可以划分成以下几个步骤:</p>
@@ -361,8 +451,18 @@
 <p>由此可见, 复制模式可以划分为同步复制(Synchronous replication)与异步复制(Asynchronous replicatin)</p>
 <h3 id="synchronous-replication"><span class="section-num">5.1</span> Synchronous replication</h3>
 <p>同步复制模式(也被称为active/eager/push/pessimistic replication):</p>
+
 <figure><a href="/ox-hugo/replication-sync.png">
-    <img loading="lazy" src="/ox-hugo/replication-sync.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-47867" hidden>
+    <label for="zoomCheck-47867">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/replication-sync.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>我们可以看到三个不同的阶段:</p>
@@ -396,8 +496,18 @@
 <li>8 * n 条消息(3-phase commit, Paxos with repeated leader election)</li>
 </ul>
 <p>不同的复制算法有不同的特点, 以下是改编自<a href="https://youtu.be/srOgpXECblk">Google 的Ryan Barret</a> 的一张图:</p>
+
 <figure><a href="/ox-hugo/google-transact09.png">
-    <img loading="lazy" src="/ox-hugo/google-transact09.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-cec0c" hidden>
+    <label for="zoomCheck-cec0c">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google-transact09.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>上图中的一致性、延迟、吞吐量、数据丢失和故障转移的特点，实际上可以追溯到两种不同的复制模式：</p>
@@ -464,13 +574,33 @@
 <p>网络分区是指一个或几个节点的网络链接失效. 节点本身继续保持活跃，它们甚至可以接收来自网络分区一侧的客户端的请求.</p>
 <p>网络分区很棘手的，因为在网络分区期间，不可能区分一个节点是挂了呢还是出现网络分区导致请求不可达. 如果发生了网络分区，但没有节点发生故障，那么系统就被分成两个分区. 如下图:</p>
 <p>2个节点时, 节点故障vs 网络分区:</p>
+
 <figure><a href="/ox-hugo/network-partition-vs-node-failure-of-2.png">
-    <img loading="lazy" src="/ox-hugo/network-partition-vs-node-failure-of-2.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-1fee3" hidden>
+    <label for="zoomCheck-1fee3">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/network-partition-vs-node-failure-of-2.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>3个节点时, 节点故障vs 网络分区:</p>
+
 <figure><a href="/ox-hugo/network-partition-vs-node-failure-of-3.png">
-    <img loading="lazy" src="/ox-hugo/network-partition-vs-node-failure-of-3.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-d166a" hidden>
+    <label for="zoomCheck-d166a">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/network-partition-vs-node-failure-of-3.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>分裂成两个网络分区时, 共识算法必须要处理这种对称情况, 只允许一个网络分区保持活跃.</p>
@@ -484,8 +614,18 @@
 <p>角色在系统正常运行过程是固定的, 但这并不意味着领导不会出现意外, 或者可以无限期当领导.</p>
 <h4 id="epochs"><span class="section-num">5.6.4</span> Epochs</h4>
 <p>在Paxos和Raft算法, 正常运行的每个一个时间被称为一个纪元(有魔戒的味道了. 在Raft中被称为期限), 在每个纪元期间，只有一个节点是指定的领导者.</p>
+
 <figure><a href="/ox-hugo/epoch.png">
-    <img loading="lazy" src="/ox-hugo/epoch.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-aaadb" hidden>
+    <label for="zoomCheck-aaadb">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/epoch.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>选举成功后，同一个领导者会协调到纪元结束(任期到了就要换人, 不能賴着不走.). 如上图所示（来自Raft的论文），一些选举可能会失败，导致纪元立即结束.</p>

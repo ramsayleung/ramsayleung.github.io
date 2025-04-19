@@ -537,9 +537,19 @@ code to figure out who&rsquo;s calling them.</p>
 <p>JDK 提供了各种功能强大的工具类, 宛如装备齐全的军火库,
 而容器就是其中一项内置的利器, 提供了包括诸多常用的数据结构, 下图对 JDK
 已有容器进行了概括:</p>
+
 <figure>
-    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191122171101.png"
-         alt="Figure 1: JDK 容器"/> <figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-45308" hidden>
+    <label for="zoomCheck-45308">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191122171101.png"
+         alt="Figure 1: JDK 容器"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 1: </span>JDK 容器</p>
         </figcaption>
 </figure>
@@ -1172,16 +1182,36 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 用法而这样造数据. <code>row</code>, <code>column</code> 函数可能让人比较迷惑,
 这两个函数是怎么搜索的?</p>
 <p>其实很简单, <code>row</code> 是以第一个 key 来搜索, 而 <code>column</code> 以第二个 key 来搜索, 如图:</p>
+
 <figure>
-    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/guava_table_row.png"
-         alt="Figure 2: row: 以第一个 key 来搜索"/> <figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-94a93" hidden>
+    <label for="zoomCheck-94a93">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/guava_table_row.png"
+         alt="Figure 2: row: 以第一个 key 来搜索"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 2: </span>row: 以第一个 key 来搜索</p>
         </figcaption>
 </figure>
 
+
 <figure>
-    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/guava_table_column.png"
-         alt="Figure 3: column: 以第二个 key 来搜索"/> <figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-325ee" hidden>
+    <label for="zoomCheck-325ee">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/guava_table_column.png"
+         alt="Figure 3: column: 以第二个 key 来搜索"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 3: </span>column: 以第二个 key 来搜索</p>
         </figcaption>
 </figure>
@@ -2079,9 +2109,19 @@ JDK也推出了一个=Objects.hash(field1, field2,&hellip;,fieldn)=的方法,
 比较常见的重写=toString()=的方式是把所有的字段拼接输出,
 只不过手动拼接有点累.</p>
 <p>省心的是, Intellij Idea 为开发者提供了生成=toString()=的快捷方式, 如下图:</p>
+
 <figure><a href="/ox-hugo/Idea_generate_to_string.gif">
-    <img loading="lazy" src="/ox-hugo/Idea_generate_to_string.gif"
-         alt="Figure 1: Idea生成toString"/> </a><figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-2d11a" hidden>
+    <label for="zoomCheck-2d11a">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/Idea_generate_to_string.gif"
+         alt="Figure 1: Idea生成toString"/> 
+    
+    
+    </label></a><figcaption>
             <p><span class="figure-number">Figure 1: </span>Idea生成toString</p>
         </figcaption>
 </figure>
@@ -3102,14 +3142,34 @@ A、B、C，每个线程将自己的 输出在屏幕上打印 10
 <li>比较index的值是否大于30 3. 如果小于30, 尝试获取锁</li>
 </ol>
 <p>换言之，当index=29时，线程C持有锁，但是锁只能阻止线程A,线程B修改index的值，并不能阻止线程A,线程B在获取锁之前读取index的值，所以线程A读取index=29,并把值保持到线程的内部，如下图:</p>
+
 <figure>
-    <img loading="lazy" src="https://imgur.com/tI8NTgO.png"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-5cad4" hidden>
+    <label for="zoomCheck-5cad4">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://imgur.com/tI8NTgO.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p><strong>当线程C执行完，还没释放锁的时候，线程A的index值为29；当线程C释放锁，线程A获取锁，进入同步块的时候，因为 <a href="https://en.wikipedia.org/wiki/Memory_barrier#Multithreaded_programming_and_memory_visibility">Java内存模型有内存可见性的要求</a>, 兼之Lock的实现类实现了<a href="https://stackoverflow.com/questions/12429818/does-explicit-lock-automatically-provide-memory-visibility">内存可见</a>，所以线程A的index值会变成30</strong>,</p>
 <p>这就解析了为什么线程A index=30的时候能跳过<code>(index.intValue&lt;30)</code>的判断条件，因为执行这个判断条件的时候线程A index=29, 进入同步块之后变成了30:</p>
+
 <figure>
-    <img loading="lazy" src="https://imgur.com/xaA4Q0y.png"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-f6e54" hidden>
+    <label for="zoomCheck-f6e54">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://imgur.com/xaA4Q0y.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p>把问题剖析清楚之后，解决方案就呼之欲出了:</p>
@@ -3244,9 +3304,19 @@ A、B、C，每个线程将自己的 输出在屏幕上打印 10
 <p>众所周知，蚂蚁对代码质量要求很高，质量红线其中一项指标就是变更行覆盖率。如果你的变更行覆盖率没有达到80%，测试同学是不会允许你上测试环境的（如果对此有所不满，测试同学就会过来捶你)。
 为了提高代码质量，这项要求倒是无可厚非，变更的代码逻辑需要充分的测试；但是如果我新增了一堆的POJO类，只是为了逻辑模型，变更行也会变得非常可观。为了覆盖这些POJO类的变更，你免不了会测试一堆的Getter/Setter
 方法：</p>
+
 <figure>
-    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191104102036.png"
-         alt="Figure 1: getter/setter"/> <figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-e2b64" hidden>
+    <label for="zoomCheck-e2b64">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191104102036.png"
+         alt="Figure 1: getter/setter"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 1: </span>getter/setter</p>
         </figcaption>
 </figure>
@@ -3713,9 +3783,19 @@ Wall 说的</li>
 <li>中央仓库：Maven 核心自带的的远程仓库，它包含了绝大部分开源的构件。在默认的配置下，当本地仓库没有 Maven 需要的构件的时候，它就会尝试从中央仓库下载。</li>
 <li>私服：为了节省带宽和时间，可以在内网假设一个特殊的仓库服务器，用来代理所有的外部的远程仓库</li>
 </ul>
+
 <figure>
-    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191104112131.png"
-         alt="Figure 1: repo"/> <figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-fe466" hidden>
+    <label for="zoomCheck-fe466">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191104112131.png"
+         alt="Figure 1: repo"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 1: </span>repo</p>
         </figcaption>
 </figure>
@@ -3794,9 +3874,19 @@ Wall 说的</li>
 </ul>
 <h2 id="继承"><span class="section-num">6</span> 继承</h2>
 <p>如bkoneuser 的项目结构所示:</p>
+
 <figure>
-    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191104112215.png"
-         alt="Figure 2: bkoneuser 的项目结构"/> <figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-25d4b" hidden>
+    <label for="zoomCheck-25d4b">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191104112215.png"
+         alt="Figure 2: bkoneuser 的项目结构"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 2: </span>bkoneuser 的项目结构</p>
         </figcaption>
 </figure>

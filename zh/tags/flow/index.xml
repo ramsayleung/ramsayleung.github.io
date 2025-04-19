@@ -31,8 +31,18 @@
 <p>虽然搜索引擎有很多，但是我基本只用 Google；如果没法使用 Google, 那么推荐使用Bing, 反正百度不在我的推荐之列. <br/></p>
 <p>Google 搜索的界面很简单，只有一个搜索框，用户只需要把想要搜索的内容输入进去并回车即可。 <br/></p>
 <p>比如搜索：「cpp modules」，返回了 7,320,000条结果。 <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_result.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-3ed1b" hidden>
+    <label for="zoomCheck-3ed1b">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_search_result.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>搜索结果太多，我想对搜索内容进行筛选，google 就提供了相当多的搜索指令(search operator) <br/></p>
@@ -46,8 +56,18 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cpp modules :before 2020
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_before.png"/> 
+</div><p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-8b4e5" hidden>
+    <label for="zoomCheck-8b4e5">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_search_before.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>可以看到搜索结果变成了185,000条，并且返回的搜索结果都是在 2020 年以前的纪录，这个在查看历史新闻时特别有用，比如看历史合订本。 <br/></p>
@@ -62,8 +82,18 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cpp modules site:jetbrains.com
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_site.png"/> 
+</div><p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-babaf" hidden>
+    <label for="zoomCheck-babaf">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_search_site.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>又或者，我搜索网站的时候，想把某个网站排除掉, 比如使用中文搜索编程相关关键词的时候，经常会被CSDN 的垃圾内容污染，那么就可以使用 <code>-</code>, 来排除掉某些内容. <br/></p>
@@ -75,8 +105,18 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cpp modules -microsoft
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_exclude.png"/> 
+</div><p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-eafe2" hidden>
+    <label for="zoomCheck-eafe2">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_search_exclude.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>原来排名第二的 Miscrosft 就被过滤掉了. <br/></p>
@@ -91,8 +131,18 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cpp modules @reddit
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_reddit.png"/> 
+</div><p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-34bc3" hidden>
+    <label for="zoomCheck-34bc3">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_search_reddit.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <div class="highlight"><div class="chroma">
@@ -103,8 +153,18 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cpp modules @zhihu
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_zhihu.png"/> 
+</div><p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-c6b16" hidden>
+    <label for="zoomCheck-c6b16">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_search_zhihu.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <h3 id="文件类型"><span class="section-num">2.4</span> 文件类型</h3>
@@ -117,8 +177,18 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cpp modules filetype:pdf
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_pdf.png"/> 
+</div><p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-03927" hidden>
+    <label for="zoomCheck-03927">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_search_pdf.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>这个在知道书名，想要搜索电子书的时候特别有用. <br/></p>
@@ -133,8 +203,18 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&#34;cpp modules&#34;
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_precise_match.png"/> 
+</div><p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-b0e1e" hidden>
+    <label for="zoomCheck-b0e1e">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_search_precise_match.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>搜索结果变成 3530 条纪录了. <br/></p>
@@ -143,8 +223,18 @@
 <li>OR: &ldquo;cpp or module&rdquo;, 匹配包含 &ldquo;cpp&rdquo; 或者&quot;module&rdquo; 的内容, <code>or</code> 可以使用竖线代替 <code>|</code> 个人觉得用处不大，也只会让搜索结果膨胀 <br/></li>
 <li>AND: &ldquo;cpp and module&rdquo;, 匹配包含 &ldquo;cpp&rdquo; 与&quot;module&quot; 的内容, <code>and</code> 可以使用与符号代替 <code>&amp;</code> <br/></li>
 </ul>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_and.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-11d41" hidden>
+    <label for="zoomCheck-11d41">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_search_and.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <h2 id="custome-search"><span class="section-num">3</span> Custome Search</h2>
@@ -155,13 +245,33 @@
 <p>（下文以同样使用 OpenGrok 部署的开源项目 <code>LibreOffice</code> 的代码为例子） <br/></p>
 <p>因为在日常开发的时候，遇到陌生的函数名或者枚举定义，就需要看下他们的定义与实现，看下有没有问题： <br/></p>
 <p>比如想看下 <code>contains</code> 这个函数的实现： <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/libre_office_definition.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-89a36" hidden>
+    <label for="zoomCheck-89a36">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/libre_office_definition.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>或者想看下 <code>Intersection</code> 这个函数的引用，看下其他人是怎么用这个函数的，我也顺便抄下。 <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/libre_office_symbol.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-b0a48" hidden>
+    <label for="zoomCheck-b0a48">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/libre_office_symbol.png"/> 
+    
+    
+    </label>
 </figure>
   <br/></p>
 <p>一般的步骤是: <br/></p>
@@ -198,13 +308,33 @@
 <li>Keyword: csr <br/></li>
 <li>URL: <code>https://opengrok.libreoffice.org/search?full=&amp;defs=&amp;refs=%s&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=refs&amp;searchall=true&amp;si=refs</code> <br/></li>
 </ul>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/google_site_search_ref.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-addec" hidden>
+    <label for="zoomCheck-addec">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_site_search_ref.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>然后，在Chrome 的浏览器地址，输入 <code>csr</code>, 空格, 再搜索 <code>Intersection</code>, 回车。就可以直接在Chrome 地址栏里面搜索指定网页的代码. <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/google_site_search_csr.gif"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-3c019" hidden>
+    <label for="zoomCheck-3c019">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_site_search_csr.gif"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>而搜索代码定义，URL 如下: <br/></p>
@@ -227,34 +357,94 @@
 <li>在搜索框点击鼠标右键，然后会看到一个「Add a Keyword for this Search&hellip;」 <br/></li>
 <li>修改名字与 keyword <br/></li>
 </ol>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/firefox_add_key_word_search.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-b6f7b" hidden>
+    <label for="zoomCheck-b6f7b">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/firefox_add_key_word_search.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/firefox_add_key_word_search_bookmark.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-dfd54" hidden>
+    <label for="zoomCheck-dfd54">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/firefox_add_key_word_search_bookmark.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>然后，在 Firefox 的浏览器地址，输入 <code>csd</code>, 空格, 再搜索 <code>Intersection</code>, 回车。就可以直接在 Firefox 地址栏里面搜索指定网页的代码. <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/firefox_keyword_search.gif"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-2c9b3" hidden>
+    <label for="zoomCheck-2c9b3">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/firefox_keyword_search.gif"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>如果没有右键时没有找到 「Add a Keyword for this Search&hellip;」的选项，也可以使用添加书签的方式，手动添加一个 keyword search: <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/firefox_add_bookmark.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-c9c77" hidden>
+    <label for="zoomCheck-c9c77">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/firefox_add_bookmark.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <h2 id="alfred-web-search"><span class="section-num">4</span> Alfred Web Search</h2>
 <p>如果使用的是 Mac OS, 那么通过Alfred 插件的 Web Search功能，甚至可以不用手动切换到浏览器，直接就可以进行搜索，可以把搜索流的耗时进一步缩短到1-3秒。 <br/></p>
 <p>Alfred -&gt; Preference -&gt; Web Search -&gt; Add custome Search <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/alfred_web_seasch.jpg"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-d4600" hidden>
+    <label for="zoomCheck-d4600">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/alfred_web_seasch.jpg"/> 
+    
+    
+    </label>
 </figure>
   <br/></p>
 <p>除了要将 <code>%s</code> 换成 <code>{query}</code> 之外, 其他添加的步骤与 Site Search 一致： <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/alfred_code_search.gif"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-78375" hidden>
+    <label for="zoomCheck-78375">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/alfred_code_search.gif"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>录制 Gif 只花了1.5 秒. <br/></p>

@@ -24,9 +24,19 @@
 <p>JDK 提供了各种功能强大的工具类, 宛如装备齐全的军火库,
 而容器就是其中一项内置的利器, 提供了包括诸多常用的数据结构, 下图对 JDK
 已有容器进行了概括:</p>
+
 <figure>
-    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191122171101.png"
-         alt="Figure 1: JDK 容器"/> <figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-45308" hidden>
+    <label for="zoomCheck-45308">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191122171101.png"
+         alt="Figure 1: JDK 容器"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 1: </span>JDK 容器</p>
         </figcaption>
 </figure>
@@ -659,16 +669,36 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 用法而这样造数据. <code>row</code>, <code>column</code> 函数可能让人比较迷惑,
 这两个函数是怎么搜索的?</p>
 <p>其实很简单, <code>row</code> 是以第一个 key 来搜索, 而 <code>column</code> 以第二个 key 来搜索, 如图:</p>
+
 <figure>
-    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/guava_table_row.png"
-         alt="Figure 2: row: 以第一个 key 来搜索"/> <figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-94a93" hidden>
+    <label for="zoomCheck-94a93">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/guava_table_row.png"
+         alt="Figure 2: row: 以第一个 key 来搜索"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 2: </span>row: 以第一个 key 来搜索</p>
         </figcaption>
 </figure>
 
+
 <figure>
-    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/guava_table_column.png"
-         alt="Figure 3: column: 以第二个 key 来搜索"/> <figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-325ee" hidden>
+    <label for="zoomCheck-325ee">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/guava_table_column.png"
+         alt="Figure 3: column: 以第二个 key 来搜索"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 3: </span>column: 以第二个 key 来搜索</p>
         </figcaption>
 </figure>

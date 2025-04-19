@@ -258,8 +258,18 @@
 </div>
 </div><p>只需在 Shell 中输入 <code>pwdf</code>, 然后选择需要复制的路径即可。
 运行截图：</p>
+
 <figure>
-    <img loading="lazy" src="https://i.imgur.com/Ppkm2xV.gif"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-069ae" hidden>
+    <label for="zoomCheck-069ae">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://i.imgur.com/Ppkm2xV.gif"/> 
+    
+    
+    </label>
 </figure>
 
 <hr>

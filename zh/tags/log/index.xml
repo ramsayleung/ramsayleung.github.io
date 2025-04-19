@@ -514,13 +514,33 @@
 <h3 id="对于不同的代码-使用不同的日志等级"><span class="section-num">3.6</span> 对于不同的代码，使用不同的日志等级</h3>
 <p>因为一个项目不同代码要求不一样，也无需把每一个实现细节都记录在日志，只需要根 据不同的实现，使用不同的日志等级，例如使用 <code>Debug</code> 记录系统启动，处理业务逻辑 请求的信息，使用 <code>Error</code>, 记录系统的出错信息，可以结合堆栈分析原因，等等。</p>
 <p>此外，Logger 实例可以被配置成基于名字的树状结构。 每一个部件都定义了一个基础的名字，对应的模块被设置成子节点。而 root logger 没有名字。如图：</p>
+
 <figure><a href="/ox-hugo/example_logger_tree.png">
-    <img loading="lazy" src="/ox-hugo/example_logger_tree.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-2c8af" hidden>
+    <label for="zoomCheck-2c8af">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/example_logger_tree.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>就配置 <code>logging</code> 而言，我认为树状结构是非常有用的，因为无需为每一个 logger 都设置handler. 如果一个 logger 没有 handler 的话，它就会让父节点来处理。所以 对于对于大部份的应用而言，只需配置 root logger, 而所有的信息都会发送到同一个 地方</p>
+
 <figure><a href="/ox-hugo/one_logger_handler.png">
-    <img loading="lazy" src="/ox-hugo/one_logger_handler.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-e436a" hidden>
+    <label for="zoomCheck-e436a">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/one_logger_handler.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>而树状结构可以对应用的不同部分使用不同的日志等级，不同的 handler, 不同的formatter, 以更好地控制日志信息</p>

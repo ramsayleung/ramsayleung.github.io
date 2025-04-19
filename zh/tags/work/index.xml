@@ -379,8 +379,18 @@
 <p>而陆老师自身的软硬笔书法水平都很过硬，黑板板书相当漂亮。 <br/></p>
 <p>明清两朝，有专门用于科举考试的通用字体，特点是：以乌黑、方正、光洁而大小齐平。 <br/></p>
 <p>明朝称之为「台阁体」，清朝称之为「馆阁体」： <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/%e9%a6%86%e9%98%81%e4%bd%93.jpg"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-ac558" hidden>
+    <label for="zoomCheck-ac558">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/%e9%a6%86%e9%98%81%e4%bd%93.jpg"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>人终归是视觉动物，内涵固然重要，门面也不可或缺。 <br/></p>
@@ -485,15 +495,35 @@
 <p>所以写简历，我只推荐使用 LaTex, Word 还是算了吧。 <br/></p>
 <p>有朋友可能不熟悉 LaTex, LaTex 是美国计算机科学家Leslie Lamport(就是那个发明 Paxos 共识算法的大神) 在20世纪80年代开发的排版系统，遵循「展示与内容分离（separating presentation from content）的原则」, 顺便说一下, HTML 和 CSS也是依照「展示与内容」这样的思路。 <br/></p>
 <p>即使用户没有排版和写代码的经验，只需要根据模板填入内容，就可以生成精美的出版刊物。 <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/wikipedia_latex.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-1d9b9" hidden>
+    <label for="zoomCheck-1d9b9">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/wikipedia_latex.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>想熟练掌握Latex, 需要花费相当长的时间, 但是如果只是用来写简历，只需要掌握几个简单的宏即可, 难度只比Markdown高一点. <br/></p>
 <p>本地安装和使用LaTex 相当麻烦，所以强烈建议使用网页版本的LaTex 服务，如 <a href="https://www.overleaf.com/">Overleaf:</a> <a href="https://www.overleaf.com/">https://www.overleaf.com/</a>, 所见即所得, 非常简观，对类似我这种Latex 新手非常友好. <br/></p>
 <p>至于简历模板, Overleaf 本身有很多的简历模板分享，Github上也有许多类似的项目，如 <a href="https://github.com/billryan/resume">https://github.com/billryan/resume</a>, 只要把在 Overleaf 上把内容填入到模板中，即可生成一份好看的简历： <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/overleaf_resume.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-78bc5" hidden>
+    <label for="zoomCheck-78bc5">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/overleaf_resume.png"/> 
+    
+    
+    </label>
 </figure>
   <br/></p>
 <p>如果是应届生，推荐简历在一页内，在职的工程师，简历最好也不要超过两页，太长的简历没有人会去细看的. <br/></p>
@@ -515,8 +545,18 @@
 <p>别人一般都很乐意的，部分公司还对内推有奖励。 <br/></p>
 <p>如果实在是找不到人内推，官网也是一个备选项，一般公司的简历系统都会对处理时间有规定，简历起码都会被处理到，但有可能渺无音讯。 <br/></p>
 <p>2022年时曾经去 Indeed 官网投递，几天后直接收到拒信了. <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/indeed_refuse.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-e88db" hidden>
+    <label for="zoomCheck-e88db">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/indeed_refuse.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>比较有趣的是，在收到拒信之后, Indeed的招聘人员却在Linkedin 上面加我了. <br/></p>
@@ -528,28 +568,78 @@
 <p>但「猎头」比第三方网站要强的地方在于，他要把「你」这件商品成功销售给他的客户，也就是你入职成功才能获利，所以我们作为求职者与「猎头」是有共同利益的. <br/></p>
 <p>关于筛选无用的猎头和招聘消息，我有个简单的小技巧: <br/></p>
 <p>我在「Linkedin」上，把我的First Name 设为「啤酒的Emoji」，Last Name 才是「我的姓与名」。 <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/linkedin_basic_info.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-f7351" hidden>
+    <label for="zoomCheck-f7351">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/linkedin_basic_info.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>所以那些没有看过我信息，直接私聊发送招聘信息的，就会变成这个样子： <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/hi_beer2.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-9bb59" hidden>
+    <label for="zoomCheck-9bb59">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/hi_beer2.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/hi_beer3.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-a6c0e" hidden>
+    <label for="zoomCheck-a6c0e">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/hi_beer3.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>连我名字都没有写对的人，还能指望什么呢。 <br/></p>
 <h2 id="抛砖引玉"><span class="section-num">8</span> 抛砖引玉</h2>
 <p>我按照上文提到的技巧，结构与格式来整理了一下自己拙劣的履历： <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/ramsay_resume1.jpg"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-a33c8" hidden>
+    <label for="zoomCheck-a33c8">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/ramsay_resume1.jpg"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/ramsay_resume2.jpg"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-b04f2" hidden>
+    <label for="zoomCheck-b04f2">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/ramsay_resume2.jpg"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <h2 id="趣事"><span class="section-num">9</span> 趣事</h2>
@@ -557,8 +647,18 @@
 <p>然后，过了一周后，我的个人邮箱收到了这个专场招聘的另外一位recruiter 的邮件，推荐我去参加这个专场招聘，因为我曾经用自己的个人邮箱给 Amazon 投递过简历。 <br/></p>
 <p>只是这位recruiter 不知道我入职，并且与她同组的另外一位同事沟通过这个专场招聘的事。 <br/></p>
 <p>就变成了我这个帮忙发专场招聘信息的人，最后究竟也收到了这个专场招聘的邀请。 <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/relocation_opportunity.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-313f2" hidden>
+    <label for="zoomCheck-313f2">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/relocation_opportunity.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <h2 id="总结"><span class="section-num">10</span> 总结</h2>
@@ -658,8 +758,18 @@
 <p>因为对于朋友而言，他的诉求肯定是有充足的时间来准备； <br/></p>
 <p>而对于recruiter 而言，她们办这个event ，也是希望有尽量多的候选人参加，有尽量多的候选人通过。 <br/></p>
 <p>所以推迟笔试时间，以便朋友参与笔试，是一个符合多方诉求的方案，最后recruiter 的回复也是可以推迟时间： <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/%e7%ac%94%e8%af%95%e5%bb%b6%e6%9c%9f.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-77e40" hidden>
+    <label for="zoomCheck-77e40">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/%e7%ac%94%e8%af%95%e5%bb%b6%e6%9c%9f.png"/> 
+    
+    
+    </label>
 </figure>
   <br/></p>
 <h3 id="充分的上下文"><span class="section-num">3.4</span> 充分的上下文</h3>
@@ -890,8 +1000,18 @@
 </ol>
 <h2 id="背景"><span class="section-num">2</span> 背景</h2>
 <p>上大学时，曾经看过一本书《软技能，代码之外的生存指南》，主要介绍程序员要想取得成功的职业生涯，所必需的软技能。</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/book_cover_v1.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-b1c92" hidden>
+    <label for="zoomCheck-b1c92">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/book_cover_v1.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>所谓的软技能，是区别与使用C++或Java 编写业务逻辑和单元测试代码，使用Docker 部署等「硬技能」，而是注重职场，心态，身体与理财等各方面提升的「软技能」。</p>
@@ -905,8 +1025,18 @@
 <h3 id="三读"><span class="section-num">2.2</span> 三读</h3>
 <p>最近突然想起了这本书，搜索之后发现，英文原版在2020能出了第二版，而中文版本也在2022年翻译出版了；</p>
 <p>因为书再版了，所以又重读了一次这本书，英文书名会更正常一些：Soft Skills: The Software Developer&rsquo;s Life Manual</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/book_cover.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-0a05b" hidden>
+    <label for="zoomCheck-0a05b">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/book_cover.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>得出的结论还是与之前一致：「书中的思路和哲学很有参考意义，做法却不一定适用」。</p>
@@ -917,8 +1047,18 @@
 <p>见贤思齐焉，见不贤而内自省也。</p>
 </blockquote>
 <p>这让我想起了Netflix 的高分纪录片《我心永随桑德兰》，别人拍纪录片是记录成功，这部豆瓣9.2分的片子却是在记录失败：</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/%e6%88%91%e5%bf%83%e6%b0%b8%e9%9a%8f%e6%a1%91%e5%be%b7%e5%85%b0.png"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-f70e3" hidden>
+    <label for="zoomCheck-f70e3">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/%e6%88%91%e5%bf%83%e6%b0%b8%e9%9a%8f%e6%a1%91%e5%be%b7%e5%85%b0.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p>英超保级劲旅桑德兰，在2017年终于花光自己在英超的保级运气，从顶级联赛英超跌入二级联赛英冠。</p>
@@ -1173,9 +1313,19 @@ add/git commit/git push, 连git bisect都没听过, 那就&hellip;</li>
 所以拿了基友的简历过来, 基友拿到了AWS的offer,
 他的实习/学术项目已经足够丰富, 其他内容就做了取舍(已获得基友授权,
 基于本人要求, 去掉个人信息):</p>
+
 <figure>
-    <img loading="lazy" src="https://uploadfiles.nowcoder.com/files/20200312/188797_1583998156546_8ZxIzt.jpg"
-         alt="Figure 1: 8ZxIzt.jpg"/> <figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-09006" hidden>
+    <label for="zoomCheck-09006">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://uploadfiles.nowcoder.com/files/20200312/188797_1583998156546_8ZxIzt.jpg"
+         alt="Figure 1: 8ZxIzt.jpg"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 1: </span>8ZxIzt.jpg</p>
         </figcaption>
 </figure>

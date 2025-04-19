@@ -28,14 +28,34 @@
 <h3 id="college-class-prerequisites"><span class="section-num">2.1</span> College class prerequisites</h3>
 <p>You must take course <code>b</code> first if you want to take course <code>a</code>. For example, in your alma mater, the student must complete <code>PHYS:1511(College Physics)</code> or <code>PHYS:1611(Introductory Physics I)</code> before taking <code>College Physics II</code>.</p>
 <p>The courses can be represented by vertices, and there is an edge from <code>College Physics</code> to <code>College Physics II</code> since <code>PHYS:1511</code> must be finished before <code>College Physics II</code> can be enrolled.</p>
+
 <figure><a href="/ox-hugo/course_prerequsites.png">
-    <img loading="lazy" src="/ox-hugo/course_prerequsites.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-1c4f5" hidden>
+    <label for="zoomCheck-1c4f5">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/course_prerequsites.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <h3 id="job-scheduling"><span class="section-num">2.2</span> Job scheduling</h3>
 <p>scheduling a sequence of jobs or tasks based on their dependencies. The jobs are represented by vertices, and there is an edge from <code>x</code> to <code>y</code> if job <code>x</code> must be completed before job <code>y</code> can be started.</p>
+
 <figure><a href="/ox-hugo/job_scheduling.png">
-    <img loading="lazy" src="/ox-hugo/job_scheduling.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-0797d" hidden>
+    <label for="zoomCheck-0797d">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/job_scheduling.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>In the context of a CI/CD pipeline, the relationships between jobs can be represented by directed graph(specifically speaking, by directed acyclic graph). For example, in a CI pipeline, <code>build</code> job should be finished before start <code>test</code> job and <code>lint</code> job.</p>
@@ -69,21 +89,51 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>Make</code> will generate a DAG internally to figure out which target should be executed firstly with typological sort:</p>
+
 <figure><a href="/ox-hugo/build_dependencies.png">
-    <img loading="lazy" src="/ox-hugo/build_dependencies.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-9b93b" hidden>
+    <label for="zoomCheck-9b93b">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/build_dependencies.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <h2 id="directed-acyclic-graph"><span class="section-num">3</span> Directed Acyclic Graph</h2>
 <p>Back to the definition, we say that a topological ordering of a directed graph is a linear ordering of its vertices, but not all directed graphs have a topological ordering.</p>
 <p>A topological ordering is possible if and only if the graph has no directed cycles, that is, if it&rsquo;s a directed acyclic graph(DAG).</p>
 <p>Let us see some examples:</p>
+
 <figure><a href="/ox-hugo/directed_acyclic_graph.png">
-    <img loading="lazy" src="/ox-hugo/directed_acyclic_graph.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-3b058" hidden>
+    <label for="zoomCheck-3b058">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/directed_acyclic_graph.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>The definition requires that only the directed acyclic graph has a topological ordering, but why? What happens if we are trying to find a topological ordering of a directed graph? Let&rsquo;s take the <code>figure 3</code> for an example.</p>
+
 <figure><a href="/ox-hugo/dag_issue.png">
-    <img loading="lazy" src="/ox-hugo/dag_issue.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-a4346" hidden>
+    <label for="zoomCheck-a4346">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/dag_issue.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>The directed graph problem has no solution, this is the reason why directed cycle is forbidden</p>
@@ -95,20 +145,60 @@
 <p>We keep removing nodes without dependencies from the graph until all nodes are processed, or a cycle is detected.</p>
 <p>The dependencies of one node are represented as in-degree of this node.</p>
 <p>Let&rsquo;s take a quick example of how to find out a topological ordering of a given graph with Kahn&rsquo;s algorithm.</p>
+
 <figure><a href="/ox-hugo/kahn%27s_algorithm_1.png">
-    <img loading="lazy" src="/ox-hugo/kahn%27s_algorithm_1.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-c84fa" hidden>
+    <label for="zoomCheck-c84fa">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/kahn%27s_algorithm_1.png"/> 
+    
+    
+    </label></a>
 </figure>
+
 
 <figure><a href="/ox-hugo/kahn%27s_algorithm_2.png">
-    <img loading="lazy" src="/ox-hugo/kahn%27s_algorithm_2.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-6a74a" hidden>
+    <label for="zoomCheck-6a74a">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/kahn%27s_algorithm_2.png"/> 
+    
+    
+    </label></a>
 </figure>
+
 
 <figure><a href="/ox-hugo/kahn%27s_algorithm_3.png">
-    <img loading="lazy" src="/ox-hugo/kahn%27s_algorithm_3.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-a6975" hidden>
+    <label for="zoomCheck-a6975">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/kahn%27s_algorithm_3.png"/> 
+    
+    
+    </label></a>
 </figure>
 
+
 <figure><a href="/ox-hugo/kahn%27s_algorithm_4.png">
-    <img loading="lazy" src="/ox-hugo/kahn%27s_algorithm_4.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-020a2" hidden>
+    <label for="zoomCheck-020a2">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/kahn%27s_algorithm_4.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>Now we should understand how Kahn&rsquo;s algorithm works. Let&rsquo;s have a look at a C++ implementation of Kahn&rsquo;s algorithm:</p>
@@ -600,18 +690,48 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 <p>而使用布隆过滤器判重可以实现常数级的时间复杂度(检索时间不随元素增长而增加).那么布隆过滤器又是怎样实现的呢</p>
 <h3 id="布隆过滤器实现原理"><span class="section-num">1.1</span> 布隆过滤器实现原理</h3>
 <p>一个Bloom Filter是基于一个m位的位向量（Bit Vector），这些位向量的初始值为0, 并且有一系列的 hash 函数，hash 函数值域为1-m.在下面例子中，是15位的位向量，初始值为0以空白表示，为1以颜色填充</p>
+
 <figure><a href="/ox-hugo/bit_vector.png">
-    <img loading="lazy" src="/ox-hugo/bit_vector.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-a88b8" hidden>
+    <label for="zoomCheck-a88b8">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/bit_vector.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>现在有两个简单的 hash 函数：fnv,murmur.现在我输入一个字符串 &ldquo;whatever&rdquo; ,然后分别使用两个 hash 函数对 &ldquo;whatever&rdquo; 进行散列计算并且映射到上面的位向量。</p>
+
 <figure><a href="/ox-hugo/whatever.png">
-    <img loading="lazy" src="/ox-hugo/whatever.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-395b7" hidden>
+    <label for="zoomCheck-395b7">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/whatever.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>可知，使用 fnv 函数计算出的 hash 值是11,使用 murmur 函数计算出的 hash 值是4. 然后映射到位向量上：</p>
+
 <figure><a href="/ox-hugo/bit_vector1.png">
-    <img loading="lazy" src="/ox-hugo/bit_vector1.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-05bbd" hidden>
+    <label for="zoomCheck-05bbd">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/bit_vector1.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>如果下一次，笔者要判断 <strong>whatever</strong> 是否在字符串中，只需使用 fnv 和 murmur 两个 hash 函数对 <strong>whatever</strong> 进行散列值计算，然后与位向量做 &ldquo;与运算&rdquo;，如果结果为0, 那么说明 <strong>whatever</strong> 是不在集合中的，因为同样的元素使用同一个 hash 函数产生的值每次都是相同的，不相同就说明不是同一个元素。</p>
@@ -733,9 +853,19 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><figure>
-    <img loading="lazy" src="http://algs4.cs.princeton.edu/22mergesort/images/mergesortTD-bars.png"
-         alt="Figure 1: 轨迹图如上：(图来源于《算法》)"/> <figcaption>
+</div>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-a8c01" hidden>
+    <label for="zoomCheck-a8c01">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="http://algs4.cs.princeton.edu/22mergesort/images/mergesortTD-bars.png"
+         alt="Figure 1: 轨迹图如上：(图来源于《算法》)"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 1: </span>轨迹图如上：(图来源于《算法》)</p>
         </figcaption>
 </figure>
@@ -743,32 +873,82 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 <p>《算法》 中提到插入排序处理小规模的子数组(比如长度小于15) 一般可以将归并排序的运行时间缩短10%-15%. 实践出真知，还是要自己来测试一下更佳。</p>
 <h4 id="测试1"><span class="section-num">1.1.3</span> 测试1</h4>
 <p>对100*1000 个字符进行排序，结果如下：</p>
+
 <figure><a href="/ox-hugo/100*1000-1.png">
-    <img loading="lazy" src="/ox-hugo/100*1000-1.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-c9324" hidden>
+    <label for="zoomCheck-c9324">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/100*1000-1.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <h4 id="测试2"><span class="section-num">1.1.4</span> 测试2</h4>
 <p>对1000*1000 个字符进行排序，结果如下：</p>
+
 <figure><a href="/ox-hugo/1000*1000-1.png">
-    <img loading="lazy" src="/ox-hugo/1000*1000-1.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-cf7f6" hidden>
+    <label for="zoomCheck-cf7f6">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/1000*1000-1.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <h4 id="测试3"><span class="section-num">1.1.5</span> 测试3</h4>
 <p>对10000*1000 个字符进行排序，结果如下</p>
+
 <figure><a href="/ox-hugo/10000*1000-1.png">
-    <img loading="lazy" src="/ox-hugo/10000*1000-1.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-91423" hidden>
+    <label for="zoomCheck-91423">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/10000*1000-1.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <h4 id="测试4"><span class="section-num">1.1.6</span> 测试4</h4>
 <p>对100000*1000 个字符进行排序，结果如下</p>
+
 <figure><a href="/ox-hugo/1000000*1000-1.png">
-    <img loading="lazy" src="/ox-hugo/1000000*1000-1.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-f8fc3" hidden>
+    <label for="zoomCheck-f8fc3">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/1000000*1000-1.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <h4 id="测试5"><span class="section-num">1.1.7</span> 测试5</h4>
 <p>对500000*1000 个字符进行排序，结果如下</p>
+
 <figure><a href="/ox-hugo/500000*1000-1.png">
-    <img loading="lazy" src="/ox-hugo/500000*1000-1.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-b3285" hidden>
+    <label for="zoomCheck-b3285">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/500000*1000-1.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <h4 id="小结"><span class="section-num">1.1.8</span> 小结</h4>

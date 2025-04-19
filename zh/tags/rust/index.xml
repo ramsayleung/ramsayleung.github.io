@@ -1917,12 +1917,32 @@
 <p>一周前看到个<a href="https://www.theverge.com/2023/1/31/23577499/spotify-q4-2022-earnings-release-subscriber-growth-layoffs">新闻</a>，Spotify在其第四季度财报中披露，截至2022年12月31日，它的付费订阅用户数达到了2.05亿，同比增长14%；
 月活用户4.89亿。Spotify成为第一家订阅用户数突破2亿的音乐流服务。</p>
 <p>而我突然意识到，我那个使用Rust, 为Spotify开发，挂在Sptofiy官网的<a href="https://developer.spotify.com/documentation/web-api/libraries/">library</a>：<a href="https://github.com/ramsayleung/rspotify">RSpotify</a>，已经维护有五年了：</p>
+
 <figure><a href="/ox-hugo/web_api_wrapper.png">
-    <img loading="lazy" src="/ox-hugo/web_api_wrapper.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-b7e14" hidden>
+    <label for="zoomCheck-b7e14">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/web_api_wrapper.png"/> 
+    
+    
+    </label></a>
 </figure>
 
+
 <figure><a href="/ox-hugo/commit.png">
-    <img loading="lazy" src="/ox-hugo/commit.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-dd09e" hidden>
+    <label for="zoomCheck-dd09e">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/commit.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>一件用爱发电的开源项目要坚持维护五年，也是有很多话可以说的。</p>
@@ -1962,22 +1982,52 @@
 </ul>
 <p>为了吸引其他开发者来协作开发，所有的资料都是英文的。</p>
 <p>不过从Rust 包托管网站 <a href="https://crates.io/crates/rspotify/0.1.0">crates.io</a> 的数据可以看到，0.1版本只有300+的下载量，几乎没有什么人在用。</p>
+
 <figure><a href="/ox-hugo/stats_0.10.png">
-    <img loading="lazy" src="/ox-hugo/stats_0.10.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-f7bd5" hidden>
+    <label for="zoomCheck-f7bd5">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/stats_0.10.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <h3 id="async-阶段"><span class="section-num">3.2</span> async 阶段</h3>
 <p>时间来到2019年，对于Rust社区来说，<a href="https://www.reddit.com/r/rust/comments/ct7aus/stabilize_async_await_in_rust_1390/">最激动人心</a>的应该是Rust 1.39版本，将正式包含 <code>async/await</code> 特性，自那天起，Rust正式支持异步编程。</p>
 <p>自此之后，Rust社区在做的事情，就是把已有Rust代码疯狂升级到async await，RSpotify虽迟，但也赶上了这波潮流。</p>
 <p>当时RSpotify 请求Spotify的API使用的HTTP库是 <code>reqwest=，在 =reqwest</code> 支持异步模式之后，开发者 <a href="https://github.com/Rigellute">Alexander</a>就提了一个超大的<a href="https://github.com/ramsayleung/rspotify/pull/81">PR</a>，把所有已有的api全部修改成=async=, 我就乐见其成，就把这个PR合并了。</p>
+
 <figure><a href="/ox-hugo/add_async_await_1.png">
-    <img loading="lazy" src="/ox-hugo/add_async_await_1.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-e7c2b" hidden>
+    <label for="zoomCheck-e7c2b">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/add_async_await_1.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>有社区的同学抱怨说异步模式的代码不好使用，他对性能没有什么要求，能否保留同步模式的接口调用。</p>
 <p>后来为了兼顾同步模式和异步模式这两种调用方式，Alexander 又提了一个超大超大的<a href="https://github.com/ramsayleung/rspotify/pull/82/files">PR</a>，把现有的异步模式代码复制一份，然后把=async= 关键字去掉。</p>
+
 <figure><a href="/ox-hugo/add_async_await_2.png">
-    <img loading="lazy" src="/ox-hugo/add_async_await_2.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-8f16e" hidden>
+    <label for="zoomCheck-8f16e">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/add_async_await_2.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>从此以后，RSpotify就需要同时维护两份几乎相同的代码，每次新增，修改，删除都需要确保同时变更两份代码。
@@ -2049,20 +2099,50 @@
 <p>前面提到，RSpotify最开始是直接翻译spotipy的代码。
 因为Python是弱类型，而Rust是强类型，直接翻译，难免会有不少代码，写法没有纯正的Rust味道。</p>
 <p>社区的Kestrer同学就在一个<a href="https://github.com/ramsayleung/rspotify/issues/127">issue</a>里面，给RSpotify提了近90条优化建议，指出了RSpotify中设计的各种问题，包括强类型运用不当，使用过多的原始类型，函数出入参设计不够优雅，授权流程设计不够易用等等。</p>
+
 <figure><a href="/ox-hugo/meta-issue.png">
-    <img loading="lazy" src="/ox-hugo/meta-issue.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-50cd1" hidden>
+    <label for="zoomCheck-50cd1">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/meta-issue.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>这么多的优化建议，可以看出Kestrer真的花了很多时间来阅读和改善RSpotify的代码，盛情难却（可见原来的代码是+多烂+, 有非常多激发社区同学参与改进的空间）.</p>
 <p>别人指出问题，就要好好优化。</p>
 <p>所以我和Mario就分别对每个接口返回的数据模型，数据模型与Json间转换的序列化方式，授权流程作了改进。
 并对RSpotify这个library作了拆分，按照功能，拆分成 <code>model</code>, <code>http</code>, <code>macros</code> 三个单独的library。</p>
+
 <figure><a href="/ox-hugo/trait_hierarchy.png">
-    <img loading="lazy" src="/ox-hugo/trait_hierarchy.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-a4a96" hidden>
+    <label for="zoomCheck-a4a96">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/trait_hierarchy.png"/> 
+    
+    
+    </label></a>
 </figure>
 
+
 <figure><a href="/ox-hugo/crate_hierarchy.png">
-    <img loading="lazy" src="/ox-hugo/crate_hierarchy.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-5a9da" hidden>
+    <label for="zoomCheck-5a9da">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/crate_hierarchy.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>期间提了大概20多个PR，花了超过一年的时间，才处理完Kestrer 提的所有建议。</p>
@@ -2083,12 +2163,32 @@
 <h2 id="感悟"><span class="section-num">4</span> 感悟</h2>
 <h3 id="开源协作"><span class="section-num">4.1</span> 开源协作</h3>
 <p>截至到2023-02-09，RSpotify一共有1673次commit, 但我和Mario都只贡献了1/3的commit，剩下的commit都是社区的其他开发者提交的。</p>
+
 <figure><a href="/ox-hugo/1673.png">
-    <img loading="lazy" src="/ox-hugo/1673.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-ffb13" hidden>
+    <label for="zoomCheck-ffb13">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/1673.png"/> 
+    
+    
+    </label></a>
 </figure>
 
+
 <figure><a href="/ox-hugo/contributor.png">
-    <img loading="lazy" src="/ox-hugo/contributor.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-e8d6a" hidden>
+    <label for="zoomCheck-e8d6a">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/contributor.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>从RSpotify的演进历程也可以看出，我只是从0开发了最初版本的RSpotify，后面都是随着Rust的演进，有不同的开发者帮忙优化与迭代，我做的事情就从单纯的creator, developer 变成maintainer, reviewer，负责review其他开发者的PR。</p>
@@ -2154,13 +2254,33 @@
 <h3 id="些许成果"><span class="section-num">4.4</span> 些许成果</h3>
 <p>在Github上，被1108个仓库及18个package 所依赖，而其中Alexander的 <a href="https://github.com/Rigellute/spotify-tui">spotify-tui</a> 就是我期望做的终端版本的Spotify。</p>
 <p>开源的好处就是，在开发好基础设施之后，自然就会有其他有相同想法的同学，把应用开发出来。</p>
+
 <figure><a href="/ox-hugo/dependent_packages.png">
-    <img loading="lazy" src="/ox-hugo/dependent_packages.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-41258" hidden>
+    <label for="zoomCheck-41258">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/dependent_packages.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>crates.io 的统计，总计被下载23w次，当然包括很多CI的重复下载。</p>
+
 <figure><a href="/ox-hugo/stats.png">
-    <img loading="lazy" src="/ox-hugo/stats.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-858bd" hidden>
+    <label for="zoomCheck-858bd">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/stats.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>对于有Rust，Spotify，Library等诸多定语的RSpotify来说，目标受众本来就不多，能有现在这样的用户量也算是个挺不错的成果了。</p>
@@ -2273,8 +2393,18 @@ you would to get the data of the next page, you have to parse a URL:</p>
 </div>
 </div><p>You have to parse the URL and extract <code>limit</code> and <code>offset</code> parameters, and recall the <code>artist_albums</code> endpoint with setting <code>limit</code> to 20 and <code>offset</code> to 2.</p>
 <p>We have to manually fetch the data again and again until all datas have been consumed. It is not elegant, but works.</p>
+
 <figure>
-    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210429172938.png"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-fe459" hidden>
+    <label for="zoomCheck-fe459">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210429172938.png"/> 
+    
+    
+    </label>
 </figure>
 
 <h2 id="iterator-story"><span class="section-num">3</span> Iterator Story</h2>
@@ -2303,8 +2433,18 @@ you would to get the data of the next page, you have to parse a URL:</p>
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>By implementing the <code>Iterator</code> trait on our own types, we could have iterators that do anything we want. Then working mechanism we want to iterate over paginated result will look like this:</p>
+
 <figure>
-    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/sync_iterator_iterate.png"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-19c48" hidden>
+    <label for="zoomCheck-19c48">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/sync_iterator_iterate.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p>Now let&rsquo;s dive deep into the code, we need to implement <code>Iterator</code> for our own types, the pseudocode looks like:</p>

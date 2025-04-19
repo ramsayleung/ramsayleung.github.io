@@ -79,8 +79,18 @@
 <li><code>sin 20</code> 频率为20 hz(如果听到了，可以设置成更低) <br/></li>
 </ul>
 <p>执行命令之后，可以使用 <code>pavucontrol</code> 命令查看声音输出，应该是类似这样的效果： <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/sox_pavucontrol.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-76288" hidden>
+    <label for="zoomCheck-76288">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/sox_pavucontrol.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <h2 id="定时执行"><span class="section-num">4</span> 定时执行</h2>
@@ -900,8 +910,18 @@ sockets 处于 <code>CLOSED</code> 的状态，但是却没有真正close 掉，
 <p>如此说来，是否可能是因为测试环境网络不稳定，连接池无法和 Mysql 保持连接，在丢掉 Connection 之后，连接池重新发起连接，但是因为网络不稳定又丢掉了Connection, 不断循环这个过程，导致建立的 socket 连接越 来越多，但是建立的 socket 很快就被Close 掉了，内核又没有把这些 Close 掉的 socket 资源回收掉，因此打开的 socket 文件越来越多，最后导致 Tomcat 因为打开的文件过多无法建立新的 socket 连接。</p>
 <h2 id="小心求证"><span class="section-num">6</span> 小心求证</h2>
 <p>如果连接池真的不断尝试连接Mysql 的话，必定会建立很多的连接，而Mysql 是会将这些记录保存下来的，检查Mysql 的变量：</p>
+
 <figure>
-    <img loading="lazy" src="https://imgur.com/gAxepYH.png"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-bb96e" hidden>
+    <label for="zoomCheck-bb96e">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://imgur.com/gAxepYH.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p>查看Mysql 的文档关于 <code>Connection</code> 和 <code>Thread_connected</code> 的说明：</p>
@@ -959,16 +979,36 @@ sockets 处于 <code>CLOSED</code> 的状态，但是却没有真正close 掉，
 <p>能不能在文件还没有完成写回磁盘又中途出现错误的时候，告诉系统你的 目标文件还有数据没有写回磁盘，你要记得完成这项工作阿？</p>
 <p>当然可以，这就是文件系统中日志的功能，在日志的协助下，你的电脑会在日志中记着，“我要把某某文件写入到磁盘”，如果顺利完成写入磁盘工作，日志的这项记录就会被删除，如果中途出现异常，例 如断电了，重新启动的时候，你的系统就会发现，我要写入某某文件的工作还没完成，它就会继续未了的事业，这样就可以保障数据不会丢失。</p>
 <p>(而你日常工作生活中，数据的丢失是因为你没有保存数据，即没有把数据写入到磁盘). 如图：</p>
+
 <figure>
-    <img loading="lazy" src="https://www.howtogeek.com/wp-content/uploads/2017/02/img_58af43716360e.png%20"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-d0831" hidden>
+    <label for="zoomCheck-d0831">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://www.howtogeek.com/wp-content/uploads/2017/02/img_58af43716360e.png%20"/> 
+    
+    
+    </label>
 </figure>
 
 <p>因为写入日志需要额外的工作，所以需要额外的资源，但是这样的消耗是相当值得地。</p>
 <h2 id="comparison"><span class="section-num">3</span> Comparison</h2>
 <p>下面对比一下 各种文件系统的特性</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/comparison_file_system.png"
-         alt="Figure 1: 图来自archwiki"/> <figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-a3cd4" hidden>
+    <label for="zoomCheck-a3cd4">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/comparison_file_system.png"
+         alt="Figure 1: 图来自archwiki"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 1: </span>图来自archwiki</p>
         </figcaption>
 </figure>

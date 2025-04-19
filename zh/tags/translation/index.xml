@@ -59,9 +59,19 @@
 <p>你可以用Helm 来完成任何事。</p>
 <p>基于 <strong>tuhdo</strong> 对我在<a href="https://www.reddit.com/r/emacs/comments/52lnad/from_helm_to_ivy_a_user_perspective/d7lypeu/">Reddit</a> 上面问题的回复，我想指出的一个特性就是Helm 是不使用 <em>minibuffer</em>,但是Ivy 是使用的。</p>
 <p>所以它可以被配置成总是在当前打开的窗口展示。对于那些大屏幕显示器的用户而言，这个特性真的非常有用，因为你的目光不用在 <em>minibuffer</em> 来回切换：</p>
+
 <figure>
-    <img loading="lazy" src="http://i.imgur.com/g1Oz9JY.png"
-         alt="Figure 1: 补全结果总是显示在同一个窗口"/> <figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-2b760" hidden>
+    <label for="zoomCheck-2b760">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="http://i.imgur.com/g1Oz9JY.png"
+         alt="Figure 1: 补全结果总是显示在同一个窗口"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 1: </span>补全结果总是显示在同一个窗口</p>
         </figcaption>
 </figure>

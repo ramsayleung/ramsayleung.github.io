@@ -147,9 +147,19 @@
 <li>中央仓库：Maven 核心自带的的远程仓库，它包含了绝大部分开源的构件。在默认的配置下，当本地仓库没有 Maven 需要的构件的时候，它就会尝试从中央仓库下载。</li>
 <li>私服：为了节省带宽和时间，可以在内网假设一个特殊的仓库服务器，用来代理所有的外部的远程仓库</li>
 </ul>
+
 <figure>
-    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191104112131.png"
-         alt="Figure 1: repo"/> <figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-fe466" hidden>
+    <label for="zoomCheck-fe466">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191104112131.png"
+         alt="Figure 1: repo"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 1: </span>repo</p>
         </figcaption>
 </figure>
@@ -228,9 +238,19 @@
 </ul>
 <h2 id="继承"><span class="section-num">6</span> 继承</h2>
 <p>如bkoneuser 的项目结构所示:</p>
+
 <figure>
-    <img loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191104112215.png"
-         alt="Figure 2: bkoneuser 的项目结构"/> <figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-25d4b" hidden>
+    <label for="zoomCheck-25d4b">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20191104112215.png"
+         alt="Figure 2: bkoneuser 的项目结构"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 2: </span>bkoneuser 的项目结构</p>
         </figcaption>
 </figure>

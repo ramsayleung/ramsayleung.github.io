@@ -27,8 +27,18 @@
 <p>Orgmode是类似Markdown，与Emacs深度绑定优化的标记语言，使用Emacs来编写org-mode 文档就有下笔有神，文思泉涌，如丝般顺滑(这篇文章也是用org-mode写的)。</p>
 <p>因为org-mode 与Emacs 深度结合，自然无法脱离Emacs单独使用，而其他编辑器模仿org-mode 开发的插件，如 <a href="https://github.com/jceb/vim-orgmode">vim-orgmode</a>, <a href="https://github.com/nvim-orgmode/orgmode">nvim-orgmode</a> 和 <a href="https://github.com/vscode-org-mode/vscode-org-mode">vscode-orgmode</a>, 难免只得其形，未得其神，还不如用Markdown.</p>
 <p>而 Magit 是 Git的Emacs图形化客户端, 也是我用过的最好用的Git 客户端软件，既直观又易用(看看Emacs 道友们夸 Magit 的<a href="https://emacs-china.org/t/magit/22521/5">帖子</a>):</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/magit_dashboard.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-02203" hidden>
+    <label for="zoomCheck-02203">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/magit_dashboard.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>虽然我已经用了Emacs很多年，但是已经过了Live with Emacs的境界, 不会用Emacs处理所有事情, 比如用VSCode 写Rust, 用Intellij Idea写Java, 既然 Magit 那么好用，有没可能独立于Emacs使用呢?</p>
@@ -43,8 +53,18 @@
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">magit</span><span class="o">=</span><span class="s2">&#34;emacsclient -nw -eval &#39;(magit-status)&#39;&#34;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><figure>
-    <img loading="lazy" src="/ox-hugo/magit.gif"/> 
+</div>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-cc913" hidden>
+    <label for="zoomCheck-cc913">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/magit.gif"/> 
+    
+    
+    </label>
 </figure>
 
 <p>这样就可以在VSCode和Idea里面愉快地使用 magit了.</p>

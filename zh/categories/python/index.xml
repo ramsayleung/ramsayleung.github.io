@@ -946,8 +946,18 @@
 <h2 id="爬取策略"><span class="section-num">1</span> 爬取策略</h2>
 <p>众所周知，爬虫比较难爬取的就是动态生成的网页，因为需要解析 JS, 其中比较典型的例子就是淘宝，天猫，京东，QQ 空间等。</p>
 <p>所以在我爬取京东网站的时候，首先需要确定的就是爬取策略。因为我想要爬取的是商品的信息以及相应的评论，并没有爬取特定的商品的需求。所以在分析京东的网页的 url 的时候, 决定使用类似全站爬取的策略。 分析如图：</p>
+
 <figure><a href="/ox-hugo/jd_analyze.png">
-    <img loading="lazy" src="/ox-hugo/jd_analyze.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-0b0bf" hidden>
+    <label for="zoomCheck-0b0bf">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/jd_analyze.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>可以看出，京东不同的商品类别是对应不同的子域名的，例如 <code>book</code> 对应的是图书， <code>mvd</code> 对应的是音像， <code>shouji</code> 对应的是手机等。</p>
@@ -969,8 +979,18 @@
 </div>
 </div><h2 id="提取数据"><span class="section-num">2</span> 提取数据</h2>
 <p>在确定了爬取策略之后，爬虫就可以不断地进行工作了。那么爬虫怎么知道什么时候才是商品信息的页面呢？再来分析一下京东的商品页面：</p>
+
 <figure><a href="/ox-hugo/jd_item_analyze.png">
-    <img loading="lazy" src="/ox-hugo/jd_item_analyze.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-c8137" hidden>
+    <label for="zoomCheck-c8137">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/jd_item_analyze.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>从上面的信息可以看出，每个商品的页面都是以 <code>item.jd.com/xxxxxxx.html</code> 的形式存 在的；而 xxxxxxx 就是该商品的 sku-id. 所以只需对 url 进行解析，子域名为 <code>item</code> 即商品页面，就可以进行爬取。</p>
@@ -1033,12 +1053,32 @@
 <p>参考 Github上 <a href="https://github.com/gnemoug/distribute_crawler">distributed_crawler</a> 的代码，将单机版本的 <a href="https://github.com/noplay/scrapy-graphite">scrapy-graphite</a> 扩展成基于分布式的 graphite 监控程序，并且实现对 python3 的支持。</p>
 <h3 id="docker"><span class="section-num">6.2</span> docker</h3>
 <p>但是 graphite 只是支持 python2, 并且安装过程很麻烦，我在折腾大半天后都无法安装成功，实在有点沮丧。最后想起了伟大的 docker, 并且直接找到已经打包好的image. 数行命令即解决所有的安装问题，不得不说：docker, 你值得拥有。运行截图：</p>
+
 <figure><a href="/ox-hugo/jd_comment_graphite1.png">
-    <img loading="lazy" src="/ox-hugo/jd_comment_graphite1.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-cd205" hidden>
+    <label for="zoomCheck-cd205">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/jd_comment_graphite1.png"/> 
+    
+    
+    </label></a>
 </figure>
 
+
 <figure><a href="/ox-hugo/jd_comment_graphite2.png">
-    <img loading="lazy" src="/ox-hugo/jd_comment_graphite2.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-97ae9" hidden>
+    <label for="zoomCheck-97ae9">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/jd_comment_graphite2.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <h2 id="爬虫拆分"><span class="section-num">7</span> 爬虫拆分</h2>
@@ -1047,18 +1087,48 @@
 <h2 id="小结"><span class="section-num">8</span> 小结</h2>
 <p>在爬取一天之后，爬虫成果：</p>
 <h3 id="评论"><span class="section-num">8.1</span> 评论</h3>
+
 <figure><a href="/ox-hugo/jd_comment.png">
-    <img loading="lazy" src="/ox-hugo/jd_comment.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-8be27" hidden>
+    <label for="zoomCheck-8be27">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/jd_comment.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <h3 id="评论总结"><span class="section-num">8.2</span> 评论总结</h3>
+
 <figure><a href="/ox-hugo/jd_comment_summary.png">
-    <img loading="lazy" src="/ox-hugo/jd_comment_summary.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-fc61f" hidden>
+    <label for="zoomCheck-fc61f">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/jd_comment_summary.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <h3 id="商品信息"><span class="section-num">8.3</span> 商品信息</h3>
+
 <figure><a href="/ox-hugo/jd_parameters.png">
-    <img loading="lazy" src="/ox-hugo/jd_parameters.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-29f68" hidden>
+    <label for="zoomCheck-29f68">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/jd_parameters.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>商品信息加上评论数约 150+w.</p>
@@ -1576,13 +1646,33 @@
 <h3 id="对于不同的代码-使用不同的日志等级"><span class="section-num">3.6</span> 对于不同的代码，使用不同的日志等级</h3>
 <p>因为一个项目不同代码要求不一样，也无需把每一个实现细节都记录在日志，只需要根 据不同的实现，使用不同的日志等级，例如使用 <code>Debug</code> 记录系统启动，处理业务逻辑 请求的信息，使用 <code>Error</code>, 记录系统的出错信息，可以结合堆栈分析原因，等等。</p>
 <p>此外，Logger 实例可以被配置成基于名字的树状结构。 每一个部件都定义了一个基础的名字，对应的模块被设置成子节点。而 root logger 没有名字。如图：</p>
+
 <figure><a href="/ox-hugo/example_logger_tree.png">
-    <img loading="lazy" src="/ox-hugo/example_logger_tree.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-2c8af" hidden>
+    <label for="zoomCheck-2c8af">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/example_logger_tree.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>就配置 <code>logging</code> 而言，我认为树状结构是非常有用的，因为无需为每一个 logger 都设置handler. 如果一个 logger 没有 handler 的话，它就会让父节点来处理。所以 对于对于大部份的应用而言，只需配置 root logger, 而所有的信息都会发送到同一个 地方</p>
+
 <figure><a href="/ox-hugo/one_logger_handler.png">
-    <img loading="lazy" src="/ox-hugo/one_logger_handler.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-e436a" hidden>
+    <label for="zoomCheck-e436a">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/one_logger_handler.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>而树状结构可以对应用的不同部分使用不同的日志等级，不同的 handler, 不同的formatter, 以更好地控制日志信息</p>

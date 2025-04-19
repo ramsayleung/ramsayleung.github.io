@@ -27,8 +27,18 @@
 <p>Orgmode是类似Markdown，与Emacs深度绑定优化的标记语言，使用Emacs来编写org-mode 文档就有下笔有神，文思泉涌，如丝般顺滑(这篇文章也是用org-mode写的)。</p>
 <p>因为org-mode 与Emacs 深度结合，自然无法脱离Emacs单独使用，而其他编辑器模仿org-mode 开发的插件，如 <a href="https://github.com/jceb/vim-orgmode">vim-orgmode</a>, <a href="https://github.com/nvim-orgmode/orgmode">nvim-orgmode</a> 和 <a href="https://github.com/vscode-org-mode/vscode-org-mode">vscode-orgmode</a>, 难免只得其形，未得其神，还不如用Markdown.</p>
 <p>而 Magit 是 Git的Emacs图形化客户端, 也是我用过的最好用的Git 客户端软件，既直观又易用(看看Emacs 道友们夸 Magit 的<a href="https://emacs-china.org/t/magit/22521/5">帖子</a>):</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/magit_dashboard.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-02203" hidden>
+    <label for="zoomCheck-02203">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/magit_dashboard.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>虽然我已经用了Emacs很多年，但是已经过了Live with Emacs的境界, 不会用Emacs处理所有事情, 比如用VSCode 写Rust, 用Intellij Idea写Java, 既然 Magit 那么好用，有没可能独立于Emacs使用呢?</p>
@@ -43,8 +53,18 @@
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">magit</span><span class="o">=</span><span class="s2">&#34;emacsclient -nw -eval &#39;(magit-status)&#39;&#34;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><figure>
-    <img loading="lazy" src="/ox-hugo/magit.gif"/> 
+</div>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-cc913" hidden>
+    <label for="zoomCheck-cc913">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/magit.gif"/> 
+    
+    
+    </label>
 </figure>
 
 <p>这样就可以在VSCode和Idea里面愉快地使用 magit了.</p>
@@ -75,8 +95,18 @@
       <content:encoded><![CDATA[<h2 id="技巧"><span class="section-num">1</span> 技巧</h2>
 <p>对于使用org-mode 格式的文本，例如Emacs官方<a href="https://git.savannah.gnu.org/cgit/emacs.git/plain/admin/notes/tree-sitter/starter-guide?h=feature/tree-sitter"> tree-sitter 的使用教程</a></p>
 <p>在线阅读不是很易读，相当于人脑解析 <code>org-mode</code>. 我的个人习惯是使用 <code>eww</code> 浏览器来阅读:</p>
+
 <figure><a href="/ox-hugo/tree-sitter-doc.png">
-    <img loading="lazy" src="/ox-hugo/tree-sitter-doc.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-e30a7" hidden>
+    <label for="zoomCheck-e30a7">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/tree-sitter-doc.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <ol>
@@ -84,8 +114,18 @@
 <li>使用 <code>eww</code> 打开链接</li>
 <li><code>major-mode</code> 切换到 <code>org-mode</code>, 就可以愉快地使用 Emacs 来阅读 <code>org-mode</code> 文本.</li>
 </ol>
+
 <figure><a href="/ox-hugo/eww.gif">
-    <img loading="lazy" src="/ox-hugo/eww.gif"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-f22f6" hidden>
+    <label for="zoomCheck-f22f6">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/eww.gif"/> 
+    
+    
+    </label></a>
 </figure>
 
 <div center class="qr-container">
@@ -114,16 +154,36 @@
 </li>
 <li><code>C-c C-c</code> 提交修改或 <code>C-c C-k</code> 放弃修改</li>
 </ol>
+
 <figure><a href="/ox-hugo/dired_rename_multi_files.gif">
-    <img loading="lazy" src="~/btsync/org/blog/2023/%e6%8a%80%e5%b7%a7%e5%88%86%e4%ba%ab-dired%e6%89%b9%e9%87%8f%e4%bf%ae%e6%94%b9%e6%96%87%e4%bb%b6%e5%90%8d/img/dired_rename_multi_files.gif"
-         alt="Figure 1: 使用 rectangle-command 进行批量修改"/> </a><figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-3d34b" hidden>
+    <label for="zoomCheck-3d34b">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="~/btsync/org/blog/2023/%e6%8a%80%e5%b7%a7%e5%88%86%e4%ba%ab-dired%e6%89%b9%e9%87%8f%e4%bf%ae%e6%94%b9%e6%96%87%e4%bb%b6%e5%90%8d/img/dired_rename_multi_files.gif"
+         alt="Figure 1: 使用 rectangle-command 进行批量修改"/> 
+    
+    
+    </label></a><figcaption>
             <p><span class="figure-number">Figure 1: </span>使用 <code>rectangle-command</code> 进行批量修改</p>
         </figcaption>
 </figure>
 
+
 <figure><a href="/ox-hugo/dired_rename_multi_files_2.gif">
-    <img loading="lazy" src="~/btsync/org/blog/2023/%e6%8a%80%e5%b7%a7%e5%88%86%e4%ba%ab-dired%e6%89%b9%e9%87%8f%e4%bf%ae%e6%94%b9%e6%96%87%e4%bb%b6%e5%90%8d/img/dired_rename_multi_files_2.gif"
-         alt="Figure 2: 使用 evil的多行编辑模式进行批量修改"/> </a><figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-135a4" hidden>
+    <label for="zoomCheck-135a4">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="~/btsync/org/blog/2023/%e6%8a%80%e5%b7%a7%e5%88%86%e4%ba%ab-dired%e6%89%b9%e9%87%8f%e4%bf%ae%e6%94%b9%e6%96%87%e4%bb%b6%e5%90%8d/img/dired_rename_multi_files_2.gif"
+         alt="Figure 2: 使用 evil的多行编辑模式进行批量修改"/> 
+    
+    
+    </label></a><figcaption>
             <p><span class="figure-number">Figure 2: </span>使用 evil的多行编辑模式进行批量修改</p>
         </figcaption>
 </figure>
@@ -144,9 +204,19 @@
 <p>目标: 在=Eshell=中像在bash/zsh中使用=fzf=那般搜索历史命令</p>
 <h2 id="fzf"><span class="section-num">2</span> fzf</h2>
 <p>我的主力Shell 是Eshell, 但是平时我也会用Zsh, 而<a href="https://github.com/junegunn/fzf">fzf</a> 是一个非常好用的命令行工具，用了=fzf=搜索历史命令:</p>
+
 <figure>
-    <img loading="lazy" src="https://i.imgur.com/pPMxauw.gif"
-         alt="Figure 1: fzf"/> <figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-ae06a" hidden>
+    <label for="zoomCheck-ae06a">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://i.imgur.com/pPMxauw.gif"
+         alt="Figure 1: fzf"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 1: </span>fzf</p>
         </figcaption>
 </figure>
@@ -155,9 +225,19 @@
 <p>我日常的操作基本都是在 Eshell 上面进行的，不过 Eshell 是没办法直接像 Bash 那样调用 =fzf=来查找命令历史的，所以我希望把这个功能迁移到到Eshell 上面来。</p>
 <p>我在 Emacs 使用的补全框架是 <code>Ivy/Counsel</code>,它有一个 <code>counsel-esh-history=的命令可以使用 =Ivy</code> 来搜索命令，但是没办法使用用户已经输入的内容来过滤命令，所以我就在自己折腾了一个</p>
 <p><code>counsel-esh-history</code> 命令。效果如下：</p>
+
 <figure>
-    <img loading="lazy" src="https://i.imgur.com/3tvGDzW.gif"
-         alt="Figure 2: 感觉很不错嘛 :)"/> <figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-a5648" hidden>
+    <label for="zoomCheck-a5648">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://i.imgur.com/3tvGDzW.gif"
+         alt="Figure 2: 感觉很不错嘛 :)"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 2: </span>感觉很不错嘛 :)</p>
         </figcaption>
 </figure>
@@ -270,8 +350,18 @@
 </div><p>效果自然是很 sexy.</p>
 <h2 id="与原有提示符冲突"><span class="section-num">2</span> 与原有提示符冲突</h2>
 <p>但是我原来使用的 <a href="https://github.com/kaihaosw/eshell-prompt-extras">eshell-prompt-extra</a> 的效果就被覆盖了。而 <code>eshell_prompt_extra</code> 可以提供的额外信息非常多，包括：git, python virtualenv, 以及远程登录时的主机信息，如图：</p>
+
 <figure><a href="/ox-hugo/eshell_extra_prompt.png">
-    <img loading="lazy" src="/ox-hugo/eshell_extra_prompt.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-0fac0" hidden>
+    <label for="zoomCheck-0fac0">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/eshell_extra_prompt.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>如果用上这个 sexy 的提示符，eshell-extra-prompt 的额外的信息就不能显示，感觉好亏:(</p>
@@ -532,8 +622,18 @@
 </div>
 </div><h2 id="总结"><span class="section-num">4</span> 总结</h2>
 <p>这样一个新的 Eshell 主题就完工了，然后我给 <code>eshell-extra-prompt</code> 发了一个<a href="https://github.com/kaihaosw/eshell-prompt-extras/pull/16">Pull Request</a>, 最终效果如下：</p>
+
 <figure><a href="/ox-hugo/epe.png">
-    <img loading="lazy" src="/ox-hugo/epe.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-45cf5" hidden>
+    <label for="zoomCheck-45cf5">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/epe.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>Enjoy Emacs, Enjor Tweaking :)</p>
@@ -588,9 +688,19 @@
 <p>你可以用Helm 来完成任何事。</p>
 <p>基于 <strong>tuhdo</strong> 对我在<a href="https://www.reddit.com/r/emacs/comments/52lnad/from_helm_to_ivy_a_user_perspective/d7lypeu/">Reddit</a> 上面问题的回复，我想指出的一个特性就是Helm 是不使用 <em>minibuffer</em>,但是Ivy 是使用的。</p>
 <p>所以它可以被配置成总是在当前打开的窗口展示。对于那些大屏幕显示器的用户而言，这个特性真的非常有用，因为你的目光不用在 <em>minibuffer</em> 来回切换：</p>
+
 <figure>
-    <img loading="lazy" src="http://i.imgur.com/g1Oz9JY.png"
-         alt="Figure 1: 补全结果总是显示在同一个窗口"/> <figcaption>
+    
+    
+    <input type="checkbox" id="zoomCheck-2b760" hidden>
+    <label for="zoomCheck-2b760">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="http://i.imgur.com/g1Oz9JY.png"
+         alt="Figure 1: 补全结果总是显示在同一个窗口"/> 
+    
+    
+    </label><figcaption>
             <p><span class="figure-number">Figure 1: </span>补全结果总是显示在同一个窗口</p>
         </figcaption>
 </figure>
@@ -835,8 +945,18 @@ Counsel 也只有7500 行代码</p>
 <p>你是通过 <code>magit-status</code> 这个接口来使用Magit 的。此外，如果你是使用 Emacs VC的，你需要知道的是，Magit是没有集成到Emacs VC(Version Control)的 抽象层。</p>
 <p>虽然你没法在VC 使用Magit,不过你还是可以在大多数版本控制工具使用Magit 的，Magit 为这些版本控制工具都提供了统一的接口；你如果想调用Magit,你只需要 <code>M-x magit-status</code></p>
 <h2 id="the-magit-status"><span class="section-num">2</span> The Magit Status</h2>
+
 <figure>
-    <img loading="lazy" src="https://www.masteringemacs.org/static/uploads/Screenshot-from-2013-12-06-114511.png"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-e3368" hidden>
+    <label for="zoomCheck-e3368">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://www.masteringemacs.org/static/uploads/Screenshot-from-2013-12-06-114511.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p>你首先会注意到关于Magit的事情应该就是当你打开Magit 的状态窗口时，Magit 的状态窗口
@@ -856,8 +976,18 @@ Counsel 也只有7500 行代码</p>
 让你通过 <code>tab</code> 展开或者折叠已经暂存或者未暂存文件。</p>
 <p>如果你想更加细颗粒度地暂存或者未暂存文件，你可以使用 <strong>M-1</strong> 到 <strong>M-4</strong> 来操作所有的文件；此外，也可以使用 <strong>1</strong> 到 <strong>4</strong>
 操作选定的文件</p>
+
 <figure>
-    <img loading="lazy" src="https://www.masteringemacs.org/static/uploads/diff-hunk-refined-level-4.png"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-a2b5c" hidden>
+    <label for="zoomCheck-a2b5c">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://www.masteringemacs.org/static/uploads/diff-hunk-refined-level-4.png"/> 
+    
+    
+    </label>
 </figure>
 
 <ol>
@@ -899,8 +1029,18 @@ Counsel 也只有7500 行代码</p>
 <p>如果你想在最新一次提交下创建一个 <code>fixup</code> 或者 <code>squash</code> 提交的话，使用修整或压缩命令 可以重整或者 <code>--(自动压缩)autosquash</code> 最新一次提交。</p>
 <p>如果你不会去重写你的git历史或者你未使用过重整，你可能觉得这两个命令不是很有用</p>
 <h2 id="logging"><span class="section-num">5</span> Logging</h2>
+
 <figure>
-    <img loading="lazy" src="https://www.masteringemacs.org/static/uploads/Screenshot-from-2013-12-06-142317.png"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-cb202" hidden>
+    <label for="zoomCheck-cb202">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="https://www.masteringemacs.org/static/uploads/Screenshot-from-2013-12-06-142317.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p>我觉得Magit非常强大的特性之一就是它有不计其数的选项可以用来对你的git 历史进行 过滤，排序，查找。</p>

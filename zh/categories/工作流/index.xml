@@ -31,8 +31,18 @@
 <p>虽然搜索引擎有很多，但是我基本只用 Google；如果没法使用 Google, 那么推荐使用Bing, 反正百度不在我的推荐之列. <br/></p>
 <p>Google 搜索的界面很简单，只有一个搜索框，用户只需要把想要搜索的内容输入进去并回车即可。 <br/></p>
 <p>比如搜索：「cpp modules」，返回了 7,320,000条结果。 <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_result.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-3ed1b" hidden>
+    <label for="zoomCheck-3ed1b">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_search_result.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>搜索结果太多，我想对搜索内容进行筛选，google 就提供了相当多的搜索指令(search operator) <br/></p>
@@ -46,8 +56,18 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cpp modules :before 2020
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_before.png"/> 
+</div><p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-8b4e5" hidden>
+    <label for="zoomCheck-8b4e5">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_search_before.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>可以看到搜索结果变成了185,000条，并且返回的搜索结果都是在 2020 年以前的纪录，这个在查看历史新闻时特别有用，比如看历史合订本。 <br/></p>
@@ -62,8 +82,18 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cpp modules site:jetbrains.com
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_site.png"/> 
+</div><p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-babaf" hidden>
+    <label for="zoomCheck-babaf">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_search_site.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>又或者，我搜索网站的时候，想把某个网站排除掉, 比如使用中文搜索编程相关关键词的时候，经常会被CSDN 的垃圾内容污染，那么就可以使用 <code>-</code>, 来排除掉某些内容. <br/></p>
@@ -75,8 +105,18 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cpp modules -microsoft
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_exclude.png"/> 
+</div><p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-eafe2" hidden>
+    <label for="zoomCheck-eafe2">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_search_exclude.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>原来排名第二的 Miscrosft 就被过滤掉了. <br/></p>
@@ -91,8 +131,18 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cpp modules @reddit
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_reddit.png"/> 
+</div><p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-34bc3" hidden>
+    <label for="zoomCheck-34bc3">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_search_reddit.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <div class="highlight"><div class="chroma">
@@ -103,8 +153,18 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cpp modules @zhihu
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_zhihu.png"/> 
+</div><p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-c6b16" hidden>
+    <label for="zoomCheck-c6b16">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_search_zhihu.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <h3 id="文件类型"><span class="section-num">2.4</span> 文件类型</h3>
@@ -117,8 +177,18 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cpp modules filetype:pdf
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_pdf.png"/> 
+</div><p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-03927" hidden>
+    <label for="zoomCheck-03927">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_search_pdf.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>这个在知道书名，想要搜索电子书的时候特别有用. <br/></p>
@@ -133,8 +203,18 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&#34;cpp modules&#34;
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_precise_match.png"/> 
+</div><p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-b0e1e" hidden>
+    <label for="zoomCheck-b0e1e">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_search_precise_match.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>搜索结果变成 3530 条纪录了. <br/></p>
@@ -143,8 +223,18 @@
 <li>OR: &ldquo;cpp or module&rdquo;, 匹配包含 &ldquo;cpp&rdquo; 或者&quot;module&rdquo; 的内容, <code>or</code> 可以使用竖线代替 <code>|</code> 个人觉得用处不大，也只会让搜索结果膨胀 <br/></li>
 <li>AND: &ldquo;cpp and module&rdquo;, 匹配包含 &ldquo;cpp&rdquo; 与&quot;module&quot; 的内容, <code>and</code> 可以使用与符号代替 <code>&amp;</code> <br/></li>
 </ul>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/google_search_and.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-11d41" hidden>
+    <label for="zoomCheck-11d41">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_search_and.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <h2 id="custome-search"><span class="section-num">3</span> Custome Search</h2>
@@ -155,13 +245,33 @@
 <p>（下文以同样使用 OpenGrok 部署的开源项目 <code>LibreOffice</code> 的代码为例子） <br/></p>
 <p>因为在日常开发的时候，遇到陌生的函数名或者枚举定义，就需要看下他们的定义与实现，看下有没有问题： <br/></p>
 <p>比如想看下 <code>contains</code> 这个函数的实现： <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/libre_office_definition.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-89a36" hidden>
+    <label for="zoomCheck-89a36">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/libre_office_definition.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>或者想看下 <code>Intersection</code> 这个函数的引用，看下其他人是怎么用这个函数的，我也顺便抄下。 <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/libre_office_symbol.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-b0a48" hidden>
+    <label for="zoomCheck-b0a48">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/libre_office_symbol.png"/> 
+    
+    
+    </label>
 </figure>
   <br/></p>
 <p>一般的步骤是: <br/></p>
@@ -198,13 +308,33 @@
 <li>Keyword: csr <br/></li>
 <li>URL: <code>https://opengrok.libreoffice.org/search?full=&amp;defs=&amp;refs=%s&amp;path=&amp;hist=&amp;type=cxx&amp;xrd=&amp;nn=19&amp;si=refs&amp;searchall=true&amp;si=refs</code> <br/></li>
 </ul>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/google_site_search_ref.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-addec" hidden>
+    <label for="zoomCheck-addec">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_site_search_ref.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>然后，在Chrome 的浏览器地址，输入 <code>csr</code>, 空格, 再搜索 <code>Intersection</code>, 回车。就可以直接在Chrome 地址栏里面搜索指定网页的代码. <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/google_site_search_csr.gif"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-3c019" hidden>
+    <label for="zoomCheck-3c019">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/google_site_search_csr.gif"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>而搜索代码定义，URL 如下: <br/></p>
@@ -227,34 +357,94 @@
 <li>在搜索框点击鼠标右键，然后会看到一个「Add a Keyword for this Search&hellip;」 <br/></li>
 <li>修改名字与 keyword <br/></li>
 </ol>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/firefox_add_key_word_search.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-b6f7b" hidden>
+    <label for="zoomCheck-b6f7b">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/firefox_add_key_word_search.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/firefox_add_key_word_search_bookmark.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-dfd54" hidden>
+    <label for="zoomCheck-dfd54">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/firefox_add_key_word_search_bookmark.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>然后，在 Firefox 的浏览器地址，输入 <code>csd</code>, 空格, 再搜索 <code>Intersection</code>, 回车。就可以直接在 Firefox 地址栏里面搜索指定网页的代码. <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/firefox_keyword_search.gif"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-2c9b3" hidden>
+    <label for="zoomCheck-2c9b3">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/firefox_keyword_search.gif"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>如果没有右键时没有找到 「Add a Keyword for this Search&hellip;」的选项，也可以使用添加书签的方式，手动添加一个 keyword search: <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/firefox_add_bookmark.png"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-c9c77" hidden>
+    <label for="zoomCheck-c9c77">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/firefox_add_bookmark.png"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <h2 id="alfred-web-search"><span class="section-num">4</span> Alfred Web Search</h2>
 <p>如果使用的是 Mac OS, 那么通过Alfred 插件的 Web Search功能，甚至可以不用手动切换到浏览器，直接就可以进行搜索，可以把搜索流的耗时进一步缩短到1-3秒。 <br/></p>
 <p>Alfred -&gt; Preference -&gt; Web Search -&gt; Add custome Search <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/alfred_web_seasch.jpg"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-d4600" hidden>
+    <label for="zoomCheck-d4600">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/alfred_web_seasch.jpg"/> 
+    
+    
+    </label>
 </figure>
   <br/></p>
 <p>除了要将 <code>%s</code> 换成 <code>{query}</code> 之外, 其他添加的步骤与 Site Search 一致： <br/></p>
-<p><figure>
-    <img loading="lazy" src="/ox-hugo/alfred_code_search.gif"/> 
+<p>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-78375" hidden>
+    <label for="zoomCheck-78375">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/alfred_code_search.gif"/> 
+    
+    
+    </label>
 </figure>
  <br/></p>
 <p>录制 Gif 只花了1.5 秒. <br/></p>
@@ -304,36 +494,96 @@
 <p>excalidraw提供了基本的图形，如矩形，图形，菱形，文本，箭头等，稍经组合，就可以绘制很精美，简洁的图画。</p>
 <h3 id="涂鸦之作"><span class="section-num">2.1</span> 涂鸦之作</h3>
 <p>Hadoop 词频计算:</p>
+
 <figure><a href="/ox-hugo/word_freq_count.png">
-    <img loading="lazy" src="/ox-hugo/word_freq_count.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-70568" hidden>
+    <label for="zoomCheck-70568">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/word_freq_count.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>数据治理:</p>
+
 <figure><a href="/ox-hugo/%e6%95%b0%e6%8d%ae%e6%b2%bb%e7%90%86.png">
-    <img loading="lazy" src="/ox-hugo/%e6%95%b0%e6%8d%ae%e6%b2%bb%e7%90%86.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-1ba33" hidden>
+    <label for="zoomCheck-1ba33">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/%e6%95%b0%e6%8d%ae%e6%b2%bb%e7%90%86.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>数据未分层:</p>
+
 <figure><a href="/ox-hugo/%e6%95%b0%e6%8d%ae%e6%9c%aa%e5%88%86%e5%b1%82.png">
-    <img loading="lazy" src="/ox-hugo/%e6%95%b0%e6%8d%ae%e6%9c%aa%e5%88%86%e5%b1%82.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-fb586" hidden>
+    <label for="zoomCheck-fb586">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/%e6%95%b0%e6%8d%ae%e6%9c%aa%e5%88%86%e5%b1%82.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>数据分层:</p>
+
 <figure><a href="/ox-hugo/%e6%95%b0%e6%8d%ae%e5%88%86%e5%b1%82.png">
-    <img loading="lazy" src="/ox-hugo/%e6%95%b0%e6%8d%ae%e5%88%86%e5%b1%82.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-d61f3" hidden>
+    <label for="zoomCheck-d61f3">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/%e6%95%b0%e6%8d%ae%e5%88%86%e5%b1%82.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>因为excalidraw 相当的灵活，甚至系统循环图我都是使用它来绘制的：</p>
 <p>系统循环图:</p>
+
 <figure><a href="/ox-hugo/%e4%ba%ba%e5%8f%a3%e4%b8%8e%e5%80%ba%e5%8a%a1%e9%a3%8e%e9%99%a93.png">
-    <img loading="lazy" src="/ox-hugo/%e4%ba%ba%e5%8f%a3%e4%b8%8e%e5%80%ba%e5%8a%a1%e9%a3%8e%e9%99%a93.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-1b310" hidden>
+    <label for="zoomCheck-1b310">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/%e4%ba%ba%e5%8f%a3%e4%b8%8e%e5%80%ba%e5%8a%a1%e9%a3%8e%e9%99%a93.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <h3 id="素材库"><span class="section-num">2.2</span> 素材库</h3>
 <p>如果基本的图形无法满足诉求的话，excalidraw 还提供了在线<a href="https://libraries.excalidraw.com/?theme=light&amp;sort=default">library</a>，供设计师把他们的图形，图标分享给其他用户。例如系统架构图，AWS组件图，UML图，手绘人物图等等，应有尽有，不一而足。</p>
 <p>素材库:</p>
+
 <figure><a href="/ox-hugo/library.png">
-    <img loading="lazy" src="/ox-hugo/library.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-b14b4" hidden>
+    <label for="zoomCheck-b14b4">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/library.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>(商户系统的头像就是引用自 library)</p>
@@ -355,20 +605,50 @@
 <li>然后拖动线条，使用Control/Command + D 在末尾增加一个端点，或者使用删除键删除一个端点（留意excalidraw 工具栏下方的操作提示）</li>
 </ol>
 <p>绘制曲线:</p>
+
 <figure><a href="/ox-hugo/cursed_line.gif">
-    <img loading="lazy" src="/ox-hugo/cursed_line.gif"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-77d58" hidden>
+    <label for="zoomCheck-77d58">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/cursed_line.gif"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>我在拙作<a href="https://mp.weixin.qq.com/s/mid3TpmXJMM7xWm5rfl7qg">《我的写作流》</a>中提到过，我倾向「本地化」+ 「文本化」 + 「版本管理」 + 「云同步」的知识管理文案，对于图片管理，我也是类似的倾向。</p>
 <p>因为图片是二进制流，无法做版本管理，所以我一般会把excalidraw 文件保存到本地，保存成xxx.excalidraw 的文件，实际是Json 文本；然后再导出成png, svg 等各种形式的图片文件。</p>
 <p>如果需要修改图片或者复制，剪切，只需要导入xxx.excalidraw，修改保存成新的excalidraw 文件，即可以实现「版本管理」</p>
+
 <figure><a href="/ox-hugo/excalidraw%e7%ae%a1%e7%90%86.png">
-    <img loading="lazy" src="/ox-hugo/excalidraw%e7%ae%a1%e7%90%86.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-2293a" hidden>
+    <label for="zoomCheck-2293a">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/excalidraw%e7%ae%a1%e7%90%86.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>原来excalidraw 有个限制，就是一次只能编辑一个excalidraw 文件，经@qisdreamyan 提醒，Vscode的<a href="https://marketplace.visualstudio.com/items?itemName=pomdtr.excalidraw-editor">excalidraw 插件</a>支持直接在Vscode 里面编辑excalidraw 文件，那么就可以同时编辑多个文件啦。</p>
+
 <figure><a href="/ox-hugo/vscode_excalidraw.gif">
-    <img loading="lazy" src="/ox-hugo/vscode_excalidraw.gif"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-89bce" hidden>
+    <label for="zoomCheck-89bce">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/vscode_excalidraw.gif"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>目前excalidraw 美中不足的一点就是，不支持手绘风格的非拉丁文字体，如中文，日文字体等，很早之前就有<a href="https://github.com/excalidraw/excalidraw/pull/5604">issue</a>在谈论了，目前还没有什么进展。</p>
@@ -380,24 +660,64 @@
 <p>但如果是绘制复杂的图画，「手动布局」不仅繁琐，还不美观，而「自动布局」都能帮我们轻松搞定，为我们节省非常多的精力。</p>
 <p>不看广告，看疗效，来看下我使用graphviz 画出的图：</p>
 <p>土地财政时间线:</p>
+
 <figure><a href="/ox-hugo/%e5%9c%9f%e5%9c%b0%e8%b4%a2%e6%94%bf%e6%97%b6%e9%97%b4%e7%ba%bf.png">
-    <img loading="lazy" src="/ox-hugo/%e5%9c%9f%e5%9c%b0%e8%b4%a2%e6%94%bf%e6%97%b6%e9%97%b4%e7%ba%bf.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-aa7ff" hidden>
+    <label for="zoomCheck-aa7ff">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/%e5%9c%9f%e5%9c%b0%e8%b4%a2%e6%94%bf%e6%97%b6%e9%97%b4%e7%ba%bf.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>西方哲学史演进历程:</p>
+
 <figure><a href="/ox-hugo/%e8%a5%bf%e6%96%b9%e5%93%b2%e5%ad%a6%e5%8f%b2.png">
-    <img loading="lazy" src="/ox-hugo/%e8%a5%bf%e6%96%b9%e5%93%b2%e5%ad%a6%e5%8f%b2.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-6894f" hidden>
+    <label for="zoomCheck-6894f">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/%e8%a5%bf%e6%96%b9%e5%93%b2%e5%ad%a6%e5%8f%b2.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>Graphviz 官方示例库：</p>
 <p>Unix 家谱:</p>
+
 <figure><a href="/ox-hugo/unix.png">
-    <img loading="lazy" src="/ox-hugo/unix.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-02be2" hidden>
+    <label for="zoomCheck-02be2">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/unix.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>数据结构:</p>
+
 <figure><a href="/ox-hugo/datastruct.png">
-    <img loading="lazy" src="/ox-hugo/datastruct.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-144c0" hidden>
+    <label for="zoomCheck-144c0">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/datastruct.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>更多更复杂的示例，可见官方的<a href="http://www.graphviz.org/gallery/">gallery</a></p>
@@ -423,8 +743,18 @@
 </span></span><span class="line"><span class="cl">// graph 标识来定义一个无向图
 </span></span></code></pre></td></tr></table>
 </div>
-</div><figure>
-    <img loading="lazy" src="/ox-hugo/graph.png"/> 
+</div>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-b44a5" hidden>
+    <label for="zoomCheck-b44a5">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/graph.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p>定义一个有向图：</p>
@@ -444,8 +774,18 @@
 </span></span><span class="line"><span class="cl">// digraph 标识来定义一个无向图
 </span></span></code></pre></td></tr></table>
 </div>
-</div><figure>
-    <img loading="lazy" src="/ox-hugo/digraph.png"/> 
+</div>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-2603c" hidden>
+    <label for="zoomCheck-2603c">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/digraph.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p>命名规范与C家族的编程语言类似：图形关系定义在花括号={}= 中；每条语句以 <code>;</code> 结尾; <code>//</code> 表示单行注释, =/**/=表示多行注释</p>
@@ -495,8 +835,18 @@
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><figure>
-    <img loading="lazy" src="/ox-hugo/attr.png"/> 
+</div>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-b6838" hidden>
+    <label for="zoomCheck-b6838">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/attr.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p>属性还可以作用于图(graph)上，常用的属性包括:</p>
@@ -529,8 +879,18 @@
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><figure>
-    <img loading="lazy" src="/ox-hugo/graph_attr.png"/> 
+</div>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-9fb24" hidden>
+    <label for="zoomCheck-9fb24">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/graph_attr.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p>更多的属性可见官网：<a href="http://www.graphviz.org/doc/info/attrs.html">Attributes</a></p>
@@ -580,8 +940,18 @@
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><figure>
-        <img loading="lazy" src="/ox-hugo/subgraph.png"/> 
+</div>
+    <figure>
+        
+        
+        <input type="checkbox" id="zoomCheck-28fbc" hidden>
+        <label for="zoomCheck-28fbc">
+        
+        
+        <img class="zoomCheck" loading="lazy" src="/ox-hugo/subgraph.png"/> 
+        
+        
+        </label>
     </figure>
 </li>
 </ul>
@@ -602,8 +972,18 @@
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><figure>
-    <img loading="lazy" src="/ox-hugo/rankdir_tb.png"/> 
+</div>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-362b5" hidden>
+    <label for="zoomCheck-362b5">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/rankdir_tb.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p>From Left to right:</p>
@@ -621,8 +1001,18 @@
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><figure>
-    <img loading="lazy" src="/ox-hugo/rankdir_lr.png"/> 
+</div>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-fbcf0" hidden>
+    <label for="zoomCheck-fbcf0">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/rankdir_lr.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p>该属性只针对图(graph)生效.</p>
@@ -746,15 +1136,35 @@
 </div>
 </div><h4 id="编辑器支持"><span class="section-num">3.1.7</span> 编辑器支持</h4>
 <p>如果是Emacs 用户，可以使用<a href="https://github.com/ppareit/graphviz-dot-mode">graphviz-dot-mode</a> 来编辑并预览生成的图片，效果如下：</p>
+
 <figure><a href="/ox-hugo/graphviz-dot-mode.png">
-    <img loading="lazy" src="/ox-hugo/graphviz-dot-mode.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-990bb" hidden>
+    <label for="zoomCheck-990bb">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/graphviz-dot-mode.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>虽然我是重度Emacs 用户，但是在Emacs上实时预览图片效果并不好。</p>
 <p>Emacs对查看图片功能支持不够强大，无法通过鼠标放大缩小，并实时预览图片。</p>
 <p>如果需要实时预览graphviz 生成的图片，我个人更加推荐使用Vscode + <a href="https://marketplace.visualstudio.com/items?itemName=joaompinto.vscode-graphviz">graphviz 插件</a> ：</p>
+
 <figure><a href="/ox-hugo/graph_snippet.gif">
-    <img loading="lazy" src="/ox-hugo/graph_snippet.gif"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-5c51e" hidden>
+    <label for="zoomCheck-5c51e">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/graph_snippet.gif"/> 
+    
+    
+    </label></a>
 </figure>
 
 <h2 id="plantuml"><span class="section-num">4</span> plantuml</h2>
@@ -807,8 +1217,18 @@
 </span></span><span class="line"><span class="cl">@enduml
 </span></span></code></pre></td></tr></table>
 </div>
-</div><figure>
-    <img loading="lazy" src="/ox-hugo/sequence.png"/> 
+</div>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-749be" hidden>
+    <label for="zoomCheck-749be">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/sequence.png"/> 
+    
+    
+    </label>
 </figure>
 
 <p>时序图的更多用法可见官网文档：<a href="https://plantuml.com/sequence-diagram">Sequence-Diagram</a></p>
@@ -849,14 +1269,34 @@
 </span></span><span class="line"><span class="cl">@enduml
 </span></span></code></pre></td></tr></table>
 </div>
-</div><figure>
-    <img loading="lazy" src="/ox-hugo/activity-digram.png"/> 
+</div>
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-22b8a" hidden>
+    <label for="zoomCheck-22b8a">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/activity-digram.png"/> 
+    
+    
+    </label>
 </figure>
 
 <h3 id="编辑器"><span class="section-num">4.3</span> 编辑器</h3>
 <p>如果需要实时预览，个人推荐Vscode + <a href="https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml">plantuml插件</a>来绘制plantuml 图，所见即所得，实时预览，并提供代码补全：</p>
+
 <figure><a href="/ox-hugo/auto_update_demo.gif">
-    <img loading="lazy" src="/ox-hugo/auto_update_demo.gif"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-dc999" hidden>
+    <label for="zoomCheck-dc999">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/auto_update_demo.gif"/> 
+    
+    
+    </label></a>
 </figure>
 
 <h2 id="matplotlib"><span class="section-num">5</span> matplotlib</h2>
@@ -1062,8 +1502,18 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>模拟5次，生成出来的<a href="https://xkcd.com/">xkcd</a>风格的图表：</p>
+
 <figure><a href="/ox-hugo/simulation_random_walk_trail1.png">
-    <img loading="lazy" src="/ox-hugo/simulation_random_walk_trail1.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-e90b4" hidden>
+    <label for="zoomCheck-e90b4">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/simulation_random_walk_trail1.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <h3 id="再话org-mode"><span class="section-num">5.1</span> 再话org-mode</h3>
@@ -1141,8 +1591,18 @@
 <p>所以我倾向于「本地化储存」+「文本格式」 + 「易于同步」的写作方案</p>
 <p>最后我选择的写作工具是 <code>Emacs</code> + <code>org-mode=，不熟悉 =org-mode</code> 的读者可能不知道 <code>org-mode</code> 是什么，可能理解成类似是 <code>markdown</code> 的标记语言，但是和=Emacs= 结合后，易用性与扩展性比=markdown= 提高了一个数量级。</p>
 <p>这篇文章就是使用 <code>Emacs</code> + <code>org-mode</code> 写出来的:</p>
+
 <figure><a href="/ox-hugo/emacs_org_mode.png">
-    <img loading="lazy" src="/ox-hugo/emacs_org_mode.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-2b154" hidden>
+    <label for="zoomCheck-2b154">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/emacs_org_mode.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <h3 id="图片"><span class="section-num">2.1</span> 图片</h3>
@@ -1161,8 +1621,18 @@
 <li><code>Ctrl-c Ctrl-l</code> 触发 <code>org-insert-link</code> 函数, 选择刚刚指定的文件, 点击回车即可.</li>
 </ol>
 <p>我现在管理图片的方式是将每篇文章相关的文章都放到 <code>文章名/img</code> 的目录下, 所以我只需要打开 <code>img</code>, <code>Ctrl-c l</code> 选择图片, 再回到文章 <code>Ctrl-c Ctrl-l</code> 插入即可.</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/ox-hugo-link-image.gif"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-57e55" hidden>
+    <label for="zoomCheck-57e55">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/ox-hugo-link-image.gif"/> 
+    
+    
+    </label>
 </figure>
 
 <p>又得益于Emacs org-mode 无可比拟的export 功能, 我可以通过ox-hugo 将 org-mode 文件导出成 Hugo 兼容的Markdown 文件, 然后再自动将文章中所有的图片复制到 Hugo 博客下的 <code>static/ox-hugo</code> 目录下.</p>
@@ -1214,8 +1684,18 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Emacs一个快捷键 <code>C-c C-e H h</code> 就可以将 <code>org-mode</code> 转换成 <code>Hugo</code> 格式的 <code>Markdown</code>:</p>
+
 <figure><a href="/ox-hugo/one-post-per-subtree.png">
-    <img loading="lazy" src="/ox-hugo/one-post-per-subtree.png"/> </a>
+    
+    
+    <input type="checkbox" id="zoomCheck-acce8" hidden>
+    <label for="zoomCheck-acce8">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/one-post-per-subtree.png"/> 
+    
+    
+    </label></a>
 </figure>
 
 <p>结合<a href="https://github.com/ramsayleung/ramsayleung.github.io/blob/master/.github/workflows/gh-pages.yml">Github Action</a>，就可以自动把导出的markdown 博文部署到Github Pages，称得上是一键部署。</p>
@@ -1376,8 +1856,18 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>最后的效果就是，在我把 Org-mode 文件导出成 Hugo Markdown 后，会自己再生成一份替换了图片链接地址的标准Markdown.</p>
+
 <figure>
-    <img loading="lazy" src="/ox-hugo/ox-hugo-export.gif"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-f6243" hidden>
+    <label for="zoomCheck-f6243">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/ox-hugo-export.gif"/> 
+    
+    
+    </label>
 </figure>
 
 <p>因为我太懒了，所以我再写了个小函数，导出完成之后，自动复制标准 Markdown 的内容到 clipboard, 这样就可以直接粘贴到 markdown.com.cn了（算下来，我每次操作都省了10来秒）</p>

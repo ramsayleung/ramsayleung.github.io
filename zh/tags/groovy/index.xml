@@ -26,8 +26,18 @@
 <p>Spock 是一个适用于 Java(Groovy) 的一个优雅并且全面的测试框架, 说 Spock 全面，是
 因为 Spock 集成了现有的 Java 测试库；至于为什么赞美 Spock 优雅，阅读完全文你就会
 有体会的了</p>
+
 <figure>
-    <img loading="lazy" src="http://ww3.sinaimg.cn/large/cd613764jw1f71jlmu3hpj20i70eemy7.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-68519" hidden>
+    <label for="zoomCheck-68519">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="http://ww3.sinaimg.cn/large/cd613764jw1f71jlmu3hpj20i70eemy7.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>因为基于 Groovy, 使得 Spock 可以更容易地写出表达能力更强的测试用例。又因为它内置
@@ -47,35 +57,95 @@
 <p>Spock 似乎有很多不错的特性，但是为什么有 Junit 这个那么强大的测试框架, 还要去
 使用 Spock 呢? 甚至可以用 Spock 来代替 Junit 呢? 下面就用一些简单的例子来诠释
 一下Spock 的强大. 以一个简单的加法为例：</p>
+
 <figure>
-    <img loading="lazy" src="http://ww1.sinaimg.cn/large/cd613764jw1f71jm5dserj20ek04kmxc.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-f453b" hidden>
+    <label for="zoomCheck-f453b">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="http://ww1.sinaimg.cn/large/cd613764jw1f71jm5dserj20ek04kmxc.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>Junit 的测试用例</p>
+
 <figure>
-    <img loading="lazy" src="http://ww4.sinaimg.cn/large/cd613764jw1f71jmipwsmj20hy07xabc.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-06dc9" hidden>
+    <label for="zoomCheck-06dc9">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="http://ww4.sinaimg.cn/large/cd613764jw1f71jmipwsmj20hy07xabc.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>Spock 的测试用例</p>
+
 <figure>
-    <img loading="lazy" src="http://ww2.sinaimg.cn/large/cd613764gw1f71jn4vlzoj20nn09vmym.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-d6974" hidden>
+    <label for="zoomCheck-d6974">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="http://ww2.sinaimg.cn/large/cd613764gw1f71jn4vlzoj20nn09vmym.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>是否觉得耳目一新呢? 因为 Spock 支持以类人类语言的形式来定义方法名, 所以对比
 Junit 的测试用例, 你会发现 Spock 的测试用例, 只需函数名, 就可以清晰了解这个测
 试的用途</p>
 <p>接下来, 再写一个乘法的类, 然后人为地加入一个 Bug, 再看看 Junit 和 Spock 的表现</p>
+
 <figure>
-    <img loading="lazy" src="http://ww1.sinaimg.cn/large/cd613764gw1f71jnieycnj20lz047dfz.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-17957" hidden>
+    <label for="zoomCheck-17957">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="http://ww1.sinaimg.cn/large/cd613764gw1f71jnieycnj20lz047dfz.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>如果测试 fail, 会出现什么情况呢?</p>
-<figure>
-    <img loading="lazy" src="http://ww1.sinaimg.cn/large/cd613764gw1f71jnxh6wtj20sq0gpdic.jpg"/> 
-</figure>
 
 <figure>
-    <img loading="lazy" src="http://ww2.sinaimg.cn/large/cd613764jw1f71job6us9j20p308iq42.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-92281" hidden>
+    <label for="zoomCheck-92281">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="http://ww1.sinaimg.cn/large/cd613764gw1f71jnxh6wtj20sq0gpdic.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-c7b17" hidden>
+    <label for="zoomCheck-c7b17">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="http://ww2.sinaimg.cn/large/cd613764jw1f71job6us9j20p308iq42.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>显而易见，Junit 只是显示了结果不等，却没办法究竟判断是加法还是乘法出现了 bug，
@@ -154,8 +224,18 @@ All fixture methods are optional.</p>
 </blockquote>
 <p>简而言之， <strong>Fixture methodr</strong> 是进行初始化或者收尾工作的。为了更好地理解 Spock
 的特性，可以用 Spock 和 Junit 进行比较，(图截自官网)</p>
+
 <figure>
-    <img loading="lazy" src="http://ww4.sinaimg.cn/large/cd613764jw1f71josjimij20sl0g7jsr.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-42389" hidden>
+    <label for="zoomCheck-42389">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="http://ww4.sinaimg.cn/large/cd613764jw1f71josjimij20sl0g7jsr.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>以上就是 Spock 的基本用法， 也只能说是中规中矩，难言惊艳。那么，接下来介绍的
@@ -170,8 +250,18 @@ end of the method. There are six kinds of blocks: setup, when, then, expect,
 cleanup, and where blocks</p>
 </blockquote>
 <p>简而言之， 这些内置的功能强大的 blocks, 就是帮助开发者编写单元测试的语法糖</p>
+
 <figure>
-    <img loading="lazy" src="http://ww2.sinaimg.cn/large/cd613764jw1f71jpaxv52j20uv095q40.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-3c3ed" hidden>
+    <label for="zoomCheck-3c3ed">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="http://ww2.sinaimg.cn/large/cd613764jw1f71jpaxv52j20uv095q40.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>下面就了解一下不同 Block 的功能</p>
@@ -192,8 +282,18 @@ Spock 使用的是 assertion, 笔者个人理解成这是一种隐式的断言�
 <p>现在已经把 given-when-then 粗略地解释了一下, 现在就通过代码阐述具体的用法.
 首先确定一下需求; 假设现在要测试一个通过网站来销售电脑的电商平台, 如下图 (图
 截自 java_test_with_spock 一书)</p>
+
 <figure>
-    <img loading="lazy" src="http://ww1.sinaimg.cn/large/cd613764gw1f71jyfgad2j20t90alq3n.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-c59ec" hidden>
+    <label for="zoomCheck-c59ec">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="http://ww1.sinaimg.cn/large/cd613764gw1f71jyfgad2j20t90alq3n.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>然通过模拟用户添加商品到购物车, 以展示 Spock 的用法</p>
@@ -321,8 +421,18 @@ Spock 使用的是 assertion, 笔者个人理解成这是一种隐式的断言�
 </div>
 </div><p>从上面的代码可以看出，given 和 and 都用来进行类初始化，只是根据 Basket 和
 Product 类型进行了细分。如下图</p>
+
 <figure>
-    <img loading="lazy" src="http://ww1.sinaimg.cn/large/cd613764jw1f71jq4hwjlj20wt0e10uv.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-aecb9" hidden>
+    <label for="zoomCheck-aecb9">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="http://ww1.sinaimg.cn/large/cd613764jw1f71jq4hwjlj20wt0e10uv.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>使用 <strong>and</strong> block 可以代码结构更简洁优雅. 此外, 如果 <strong>and</strong> 是紧跟在 <strong>when</strong> 后
@@ -448,8 +558,18 @@ given-when-then 都结合起来</p>
 <li>
 <p>通知操作员关闭反应堆(输出)
 系统如图</p>
-<figure>
-        <img loading="lazy" src="http://ww1.sinaimg.cn/large/cd613764jw1f71jsj8fqqj20vt0jlmzt.jpg"/> 
+
+    <figure>
+        
+        
+        <input type="checkbox" id="zoomCheck-9e46c" hidden>
+        <label for="zoomCheck-9e46c">
+        
+        
+        <img class="zoomCheck" loading="lazy" src="http://ww1.sinaimg.cn/large/cd613764jw1f71jsj8fqqj20vt0jlmzt.jpg"/> 
+        
+        
+        </label>
     </figure>
 
 <p>系统相关设定:</p>
@@ -465,8 +585,18 @@ given-when-then 都结合起来</p>
 </li>
 </ul>
 <p>输入输出对应关系</p>
+
 <figure>
-    <img loading="lazy" src="http://ww4.sinaimg.cn/large/cd613764jw1f71jtabh47j20tm0k976p.jpg"/> 
+    
+    
+    <input type="checkbox" id="zoomCheck-0b659" hidden>
+    <label for="zoomCheck-0b659">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="http://ww4.sinaimg.cn/large/cd613764jw1f71jtabh47j20tm0k976p.jpg"/> 
+    
+    
+    </label>
 </figure>
 
 <p>现在，假如用 Junit 来写测试用例</p>
