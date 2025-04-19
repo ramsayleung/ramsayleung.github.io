@@ -24,14 +24,24 @@
         z-index: 998;
     }
 
-    /* Style for the zoomed image */
-    .post-content input[type="checkbox"]:checked ~ label > img {
+    /* The zoomed state - make label take up full viewport */
+    .post-content input[type="checkbox"]:checked ~ label {
         position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(1);
-        max-height: 90vh;  /* Maximum height: 90% of viewport height */
-        max-width: 90vw;   /* Maximum width: 90% of viewport width */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        /* Centers the image within that container using flexbox */
+        align-items: center;
+        justify-content: center;
+        z-index: 999;
+    }
+
+    /* Style for the zoomed image */
+    .post-content input[type="checkbox"]:checked ~ label > img.zoomCheck {
+        max-height: 95vh;
+        max-width: 95vw;
         width: auto;
         height: auto;
         object-fit: contain;
@@ -42,9 +52,12 @@
 
     /* Normal image style */
     .post-content img.zoomCheck {
-        transition: all 0.3s ease;
+        transition: transform 0.3s ease;
         cursor: zoom-in;
+        display: block;
         max-width: 100%;
         height: auto;
+        transform-origin: center;
+        z-index: 1;
     }
 }
