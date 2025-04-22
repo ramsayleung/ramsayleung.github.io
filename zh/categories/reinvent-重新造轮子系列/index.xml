@@ -12,8 +12,469 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Wed, 16 Apr 2025 23:34:36 -0700</lastBuildDate>
+    <lastBuildDate>Mon, 21 Apr 2025 22:53:44 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/categories/reinvent-%E9%87%8D%E6%96%B0%E9%80%A0%E8%BD%AE%E5%AD%90%E7%B3%BB%E5%88%97/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>重新造轮子系列(六)：构建工具</title>
+      <link>https://ramsayleung.github.io/zh/post/2025/reinvent_build_manager/</link>
+      <pubDate>Sun, 20 Apr 2025 18:18:00 -0700</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2025/reinvent_build_manager/</guid>
+      <description>项目 GitHub 地址: Build Manager 1 前言 以 C 语言为例，一个程序通常由多个源文件 .c 组成, 每个源文件需要先编译成目标文件 .o, 再链接成最终的可执行文件。 如果只改动了其</description>
+      <content:encoded><![CDATA[<p>项目 GitHub 地址: <a href="https://github.com/ramsayleung/reinvent/tree/master/build_manager">Build Manager</a></p>
+<h2 id="前言"><span class="section-num">1</span> 前言</h2>
+<p>以 C 语言为例，一个程序通常由多个源文件 <code>.c</code> 组成, 每个源文件需要先编译成目标文件 <code>.o</code>, 再链接成最终的可执行文件。</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-63797" hidden>
+    <label for="zoomCheck-63797">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/c_program_build_phase.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>如果只改动了其中一个源文件的内容，理想情况只需要重新编译并重新链接改动文件，而非从头构建整个项目(所谓的增量编译)。</p>
+<p>但是如果手动管理这些依赖关系，随着源文件的增多，很容易就会变得无法维护。</p>
+<p>类似的问题在软件开发中比比皆是，以我们此前实现的<a href="/zh/post/2025/reinvent_page_template/">「模板引擎」</a>为例，如果我们正使用静态网站生成器来构建个人博客(Hugo 或者 Jekyll),
+当我们修改了某篇文章时，系统只需要重新生成该页面，而不必重新编译整个网站。</p>
+<p>但如果我们调整了调整了网站的模板，那么所有依赖该模板的页面都需要重新渲染，而手动处理这些依赖关系既繁琐又容易出错。</p>
+<p>因此我们需要一个构建工具(build tool或者叫 build maanger).</p>
+<h2 id="需求"><span class="section-num">2</span> 需求</h2>
+<p>构建工具的核心理念就是自动化上述的操作：</p>
+<ol>
+<li>定义依赖关系, 比如 <code>main.o</code> 依赖于 <code>main.c</code> 和 <code>header.h</code></li>
+<li>检测变更，可以通过时间戳或者内容的哈希来判断文件是否「过时」</li>
+<li>按需执行，只重新生成受影响的目标</li>
+</ol>
+<p>从经典的 <a href="https://www.gnu.org/software/make/">make</a>, 到现代构建系统如 <a href="https://bazel.build">Bazel</a>, 尽管它们的实现方式各异，但是基本都遵循着这一思路。</p>
+<p>所以我们会参考 <code>make</code>, 从零实现一个类 <code>make</code> 的构建工具，核心功能包括：</p>
+<ol>
+<li>构建规则(rule)：描述目标(target), 依赖(dependency)和生成命令(recipe)</li>
+<li>依赖图(DAG): 避免循环依赖并确定构建顺序</li>
+<li>增量编译：仅重新生成「过期」的目标</li>
+<li>变量与通配符（如 <code>@TARGET</code> 和 <code>%</code> ） 以提高灵活性.</li>
+</ol>
+<h2 id="设计"><span class="section-num">3</span> 设计</h2>
+<h3 id="构建规则"><span class="section-num">3.1</span> 构建规则</h3>
+<p>构建工具的输入是一系列的规则，每个规则必需包含三个关键要素，分别是：</p>
+<ol>
+<li>目标，即构建命令生成的最终结果</li>
+<li>依赖，即目标依赖于哪些文件</li>
+<li>生成命令：具体的命令，用于描述如何将依赖生成出目标。</li>
+</ol>
+<p>以 <code>make</code> 的规则文件 <code>Makefile</code> 举例:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="line"><span class="cl"><span class="nf">target</span><span class="o">:</span> <span class="n">dependencies</span>
+</span></span><span class="line"><span class="cl">    recipe
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>以一个 C 语言程序的构建规则为例:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="line"><span class="cl"><span class="nf">hello</span><span class="o">:</span> <span class="n">utils</span>.<span class="n">c</span> <span class="n">main</span>.<span class="n">c</span> <span class="n">utils</span>.<span class="n">h</span>
+</span></span><span class="line"><span class="cl">        gcc main.c utils.c -o hello
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中 <code>hello</code> 是构建目标， <code>utils.c main.c utils.h</code> 是多个依赖文件, <code>gcc main.c utils.c -o hello</code> 是生成命令.</p>
+<p><code>Makefile</code> 是 <code>make</code> 专属的配置文件格式，我们可以使用 JSON 或者 YAML 作为配置文件，避免重复造轮子，只要要表达列表和嵌套关系。</p>
+<p>那么为什么 <code>make</code> 不使用 JSON 或者 YAML 作为配置文件呢？因为 <code>make</code> 被造出来的时候(1976年)，JSON 和 YAML 离诞生还有几十年呢.</p>
+<h3 id="依赖图"><span class="section-num">3.2</span> 依赖图</h3>
+<p>以前学数据结构的时候，难免会觉得图(graph) 这个数据结构真的没有什么用，除了刷题和面试会被问到.</p>
+<p>但是在开发这个构建工具的时候，会发现图是必不可少的数据结构，准确来说是有向无环图(directed acyclic graph, DAG).</p>
+<p>在构建工具中，每个构建规则（target: dependencies）定义了文件之间的依赖关系，这些关系天然形成一个有向无环图（DAG）。</p>
+<p>例如：</p>
+<ul>
+<li>A 依赖于 B 和 C（ <code>A → B, A → C</code> ）</li>
+<li>B 依赖于 D（ <code>B → D</code> ）</li>
+</ul>
+<p>此时，*构建顺序必须满足依赖的先后关系*：D 必须在 B 之前构建，B 和 C 必须在 A 之前构建。</p>
+<p>而拓扑排序的作用，正是将图中的节点排序，保证每个节点在其依赖之后被执行。</p>
+<p>而如果依赖图中存在环（例如 A → B → A），拓扑排序会失败.</p>
+<p>拓扑排序的经典算法有 <a href="https://www.youtube.com/watch?v=cIBFEhD77b4">Kahn</a> 算法(基于入度)与 DFS 算法, 以 Kahn 算法为例, 步骤如下:</p>
+<ol>
+<li>先初始化一个队列，存入所有入度(in degree)为0的节点（无依赖节点）</li>
+<li>依次处理队列中的节点，并将其人图中「移除」，更新后续节点的入度</li>
+<li>若最终未处理所有节点，则说明存在环</li>
+</ol>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-9b93b" hidden>
+    <label for="zoomCheck-9b93b">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/build_dependencies.png"/> 
+    
+    
+    </label>
+</figure>
+
+<p>我曾经写过一篇关于拓扑排序的<a href="https://ramsayleung.github.io/en/post/2022/topological_sorting/">英文博客</a>，有兴趣可以移步阅读.</p>
+<h3 id="过期检测"><span class="section-num">3.3</span> 过期检测</h3>
+<p>增量编译的关键是仅重建「过期 」的目标，那么要怎么找到「过期」的目标呢？</p>
+<p>最简单方式就是使用时间来作为判断标准，假如我们的源文件在上一次构建之后发生了修改，
+那么我们就可以认为其对应的目标「过期」了，需要重新构建。</p>
+<p>那么我们就需要记录上一次是什么时候构建的，然后再把文件最近的修改时间(last modification timestamp)作为比较, 用额外的文件来记录也太繁琐了，为此我们可以取一下巧：</p>
+<p>把目标的生成时间作为上一次的构建时间，那么只要依赖的 <code>last modification timestamp</code> 大于目标的 <code>last modification timestamp</code>, 那么我们就可以认为其「过期」了。</p>
+<p>这个就是 <code>make</code> 的实现方式，但是时间并不是总是可靠的，尤其是在网络环境下。</p>
+<p>所以像 <code>bazel</code> 这样的现代构建系统，使用的就是源文件的哈希值来作为比较的标识：
+即文件内容哈希值发生了变化，那么就认为发生内容变更，目标「过期」，需要重新生成。</p>
+<h3 id="设计模式"><span class="section-num">3.4</span> 设计模式</h3>
+<p>上文已经提到，我们构建工具的核心功能是解析构建规则, 构建依赖图，增量编译，变量与通配符匹配，那么我们可以很容易地写出对应的实现原型:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">loadConfig</span><span class="p">()</span><span class="o">:</span> <span class="nx">rules</span>
+</span></span><span class="line"><span class="cl"><span class="nx">buildGraph</span><span class="p">(</span><span class="nx">rules</span><span class="p">)</span><span class="o">:</span> <span class="nx">graph</span>
+</span></span><span class="line"><span class="cl"><span class="nx">variableExpand</span><span class="p">(</span><span class="nx">graph</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">incrementalBuild</span><span class="p">(</span><span class="nx">graph</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>那么要如何实现上面的原型呢？在面向对象的编程思路里，要不使用继承，或者是组合，而两者对应的设计模式分别对应<a href="https://refactoring.guru/design-patterns/template-method">模板方法(Template Method)</a> 与 <a href="https://refactoring.guru/design-patterns/strategy">策略模式 (Strategy Pattern)</a></p>
+<p>模板方法的核心思想是继承与流程固化，在父类中定义算法的整体骨架（不可变的执行流程），将某些步骤的具体实现延迟到子类，通过 <strong><strong>继承</strong></strong> 扩展行为。</p>
+<p>而策略模式核心思想是组合 + 运行时替换，将算法的每个可变部分抽象为独立策略（接口），通过 <strong><strong>组合</strong></strong> 的方式注入到主类中。</p>
+<p><a href="https://third-bit.com/sdxjs/build-manager/">System Design By Example</a> 原书使用的是模板方法，其实现可谓是充分展示了继承的不足：紧耦合，新增功能需要创建新子类，导致类爆炸，各种类变量在继承链传递，真的是无法维护，最后甚至「丧心病狂」地实现了八层继承，真的是完美诠释了 <a href="https://en.wikipedia.org/wiki/Fragile_base_class">Fragile base class</a> 的 code smell.</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-8a381" hidden>
+    <label for="zoomCheck-8a381">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_template_method_inheritance_chain.png"/> 
+    
+    
+    </label>
+</figure>
+
+<p>在体现到维护与扩展 <code>template method</code> 代码的痛苦之后，我最终选择了策略模式，因为其可以实现不同策略之间的松耦合，每个策略可以独立修改和扩展，不影响其他组件；易于测试，每个策略可被单独测试。</p>
+<p>此外，构建工具需求可能会很多样，比如支持不同的增量编译算法（时间戳与内容哈希），支持不同的配置格式(Makefile/JSON/YAML), 策略模式不需要改写核心代码即可支持这些变体，并且支持不同策略的组合。</p>
+<p>为了方便对比两者实现的差别，我把 <a href="https://github.com/ramsayleung/reinvent/tree/master/build_manager/template_method">template method</a> 和 <a href="https://github.com/ramsayleung/reinvent/tree/master/build_manager/strategy">strategy pattern</a> 的实现都保留了。</p>
+<h3 id="自动变量"><span class="section-num">3.5</span> 自动变量</h3>
+<p><code>make</code> 支持在 <code>Makefile</code> 中使用自动变量(Automatic Variables)来指代目标或者依赖，而无需显示将目标或者依赖名写出来，其变量含义如下:</p>
+<p>假设目标是 <code>output: main.o utils.o</code></p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>含义</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>%</code></td>
+<td>通配符, 表示匹配任意非空字符串，通常用于模式规则（Pattern Rules）中</td>
+<td><code>%.o: %.c</code> 匹配任意 <code>.c</code> 文件生成 <code>.o</code></td>
+</tr>
+<tr>
+<td><code>$@</code></td>
+<td>目标文件名</td>
+<td><code>output</code></td>
+</tr>
+<tr>
+<td><code>$^</code></td>
+<td>所有依赖文件</td>
+<td><code>main.o utils.o</code></td>
+</tr>
+<tr>
+<td><code>$&lt;</code></td>
+<td>第一个依赖文件</td>
+<td><code>main.o</code></td>
+</tr>
+</tbody>
+</table>
+<p>这些自动变量可以极大简化 Makefile 的编写，避免重复输入文件名, 只不过 <code>$@</code> 这样的格式有点难以理解，我们可以定义自己的自动变量:</p>
+<table>
+<thead>
+<tr>
+<th>我们的自动变量</th>
+<th><code>make</code> 变量</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>%</code></td>
+<td><code>%</code></td>
+<td>通配符, 表示匹配任意非空字符串</td>
+</tr>
+<tr>
+<td><code>@TARGET</code></td>
+<td><code>$@</code></td>
+<td>目标文件名</td>
+</tr>
+<tr>
+<td><code>@DEPENDENCIES</code></td>
+<td><code>$^</code></td>
+<td>所有依赖文件</td>
+</tr>
+<tr>
+<td><code>@DEP[0]</code></td>
+<td><code>$&lt;</code></td>
+<td>第一个依赖文件</td>
+</tr>
+<tr>
+<td><code>@DEP[n-1]</code></td>
+<td></td>
+<td>第 <code>n</code> 个依赖文件</td>
+</tr>
+</tbody>
+</table>
+<h2 id="实现"><span class="section-num">4</span> 实现</h2>
+<p>在介绍完设计细节，实现就没有太多需要提及的内容，根据<a href="https://github.com/ramsayleung/reinvent/blob/master/build_manager/strategy/driver.ts">入口函数</a>以及<a href="https://github.com/ramsayleung/reinvent/tree/master/__tests__/build_manager/strategy">单元测试</a>就能理解个七七八八了。</p>
+<h2 id="示例"><span class="section-num">5</span> 示例</h2>
+<p>假设我们的 <a href="https://github.com/ramsayleung/reinvent/tree/master/build_manager/strategy/src">src</a> 目录有如下的文件:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">&gt; tree src
+</span></span><span class="line"><span class="cl">src
+</span></span><span class="line"><span class="cl">├── Makefile
+</span></span><span class="line"><span class="cl">├── main.c
+</span></span><span class="line"><span class="cl">├── utils.c
+</span></span><span class="line"><span class="cl">└── utils.h
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>main.c</code> 内容如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;utils.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">print_message</span><span class="p">(</span><span class="s">&#34;Hello from Makefile!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>Makefile</code> 的内容如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="line"><span class="cl"><span class="nf">hello</span><span class="o">:</span> <span class="n">utils</span>.<span class="n">c</span> <span class="n">main</span>.<span class="n">c</span> <span class="n">utils</span>.<span class="n">h</span>
+</span></span><span class="line"><span class="cl">        gcc main.c utils.c -o hello
+</span></span><span class="line"><span class="cl"><span class="nf">varexpand_hello</span><span class="o">:</span> <span class="n">utils</span>.<span class="n">c</span> <span class="n">main</span>.<span class="n">c</span>
+</span></span><span class="line"><span class="cl">        gcc $^ -o <span class="nv">$@</span>
+</span></span><span class="line"><span class="cl"><span class="nf">clean</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        rm -f hello
+</span></span><span class="line"><span class="cl"><span class="nf">cleanvar</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        rm -rf varexpand_hello
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过 <code>hello</code> 和 <code>varexpand_hello</code> 目标可分别生成 <code>hello</code> 与 <code>varexpand_hello</code> 的目标文件:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">&gt; make hello
+</span></span><span class="line"><span class="cl">gcc main.c utils.c -o hello
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt; ./hello
+</span></span><span class="line"><span class="cl">Message: Hello from Makefile!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt; make varexpand_hello
+</span></span><span class="line"><span class="cl">gcc utils.c main.c -o varexpand_hello
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt; ./varexpand_hello
+</span></span><span class="line"><span class="cl">Message: Hello from Makefile!
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>与 <code>Makefile</code> 相同含义的构建规则 <code>build_c_app.yml</code> 如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl">- <span class="nt">target</span><span class="p">:</span><span class="w"> </span><span class="l">hello</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">depends</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">src/utils.c</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">src/utils.h</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">src/main.c</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">recipes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="s2">&#34;gcc src/main.c src/utils.c -o hello&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="nt">target</span><span class="p">:</span><span class="w"> </span><span class="l">varexpand_hello</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">depends</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">src/utils.c</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">src/main.c</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">recipes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="s2">&#34;gcc @DEPENDENCIES -o @TARGET&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="nt">target</span><span class="p">:</span><span class="w"> </span><span class="l">clean</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">depends</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">recipes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="s2">&#34;rm -rf hello&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="nt">target</span><span class="p">:</span><span class="w"> </span><span class="l">cleanvar</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">depends</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">recipes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="s2">&#34;rm -rf varexpand_hello&#34;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">&gt; npx tsx driver.ts build_c_app.yml <span class="c1"># 未指定目标，构建第一个目标，对齐 make</span>
+</span></span><span class="line"><span class="cl">gcc src/main.c src/utils.c -o hello
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt; npx tsx driver.ts build_c_app.yml hello <span class="c1"># 生成 hello</span>
+</span></span><span class="line"><span class="cl">target: hello is up to date, skipping execute the recipe
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt; ./hello
+</span></span><span class="line"><span class="cl">Message: Hello from Makefile!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt; npx tsx driver.ts build_c_app.yml varexpand_hello <span class="c1"># 生成 varexpand_hello</span>
+</span></span><span class="line"><span class="cl">gcc src/utils.c src/main.c -o varexpand_hello
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt; ./varexpand_hello
+</span></span><span class="line"><span class="cl">Message: Hello from Makefile!
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>测试增量编译，重新构建 hello 目标</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">&gt; npx tsx driver.ts build_c_app.yml hello
+</span></span><span class="line"><span class="cl">target: hello is up to date, skipping execute the recipe
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>修改 <code>main.c</code> 源码:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;utils.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">print_message</span><span class="p">(</span><span class="s">&#34;Hello from build_c_app.yml!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>重新编译及运行 <code>hello</code> 目标:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">&gt; npx tsx driver.ts build_c_app.yml hello
+</span></span><span class="line"><span class="cl">gcc src/main.c src/utils.c -o hello
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt; ./hello
+</span></span><span class="line"><span class="cl">Message: Hello from build_c_app.yml!
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="总结"><span class="section-num">6</span> 总结</h2>
+<p>终于又造了一个轮子，完成了这个类 <code>make</code> 的构建工具:</p>
+<p>除了核心的依赖管理和增量编译，还实现了自动变量替换（如 =@TARGET=）、通配符规则和策略模式的灵活扩展。</p>
+<p>写到这里总会忍不住地想起Unix的 KISS 原则, 即(&ldquo;Keep it simple, stupid!), <strong>复杂的工具往往由简单的概念组合而成</strong></p>
+<p><a href="/zh/post/2025/reinvent_project/">回到本系列的目录</a></p>
+<h2 id="参考"><span class="section-num">7</span> 参考</h2>
+<ul>
+<li><a href="https://third-bit.com/sdxjs/build-manager/">https://third-bit.com/sdxjs/build-manager/</a></li>
+</ul>
+]]></content:encoded>
+    </item>
     <item>
       <title>重新造轮子系列(五)：模板引擎</title>
       <link>https://ramsayleung.github.io/zh/post/2025/reinvent_page_template/</link>
