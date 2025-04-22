@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Mon, 21 Apr 2025 22:53:44 -0700</lastBuildDate>
+    <lastBuildDate>Mon, 21 Apr 2025 22:58:14 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>重新造轮子系列(六)：构建工具</title>
@@ -466,8 +466,8 @@
 </div>
 </div><h2 id="总结"><span class="section-num">6</span> 总结</h2>
 <p>终于又造了一个轮子，完成了这个类 <code>make</code> 的构建工具:</p>
-<p>除了核心的依赖管理和增量编译，还实现了自动变量替换（如 =@TARGET=）、通配符规则和策略模式的灵活扩展。</p>
-<p>写到这里总会忍不住地想起Unix的 KISS 原则, 即(&ldquo;Keep it simple, stupid!), <strong>复杂的工具往往由简单的概念组合而成</strong></p>
+<p>除了核心的依赖管理和增量编译，还实现了自动变量替换(如 <code>@TARGET</code>)、通配符规则和策略模式的灵活扩展。</p>
+<p>写到这里总会忍不住地想起Unix的 KISS 原则, 即 <em>Keep it simple, stupid</em>, <strong>复杂的工具往往由简单的概念组合而成</strong></p>
 <p><a href="/zh/post/2025/reinvent_project/">回到本系列的目录</a></p>
 <h2 id="参考"><span class="section-num">7</span> 参考</h2>
 <ul>
