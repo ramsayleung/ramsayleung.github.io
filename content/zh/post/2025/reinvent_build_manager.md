@@ -1,7 +1,7 @@
 +++
 title = "重新造轮子系列(六)：构建工具"
 date = 2025-04-20T18:18:00-07:00
-lastmod = 2025-04-21T22:53:44-07:00
+lastmod = 2025-04-21T22:58:14-07:00
 tags = ["reinvent"]
 categories = ["ReInvent: 重新造轮子系列"]
 draft = false
@@ -312,9 +312,9 @@ Message: Hello from build_c_app.yml!
 
 终于又造了一个轮子，完成了这个类 `make` 的构建工具:
 
-除了核心的依赖管理和增量编译，还实现了自动变量替换（如 =@TARGET=）、通配符规则和策略模式的灵活扩展。
+除了核心的依赖管理和增量编译，还实现了自动变量替换(如 `@TARGET`)、通配符规则和策略模式的灵活扩展。
 
-写到这里总会忍不住地想起Unix的 KISS 原则, 即("Keep it simple, stupid!), **复杂的工具往往由简单的概念组合而成**
+写到这里总会忍不住地想起Unix的 KISS 原则, 即 _Keep it simple, stupid_, **复杂的工具往往由简单的概念组合而成**
 
 [回到本系列的目录]({{< relref "reinvent_project" >}})
 
