@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.120.4</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Mon, 21 Apr 2025 22:58:14 -0700</lastBuildDate>
+    <lastBuildDate>Sat, 26 Apr 2025 17:12:10 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>重新造轮子系列(六)：构建工具</title>
@@ -5124,6 +5124,9 @@
 <li><a href="/zh/post/2025/reinvent_unit_test/">单元测试框架</a></li>
 <li><a href="/zh/post/2025/reinvent_file_backup/">文件备份</a></li>
 <li><a href="/zh/post/2025/reinvent_selector/">HTML Selector</a></li>
+<li><a href="/zh/post/2025/reinvent_regex/">正则表达式引擎</a></li>
+<li><a href="/zh/post/2025/reinvent_page_template/">模板引擎</a></li>
+<li><a href="/zh/post/2025/reinvent_build_manager/">构建工具</a></li>
 </ol>
 ]]></content:encoded>
     </item>
