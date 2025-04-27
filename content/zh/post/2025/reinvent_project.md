@@ -1,7 +1,7 @@
 +++
 title = "ReInvent: 重新造轮子系列(序言)"
 date = 2025-02-16T22:10:00-08:00
-lastmod = 2025-03-15T14:31:09-07:00
+lastmod = 2025-04-26T17:12:10-07:00
 tags = ["reinvent"]
 categories = ["ReInvent: 重新造轮子系列"]
 draft = false
@@ -36,3 +36,6 @@ GitHub: <https://github.com/ramsayleung/reinvent>
 1.  [单元测试框架]({{< relref "reinvent_unit_test" >}})
 2.  [文件备份]({{< relref "reinvent_file_backup" >}})
 3.  [HTML Selector]({{< relref "reinvent_selector" >}})
+4.  [正则表达式引擎]({{< relref "reinvent_regex" >}})
+5.  [模板引擎]({{< relref "reinvent_page_template" >}})
+6.  [构建工具]({{< relref "reinvent_build_manager" >}})
