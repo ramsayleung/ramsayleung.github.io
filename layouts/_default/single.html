@@ -27,7 +27,7 @@
         {{ $randomQuote := index $quotes $randomIndex }}
         <div class="post-quote">
             <blockquote>
-            <p>{{ $randomQuote.text }}</p>
+            <p>{{ replace $randomQuote.text "\n" "<br>" | safeHTML }}</p>
             {{ if $randomQuote.author }}
             <cite>— {{ $randomQuote.author }}</cite>
             {{ end }}
