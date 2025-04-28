@@ -1,0 +1,31 @@
+/* Separator styling */
+.post-separator {
+  margin: 0.3rem 0;
+  border: 0;
+  height: 1px;
+  background-color: var(--border);
+  opacity: 0.5;
+}
+
+/* Quote styling */
+.post-quote {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  background-color: var(--entry);
+  border-left: 4px solid var(--border);
+  font-size: 0.95rem;
+}
+
+.post-quote blockquote {
+  margin: 0;
+  font-style: italic;
+}
+
+.post-quote cite {
+  display: block;
+  text-align: right;
+  margin-top: 0.5rem;
+  font-style: normal;
+  opacity: 0.8;
+  font-size: 0.7rem;
+}
