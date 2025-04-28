@@ -1,6 +1,7 @@
 baseURL: https://ramsayleung.github.io
 title: "In Pursuit of Simplicity"
-paginate: 5
+pagination:
+  pagerSize: 5
 theme: PaperMod
 
 author:

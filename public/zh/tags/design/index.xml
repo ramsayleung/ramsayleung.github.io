@@ -1,0 +1,728 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Design on 过河卒</title>
+    <link>http://localhost:1313/zh/tags/design/</link>
+    <description>Recent content in Design on 过河卒</description>
+    <image>
+      <title>过河卒</title>
+      <url>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- 0.146.7</generator>
+    <language>zh</language>
+    <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
+    <lastBuildDate>Thu, 09 Jan 2025 19:10:19 -0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/zh/tags/design/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Non-designer&#39;s design book</title>
+      <link>http://localhost:1313/zh/post/2021/the_nondesigners_design_book/</link>
+      <pubDate>Sun, 17 Oct 2021 15:16:36 +0000</pubDate>
+      <guid>http://localhost:1313/zh/post/2021/the_nondesigners_design_book/</guid>
+      <description>&lt;h2 id=&#34;design-principle&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; Design principle&lt;/h2&gt;
+&lt;p&gt;在谈论四个设计的基本准则前, 作者强调了关于命名的重要性.&lt;/p&gt;
+&lt;p&gt;作者举了一个例子, 在圣诞节, 他收到一本书介绍树木的分类, 他注意到一种叫Joshua tree的树, 造型奇特. 他想, 如果我看过, 我肯定会记得, 毕竟形状特别. 当他走出家门时, 发现社区80%的院子都有这种树, 但他此前从未注意到. &lt;strong&gt;&lt;strong&gt;一旦你可以叫出它的名字, 你就发现它随处可见&lt;/strong&gt;&lt;/strong&gt;&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="design-principle"><span class="section-num">1</span> Design principle</h2>
+<p>在谈论四个设计的基本准则前, 作者强调了关于命名的重要性.</p>
+<p>作者举了一个例子, 在圣诞节, 他收到一本书介绍树木的分类, 他注意到一种叫Joshua tree的树, 造型奇特. 他想, 如果我看过, 我肯定会记得, 毕竟形状特别. 当他走出家门时, 发现社区80%的院子都有这种树, 但他此前从未注意到. <strong><strong>一旦你可以叫出它的名字, 你就发现它随处可见</strong></strong></p>
+<blockquote>
+<p>Once you can name something, you&rsquo;re conscious of it. You have power over it. You&rsquo;re in control. You own it.</p></blockquote>
+<p>深有体会. 树尤如此, 设计准则亦如是.</p>
+<p><strong><strong>Good design</strong></strong> is as easy as:</p>
+<ul>
+<li>Learn the basic principles: They&rsquo;re simpler than you might think</li>
+<li>Recognize when you&rsquo;re not using them: Put it into words - name the problem</li>
+<li>Apply the principles: Be amazed</li>
+</ul>
+<h3 id="proximity"><span class="section-num">1.1</span> Proximity</h3>
+<p>The principle of Proximity states: <strong><strong>Group related item together</strong></strong>. 有关联的元素, 位置上让它们更接近, 以表示它们有关联的一个群组而不是若干个无关联散落的元素</p>
+<p>当然, 有关联才放在一起, 没关联就不要硬挤过来. 留下视觉距离让读者可以判别出他们的关系. 这也和生活经验吻合, 可以从两人的物理距离判别出他们的关系</p>
+
+<figure><a href="/ox-hugo/mon_and_son_1.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-ffc82" hidden>
+    <label for="zoomCheck-ffc82">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/mon_and_son_1.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+
+<figure><a href="/ox-hugo/mon_and_son_2.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-66d20" hidden>
+    <label for="zoomCheck-66d20">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/mon_and_son_2.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+<p>如下例子:</p>
+
+<figure><a href="/ox-hugo/card_1.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-bcda1" hidden>
+    <label for="zoomCheck-bcda1">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/card_1.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+
+<figure><a href="/ox-hugo/card_2.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-a9945" hidden>
+    <label for="zoomCheck-a9945">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/card_2.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+
+<figure><a href="/ox-hugo/post_card_1.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-a7d75" hidden>
+    <label for="zoomCheck-a7d75">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/post_card_1.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+
+<figure><a href="/ox-hugo/post_card_2.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-73eee" hidden>
+    <label for="zoomCheck-73eee">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/post_card_2.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+
+<figure><a href="/ox-hugo/poster_1.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-d830e" hidden>
+    <label for="zoomCheck-d830e">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/poster_1.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+
+<figure><a href="/ox-hugo/poster_2.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-a99e9" hidden>
+    <label for="zoomCheck-a99e9">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/poster_2.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+<p>The idea of proximity doesn&rsquo;t mean that <em>everything</em> is closer together; it means elements that are <em>ntellectually connected</em>, those that have some sort of communication relationship, should also be <em>visually connected</em>.</p>
+<p>It&rsquo;s all about space. The principle of Proximity helps you focus on space and what it can do for communication</p>
+<h3 id="alignment"><span class="section-num">1.2</span> Alignment</h3>
+<p>The Principle of Alighment states: <strong><strong>Nothing should be placed on the page arbitrarily. Every item should have a visual connection with something else on the page.</strong></strong> The principle of alignment forces you to be conscious &ndash; no longer can you just throw things on the page and see where they stick</p>
+<p>通过对齐, 可以让元素之间产生联系, 使杂乱的设计变得有条理, 通过布局来展现关联. 如下图分析</p>
+
+<figure><a href="/ox-hugo/card_1.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-bcda1" hidden>
+    <label for="zoomCheck-bcda1">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/card_1.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+
+<figure><a href="/ox-hugo/card_2.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-a9945" hidden>
+    <label for="zoomCheck-a9945">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/card_2.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+
+<figure><a href="/ox-hugo/card_3.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-6f7c8" hidden>
+    <label for="zoomCheck-6f7c8">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/card_3.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+<p>又或者是:</p>
+
+<figure><a href="/ox-hugo/report_cover_1.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-a755d" hidden>
+    <label for="zoomCheck-a755d">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/report_cover_1.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+
+<figure><a href="/ox-hugo/report_cover2.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-d12c2" hidden>
+    <label for="zoomCheck-d12c2">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/report_cover2.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+<p>通常来说, 左对齐或者右对齐会比居中对齐有更强烈的视觉效果, 因为居中对齐两边不对齐, 就会让我有种未对齐的感觉</p>
+
+<figure><a href="/ox-hugo/center_align.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-25559" hidden>
+    <label for="zoomCheck-25559">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/center_align.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+<p>对于页面, 可分析其页面元素的对齐, 然后修正成统一的对齐方式. 而下图的书页, 左右都对齐了, 还增加了缩进和行分隔, 看起来就清晰多了.</p>
+
+<figure><a href="/ox-hugo/book_page_1.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-50800" hidden>
+    <label for="zoomCheck-50800">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/book_page_1.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+
+<figure><a href="/ox-hugo/book_page_2.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-7bdb3" hidden>
+    <label for="zoomCheck-7bdb3">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/book_page_2.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+<p>I am giving you a number of rules here, and it&rsquo;s true that rules are made to be broken. But remember the <strong><strong>Rule about Breaking Rules: You must know what the rule is before you can break it</strong></strong></p>
+<h3 id="repetition"><span class="section-num">1.3</span> Repetition</h3>
+<p>The Principle of Pepetition States: <strong><strong>Repeat some aspect of the design throught the entire piece</strong></strong>. The repetitive element may be a bold font, a thick rule(line), a certain bullet, design element, color, format, spatial relationships, etc. It can be anything that a reader will visually recognize</p>
+<p>重复是一致性的一种实现, 但重复并不止于一致性, 它还是一种统一设计中各个元素的有力手段. 还是熟悉的名片:</p>
+
+<figure><a href="/ox-hugo/card_1.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-bcda1" hidden>
+    <label for="zoomCheck-bcda1">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/card_1.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+
+<figure><a href="/ox-hugo/card_2.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-a9945" hidden>
+    <label for="zoomCheck-a9945">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/card_2.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+<h3 id="contrast"><span class="section-num">1.4</span> Contrast</h3>
+<p>The Principle of Contrast states: <strong><strong>Contrast Various elements of the piece to draw a reader&rsquo;s eye itno the page</strong></strong>. If two items are not exactly the same, then make them different. Really different</p>
+<p>对比有很多手法, 诸如大与小, 复古与新潮, 强与弱, 明与暗, 粗糙与细滑, 水平与垂直等等.</p>
+<p>需要注意的是, 如果两个元素有区分, 但本质无差别, 那就不是 <em>contrast</em>, 而是 <em>conflict</em>.</p>
+
+<figure><a href="/ox-hugo/conflict.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-dd672" hidden>
+    <label for="zoomCheck-dd672">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/conflict.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+
+<figure><a href="/ox-hugo/contrast.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-be993" hidden>
+    <label for="zoomCheck-be993">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/contrast.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+
+<figure><a href="/ox-hugo/newsletter1.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-8517b" hidden>
+    <label for="zoomCheck-8517b">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/newsletter1.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+
+<figure><a href="/ox-hugo/newsletter2.png">
+    
+    
+    <input type="checkbox" id="zoomCheck-b2445" hidden>
+    <label for="zoomCheck-b2445">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/newsletter2.png"/> 
+    
+    
+    </label></a>
+</figure>
+
+<p>There is one more general guiding principle of Design(and of Life):
+<strong><strong>Don&rsquo;t be wimp</strong></strong></p>
+<p>突然意识到, 本书的PDF 版本的排版和字段, 图片也是相当舒服的</p>
+<h2 id="design-with-type"><span class="section-num">2</span> Design with Type</h2>
+<p>接下来大部分内容都关于Type, 关于印刷, 关于字体种类, 不是很感兴趣, 所以就草草涉猎过.</p>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>关于分布式系统唯一ID的探究</title>
+      <link>http://localhost:1313/zh/post/2017/distributed_system_unique_id/</link>
+      <pubDate>Tue, 23 May 2017 00:00:00 -0700</pubDate>
+      <guid>http://localhost:1313/zh/post/2017/distributed_system_unique_id/</guid>
+      <description>An discussion about unique id in distributed system</description>
+      <content:encoded><![CDATA[<p>最近我需要为运行的分布式系统某部分模块构造系统唯一的ID, 而 ID 需要是数字的形式，并应该尽量的短。不得不说，这是一个有趣的问题</p>
+<h2 id="若干实现策略"><span class="section-num">1</span> 若干实现策略</h2>
+<p>查阅完相关的资料，发现为分布式系统生成唯一 ID 方法挺多的，例如：</p>
+<ul>
+<li>UUID</li>
+<li>使用一个 ticket server, 即中央的服务器，各个节点都从中央服务器取 ID</li>
+<li>Twitter 的 Snowflake 算法</li>
+<li>Boundary 的 flake 算法</li>
+</ul>
+<p>其中 UUID 生成的 ID 是字符串＋数字，不适用； ticket server 的做法略麻烦，我
+并不想为了个 ID 还要去访问中央服务器；剩下就是 Snowflake 和 flake 算法，
+flake 算法生成的是 128 位的 ID, 略长；所以最后我选择了 Snowflake 算法。</p>
+<h2 id="snowflake-算法实现"><span class="section-num">2</span> Snowflake 算法实现</h2>
+<p>本来 Twitter 的算法是有相应实现的，不过后来删除了；我就只好自己卷起袖子自己 实现了:(</p>
+<p>虽说 Twitter 没有了相应的实现，但是 Snowflake 算法原理很简单，实现起来并不难.</p>
+<h3 id="snowflake-算法"><span class="section-num">2.1</span> Snowflake 算法</h3>
+<p>Snowflake 算法生成 64 位的 ID, ID 的格式是 41 位的时间戳 + 10 位的截断的 mac 地址 + 12 位递增序列：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;id format =&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">timestamp | machineId|sequence
+</span></span></span><span class="line"><span class="cl"><span class="s2">41        | 10       |12
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="snowflake-实现"><span class="section-num">2.2</span> Snowflake 实现</h3>
+<h4 id="生成时间戳"><span class="section-num">2.2.1</span> 生成时间戳</h4>
+<p>Java 内置了生成精确到毫秒的时间戳的方法，非常便利：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">long</span><span class="w"> </span><span class="n">timestamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">();</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="生成递增序列"><span class="section-num">2.2.2</span> 生成递增序列</h4>
+<p>12 bits 的最大值是 2**12=4096, 所以生成递增序列也非常简单：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">sequenceMax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">4096</span><span class="p">;</span><span class="w"> </span><span class="c1">//2**12</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">private</span><span class="w"> </span><span class="kd">volatile</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">sequence</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0L</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">generateId</span><span class="p">(){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">//do something</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">sequence</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">sequence</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">sequenceMax</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">//do something</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="获取-mac-地址"><span class="section-num">2.2.3</span> 获取 Mac 地址</h4>
+<p>我们通过获取当前机器的 IP 地址以获取对应的物理地址：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">protected</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="nf">getMachineId</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">GetHardwareIdFailedException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">InetAddress</span><span class="w"> </span><span class="n">ip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InetAddress</span><span class="p">.</span><span class="na">getLocalHost</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">NetworkInterface</span><span class="w"> </span><span class="n">network</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NetworkInterface</span><span class="p">.</span><span class="na">getByInetAddress</span><span class="p">(</span><span class="n">ip</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">network</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">mac</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">network</span><span class="p">.</span><span class="na">getHardwareAddress</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">((</span><span class="n">0x000000FF</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="kt">long</span><span class="p">)</span><span class="w"> </span><span class="n">mac</span><span class="o">[</span><span class="n">mac</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">1</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                 </span><span class="p">(</span><span class="n">0x0000FF00</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(((</span><span class="kt">long</span><span class="p">)</span><span class="w"> </span><span class="n">mac</span><span class="o">[</span><span class="n">mac</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">2</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">8</span><span class="p">)))</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">6</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">SocketException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GetHardwareIdFailedException</span><span class="p">(</span><span class="n">e</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">UnknownHostException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GetHardwareIdFailedException</span><span class="p">(</span><span class="n">e</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>又因为 Mac 地址是6 个字节 (48 bits)，而需要的只是 10 bit, 所以需要取最低位的 2个字节 (16 bits)，然后右移 6 bits 以获取 10 个 bits 的 Mac地址</p>
+<h3 id="snowflake-完整代码"><span class="section-num">2.3</span> Snowflake 完整代码</h3>
+<p>下面是 Snowflake 的 Java 实现：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">IdGenerator</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">//   id format  =&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">//   timestamp |datacenter | sequence</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">//   41        |10         |  12</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">sequenceBits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">12</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">machineIdBits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">10L</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">MaxMachineId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">1L</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="p">(</span><span class="o">-</span><span class="n">1L</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">machineIdBits</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">machineIdShift</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sequenceBits</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">timestampLeftShift</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sequenceBits</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">machineIdBits</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">lock</span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">twepoch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">1288834974657L</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">machineId</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">sequenceMax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">4096</span><span class="p">;</span><span class="w"> </span><span class="c1">//2**12</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">volatile</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">lastTimestamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">1L</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">volatile</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">sequence</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0L</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">volatile</span><span class="w"> </span><span class="n">IdGenerator</span><span class="w">  </span><span class="n">instance</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">IdGenerator</span><span class="w"> </span><span class="nf">getInstance</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">IdGenerator</span><span class="w"> </span><span class="n">generator</span><span class="o">=</span><span class="n">instance</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">instance</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kd">synchronized</span><span class="p">(</span><span class="n">lock</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">generator</span><span class="o">=</span><span class="n">instance</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">if</span><span class="p">(</span><span class="n">generator</span><span class="o">==</span><span class="kc">null</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">generator</span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="n">IdGenerator</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">instance</span><span class="o">=</span><span class="n">generator</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">generator</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="nf">IdGenerator</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">machineId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getMachineId</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">machineId</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">MaxMachineId</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">machineId</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Exception</span><span class="p">(</span><span class="s">&#34;machineId &gt; MaxMachineId&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">synchronized</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="nf">generateLongId</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">timestamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">timestamp</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">lastTimestamp</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Exception</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                </span><span class="s">&#34;Clock moved backwards.  Refusing to generate id for &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                                                                          </span><span class="n">lastTimestamp</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">timestamp</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34; milliseconds.&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lastTimestamp</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">timestamp</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">sequence</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">sequence</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">sequenceMax</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">sequence</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">timestamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tillNextMillis</span><span class="p">(</span><span class="n">lastTimestamp</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">sequence</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">lastTimestamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">timestamp</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">timestamp</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">twepoch</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">timestampLeftShift</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">(</span><span class="n">machineId</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">machineIdShift</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">sequence</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="nf">tillNextMillis</span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="n">lastTimestamp</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">timestamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">timestamp</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">lastTimestamp</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">timestamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">timestamp</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="nf">getMachineId</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">GetHardwareIdFailedException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">InetAddress</span><span class="w"> </span><span class="n">ip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InetAddress</span><span class="p">.</span><span class="na">getLocalHost</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">NetworkInterface</span><span class="w"> </span><span class="n">network</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NetworkInterface</span><span class="p">.</span><span class="na">getByInetAddress</span><span class="p">(</span><span class="n">ip</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kt">long</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">network</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">mac</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">network</span><span class="p">.</span><span class="na">getHardwareAddress</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="p">((</span><span class="n">0x000000FF</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="kt">long</span><span class="p">)</span><span class="w"> </span><span class="n">mac</span><span class="o">[</span><span class="n">mac</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">1</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                     </span><span class="p">(</span><span class="n">0x0000FF00</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(((</span><span class="kt">long</span><span class="p">)</span><span class="w"> </span><span class="n">mac</span><span class="o">[</span><span class="n">mac</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">2</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">8</span><span class="p">)))</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">6</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">SocketException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GetHardwareIdFailedException</span><span class="p">(</span><span class="n">e</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">UnknownHostException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GetHardwareIdFailedException</span><span class="p">(</span><span class="n">e</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>正如我所言，算法并不难，就是分别获取时间戳， mac 地址，和递增序列号，然后移位得到 ID. 但是在具体的实现中还是有一些需要注意的细节的。</p>
+<h4 id="线程同步"><span class="section-num">2.3.1</span> 线程同步</h4>
+<p>因为算法中使用到递增的序列号来生成 ID,而在实际的开发或者生产环境中很可能不止一个线程在使用 IdGenerator 这个类，如果这样就很容易出现不同线程的竞争问题，所以我使用了单例模式来生成 ID, 一方面更符合生成器的设计，另一方面因为对生成 ID的方法进行了同步，就保证了不会出现竞争问题。</p>
+<h4 id="同一毫秒生成多个-id"><span class="section-num">2.3.2</span> 同一毫秒生成多个 ID</h4>
+<p>因为序列号长度是 12个 bit, 那么序列号最大值就是2**12=4096了，此外时间戳是精确到毫秒的，这就是意味着，当一毫秒内，产生超过 4096 个 ID 的时候就会出现重复的ID.</p>
+<p>这样的情况并不是不可能发生，所以要对此进行处理；所以在 <em>generateId()</em> 函数中：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lastTimestamp</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">timestamp</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">sequence</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">sequence</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">sequenceMax</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">sequence</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">timestamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tillNextMillis</span><span class="p">(</span><span class="n">lastTimestamp</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>有以上的一段代码。当现在的时间戳与之前的时间戳一致，那么就意味着还是同一毫秒，如果序列号为 0, 就说明已经产生了 4096 个 ID了，继续产生 ID,就会出现重复 ID, 所以要等待一毫秒，这个就是 <em>tillNextMills()</em> 函数的作用了。</p>
+<h2 id="小结"><span class="section-num">3</span> 小结</h2>
+<p>算法虽然简单，但是在找到 Snowflake 算法之前，我尝试了挺多的算法，但是都是因为不符合要求而被一一否决， 而 Snowflake 算法虽然简单，但是胜在实用。</p>
+<p>最后附上我写的 snowflake 算法的 Python 实现： <a href="https://github.com/ramsayleung/snowflake">Snowfloke</a></p>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>
