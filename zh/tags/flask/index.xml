@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>flask on 过河卒</title>
+    <title>Flask on 过河卒</title>
     <link>https://ramsayleung.github.io/zh/tags/flask/</link>
-    <description>Recent content in flask on 过河卒</description>
+    <description>Recent content in Flask on 过河卒</description>
     <image>
       <title>过河卒</title>
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- 0.120.4</generator>
+    <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
     <lastBuildDate>Mon, 30 Dec 2024 22:32:24 -0800</lastBuildDate>
@@ -25,30 +25,30 @@
 <h2 id="验证服务器"><span class="section-num">1</span> 验证服务器</h2>
 <p>开发公众号之前，要先验证服务器的有效性，官网有详细的说明：<a href="https://mp.weixin.qq.com/wiki/8/f9a0b8382e0b77d87b3bcc1ce6fbc104.html">公众开发平台文档</a></p>
 <table>
-<thead>
-<tr>
-<th>参数</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>signature</td>
-<td>微信加密签名，signature结合了开发者填写的token参数和请求中的timestamp参数、nonce参数。</td>
-</tr>
-<tr>
-<td>timestamp</td>
-<td>时间戳</td>
-</tr>
-<tr>
-<td>nonce</td>
-<td>随机数</td>
-</tr>
-<tr>
-<td>echostr</td>
-<td>随机字符串</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>参数</th>
+          <th>描述</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>signature</td>
+          <td>微信加密签名，signature结合了开发者填写的token参数和请求中的timestamp参数、nonce参数。</td>
+      </tr>
+      <tr>
+          <td>timestamp</td>
+          <td>时间戳</td>
+      </tr>
+      <tr>
+          <td>nonce</td>
+          <td>随机数</td>
+      </tr>
+      <tr>
+          <td>echostr</td>
+          <td>随机字符串</td>
+      </tr>
+  </tbody>
 </table>
 <p>校验流程：
 加密/校验流程如下：</p>

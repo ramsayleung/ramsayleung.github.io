@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>debug on 过河卒</title>
+    <title>Debug on 过河卒</title>
     <link>https://ramsayleung.github.io/zh/tags/debug/</link>
-    <description>Recent content in debug on 过河卒</description>
+    <description>Recent content in Debug on 过河卒</description>
     <image>
       <title>过河卒</title>
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- 0.120.4</generator>
+    <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
     <lastBuildDate>Thu, 09 Jan 2025 20:05:21 -0800</lastBuildDate>
@@ -19,7 +19,9 @@
       <link>https://ramsayleung.github.io/zh/post/2023/tampermonkey_userscript_not_invokved_in_spa/</link>
       <pubDate>Sat, 26 Aug 2023 09:29:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2023/tampermonkey_userscript_not_invokved_in_spa/</guid>
-      <description>1 背景 我习惯使用浏览器匿名模式来打开 Youtube 视频，避免 Youtube 的推荐算法给我总是推荐同一类的视频。 但有个问题: 匿名模式下，Youtube的播放器是默认自</description>
+      <description>&lt;h2 id=&#34;背景&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 背景&lt;/h2&gt;
+&lt;p&gt;我习惯使用浏览器匿名模式来打开 Youtube 视频，避免 Youtube 的推荐算法给我总是推荐同一类的视频。 &lt;br/&gt;&lt;/p&gt;
+&lt;p&gt;但有个问题: 匿名模式下，Youtube的播放器是默认自动播放的。 &lt;br/&gt;&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="背景"><span class="section-num">1</span> 背景</h2>
 <p>我习惯使用浏览器匿名模式来打开 Youtube 视频，避免 Youtube 的推荐算法给我总是推荐同一类的视频。 <br/></p>
 <p>但有个问题: 匿名模式下，Youtube的播放器是默认自动播放的。 <br/></p>

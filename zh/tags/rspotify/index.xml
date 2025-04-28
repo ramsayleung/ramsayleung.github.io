@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>rspotify on 过河卒</title>
+    <title>Rspotify on 过河卒</title>
     <link>https://ramsayleung.github.io/zh/tags/rspotify/</link>
-    <description>Recent content in rspotify on 过河卒</description>
+    <description>Recent content in Rspotify on 过河卒</description>
     <image>
       <title>过河卒</title>
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- 0.120.4</generator>
+    <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
     <lastBuildDate>Thu, 09 Jan 2025 20:06:55 -0800</lastBuildDate>
@@ -19,7 +19,10 @@
       <link>https://ramsayleung.github.io/zh/post/2023/rspotify_%E4%B8%80%E4%B8%AA%E7%94%A8%E7%88%B1%E5%8F%91%E7%94%B5%E4%BA%94%E5%B9%B4%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</link>
       <pubDate>Tue, 07 Feb 2023 15:40:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2023/rspotify_%E4%B8%80%E4%B8%AA%E7%94%A8%E7%88%B1%E5%8F%91%E7%94%B5%E4%BA%94%E5%B9%B4%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</guid>
-      <description>1 前言 一周前看到个新闻，Spotify在其第四季度财报中披露，截至2022年12月31日，它的付费订阅用户数达到了2.05亿，同比增长14%</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;一周前看到个&lt;a href=&#34;https://www.theverge.com/2023/1/31/23577499/spotify-q4-2022-earnings-release-subscriber-growth-layoffs&#34;&gt;新闻&lt;/a&gt;，Spotify在其第四季度财报中披露，截至2022年12月31日，它的付费订阅用户数达到了2.05亿，同比增长14%；
+月活用户4.89亿。Spotify成为第一家订阅用户数突破2亿的音乐流服务。&lt;/p&gt;
+&lt;p&gt;而我突然意识到，我那个使用Rust, 为Spotify开发，挂在Sptofiy官网的&lt;a href=&#34;https://developer.spotify.com/documentation/web-api/libraries/&#34;&gt;library&lt;/a&gt;：&lt;a href=&#34;https://github.com/ramsayleung/rspotify&#34;&gt;RSpotify&lt;/a&gt;，已经维护有五年了：&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>一周前看到个<a href="https://www.theverge.com/2023/1/31/23577499/spotify-q4-2022-earnings-release-subscriber-growth-layoffs">新闻</a>，Spotify在其第四季度财报中披露，截至2022年12月31日，它的付费订阅用户数达到了2.05亿，同比增长14%；
 月活用户4.89亿。Spotify成为第一家订阅用户数突破2亿的音乐流服务。</p>
@@ -411,7 +414,12 @@
       <link>https://ramsayleung.github.io/zh/post/2021/iterate_through_pagination_api/</link>
       <pubDate>Thu, 29 Apr 2021 11:48:00 +0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2021/iterate_through_pagination_api/</guid>
-      <description>Iterate through pagination in the Rest API 1 Preface About 4 months ago, icewind1991 created an exciting PR that adding Stream/Iterator based versions of methods with paginated results, which makes enpoints in Rspotify more much ergonomic to use, and Mario completed this PR. In order to know what this PR brought to us, we have to go back to the orignal story, the paginated results in Spotify&amp;rsquo;s Rest API. 2</description>
+      <description>&lt;p&gt;Iterate through pagination in the Rest API&lt;/p&gt;
+&lt;h2 id=&#34;preface&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; Preface&lt;/h2&gt;
+&lt;p&gt;About 4 months ago, &lt;a href=&#34;https://github.com/icewind1991&#34;&gt;icewind1991&lt;/a&gt; created an exciting &lt;a href=&#34;https://github.com/ramsayleung/rspotify/pull/166&#34;&gt;PR&lt;/a&gt; that adding &lt;code&gt;Stream/Iterator&lt;/code&gt; based versions of methods with paginated results, which makes enpoints in &lt;a href=&#34;https://github.com/ramsayleung/rspotify&#34;&gt;Rspotify&lt;/a&gt; more much ergonomic to use, and &lt;a href=&#34;https://github.com/marioortizmanero&#34;&gt;Mario&lt;/a&gt; completed this PR.&lt;/p&gt;
+&lt;p&gt;In order to know what this PR brought to us, we have to go back to the orignal story, the paginated results in Spotify&amp;rsquo;s Rest API.&lt;/p&gt;
+&lt;h2 id=&#34;orignal-story&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;2&lt;/span&gt; Orignal Story&lt;/h2&gt;
+&lt;p&gt;Taking the &lt;code&gt;artist_albums&lt;/code&gt; as example, it gets Spotify catalog information about an artist&amp;rsquo;s albums.&lt;/p&gt;</description>
       <content:encoded><![CDATA[<p>Iterate through pagination in the Rest API</p>
 <h2 id="preface"><span class="section-num">1</span> Preface</h2>
 <p>About 4 months ago, <a href="https://github.com/icewind1991">icewind1991</a> created an exciting <a href="https://github.com/ramsayleung/rspotify/pull/166">PR</a> that adding <code>Stream/Iterator</code> based versions of methods with paginated results, which makes enpoints in <a href="https://github.com/ramsayleung/rspotify">Rspotify</a> more much ergonomic to use, and <a href="https://github.com/marioortizmanero">Mario</a> completed this PR.</p>
@@ -759,7 +767,11 @@ to the <code>Iterator</code> trait.</p>
       <link>https://ramsayleung.github.io/zh/post/2020/serde_lesson/</link>
       <pubDate>Sun, 13 Dec 2020 22:29:00 +0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2020/serde_lesson/</guid>
-      <description>The lesson learned from refactoring rspotify 1 Preface Recently, I and Mario are working on refactoring rspotify, trying to improve performance, documentation, error-handling, data model and reduce compile time, to make it easier to use. (For those who has never heard about rspotify, it is a Spotify HTTP SDK implemented in Rust). I am partly focusing on polishing the data model, based on the issue created by Koxiaet. Since rspotify</description>
+      <description>&lt;p&gt;The lesson learned from refactoring rspotify&lt;/p&gt;
+&lt;h2 id=&#34;preface&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; Preface&lt;/h2&gt;
+&lt;p&gt;Recently, I and &lt;a href=&#34;https://github.com/marioortizmanero&#34;&gt;Mario&lt;/a&gt; are working on refactoring &lt;a href=&#34;https://github.com/ramsayleung/rspotify&#34;&gt;&lt;code&gt;rspotify&lt;/code&gt;&lt;/a&gt;, trying to improve performance, documentation, error-handling, data model and reduce compile time, to make it easier to use. (For those who has never heard about &lt;code&gt;rspotify&lt;/code&gt;, it is a Spotify HTTP SDK implemented in Rust).&lt;/p&gt;
+&lt;p&gt;I am partly focusing on polishing the data model, based on the &lt;a href=&#34;https://github.com/ramsayleung/rspotify/issues/127&#34;&gt;issue&lt;/a&gt; created by &lt;a href=&#34;https://github.com/Koxiaet&#34;&gt;Koxiaet&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Since &lt;code&gt;rspotify&lt;/code&gt; is API client for Spotify, it has to handle the request and response from Spotify HTTP API.&lt;/p&gt;</description>
       <content:encoded><![CDATA[<p>The lesson learned from refactoring rspotify</p>
 <h2 id="preface"><span class="section-num">1</span> Preface</h2>
 <p>Recently, I and <a href="https://github.com/marioortizmanero">Mario</a> are working on refactoring <a href="https://github.com/ramsayleung/rspotify"><code>rspotify</code></a>, trying to improve performance, documentation, error-handling, data model and reduce compile time, to make it easier to use. (For those who has never heard about <code>rspotify</code>, it is a Spotify HTTP SDK implemented in Rust).</p>
@@ -827,8 +839,7 @@ to the <code>Iterator</code> trait.</p>
 </div>
 </div><p>And Koxiaet gave great advice about how to polish <code>Actions</code>:</p>
 <blockquote>
-<p><code>Actions::disallows</code> can be replaced with a <code>Vec&lt;DisallowKey&gt;</code> or <code>HashSet&lt;DisallowKey&gt;</code> by removing all entires whose value is false, which will result in a simpler API.</p>
-</blockquote>
+<p><code>Actions::disallows</code> can be replaced with a <code>Vec&lt;DisallowKey&gt;</code> or <code>HashSet&lt;DisallowKey&gt;</code> by removing all entires whose value is false, which will result in a simpler API.</p></blockquote>
 <p>To be honest, I was not that familiar with <code>Serde</code> before, after digging in its official documentation for a while, it seems there is now a built-in way to convert JSON map to <code>Vec&lt;T&gt;</code> base on map&rsquo;s value.</p>
 <p>After reading the <a href="https://serde.rs/custom-serialization.html">Custom serialization</a> from documentation, there was a simple solution came to my mind, so I wrote my first customized deserialize function.</p>
 <p>I created a dumb <code>Actions</code> struct inside the <code>deserialize</code> function, and converted <code>HashMap</code> to <code>Vec</code> by filtering its value.</p>
@@ -960,8 +971,7 @@ to the <code>Iterator</code> trait.</p>
 </div>
 </div><p>As before, Koxiaet made a great point about <code>timestamp</code> and =progress_ms=(I will talk about it later):</p>
 <blockquote>
-<p><code>CurrentlyPlayingContext::timestamp</code> should be a <code>chrono::DateTime&lt;Utc&gt;</code>, which could be easier to use.</p>
-</blockquote>
+<p><code>CurrentlyPlayingContext::timestamp</code> should be a <code>chrono::DateTime&lt;Utc&gt;</code>, which could be easier to use.</p></blockquote>
 <p>The polished struct looks like:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1111,7 +1121,7 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>The <code>to_millisecond_timestamp</code> function is similar to <code>from_millisecond_timestamp</code>, but it&rsquo;s eaiser to implement, check
-<a href="https://github.com/ramsayleung/rspotify/pull/157/files#">this PR</a> for more detail.</p>
+<a href="https://github.com/ramsayleung/rspotify/pull/157/files">this PR</a> for more detail.</p>
 <h3 id="deserialize-milliseconds-to-duration"><span class="section-num">2.3</span> Deserialize milliseconds to Duration</h3>
 <p>The simplified episode object contains the simplified episode information, and the <code>duration_ms</code> field is an integer, which represents the episode length in milliseconds.</p>
 <p>The response JSON data from HTTP API:</p>
@@ -1160,8 +1170,7 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 </div>
 </div><p>As before without saying, Koxiaet pointed out that</p>
 <blockquote>
-<p><code>SimplifiedEpisode::duration_ms</code> should be replaced with a <code>duration</code> of type <code>Duration</code>, since a built-in <code>Duration</code> type works better than primitive type.</p>
-</blockquote>
+<p><code>SimplifiedEpisode::duration_ms</code> should be replaced with a <code>duration</code> of type <code>Duration</code>, since a built-in <code>Duration</code> type works better than primitive type.</p></blockquote>
 <p>Since I have worked with <code>Serde</code>&rsquo;s custome deserialization, it&rsquo;s not a hard job for me any more. I easily figure out how to deserialize <code>u64</code> to <code>Duration</code>:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1246,12 +1255,10 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 <p>The <code>progress_ms</code> field is either not present or a millisecond, the <code>u32</code> handles the milliseconds, as its value might not be present in the response, it&rsquo;s an <code>Option&lt;u32&gt;</code>, so it won&rsquo;t work with <code>from_duration_ms</code>.</p>
 <p>Thus, it&rsquo;s necessary to figure out how to handle the <code>Option</code> type, and the answer is in the documentation, the <code>deserialize_option</code> function:</p>
 <blockquote>
-<p>Hint that the <code>Deserialize</code> type is expecting an optional value.</p>
-</blockquote>
+<p>Hint that the <code>Deserialize</code> type is expecting an optional value.</p></blockquote>
 <!--quoteend-->
 <blockquote>
-<p>This allows deserializers that encode an optional value as a nullable value to convert the null value into <code>None</code> and a regular value into <code>Some(value)</code>.</p>
-</blockquote>
+<p>This allows deserializers that encode an optional value as a nullable value to convert the null value into <code>None</code> and a regular value into <code>Some(value)</code>.</p></blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1403,8 +1410,7 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 </div>
 </div><p>Koxiaet made a great point about <code>mode</code> field:</p>
 <blockquote>
-<p><code>AudioAnalysisSection::mode</code> and <code>AudioFeatures::mode</code> are <code>f32=s but should be =Option&lt;Mode&gt;=s where =enum Mode { Major, Minor }</code> as it is more useful.</p>
-</blockquote>
+<p><code>AudioAnalysisSection::mode</code> and <code>AudioFeatures::mode</code> are <code>f32=s but should be =Option&lt;Mode&gt;=s where =enum Mode { Major, Minor }</code> as it is more useful.</p></blockquote>
 <p>In this case, we don&rsquo;t need the <code>Opiton</code> type and in order to deserialize enum from number, we firstly need to define a C-like enum:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1580,7 +1586,19 @@ construction. And it turns out that there is a way to construct <code>DateTime</
       <link>https://ramsayleung.github.io/zh/post/2020/async_await_for_rspotify/</link>
       <pubDate>Fri, 28 Feb 2020 01:27:00 +0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2020/async_await_for_rspotify/</guid>
-      <description>1 Preface Today, I am exited to introduce you the v0.9 release I have been continued to work on it for the past few weeks that adds async/await support now! 2 The road to async/await What is rspotify: &amp;gt; For those who has never heared about rspotify before, rspotify is a Spotify web Api wrapper implemented in Rust. With async/await&amp;rsquo;s forthcoming stabilization and reqwest adds async/await support now, I think</description>
+      <description>&lt;h2 id=&#34;preface&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; Preface&lt;/h2&gt;
+&lt;p&gt;Today, I am exited to introduce you the &lt;a href=&#34;https://github.com/ramsayleung/rspotify/releases/tag/v0.9&#34;&gt;v0.9&lt;/a&gt; release I have been continued to work on it for the past few weeks that
+adds &lt;code&gt;async/await&lt;/code&gt; support now!&lt;/p&gt;
+&lt;h2 id=&#34;the-road-to-async-await&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;2&lt;/span&gt; The road to async/await&lt;/h2&gt;
+&lt;p&gt;What is rspotify: &amp;gt; For those who has never heared about rspotify
+before, &lt;a href=&#34;https://github.com/ramsayleung/rspotify&#34;&gt;rspotify&lt;/a&gt; is a
+Spotify web Api wrapper implemented in Rust.&lt;/p&gt;
+&lt;p&gt;With async/await&amp;rsquo;s forthcoming stabilization and reqwest adds
+&lt;code&gt;async/await&lt;/code&gt; support now, I think it&amp;rsquo;s time to let rspotify leverage
+power from &lt;code&gt;async/await&lt;/code&gt;. To be honest, I was not familiar with
+&lt;code&gt;async/await&lt;/code&gt; before, because of my Java background from where I just
+get used to multiple thread and sync stuff(Yes, I know Java has &lt;code&gt;future&lt;/code&gt;
+either).&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="preface"><span class="section-num">1</span> Preface</h2>
 <p>Today, I am exited to introduce you the <a href="https://github.com/ramsayleung/rspotify/releases/tag/v0.9">v0.9</a> release I have been continued to work on it for the past few weeks that
 adds <code>async/await</code> support now!</p>
@@ -1707,7 +1725,10 @@ tracker!</p>
       <link>https://ramsayleung.github.io/zh/post/2018/rspotify/</link>
       <pubDate>Wed, 28 Feb 2018 20:44:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2018/rspotify/</guid>
-      <description>开发第一个Rust crate 的感受和踩到的坑 最近写了人生第一个 Rust crate &amp;ndash; RSpotify. 虽说并不是什么惊天地，泣鬼神的大作，但是也是我花费了近两个月实现的。 现在就来聊</description>
+      <description>&lt;p&gt;开发第一个Rust crate 的感受和踩到的坑&lt;/p&gt;
+&lt;p&gt;最近写了人生第一个 Rust crate &amp;ndash; &lt;a href=&#34;https://github.com/ramsayleung/rspotify&#34;&gt;RSpotify&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;虽说并不是什么惊天地，泣鬼神的大作，但是也是我花费了近两个月实现的。&lt;/p&gt;
+&lt;p&gt;现在就来聊聊这个开发过程的感悟和踩到的坑&lt;/p&gt;</description>
       <content:encoded><![CDATA[<p>开发第一个Rust crate 的感受和踩到的坑</p>
 <p>最近写了人生第一个 Rust crate &ndash; <a href="https://github.com/ramsayleung/rspotify">RSpotify</a>.</p>
 <p>虽说并不是什么惊天地，泣鬼神的大作，但是也是我花费了近两个月实现的。</p>

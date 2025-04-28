@@ -9,7 +9,7 @@
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- 0.120.4</generator>
+    <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
     <lastBuildDate>Thu, 09 Jan 2025 18:49:30 -0800</lastBuildDate>
@@ -19,7 +19,10 @@
       <link>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E6%96%B0%E7%B1%BB%E5%9E%8B%E5%AE%B9%E5%99%A8/</link>
       <pubDate>Thu, 12 Dec 2019 15:45:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E6%96%B0%E7%B1%BB%E5%9E%8B%E5%AE%B9%E5%99%A8/</guid>
-      <description>1 前言 JDK 提供了各种功能强大的工具类, 宛如装备齐全的军火库, 而容器就是其中一项内置的利器, 提供了包括诸多常用的数据结构, 下图对 JDK 已有容器进行了</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;JDK 提供了各种功能强大的工具类, 宛如装备齐全的军火库,
+而容器就是其中一项内置的利器, 提供了包括诸多常用的数据结构, 下图对 JDK
+已有容器进行了概括:&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>JDK 提供了各种功能强大的工具类, 宛如装备齐全的军火库,
 而容器就是其中一项内置的利器, 提供了包括诸多常用的数据结构, 下图对 JDK
@@ -79,10 +82,9 @@ value 都加起来?</p>
 <p>对于这样的要求, Guava 提供了一个更好的解决方案: 一个新类型容器
 <code>Multiset</code> , 它支持新增多个相同类型的元素并统计. 维基百科给出的关于
 <code>Multiset</code>
-的<a href="https://en.wikipedia.org/wiki/Set_(abstract_data_type)#Multiset">解释</a>:</p>
+的<a href="https://en.wikipedia.org/wiki/Set_%28abstract_data_type%29#Multiset">解释</a>:</p>
 <blockquote>
-<p>这是个成员可以出现多次的集合(Set), 也被称为背包(bag)</p>
-</blockquote>
+<p>这是个成员可以出现多次的集合(Set), 也被称为背包(bag)</p></blockquote>
 <p>大名鼎鼎的《算法/Algorithm》也给出过 <a href="https://algs4.cs.princeton.edu/13stacks/">bag</a> 的解释和实现.</p>
 <p>需要注意的是, <code>multisets</code> 的成员是无序的, <code>{a,a,b}</code> 和 <code>{a,b,a}</code>
 这两个集合在 <code>multisets</code> 看来是相等.</p>
@@ -176,40 +178,40 @@ value 都加起来?</p>
 <p>鉴于 <code>Multiset</code> 只是个接口, Guava 提供许多的接口实现, 大致可以与 Java
 中的容器对应上:</p>
 <table>
-<thead>
-<tr>
-<th>Map</th>
-<th>MultiSet</th>
-<th>支持 <code>null</code> 元素</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>HashMap</td>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/HashMultiset.html">HashMultiset</a></td>
-<td>Yes</td>
-</tr>
-<tr>
-<td>TreeMap</td>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/TreeMultiset.html">TreeMultiset</a></td>
-<td>Yes</td>
-</tr>
-<tr>
-<td>LinkedHashMap</td>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/LinkedHashMultiset.html">LinkedHashMultiset</a></td>
-<td>Yes</td>
-</tr>
-<tr>
-<td>ConcurrentHashMap</td>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ConcurrentHashMultiset.html">ConcurrentHashMultiset</a></td>
-<td>No</td>
-</tr>
-<tr>
-<td>ImmutableMap</td>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableMultiset.html">ImmutableMultiset</a></td>
-<td>No</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>Map</th>
+          <th>MultiSet</th>
+          <th>支持 <code>null</code> 元素</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>HashMap</td>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/HashMultiset.html">HashMultiset</a></td>
+          <td>Yes</td>
+      </tr>
+      <tr>
+          <td>TreeMap</td>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/TreeMultiset.html">TreeMultiset</a></td>
+          <td>Yes</td>
+      </tr>
+      <tr>
+          <td>LinkedHashMap</td>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/LinkedHashMultiset.html">LinkedHashMultiset</a></td>
+          <td>Yes</td>
+      </tr>
+      <tr>
+          <td>ConcurrentHashMap</td>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ConcurrentHashMultiset.html">ConcurrentHashMultiset</a></td>
+          <td>No</td>
+      </tr>
+      <tr>
+          <td>ImmutableMap</td>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableMultiset.html">ImmutableMultiset</a></td>
+          <td>No</td>
+      </tr>
+  </tbody>
 </table>
 <h2 id="multimap"><span class="section-num">3</span> Multimap</h2>
 <p>又来假设, 你是个班主任, 刚刚考完试, 你想记录下班里所有同学的成绩,
@@ -428,50 +430,50 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 <p><code>Multimap</code> 提供了若干个不同类型的实现, 你可以使用对应的实现来取代原来
 <code>Map&lt;K, Collection&lt;V&gt;&gt;</code> 的地方:</p>
 <table>
-<thead>
-<tr>
-<th>实现</th>
-<th>key 表现得类似&hellip;</th>
-<th>value 表现得类似&hellip;</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ArrayListMultimap.html">ArrayListMultimap</a></td>
-<td>HashMap</td>
-<td>ArrayList</td>
-</tr>
-<tr>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/HashMultimap.html">HashMultimap</a></td>
-<td>HashMap</td>
-<td>HashSet</td>
-</tr>
-<tr>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/LinkedListMultimap.html">LinkedListMultimap</a></td>
-<td>LinkedHashMap</td>
-<td>LinkedList</td>
-</tr>
-<tr>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/LinkedHashMultimap.html">LinkedHashMultimap</a></td>
-<td>LinkedHashMap</td>
-<td>LinkedHashSet</td>
-</tr>
-<tr>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/TreeMultimap.html">TreeMultimap</a></td>
-<td>TreeMap</td>
-<td>TreeSet</td>
-</tr>
-<tr>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableListMultimap.html">ImmutableListMultimap</a></td>
-<td>ImmutableMap</td>
-<td>ImmutableList</td>
-</tr>
-<tr>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableSetMultimap.html">ImmutableSetMultimap</a></td>
-<td>ImmutableMap</td>
-<td>ImmutableSet</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>实现</th>
+          <th>key 表现得类似&hellip;</th>
+          <th>value 表现得类似&hellip;</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ArrayListMultimap.html">ArrayListMultimap</a></td>
+          <td>HashMap</td>
+          <td>ArrayList</td>
+      </tr>
+      <tr>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/HashMultimap.html">HashMultimap</a></td>
+          <td>HashMap</td>
+          <td>HashSet</td>
+      </tr>
+      <tr>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/LinkedListMultimap.html">LinkedListMultimap</a></td>
+          <td>LinkedHashMap</td>
+          <td>LinkedList</td>
+      </tr>
+      <tr>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/LinkedHashMultimap.html">LinkedHashMultimap</a></td>
+          <td>LinkedHashMap</td>
+          <td>LinkedHashSet</td>
+      </tr>
+      <tr>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/TreeMultimap.html">TreeMultimap</a></td>
+          <td>TreeMap</td>
+          <td>TreeSet</td>
+      </tr>
+      <tr>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableListMultimap.html">ImmutableListMultimap</a></td>
+          <td>ImmutableMap</td>
+          <td>ImmutableList</td>
+      </tr>
+      <tr>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableSetMultimap.html">ImmutableSetMultimap</a></td>
+          <td>ImmutableMap</td>
+          <td>ImmutableSet</td>
+      </tr>
+  </tbody>
 </table>
 <p>上述的实现, 除了不可变的实现之外, 其他都支持 <code>null key</code> 与 <code>null value</code>.
 并非所有的实现底层用的都是 <code>Map&lt;K, Collection&lt;V&gt;&gt;</code>,
@@ -538,35 +540,35 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 </div>
 </div><h3 id="bimap-实现"><span class="section-num">4.2</span> BiMap 实现</h3>
 <table>
-<thead>
-<tr>
-<th>key-value map 实现</th>
-<th>value-key map 实现</th>
-<th>对应的 BiMap</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>HashMap</td>
-<td>HashMap</td>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/HashBiMap.html"><code>HashBiMap</code></a></td>
-</tr>
-<tr>
-<td>ImmutableMap</td>
-<td>ImmutableMap</td>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableBiMap.html"><code>ImmutableBiMap</code></a></td>
-</tr>
-<tr>
-<td>EnumMap</td>
-<td>EnumMap</td>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/EnumBiMap.html"><code>EnumBiMap</code></a></td>
-</tr>
-<tr>
-<td>EnumMap</td>
-<td>HashMap</td>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/EnumHashBiMap.html"><code>EnumHashBiMap</code></a></td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>key-value map 实现</th>
+          <th>value-key map 实现</th>
+          <th>对应的 BiMap</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>HashMap</td>
+          <td>HashMap</td>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/HashBiMap.html"><code>HashBiMap</code></a></td>
+      </tr>
+      <tr>
+          <td>ImmutableMap</td>
+          <td>ImmutableMap</td>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableBiMap.html"><code>ImmutableBiMap</code></a></td>
+      </tr>
+      <tr>
+          <td>EnumMap</td>
+          <td>EnumMap</td>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/EnumBiMap.html"><code>EnumBiMap</code></a></td>
+      </tr>
+      <tr>
+          <td>EnumMap</td>
+          <td>HashMap</td>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/EnumHashBiMap.html"><code>EnumHashBiMap</code></a></td>
+      </tr>
+  </tbody>
 </table>
 <h2 id="table"><span class="section-num">5</span> Table</h2>
 <p>假设还是个班主任, 现在你需要制作一个包含学号, 姓名与成绩的名单,
@@ -719,30 +721,30 @@ key 对应多个 values 的场景: <code>Multimap</code> . 同样的,
 <h3 id="table-实现"><span class="section-num">5.3</span> Table 实现</h3>
 <p>Table 依旧提供了若干个实现, 列表如下:</p>
 <table>
-<thead>
-<tr>
-<th>Table&lt;R, C, V&gt;</th>
-<th>类似的 Map&lt;R, Map&lt;C, V&gt;&gt;</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/HashBasedTable.html"><code>HashBasedTable</code></a></td>
-<td>HashMap&lt;R, HashMap&lt;C, V&gt;&gt;</td>
-</tr>
-<tr>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/TreeBasedTable.html"><code>TreeBasedTable</code></a></td>
-<td>TreeMap&lt;R, TreeMap&lt;C, V&gt;&gt;</td>
-</tr>
-<tr>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableTable.html"><code>ImmutableTable</code></a></td>
-<td>ImmutableMap&lt;R, ImmutableMap&lt;C, V&gt;&gt;</td>
-</tr>
-<tr>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ArrayTable.html"><code>ArrayTable</code></a></td>
-<td>ImmutableMap&lt;R, ImmutableMap&lt;C, V&gt;&gt;, 特别的一个</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>Table&lt;R, C, V&gt;</th>
+          <th>类似的 Map&lt;R, Map&lt;C, V&gt;&gt;</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/HashBasedTable.html"><code>HashBasedTable</code></a></td>
+          <td>HashMap&lt;R, HashMap&lt;C, V&gt;&gt;</td>
+      </tr>
+      <tr>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/TreeBasedTable.html"><code>TreeBasedTable</code></a></td>
+          <td>TreeMap&lt;R, TreeMap&lt;C, V&gt;&gt;</td>
+      </tr>
+      <tr>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableTable.html"><code>ImmutableTable</code></a></td>
+          <td>ImmutableMap&lt;R, ImmutableMap&lt;C, V&gt;&gt;</td>
+      </tr>
+      <tr>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ArrayTable.html"><code>ArrayTable</code></a></td>
+          <td>ImmutableMap&lt;R, ImmutableMap&lt;C, V&gt;&gt;, 特别的一个</td>
+      </tr>
+  </tbody>
 </table>
 <h2 id="classtoinstancemap"><span class="section-num">6</span> ClassToInstanceMap</h2>
 <p>目前, 我们介绍过的 Map, 无论是原生 Jdk 的 Map, 抑或是 Guava 的 Map,
@@ -795,22 +797,22 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 <h3 id="classtoinstancemap-实现"><span class="section-num">6.2</span> ClassToInstanceMap 实现</h3>
 <p><code>ClassToInstanceMap</code> 提供了两个实现:</p>
 <table>
-<thead>
-<tr>
-<th>ClassToInstanceMap</th>
-<th>类似的 Map</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/MutableClassToInstanceMap.html"><code>MutableClassToInstanceMap</code></a></td>
-<td>Map&lt;Class, Object&gt;</td>
-</tr>
-<tr>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableClassToInstanceMap.html"><code>ImmutableClassToInstanceMap</code></a></td>
-<td>ImmutableMap&lt;Class,Object&gt;</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>ClassToInstanceMap</th>
+          <th>类似的 Map</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/MutableClassToInstanceMap.html"><code>MutableClassToInstanceMap</code></a></td>
+          <td>Map&lt;Class, Object&gt;</td>
+      </tr>
+      <tr>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableClassToInstanceMap.html"><code>ImmutableClassToInstanceMap</code></a></td>
+          <td>ImmutableMap&lt;Class,Object&gt;</td>
+      </tr>
+  </tbody>
 </table>
 <h2 id="rangeset"><span class="section-num">7</span> RangeSet</h2>
 <p>目前为止, 我们介绍过的新类型容器都是常见的 Map/Set/Table,
@@ -957,22 +959,22 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 <h3 id="rangeset-实现"><span class="section-num">7.3</span> RangeSet 实现</h3>
 <p><code>RangeSet</code> 提供了两个实现:</p>
 <table>
-<thead>
-<tr>
-<th><code>RangeSet</code></th>
-<th>类似的 Set&lt;Range&gt;</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/TreeRangeSet.html"><code>TreeRangeSet</code></a></td>
-<td>TreeSet&lt;Range&gt;</td>
-</tr>
-<tr>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableRangeSet.html"><code>ImmutableRangeSet</code></a></td>
-<td>ImmutableSet&lt;Range&gt;</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th><code>RangeSet</code></th>
+          <th>类似的 Set&lt;Range&gt;</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/TreeRangeSet.html"><code>TreeRangeSet</code></a></td>
+          <td>TreeSet&lt;Range&gt;</td>
+      </tr>
+      <tr>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableRangeSet.html"><code>ImmutableRangeSet</code></a></td>
+          <td>ImmutableSet&lt;Range&gt;</td>
+      </tr>
+  </tbody>
 </table>
 <h2 id="rangemap"><span class="section-num">8</span> RangeMap</h2>
 <p>既然能以区间集作为容器, 那么能否把区间当作 Map 的 <code>key</code> 呢?
@@ -1038,26 +1040,26 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
 <h3 id="rangemap-实现"><span class="section-num">9.2</span> RangeMap 实现</h3>
 <p>RangeMap 提供了两个实现:</p>
 <table>
-<thead>
-<tr>
-<th>RangeMap</th>
-<th>类似的 Map&lt;Range, V&gt;</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/TreeRangeMap.html">TreeRangeMap</a></td>
-<td>TreeMap&lt;Range, V&gt;</td>
-</tr>
-<tr>
-<td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableRangeMap.html">ImmutableRangeMap</a></td>
-<td>ImmutableMap&lt;Range&lt;K, V&gt;&gt;</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>RangeMap</th>
+          <th>类似的 Map&lt;Range, V&gt;</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/TreeRangeMap.html">TreeRangeMap</a></td>
+          <td>TreeMap&lt;Range, V&gt;</td>
+      </tr>
+      <tr>
+          <td><a href="https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableRangeMap.html">ImmutableRangeMap</a></td>
+          <td>ImmutableMap&lt;Range&lt;K, V&gt;&gt;</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
 </table>
 <h2 id="总结"><span class="section-num">10</span> 总结</h2>
 <p>介绍完新类型的容器之后, 希望大家对这些新类型容器熟悉起来, 应对需求来也能得心应手 :)</p>
@@ -1072,7 +1074,11 @@ key 阿! 你也可以这样理解, well, 咬文嚼字就没有什么意义了)</
       <link>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AE%B9%E5%99%A8/</link>
       <pubDate>Thu, 05 Sep 2019 15:36:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AE%B9%E5%99%A8/</guid>
-      <description>1 前言 先此声明, 个人倾向于将 Collection 翻译成容器, 将 Set 翻译成集合. 已经许久没有更新Guava研读系列的文章, 今天要介绍的是Guava的不可变容器. 2</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;先此声明, 个人倾向于将 &lt;code&gt;Collection&lt;/code&gt; 翻译成容器, 将 &lt;code&gt;Set&lt;/code&gt; 翻译成集合.&lt;/p&gt;
+&lt;p&gt;已经许久没有更新Guava研读系列的文章, 今天要介绍的是Guava的不可变容器.&lt;/p&gt;
+&lt;h2 id=&#34;关于不可变对象&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;2&lt;/span&gt; 关于不可变对象&lt;/h2&gt;
+&lt;p&gt;不可变的对象有许多的优点, 如下:&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>先此声明, 个人倾向于将 <code>Collection</code> 翻译成容器, 将 <code>Set</code> 翻译成集合.</p>
 <p>已经许久没有更新Guava研读系列的文章, 今天要介绍的是Guava的不可变容器.</p>
@@ -1362,85 +1368,85 @@ Collections方法不能提供真正的不可变容器,
 <p>对于JDK提供的标准容器, Guava提供了相应的不可变容器实现,
 对于Guava自家的容器, Guava也提供了对应的不可变容器, 具体实现对比如下:</p>
 <table>
-<thead>
-<tr>
-<th>Interface</th>
-<th>JDK or Guava?</th>
-<th>Immutable Version</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>Collection</code></td>
-<td>JDK</td>
-<td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableCollection.html"><code>ImmutableCollection</code></a></td>
-</tr>
-<tr>
-<td><code>List</code></td>
-<td>JDK</td>
-<td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableList.html"><code>ImmutableList</code></a></td>
-</tr>
-<tr>
-<td><code>Set</code></td>
-<td>JDK</td>
-<td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableSet.html"><code>ImmutableSet</code></a></td>
-</tr>
-<tr>
-<td><code>SortedSet=/=NavigableSet</code></td>
-<td>JDK</td>
-<td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableSortedSet.html"><code>ImmutableSortedSet</code></a></td>
-</tr>
-<tr>
-<td><code>Map</code></td>
-<td>JDK</td>
-<td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableMap.html"><code>ImmutableMap</code></a></td>
-</tr>
-<tr>
-<td><code>SortedMap</code></td>
-<td>JDK</td>
-<td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableSortedMap.html"><code>ImmutableSortedMap</code></a></td>
-</tr>
-<tr>
-<td><a href="https://github.com/google/guava/wiki/NewCollectionTypesExplained#Multiset"><code>Multiset</code></a></td>
-<td>Guava</td>
-<td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableMultiset.html"><code>ImmutableMultiset</code></a></td>
-</tr>
-<tr>
-<td><code>SortedMultiset</code></td>
-<td>Guava</td>
-<td><a href="http://google.github.io/guava/releases/12.0/api/docs/com/google/common/collect/ImmutableSortedMultiset.html"><code>ImmutableSortedMultiset</code></a></td>
-</tr>
-<tr>
-<td><a href="https://github.com/google/guava/wiki/NewCollectionTypesExplained#Multimap"><code>Multimap</code></a></td>
-<td>Guava</td>
-<td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableMultimap.html"><code>ImmutableMultimap</code></a></td>
-</tr>
-<tr>
-<td><code>ListMultimap</code></td>
-<td>Guava</td>
-<td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableListMultimap.html"><code>ImmutableListMultimap</code></a></td>
-</tr>
-<tr>
-<td><code>SetMultimap</code></td>
-<td>Guava</td>
-<td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableSetMultimap.html"><code>ImmutableSetMultimap</code></a></td>
-</tr>
-<tr>
-<td><a href="https://github.com/google/guava/wiki/NewCollectionTypesExplained#BiMap"><code>BiMap</code></a></td>
-<td>Guava</td>
-<td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableBiMap.html"><code>ImmutableBiMap</code></a></td>
-</tr>
-<tr>
-<td><a href="https://github.com/google/guava/wiki/NewCollectionTypesExplained#ClassToInstanceMap"><code>ClassToInstanceMap</code></a></td>
-<td>Guava</td>
-<td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableClassToInstanceMap.html"><code>ImmutableClassToInstanceMap</code></a></td>
-</tr>
-<tr>
-<td><a href="https://github.com/google/guava/wiki/NewCollectionTypesExplained#Table"><code>Table</code></a></td>
-<td>Guava</td>
-<td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableTable.html"><code>ImmutableTable</code></a></td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>Interface</th>
+          <th>JDK or Guava?</th>
+          <th>Immutable Version</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>Collection</code></td>
+          <td>JDK</td>
+          <td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableCollection.html"><code>ImmutableCollection</code></a></td>
+      </tr>
+      <tr>
+          <td><code>List</code></td>
+          <td>JDK</td>
+          <td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableList.html"><code>ImmutableList</code></a></td>
+      </tr>
+      <tr>
+          <td><code>Set</code></td>
+          <td>JDK</td>
+          <td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableSet.html"><code>ImmutableSet</code></a></td>
+      </tr>
+      <tr>
+          <td><code>SortedSet=/=NavigableSet</code></td>
+          <td>JDK</td>
+          <td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableSortedSet.html"><code>ImmutableSortedSet</code></a></td>
+      </tr>
+      <tr>
+          <td><code>Map</code></td>
+          <td>JDK</td>
+          <td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableMap.html"><code>ImmutableMap</code></a></td>
+      </tr>
+      <tr>
+          <td><code>SortedMap</code></td>
+          <td>JDK</td>
+          <td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableSortedMap.html"><code>ImmutableSortedMap</code></a></td>
+      </tr>
+      <tr>
+          <td><a href="https://github.com/google/guava/wiki/NewCollectionTypesExplained#Multiset"><code>Multiset</code></a></td>
+          <td>Guava</td>
+          <td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableMultiset.html"><code>ImmutableMultiset</code></a></td>
+      </tr>
+      <tr>
+          <td><code>SortedMultiset</code></td>
+          <td>Guava</td>
+          <td><a href="http://google.github.io/guava/releases/12.0/api/docs/com/google/common/collect/ImmutableSortedMultiset.html"><code>ImmutableSortedMultiset</code></a></td>
+      </tr>
+      <tr>
+          <td><a href="https://github.com/google/guava/wiki/NewCollectionTypesExplained#Multimap"><code>Multimap</code></a></td>
+          <td>Guava</td>
+          <td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableMultimap.html"><code>ImmutableMultimap</code></a></td>
+      </tr>
+      <tr>
+          <td><code>ListMultimap</code></td>
+          <td>Guava</td>
+          <td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableListMultimap.html"><code>ImmutableListMultimap</code></a></td>
+      </tr>
+      <tr>
+          <td><code>SetMultimap</code></td>
+          <td>Guava</td>
+          <td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableSetMultimap.html"><code>ImmutableSetMultimap</code></a></td>
+      </tr>
+      <tr>
+          <td><a href="https://github.com/google/guava/wiki/NewCollectionTypesExplained#BiMap"><code>BiMap</code></a></td>
+          <td>Guava</td>
+          <td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableBiMap.html"><code>ImmutableBiMap</code></a></td>
+      </tr>
+      <tr>
+          <td><a href="https://github.com/google/guava/wiki/NewCollectionTypesExplained#ClassToInstanceMap"><code>ClassToInstanceMap</code></a></td>
+          <td>Guava</td>
+          <td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableClassToInstanceMap.html"><code>ImmutableClassToInstanceMap</code></a></td>
+      </tr>
+      <tr>
+          <td><a href="https://github.com/google/guava/wiki/NewCollectionTypesExplained#Table"><code>Table</code></a></td>
+          <td>Guava</td>
+          <td><a href="http://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableTable.html"><code>ImmutableTable</code></a></td>
+      </tr>
+  </tbody>
 </table>
 <h2 id="总结"><span class="section-num">6</span> 总结</h2>
 <p>因为不可变容器不会在运行时改变他们的内部状态, 所以他们是线程安全和无副作用的.</p>
@@ -1462,7 +1468,9 @@ Collections</a></li>
       <link>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E7%B1%BB%E6%94%B9%E5%96%84%E9%80%9A%E7%94%A8%E6%96%B9%E6%B3%95/</link>
       <pubDate>Thu, 25 Jul 2019 22:33:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E7%B1%BB%E6%94%B9%E5%96%84%E9%80%9A%E7%94%A8%E6%96%B9%E6%B3%95/</guid>
-      <description>1 前言 Java 是一门集大成的面向对象语言, 在Java的世界里, 一切皆对象, 而=Object=类就是所有对象的默认父类. Guava 提供了若干个工具方法来扩展</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;Java 是一门集大成的面向对象语言, 在Java的世界里, 一切皆对象, 而=Object=类就是所有对象的默认父类. Guava
+提供了若干个工具方法来扩展=Object=类的通用能力.&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>Java 是一门集大成的面向对象语言, 在Java的世界里, 一切皆对象, 而=Object=类就是所有对象的默认父类. Guava
 提供了若干个工具方法来扩展=Object=类的通用能力.</p>
@@ -1513,8 +1521,7 @@ Guava叫=hashCode=).</p>
 <h3 id="hashcode"><span class="section-num">2.1</span> hashCode</h3>
 <p>在《Effective Java》的条款9中说到:</p>
 <blockquote>
-<p>Always override <code>hashCode</code> when you override <code>equals</code></p>
-</blockquote>
+<p>Always override <code>hashCode</code> when you override <code>equals</code></p></blockquote>
 <p>就是说在你重写=equals=方法的时候, 记得重写=hashCode=方法,
 因为按照Java的约定, 如果两个对象通过调用=equals=方法判断是相等的话,
 它们调用=hashCode()=方法的返回结果也是一样的.</p>
@@ -1588,8 +1595,7 @@ JDK也推出了一个=Objects.hash(field1, field2,&hellip;,fieldn)=的方法,
 <h2 id="tostring"><span class="section-num">3</span> toString</h2>
 <p>《Effective Java》的条款10说到:</p>
 <blockquote>
-<p>Always override toString</p>
-</blockquote>
+<p>Always override toString</p></blockquote>
 <p>也就是说, 《Effective Java》建议所有的类都重写=toString()=方法.
 其实=toString()=方法不是给程序看的, 而是给开发者自己看的.</p>
 <p>据说, 好看的=toString()=方法的输出结果可以让程序员更愉悦, 可见颜值处处都有用.
@@ -1653,8 +1659,7 @@ JDK也推出了一个=Objects.hash(field1, field2,&hellip;,fieldn)=的方法,
 <p>既然前面提到了《Effective Java》, 那么基于前后呼应的原则,
 最后也免不了要再引用一下《Effective Java》:</p>
 <blockquote>
-<p>条款12: Consider implementing Comparable</p>
-</blockquote>
+<p>条款12: Consider implementing Comparable</p></blockquote>
 <p>不像前文介绍过的方法, =compareTo=方法并不是=Object=类的方法,
 而是=Comparable=接口的方法. 这个方法和前文提到的=equals=方法类似,
 只不过用法不一样. =compareTo=通常用于排序,
@@ -1775,7 +1780,12 @@ JDK也推出了一个=Objects.hash(field1, field2,&hellip;,fieldn)=的方法,
       <link>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BC%98%E9%9B%85%E6%A0%A1%E9%AA%8C%E6%95%B0%E6%8D%AE/</link>
       <pubDate>Thu, 04 Jul 2019 10:16:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BC%98%E9%9B%85%E6%A0%A1%E9%AA%8C%E6%95%B0%E6%8D%AE/</guid>
-      <description>1 前言 根据防御式编程的要求, 在日常的开发中, 总少不了对函数的各种入参做校验, 以便保证函数能按照预期的流程执行下去. 比如各种费率的值就没可能是</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;根据防御式编程的要求, 在日常的开发中, 总少不了对函数的各种入参做校验,
+以便保证函数能按照预期的流程执行下去.&lt;/p&gt;
+&lt;p&gt;比如各种费率的值就没可能是负数, 如果费率出现负数, 所以数据有问题,
+我们需要做的事情就是把这些有问题的数据挑出来.
+自己手写这些校验函数未免过于繁琐, 所幸的是我们需要的函数已经有现成的:&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>根据防御式编程的要求, 在日常的开发中, 总少不了对函数的各种入参做校验,
 以便保证函数能按照预期的流程执行下去.</p>
@@ -2205,16 +2215,20 @@ Guava wiki 还提了两点最佳实践(best practice):</p>
       <link>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BD%BF%E7%94%A8%E5%92%8C%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E7%A9%BA%E6%8C%87%E9%92%88/</link>
       <pubDate>Tue, 02 Jul 2019 19:25:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2019/guava%E6%8E%A2%E7%A9%B6%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BD%BF%E7%94%A8%E5%92%8C%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E7%A9%BA%E6%8C%87%E9%92%88/</guid>
-      <description>1 前言 To be, or not to be, that is the question: 先来看看奆佬们关于空指针的看法: Null sucks - Doug Lea(JCP,Java并发编程实战作者, Java巨佬) I call it my billion-dollar mistake. - Sir C.</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;To be, or not to be, that is the question:&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;先来看看奆佬们关于空指针的看法:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Null sucks - &lt;a href=&#34;https://en.wikipedia.org/wiki/Doug_Lea&#34;&gt;Doug Lea&lt;/a&gt;(JCP,Java并发编程实战作者, Java巨佬)&lt;/p&gt;
+&lt;p&gt;I call it my billion-dollar mistake. - &lt;a href=&#34;https://en.wikipedia.org/wiki/C._A._R._Hoare&#34;&gt;Sir C. A. R. Hoare&lt;/a&gt;, 空指针的发明者&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <blockquote>
-<p>To be, or not to be, that is the question:</p>
-</blockquote>
+<p>To be, or not to be, that is the question:</p></blockquote>
 <p>先来看看奆佬们关于空指针的看法:</p>
 <blockquote>
 <p>Null sucks - <a href="https://en.wikipedia.org/wiki/Doug_Lea">Doug Lea</a>(JCP,Java并发编程实战作者, Java巨佬)</p>
-<p>I call it my billion-dollar mistake. - <a href="https://en.wikipedia.org/wiki/C._A._R._Hoare">Sir C. A. R. Hoare</a>, 空指针的发明者</p>
-</blockquote>
+<p>I call it my billion-dollar mistake. - <a href="https://en.wikipedia.org/wiki/C._A._R._Hoare">Sir C. A. R. Hoare</a>, 空指针的发明者</p></blockquote>
 <p>按照Guava wiki的说法,
 大部分的Google代码都是不支持使用空指针(下文用=null=表示空指针)的,</p>
 <p>如接近95%的集合类都不支持使用=null=作为集合元素.

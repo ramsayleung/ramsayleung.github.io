@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>algorithm on 过河卒</title>
+    <title>Algorithm on 过河卒</title>
     <link>https://ramsayleung.github.io/zh/categories/algorithm/</link>
-    <description>Recent content in algorithm on 过河卒</description>
+    <description>Recent content in Algorithm on 过河卒</description>
     <image>
       <title>过河卒</title>
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- 0.120.4</generator>
+    <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
     <lastBuildDate>Mon, 30 Dec 2024 22:34:05 -0800</lastBuildDate>
@@ -19,7 +19,11 @@
       <link>https://ramsayleung.github.io/zh/post/2022/topological_sorting/</link>
       <pubDate>Sun, 22 May 2022 10:34:00 +0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2022/topological_sorting/</guid>
-      <description>1 Definition In computer science, a topological sort or topological ordering of a directed graph is a linear ordering of its vertices such that for every directed edge uv from vertex u to vertx v, u comes before v in the ordering. It sounds pretty academic, but I am sure you are using topological sort unconsciously every single day. 2 Application Many real world situations can be modeled as a</description>
+      <description>&lt;h2 id=&#34;definition&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; Definition&lt;/h2&gt;
+&lt;p&gt;In computer science, a topological sort or topological ordering of a directed graph is a linear ordering of its vertices such that for every directed edge &lt;code&gt;uv&lt;/code&gt; from vertex &lt;code&gt;u&lt;/code&gt; to vertx &lt;code&gt;v&lt;/code&gt;, &lt;code&gt;u&lt;/code&gt; comes before &lt;code&gt;v&lt;/code&gt; in the ordering.&lt;/p&gt;
+&lt;p&gt;It sounds pretty academic, but I am sure you are using topological sort unconsciously every single day.&lt;/p&gt;
+&lt;h2 id=&#34;application&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;2&lt;/span&gt; Application&lt;/h2&gt;
+&lt;p&gt;Many real world situations can be modeled as a graph with directed edges where some events must occur before others. Then a topological sort gives an order in which to perform these events, for instance:&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="definition"><span class="section-num">1</span> Definition</h2>
 <p>In computer science, a topological sort or topological ordering of a directed graph is a linear ordering of its vertices such that for every directed edge <code>uv</code> from vertex <code>u</code> to vertx <code>v</code>, <code>u</code> comes before <code>v</code> in the ordering.</p>
 <p>It sounds pretty academic, but I am sure you are using topological sort unconsciously every single day.</p>
@@ -1022,24 +1026,19 @@ url 的去重，即如何判别 url 是否已经被爬取，如果被爬取，�
 </div>
 </div><h4 id="测试1"><span class="section-num">1.2.3</span> 测试1</h4>
 <p>对100*1000 个字符进行排序，结果如下：
-<a href="/ox-hugo/100*1000-2.png"><img loading="lazy" src="/ox-hugo/100*1000-2.png" alt=""  />
-</a></p>
+<a href="/ox-hugo/100*1000-2.png"><img loading="lazy" src="/ox-hugo/100*1000-2.png"></a></p>
 <h4 id="测试2"><span class="section-num">1.2.4</span> 测试2</h4>
 <p>对1000*1000 个字符进行排序，结果如下：
-<a href="/ox-hugo/1000*1000-2.png"><img loading="lazy" src="/ox-hugo/1000*1000-2.png" alt=""  />
-</a></p>
+<a href="/ox-hugo/1000*1000-2.png"><img loading="lazy" src="/ox-hugo/1000*1000-2.png"></a></p>
 <h4 id="测试3"><span class="section-num">1.2.5</span> 测试3</h4>
 <p>对10000*1000 个字符进行排序，结果如下：
-<a href="/ox-hugo/10000*1000-2.png"><img loading="lazy" src="/ox-hugo/10000*1000-2.png" alt=""  />
-</a></p>
+<a href="/ox-hugo/10000*1000-2.png"><img loading="lazy" src="/ox-hugo/10000*1000-2.png"></a></p>
 <h4 id="测试4"><span class="section-num">1.2.6</span> 测试4</h4>
 <p>对100000*1000 个字符进行排序，结果如下：
-<a href="/ox-hugo/100000*1000-2.png"><img loading="lazy" src="/ox-hugo/100000*1000-2.png" alt=""  />
-</a></p>
+<a href="/ox-hugo/100000*1000-2.png"><img loading="lazy" src="/ox-hugo/100000*1000-2.png"></a></p>
 <h4 id="测试5"><span class="section-num">1.2.7</span> 测试5</h4>
 <p>对500000*1000 个字符进行排序，结果如下：
-<a href="/ox-hugo/500000*1000-2.png"><img loading="lazy" src="/ox-hugo/500000*1000-2.png" alt=""  />
-</a></p>
+<a href="/ox-hugo/500000*1000-2.png"><img loading="lazy" src="/ox-hugo/500000*1000-2.png"></a></p>
 <h4 id="小结"><span class="section-num">1.2.8</span> 小结</h4>
 <p>从上面的结果可以看出，只是添加了一个判断数组是否已经有序的条件，算法性能就优化了 大概20%左右(未经过精确数据验证), 不得不说真的令人惊讶。</p>
 <p><strong><strong>注意</strong></strong>:

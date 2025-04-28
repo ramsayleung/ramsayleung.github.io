@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>blockchain on 过河卒</title>
+    <title>Blockchain on 过河卒</title>
     <link>https://ramsayleung.github.io/zh/tags/blockchain/</link>
-    <description>Recent content in blockchain on 过河卒</description>
+    <description>Recent content in Blockchain on 过河卒</description>
     <image>
       <title>过河卒</title>
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- 0.120.4</generator>
+    <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
     <lastBuildDate>Thu, 09 Jan 2025 20:03:58 -0800</lastBuildDate>
@@ -19,7 +19,9 @@
       <link>https://ramsayleung.github.io/zh/post/2024/%E5%8C%BA%E5%9D%97%E9%93%BE%E7%9A%84%E5%AE%8C%E6%95%B4%E6%80%A7%E6%A0%A1%E9%AA%8C%E6%96%B9%E6%A1%88_merkle_tree/</link>
       <pubDate>Sat, 12 Oct 2024 18:22:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2024/%E5%8C%BA%E5%9D%97%E9%93%BE%E7%9A%84%E5%AE%8C%E6%95%B4%E6%80%A7%E6%A0%A1%E9%AA%8C%E6%96%B9%E6%A1%88_merkle_tree/</guid>
-      <description>1 前言 最近通过 Solidity-103 课程在学习 Solidity, 看到第36课 Merkle Tree 的时候着实头疼, 即使我已经了解 Merkle Tree 这数据结构，但是课程还是看得不明所以。 所以写下这篇文章，梳理我</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;最近通过 &lt;a href=&#34;https://www.wtf.academy/docs/solidity-103&#34;&gt;Solidity-103&lt;/a&gt; 课程在学习 Solidity, 看到&lt;a href=&#34;https://www.wtf.academy/docs/solidity-103/MerkleTree/&#34;&gt;第36课&lt;/a&gt; Merkle Tree 的时候着实头疼, 即使我已经了解 Merkle Tree 这数据结构，但是课程还是看得不明所以。 &lt;br/&gt;&lt;/p&gt;
+&lt;p&gt;所以写下这篇文章，梳理我所理解的 Merkle Tree 及其用途，既加深自己的理解，又践行了&lt;a href=&#34;https://ramsayleung.github.io/zh/post/2022/feynman_technique/&#34;&gt;费曼学习法&lt;/a&gt; &lt;br/&gt;&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>最近通过 <a href="https://www.wtf.academy/docs/solidity-103">Solidity-103</a> 课程在学习 Solidity, 看到<a href="https://www.wtf.academy/docs/solidity-103/MerkleTree/">第36课</a> Merkle Tree 的时候着实头疼, 即使我已经了解 Merkle Tree 这数据结构，但是课程还是看得不明所以。 <br/></p>
 <p>所以写下这篇文章，梳理我所理解的 Merkle Tree 及其用途，既加深自己的理解，又践行了<a href="https://ramsayleung.github.io/zh/post/2022/feynman_technique/">费曼学习法</a> <br/></p>
@@ -41,8 +43,7 @@
 </figure>
  <br/></p>
 <p>每个区块都会保存对应的交易信息，也会包含元数据信息在头部，包括前一个区块的 hash, 包含的交易数，merkle tree 的根节点 hash,时间戳等信息. <br/>
-<img loading="lazy" src="/ox-hugo/block_detail.jpg" alt=""  />
- <br/></p>
+<img loading="lazy" src="/ox-hugo/block_detail.jpg"> <br/></p>
 <p>我们总说区块链是不可窜改，那么它究竟是怎么不可窜改的? <br/></p>
 <p>如果用户想要验证某个区块的某笔交易是否被窜改，他要怎么做？ <br/>
 最简单的方式自然是把整个区块的交易都下载下来，平均每个区块有1M的数据，验证起来肯定很费时间. <br/></p>

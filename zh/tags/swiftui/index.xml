@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>swiftui on 过河卒</title>
+    <title>Swiftui on 过河卒</title>
     <link>https://ramsayleung.github.io/zh/tags/swiftui/</link>
-    <description>Recent content in swiftui on 过河卒</description>
+    <description>Recent content in Swiftui on 过河卒</description>
     <image>
       <title>过河卒</title>
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- 0.120.4</generator>
+    <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
     <lastBuildDate>Thu, 09 Jan 2025 20:04:57 -0800</lastBuildDate>
@@ -19,7 +19,8 @@
       <link>https://ramsayleung.github.io/zh/post/2024/100_days_of_swiftui/</link>
       <pubDate>Tue, 09 Apr 2024 19:04:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2024/100_days_of_swiftui/</guid>
-      <description>1 缘起 我花了半年多的时间，在闲暇时间，学习了苹果的Swift语言和SwiftUI框架，想体验下IOS开发，再看下有没有机会通过写软件来做点副</description>
+      <description>&lt;h2 id=&#34;缘起&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 缘起&lt;/h2&gt;
+&lt;p&gt;我花了半年多的时间，在闲暇时间，学习了苹果的Swift语言和SwiftUI框架，想体验下IOS开发，再看下有没有机会通过写软件来做点副业。 &lt;br/&gt;&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="缘起"><span class="section-num">1</span> 缘起</h2>
 <p>我花了半年多的时间，在闲暇时间，学习了苹果的Swift语言和SwiftUI框架，想体验下IOS开发，再看下有没有机会通过写软件来做点副业。 <br/></p>
 <p>先花了大概3个月时间，通过阅读 <a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/guidedtour/">The Swift Programming Language</a> 这本官方电子书<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>来学习Swift这门语言，又花了接近4个月的时候来学习 <a href="https://www.hackingwithswift.com/100/swiftui">100 Days of SwiftUI</a> 这门课程<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>，每天花费1到2小时来学习一课，总共100课，所以顾名思义叫 100 Days of SwiftUI, 课程非常新且好，讲师功力深厚，课讲得深入浅出，娓娓道来。 <br/></p>
@@ -405,7 +406,7 @@
 <p><a href="https://www.hackingwithswift.com/100/swiftui">https://www.hackingwithswift.com/100/swiftui</a> <br/>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:3">
-<p><a href="https://github.com/ramsayleung?tab=repositories&amp;q=&amp;type=&amp;language=swift&amp;sort">https://github.com/ramsayleung?tab=repositories&amp;q=&amp;type=&amp;language=swift&amp;sort</a>= <br/>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://github.com/ramsayleung?tab=repositories&amp;q=&amp;type=&amp;language=swift&amp;sort">https://github.com/ramsayleung?tab=repositories&q=&type=&language=swift&sort</a>= <br/>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:4">
 <p><a href="https://en.wikipedia.org/wiki/Chris_Lattner">https://en.wikipedia.org/wiki/Chris_Lattner</a>  <br/>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>eshell on 过河卒</title>
+    <title>Eshell on 过河卒</title>
     <link>https://ramsayleung.github.io/zh/tags/eshell/</link>
-    <description>Recent content in eshell on 过河卒</description>
+    <description>Recent content in Eshell on 过河卒</description>
     <image>
       <title>过河卒</title>
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- 0.120.4</generator>
+    <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
     <lastBuildDate>Thu, 09 Jan 2025 19:20:26 -0800</lastBuildDate>
@@ -19,7 +19,10 @@
       <link>https://ramsayleung.github.io/zh/post/2017/search_eshell_history_like_fzf/</link>
       <pubDate>Sun, 17 Dec 2017 15:46:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/search_eshell_history_like_fzf/</guid>
-      <description>1 前言 目标: 在=Eshell=中像在bash/zsh中使用=fzf=那般搜索历史命令 2 fzf 我的主力Shell 是Eshell, 但是平时我也会用Z</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;目标: 在=Eshell=中像在bash/zsh中使用=fzf=那般搜索历史命令&lt;/p&gt;
+&lt;h2 id=&#34;fzf&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;2&lt;/span&gt; fzf&lt;/h2&gt;
+&lt;p&gt;我的主力Shell 是Eshell, 但是平时我也会用Zsh, 而&lt;a href=&#34;https://github.com/junegunn/fzf&#34;&gt;fzf&lt;/a&gt; 是一个非常好用的命令行工具，用了=fzf=搜索历史命令:&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>目标: 在=Eshell=中像在bash/zsh中使用=fzf=那般搜索历史命令</p>
 <h2 id="fzf"><span class="section-num">2</span> fzf</h2>
@@ -128,8 +131,7 @@
       <description>Tweak with Emacs shell prompt</description>
       <content:encoded><![CDATA[<h2 id="发现帅气的提示符"><span class="section-num">1</span> 发现帅气的提示符</h2>
 <p>近日，我在浏览 <a href="https://www.reddit.com/r/emacs/comments/6f0rkz/my_fancy_eshell_prompt/">Reddit</a> 的时候，发现了一位 Emacs 用户把他的 Eshell 提示符修改得很帅，如图：</p>
-<p><a href="/ox-hugo/eshell_prompt.png"><img loading="lazy" src="/ox-hugo/eshell_prompt.png" alt=""  />
-</a>
+<p><a href="/ox-hugo/eshell_prompt.png"><img loading="lazy" src="/ox-hugo/eshell_prompt.png"></a>
 本着拿来主义的想法，我就直接把这位小哥的代码添加到了我的配置文件里面：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -470,8 +472,7 @@
       <guid>https://ramsayleung.github.io/zh/post/2017/fasd-meet-eshell/</guid>
       <description>An introduction about tweaking eshell with fasd</description>
       <content:encoded><![CDATA[<blockquote>
-<p>fasd - quick access to files and directory</p>
-</blockquote>
+<p>fasd - quick access to files and directory</p></blockquote>
 <p>之前一位 Windows 用户看到我在 Shell 下面的操作，他很奇怪，觉得明明已经有图形化界面，为什么还要用这种命令行呢，直接用鼠标点击不就很好了么。</p>
 <p>我觉得很难直接跟他解释，因为他没有用过Linux/Unix,完全不熟悉命令行，不知道其强大之处，其高效率是图形化界面完全无法比拟的(当然，命令行的学习成本和学习曲线肯定比图型化界面高), So I live in terminal.</p>
 <p>而今天我要介绍的神器 fasd 就是可以让命令行操作变得更加高效</p>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>test on 过河卒</title>
+    <title>Test on 过河卒</title>
     <link>https://ramsayleung.github.io/zh/tags/test/</link>
-    <description>Recent content in test on 过河卒</description>
+    <description>Recent content in Test on 过河卒</description>
     <image>
       <title>过河卒</title>
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- 0.120.4</generator>
+    <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
     <lastBuildDate>Fri, 25 Feb 2022 09:49:13 +0800</lastBuildDate>
@@ -19,7 +19,12 @@
       <link>https://ramsayleung.github.io/zh/post/2019/%E5%A6%82%E4%BD%95%E5%88%B7pojo%E7%B1%BB%E7%9A%84%E5%8F%98%E6%9B%B4%E8%A1%8C%E8%A6%86%E7%9B%96%E7%8E%87/</link>
       <pubDate>Thu, 14 Mar 2019 11:14:00 +0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2019/%E5%A6%82%E4%BD%95%E5%88%B7pojo%E7%B1%BB%E7%9A%84%E5%8F%98%E6%9B%B4%E8%A1%8C%E8%A6%86%E7%9B%96%E7%8E%87/</guid>
-      <description>刷POJO类的变更行覆盖率 1 反射大法好 1.1 背景 众所周知，蚂蚁对代码质量要求很高，质量红线其中一项指标就是变更行覆盖率。如果你的变更行覆盖率没有</description>
+      <description>&lt;p&gt;刷POJO类的变更行覆盖率&lt;/p&gt;
+&lt;h2 id=&#34;反射大法好&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 反射大法好&lt;/h2&gt;
+&lt;h3 id=&#34;背景&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1.1&lt;/span&gt; 背景&lt;/h3&gt;
+&lt;p&gt;众所周知，蚂蚁对代码质量要求很高，质量红线其中一项指标就是变更行覆盖率。如果你的变更行覆盖率没有达到80%，测试同学是不会允许你上测试环境的（如果对此有所不满，测试同学就会过来捶你)。
+为了提高代码质量，这项要求倒是无可厚非，变更的代码逻辑需要充分的测试；但是如果我新增了一堆的POJO类，只是为了逻辑模型，变更行也会变得非常可观。为了覆盖这些POJO类的变更，你免不了会测试一堆的Getter/Setter
+方法：&lt;/p&gt;</description>
       <content:encoded><![CDATA[<p>刷POJO类的变更行覆盖率</p>
 <h2 id="反射大法好"><span class="section-num">1</span> 反射大法好</h2>
 <h3 id="背景"><span class="section-num">1.1</span> 背景</h3>
@@ -578,8 +583,7 @@ Specification 的名字一般是跟系统或者业务逻辑有关的组合词，
 <p>Fixture methods are responsible for setting up and cleaning up the environment in
 which feature methods are run. Usually it’s a good idea to use a fresh fixture for
 every feature method, which is what the setup() and cleanup() methods are for.
-All fixture methods are optional.</p>
-</blockquote>
+All fixture methods are optional.</p></blockquote>
 <p>简而言之， <strong>Fixture methodr</strong> 是进行初始化或者收尾工作的。为了更好地理解 Spock
 的特性，可以用 Spock 和 Junit 进行比较，(图截自官网)</p>
 
@@ -605,8 +609,7 @@ All fixture methods are optional.</p>
 feature method. To this end, feature methods are structured into so-called blocks.
 Blocks start with a label, and extend to the beginning of the next block, or the
 end of the method. There are six kinds of blocks: setup, when, then, expect,
-cleanup, and where blocks</p>
-</blockquote>
+cleanup, and where blocks</p></blockquote>
 <p>简而言之， 这些内置的功能强大的 blocks, 就是帮助开发者编写单元测试的语法糖</p>
 
 <figure>

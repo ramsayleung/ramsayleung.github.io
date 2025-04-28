@@ -9,7 +9,7 @@
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- 0.120.4</generator>
+    <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
     <lastBuildDate>Thu, 09 Jan 2025 19:18:24 -0800</lastBuildDate>
@@ -19,7 +19,8 @@
       <link>https://ramsayleung.github.io/zh/post/2024/%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8emacs%E7%9A%84magit%E6%8F%92%E4%BB%B6/</link>
       <pubDate>Wed, 11 Dec 2024 16:00:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2024/%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8emacs%E7%9A%84magit%E6%8F%92%E4%BB%B6/</guid>
-      <description>1 Emacs 与 Magit 不知不觉，我已经使用Emacs 快10年了，在我使用过的编辑器中，Emacs是扩展性最强的编辑器，毕竟Emacs是个披着编辑器外衣的L</description>
+      <description>&lt;h2 id=&#34;emacs-与-magit&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; Emacs 与 Magit&lt;/h2&gt;
+&lt;p&gt;不知不觉，我已经使用Emacs 快10年了，在我使用过的编辑器中，Emacs是扩展性最强的编辑器，毕竟Emacs是个披着编辑器外衣的Lisp虚拟机。&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="emacs-与-magit"><span class="section-num">1</span> Emacs 与 Magit</h2>
 <p>不知不觉，我已经使用Emacs 快10年了，在我使用过的编辑器中，Emacs是扩展性最强的编辑器，毕竟Emacs是个披着编辑器外衣的Lisp虚拟机。</p>
 <p>在Emacs无所不能的扩展性之下，诞生了非常多强大的插件，
@@ -91,7 +92,9 @@
       <link>https://ramsayleung.github.io/zh/post/2023/emacs%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_%E4%BD%BF%E7%94%A8eww%E6%89%93%E5%BC%80%E5%9C%A8%E7%BA%BForg-mode%E6%96%87%E6%A1%A3/</link>
       <pubDate>Sat, 04 Mar 2023 21:55:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2023/emacs%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_%E4%BD%BF%E7%94%A8eww%E6%89%93%E5%BC%80%E5%9C%A8%E7%BA%BForg-mode%E6%96%87%E6%A1%A3/</guid>
-      <description>1 技巧 对于使用org-mode 格式的文本，例如Emacs官方 tree-sitter 的使用教程 在线阅读不是很易读，相当于人脑解析 org-mode. 我的个人习惯是使用 eww 浏览器来阅读</description>
+      <description>&lt;h2 id=&#34;技巧&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 技巧&lt;/h2&gt;
+&lt;p&gt;对于使用org-mode 格式的文本，例如Emacs官方&lt;a href=&#34;https://git.savannah.gnu.org/cgit/emacs.git/plain/admin/notes/tree-sitter/starter-guide?h=feature/tree-sitter&#34;&gt; tree-sitter 的使用教程&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;在线阅读不是很易读，相当于人脑解析 &lt;code&gt;org-mode&lt;/code&gt;. 我的个人习惯是使用 &lt;code&gt;eww&lt;/code&gt; 浏览器来阅读:&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="技巧"><span class="section-num">1</span> 技巧</h2>
 <p>对于使用org-mode 格式的文本，例如Emacs官方<a href="https://git.savannah.gnu.org/cgit/emacs.git/plain/admin/notes/tree-sitter/starter-guide?h=feature/tree-sitter"> tree-sitter 的使用教程</a></p>
 <p>在线阅读不是很易读，相当于人脑解析 <code>org-mode</code>. 我的个人习惯是使用 <code>eww</code> 浏览器来阅读:</p>
@@ -139,7 +142,34 @@
       <link>https://ramsayleung.github.io/zh/post/2023/%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_dired%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8D/</link>
       <pubDate>Sat, 04 Mar 2023 21:34:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2023/%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB_dired%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%90%8D/</guid>
-      <description>1 技巧 分享一下平时使用 dired-mode 批量修改文件名的技巧: C-x C-f 指定的文件目录，进入 dired-mode C-x C-q dired-toggle-read-only: Edit Dired buffer with Wdired. 批量修改，手段有 使用 query-replace 批量修改文件名 使用evil的多</description>
+      <description>&lt;h2 id=&#34;技巧&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 技巧&lt;/h2&gt;
+&lt;p&gt;分享一下平时使用 &lt;code&gt;dired-mode&lt;/code&gt; 批量修改文件名的技巧:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;C-x C-f&lt;/code&gt; 指定的文件目录，进入 &lt;code&gt;dired-mode&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C-x C-q&lt;/code&gt; &lt;code&gt;dired-toggle-read-only&lt;/code&gt;: Edit Dired buffer with Wdired.&lt;/li&gt;
+&lt;li&gt;批量修改，手段有
+&lt;ul&gt;
+&lt;li&gt;使用 &lt;code&gt;query-replace&lt;/code&gt; 批量修改文件名&lt;/li&gt;
+&lt;li&gt;使用evil的多行编辑模式&lt;/li&gt;
+&lt;li&gt;使用 &lt;code&gt;rectangle-command&lt;/code&gt;: &lt;code&gt;C-x r t&lt;/code&gt; &lt;code&gt;string-rectangle&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C-c C-c&lt;/code&gt; 提交修改或 &lt;code&gt;C-c C-k&lt;/code&gt; 放弃修改&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;figure&gt;&lt;a href=&#34;https://ramsayleung.github.io/ox-hugo/dired_rename_multi_files.gif&#34;&gt;
+    
+    
+    &lt;input type=&#34;checkbox&#34; id=&#34;zoomCheck-3d34b&#34; hidden&gt;
+    &lt;label for=&#34;zoomCheck-3d34b&#34;&gt;
+    
+    
+    &lt;img class=&#34;zoomCheck&#34; loading=&#34;lazy&#34; src=&#34;~/btsync/org/blog/2023/%e6%8a%80%e5%b7%a7%e5%88%86%e4%ba%ab-dired%e6%89%b9%e9%87%8f%e4%bf%ae%e6%94%b9%e6%96%87%e4%bb%b6%e5%90%8d/img/dired_rename_multi_files.gif&#34;
+         alt=&#34;Figure 1: 使用 rectangle-command 进行批量修改&#34;/&gt; 
+    
+    
+    &lt;/label&gt;&lt;/a&gt;&lt;figcaption&gt;
+            &lt;p&gt;&lt;span class=&#34;figure-number&#34;&gt;Figure 1: &lt;/span&gt;使用 &lt;code&gt;rectangle-command&lt;/code&gt; 进行批量修改&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="技巧"><span class="section-num">1</span> 技巧</h2>
 <p>分享一下平时使用 <code>dired-mode</code> 批量修改文件名的技巧:</p>
 <ol>
@@ -199,7 +229,10 @@
       <link>https://ramsayleung.github.io/zh/post/2017/search_eshell_history_like_fzf/</link>
       <pubDate>Sun, 17 Dec 2017 15:46:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/search_eshell_history_like_fzf/</guid>
-      <description>1 前言 目标: 在=Eshell=中像在bash/zsh中使用=fzf=那般搜索历史命令 2 fzf 我的主力Shell 是Eshell, 但是平时我也会用Z</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;目标: 在=Eshell=中像在bash/zsh中使用=fzf=那般搜索历史命令&lt;/p&gt;
+&lt;h2 id=&#34;fzf&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;2&lt;/span&gt; fzf&lt;/h2&gt;
+&lt;p&gt;我的主力Shell 是Eshell, 但是平时我也会用Zsh, 而&lt;a href=&#34;https://github.com/junegunn/fzf&#34;&gt;fzf&lt;/a&gt; 是一个非常好用的命令行工具，用了=fzf=搜索历史命令:&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>目标: 在=Eshell=中像在bash/zsh中使用=fzf=那般搜索历史命令</p>
 <h2 id="fzf"><span class="section-num">2</span> fzf</h2>
@@ -308,8 +341,7 @@
       <description>Tweak with Emacs shell prompt</description>
       <content:encoded><![CDATA[<h2 id="发现帅气的提示符"><span class="section-num">1</span> 发现帅气的提示符</h2>
 <p>近日，我在浏览 <a href="https://www.reddit.com/r/emacs/comments/6f0rkz/my_fancy_eshell_prompt/">Reddit</a> 的时候，发现了一位 Emacs 用户把他的 Eshell 提示符修改得很帅，如图：</p>
-<p><a href="/ox-hugo/eshell_prompt.png"><img loading="lazy" src="/ox-hugo/eshell_prompt.png" alt=""  />
-</a>
+<p><a href="/ox-hugo/eshell_prompt.png"><img loading="lazy" src="/ox-hugo/eshell_prompt.png"></a>
 本着拿来主义的想法，我就直接把这位小哥的代码添加到了我的配置文件里面：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -650,8 +682,7 @@
       <guid>https://ramsayleung.github.io/zh/post/2017/fasd-meet-eshell/</guid>
       <description>An introduction about tweaking eshell with fasd</description>
       <content:encoded><![CDATA[<blockquote>
-<p>fasd - quick access to files and directory</p>
-</blockquote>
+<p>fasd - quick access to files and directory</p></blockquote>
 <p>之前一位 Windows 用户看到我在 Shell 下面的操作，他很奇怪，觉得明明已经有图形化界面，为什么还要用这种命令行呢，直接用鼠标点击不就很好了么。</p>
 <p>我觉得很难直接跟他解释，因为他没有用过Linux/Unix,完全不熟悉命令行，不知道其强大之处，其高效率是图形化界面完全无法比拟的(当然，命令行的学习成本和学习曲线肯定比图型化界面高), So I live in terminal.</p>
 <p>而今天我要介绍的神器 fasd 就是可以让命令行操作变得更加高效</p>
@@ -853,8 +884,7 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 <ul>
 <li>A: 在等待emacs 加载的时间里，你会干什么？</li>
 <li>B: 打开Vim,修改代码，保存，退出</li>
-</ul>
-</blockquote>
+</ul></blockquote>
 <p>有时候，经常看到社区里面有人吐嘈Emacs 什么都好，就是启动时间太长了，其实是存在一些技巧来缩短加载时间的</p>
 <h2 id="技巧1"><span class="section-num">1</span> 技巧1</h2>
 <p>在你的 <code>.emacs</code> 或者相应的初始化文件里面添加如下代码</p>
@@ -948,8 +978,7 @@ Fasd 文档还建议你为 fasd的命令选项设置别名</p>
 </div><p>这里就贴上<a href="https://github.com/jwiegley/use-package">use-package</a>文档 的说明了</p>
 <blockquote>
 <p>When you use the :commands keyword, it creates autoloads for those commands
-and defers loading of the module until they are used</p>
-</blockquote>
+and defers loading of the module until they are used</p></blockquote>
 <p>也就是 <code>:commands</code> 关键字就创建了后面所接的命令的 <code>autoloads</code> 机制了</p>
 <h3 id="bind-mode"><span class="section-num">3.3</span> :bind :mode</h3>
 <div class="highlight"><div class="chroma">
@@ -983,16 +1012,14 @@ and defers loading of the module until they are used</p>
 </div><p>附上文档说明</p>
 <blockquote>
 <p>In almost all cases you don&rsquo;t need to manually specify :defer t. This is implied
-whenever :bind or :mode or :interpreter is used</p>
-</blockquote>
+whenever :bind or :mode or :interpreter is used</p></blockquote>
 <p>也就是说，当你使用了 <code>:bind</code> 或者 <code>:mode</code> 关键字的时候，不用明确指定 <code>:defer</code> 也可以实现延迟加载机制。</p>
 <p>当然你也可以，直接使用 <code>:defer</code> 关键字来指定延迟加载. 不过前提是，你要明确它加载的时机</p>
 <blockquote>
 <p>Typically, you only need to specify :defer if you know for a fact that some
 other package will do something to cause your package to load at the appropriate
 time, and thus you would like to defer loading even though use-package isn&rsquo;t
-creating any autoloads for you.</p>
-</blockquote>
+creating any autoloads for you.</p></blockquote>
 <p>贴上笔者自己的代码，可以更加清晰</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">

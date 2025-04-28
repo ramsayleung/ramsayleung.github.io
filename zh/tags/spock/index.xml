@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>spock on 过河卒</title>
+    <title>Spock on 过河卒</title>
     <link>https://ramsayleung.github.io/zh/tags/spock/</link>
-    <description>Recent content in spock on 过河卒</description>
+    <description>Recent content in Spock on 过河卒</description>
     <image>
       <title>过河卒</title>
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- 0.120.4</generator>
+    <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
     <lastBuildDate>Wed, 23 Feb 2022 17:51:48 +0800</lastBuildDate>
@@ -220,8 +220,7 @@ Specification 的名字一般是跟系统或者业务逻辑有关的组合词，
 <p>Fixture methods are responsible for setting up and cleaning up the environment in
 which feature methods are run. Usually it’s a good idea to use a fresh fixture for
 every feature method, which is what the setup() and cleanup() methods are for.
-All fixture methods are optional.</p>
-</blockquote>
+All fixture methods are optional.</p></blockquote>
 <p>简而言之， <strong>Fixture methodr</strong> 是进行初始化或者收尾工作的。为了更好地理解 Spock
 的特性，可以用 Spock 和 Junit 进行比较，(图截自官网)</p>
 
@@ -247,8 +246,7 @@ All fixture methods are optional.</p>
 feature method. To this end, feature methods are structured into so-called blocks.
 Blocks start with a label, and extend to the beginning of the next block, or the
 end of the method. There are six kinds of blocks: setup, when, then, expect,
-cleanup, and where blocks</p>
-</blockquote>
+cleanup, and where blocks</p></blockquote>
 <p>简而言之， 这些内置的功能强大的 blocks, 就是帮助开发者编写单元测试的语法糖</p>
 
 <figure>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>reinvent on 过河卒</title>
+    <title>Reinvent on 过河卒</title>
     <link>https://ramsayleung.github.io/zh/tags/reinvent/</link>
-    <description>Recent content in reinvent on 过河卒</description>
+    <description>Recent content in Reinvent on 过河卒</description>
     <image>
       <title>过河卒</title>
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- 0.120.4</generator>
+    <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
     <lastBuildDate>Sat, 26 Apr 2025 17:12:10 -0700</lastBuildDate>
@@ -19,7 +19,24 @@
       <link>https://ramsayleung.github.io/zh/post/2025/reinvent_build_manager/</link>
       <pubDate>Sun, 20 Apr 2025 18:18:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2025/reinvent_build_manager/</guid>
-      <description>项目 GitHub 地址: Build Manager 1 前言 以 C 语言为例，一个程序通常由多个源文件 .c 组成, 每个源文件需要先编译成目标文件 .o, 再链接成最终的可执行文件。 如果只改动了其</description>
+      <description>&lt;p&gt;项目 GitHub 地址: &lt;a href=&#34;https://github.com/ramsayleung/reinvent/tree/master/build_manager&#34;&gt;Build Manager&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;以 C 语言为例，一个程序通常由多个源文件 &lt;code&gt;.c&lt;/code&gt; 组成, 每个源文件需要先编译成目标文件 &lt;code&gt;.o&lt;/code&gt;, 再链接成最终的可执行文件。&lt;/p&gt;
+
+&lt;figure&gt;
+    
+    
+    &lt;input type=&#34;checkbox&#34; id=&#34;zoomCheck-63797&#34; hidden&gt;
+    &lt;label for=&#34;zoomCheck-63797&#34;&gt;
+    
+    
+    &lt;img class=&#34;zoomCheck&#34; loading=&#34;lazy&#34; src=&#34;https://ramsayleung.github.io/ox-hugo/c_program_build_phase.jpg&#34;/&gt; 
+    
+    
+    &lt;/label&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;如果只改动了其中一个源文件的内容，理想情况只需要重新编译并重新链接改动文件，而非从头构建整个项目(所谓的增量编译)。&lt;/p&gt;</description>
       <content:encoded><![CDATA[<p>项目 GitHub 地址: <a href="https://github.com/ramsayleung/reinvent/tree/master/build_manager">Build Manager</a></p>
 <h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>以 C 语言为例，一个程序通常由多个源文件 <code>.c</code> 组成, 每个源文件需要先编译成目标文件 <code>.o</code>, 再链接成最终的可执行文件。</p>
@@ -174,72 +191,72 @@
 <p><code>make</code> 支持在 <code>Makefile</code> 中使用自动变量(Automatic Variables)来指代目标或者依赖，而无需显示将目标或者依赖名写出来，其变量含义如下:</p>
 <p>假设目标是 <code>output: main.o utils.o</code></p>
 <table>
-<thead>
-<tr>
-<th>变量</th>
-<th>含义</th>
-<th>示例</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>%</code></td>
-<td>通配符, 表示匹配任意非空字符串，通常用于模式规则（Pattern Rules）中</td>
-<td><code>%.o: %.c</code> 匹配任意 <code>.c</code> 文件生成 <code>.o</code></td>
-</tr>
-<tr>
-<td><code>$@</code></td>
-<td>目标文件名</td>
-<td><code>output</code></td>
-</tr>
-<tr>
-<td><code>$^</code></td>
-<td>所有依赖文件</td>
-<td><code>main.o utils.o</code></td>
-</tr>
-<tr>
-<td><code>$&lt;</code></td>
-<td>第一个依赖文件</td>
-<td><code>main.o</code></td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>变量</th>
+          <th>含义</th>
+          <th>示例</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>%</code></td>
+          <td>通配符, 表示匹配任意非空字符串，通常用于模式规则（Pattern Rules）中</td>
+          <td><code>%.o: %.c</code> 匹配任意 <code>.c</code> 文件生成 <code>.o</code></td>
+      </tr>
+      <tr>
+          <td><code>$@</code></td>
+          <td>目标文件名</td>
+          <td><code>output</code></td>
+      </tr>
+      <tr>
+          <td><code>$^</code></td>
+          <td>所有依赖文件</td>
+          <td><code>main.o utils.o</code></td>
+      </tr>
+      <tr>
+          <td><code>$&lt;</code></td>
+          <td>第一个依赖文件</td>
+          <td><code>main.o</code></td>
+      </tr>
+  </tbody>
 </table>
 <p>这些自动变量可以极大简化 Makefile 的编写，避免重复输入文件名, 只不过 <code>$@</code> 这样的格式有点难以理解，我们可以定义自己的自动变量:</p>
 <table>
-<thead>
-<tr>
-<th>我们的自动变量</th>
-<th><code>make</code> 变量</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>%</code></td>
-<td><code>%</code></td>
-<td>通配符, 表示匹配任意非空字符串</td>
-</tr>
-<tr>
-<td><code>@TARGET</code></td>
-<td><code>$@</code></td>
-<td>目标文件名</td>
-</tr>
-<tr>
-<td><code>@DEPENDENCIES</code></td>
-<td><code>$^</code></td>
-<td>所有依赖文件</td>
-</tr>
-<tr>
-<td><code>@DEP[0]</code></td>
-<td><code>$&lt;</code></td>
-<td>第一个依赖文件</td>
-</tr>
-<tr>
-<td><code>@DEP[n-1]</code></td>
-<td></td>
-<td>第 <code>n</code> 个依赖文件</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>我们的自动变量</th>
+          <th><code>make</code> 变量</th>
+          <th>含义</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>%</code></td>
+          <td><code>%</code></td>
+          <td>通配符, 表示匹配任意非空字符串</td>
+      </tr>
+      <tr>
+          <td><code>@TARGET</code></td>
+          <td><code>$@</code></td>
+          <td>目标文件名</td>
+      </tr>
+      <tr>
+          <td><code>@DEPENDENCIES</code></td>
+          <td><code>$^</code></td>
+          <td>所有依赖文件</td>
+      </tr>
+      <tr>
+          <td><code>@DEP[0]</code></td>
+          <td><code>$&lt;</code></td>
+          <td>第一个依赖文件</td>
+      </tr>
+      <tr>
+          <td><code>@DEP[n-1]</code></td>
+          <td></td>
+          <td>第 <code>n</code> 个依赖文件</td>
+      </tr>
+  </tbody>
 </table>
 <h2 id="实现"><span class="section-num">4</span> 实现</h2>
 <p>在介绍完设计细节，实现就没有太多需要提及的内容，根据<a href="https://github.com/ramsayleung/reinvent/blob/master/build_manager/strategy/driver.ts">入口函数</a>以及<a href="https://github.com/ramsayleung/reinvent/tree/master/__tests__/build_manager/strategy">单元测试</a>就能理解个七七八八了。</p>
@@ -480,7 +497,10 @@
       <link>https://ramsayleung.github.io/zh/post/2025/reinvent_page_template/</link>
       <pubDate>Mon, 14 Apr 2025 22:59:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2025/reinvent_page_template/</guid>
-      <description>项目 GitHub 地址: Page Template 1 前言 在现代网站开发里，内容与表现的分离已经成为基本准则(Separation of content and presentation), 比如 HTML 就是负责内容展现，而 CSS 就是负责页</description>
+      <description>&lt;p&gt;项目 GitHub 地址: &lt;a href=&#34;https://github.com/ramsayleung/reinvent/tree/master/page_templates&#34;&gt;Page Template&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;在现代网站开发里，内容与表现的分离已经成为基本准则(Separation of content and presentation),
+比如 HTML 就是负责内容展现，而 CSS 就是负责页面的样式。&lt;/p&gt;</description>
       <content:encoded><![CDATA[<p>项目 GitHub 地址: <a href="https://github.com/ramsayleung/reinvent/tree/master/page_templates">Page Template</a></p>
 <h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>在现代网站开发里，内容与表现的分离已经成为基本准则(Separation of content and presentation),
@@ -686,30 +706,30 @@
 </div>
 </div><p>我们可以先支持以下的指令集:</p>
 <table>
-<thead>
-<tr>
-<th>指令集</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>z-loop</code></td>
-<td>循环遍历数组生成元素内容</td>
-</tr>
-<tr>
-<td><code>z-if</code></td>
-<td>条件渲染，值为false时移除元素</td>
-</tr>
-<tr>
-<td><code>z-var</code></td>
-<td>将变量值输出到元素内容</td>
-</tr>
-<tr>
-<td><code>z-num</code></td>
-<td>直接输出数字值到元素内容</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>指令集</th>
+          <th>含义</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>z-loop</code></td>
+          <td>循环遍历数组生成元素内容</td>
+      </tr>
+      <tr>
+          <td><code>z-if</code></td>
+          <td>条件渲染，值为false时移除元素</td>
+      </tr>
+      <tr>
+          <td><code>z-var</code></td>
+          <td>将变量值输出到元素内容</td>
+      </tr>
+      <tr>
+          <td><code>z-num</code></td>
+          <td>直接输出数字值到元素内容</td>
+      </tr>
+  </tbody>
 </table>
 <h2 id="设计思路"><span class="section-num">3</span> 设计思路</h2>
 <h3 id="stack-frame"><span class="section-num">3.1</span> stack frame</h3>
@@ -733,7 +753,7 @@
 
 <p>谈及变量和 stack frame, 编程语言中有个 <code>作用域(scoping)</code> 的概念, 定义了变量会怎么被程序访问到。</p>
 <p>主要有两种作用域，分别被称为：</p>
-<p>词法作用域(<a href="https://en.wikipedia.org/wiki/Scope_(computer_science)">Lexical/Static Scoping</a>): 在编译时就将变量给解析确定了下来，大部分编程语言使用的都是语法作用域，比如 Javascript, C/C++, Rust, Golang, Swift, Java 这个名单还可以很长.</p>
+<p>词法作用域(<a href="https://en.wikipedia.org/wiki/Scope_%28computer_science%29">Lexical/Static Scoping</a>): 在编译时就将变量给解析确定了下来，大部分编程语言使用的都是语法作用域，比如 Javascript, C/C++, Rust, Golang, Swift, Java 这个名单还可以很长.</p>
 <p>因为其性能更优，并且行为是相当明确的，不需要分析运行时代码再来确定，如：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1106,60 +1126,60 @@
 <h3 id="支持的指令集"><span class="section-num">4.1</span> 支持的指令集</h3>
 <p>不同的指令集的差别只是如何实现 <code>open</code> 和 <code>close</code> 逻辑，我就不一一赘述了，已支持的指令集及实现列表如下：</p>
 <table>
-<thead>
-<tr>
-<th>指令</th>
-<th>作用</th>
-<th>实现</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>z-if</code></td>
-<td>条件渲染，值为false时移除元素</td>
-<td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-if.ts">z-if.ts</a></td>
-</tr>
-<tr>
-<td><code>z-include</code></td>
-<td>引入外部HTML文件内容</td>
-<td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-include.ts">z-include.ts</a></td>
-</tr>
-<tr>
-<td><code>z-iteration</code></td>
-<td>数字迭代，生成序列内容</td>
-<td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-iteration.ts">z-iteration.ts</a></td>
-</tr>
-<tr>
-<td><code>z-literal</code></td>
-<td>保留元素原始属性不解析</td>
-<td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-literal.ts">z-literal.ts</a></td>
-</tr>
-<tr>
-<td><code>z-loop</code></td>
-<td>循环遍历数组生成元素内容</td>
-<td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-loop.ts">z-loop.ts</a></td>
-</tr>
-<tr>
-<td><code>z-num</code></td>
-<td>直接输出数字值到元素内容</td>
-<td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-num.ts">z-num.ts</a></td>
-</tr>
-<tr>
-<td><code>z-snippet</code></td>
-<td>定义可复用的HTML片段</td>
-<td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-snippet.ts">z-snippet.ts</a></td>
-</tr>
-<tr>
-<td><code>z-trace</code></td>
-<td>打印变量值到控制台（调试用）</td>
-<td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-trace.ts">z-trace.ts</a></td>
-</tr>
-<tr>
-<td><code>z-var</code></td>
-<td>将变量值输出到元素内容</td>
-<td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-var.ts">z-var.ts</a></td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>指令</th>
+          <th>作用</th>
+          <th>实现</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>z-if</code></td>
+          <td>条件渲染，值为false时移除元素</td>
+          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-if.ts">z-if.ts</a></td>
+      </tr>
+      <tr>
+          <td><code>z-include</code></td>
+          <td>引入外部HTML文件内容</td>
+          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-include.ts">z-include.ts</a></td>
+      </tr>
+      <tr>
+          <td><code>z-iteration</code></td>
+          <td>数字迭代，生成序列内容</td>
+          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-iteration.ts">z-iteration.ts</a></td>
+      </tr>
+      <tr>
+          <td><code>z-literal</code></td>
+          <td>保留元素原始属性不解析</td>
+          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-literal.ts">z-literal.ts</a></td>
+      </tr>
+      <tr>
+          <td><code>z-loop</code></td>
+          <td>循环遍历数组生成元素内容</td>
+          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-loop.ts">z-loop.ts</a></td>
+      </tr>
+      <tr>
+          <td><code>z-num</code></td>
+          <td>直接输出数字值到元素内容</td>
+          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-num.ts">z-num.ts</a></td>
+      </tr>
+      <tr>
+          <td><code>z-snippet</code></td>
+          <td>定义可复用的HTML片段</td>
+          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-snippet.ts">z-snippet.ts</a></td>
+      </tr>
+      <tr>
+          <td><code>z-trace</code></td>
+          <td>打印变量值到控制台（调试用）</td>
+          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-trace.ts">z-trace.ts</a></td>
+      </tr>
+      <tr>
+          <td><code>z-var</code></td>
+          <td>将变量值输出到元素内容</td>
+          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/page_templates/z-var.ts">z-var.ts</a></td>
+      </tr>
+  </tbody>
 </table>
 <h3 id="示例"><span class="section-num">4.2</span> 示例</h3>
 <p>假设有数据如下:</p>
@@ -1425,48 +1445,50 @@
       <link>https://ramsayleung.github.io/zh/post/2025/reinvent_regex/</link>
       <pubDate>Sat, 15 Mar 2025 11:01:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2025/reinvent_regex/</guid>
-      <description>项目 GitHub 地址: Regex 1 前言 所谓的正则表达式，指的是由一系列字符和特殊字符组成的模式，用于描述要匹配的文本。 最开始是一位叫 Stephen Cole Kleene 的数学家用被他称为 Regular</description>
+      <description>&lt;p&gt;项目 GitHub 地址: &lt;a href=&#34;https://github.com/ramsayleung/reinvent/tree/master/regular_expression&#34;&gt;Regex&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;所谓的正则表达式，指的是由一系列字符和特殊字符组成的模式，用于描述要匹配的文本。&lt;/p&gt;
+&lt;p&gt;最开始是一位叫 &lt;a href=&#34;https://en.wikipedia.org/wiki/Stephen_Cole_Kleene&#34;&gt;Stephen Cole Kleene&lt;/a&gt; 的数学家用被他称为 Regular Events 的数学表达式来描述这一模型，在 1968 年，由C语言之父 Ken Tompson 将这个表达式引入到行编辑器 &lt;a href=&#34;https://en.wikipedia.org/wiki/QED_%28text_editor%29&#34;&gt;QED&lt;/a&gt;, 随后是 Unix 上的编辑器 &lt;a href=&#34;https://en.wikipedia.org/wiki/Ed_%28software%29&#34;&gt;ed&lt;/a&gt; (vi 的前身) ，并最终引入到 &lt;a href=&#34;https://en.wikipedia.org/wiki/Grep&#34;&gt;grep&lt;/a&gt;.&lt;/p&gt;</description>
       <content:encoded><![CDATA[<p>项目 GitHub 地址: <a href="https://github.com/ramsayleung/reinvent/tree/master/regular_expression">Regex</a></p>
 <h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>所谓的正则表达式，指的是由一系列字符和特殊字符组成的模式，用于描述要匹配的文本。</p>
-<p>最开始是一位叫 <a href="https://en.wikipedia.org/wiki/Stephen_Cole_Kleene">Stephen Cole Kleene</a> 的数学家用被他称为 Regular Events 的数学表达式来描述这一模型，在 1968 年，由C语言之父 Ken Tompson 将这个表达式引入到行编辑器 <a href="https://en.wikipedia.org/wiki/QED_(text_editor)">QED</a>, 随后是 Unix 上的编辑器 <a href="https://en.wikipedia.org/wiki/Ed_(software)">ed</a> (vi 的前身) ，并最终引入到 <a href="https://en.wikipedia.org/wiki/Grep">grep</a>.</p>
+<p>最开始是一位叫 <a href="https://en.wikipedia.org/wiki/Stephen_Cole_Kleene">Stephen Cole Kleene</a> 的数学家用被他称为 Regular Events 的数学表达式来描述这一模型，在 1968 年，由C语言之父 Ken Tompson 将这个表达式引入到行编辑器 <a href="https://en.wikipedia.org/wiki/QED_%28text_editor%29">QED</a>, 随后是 Unix 上的编辑器 <a href="https://en.wikipedia.org/wiki/Ed_%28software%29">ed</a> (vi 的前身) ，并最终引入到 <a href="https://en.wikipedia.org/wiki/Grep">grep</a>.</p>
 <p>我一直很好奇正则表达式 (regular expression, 即 <code>Regex</code> ) 是怎么实现的，自正则表达式被引入编程语言之后 之后，可谓说有字符串的地方就基本有正则表达式。</p>
 <p>想起个关于 <code>Regex</code> 的经典笑话:</p>
 <blockquote>
 <p>程序员A：我有个问题，想用正则表达式解决。</p>
-<p>程序员B：现在你有两个问题了。</p>
-</blockquote>
+<p>程序员B：现在你有两个问题了。</p></blockquote>
 <h2 id="需求"><span class="section-num">2</span> 需求</h2>
 <p>完整版本的正则表达式非常复杂，我们的实现不会覆盖所有的规则，所以先来看下我们要支持的正则表达式规则：</p>
 <table>
-<thead>
-<tr>
-<th>含义</th>
-<th>字符</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>任意的字符 <code>c</code></td>
-<td><code>c</code></td>
-</tr>
-<tr>
-<td>任意的单个字符</td>
-<td><code>.</code></td>
-</tr>
-<tr>
-<td>匹配开头的字符</td>
-<td><code>^</code></td>
-</tr>
-<tr>
-<td>匹配结尾的字符</td>
-<td><code>$</code></td>
-</tr>
-<tr>
-<td>匹配零个或多个的字符</td>
-<td><code>*</code></td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>含义</th>
+          <th>字符</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>任意的字符 <code>c</code></td>
+          <td><code>c</code></td>
+      </tr>
+      <tr>
+          <td>任意的单个字符</td>
+          <td><code>.</code></td>
+      </tr>
+      <tr>
+          <td>匹配开头的字符</td>
+          <td><code>^</code></td>
+      </tr>
+      <tr>
+          <td>匹配结尾的字符</td>
+          <td><code>$</code></td>
+      </tr>
+      <tr>
+          <td>匹配零个或多个的字符</td>
+          <td><code>*</code></td>
+      </tr>
+  </tbody>
 </table>
 <p>虽然这五条原则看起来不是很多，但是已经覆盖日常开发绝大多数的场景了。</p>
 <p>比如 <code>^ab*c</code> 就意味着匹配以 <code>a</code> 开头，并且0到无数个的 <code>b</code>, 再接一个字符 <code>c</code>, 所以它能匹配:
@@ -1952,87 +1974,86 @@
 </li>
 </ol>
 <p>以及使用模式 <code>a*ab</code> 来匹配文本 <code>ab</code> 的过程:
-<img loading="lazy" src="/ox-hugo/reinvent_regex_match_ab.jpg" alt=""  />
-</p>
+<img loading="lazy" src="/ox-hugo/reinvent_regex_match_ab.jpg"></p>
 <h3 id="支持的模式"><span class="section-num">4.5</span> 支持的模式</h3>
 <p>每种模式对应一个单独的类之后，再通过 <code>rest</code> 指针进行关联，现在的实现就非常易于扩展了，我们可以很容易地支持其他的模式，具体列表如下：</p>
 <table>
-<thead>
-<tr>
-<th>含义</th>
-<th>字符</th>
-<th>例子</th>
-<th>对应实现</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>任意的字符 <code>c</code></td>
-<td><code>c</code></td>
-<td><code>c</code> 匹配字符c</td>
-<td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-lit.ts">Lit</a></td>
-</tr>
-<tr>
-<td>任意的单个字符</td>
-<td><code>.</code></td>
-<td><code>.</code> 匹配任意字符</td>
-<td></td>
-</tr>
-<tr>
-<td>匹配开头的字符</td>
-<td><code>^</code></td>
-<td><code>^c</code> 匹配以 <code>c</code> 开头的字符串</td>
-<td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-start.ts">Start</a></td>
-</tr>
-<tr>
-<td>匹配结尾的字符</td>
-<td><code>$</code></td>
-<td><code>c$</code> 匹配以 <code>c</code> 结尾的字符串</td>
-<td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-end.ts">End</a></td>
-</tr>
-<tr>
-<td>匹配零个或多个的字符</td>
-<td><code>*</code></td>
-<td><code>a*</code> 匹配0-任意个a的字符串, 贪婪匹配</td>
-<td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-any.ts">GreedyAny</a></td>
-</tr>
-<tr>
-<td>匹配零个或多个的字符</td>
-<td><code>*</code></td>
-<td><code>a*</code> 匹配0-任意个a的字符串, 惰性匹配</td>
-<td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-lazy-any.ts">LazyAny</a></td>
-</tr>
-<tr>
-<td>匹配一个或多个的字符</td>
-<td><code>+</code></td>
-<td><code>a+</code> 匹配1-任意个a的字符串</td>
-<td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-plus.ts">Plus</a></td>
-</tr>
-<tr>
-<td>匹配零个或一个的字符</td>
-<td><code>?</code></td>
-<td><code>a?</code> 匹配0-1个a的字符串</td>
-<td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-opt.ts">Opt</a></td>
-</tr>
-<tr>
-<td>多选一匹配</td>
-<td><code>❘</code></td>
-<td><code>a❘b</code> 匹配a或b的字符串</td>
-<td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-alt.ts">Alt</a></td>
-</tr>
-<tr>
-<td>序列匹配</td>
-<td><code>()</code></td>
-<td><code>(ab)</code> 匹配 ab 的字符串</td>
-<td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-group.ts">Group</a></td>
-</tr>
-<tr>
-<td>匹配方括号内的任意单个字符</td>
-<td><code>[]</code></td>
-<td><code>[abcd]</code> 匹配a或b或c或d的字符串</td>
-<td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-charclass.ts">CharClass</a></td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>含义</th>
+          <th>字符</th>
+          <th>例子</th>
+          <th>对应实现</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>任意的字符 <code>c</code></td>
+          <td><code>c</code></td>
+          <td><code>c</code> 匹配字符c</td>
+          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-lit.ts">Lit</a></td>
+      </tr>
+      <tr>
+          <td>任意的单个字符</td>
+          <td><code>.</code></td>
+          <td><code>.</code> 匹配任意字符</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>匹配开头的字符</td>
+          <td><code>^</code></td>
+          <td><code>^c</code> 匹配以 <code>c</code> 开头的字符串</td>
+          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-start.ts">Start</a></td>
+      </tr>
+      <tr>
+          <td>匹配结尾的字符</td>
+          <td><code>$</code></td>
+          <td><code>c$</code> 匹配以 <code>c</code> 结尾的字符串</td>
+          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-end.ts">End</a></td>
+      </tr>
+      <tr>
+          <td>匹配零个或多个的字符</td>
+          <td><code>*</code></td>
+          <td><code>a*</code> 匹配0-任意个a的字符串, 贪婪匹配</td>
+          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-any.ts">GreedyAny</a></td>
+      </tr>
+      <tr>
+          <td>匹配零个或多个的字符</td>
+          <td><code>*</code></td>
+          <td><code>a*</code> 匹配0-任意个a的字符串, 惰性匹配</td>
+          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-lazy-any.ts">LazyAny</a></td>
+      </tr>
+      <tr>
+          <td>匹配一个或多个的字符</td>
+          <td><code>+</code></td>
+          <td><code>a+</code> 匹配1-任意个a的字符串</td>
+          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-plus.ts">Plus</a></td>
+      </tr>
+      <tr>
+          <td>匹配零个或一个的字符</td>
+          <td><code>?</code></td>
+          <td><code>a?</code> 匹配0-1个a的字符串</td>
+          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-opt.ts">Opt</a></td>
+      </tr>
+      <tr>
+          <td>多选一匹配</td>
+          <td><code>❘</code></td>
+          <td><code>a❘b</code> 匹配a或b的字符串</td>
+          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-alt.ts">Alt</a></td>
+      </tr>
+      <tr>
+          <td>序列匹配</td>
+          <td><code>()</code></td>
+          <td><code>(ab)</code> 匹配 ab 的字符串</td>
+          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-group.ts">Group</a></td>
+      </tr>
+      <tr>
+          <td>匹配方括号内的任意单个字符</td>
+          <td><code>[]</code></td>
+          <td><code>[abcd]</code> 匹配a或b或c或d的字符串</td>
+          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-charclass.ts">CharClass</a></td>
+      </tr>
+  </tbody>
 </table>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -2696,7 +2717,7 @@
 <h2 id="参考"><span class="section-num">9</span> 参考</h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Stephen_Cole_Kleene">https://en.wikipedia.org/wiki/Stephen_Cole_Kleene</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Ed_(software)">https://en.wikipedia.org/wiki/Ed_(software)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Ed_%28software%29">https://en.wikipedia.org/wiki/Ed_(software)</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Grep">https://en.wikipedia.org/wiki/Grep</a></li>
 <li><a href="https://third-bit.com/sdxjs/regex-parser/">https://third-bit.com/sdxjs/regex-parser/</a></li>
 <li><a href="https://third-bit.com/sdxjs/pattern-matching/">https://third-bit.com/sdxjs/pattern-matching/</a></li>
@@ -2708,7 +2729,10 @@
       <link>https://ramsayleung.github.io/zh/post/2025/reinvent_selector/</link>
       <pubDate>Sat, 15 Mar 2025 10:53:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2025/reinvent_selector/</guid>
-      <description>项目 GitHub 地址: Selector 1 1 前言 以前写爬虫的时候，必不可少的一个工具就是 HTML selector, 就是用于匹配指定的 HTML 标签。 毕竟爬虫的本质就是找出需要的标签里面的内容，然后</description>
+      <description>&lt;p&gt;项目 GitHub 地址: &lt;a href=&#34;https://github.com/ramsayleung/reinvent/tree/master/html_selector&#34;&gt;Selector&lt;/a&gt; &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;以前写爬虫的时候，必不可少的一个工具就是 HTML selector, 就是用于匹配指定的 HTML 标签。&lt;/p&gt;
+&lt;p&gt;毕竟爬虫的本质就是找出需要的标签里面的内容，然后解析出来。&lt;/p&gt;</description>
       <content:encoded><![CDATA[<p>项目 GitHub 地址: <a href="https://github.com/ramsayleung/reinvent/tree/master/html_selector">Selector</a> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
 <h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>以前写爬虫的时候，必不可少的一个工具就是 HTML selector, 就是用于匹配指定的 HTML 标签。</p>
@@ -3018,8 +3042,7 @@
 <blockquote>
 <p><span class="org-target" id="org-target--Unix----"></span>这本砖头书读过, 其他的C++书籍, 如<span class="org-target" id="org-target--C---Primer"></span>, <span class="org-target" id="org-target--Effective-C--"></span>, <span class="org-target" id="org-target--Modern-C--"></span>也读过, 感觉不把书中的内容实践下, 很容易遗忘。</p>
 <p>但是日常的工作内容并不会涉及底层网络服务, 一切底层细节内容都被框架给包掉了, 开发的主力语言是Java, 也不会使用到C++.</p>
-<p>因此决定创造个机会实践下这些知识，最终决定只用C/C++内置函数库实现。</p>
-</blockquote>
+<p>因此决定创造个机会实践下这些知识，最终决定只用C/C++内置函数库实现。</p></blockquote>
 <p>的确所有工具都是用C/C++内置函数库实现的，甚至测试框架还是自己用宏实现的.</p>
 <p>只是我未曾想到的是，写了这段话后不足一年，C++就成为了我下一家公司干活的主力语言; 而现在，我又在重新写 Java, 着实是「白衣苍狗」。</p>
 <p><a href="/zh/post/2025/reinvent_project/">回到本系列的目录</a></p>
@@ -3047,7 +3070,11 @@
       <link>https://ramsayleung.github.io/zh/post/2025/reinvent_file_backup/</link>
       <pubDate>Sun, 02 Mar 2025 11:57:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2025/reinvent_file_backup/</guid>
-      <description>项目 GitHub 地址: File Backup 1 前言 既然我们已经有单元测试框架来测试软件了，我们肯定不想已经写好的代码丢失掉。 对于重要的文件，一个必不可少的功能肯定是备份</description>
+      <description>&lt;p&gt;项目 GitHub 地址: &lt;a href=&#34;https://github.com/ramsayleung/reinvent/tree/master/file_backup&#34;&gt;File Backup&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;既然我们已经有&lt;a href=&#34;https://ramsayleung.github.io/zh/post/2025/reinvent_unit_test/&#34;&gt;单元测试&lt;/a&gt;框架来测试软件了，我们肯定不想已经写好的代码丢失掉。&lt;/p&gt;
+&lt;p&gt;对于重要的文件，一个必不可少的功能肯定是备份, 这样在丢失文件之后可以重新恢复。&lt;/p&gt;
+&lt;p&gt;今天我们就来写个简单的文件备份软件，类似 Git 这样的版本系统可以当作是高级版本的文件系统，因为它还支持切换到不同版本，对比版本间的差异等等功能，而我们不打算实现一个版本管理系统，只实现基础的文件备份功能。&lt;/p&gt;</description>
       <content:encoded><![CDATA[<p>项目 GitHub 地址: <a href="https://github.com/ramsayleung/reinvent/tree/master/file_backup">File Backup</a></p>
 <h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>既然我们已经有<a href="/zh/post/2025/reinvent_unit_test/">单元测试</a>框架来测试软件了，我们肯定不想已经写好的代码丢失掉。</p>
@@ -3373,7 +3400,10 @@
       <link>https://ramsayleung.github.io/zh/post/2025/reinvent_unit_test/</link>
       <pubDate>Sun, 16 Feb 2025 22:27:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2025/reinvent_unit_test/</guid>
-      <description>项目 GitHub 地址: Unit Test 1 前言 单元测试的重要性无须多言，它是保证项目质量的基石. 如果没有单元测试，根本没有信心说自己开发的功能是符合要求的，更没法在</description>
+      <description>&lt;p&gt;项目 GitHub 地址: &lt;a href=&#34;https://github.com/ramsayleung/reinvent/tree/master/unit_test&#34;&gt;Unit Test&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;单元测试的重要性无须多言，它是保证项目质量的基石.&lt;/p&gt;
+&lt;p&gt;如果没有单元测试，根本没有信心说自己开发的功能是符合要求的，更没法在没有测试的保证进行项目的重构。&lt;/p&gt;</description>
       <content:encoded><![CDATA[<p>项目 GitHub 地址: <a href="https://github.com/ramsayleung/reinvent/tree/master/unit_test">Unit Test</a></p>
 <h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>单元测试的重要性无须多言，它是保证项目质量的基石.</p>
@@ -4712,7 +4742,9 @@
       <link>https://ramsayleung.github.io/zh/post/2025/reinvent_project/</link>
       <pubDate>Sun, 16 Feb 2025 22:10:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2025/reinvent_project/</guid>
-      <description>1 起因与动机 最近在看 System Design By Example 这本书，主旨是通过设计和实现各种日常开发中常见的软件，以理解和提高系统设计(System Design)的能力。 每</description>
+      <description>&lt;h2 id=&#34;起因与动机&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 起因与动机&lt;/h2&gt;
+&lt;p&gt;最近在看 &lt;a href=&#34;https://third-bit.com/sdxjs/unit-test/&#34;&gt;System Design By Example&lt;/a&gt; 这本书，主旨是通过设计和实现各种日常开发中常见的软件，以理解和提高系统设计(System Design)的能力。&lt;/p&gt;
+&lt;p&gt;每个章节都会实现一个软件，然后还会有大量的习题来完善这个软件，以练带学。&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="起因与动机"><span class="section-num">1</span> 起因与动机</h2>
 <p>最近在看 <a href="https://third-bit.com/sdxjs/unit-test/">System Design By Example</a> 这本书，主旨是通过设计和实现各种日常开发中常见的软件，以理解和提高系统设计(System Design)的能力。</p>
 <p>每个章节都会实现一个软件，然后还会有大量的习题来完善这个软件，以练带学。</p>

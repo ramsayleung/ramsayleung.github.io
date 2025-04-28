@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>linux on 过河卒</title>
+    <title>Linux on 过河卒</title>
     <link>https://ramsayleung.github.io/zh/tags/linux/</link>
-    <description>Recent content in linux on 过河卒</description>
+    <description>Recent content in Linux on 过河卒</description>
     <image>
       <title>过河卒</title>
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- 0.120.4</generator>
+    <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
     <lastBuildDate>Thu, 09 Jan 2025 20:52:24 -0800</lastBuildDate>
@@ -19,7 +19,9 @@
       <link>https://ramsayleung.github.io/zh/post/2023/linux%E4%B8%8B%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E8%87%AA%E5%8A%A8%E5%85%B3%E6%9C%BA/</link>
       <pubDate>Mon, 15 May 2023 20:48:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2023/linux%E4%B8%8B%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1%E8%87%AA%E5%8A%A8%E5%85%B3%E6%9C%BA/</guid>
-      <description>1 问题 最近整理了桌上乱糟糟的线，把原来使用aux 线连接的蓝牙音响换成通过蓝牙连接。 然后就发现一个问题，只要音响没有发出声音超过30分钟，蓝牙</description>
+      <description>&lt;h2 id=&#34;问题&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 问题&lt;/h2&gt;
+&lt;p&gt;最近整理了桌上乱糟糟的线，把原来使用aux 线连接的蓝牙音响换成通过蓝牙连接。 &lt;br/&gt;&lt;/p&gt;
+&lt;p&gt;然后就发现一个问题，只要音响没有发出声音超过30分钟，蓝牙音响就会断开连接，并且自动关机，即使蓝牙音响连接着电源。 &lt;br/&gt;&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="问题"><span class="section-num">1</span> 问题</h2>
 <p>最近整理了桌上乱糟糟的线，把原来使用aux 线连接的蓝牙音响换成通过蓝牙连接。 <br/></p>
 <p>然后就发现一个问题，只要音响没有发出声音超过30分钟，蓝牙音响就会断开连接，并且自动关机，即使蓝牙音响连接着电源。 <br/></p>
@@ -144,7 +146,9 @@
       <link>https://ramsayleung.github.io/zh/post/2018/lsof_cant_identify_protocol/</link>
       <pubDate>Wed, 11 Apr 2018 15:24:00 +0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2018/lsof_cant_identify_protocol/</guid>
-      <description>Socket 泄漏引起的Tomcat 宕机问题分析 在2018年4月9号下午，收到反馈：测试集群部分接口访问有问题，请求时而正常，时而超时。 最近的测试环境真</description>
+      <description>&lt;p&gt;Socket 泄漏引起的Tomcat 宕机问题分析&lt;/p&gt;
+&lt;p&gt;在2018年4月9号下午，收到反馈：测试集群部分接口访问有问题，请求时而正常，时而超时。&lt;/p&gt;
+&lt;p&gt;最近的测试环境真的是问题多多，可是测试环境就是我搭建的，冏。查看日志发现87 这台 服务器的Tomcat 无法访问：&lt;/p&gt;</description>
       <content:encoded><![CDATA[<p>Socket 泄漏引起的Tomcat 宕机问题分析</p>
 <p>在2018年4月9号下午，收到反馈：测试集群部分接口访问有问题，请求时而正常，时而超时。</p>
 <p>最近的测试环境真的是问题多多，可是测试环境就是我搭建的，冏。查看日志发现87 这台 服务器的Tomcat 无法访问：</p>
@@ -929,14 +933,12 @@ sockets 处于 <code>CLOSED</code> 的状态，但是却没有真正close 掉，
 <li>
 <p>Connections</p>
 <blockquote>
-<p>The number of connection attempts (successful or not) to the MySQL server.</p>
-</blockquote>
+<p>The number of connection attempts (successful or not) to the MySQL server.</p></blockquote>
 </li>
 <li>
 <p>Threads_connected</p>
 <blockquote>
-<p>The number of currently open connections.</p>
-</blockquote>
+<p>The number of currently open connections.</p></blockquote>
 </li>
 </ul>
 <p>也就是说，当时共有20000 多的连接请求，但是真正被 Mysql accpet 并且服务的只有 28 个连接。看来的确是因为连接池的连接导致 socket 泄漏</p>
@@ -962,7 +964,10 @@ sockets 处于 <code>CLOSED</code> 的状态，但是却没有真正close 掉，
       <link>https://ramsayleung.github.io/zh/post/2017/search_eshell_history_like_fzf/</link>
       <pubDate>Sun, 17 Dec 2017 15:46:00 -0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/search_eshell_history_like_fzf/</guid>
-      <description>1 前言 目标: 在=Eshell=中像在bash/zsh中使用=fzf=那般搜索历史命令 2 fzf 我的主力Shell 是Eshell, 但是平时我也会用Z</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;目标: 在=Eshell=中像在bash/zsh中使用=fzf=那般搜索历史命令&lt;/p&gt;
+&lt;h2 id=&#34;fzf&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;2&lt;/span&gt; fzf&lt;/h2&gt;
+&lt;p&gt;我的主力Shell 是Eshell, 但是平时我也会用Zsh, 而&lt;a href=&#34;https://github.com/junegunn/fzf&#34;&gt;fzf&lt;/a&gt; 是一个非常好用的命令行工具，用了=fzf=搜索历史命令:&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>目标: 在=Eshell=中像在bash/zsh中使用=fzf=那般搜索历史命令</p>
 <h2 id="fzf"><span class="section-num">2</span> fzf</h2>
@@ -1888,7 +1893,7 @@ sockets 处于 <code>CLOSED</code> 的状态，但是却没有真正close 掉，
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/File_system">https://en.wikipedia.org/wiki/File_system</a></li>
 <li><a href="https://btrfs.wiki.kernel.org/index.php/Main_Page">https://btrfs.wiki.kernel.org/index.php/Main_Page</a></li>
-<li><a href="https://en.wikipedia.org/wiki/JFS_(file_system)">https://en.wikipedia.org/wiki/JFS_(file_system)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/JFS_%28file_system%29">https://en.wikipedia.org/wiki/JFS_(file_system)</a></li>
 <li><a href="https://en.wikipedia.org/wiki/ReiserFS">https://en.wikipedia.org/wiki/ReiserFS</a></li>
 <li><a href="https://www.howtogeek.com/howto/33552/htg-explains-which-linux-file-system-should-you-choose/">https://www.howtogeek.com/howto/33552/htg-explains-which-linux-file-system-should-you-choose/</a></li>
 <li><a href="https://en.wikipedia.org/wiki/ZFS">https://en.wikipedia.org/wiki/ZFS</a></li>
@@ -2045,8 +2050,7 @@ zsh完成</li>
       <description>an introduction about grep</description>
       <content:encoded><![CDATA[<p>文本三剑客之 Grep</p>
 <blockquote>
-<p>grep - print  lines matching a pattern</p>
-</blockquote>
+<p>grep - print  lines matching a pattern</p></blockquote>
 <p>今天我想聊聊 <strong>grep</strong> 这个命令；据说，有Unix/Linux 的地方就会有 <strong>grep</strong>, 这个可能是安装得最广泛的命令之一；那么 <strong>grep</strong> 是用来干什么的呢？</p>
 <p>grep 其实是用来在文件中搜索特定内容或者模式的工具(配合正则表达式“食用”，味道更佳 :))现在就来一起看看*grep* 的用法</p>
 <h2 id="基本用法"><span class="section-num">1</span> 基本用法</h2>
@@ -2057,8 +2061,7 @@ zsh完成</li>
 it was the age of wisdom it was age of foolishness
 it was the epoch of belief it was the epoch of incredulity
 it was the season of light it was the season of darkness
-IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE</p>
-</blockquote>
+IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE</p></blockquote>
 <p>现在开始介绍 <strong>grep</strong> 的基本用法： <strong>grep</strong> 的基本用法很简单的，假设我想要搜索单词 <strong>darkness</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -2735,8 +2738,7 @@ IT WAS THE SPRING OF HOPE IT WAS THE WINTER OF DESPAIRE</p>
       <guid>https://ramsayleung.github.io/zh/post/2017/diff/</guid>
       <description>An introduction about diff</description>
       <content:encoded><![CDATA[<blockquote>
-<p>diff - compare files line by line</p>
-</blockquote>
+<p>diff - compare files line by line</p></blockquote>
 <p>如果你有使用过git,那么你一定不会对diff 陌生，因为对你源文件和修改后的文件进行比较的就是 <strong>diff</strong> 这个大名鼎鼎的家伙了。</p>
 <p>多年以来， <strong>diff</strong> 都一直是非常重要的工具，上古大神 都是使用 <strong>diff</strong> 和 <strong>patch</strong> 对程序进行差分和打补丁滴(现在有git了，但是diff同样发挥着重要作用)</p>
 <h2 id="语法"><span class="section-num">1</span> 语法</h2>
@@ -3058,8 +3060,7 @@ address1 包含：</p>
 <h4 id="生成fstab"><span class="section-num">3.1.7</span> 生成fstab</h4>
 <p>fstab 的作用：</p>
 <blockquote>
-<p>The fstab(5) file can be used to define how disk partitions, various other block devices, or remote filesystems should be mounted into the filesystem</p>
-</blockquote>
+<p>The fstab(5) file can be used to define how disk partitions, various other block devices, or remote filesystems should be mounted into the filesystem</p></blockquote>
 <p>生成fstab,并且查看是否正确生成fstab</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -3324,8 +3325,7 @@ address1 包含：</p>
       <guid>https://ramsayleung.github.io/zh/post/2017/cat/</guid>
       <description>An introduction about cat</description>
       <content:encoded><![CDATA[<blockquote>
-<p>cat - concatenate files and print on the standard output</p>
-</blockquote>
+<p>cat - concatenate files and print on the standard output</p></blockquote>
 <h2 id="过滤器"><span class="section-num">1</span> 过滤器</h2>
 <p>何谓过滤器呢，例如cat,grep,wl 之类的命令就是过滤器了。这样的命令
 读取数据，对数据执行一些操作，然后写入结果。更准确地说，过滤器就是任何能够从标准
@@ -3420,34 +3420,34 @@ vim/emacs 新建一个文本文件，然后输入几行文字，然后保存退�
 </span></span></code></pre></td></tr></table>
 </div>
 </div><table>
-<thead>
-<tr>
-<th>语法</th>
-<th>用法</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>cat &gt; file</td>
-<td>读取输入，创建新的文件或替换</td>
-</tr>
-<tr>
-<td>cat &gt;&gt;file</td>
-<td>读取输入，追加新的文件</td>
-</tr>
-<tr>
-<td>cat file/cat &lt;file</td>
-<td>显示一个已有文件</td>
-</tr>
-<tr>
-<td>cat &lt;oldfile&gt; newfile</td>
-<td>复制一个文件</td>
-</tr>
-<tr>
-<td>cat file1 file2 file3&gt;file4</td>
-<td>组合多个文件</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>语法</th>
+          <th>用法</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>cat &gt; file</td>
+          <td>读取输入，创建新的文件或替换</td>
+      </tr>
+      <tr>
+          <td>cat &gt;&gt;file</td>
+          <td>读取输入，追加新的文件</td>
+      </tr>
+      <tr>
+          <td>cat file/cat &lt;file</td>
+          <td>显示一个已有文件</td>
+      </tr>
+      <tr>
+          <td>cat &lt;oldfile&gt; newfile</td>
+          <td>复制一个文件</td>
+      </tr>
+      <tr>
+          <td>cat file1 file2 file3&gt;file4</td>
+          <td>组合多个文件</td>
+      </tr>
+  </tbody>
 </table>
 <div center class="qr-container">
 <img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />

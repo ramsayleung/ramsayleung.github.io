@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>translation on 过河卒</title>
+    <title>Translation on 过河卒</title>
     <link>https://ramsayleung.github.io/zh/tags/translation/</link>
-    <description>Recent content in translation on 过河卒</description>
+    <description>Recent content in Translation on 过河卒</description>
     <image>
       <title>过河卒</title>
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- 0.120.4</generator>
+    <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
     <lastBuildDate>Thu, 09 Jan 2025 19:18:56 -0800</lastBuildDate>
@@ -23,8 +23,7 @@
       <content:encoded><![CDATA[<p>最近，我发现很多Emacs 用户对Ivy 很感兴趣；而且大部份用户都是已经了解过Helm 或者Ido的
 当有人在Reddit 上面问 <a href="https://www.reddit.com/r/emacs/comments/51lqn9/helm_or_ivy/">选择Helm 还是Ido</a>这类问题的时候，我觉得我会给出我自己的选择：
 <strong>Ivy</strong>,即使我是一个前Helm 的狂热用户
-<img loading="lazy" src="http://www.feer-mcqueen.com/blog/wp-content/uploads/2015/11/miimalism-vs.-maximilasim-700x334.jpg" alt=""  />
-
+<img loading="lazy" src="http://www.feer-mcqueen.com/blog/wp-content/uploads/2015/11/miimalism-vs.-maximilasim-700x334.jpg">
 <em>最大或者最小</em></p>
 <p><strong>Helm 和Ivy 都是补全框架</strong>.这意味着它们都是Emacs生态系统中用来在用户输入后缩窄可供选择选项的范围的工具。
 很自然而然想起的通用例子就是搜索文件。Helm 和Ivy 都可以帮助用户快速搜索文件</p>
@@ -86,8 +85,7 @@
 <p>Helm 只是一个用来补全的包，就好像Ido或者Ivy.它可能很容易使用，一旦有人经历过配置它的困难，就会发现它很难做到让你随心所欲。</p>
 <p>有些人觉得只要可以让他们使用好的工具，即使他们完全不了解这些工具也无所谓。</p>
 <p>但是我就做不到</p>
-<p>&ndash;abo-abo,Ivy 的开发者，回答<a href="https://github.com/abo-abo/swiper/issues/3">&ldquo;为什么不选择Helm&rdquo;</a> 这个问题</p>
-</blockquote>
+<p>&ndash;abo-abo,Ivy 的开发者，回答<a href="https://github.com/abo-abo/swiper/issues/3">&ldquo;为什么不选择Helm&rdquo;</a> 这个问题</p></blockquote>
 <p><strong>Ivy 为实现最小化，简单化，可定制化，可发现化而努力</strong>.这四个形容词告诉我们很多Helm
 和Ivy 这两个工具间不同的设计理念。阅读<a href="http://oremacs.com/swiper/">Ivy介绍</a> 以便更好了解Ivy的理念。</p>
 <p>在写这篇文章的时候，Ivy 只有大概3400行代码，为Ivy 所打造的生态系统：即Swipter 和
@@ -171,75 +169,75 @@ Counsel 也只有7500 行代码</p>
 <p>对于那些大文件， <strong>Counsel</strong> 有 <strong>counsel-grep-or-swiper</strong>.</p>
 <p>我已经用一些非常非常大的标记语言的文件(一百万行左右)来测试过了，一点问题也没有。</p>
 <table>
-<thead>
-<tr>
-<th>Helm</th>
-<th>Ivy</th>
-<th>What ?</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>helm-mini</td>
-<td>ivy-switch-buffer</td>
-<td>search for currently opened buffers</td>
-</tr>
-<tr>
-<td>helm-recentf</td>
-<td>counsel-recentf</td>
-<td>search for recently edited files</td>
-</tr>
-<tr>
-<td>helm-find-files</td>
-<td>counsel-find-files</td>
-<td>search files starting from ./</td>
-</tr>
-<tr>
-<td>helm-ag</td>
-<td>counsel-ag</td>
-<td>search regexp occurence in current project</td>
-</tr>
-<tr>
-<td>helm-grep-do-git-grep</td>
-<td>counsel-git-grep</td>
-<td>search regexp in current project</td>
-</tr>
-<tr>
-<td>helm-swoop</td>
-<td>swiper</td>
-<td>search string interactively in current buffer</td>
-</tr>
-<tr>
-<td>helm-show-kill-ring</td>
-<td>counsel-yank-pop</td>
-<td>search copy-paste history</td>
-</tr>
-<tr>
-<td>helm-projectile</td>
-<td>counsel-projectile</td>
-<td>search project and file in it</td>
-</tr>
-<tr>
-<td>helm-ls-git-ls</td>
-<td>counsel-git</td>
-<td>search file in current git project</td>
-</tr>
-<tr>
-<td>helm-themes</td>
-<td>counsel-load-theme</td>
-<td>switch themes</td>
-</tr>
-<tr>
-<td>helm-descbinds</td>
-<td>counsel-descbinds</td>
-<td>describe keybindings and associated functions</td>
-</tr>
-<tr>
-<td>helm-M-x</td>
-<td>counsel-M-x</td>
-<td>enhanced M-x command</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>Helm</th>
+          <th>Ivy</th>
+          <th>What ?</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>helm-mini</td>
+          <td>ivy-switch-buffer</td>
+          <td>search for currently opened buffers</td>
+      </tr>
+      <tr>
+          <td>helm-recentf</td>
+          <td>counsel-recentf</td>
+          <td>search for recently edited files</td>
+      </tr>
+      <tr>
+          <td>helm-find-files</td>
+          <td>counsel-find-files</td>
+          <td>search files starting from ./</td>
+      </tr>
+      <tr>
+          <td>helm-ag</td>
+          <td>counsel-ag</td>
+          <td>search regexp occurence in current project</td>
+      </tr>
+      <tr>
+          <td>helm-grep-do-git-grep</td>
+          <td>counsel-git-grep</td>
+          <td>search regexp in current project</td>
+      </tr>
+      <tr>
+          <td>helm-swoop</td>
+          <td>swiper</td>
+          <td>search string interactively in current buffer</td>
+      </tr>
+      <tr>
+          <td>helm-show-kill-ring</td>
+          <td>counsel-yank-pop</td>
+          <td>search copy-paste history</td>
+      </tr>
+      <tr>
+          <td>helm-projectile</td>
+          <td>counsel-projectile</td>
+          <td>search project and file in it</td>
+      </tr>
+      <tr>
+          <td>helm-ls-git-ls</td>
+          <td>counsel-git</td>
+          <td>search file in current git project</td>
+      </tr>
+      <tr>
+          <td>helm-themes</td>
+          <td>counsel-load-theme</td>
+          <td>switch themes</td>
+      </tr>
+      <tr>
+          <td>helm-descbinds</td>
+          <td>counsel-descbinds</td>
+          <td>describe keybindings and associated functions</td>
+      </tr>
+      <tr>
+          <td>helm-M-x</td>
+          <td>counsel-M-x</td>
+          <td>enhanced M-x command</td>
+      </tr>
+  </tbody>
 </table>
 <p>我觉得你可以看到Ivy 基本的命令对比Helm 的命令也是毫不逊色的。它们可以代替你日常使用的每一条Helm命令。我不是说你可以像Helm 那样用Ivy 来做任何事，但是它已经足够好用了，正如我说的那样，你也不需要任何事都使用Helm 来完成。</p>
 <p>说到补全理念这个话题上，Helm 和Ivy 之间的差异并没有那么大。作为一个用户，我可以告诉你的是：Ivy 会让你感觉到更少的臃肿，更加的直观，更加地容易理解。每一次的补全都是可以预见的。</p>

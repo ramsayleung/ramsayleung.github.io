@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>python on 过河卒</title>
+    <title>Python on 过河卒</title>
     <link>https://ramsayleung.github.io/zh/categories/python/</link>
-    <description>Recent content in python on 过河卒</description>
+    <description>Recent content in Python on 过河卒</description>
     <image>
       <title>过河卒</title>
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- 0.120.4</generator>
+    <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
     <lastBuildDate>Mon, 30 Dec 2024 22:32:24 -0800</lastBuildDate>
@@ -19,7 +19,8 @@
       <link>https://ramsayleung.github.io/zh/post/2017/python_with_sqlite3/</link>
       <pubDate>Sun, 12 Nov 2017 07:05:00 +0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/python_with_sqlite3/</guid>
-      <description>python 与嵌入式关系数据库 sqlite3的邂逅 SQLite 是一个非常优秀的嵌入式数据库，非常轻量，可以与 Mysql, PostgreSQL 这样的 大型数据库互补使用. 而 Python 标准库中的 sqlite3 模块实</description>
+      <description>&lt;p&gt;python 与嵌入式关系数据库 sqlite3的邂逅&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;SQLite&lt;/code&gt; 是一个非常优秀的嵌入式数据库，非常轻量，可以与 Mysql, PostgreSQL 这样的 大型数据库互补使用. 而 Python 标准库中的 &lt;code&gt;sqlite3&lt;/code&gt; 模块实现了兼容 SQLite 的 &lt;a href=&#34;https://www.python.org/dev/peps/pep-0249/&#34;&gt;Python DB-API 2.0&lt;/a&gt;接口, 因此我们可以很方 便地使用 &lt;code&gt;sqlite3&lt;/code&gt; 模块来操作 &lt;code&gt;SQLite&lt;/code&gt;&lt;/p&gt;</description>
       <content:encoded><![CDATA[<p>python 与嵌入式关系数据库 sqlite3的邂逅</p>
 <p><code>SQLite</code> 是一个非常优秀的嵌入式数据库，非常轻量，可以与 Mysql, PostgreSQL 这样的 大型数据库互补使用. 而 Python 标准库中的 <code>sqlite3</code> 模块实现了兼容 SQLite 的 <a href="https://www.python.org/dev/peps/pep-0249/">Python DB-API 2.0</a>接口, 因此我们可以很方 便地使用 <code>sqlite3</code> 模块来操作 <code>SQLite</code></p>
 <h2 id="入门"><span class="section-num">1</span> 入门</h2>
@@ -352,11 +353,11 @@
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">birthday,name,id,phone_number
-</span></span><span class="line"><span class="cl">2018-11-30,Torres,22,98564311
-</span></span><span class="line"><span class="cl">2010-08-10,Messi,12,81582236
-</span></span><span class="line"><span class="cl">2018-11-21,Saul,9,23564548
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-csv" data-lang="csv"><span class="line"><span class="cl"><span class="s">birthday</span><span class="p">,</span><span class="s">name</span><span class="p">,</span><span class="s">id</span><span class="p">,</span><span class="s">phone_number</span><span class="p">
+</span></span></span><span class="line"><span class="cl"><span class="p"></span><span class="s">2018-11-30</span><span class="p">,</span><span class="s">Torres</span><span class="p">,</span><span class="s">22</span><span class="p">,</span><span class="s">98564311</span><span class="p">
+</span></span></span><span class="line"><span class="cl"><span class="p"></span><span class="s">2010-08-10</span><span class="p">,</span><span class="s">Messi</span><span class="p">,</span><span class="s">12</span><span class="p">,</span><span class="s">81582236</span><span class="p">
+</span></span></span><span class="line"><span class="cl"><span class="p"></span><span class="s">2018-11-21</span><span class="p">,</span><span class="s">Saul</span><span class="p">,</span><span class="s">9</span><span class="p">,</span><span class="s">23564548</span><span class="p">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1755,30 +1756,30 @@
 <h2 id="验证服务器"><span class="section-num">1</span> 验证服务器</h2>
 <p>开发公众号之前，要先验证服务器的有效性，官网有详细的说明：<a href="https://mp.weixin.qq.com/wiki/8/f9a0b8382e0b77d87b3bcc1ce6fbc104.html">公众开发平台文档</a></p>
 <table>
-<thead>
-<tr>
-<th>参数</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>signature</td>
-<td>微信加密签名，signature结合了开发者填写的token参数和请求中的timestamp参数、nonce参数。</td>
-</tr>
-<tr>
-<td>timestamp</td>
-<td>时间戳</td>
-</tr>
-<tr>
-<td>nonce</td>
-<td>随机数</td>
-</tr>
-<tr>
-<td>echostr</td>
-<td>随机字符串</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>参数</th>
+          <th>描述</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>signature</td>
+          <td>微信加密签名，signature结合了开发者填写的token参数和请求中的timestamp参数、nonce参数。</td>
+      </tr>
+      <tr>
+          <td>timestamp</td>
+          <td>时间戳</td>
+      </tr>
+      <tr>
+          <td>nonce</td>
+          <td>随机数</td>
+      </tr>
+      <tr>
+          <td>echostr</td>
+          <td>随机字符串</td>
+      </tr>
+  </tbody>
 </table>
 <p>校验流程：
 加密/校验流程如下：</p>

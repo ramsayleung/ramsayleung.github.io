@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>hbase on 过河卒</title>
+    <title>Hbase on 过河卒</title>
     <link>https://ramsayleung.github.io/zh/tags/hbase/</link>
-    <description>Recent content in hbase on 过河卒</description>
+    <description>Recent content in Hbase on 过河卒</description>
     <image>
       <title>过河卒</title>
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- 0.120.4</generator>
+    <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
     <lastBuildDate>Thu, 24 Feb 2022 22:58:14 +0800</lastBuildDate>
@@ -19,7 +19,10 @@
       <link>https://ramsayleung.github.io/zh/post/2018/hbase_crash/</link>
       <pubDate>Wed, 04 Apr 2018 19:54:00 +0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2018/hbase_crash/</guid>
-      <description>1 背景 在2018年4月4号早上，业务方反应Hbase 读超时，无法读取当前数据。然后发现测试环境的 Hbase region server 全部宕机，已经无可用Region Server. 因为</description>
+      <description>&lt;h2 id=&#34;背景&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 背景&lt;/h2&gt;
+&lt;p&gt;在2018年4月4号早上，业务方反应Hbase 读超时，无法读取当前数据。然后发现测试环境的
+Hbase region server 全部宕机，已经无可用Region Server. 因为公司的机器的Ip 和Host
+不便在博文展示，所以我会用：&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="背景"><span class="section-num">1</span> 背景</h2>
 <p>在2018年4月4号早上，业务方反应Hbase 读超时，无法读取当前数据。然后发现测试环境的
 Hbase region server 全部宕机，已经无可用Region Server. 因为公司的机器的Ip 和Host
@@ -671,7 +674,9 @@ WAL(write-ahead-log, 预写日志),较长时间无法写入日志，最终导致
       <link>https://ramsayleung.github.io/zh/post/2018/store_cluster_migrate2/</link>
       <pubDate>Fri, 09 Mar 2018 13:55:00 +0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2018/store_cluster_migrate2/</guid>
-      <description>从Mysql, Hbase 迁移数据 1 Mysql 数据迁移 搭建完之后就是数据迁移了，mysql 的数据迁移比较简单。在旧的机器用 mysqldump 把所 有的数据导出来，然后传到新的环</description>
+      <description>&lt;p&gt;从Mysql, Hbase 迁移数据&lt;/p&gt;
+&lt;h2 id=&#34;mysql-数据迁移&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; Mysql 数据迁移&lt;/h2&gt;
+&lt;p&gt;搭建完之后就是数据迁移了，mysql 的数据迁移比较简单。在旧的机器用 mysqldump 把所 有的数据导出来，然后传到新的环境然后导出：&lt;/p&gt;</description>
       <content:encoded><![CDATA[<p>从Mysql, Hbase 迁移数据</p>
 <h2 id="mysql-数据迁移"><span class="section-num">1</span> Mysql 数据迁移</h2>
 <p>搭建完之后就是数据迁移了，mysql 的数据迁移比较简单。在旧的机器用 mysqldump 把所 有的数据导出来，然后传到新的环境然后导出：</p>
@@ -859,7 +864,9 @@ WAL(write-ahead-log, 预写日志),较长时间无法写入日志，最终导致
       <link>https://ramsayleung.github.io/zh/post/2018/store_cluster_migrate1/</link>
       <pubDate>Mon, 05 Mar 2018 17:39:00 +0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2018/store_cluster_migrate1/</guid>
-      <description>搭建和配置 Hadoop, Zookeeper, Hbase 1 前言 最近负责公司测试环境的迁移，主要包括 Hbase+Mysql 存储集群的迁移，消息队列，缓存组件的迁移, 而我打算说说存储集群的迁移。因为公司的</description>
+      <description>&lt;p&gt;搭建和配置 Hadoop, Zookeeper, Hbase&lt;/p&gt;
+&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;最近负责公司测试环境的迁移，主要包括 Hbase+Mysql 存储集群的迁移，消息队列，缓存组件的迁移, 而我打算说说存储集群的迁移。因为公司的机器的Ip 和Host 不便在博文展示，所以我会用：&lt;/p&gt;</description>
       <content:encoded><![CDATA[<p>搭建和配置 Hadoop, Zookeeper, Hbase</p>
 <h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>最近负责公司测试环境的迁移，主要包括 Hbase+Mysql 存储集群的迁移，消息队列，缓存组件的迁移, 而我打算说说存储集群的迁移。因为公司的机器的Ip 和Host 不便在博文展示，所以我会用：</p>
@@ -1505,8 +1512,7 @@ hdfs namenode -format
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>或者可以使用更加友好的 Web 管理界面，在浏览器输入： <a href="http://node-master-ip:50070">http://node-master-ip:50070</a>, 然后你就可以看到如下的监控界面：
-<img loading="lazy" src="https://imgur.com/jmIXxRy.jpg" alt=""  />
-</p>
+<img loading="lazy" src="https://imgur.com/jmIXxRy.jpg"></p>
 </li>
 </ol>
 <!--list-separator-->

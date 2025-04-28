@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>java on 过河卒</title>
+    <title>Java on 过河卒</title>
     <link>https://ramsayleung.github.io/zh/categories/java/</link>
-    <description>Recent content in java on 过河卒</description>
+    <description>Recent content in Java on 过河卒</description>
     <image>
       <title>过河卒</title>
       <url>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ramsayleung.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- 0.120.4</generator>
+    <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
     <lastBuildDate>Sat, 26 Feb 2022 10:11:32 +0800</lastBuildDate>
@@ -19,7 +19,9 @@
       <link>https://ramsayleung.github.io/zh/post/2020/java%E5%AE%9E%E7%8E%B0%E5%B0%BE%E9%80%92%E5%BD%92%E4%BC%98%E5%8C%96/</link>
       <pubDate>Sun, 05 Jul 2020 16:51:00 +0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2020/java%E5%AE%9E%E7%8E%B0%E5%B0%BE%E9%80%92%E5%BD%92%E4%BC%98%E5%8C%96/</guid>
-      <description>1 前言 尾调用消除(tail call elimination, TCE)是函数式编程的重要概念, 有时也被称为尾调用优化(tail call optimization, TCO), 作用是将尾递归函数转化成循环, 避免创建许</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;尾调用消除(tail call elimination, TCE)是函数式编程的重要概念, 有时也被称为尾调用优化(tail call optimization, TCO),
+作用是将尾递归函数转化成循环, 避免创建许多栈帧, 减少开销.&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>尾调用消除(tail call elimination, TCE)是函数式编程的重要概念, 有时也被称为尾调用优化(tail call optimization, TCO),
 作用是将尾递归函数转化成循环, 避免创建许多栈帧, 减少开销.</p>
@@ -511,8 +513,7 @@ StackOverflowError</strong>.</p>
 <blockquote>
 <p>In jdk classes there are a number of security sensitive methods that
 rely on counting stack frames between jdk library code and calling
-code to figure out who&rsquo;s calling them.</p>
-</blockquote>
+code to figure out who&rsquo;s calling them.</p></blockquote>
 <p>后续java版本也暂无支持尾递归优化的计划, 无奈摊手.jpg</p>
 <h2 id="参考"><span class="section-num">5</span> 参考</h2>
 <ul>
@@ -532,15 +533,16 @@ code to figure out who&rsquo;s calling them.</p>
       <link>https://ramsayleung.github.io/zh/post/2019/%E4%B8%80%E6%9D%A1%E7%BB%8F%E5%85%B8%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BC%95%E5%8F%91%E7%9A%84%E6%80%9D%E8%80%83/</link>
       <pubDate>Thu, 21 Mar 2019 11:04:00 +0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2019/%E4%B8%80%E6%9D%A1%E7%BB%8F%E5%85%B8%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BC%95%E5%8F%91%E7%9A%84%E6%80%9D%E8%80%83/</guid>
-      <description>浅谈Java公平锁与内存模型 1 前言 春天来了，春招还会远么? 又到了春招的季节，随之而来的是各种的面试题。今天就看到组内大佬面试实习生的一道Ja</description>
+      <description>&lt;p&gt;浅谈Java公平锁与内存模型&lt;/p&gt;
+&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;春天来了，春招还会远么? 又到了春招的季节，随之而来的是各种的面试题。今天就看到组内大佬面试实习生的一道Java题目:&lt;/p&gt;</description>
       <content:encoded><![CDATA[<p>浅谈Java公平锁与内存模型</p>
 <h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>春天来了，春招还会远么? 又到了春招的季节，随之而来的是各种的面试题。今天就看到组内大佬面试实习生的一道Java题目:</p>
 <blockquote>
 <p>编写一个程序，开启 3 个线程A,B,C，这三个线程的输出分别为
 A、B、C，每个线程将自己的 输出在屏幕上打印 10
-遍，要求输出的结果必须按顺序显示。如：ABCABCABC&hellip;.</p>
-</blockquote>
+遍，要求输出的结果必须按顺序显示。如：ABCABCABC&hellip;.</p></blockquote>
 <h2 id="经过"><span class="section-num">2</span> 经过</h2>
 <p>出于好奇的心态，我花了点时间来尝试解决这个问题, 主要的难点是让线程顺序地如何顺序地输出，线程之间如何交换。</p>
 <p>很快就按着思路写出了一个版本，用Lock 来控制线程的顺序，A,B,C线程依次启动，因为A线程先启动，所以A线程会最先拿到锁，B,C阻塞；但是A输出完字符串，释放锁，B 线程获得锁，C,A线程阻塞; 依此循环:</p>
@@ -607,8 +609,7 @@ A、B、C，每个线程将自己的 输出在屏幕上打印 10
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>输入结果如我预期那般，ABCABC交替输出，也成功输出了10次，奇怪的是A,B却多输出了一次？
-<img loading="lazy" src="https://imgur.com/3lolbwK.png" alt=""  />
-</p>
+<img loading="lazy" src="https://imgur.com/3lolbwK.png"></p>
 <p>为什么会多输出一次，不是应该恰好是输出30次么, 为什么会多输出一次A,B
 真的百思不得其解. 所以我把<code>index</code> 也打印出来查看, 结果相当奇怪:</p>
 <div class="highlight"><div class="chroma">
@@ -626,8 +627,7 @@ A、B、C，每个线程将自己的 输出在屏幕上打印 10
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>为什么A 会是30, B会是31, 不是有(index.intvalue&lt;30) 的条件判断么,
-为什么还会出现这样的数据？灵异事件? <img loading="lazy" src="https://imgur.com/fhurKt5.png" alt=""  />
-</p>
+为什么还会出现这样的数据？灵异事件? <img loading="lazy" src="https://imgur.com/fhurKt5.png"></p>
 <h2 id="解惑"><span class="section-num">3</span> 解惑</h2>
 <p>灵异事件自然是不存在的，仔细分析了一番代码之后，发现了问题：</p>
 <div class="highlight"><div class="chroma">
@@ -750,8 +750,7 @@ A、B、C，每个线程将自己的 输出在屏幕上打印 10
 <p>前文说到，</p>
 <blockquote>
 <p>这个程序是用Lock 来控制线程的顺序，A,B,C线程依次启动，因为A线程先启动，所以A线程会最先拿到锁，B,C阻塞；</p>
-<p>但是A输出完字符串，释放锁，B 线程获得锁，C,A线程阻塞; 依此循环。</p>
-</blockquote>
+<p>但是A输出完字符串，释放锁，B 线程获得锁，C,A线程阻塞; 依此循环。</p></blockquote>
 <p>粗看似乎没什么问题, 但是这里是存在着一个问题: 当线程A释放锁的时候，获取锁的是否一定是线程B, 而不是线程C,
 线程C是否能够”插队”抢占锁?</p>
 <p>这个就涉及到了公平锁和非公平锁的定义了:</p>
@@ -813,7 +812,12 @@ A、B、C，每个线程将自己的 输出在屏幕上打印 10
       <link>https://ramsayleung.github.io/zh/post/2019/%E5%A6%82%E4%BD%95%E5%88%B7pojo%E7%B1%BB%E7%9A%84%E5%8F%98%E6%9B%B4%E8%A1%8C%E8%A6%86%E7%9B%96%E7%8E%87/</link>
       <pubDate>Thu, 14 Mar 2019 11:14:00 +0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2019/%E5%A6%82%E4%BD%95%E5%88%B7pojo%E7%B1%BB%E7%9A%84%E5%8F%98%E6%9B%B4%E8%A1%8C%E8%A6%86%E7%9B%96%E7%8E%87/</guid>
-      <description>刷POJO类的变更行覆盖率 1 反射大法好 1.1 背景 众所周知，蚂蚁对代码质量要求很高，质量红线其中一项指标就是变更行覆盖率。如果你的变更行覆盖率没有</description>
+      <description>&lt;p&gt;刷POJO类的变更行覆盖率&lt;/p&gt;
+&lt;h2 id=&#34;反射大法好&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 反射大法好&lt;/h2&gt;
+&lt;h3 id=&#34;背景&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1.1&lt;/span&gt; 背景&lt;/h3&gt;
+&lt;p&gt;众所周知，蚂蚁对代码质量要求很高，质量红线其中一项指标就是变更行覆盖率。如果你的变更行覆盖率没有达到80%，测试同学是不会允许你上测试环境的（如果对此有所不满，测试同学就会过来捶你)。
+为了提高代码质量，这项要求倒是无可厚非，变更的代码逻辑需要充分的测试；但是如果我新增了一堆的POJO类，只是为了逻辑模型，变更行也会变得非常可观。为了覆盖这些POJO类的变更，你免不了会测试一堆的Getter/Setter
+方法：&lt;/p&gt;</description>
       <content:encoded><![CDATA[<p>刷POJO类的变更行覆盖率</p>
 <h2 id="反射大法好"><span class="section-num">1</span> 反射大法好</h2>
 <h3 id="背景"><span class="section-num">1.1</span> 背景</h3>
@@ -1171,7 +1175,9 @@ Wall 说的</li>
       <link>https://ramsayleung.github.io/zh/post/2018/maven%E5%B0%8F%E8%AE%B0/</link>
       <pubDate>Tue, 23 Oct 2018 12:15:00 +0800</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2018/maven%E5%B0%8F%E8%AE%B0/</guid>
-      <description>Maven 在工作中的经验以及《Maven 实战》读后感 1 前言 蚂蚁金服的伯岩大大曾经说 Java 生态都太重量级，连Maven 都是怪兽级的构建工具，需要整整一本书</description>
+      <description>&lt;p&gt;Maven 在工作中的经验以及《Maven 实战》读后感&lt;/p&gt;
+&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;蚂蚁金服的伯岩大大曾经说 &lt;a href=&#34;http://blog.fnil.net/index.php/archives/70/&#34;&gt;Java 生态都太重量级，连Maven 都是怪兽级的构建工具，需要整整一本书来讲解&lt;/a&gt;. 平心而论，Maven 的确如此, 但是无论是怪兽级，还是迪迦级的工具，只要能把事情做好了就是好工具, 而 Maven 恰恰就是这样的工具&lt;/p&gt;</description>
       <content:encoded><![CDATA[<p>Maven 在工作中的经验以及《Maven 实战》读后感</p>
 <h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>蚂蚁金服的伯岩大大曾经说 <a href="http://blog.fnil.net/index.php/archives/70/">Java 生态都太重量级，连Maven 都是怪兽级的构建工具，需要整整一本书来讲解</a>. 平心而论，Maven 的确如此, 但是无论是怪兽级，还是迪迦级的工具，只要能把事情做好了就是好工具, 而 Maven 恰恰就是这样的工具</p>
@@ -1244,52 +1250,52 @@ Wall 说的</li>
 </div><p><strong>由于此类依赖不是通过Maven 仓库解析的，而且往往与本机系统绑定，可能造成构建的不可移植，因此应该谨慎使用</strong>
 上述除import 以外的各种依赖范围与三种classpath 的关系如下:</p>
 <table>
-<thead>
-<tr>
-<th>依赖范围 scope</th>
-<th>对于编译classpath有效</th>
-<th>对于测试classpath 有效</th>
-<th>对于运行时classpath有效</th>
-<th>例子</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>compile</td>
-<td>Y</td>
-<td>Y</td>
-<td>Y</td>
-<td>spring-core</td>
-</tr>
-<tr>
-<td>test</td>
-<td>&ndash;</td>
-<td>Y</td>
-<td>&ndash;</td>
-<td>JUnit</td>
-</tr>
-<tr>
-<td>provided</td>
-<td>Y</td>
-<td>Y</td>
-<td>&ndash;</td>
-<td>servlet-apt</td>
-</tr>
-<tr>
-<td>runtime</td>
-<td>&ndash;</td>
-<td>Y</td>
-<td>Y</td>
-<td>JDBC 驱动实现</td>
-</tr>
-<tr>
-<td>system</td>
-<td>Y</td>
-<td>Y</td>
-<td>&ndash;</td>
-<td>本地的，java类库以外的文件</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>依赖范围 scope</th>
+          <th>对于编译classpath有效</th>
+          <th>对于测试classpath 有效</th>
+          <th>对于运行时classpath有效</th>
+          <th>例子</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>compile</td>
+          <td>Y</td>
+          <td>Y</td>
+          <td>Y</td>
+          <td>spring-core</td>
+      </tr>
+      <tr>
+          <td>test</td>
+          <td>&ndash;</td>
+          <td>Y</td>
+          <td>&ndash;</td>
+          <td>JUnit</td>
+      </tr>
+      <tr>
+          <td>provided</td>
+          <td>Y</td>
+          <td>Y</td>
+          <td>&ndash;</td>
+          <td>servlet-apt</td>
+      </tr>
+      <tr>
+          <td>runtime</td>
+          <td>&ndash;</td>
+          <td>Y</td>
+          <td>Y</td>
+          <td>JDBC 驱动实现</td>
+      </tr>
+      <tr>
+          <td>system</td>
+          <td>Y</td>
+          <td>Y</td>
+          <td>&ndash;</td>
+          <td>本地的，java类库以外的文件</td>
+      </tr>
+  </tbody>
 </table>
 <h2 id="仓库"><span class="section-num">4</span> 仓库</h2>
 <p>上文提及了依赖管理，通过声明的方式指定所需的构件，那么是从哪里获取所需的构件的呢？答案是 Maven 仓库，Maven 仓库可以分为两类: 本地仓库和远程仓库。</p>
@@ -2868,8 +2874,7 @@ Specification 的名字一般是跟系统或者业务逻辑有关的组合词，
 <p>Fixture methods are responsible for setting up and cleaning up the environment in
 which feature methods are run. Usually it’s a good idea to use a fresh fixture for
 every feature method, which is what the setup() and cleanup() methods are for.
-All fixture methods are optional.</p>
-</blockquote>
+All fixture methods are optional.</p></blockquote>
 <p>简而言之， <strong>Fixture methodr</strong> 是进行初始化或者收尾工作的。为了更好地理解 Spock
 的特性，可以用 Spock 和 Junit 进行比较，(图截自官网)</p>
 
@@ -2895,8 +2900,7 @@ All fixture methods are optional.</p>
 feature method. To this end, feature methods are structured into so-called blocks.
 Blocks start with a label, and extend to the beginning of the next block, or the
 end of the method. There are six kinds of blocks: setup, when, then, expect,
-cleanup, and where blocks</p>
-</blockquote>
+cleanup, and where blocks</p></blockquote>
 <p>简而言之， 这些内置的功能强大的 blocks, 就是帮助开发者编写单元测试的语法糖</p>
 
 <figure>
@@ -3836,8 +3840,7 @@ boot, 和 Restful service 测试等。更多的用法，就要查阅官方文档
       <guid>https://ramsayleung.github.io/zh/post/2017/java_collection_lambda/</guid>
       <description>An Discussion abount Java Collection with Lambda Expression</description>
       <content:encoded><![CDATA[<p>我平时也有浏览各类博客的习惯，毕竟三人行则必有我师嘛。今天在浏览关于Java的一个博客的时候，对博主的观点有一些不同的开发，但是困于没法在博客下评论，内容如下：
-<a href="/ox-hugo/argument.png"><img loading="lazy" src="/ox-hugo/argument.png" alt=""  />
-</a>
+<a href="/ox-hugo/argument.png"><img loading="lazy" src="/ox-hugo/argument.png"></a>
 所以打算聊聊Java 中Collection 这个话题。(BTW,窃以为博主对Java8 新引进的Lambda, 应该了解不足)</p>
 <h2 id="java函数式编程"><span class="section-num">1</span> Java函数式编程</h2>
 <p>Java8 引进了函数式编程的新特性，让Java的开发人员也可以享受函数式编程的美妙，已经有很多的文章介绍函数式了，珠玉在前，我就不赘言了。</p>
@@ -3855,8 +3858,7 @@ boot, 和 Restful service 测试等。更多的用法，就要查阅官方文档
 </div>
 </div><h3 id="map"><span class="section-num">2.2</span> map</h3>
 <p>如果有一个函数可以将一种类型的值转换成另外一种类型，map 操作就可以使用该函数，将一个流中的值转换成一个新的流
-<a href="/ox-hugo/java_map.png"><img loading="lazy" src="/ox-hugo/java_map.png" alt=""  />
-</a></p>
+<a href="/ox-hugo/java_map.png"><img loading="lazy" src="/ox-hugo/java_map.png"></a></p>
 <h4 id="例子"><span class="section-num">2.2.1</span> 例子</h4>
 <p>将字符变成大写格式如果用没有Lambda 时的模式编程</p>
 <div class="highlight"><div class="chroma">
@@ -3965,8 +3967,7 @@ boot, 和 Restful service 测试等。更多的用法，就要查阅官方文档
 </div>
 </div><h3 id="flatmap"><span class="section-num">2.4</span> flatMap</h3>
 <p>flatMap 方法可用Stream 替换值，然后将多个Stream 连接成一个Stream
-<a href="/ox-hugo/java_flatmap.png"><img loading="lazy" src="/ox-hugo/java_flatmap.png" alt=""  />
-</a></p>
+<a href="/ox-hugo/java_flatmap.png"><img loading="lazy" src="/ox-hugo/java_flatmap.png"></a></p>
 <h4 id="例子"><span class="section-num">2.4.1</span> 例子</h4>
 <p>假设有一个包含多个列表的流，希望得到所有数字的序列</p>
 <div class="highlight"><div class="chroma">
