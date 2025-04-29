@@ -7,6 +7,7 @@ tags = ["python", "flask"]
 categories = ["python"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 [flask](http://flask.pocoo.org/) 是一个轻量级的python 框架(官网称为微型框架),很容易上手，之前因为笔者跟朋友开发小程序的时候使用过 flask,过后就遗忘了。

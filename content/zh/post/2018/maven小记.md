@@ -6,6 +6,7 @@ tags = ["java", "maven"]
 categories = ["java"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 Maven 在工作中的经验以及《Maven 实战》读后感

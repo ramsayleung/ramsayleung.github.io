@@ -6,6 +6,7 @@ tags = ["distributed_system", "book"]
 categories = ["读书感悟"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> Distributed Systems for fun and profit {#distributed-systems-for-fun-and-profit}

@@ -6,6 +6,7 @@ tags = ["graph", "algorithm"]
 categories = ["algorithm"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> Definition {#definition}

@@ -6,6 +6,7 @@ tags = ["rust", "java"]
 categories = ["rust"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 拉上Java 来谈谈 Rust的错误处理

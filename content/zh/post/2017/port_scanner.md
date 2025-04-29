@@ -6,6 +6,7 @@ lastmod = 2025-01-09T20:02:08-08:00
 tags = ["python", "network", "tool"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 近两日，闲来无事，就写了些端口扫描器，重温TCP/IP协议栈的部分原理。

@@ -7,6 +7,7 @@ tags = ["spock", "groovy", "test", "java"]
 categories = ["java"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 因为需要编写 RESTful api 测试的缘故，重拾了 Spock 这个适用于 Groovy/Java 的测试

@@ -6,6 +6,7 @@ tags = ["emacs", "eshell", "linux"]
 categories = ["Emacs技巧"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> 前言 {#前言}

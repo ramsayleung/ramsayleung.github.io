@@ -7,6 +7,7 @@ tags = ["algorithm", "java"]
 categories = ["algorithm"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 最近笔者在阅读《[算法》](http://algs4.cs.princeton.edu/home/),重温经典数据结构和算法，毕竟一直以来的说法是程序就是数据结构＋算法归并算法所需的时间和N\*logN成正比，所以可以用归并算法处理数百万甚至更大规模的数据。

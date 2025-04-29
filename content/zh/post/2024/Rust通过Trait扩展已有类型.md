@@ -5,6 +5,7 @@ lastmod = 2025-01-09T20:19:21-08:00
 tags = ["rust", "programming"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> Swift extension {#swift-extension}

@@ -6,6 +6,7 @@ tags = ["rust", "rspotify"]
 categories = ["rust"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> Preface {#preface}

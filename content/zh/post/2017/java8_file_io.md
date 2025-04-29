@@ -8,6 +8,7 @@ tags = ["java"]
 categories = ["java"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 今天在完成《算法》上的练习的时候，要对文件进行读写，而书上的例子是直接通过 Linux/Unix的重定向来实现的，我要把它修改成直接读取文件。

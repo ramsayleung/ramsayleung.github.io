@@ -6,6 +6,7 @@ tags = ["testing", "rust", "python"]
 categories = ["测试技能进阶"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> 前言 {#前言}

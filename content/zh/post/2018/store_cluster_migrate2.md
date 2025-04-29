@@ -6,6 +6,7 @@ tags = ["mysql", "hbase"]
 categories = ["hbase"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 从Mysql, Hbase 迁移数据
@@ -82,7 +83,8 @@ COLUMN FAMILIES DESCRIPTION
 
 -   将`TTL => 'FOREVER' with TTL` 修改成 `org.apache.hadoop.hbase.HConstants::FOREVER`
 -   在列族的描述之间加上逗号`,`用来在新建的时候分隔列族
--   去掉文本中的换汉符(`\n, \r`), 这样文本就会变成单行文本
+-   去掉文本中的换汉符(`
+, `), 这样文本就会变成单行文本
 
 -   通过下面的语句在新的集群创建新的相同的表：
 

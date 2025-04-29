@@ -6,6 +6,7 @@ lastmod = 2025-01-09T20:52:24-08:00
 tags = ["linux", "tool", "tweak"]
 categories = ["得失感悟"]
 draft = false
+showQuote = true
 +++
 
 我最近一直在思考，关于工具，关于折腾，关于其中的付出与收获

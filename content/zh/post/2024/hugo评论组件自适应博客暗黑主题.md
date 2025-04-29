@@ -5,6 +5,7 @@ lastmod = 2025-01-09T20:12:43-08:00
 tags = ["blog", "hugo"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> 问题 {#问题}

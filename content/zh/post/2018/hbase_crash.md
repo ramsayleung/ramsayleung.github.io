@@ -5,6 +5,7 @@ lastmod = 2022-02-24T22:58:14+08:00
 tags = ["hbase"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> 背景 {#背景}

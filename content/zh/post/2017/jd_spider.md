@@ -7,6 +7,7 @@ tags = ["python", "crawler"]
 categories = ["python"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 我最近编写了两只京东商品和评论的分布式爬虫来进行数据分析，现在就来分享一下。

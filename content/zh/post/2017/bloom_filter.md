@@ -6,6 +6,7 @@ lastmod = 2022-02-23T17:49:09+08:00
 tags = ["bloom_filter", "crawler", "python", "algorithm"]
 categories = ["algorithm"]
 draft = false
+showQuote = true
 +++
 
 笔者最近思考如何编写高效的爬虫; 而在编写高效爬虫的时候，有一个必需解决的问题就是：

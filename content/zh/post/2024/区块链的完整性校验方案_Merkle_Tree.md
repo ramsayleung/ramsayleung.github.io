@@ -6,6 +6,7 @@ tags = ["blockchain"]
 categories = ["区块链"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> 前言 {#前言}

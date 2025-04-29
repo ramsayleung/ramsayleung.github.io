@@ -6,6 +6,7 @@ tags = ["reinvent"]
 categories = ["ReInvent: 重新造轮子系列"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> 起因与动机 {#起因与动机}

@@ -6,6 +6,7 @@ tags = ["book", "design"]
 categories = ["读书感悟"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> Design principle {#design-principle}

@@ -6,6 +6,7 @@ tags = ["java", "test"]
 categories = ["java"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 刷POJO类的变更行覆盖率

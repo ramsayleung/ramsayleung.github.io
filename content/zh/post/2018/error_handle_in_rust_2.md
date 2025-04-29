@@ -6,6 +6,7 @@ tags = ["rust", "java"]
 categories = ["rust"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 自定义错误和`error_chain` 库

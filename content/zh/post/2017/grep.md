@@ -8,6 +8,7 @@ tags = ["shell", "linux", "command_line"]
 categories = ["Linux/Unix Shell 二三事"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 文本三剑客之 Grep

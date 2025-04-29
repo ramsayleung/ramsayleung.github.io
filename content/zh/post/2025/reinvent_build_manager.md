@@ -6,6 +6,7 @@ tags = ["reinvent"]
 categories = ["ReInvent: 重新造轮子系列"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 项目 GitHub 地址: [Build Manager](https://github.com/ramsayleung/reinvent/tree/master/build_manager)

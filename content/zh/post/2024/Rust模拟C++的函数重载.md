@@ -5,6 +5,7 @@ lastmod = 2025-01-09T20:05:50-08:00
 tags = ["rust", "c++"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> 函数重载(function overloading) {#函数重载--function-overloading}

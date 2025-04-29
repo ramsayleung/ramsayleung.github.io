@@ -7,6 +7,7 @@ tags = ["linux"]
 categories = ["linux"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 不久前，Apple 的文件系统 (Apple File System) 新推出，然后各方便一起挤身向前对APFS "评头品足",我是不了解 APFS ,所以也没有什么发言权嘛，不过话分两头；

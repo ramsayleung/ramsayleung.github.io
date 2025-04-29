@@ -5,6 +5,7 @@ lastmod = 2025-01-09T20:03:24-08:00
 tags = ["amazon"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> Amazon Canada国内专场招聘 {#amazon-canada国内专场招聘}

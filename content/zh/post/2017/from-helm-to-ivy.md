@@ -8,6 +8,7 @@ tags = ["emacs", "translation"]
 categories = ["翻译"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 最近，我发现很多Emacs 用户对Ivy 很感兴趣；而且大部份用户都是已经了解过Helm 或者Ido的

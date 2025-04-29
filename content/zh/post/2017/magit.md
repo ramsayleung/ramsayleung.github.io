@@ -7,6 +7,7 @@ tags = ["emacs"]
 categories = ["翻译"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 如果你足够幸运(或者不幸运，取决于你怎么看待了)可以使用 `git` 作为你工作流的一部分。

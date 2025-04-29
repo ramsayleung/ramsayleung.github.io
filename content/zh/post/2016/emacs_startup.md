@@ -8,6 +8,7 @@ tags = ["emacs"]
 categories = ["Emacs技巧"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 之前看到个笑话：

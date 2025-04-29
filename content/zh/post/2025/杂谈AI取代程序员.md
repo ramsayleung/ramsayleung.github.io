@@ -5,6 +5,7 @@ lastmod = 2025-03-01T13:56:35-08:00
 tags = ["ai", "programmer"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> 前言 {#前言}

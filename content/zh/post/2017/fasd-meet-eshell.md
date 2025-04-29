@@ -8,6 +8,7 @@ tags = ["emacs", "shell", "eshell"]
 categories = ["Emacs技巧"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 > fasd - quick access to files and directory

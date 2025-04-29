@@ -6,6 +6,7 @@ tags = ["rust", "rspotify", "serde"]
 categories = ["rust"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 The lesson learned from refactoring rspotify

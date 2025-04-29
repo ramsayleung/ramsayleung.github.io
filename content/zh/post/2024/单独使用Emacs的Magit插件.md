@@ -6,6 +6,7 @@ tags = ["emacs", "magit"]
 categories = ["Emacs技巧"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> Emacs 与 Magit {#emacs-与-magit}

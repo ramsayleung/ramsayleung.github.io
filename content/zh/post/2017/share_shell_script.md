@@ -6,6 +6,7 @@ lastmod = 2025-01-09T20:51:33-08:00
 tags = ["shell", "linux", "command_line", "tool"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 分享一下平时工作生活中编写的一些脚本片段(一直更新). 适用于 OS X 和 Linux

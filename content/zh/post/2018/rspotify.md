@@ -6,6 +6,7 @@ tags = ["rust", "rspotify"]
 categories = ["rust"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 开发第一个Rust crate 的感受和踩到的坑

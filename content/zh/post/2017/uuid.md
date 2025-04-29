@@ -7,6 +7,7 @@ tags = ["java"]
 categories = ["java"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 笔者近来闲来无事，又因为有需要构造全局唯一 ID 的需求，所以就去看了 UUID 这个提供稳定的系统唯一标识符的类的源码

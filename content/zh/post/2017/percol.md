@@ -7,6 +7,7 @@ tags = ["linux", "shell"]
 categories = ["Linux/Unix Shell 二三事"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 [Percol](https://github.com/mooz/percol) 是Emacs 的一个非常优秀package, js2-mode作者mooz 的又一力作得益于Unix Shell的管道和重定向设计理念，percol 所有的输入输出变得可交互 percol 给我一种很熟悉的感觉，就是 Eamcs 中helm 增量补全 (incremental completion)的感觉，真的可以10倍提高工作效率。

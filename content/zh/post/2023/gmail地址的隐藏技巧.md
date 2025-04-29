@@ -5,6 +5,7 @@ lastmod = 2025-01-09T20:06:06-08:00
 tags = ["tool", "productivity", "gmail"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> 前言 {#前言}

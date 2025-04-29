@@ -8,6 +8,7 @@ tags = ["java", "algorithm", "distributed_system", "design"]
 categories = ["algorithm"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 最近我需要为运行的分布式系统某部分模块构造系统唯一的ID, 而 ID 需要是数字的形式，并应该尽量的短。不得不说，这是一个有趣的问题

@@ -6,6 +6,7 @@ tags = ["emacs"]
 categories = ["Emacs技巧"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> 技巧 {#技巧}

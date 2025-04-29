@@ -5,6 +5,7 @@ lastmod = 2025-01-09T20:05:21-08:00
 tags = ["javascript", "userscript", "debug"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> 背景 {#背景}

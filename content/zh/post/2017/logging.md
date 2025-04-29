@@ -7,6 +7,7 @@ tags = ["python", "log"]
 categories = ["python"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> 重要性 {#重要性}

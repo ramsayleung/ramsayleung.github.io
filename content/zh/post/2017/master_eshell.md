@@ -7,6 +7,7 @@ lastmod = 2025-01-09T19:20:26-08:00
 tags = ["eshell", "emacs"]
 categories = ["翻译"]
 draft = false
+showQuote = true
 +++
 
 Emacs 支持若干种shell,但是就功能丰富度，以及与Emacs 的集成程度而言，

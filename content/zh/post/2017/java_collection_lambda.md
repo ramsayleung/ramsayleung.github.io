@@ -7,6 +7,7 @@ tags = ["java"]
 categories = ["java"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 我平时也有浏览各类博客的习惯，毕竟三人行则必有我师嘛。今天在浏览关于Java的一个博客的时候，对博主的观点有一些不同的开发，但是困于没法在博客下评论，内容如下：

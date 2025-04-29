@@ -6,6 +6,7 @@ tags = ["python", "sqlite"]
 categories = ["python"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 python 与嵌入式关系数据库 sqlite3的邂逅

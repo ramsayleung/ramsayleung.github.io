@@ -7,6 +7,7 @@ tags = ["linux", "shell", "command_line"]
 categories = ["Linux/Unix Shell 二三事"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 > diff - compare files line by line

@@ -7,6 +7,7 @@ tags = ["shell", "linux", "command_line"]
 categories = ["Linux/Unix Shell 二三事"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 > head - output the first part of files

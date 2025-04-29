@@ -7,6 +7,7 @@ tags = ["emacs", "eshell", "tool"]
 categories = ["Emacs技巧"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> 发现帅气的提示符 {#发现帅气的提示符}

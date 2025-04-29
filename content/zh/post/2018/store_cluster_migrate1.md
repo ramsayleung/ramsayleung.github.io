@@ -6,6 +6,7 @@ tags = ["mysql", "hbase"]
 categories = ["hbase"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 搭建和配置 Hadoop, Zookeeper, Hbase

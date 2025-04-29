@@ -7,6 +7,7 @@ tags = ["linux", "shell", "command_line"]
 categories = ["Linux/Unix Shell 二三事"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 > cat - concatenate files and print on the standard output

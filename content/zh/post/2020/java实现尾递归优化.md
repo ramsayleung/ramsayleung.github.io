@@ -6,6 +6,7 @@ tags = ["java"]
 categories = ["java"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> 前言 {#前言}

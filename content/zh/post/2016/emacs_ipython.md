@@ -8,6 +8,7 @@ tags = ["emacs", "python"]
 categories = ["Emacs技巧"]
 draft = false
 toc = true
+showQuote = true
 +++
 
 ## <span class="section-num">1</span> Emacs Ipython 输出错误 {#emacs-ipython-输出错误}
