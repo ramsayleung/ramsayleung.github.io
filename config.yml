@@ -115,6 +115,18 @@ params:
     threshold: 0.4
     minMatchCharLength: 0
     keys: ["title", "permalink", "summary", "content"]
+
+  socialIcons:
+    - name: github
+      url: "https://github.com/ramsayleung"
+    - name: stackoverflow
+      url: "https://stackoverflow.com/users/5738112/ramsay"
+    - name: x
+      url: "https://twitter.com/foobar_ramsay"
+    - name: linkedin
+      url: "https://www.linkedin.com/in/ramsayleung/"
+    - name: telegram
+      url: "https://t.me/+Z2PUA7NFt41iY2M1"
 defaultContentLanguageInSubdir: true
 copyright: "See this site's source code [here](https://github.com/ramsayleung/ramsayleung.github.io), licensed under GPLv3 ·"
 defaultContentLanguage: en
@@ -124,17 +136,6 @@ languages:
     subtitle: "Yet Another Programming Blog"
     weight: 1
     contentDir: 'content/en'
-    socialIcons:
-      - name: github
-        url: "https://github.com/ramsayleung"
-      - name: stackoverflow
-        url: "https://stackoverflow.com/users/5738112/ramsay"
-      - name: twitter
-        url: "https://twitter.com/foobar_ramsay"
-      - name: linkedin
-        url: "https://www.linkedin.com/in/ramsayleung/"
-      - name: RSS
-        url: "/en/index.xml"
     menu:
       main:
         - name: Archives
@@ -158,17 +159,6 @@ languages:
     subtitle: "过河卒"
     contentDir: 'content/zh'
     weight: 2
-    socialIcons:
-      - name: github
-        url: "https://github.com/ramsayleung"
-      - name: stackoverflow
-        url: "https://stackoverflow.com/users/5738112/ramsay"
-      - name: twitter
-        url: "https://twitter.com/foobar_ramsay"
-      - name: linkedin
-        url: "https://www.linkedin.com/in/ramsayleung/"
-      - name: RSS
-        url: "/zh/index.xml"
     menu:
       main:
         - name: "归档"
