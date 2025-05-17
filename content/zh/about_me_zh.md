@@ -13,13 +13,13 @@ toc = true
 
 Ramsay 是位软件工程师，以写程序为业, 曾经就职于蚂蚁金服，微信，现供职于AWS, 详见[Linkedin](https://www.linkedin.com/in/ramsayleung/)<br/>
 
-推崇开源与动手精神，使用Emacs 与Linux 多年，喜欢动手折腾。 <br/>
+推崇开源与动手精神，使用 Emacs 与 Linux 多年，喜欢动手折腾。 <br/>
 
 写过 C++, Java, Javascript/Typescript, Rust这几种语言的生产代码，目前在[AWS S3](https://aws.amazon.com/s3/) 写Rust和Java养活自己，偶尔用[EmacsLisp](https://github.com/ramsayleung/emacs.d) 为自己的工作流写小工具，喜欢用 Python 做自动化，使用 Ruby on Rails 写 Web <br/>
 
 在职业生涯，作为核心开发深度参与开发&设计的产品:
-- 微信支付[委托代扣](https://pay.weixin.qq.com/docs/merchant/products/entrusted-payment/introduction.html)
-- [S3 Metadata](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingMetadata.html)
+- [微信支付委托代扣](https://pay.weixin.qq.com/doc/v3/merchant/4012161105)
+- Founding Engineer @ [AWS S3 Metadata](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingMetadata.html) 
 
 ## <span class="section-num">0x2</span> 写作 {#写作}
 
