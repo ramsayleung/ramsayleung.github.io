@@ -12,8 +12,323 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sat, 26 Apr 2025 17:12:10 -0700</lastBuildDate>
+    <lastBuildDate>Fri, 30 May 2025 01:04:13 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>软件设计的哲学</title>
+      <link>https://ramsayleung.github.io/zh/post/2025/a_philosophy_of_software_design/</link>
+      <pubDate>Fri, 30 May 2025 00:39:00 -0700</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2025/a_philosophy_of_software_design/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;知道这本书是因为在 Hacker News 上有人提问：&lt;a href=&#34;https://news.ycombinator.com/item?id=31713756&#34;&gt;你读过最好的技术书是什么&lt;/a&gt; &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;?&lt;/p&gt;
+&lt;p&gt;最高赞的书是 Design Data Intensive Application(DDIA, 即《&lt;a href=&#34;https://book.douban.com/subject/30329536/&#34;&gt;数据密集型应用系统设计&lt;/a&gt;》&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;), 我觉得 DDIA 也当得起这个赞誉，然后最高赞的回答顺势提到了 &lt;a href=&#34;https://book.douban.com/subject/30218046/&#34;&gt;A Philosophy Of Software Design&lt;/a&gt; &lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;, 想来能与 DDIA 齐名的书，肯定不会差得哪里去。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
+<p>知道这本书是因为在 Hacker News 上有人提问：<a href="https://news.ycombinator.com/item?id=31713756">你读过最好的技术书是什么</a> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>?</p>
+<p>最高赞的书是 Design Data Intensive Application(DDIA, 即《<a href="https://book.douban.com/subject/30329536/">数据密集型应用系统设计</a>》<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>), 我觉得 DDIA 也当得起这个赞誉，然后最高赞的回答顺势提到了 <a href="https://book.douban.com/subject/30218046/">A Philosophy Of Software Design</a> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>, 想来能与 DDIA 齐名的书，肯定不会差得哪里去。</p>
+<p>作者是 John Ousterhout, 斯坦福大学的教授，TCL 编程语言的创造者(Redis 的初始化版本就是用 TCL 写的)，共识算法 Raft 的作者之一.</p>
+<p>这本书并不厚，全书只有200多页，读起来也并不费劲。</p>
+<p>而这本书的主旨，开篇就点出来了:</p>
+<blockquote>
+<p>This book is about how to design software systems to minimize their complexity.</p>
+<p>本书讲述如何设计软件系统以最小化其复杂度</p></blockquote>
+<p>而软件工程的本质就是如何管理复杂度，全书围绕如何降低软件复杂性提出的思考和解决方案，
+主要围绕抽象，异常，文档，一致性，设计原则这五个方向。</p>
+<p>许多原则我看着都深有共鸣，尤其在设计过相当多的系统之后，犯过许多错误之后，才会意识到这些原则的重要之处。</p>
+<p>很多原则看上去说的和没说一样，但只有踩过坑，实践起来都知道是金科玉律, 除了道出「软件设计」的真谛之外, 这本书其他论点也可谓字字珠玑.</p>
+<p>关于谨慎暴露过多的配置给用户，尽量让程序动态计算各种参数值，尽量提供默认参数。</p>
+<blockquote>
+<p>开发软件时，开发者主动承担一些额外痛苦，从而减少用户的痛苦。</p>
+<p>When developing a module, look for opportunities to take a little bit of extra suffering upon yourself in order to reduce the suffering of your users.</p></blockquote>
+<p>关于接口设计的原则:</p>
+<blockquote>
+<p>模块拥有简单的接口比简单的实现更重要。</p>
+<p>it&rsquo;s more important for a module to have simple interface than a simple implementation</p></blockquote>
+<p>关于异常处理的洞见:</p>
+<blockquote>
+<p>解决问题的最好方式是避免出现问题。</p>
+<p>The best way to eliminate exception handling complexity is to define your APIs so that there are no exceptions to handle: <strong><strong>define errors out of existence</strong></strong></p>
+<p>归根结底，减少 Bug 的最佳方法是让软件更简单(少即是多)</p>
+<p><strong><strong>Overall, the best way to reduce bugs is to make software simpler.</strong></strong></p></blockquote>
+<h2 id="抽象"><span class="section-num">2</span> 抽象</h2>
+<p>所谓的抽象，用我自己的话来说的就是把复杂的东西简单地呈现出来。</p>
+<h3 id="模块深度"><span class="section-num">2.1</span> 模块深度</h3>
+<p>为了直观地感受一个模块设计到是否抽象得多，作者提出一个模块深度的概念:</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-ff3dd" hidden>
+    <label for="zoomCheck-ff3dd">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/deep_module.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>矩形的表层长度即是接口的复杂程度，而矩形的面积代表模块实现的功能，好的模块应该是深的(deep), 这意味着它有简单的接口，但是内部处理复杂的功能.</p>
+<p>例如 Unix 的文件读写接口:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">open</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">path</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">,</span> <span class="kt">mode_t</span> <span class="n">permissions</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">ssize_t</span> <span class="nf">read</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span> <span class="n">buffer</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">count</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">ssize_t</span> <span class="nf">write</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span><span class="o">*</span> <span class="n">buffer</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">count</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">off_t</span> <span class="nf">lseek</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">off_t</span> <span class="n">offset</span><span class="p">,</span> <span class="kt">int</span> <span class="n">referencePosition</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">close</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>接口非常简单，但是其内部的实现可能需要成千上万行的代码，
+需要支持文件目录的读写，文件权限，读写缓冲区，磁盘读写等等功能，这就是「深的」模块。</p>
+<p>与其相反的就是浅的模块(shallow), 接口很复杂，但是功能却很简单。</p>
+<h3 id="信息的漏与藏"><span class="section-num">2.2</span> 信息的漏与藏</h3>
+<p>实现抽象的关键手段就是辨别出信息的重要程度，对于不重要的信息，就要对用户隐藏起来，关键的信息，就要暴露给用户, 实现「去粗存精，开箱即用」。</p>
+<p>一个典型的例子就是参数配置，把参数暴露给用户，除非用户非常熟悉这个系统，不然他也不知道怎么算，
+不需要用户关注的参数就提供默认值，能程序动态计算就由程序自己来算.</p>
+<p>我很厌恶的一种设计就是引入一个配置系统，系统的运行参数都要由工程师配置，美其名是提供灵活度。</p>
+<p>但这不仅引入额外的系统依赖（须知复杂度的根源就来自依赖与不明确），还大大增加了的运维成本，
+更何况这样的配置还无法自适应，换种机型又要重新配置，导致配置越来越复杂。</p>
+<p>除非是业务的黑名单或者白名单，系统的运行参数能用默认的就用默认，能动态计算就动态计算。</p>
+<p>想想TCP/IP 的重试延迟时长如果不是动态计算，那么配置什么值比较合适，网络畅通和网络延迟又该是什么值，
+开始恢复时和开始堵塞时又应该是什么值的呢。</p>
+<h2 id="异常"><span class="section-num">3</span> 异常</h2>
+<p>异常处理是系统复杂度的关键来源之一，异常就是一种特殊的分支，系统为了处理特殊 case难免需要写很多的逻辑。</p>
+<p>而作者提出的降低异常处理来系统复杂度影响的方法，就是优化设计，减少必须处理异常的地方。</p>
+<p>解决一个问题最好的方法是避免其发生，听起来很空洞或者是很不可思议，作者举出来的例子就是 Java 的 <code>substring(int beginIndex, int endIndex)</code> 用于截取子字符串的接口, 如果 <code>endIndex</code> 超出字符长度，Java 就会抛出一个 <code>IndexOutOfBoundException</code>, 调用方就是需要考虑越界的问题。</p>
+<p>但是如果 Java 的 <code>substring</code> 接口本身可以像 Python 那样支持越界，返回一个空字符串，那么调用方就完全不需要考虑越界导致的异常</p>
+<p>另外一个例子是作者设计的TCL脚本中的 <code>unset</code> 指令，原意是用来删除一个变量，因为他最初的设想是变量如果不存在，用户不可能调用 <code>unset</code> 的，那么当 <code>unset</code> 操作的变量不存在，那么就会抛出异常。</p>
+<p>但是很多用户就是用 <code>unset</code> 来清理可能被初始化或者未初始化的变量，现在的设计就意味用户还需要包一层 <code>try/catch</code> 才能使用 <code>unset</code>.</p>
+<p>意识到这个设计错误之后，作者对 <code>unset</code> 的语义作了稍微的修正，用 <code>unset</code> 来确保指定的变量不再存在(如果变量本身不存在，那么它什么都不需要做)</p>
+<p>更经典的例子就是 Windows 下面删除一个文件，相信使用过 Windows 的朋友尝试删除文件时都会遇到这样的弹窗：「文件已被打开，无法删除，请重试」</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-bbb1b" hidden>
+    <label for="zoomCheck-bbb1b">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/windows_delete_opening_file.png"/> 
+    
+    
+    </label>
+</figure>
+
+<p>用户只能费尽心思去找打开这个文件的进程，然后把它杀掉再尝试删除，甚至只能通过关机重启来尝试删除文件。</p>
+<p>但是 Unix 的处理方式就更优雅，它允许用户删除已经被其他进程打开的文件，它会对该文件做标记，让用户看来它已经被删除了，但是在打开它的进程结束前文件对应的数据都会一直存在。</p>
+<p>只有在进程结束后，文件数据才会被删除掉，这样用户在删除文件时就不需要担心文件是否被使用。</p>
+<p>通过优化以上的设计，减少需要用户处理的异常，这也是一个「去粗留精」的过程, 减少用户需要感知的内容。</p>
+<h2 id="文档"><span class="section-num">4</span> 文档</h2>
+<p>本书用了好几个章节来介绍文档与注释的重要性，命名的重要性，如何写好注释和起好名字。</p>
+<p>好的文档可以大幅改善一个系统的设计，因为文档的作用就是把「对用户重要的，但是无法直接从代码中得知的关键信息告知用户」, 相当于帮用户把一个系统的关键信息给找出来。</p>
+<p>不是有这么一句话： <strong><strong>程序员都讨厌写文档，但是更痛恨其他程序员不写文档。</strong></strong></p>
+<p>程序员不写代码的借口大概有这么几个（可惜它们都是不成立的）, 常见的借口与它们不成立的原因可见:</p>
+<h3 id="好的代码是自解释的"><span class="section-num">4.1</span> 好的代码是自解释的</h3>
+<p>如果用户必须阅读方法源码才能使用它，那就没有抽象，你相当于把实现的所有复杂度都直接暴露给用户。</p>
+<p>若想通过抽象隐藏复杂性，注释必不可少</p>
+<h3 id="我没有时间写文档"><span class="section-num">4.2</span> 我没有时间写文档</h3>
+<p>如果你一直把写代码的优先级置于写文档之上，那么你会一直没有时间写代码，
+因为一个项目结束之后总会有新的项目到来，如果你一直把写注释的优先级放在代码之后，那么你永远都不会去写注释。</p>
+<p>写文档实际并不需要那么多的时间</p>
+<h3 id="文档都会过期的啦"><span class="section-num">4.3</span> 文档都会过期的啦</h3>
+<p>注释虽然难免会过期，但是保持与代码一致也并不会花费太多时间。</p>
+<p>只有大幅需要修改代码时才需要更新文档，更何况，只有每次都不更新文档，文档才会难免过期</p>
+<h3 id="我见过的文档都很烂-我为啥还要写"><span class="section-num">4.4</span> 我见过的文档都很烂，我为啥还要写</h3>
+<p>别人的注释写得不好，那不正说明你可以写出好的注释嘛。</p>
+<p>不能用别人的低标准来要求自己嘛。</p>
+<h3 id="文档的原则"><span class="section-num">4.5</span> 文档的原则</h3>
+<p><strong><strong>注释应当描述代码中不明显的内容</strong></strong>, 简单来说，就是要描述代码为什么要这么做，而不是描述代码是怎么做的，这相当于是把代码换成注释再写一次。</p>
+<p>作者推荐在定义完函数或者模块接口之后，不要马上动手写实现，
+而是在这个时候在接口上把注释文档写下来，
+这相当于是在脑海把模块的设计再过一次。</p>
+<p>说起接口注释和文档，我一直觉得我描述下接口功能和使用场景，已经比绝大多数的同行做得好了。</p>
+<p>在和现在的 L7 大佬一起工作之后，着实被他的文档所震撼。</p>
+<p>不知道是因为其对代码质量和文档都有非常高的要求，还是读博士时训练出来的写作能力，
+其对接口的功能，使用场景以及异常的描述都非常详尽，甚至包括代码使用示例，质量与 JDK 源码的注释不相上下, 原来真的有程序员花这么多精力写代码注释的。</p>
+<h2 id="一致性"><span class="section-num">5</span> 一致性</h2>
+<p>前文提到，系统的复杂度来自于两个方面「依赖」与「不明确」，
+而「一致性」就是让系统的行为更加清晰明确。</p>
+<p><strong><strong>它意味着相似的事情以相似的方式处理，不同的事情以不同的方式处理。</strong></strong></p>
+<p>即所谓的「规圆矩方」，通过规范约束降低随意性，以及「一法通，万法通」，统一模式提升可维护性，让行为可预期。</p>
+<p>一个系统的一致性一般体现在以下方面：</p>
+<ol>
+<li>命名(驼峰还是下划线)</li>
+<li>代码风格(缩进，空格还是tab)</li>
+<li>设计模式(使用特定的设计模式解决特定的问题)</li>
+</ol>
+<p>当然，还有通过「一致性」降低系统复杂度，走得比较极端的:</p>
+<p>之前还在微信支付的时候，除上述的要求外，还要求后端只能使用一种语言(C++, Golang/JavaScript就别想了), 存储组件只能使用微信内部研发的KV(使用MySql需要向总经理申请)等等的要求.</p>
+<h2 id="设计原则"><span class="section-num">6</span> 设计原则</h2>
+<h3 id="通用设计"><span class="section-num">6.1</span> 通用设计</h3>
+<p>好的设计应该是通用的，优先采用通用设计而非特殊场景的定制化方案，这个是减少复杂度和改善软件系统的根本原则。</p>
+<p>过度定制通常是成为软件复杂度增加的首要诱因。</p>
+<p>通用设计可以降低系统的整体复杂度(更少处理特殊分支的逻辑), 更深的模块(接口简单，功能丰富), 隐藏非关键信息.</p>
+<p>文中提到的例子就是文本编辑器的文字插入与删除操作:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 反例：过度定制（绑定特殊场景）, 实现删除键功能</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">TextEditor</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">handleBackspaceKey</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// 耦合UI事件</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cursorPosition</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">text</span><span class="p">.</span><span class="na">deleteCharAt</span><span class="p">(</span><span class="n">cursorPosition</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">cursorPosition</span><span class="o">--</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 正例：通用设计（解耦核心逻辑）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">Text</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">end</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// 纯文本操作</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">content</span><span class="p">.</span><span class="na">delete</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">UI</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">onBackspacePressed</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">text</span><span class="p">.</span><span class="na">delete</span><span class="p">(</span><span class="n">cursor</span><span class="p">.</span><span class="na">position</span><span class="p">(),</span><span class="w"> </span><span class="n">cursor</span><span class="p">.</span><span class="na">position</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// 调用通用API</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">cursor</span><span class="p">.</span><span class="na">moveLeft</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过 <code>delete(int start, int end)</code> 既可以实现删除键功能，也可以实现选中并删除的功能。</p>
+<h3 id="性能"><span class="section-num">6.2</span> 性能</h3>
+<p>在设计系统的时候，一般不需要太多地考虑性能的问题，因为简单，通用的系统要做性能优化通常都是比较容易；
+相反而言，深度定制的系统因为耦合了定义逻辑，要优化性能并没有那么容易。</p>
+<h3 id="设计两次"><span class="section-num">6.3</span> 设计两次</h3>
+<p>Design it twice</p>
+<p>因为很难一次就把事情做到极致, 那就再来一次, 设计时把能想到的选项都列下来.</p>
+<p>反直觉的是，第一直觉通常不是最优的, 所以不要只考虑一种设计方案，无论它看起来多么合理，多对比下其他方案总没有害处的。</p>
+<p>只用第一直觉的方案，其实你是在低估自己的潜力，你错失了找到更好方案的机会。</p>
+<p>这也是我在写设计方案时候的做法，把自己能想到的，和同事讨论出来的所有方案都写上，然后分析各种方案的优劣, 最好的方案可能并不在原有方案列表里面，而是其中几个方案的合体。</p>
+<h3 id="大局观"><span class="section-num">6.4</span> 大局观</h3>
+<p>做任何事都要有大局观, 编程也不例外，战略编程优于战术编程(Strategic Programming over Tactical Programming);</p>
+<p>虽然我们一直说「又不是不能跑」，但是我们对代码的要求，不能是「能跑就行啦」.</p>
+<p>再者就是要和扁鹊他大哥治病一样，把功夫都做在前期，防范于未然，修补错误成本往往也越往后越高，病入膏肓之后，扁鹊来了也要提桶跑路:</p>
+<blockquote>
+<p>治不了，等死吧，告辞</p></blockquote>
+<h2 id="代码整洁之道vs软件设计哲学"><span class="section-num">7</span> 代码整洁之道vs软件设计哲学</h2>
+<p>本书的作者对<a href="https://book.douban.com/subject/34986245/">《代码整洁之道》</a>(Clean Code)<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup> 的作者(Robert C. Martin, 即 Uncle Bob)的诸多观点作了反驳</p>
+<h3 id="函数拆分"><span class="section-num">7.1</span> 函数拆分</h3>
+<p>比如关于什么时候应该拆分一个函数，Uncle Bob 的观点是，基于函数的代码行数，一个函数需要相当短，甚至10行都有太长了。</p>
+<p>Uncle Bob 原话:</p>
+<blockquote>
+<p>In the book Clean Code1, Robert Martin argues that functions should be broken up on length alone. He says that functions should be extremely short, and that even 10 lines is too long.</p></blockquote>
+<p>而本书作者 John 的观点是: <strong><strong>每个函数应只做一件事，并完整地做好</strong></strong></p>
+<p>函数的接口应当简洁，这样调用者无需记住大量信息就能正确使用它。</p>
+<p>函数应当具备深度：其接口应远比实现更简单。如果一个函数满足以上所有特性，那么它的长度通常并不重要。</p>
+<p><strong><strong>除非能让整个系统更简单，否则不应拆分函数</strong></strong></p>
+<h3 id="文档注释"><span class="section-num">7.2</span> 文档注释</h3>
+<p>Uncle Bob 认为需要给函数「注释始终是一种失败(<strong><strong>Comments are always failures</strong></strong>)」</p>
+<p>如果我们的编程语言足够富有表现力，或者如果我们有能力用好这些语言来传达意图，那么我们就不太需要注释——甚至可能完全不需要.</p>
+<p><strong><strong>注释的正确用途，是弥补我们无法用代码清晰表达的缺陷……注释始终是一种失败</strong></strong></p>
+<blockquote>
+<p>If our programming languages were expressive enough, or if we had the talent to subtly wield those languages to express our intent, we would not need comments very much — perhaps not at all.</p>
+<p>he proper use of comments is to compensate for our failure to express ourselves in code&hellip;. Comments are always failures.</p></blockquote>
+<p>而 John 的观点是</p>
+<p>但注释并非失败的表现。</p>
+<p><strong><strong>它们提供的信息与代码截然不同，而这些信息目前无法通过代码本身来表达。</strong></strong></p>
+<p><strong><strong>注释的作用之一，正是让人无需阅读代码即可理解其含义</strong></strong></p>
+<p>甚至直接反驳其观点:</p>
+<blockquote>
+<p>I worry that Martin’s philosophy encourages a bad attitude in programmers, where they avoid comments so as not to seem like failures.</p></blockquote>
+<h3 id="网上对线"><span class="section-num">7.3</span> 网上对线</h3>
+<p>所以也难怪 Uncle Bob 和 John Ousterhout 几个月前直接在网上论坛来了一次 <del>对线</del> (<a href="https://news.ycombinator.com/item?id=43166362">辩论)</a> <sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup></p>
+<p>然后有看热闹不嫌事大的播主，把两人邀请到直播上，让他们直接面对面再来了一次对线</p>
+<p>对应的Youtube视频: <a href="https://www.youtube.com/watch?v=3Vlk6hCWBw0">https://www.youtube.com/watch?v=3Vlk6hCWBw0</a></p>
+<p>两位的书我都看过，我个人的感觉是《代码整洁之道》更适合入门的工程师，它可以教你如何写出好的「代码片段」；
+而《软件设计的哲学》更适合需要做系统设计的工程师，它指导你如何设计好的「软件」。</p>
+<p>考虑到两位作者的背景和作品，我可以说两位的差别可以说是 <strong><strong>以编程为生的人与以写编程相关的东西为生的人</strong></strong></p>
+<h2 id="总结"><span class="section-num">8</span> 总结</h2>
+<p>全书读完，我觉得《软件设计的哲学》绝对是配得上最好的技术书籍之一的赞誉。</p>
+<p>但是不同的人读起来可能会有不同的感觉，其中的许多原则真的是做过设计，踩过坑才会有所共鸣, 否则会觉得其泛泛其谈。</p>
+<p>当然，我也不是完全同意书中的所有观点的。</p>
+<p>比如书中提到的会导致代码意图不「明显」的其中一种做法是声明的类型与初始化的类型不一致的情况:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span><span class="w"> </span><span class="n">incomingMessageList</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">incomingMessageList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span><span class="p">();</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>上面声明的是 <code>List&lt;Message&gt;</code>, 实际使用的 <code>ArrayList&lt;Message&gt;</code>, 这可能会误导用户，因为意图不清晰，阅读代码的人可能不确定是否需要使用 <code>List</code> 或者 <code>ArrayList</code>, 最好是声明和初始化都换成相同的类型。</p>
+<p>但是 <code>List</code> 是接口, <code>ArrayList</code> 是接口的具体实现，这个就是非常标准的面向对象编程中的多态，这并不什么问题。</p>
+<p>但瑕不掩瑜，全书读完，把书盖上后，我有种齿颊留香, 余音绕梁的感觉，书里有很多「熟悉的味道」，总是让我想起经手过的项目中种种的好代码和「坏」代码.</p>
+<div class="qr-container" center>
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" class="qr-container" width="160px" height="160px" center="t" />
+公号同步更新，欢迎关注👻
+</div>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://news.ycombinator.com/item?id=31713756">https://news.ycombinator.com/item?id=31713756</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://book.douban.com/subject/30329536/">https://book.douban.com/subject/30329536/</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://book.douban.com/subject/30218046/">https://book.douban.com/subject/30218046/</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="https://book.douban.com/subject/34986245/">https://book.douban.com/subject/34986245/</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5">
+<p><a href="https://news.ycombinator.com/item?id=43166362">https://news.ycombinator.com/item?id=43166362</a>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+]]></content:encoded>
+    </item>
     <item>
       <title>重新造轮子系列(六)：构建工具</title>
       <link>https://ramsayleung.github.io/zh/post/2025/reinvent_build_manager/</link>
@@ -5168,636 +5483,6 @@
 <li><a href="/zh/post/2025/reinvent_page_template/">模板引擎</a></li>
 <li><a href="/zh/post/2025/reinvent_build_manager/">构建工具</a></li>
 </ol>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>杂谈AI取代程序员</title>
-      <link>https://ramsayleung.github.io/zh/post/2025/%E6%9D%82%E8%B0%88ai%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98/</link>
-      <pubDate>Fri, 14 Feb 2025 21:15:00 -0800</pubDate>
-      <guid>https://ramsayleung.github.io/zh/post/2025/%E6%9D%82%E8%B0%88ai%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98/</guid>
-      <description>&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
-&lt;p&gt;最近国产的DeepSeek 模型的爆火，让「AI取代程序员」的说法又甚嚣尘上, 比如在国内著名的程序员社区 V2ex 搜索「&lt;a href=&#34;https://www.sov2ex.com/?q=AI%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98&#34;&gt;AI取代程序员&lt;/a&gt;」&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;，可以搜索出 69627 条结果(截止2025-02-15):&lt;/p&gt;</description>
-      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
-<p>最近国产的DeepSeek 模型的爆火，让「AI取代程序员」的说法又甚嚣尘上, 比如在国内著名的程序员社区 V2ex 搜索「<a href="https://www.sov2ex.com/?q=AI%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98">AI取代程序员</a>」<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>，可以搜索出 69627 条结果(截止2025-02-15):</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-bb60f" hidden>
-    <label for="zoomCheck-bb60f">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/v2ex_ai_replace_programmer.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>以至于我的一位非程序员朋友都来关心我，问我是否有被取代的担忧。</p>
-<p>在感谢朋友的关心之后，我也开始静下心来思考这个问题，以及形成这种想法背后可能的原因，然后就有了这篇文章。</p>
-<h2 id="ai取代程序员"><span class="section-num">2</span> AI取代程序员</h2>
-<p>在谈论AI能否真的取代程序员之前，我想先聊一下程序员的工作是什么, 毕竟定义好了问题才会分析.</p>
-<h3 id="研发流程"><span class="section-num">2.1</span> 研发流程</h3>
-<p>既然是程序员，那工作肯定是写代码嘛, 但是就我个人经验来说，我真正花费在写代码的时间可能连我工作时间30%都占不到.</p>
-<p>一个新功能大体的研发流程如下：
-当产品经理或者老板提出一个新需求的时候，程序员需要评估需求的可行性，然后撰写设计文档，评审设计方案，而后编码，测试再灰度上线功能，最后对新功能增加新监控告警，提供各项数据指标。</p>
-<p>由此可知, 产品经理只会跟你说他/她想要什么(what), 但是产品经理肯定不知道如何实现这个功能的(how), 需要程序员把模糊又朦胧的问题具体化和细致化，然后再根据方案来编码。</p>
-<p>遇到不合理的需求时，还需要告知产品经理，你的想法是不切实际的，比如经典的「根据手机壳颜色切换壁纸」需求</p>
-<p>但是我们在使用AI的时候，更多是一个具体而明确的任务，并且是我们针对的需求已经拆分好的任务，
-所以AI在做的只是将具体的设计方案翻译成代码的步骤。</p>
-<p>这不禁让我想起自己当年在微信支付7级晋升8级的答辩项目：一个研发提效的代码生成框架。</p>
-<p>我当时可谓信心满满，我的项目可以根据模板直接生成代码，不再需要手写CRUD的代码，以此来给工程师提效。</p>
-<p>评委就询问我：</p>
-<blockquote>
-<p>你有对项目开发的各个环节的耗时和阻塞时间做量化分析么？</p>
-<p>编码是整个研发流程效能最低的部分么？</p>
-<p>从拿到需求到开发上线，只有编码可以提效么?</p></blockquote>
-<p>评委这么一顿批头盖脸的输出，直接把我的信心给浇没了。</p>
-<p>虽然我写的代码生成工具远不如大模型加持的AI强大，但看起来都只局限于解决编码问题，研发流程的其他问题并没有解决。</p>
-<h3 id="冰山之下"><span class="section-num">2.2</span> 冰山之下</h3>
-<blockquote>
-<p>冰山运动之所以雄伟壮观，是因为它只有八分之一在水面上</p>
-<p>《午后之死》 海明威</p></blockquote>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-9c152" hidden>
-    <label for="zoomCheck-9c152">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/iceberg.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>如同只有只有八分之一在水面上的冰山一样, 很多程序员都可能没有意识到，写代码只是工作的一小部分，甚至可能是其中最轻松的部分, 维护才是工作中最繁琐且具有挑战性的部分。</p>
-<p>维护工作包含测试，debug, 修bug, 性能优化, 更新以适应其它改变，代码重构，客户支持，写文档并随时间修改文档.</p>
-<p>以我自己的经历为例，之前组里面有不少近10年的历史服务，但是还在发光发热，作为核心组件给客户提供服务.</p>
-<p>这些服务基本都是用Java写的, Java 以「Write once, run everywhere」且优秀的向后兼容能力而闻名, 因此还有不少公司还在使用JDK8, 仿佛被封印在 Java8 一样了。</p>
-<p>不久前, 在公司内部推行了一个要求将JDK升级到JDK17的全公司范围的项目:</p>
-<p>而升级JDK的动机，一方面是因为可以使用最新的语言特性，此外JDK8也马上要被停止支持了，另外一方面是性能优化, 各种评测都显示，从JDK8升级到JDK17，升级后JVM的系统资源使用量平均下降约10%~15%, 对于公司而言，更少的系统资源，就可以使用更少的服务器，通过升级JDK 就可实现无痛「降本增效」。</p>
-<p>但即使兼容能力优秀如Java，我也花费了近3周才把组里使用 JDK8/JDK11 的老服务切换到 JDK17，</p>
-<p>期间还出现了各种奇怪的问题，比如JVM参数名或者选项在升级之后被废弃了, 新版本JVM 无法识别，又或者是出于安全的考虑，部分JDK内部的 class 无法通过反射访问，会导致运行时异常，服务需要回滚.</p>
-<p>AI 也没法帮我们一键升级或维护, 而这些枯燥且繁琐的工作才是那未被人所见的「八分之七」.</p>
-<h3 id="功能性与非功能性需求"><span class="section-num">2.3</span> 功能性与非功能性需求</h3>
-<p>在程序开发中，除了有功能性需求，还需要非功能性需求.</p>
-<p>而功能性需求恰恰是其中最简单直接的，是满足「又不是不能用」的最基本要求。</p>
-<p>比如我需要实现加法，这个就是功能性需求，AI就需要帮我把加法实现出来。</p>
-<p>而所谓的非功能性需求，比较常见的是可扩展性(scalability)，可维护性(maintainability) 和性能(performance).</p>
-<h4 id="非功能性需求"><span class="section-num">2.3.1</span> 非功能性需求</h4>
-<p>还是以加法为例, 我可能需要后面扩展到乘法和除法, 或者扩展到复数或者矩阵加法，要怎么易于扩展呢？</p>
-<p>这些都是AI生成代码是没有考虑到的因素，AI比较擅长的可能是给它一个需求，它生成一段代码给我们。</p>
-<p>但是在软件研发的生命周期中，有大概80%的时间，都是维护已有的系统。</p>
-<p>而给已有的系统上增加功能，就需要考虑各种奇怪的兼容性，相当于带着锁链来跳舞，并不能像从无到有，什么都不用考虑的那般洒脱。</p>
-<p>而这样的限制，又是AI生成代码时未曾考虑的。</p>
-<p>所以从零开始的日抛型，不需要考虑维护成本的项目，很适合由AI来生成.</p>
-<h4 id="已解问题"><span class="section-num">2.3.2</span> 已解问题</h4>
-<p>但即使功能性的需求，有时候AI也会做不好。</p>
-<p>我之前在工作中需要根据已有的Schema, 使用Rust 写入Parquet数据，Rust本来就新，加之操作Parquet的库就更少了, 所以ChatGPT, Claude或者Gemini 都没有给出我满意能跑的结果，最后还是靠自己去读 Parquet库的源码找出的解决办法。</p>
-<p>无论模型怎么变，AI现阶段还需要预训练数据的投喂，所以没有相关的预处理数据，AI也只能胡扯。</p>
-<p>换而言之，所限于当前的AI模型，AI是只 <strong>善于处理已经被解决过的问题</strong></p>
-<p>所以总结下来，在真实项目中，AI还没有办法取代程序员。</p>
-<h3 id="ai取代论背后的动机"><span class="section-num">2.4</span> AI取代论背后的动机</h3>
-<p>既然你说AI现阶段还没有办法取代程序员，为什么我看到各种各样程序员要被AI取代的新闻，甚至有公司用AI来替代员工了？</p>
-<p>除去真的担心自己被AI取代的从业者外，我觉得看到两种扯着AI大旗的人。</p>
-<p>一种就是懂程序开发，装不懂程序开发，然后贩卖焦虑的人，最近非常火的就是，「我用Cursor从0 xx 天开发了一个App」 (Cursor是最近一个很火的AI编辑器，可以通过输入的指令生成代码).</p>
-<p>大体都是说自己完全不懂程序开发，借助AI/Cursor, xx天内开发出了一个App, 并且冲到了苹果App Store热门榜第一.</p>
-<p>普通程序员看到这种说法，一个小白从无到有都能开发出一个App, 难免会焦虑,不得不说，这种反向装弱再变强真的令人防不胜防， 想着不能被落下，就斥资加入各种付费群或者购买各种课程。</p>
-<p>神智清明的你可能在心平气和下很难做出这样的决定嘛。</p>
-<p>制造焦虑才能更好地贩卖自己的产品，毕竟到现在为止，靠AI盈利主要有两种方式:</p>
-<ol>
-<li>AI 公司靠产品融资，拉风投</li>
-<li>制造AI焦虑，借机卖课卖书卖文档</li>
-</ol>
-<p>另外一种就是要用AI来取代程序的公司，说要通过AI来增效，裁撤工程师，比如国外的 <a href="https://apnews.com/article/workday-layoffs-job-cuts-ai-investments-437581ad79d6e1cef2de7b300015dfbb?utm_source=t.me/mtfront">Workday 裁员说要再招人做 AI 的新闻</a> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>, 还有2023年 <a href="https://www.bwpeople.in/article/google-contemplates-30000-layoffs-due-to-ai-job-impact-503670">Google 因为AI裁员而30000 名员工的新闻 </a><sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
-<p>怎么说呢，AI这块牌子太好用了, 什么都可以往里面套，裁撤工程师降本是真，AI增效大概是假。</p>
-<p>裁员就裁员呗，为什么还要说是用AI来取代程序员呢？</p>
-<p>因为说是AI取代了程序员，被毕业的员工们和待毕业的员工们都只会把裁员的原因归罪到AI上，
-管理层的无所作为，墨守成规，决策失误，无序扩张这些失误都不需要承诺后果了，反正背锅有AI。</p>
-<p>苦一苦员工，骂名AI来担。
-<img loading="lazy" src="/ox-hugo/ai_bear_the_infamy.jpg"></p>
-<h2 id="ai一无用处"><span class="section-num">3</span> AI一无用处</h2>
-<p>当然凡事都有例外，有人觉得AI会取代程序员，也有人觉得AI一无用处，不值一提。</p>
-<p>我对此也是持反对态度了，虽然AI无法取代程序员，但是它的确在很多方面可以给我提升相当大的效率，其效率跃升堪比计算机连上互联网。</p>
-<p>所以我也藉此来分享下我的AI用法</p>
-<h2 id="我的ai用法"><span class="section-num">4</span> 我的AI用法</h2>
-<p>我使用对AI的定位把它当作一位非常耐心，能力全面的助理，所以我给它分配的都是明确而繁琐的任务，并且我有能力对其输出进行评判的情景。
-(也就是让它干脏活累活)</p>
-<p>先声明一下我使用的AI 模型，日常事务我会使用ChatGPT, 响应速度快，量大够饱； 编码我会使用Claude 3.5 Sonnet，目前是我使用过效果最好的; 中文相关会使用DeepSeek, 但是经常服务器繁忙，体验不好。</p>
-<h3 id="生成测试用例"><span class="section-num">4.1</span> 生成测试用例</h3>
-<p>测试用例太适合让AI来写了，毕竟任务是非常明确的，需要被测的函数也是非常明确的，你只需要使用把测试的场景说清楚。</p>
-<p>我觉得都可以把这个内容扩展写成 <a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%80_%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E8%AE%A4%E7%9F%A5/">测试技能进阶系列</a> 的第四篇了</p>
-<p>假设我需要测试一个计算字符串中元音数量的函数 <code>count_vowels(s: str) -&gt; int</code>, 我的指令是:</p>
-<blockquote>
-<p>请为以下函数 `count_vowels(s: str) -&gt; int` 生成pytest测试用例：</p>
-<ol>
-<li>正常输入包含大小写元音的情况</li>
-<li>空字符串边界条件</li>
-<li>全元音字符的特殊情况</li>
-<li>不含元音的字符串</li>
-<li>非法输入类型校验</li>
-</ol></blockquote>
-<p>AI生成结果：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pytest</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_count_vowels_normal_cases</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># 混合大小写元音测试</span>
-</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">count_vowels</span><span class="p">(</span><span class="s2">&#34;Hello World&#34;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
-</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">count_vowels</span><span class="p">(</span><span class="s2">&#34;AEiou&#34;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_count_vowels_edge_cases</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># 空字符串/全元音测试</span>
-</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">count_vowels</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
-</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">count_vowels</span><span class="p">(</span><span class="s2">&#34;aei&#34;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_count_vowels_special_cases</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># 无元音字符串测试</span>
-</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">count_vowels</span><span class="p">(</span><span class="s2">&#34;rhythm&#34;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
-</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">count_vowels</span><span class="p">(</span><span class="s2">&#34;12345!@#&#34;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">test_count_vowels_invalid_input</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># 类型校验测试</span>
-</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="n">count_vowels</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="n">count_vowels</span><span class="p">([</span><span class="s2">&#34;hello&#34;</span><span class="p">])</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="语言学习"><span class="section-num">4.2</span> 语言学习</h3>
-<p>AI的多语言翻译功能对比其他传统基于单词的翻译软件简直是降维打击bb，毕竟Google的科学家最初做 Transform 模型就是为了做翻译的。</p>
-<p>记得我之前考雅思的时候，口语和写作考前复习就是把题库的复制给AI，然后让他来给我答题，我就把思路背下来，做题这方面，AI实在是太擅长了。</p>
-<blockquote>
-<p>Given the following IELTS Speaking Part1, you are an examinee, could you give me some band 9 answer:</p>
-<p>Ielts Speaking 3 Practice 5 (Change)</p>
-<ol>
-<li>Do you think change is good?</li>
-<li>What are some of the major changes that occur to people throughout their lives?</li>
-<li>Is your country changing rapidly?</li>
-<li>In what ways have changes in technology changed people&rsquo;s lives?</li>
-<li>Why do old people not accept change?</li>
-</ol></blockquote>
-<!--quoteend-->
-<blockquote>
-<p>Here are some Band 9 answers for the IELTS Speaking Part 1 topic &ldquo;Change&rdquo;, with a natural, fluent style and advanced vocabulary.</p>
-<ol>
-<li>Do you think change is good?</li>
-</ol>
-<p>Absolutely. Change is an inevitable part of life, and in most cases, it drives progress and personal growth. While change can be daunting at first, it often leads to new opportunities and valuable experiences. Without change, we would stagnate, both individually and as a society.
-&hellip;</p></blockquote>
-<p>让AI做词典, 帮我解释和翻译我不懂的单词，或者做中译英方便交流:</p>
-<blockquote>
-<p>You are a professional translator. Translate all input Chinese paragraphs into English and all input English into Chinese, and help me explain its meaning</p></blockquote>
-<p>而后我输入中文，它就会给我英文翻译；输入英文，它会给我中文翻译:</p>
-<blockquote>
-<p>&ldquo;爱哭的孩子有奶喝&rdquo;</p>
-<hr>
-<p>&ldquo;The crying baby gets the milk.&rdquo;
-Meaning:</p>
-<p>This Chinese proverb &ldquo;爱哭的孩子有奶喝&rdquo; (ài kū de háizi yǒu nǎi hē) means that those who complain, express their needs, or fight for their interests are more likely to get attention and benefits. It suggests that speaking up and advocating for oneself can lead to better outcomes, similar to how a baby who cries gets fed first.</p></blockquote>
-<!--quoteend-->
-<blockquote>
-<p>illiterate</p>
-<hr>
-<p>&ldquo;Illiterate&rdquo; 的中文翻译是 “文盲” 或 “不识字”。
-含义：</p>
-<ol>
-<li>
-<p>基本含义：指一个人 不识字或无法阅读和书写。</p>
-<ul>
-<li>例如：Many people in the past were illiterate because they had no access to education.（过去，许多人因为无法接受教育而是文盲。）</li>
-</ul>
-</li>
-<li>
-<p>引申含义：在某个领域缺乏基本知识或技能。</p>
-<ul>
-<li>例如：&ldquo;He is financially illiterate.&quot;（他在财务方面一窍不通。）</li>
-<li>在科技、法律、文化等方面，也可以用 illiterate 来形容缺乏基础知识的人，例如 &ldquo;technologically illiterate&rdquo;（科技文盲）。</li>
-</ul>
-</li>
-</ol></blockquote>
-<p>还有一个就是让AI 给我写的内容纠错，这个也比传统的语法工具类如 Grammarly 好用.</p>
-<blockquote>
-<p>You are a professional and seasoned translator, correct me if I am wrong.</p></blockquote>
-<h3 id="代码审计"><span class="section-num">4.3</span> 代码审计</h3>
-<p>有时候我会查看一些智能合约的代码或者TG bot的代码，在实际交互前，我一般会把代码丢给AI，让它检查一下是否有可疑的代码片段，类如窃取用户的私钥，把资金转到可疑账户等等。</p>
-<p>或者把我自己写的代码丢给AI，让它看下是否有安全漏洞:</p>
-<blockquote>
-<p>Given the following code, help me spot if there is any vulnerability here:</p></blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/search&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">search</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">    <span class="n">query</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;q&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">cursor</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;SELECT * FROM products WHERE name LIKE &#39;%</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">%&#39;&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;results.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">())</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>Yes, there are several serious security vulnerabilities in this code. Let me break them down:</p>
-<ul>
-<li>SQL Injection Vulnerability (Critical):</li>
-</ul>
-<p>The most severe issue is that the code uses string formatting (f-string) to directly insert user input into the SQL query. This allows SQL injection attacks. For example, a malicious user could input:</p>
-<p>Here&rsquo;s a secure version of the code:</p></blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/search&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">search</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">    <span class="n">query</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;q&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">query</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;results.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[])</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># Using parameterized query with placeholders</span>
-</span></span><span class="line"><span class="cl">    <span class="n">cursor</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">        <span class="s2">&#34;SELECT * FROM products WHERE name LIKE ?&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="s1">&#39;%&#39;</span> <span class="o">+</span> <span class="n">query</span> <span class="o">+</span> <span class="s1">&#39;%&#39;</span><span class="p">,)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;results.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">())</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="反编译"><span class="section-num">4.4</span> 反编译</h3>
-<p>现代前端基本都会使用类似webpack 的打包工具进行打包压缩, 甚至还会进行代码混淆，所以F12 查看源码，并不能查出端倪.</p>
-<p>因此我一般都是让AI 来帮我反编译和还原, 这样就免去了复杂的人工转译的过程:</p>
-<blockquote>
-<p>Given the obfuscated and compressed code, could you reverse it back to the original source code?</p></blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">_0x3f2a</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;\x48\x65\x6c\x6c\x6f&#39;</span><span class="p">,</span> <span class="s1">&#39;\x6c\x6f\x67&#39;</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">_0x12d3f0</span><span class="p">,</span> <span class="nx">_0x3f2a8c</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">_0x553e8f</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">_0x5e7a28</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="p">(</span><span class="o">--</span><span class="nx">_0x5e7a28</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="nx">_0x12d3f0</span><span class="p">[</span><span class="s1">&#39;push&#39;</span><span class="p">](</span><span class="nx">_0x12d3f0</span><span class="p">[</span><span class="s1">&#39;shift&#39;</span><span class="p">]());</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">};</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">_0x553e8f</span><span class="p">(</span><span class="o">++</span><span class="nx">_0x3f2a8c</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}(</span><span class="nx">_0x3f2a</span><span class="p">,</span> <span class="mh">0x1a4</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">_0x553e</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">_0x12d3f0</span><span class="p">,</span> <span class="nx">_0x3f2a8c</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">_0x12d3f0</span> <span class="o">=</span> <span class="nx">_0x12d3f0</span> <span class="o">-</span> <span class="mh">0x0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">_0x553e8f</span> <span class="o">=</span> <span class="nx">_0x3f2a</span><span class="p">[</span><span class="nx">_0x12d3f0</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">_0x553e8f</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">_ax342</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">_0x5e7a28</span> <span class="o">=</span> <span class="nx">_0x553e</span><span class="p">(</span><span class="s1">&#39;0x0&#39;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">[</span><span class="nx">_0x553e</span><span class="p">(</span><span class="s1">&#39;0x1&#39;</span><span class="p">)](</span><span class="nx">_0x5e7a28</span> <span class="o">+</span> <span class="s1">&#39; World!&#39;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="nx">_ax342</span><span class="p">();</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>Let me help you deobfuscate this code. Based on the patterns and structure, this appears to be JavaScript code that has been obfuscated using common techniques like array-based string storage and variable name mangling.
-The original source code would be:</p></blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">greet</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;Hello World!&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="nx">greet</span><span class="p">();</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>着实有点东西</p>
-<h3 id="排查问题"><span class="section-num">4.5</span> 排查问题</h3>
-<p>在出现大模型AI之前，当遇到某个工具或者库的错误信息时，我一般的做法是：</p>
-<ol>
-<li>复制错误信息</li>
-<li>粘贴到Google</li>
-<li>点击排名最靠前的Stackoverflow 链接</li>
-<li>扫一下是否是我想问的问题，如果不是就再回到2</li>
-<li>按照最高赞的解决方案尝试下</li>
-<li>如果还不行，再回到2</li>
-</ol>
-<p>有了AI之后，我一般的做法是:</p>
-<ol>
-<li>复制错误信息</li>
-<li>问AI &ldquo;How to fix this erro&rdquo;, 粘贴上错误信息</li>
-<li>按照AI的建议一步步尝试</li>
-<li>如果不行，把最新的错误信息复制粘贴给AI, 告诉它这不管用.</li>
-</ol>
-<p>与Google 的方案相比，我现在有了个再反馈的过程, 可以把最新的结果再告知AI, 这样更方便AI基于上下文做出解答.</p>
-<h3 id="数据处理"><span class="section-num">4.6</span> 数据处理</h3>
-<p>非结构化数据转换成结构化数据，如JSON, 相当于让AI做了数据清洗的脏活:</p>
-<blockquote>
-<p>Given the following output of ls command, could you convert it to JSON?</p></blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">-&gt; % ls -alrt
-</span></span><span class="line"><span class="cl">total <span class="m">828</span>
-</span></span><span class="line"><span class="cl">-rw-rw----+   <span class="m">1</span> ramsay ramsay   <span class="m">4672</span> Mar <span class="m">21</span>  <span class="m">2019</span> abbrev_defs
-</span></span><span class="line"><span class="cl">-rw-rw----+   <span class="m">1</span> ramsay ramsay  <span class="m">10079</span> Mar <span class="m">21</span>  <span class="m">2019</span> recentf~
-</span></span><span class="line"><span class="cl">drwxr-xr-x    <span class="m">2</span> ramsay ramsay   <span class="m">4096</span> Apr <span class="m">16</span>  <span class="m">2021</span> images
-</span></span><span class="line"><span class="cl">drwxrw----+  <span class="m">44</span> ramsay ramsay   <span class="m">4096</span> Apr <span class="m">16</span>  <span class="m">2021</span> snippets
-</span></span><span class="line"><span class="cl">-rw-rw----+   <span class="m">1</span> ramsay ramsay   <span class="m">3740</span> Dec <span class="m">10</span>  <span class="m">2021</span> projectile-bookmarks.eld
-</span></span><span class="line"><span class="cl">-rw-rw----+   <span class="m">1</span> ramsay ramsay <span class="m">241501</span> May <span class="m">27</span>  <span class="m">2022</span> company-statistics-cache.el
-</span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>Here is the JSON representation of the given ls -alrt output:
-Explanation:</p>
-<ul>
-<li>Each file/directory is represented as an object inside the &ldquo;files&rdquo; array.</li>
-<li>&ldquo;name&rdquo; is the file/directory name.</li>
-<li>&ldquo;permissions&rdquo; is the file permissions.</li>
-<li>&ldquo;links&rdquo; is the number of hard links.</li>
-<li>&ldquo;owner&rdquo; is the owner of the file.</li>
-<li>&ldquo;group&rdquo; is the group the file belongs to.</li>
-<li>&ldquo;size&rdquo; is the size of the file in bytes.</li>
-<li>&ldquo;modified&rdquo; is the date of the last modification.</li>
-</ul></blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl">     <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nt">&#34;files&#34;</span><span class="p">:</span> <span class="p">[</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;abbrev_defs&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;permissions&#34;</span><span class="p">:</span> <span class="s2">&#34;-rw-rw----+&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;links&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;owner&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;size&#34;</span><span class="p">:</span> <span class="mi">4672</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;modified&#34;</span><span class="p">:</span> <span class="s2">&#34;Mar 21 2019&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">},</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;recentf~&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;permissions&#34;</span><span class="p">:</span> <span class="s2">&#34;-rw-rw----+&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;links&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;owner&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;size&#34;</span><span class="p">:</span> <span class="mi">10079</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;modified&#34;</span><span class="p">:</span> <span class="s2">&#34;Mar 21 2019&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">},</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;images&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;permissions&#34;</span><span class="p">:</span> <span class="s2">&#34;drwxr-xr-x&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;links&#34;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;owner&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;size&#34;</span><span class="p">:</span> <span class="mi">4096</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;modified&#34;</span><span class="p">:</span> <span class="s2">&#34;Apr 16 2021&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">},</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;snippets&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;permissions&#34;</span><span class="p">:</span> <span class="s2">&#34;drwxrw----+&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;links&#34;</span><span class="p">:</span> <span class="mi">44</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;owner&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;size&#34;</span><span class="p">:</span> <span class="mi">4096</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;modified&#34;</span><span class="p">:</span> <span class="s2">&#34;Apr 16 2021&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">},</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;projectile-bookmarks.eld&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;permissions&#34;</span><span class="p">:</span> <span class="s2">&#34;-rw-rw----+&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;links&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;owner&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;size&#34;</span><span class="p">:</span> <span class="mi">3740</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;modified&#34;</span><span class="p">:</span> <span class="s2">&#34;Dec 10 2021&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">},</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;company-statistics-cache.el&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;permissions&#34;</span><span class="p">:</span> <span class="s2">&#34;-rw-rw----+&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;links&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;owner&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;ramsay&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;size&#34;</span><span class="p">:</span> <span class="mi">241501</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;modified&#34;</span><span class="p">:</span> <span class="s2">&#34;May 27 2022&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="p">]</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>对于非结构化的数据，或者缺失格式的数据, AI都能处理.</p>
-<h2 id="总结"><span class="section-num">5</span> 总结</h2>
-<p>这是我用即梦AI生成的一张街舞海报，我注明了地址，联系电话，以及价格，生成出来的结果是这样的</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-26467" hidden>
-    <label for="zoomCheck-26467">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/genai_cover_image.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>远看是那么一回事！细看是什么回事?</p>
-<p>AI现阶段还是无法取代程序员的，未来AI我也觉得很难取代程序员(当然，取代把需求翻译成代码的人肉翻译器还是有可能的)，因为程序员虽然是和机器打交道，但是本质上还是解决人的问题。</p>
-<p>担忧程序员被AI取代的人可能只看到了测试场景里面的 happy path, 也就是AI能生成老板们想要的代码，没有看到unhappy path, 也就是老板们想要的代码, AI生成不出来要怎么办?</p>
-<p>毕竟人可以根据已有的经验进行归纳总结，把已有的经验应用在未踏足的领域，且持续学习，但是AI还是受限于预训练数据，做不出来就是做不出来。</p>
-<p>但是对程序员而言，AI不失为一个好用且提效的工具，好用的工具就应该多学多用多玩，而不是担忧被其取代。</p>
-<p>AI无法取代持续精进者, 傲慢自满方为淘汰之源</p>
-<p>(什么，你问我当初的答辩结果？自然是</p>
-<hr>
-<p>挂了)</p>
-<h3 id="推荐阅读">推荐阅读</h3>
-<ul>
-<li>旅加经历
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E8%BF%99%E4%BA%9B%E5%B9%B4%E8%B5%B0%E8%BF%87%E7%9A%84%E8%B7%AF_%E4%BB%8E%E5%B9%BF%E5%B7%9E%E5%88%B0%E6%B8%A9%E5%93%A5%E5%8D%8E/">这些年走过的路：从广州到温哥华</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B9%8B%E5%88%9D%E4%BD%93%E9%AA%8C/">加拿大之初体验</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%99%BB%E9%99%86%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B8%80%E5%B9%B4%E7%9A%84%E4%BD%93%E4%BC%9A/">登陆加拿大一年后的体会</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E5%A4%8F%E6%97%A5%E6%8D%95%E8%9F%B9%E8%AE%B0/">夏日捕蟹记</a></li>
-</ul>
-</li>
-<li>历史思考
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E7%BD%AE%E8%BA%AB%E4%BA%8B%E5%86%85/">为什么梦想买不起，故乡回不去</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E9%97%B2%E8%81%8A%E5%86%99%E4%BD%9C/">闲聊写作的好处</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E9%87%91%E6%A6%9C%E9%A2%98%E5%90%8D%E4%B9%8B%E5%90%8E/">金榜题名之后</a></li>
-</ul>
-</li>
-<li>工具流分享
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%AE%80%E6%98%8E%E5%86%99%E4%BD%9C%E6%8C%87%E5%8D%97/">简明写作指南</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E5%86%99%E4%BD%9C%E6%B5%81/">我的写作流</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E7%94%BB%E5%9B%BE%E6%B5%81/">我的画图流：画图工具与技巧分享</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E6%90%9C%E7%B4%A2%E6%B5%81/">我的搜索流：高效搜索经验分享</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2022/feynman_technique/">最好的学习方式：费曼学习法(Feynman Technique)</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2021/%E7%B3%BB%E7%BB%9F%E6%80%9D%E8%80%83/">系统思考：既见树木，又见森林</a></li>
-</ul>
-</li>
-<li>职场思考
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%BC%96%E7%A8%8B%E5%8D%81%E5%B9%B4%E7%9A%84%E6%84%9F%E6%82%9F/">编程十年的感悟</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E4%BB%8E%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E7%A6%BB%E7%BA%BF_%E6%88%91%E5%B8%A6%E8%B5%B0%E4%BA%86%E4%BB%80%E4%B9%88/">那些年，我从微信支付学到的东西</a></li>
-</ul>
-</li>
-<li>软件工程
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%80_%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E8%AE%A4%E7%9F%A5/">测试技能进阶(一): 软件质量认知</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/">测试技能进阶(二): Parameterized Tests</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%89_property_based_testing/">测试技能进阶(三): Property Based Testing</a></li>
-</ul>
-</li>
-</ul>
-<div center class="qr-container">
-<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
-公号同步更新，欢迎关注👻
-</div>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p><a href="https://www.sov2ex.com/?q=AI%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98">https://www.sov2ex.com/?q=AI%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p><a href="https://apnews.com/article/workday-layoffs-job-cuts-ai-investments-437581ad79d6e1cef2de7b300015dfbb?utm_source=t.me/mtfront">https://apnews.com/article/workday-layoffs-job-cuts-ai-investments-437581ad79d6e1cef2de7b300015dfbb?utm_source=t.me/mtfront</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:3">
-<p><a href="https://www.bwpeople.in/article/google-contemplates-30000-layoffs-due-to-ai-job-impact-503670">https://www.bwpeople.in/article/google-contemplates-30000-layoffs-due-to-ai-job-impact-503670</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>
 ]]></content:encoded>
     </item>
   </channel>

@@ -12,8 +12,323 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Thu, 10 Apr 2025 23:43:35 -0700</lastBuildDate>
+    <lastBuildDate>Fri, 30 May 2025 01:04:13 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/book/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>软件设计的哲学</title>
+      <link>https://ramsayleung.github.io/zh/post/2025/a_philosophy_of_software_design/</link>
+      <pubDate>Fri, 30 May 2025 00:39:00 -0700</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2025/a_philosophy_of_software_design/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;知道这本书是因为在 Hacker News 上有人提问：&lt;a href=&#34;https://news.ycombinator.com/item?id=31713756&#34;&gt;你读过最好的技术书是什么&lt;/a&gt; &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;?&lt;/p&gt;
+&lt;p&gt;最高赞的书是 Design Data Intensive Application(DDIA, 即《&lt;a href=&#34;https://book.douban.com/subject/30329536/&#34;&gt;数据密集型应用系统设计&lt;/a&gt;》&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;), 我觉得 DDIA 也当得起这个赞誉，然后最高赞的回答顺势提到了 &lt;a href=&#34;https://book.douban.com/subject/30218046/&#34;&gt;A Philosophy Of Software Design&lt;/a&gt; &lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;, 想来能与 DDIA 齐名的书，肯定不会差得哪里去。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
+<p>知道这本书是因为在 Hacker News 上有人提问：<a href="https://news.ycombinator.com/item?id=31713756">你读过最好的技术书是什么</a> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>?</p>
+<p>最高赞的书是 Design Data Intensive Application(DDIA, 即《<a href="https://book.douban.com/subject/30329536/">数据密集型应用系统设计</a>》<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>), 我觉得 DDIA 也当得起这个赞誉，然后最高赞的回答顺势提到了 <a href="https://book.douban.com/subject/30218046/">A Philosophy Of Software Design</a> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>, 想来能与 DDIA 齐名的书，肯定不会差得哪里去。</p>
+<p>作者是 John Ousterhout, 斯坦福大学的教授，TCL 编程语言的创造者(Redis 的初始化版本就是用 TCL 写的)，共识算法 Raft 的作者之一.</p>
+<p>这本书并不厚，全书只有200多页，读起来也并不费劲。</p>
+<p>而这本书的主旨，开篇就点出来了:</p>
+<blockquote>
+<p>This book is about how to design software systems to minimize their complexity.</p>
+<p>本书讲述如何设计软件系统以最小化其复杂度</p></blockquote>
+<p>而软件工程的本质就是如何管理复杂度，全书围绕如何降低软件复杂性提出的思考和解决方案，
+主要围绕抽象，异常，文档，一致性，设计原则这五个方向。</p>
+<p>许多原则我看着都深有共鸣，尤其在设计过相当多的系统之后，犯过许多错误之后，才会意识到这些原则的重要之处。</p>
+<p>很多原则看上去说的和没说一样，但只有踩过坑，实践起来都知道是金科玉律, 除了道出「软件设计」的真谛之外, 这本书其他论点也可谓字字珠玑.</p>
+<p>关于谨慎暴露过多的配置给用户，尽量让程序动态计算各种参数值，尽量提供默认参数。</p>
+<blockquote>
+<p>开发软件时，开发者主动承担一些额外痛苦，从而减少用户的痛苦。</p>
+<p>When developing a module, look for opportunities to take a little bit of extra suffering upon yourself in order to reduce the suffering of your users.</p></blockquote>
+<p>关于接口设计的原则:</p>
+<blockquote>
+<p>模块拥有简单的接口比简单的实现更重要。</p>
+<p>it&rsquo;s more important for a module to have simple interface than a simple implementation</p></blockquote>
+<p>关于异常处理的洞见:</p>
+<blockquote>
+<p>解决问题的最好方式是避免出现问题。</p>
+<p>The best way to eliminate exception handling complexity is to define your APIs so that there are no exceptions to handle: <strong><strong>define errors out of existence</strong></strong></p>
+<p>归根结底，减少 Bug 的最佳方法是让软件更简单(少即是多)</p>
+<p><strong><strong>Overall, the best way to reduce bugs is to make software simpler.</strong></strong></p></blockquote>
+<h2 id="抽象"><span class="section-num">2</span> 抽象</h2>
+<p>所谓的抽象，用我自己的话来说的就是把复杂的东西简单地呈现出来。</p>
+<h3 id="模块深度"><span class="section-num">2.1</span> 模块深度</h3>
+<p>为了直观地感受一个模块设计到是否抽象得多，作者提出一个模块深度的概念:</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-ff3dd" hidden>
+    <label for="zoomCheck-ff3dd">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/deep_module.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>矩形的表层长度即是接口的复杂程度，而矩形的面积代表模块实现的功能，好的模块应该是深的(deep), 这意味着它有简单的接口，但是内部处理复杂的功能.</p>
+<p>例如 Unix 的文件读写接口:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">open</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">path</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">,</span> <span class="kt">mode_t</span> <span class="n">permissions</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">ssize_t</span> <span class="nf">read</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span> <span class="n">buffer</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">count</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">ssize_t</span> <span class="nf">write</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span><span class="o">*</span> <span class="n">buffer</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">count</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">off_t</span> <span class="nf">lseek</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">off_t</span> <span class="n">offset</span><span class="p">,</span> <span class="kt">int</span> <span class="n">referencePosition</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">close</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>接口非常简单，但是其内部的实现可能需要成千上万行的代码，
+需要支持文件目录的读写，文件权限，读写缓冲区，磁盘读写等等功能，这就是「深的」模块。</p>
+<p>与其相反的就是浅的模块(shallow), 接口很复杂，但是功能却很简单。</p>
+<h3 id="信息的漏与藏"><span class="section-num">2.2</span> 信息的漏与藏</h3>
+<p>实现抽象的关键手段就是辨别出信息的重要程度，对于不重要的信息，就要对用户隐藏起来，关键的信息，就要暴露给用户, 实现「去粗存精，开箱即用」。</p>
+<p>一个典型的例子就是参数配置，把参数暴露给用户，除非用户非常熟悉这个系统，不然他也不知道怎么算，
+不需要用户关注的参数就提供默认值，能程序动态计算就由程序自己来算.</p>
+<p>我很厌恶的一种设计就是引入一个配置系统，系统的运行参数都要由工程师配置，美其名是提供灵活度。</p>
+<p>但这不仅引入额外的系统依赖（须知复杂度的根源就来自依赖与不明确），还大大增加了的运维成本，
+更何况这样的配置还无法自适应，换种机型又要重新配置，导致配置越来越复杂。</p>
+<p>除非是业务的黑名单或者白名单，系统的运行参数能用默认的就用默认，能动态计算就动态计算。</p>
+<p>想想TCP/IP 的重试延迟时长如果不是动态计算，那么配置什么值比较合适，网络畅通和网络延迟又该是什么值，
+开始恢复时和开始堵塞时又应该是什么值的呢。</p>
+<h2 id="异常"><span class="section-num">3</span> 异常</h2>
+<p>异常处理是系统复杂度的关键来源之一，异常就是一种特殊的分支，系统为了处理特殊 case难免需要写很多的逻辑。</p>
+<p>而作者提出的降低异常处理来系统复杂度影响的方法，就是优化设计，减少必须处理异常的地方。</p>
+<p>解决一个问题最好的方法是避免其发生，听起来很空洞或者是很不可思议，作者举出来的例子就是 Java 的 <code>substring(int beginIndex, int endIndex)</code> 用于截取子字符串的接口, 如果 <code>endIndex</code> 超出字符长度，Java 就会抛出一个 <code>IndexOutOfBoundException</code>, 调用方就是需要考虑越界的问题。</p>
+<p>但是如果 Java 的 <code>substring</code> 接口本身可以像 Python 那样支持越界，返回一个空字符串，那么调用方就完全不需要考虑越界导致的异常</p>
+<p>另外一个例子是作者设计的TCL脚本中的 <code>unset</code> 指令，原意是用来删除一个变量，因为他最初的设想是变量如果不存在，用户不可能调用 <code>unset</code> 的，那么当 <code>unset</code> 操作的变量不存在，那么就会抛出异常。</p>
+<p>但是很多用户就是用 <code>unset</code> 来清理可能被初始化或者未初始化的变量，现在的设计就意味用户还需要包一层 <code>try/catch</code> 才能使用 <code>unset</code>.</p>
+<p>意识到这个设计错误之后，作者对 <code>unset</code> 的语义作了稍微的修正，用 <code>unset</code> 来确保指定的变量不再存在(如果变量本身不存在，那么它什么都不需要做)</p>
+<p>更经典的例子就是 Windows 下面删除一个文件，相信使用过 Windows 的朋友尝试删除文件时都会遇到这样的弹窗：「文件已被打开，无法删除，请重试」</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-bbb1b" hidden>
+    <label for="zoomCheck-bbb1b">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/windows_delete_opening_file.png"/> 
+    
+    
+    </label>
+</figure>
+
+<p>用户只能费尽心思去找打开这个文件的进程，然后把它杀掉再尝试删除，甚至只能通过关机重启来尝试删除文件。</p>
+<p>但是 Unix 的处理方式就更优雅，它允许用户删除已经被其他进程打开的文件，它会对该文件做标记，让用户看来它已经被删除了，但是在打开它的进程结束前文件对应的数据都会一直存在。</p>
+<p>只有在进程结束后，文件数据才会被删除掉，这样用户在删除文件时就不需要担心文件是否被使用。</p>
+<p>通过优化以上的设计，减少需要用户处理的异常，这也是一个「去粗留精」的过程, 减少用户需要感知的内容。</p>
+<h2 id="文档"><span class="section-num">4</span> 文档</h2>
+<p>本书用了好几个章节来介绍文档与注释的重要性，命名的重要性，如何写好注释和起好名字。</p>
+<p>好的文档可以大幅改善一个系统的设计，因为文档的作用就是把「对用户重要的，但是无法直接从代码中得知的关键信息告知用户」, 相当于帮用户把一个系统的关键信息给找出来。</p>
+<p>不是有这么一句话： <strong><strong>程序员都讨厌写文档，但是更痛恨其他程序员不写文档。</strong></strong></p>
+<p>程序员不写代码的借口大概有这么几个（可惜它们都是不成立的）, 常见的借口与它们不成立的原因可见:</p>
+<h3 id="好的代码是自解释的"><span class="section-num">4.1</span> 好的代码是自解释的</h3>
+<p>如果用户必须阅读方法源码才能使用它，那就没有抽象，你相当于把实现的所有复杂度都直接暴露给用户。</p>
+<p>若想通过抽象隐藏复杂性，注释必不可少</p>
+<h3 id="我没有时间写文档"><span class="section-num">4.2</span> 我没有时间写文档</h3>
+<p>如果你一直把写代码的优先级置于写文档之上，那么你会一直没有时间写代码，
+因为一个项目结束之后总会有新的项目到来，如果你一直把写注释的优先级放在代码之后，那么你永远都不会去写注释。</p>
+<p>写文档实际并不需要那么多的时间</p>
+<h3 id="文档都会过期的啦"><span class="section-num">4.3</span> 文档都会过期的啦</h3>
+<p>注释虽然难免会过期，但是保持与代码一致也并不会花费太多时间。</p>
+<p>只有大幅需要修改代码时才需要更新文档，更何况，只有每次都不更新文档，文档才会难免过期</p>
+<h3 id="我见过的文档都很烂-我为啥还要写"><span class="section-num">4.4</span> 我见过的文档都很烂，我为啥还要写</h3>
+<p>别人的注释写得不好，那不正说明你可以写出好的注释嘛。</p>
+<p>不能用别人的低标准来要求自己嘛。</p>
+<h3 id="文档的原则"><span class="section-num">4.5</span> 文档的原则</h3>
+<p><strong><strong>注释应当描述代码中不明显的内容</strong></strong>, 简单来说，就是要描述代码为什么要这么做，而不是描述代码是怎么做的，这相当于是把代码换成注释再写一次。</p>
+<p>作者推荐在定义完函数或者模块接口之后，不要马上动手写实现，
+而是在这个时候在接口上把注释文档写下来，
+这相当于是在脑海把模块的设计再过一次。</p>
+<p>说起接口注释和文档，我一直觉得我描述下接口功能和使用场景，已经比绝大多数的同行做得好了。</p>
+<p>在和现在的 L7 大佬一起工作之后，着实被他的文档所震撼。</p>
+<p>不知道是因为其对代码质量和文档都有非常高的要求，还是读博士时训练出来的写作能力，
+其对接口的功能，使用场景以及异常的描述都非常详尽，甚至包括代码使用示例，质量与 JDK 源码的注释不相上下, 原来真的有程序员花这么多精力写代码注释的。</p>
+<h2 id="一致性"><span class="section-num">5</span> 一致性</h2>
+<p>前文提到，系统的复杂度来自于两个方面「依赖」与「不明确」，
+而「一致性」就是让系统的行为更加清晰明确。</p>
+<p><strong><strong>它意味着相似的事情以相似的方式处理，不同的事情以不同的方式处理。</strong></strong></p>
+<p>即所谓的「规圆矩方」，通过规范约束降低随意性，以及「一法通，万法通」，统一模式提升可维护性，让行为可预期。</p>
+<p>一个系统的一致性一般体现在以下方面：</p>
+<ol>
+<li>命名(驼峰还是下划线)</li>
+<li>代码风格(缩进，空格还是tab)</li>
+<li>设计模式(使用特定的设计模式解决特定的问题)</li>
+</ol>
+<p>当然，还有通过「一致性」降低系统复杂度，走得比较极端的:</p>
+<p>之前还在微信支付的时候，除上述的要求外，还要求后端只能使用一种语言(C++, Golang/JavaScript就别想了), 存储组件只能使用微信内部研发的KV(使用MySql需要向总经理申请)等等的要求.</p>
+<h2 id="设计原则"><span class="section-num">6</span> 设计原则</h2>
+<h3 id="通用设计"><span class="section-num">6.1</span> 通用设计</h3>
+<p>好的设计应该是通用的，优先采用通用设计而非特殊场景的定制化方案，这个是减少复杂度和改善软件系统的根本原则。</p>
+<p>过度定制通常是成为软件复杂度增加的首要诱因。</p>
+<p>通用设计可以降低系统的整体复杂度(更少处理特殊分支的逻辑), 更深的模块(接口简单，功能丰富), 隐藏非关键信息.</p>
+<p>文中提到的例子就是文本编辑器的文字插入与删除操作:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 反例：过度定制（绑定特殊场景）, 实现删除键功能</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">TextEditor</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">handleBackspaceKey</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// 耦合UI事件</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cursorPosition</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">text</span><span class="p">.</span><span class="na">deleteCharAt</span><span class="p">(</span><span class="n">cursorPosition</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">cursorPosition</span><span class="o">--</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 正例：通用设计（解耦核心逻辑）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">Text</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">end</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// 纯文本操作</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">content</span><span class="p">.</span><span class="na">delete</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">class</span> <span class="nc">UI</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">onBackspacePressed</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">text</span><span class="p">.</span><span class="na">delete</span><span class="p">(</span><span class="n">cursor</span><span class="p">.</span><span class="na">position</span><span class="p">(),</span><span class="w"> </span><span class="n">cursor</span><span class="p">.</span><span class="na">position</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// 调用通用API</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">cursor</span><span class="p">.</span><span class="na">moveLeft</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过 <code>delete(int start, int end)</code> 既可以实现删除键功能，也可以实现选中并删除的功能。</p>
+<h3 id="性能"><span class="section-num">6.2</span> 性能</h3>
+<p>在设计系统的时候，一般不需要太多地考虑性能的问题，因为简单，通用的系统要做性能优化通常都是比较容易；
+相反而言，深度定制的系统因为耦合了定义逻辑，要优化性能并没有那么容易。</p>
+<h3 id="设计两次"><span class="section-num">6.3</span> 设计两次</h3>
+<p>Design it twice</p>
+<p>因为很难一次就把事情做到极致, 那就再来一次, 设计时把能想到的选项都列下来.</p>
+<p>反直觉的是，第一直觉通常不是最优的, 所以不要只考虑一种设计方案，无论它看起来多么合理，多对比下其他方案总没有害处的。</p>
+<p>只用第一直觉的方案，其实你是在低估自己的潜力，你错失了找到更好方案的机会。</p>
+<p>这也是我在写设计方案时候的做法，把自己能想到的，和同事讨论出来的所有方案都写上，然后分析各种方案的优劣, 最好的方案可能并不在原有方案列表里面，而是其中几个方案的合体。</p>
+<h3 id="大局观"><span class="section-num">6.4</span> 大局观</h3>
+<p>做任何事都要有大局观, 编程也不例外，战略编程优于战术编程(Strategic Programming over Tactical Programming);</p>
+<p>虽然我们一直说「又不是不能跑」，但是我们对代码的要求，不能是「能跑就行啦」.</p>
+<p>再者就是要和扁鹊他大哥治病一样，把功夫都做在前期，防范于未然，修补错误成本往往也越往后越高，病入膏肓之后，扁鹊来了也要提桶跑路:</p>
+<blockquote>
+<p>治不了，等死吧，告辞</p></blockquote>
+<h2 id="代码整洁之道vs软件设计哲学"><span class="section-num">7</span> 代码整洁之道vs软件设计哲学</h2>
+<p>本书的作者对<a href="https://book.douban.com/subject/34986245/">《代码整洁之道》</a>(Clean Code)<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup> 的作者(Robert C. Martin, 即 Uncle Bob)的诸多观点作了反驳</p>
+<h3 id="函数拆分"><span class="section-num">7.1</span> 函数拆分</h3>
+<p>比如关于什么时候应该拆分一个函数，Uncle Bob 的观点是，基于函数的代码行数，一个函数需要相当短，甚至10行都有太长了。</p>
+<p>Uncle Bob 原话:</p>
+<blockquote>
+<p>In the book Clean Code1, Robert Martin argues that functions should be broken up on length alone. He says that functions should be extremely short, and that even 10 lines is too long.</p></blockquote>
+<p>而本书作者 John 的观点是: <strong><strong>每个函数应只做一件事，并完整地做好</strong></strong></p>
+<p>函数的接口应当简洁，这样调用者无需记住大量信息就能正确使用它。</p>
+<p>函数应当具备深度：其接口应远比实现更简单。如果一个函数满足以上所有特性，那么它的长度通常并不重要。</p>
+<p><strong><strong>除非能让整个系统更简单，否则不应拆分函数</strong></strong></p>
+<h3 id="文档注释"><span class="section-num">7.2</span> 文档注释</h3>
+<p>Uncle Bob 认为需要给函数「注释始终是一种失败(<strong><strong>Comments are always failures</strong></strong>)」</p>
+<p>如果我们的编程语言足够富有表现力，或者如果我们有能力用好这些语言来传达意图，那么我们就不太需要注释——甚至可能完全不需要.</p>
+<p><strong><strong>注释的正确用途，是弥补我们无法用代码清晰表达的缺陷……注释始终是一种失败</strong></strong></p>
+<blockquote>
+<p>If our programming languages were expressive enough, or if we had the talent to subtly wield those languages to express our intent, we would not need comments very much — perhaps not at all.</p>
+<p>he proper use of comments is to compensate for our failure to express ourselves in code&hellip;. Comments are always failures.</p></blockquote>
+<p>而 John 的观点是</p>
+<p>但注释并非失败的表现。</p>
+<p><strong><strong>它们提供的信息与代码截然不同，而这些信息目前无法通过代码本身来表达。</strong></strong></p>
+<p><strong><strong>注释的作用之一，正是让人无需阅读代码即可理解其含义</strong></strong></p>
+<p>甚至直接反驳其观点:</p>
+<blockquote>
+<p>I worry that Martin’s philosophy encourages a bad attitude in programmers, where they avoid comments so as not to seem like failures.</p></blockquote>
+<h3 id="网上对线"><span class="section-num">7.3</span> 网上对线</h3>
+<p>所以也难怪 Uncle Bob 和 John Ousterhout 几个月前直接在网上论坛来了一次 <del>对线</del> (<a href="https://news.ycombinator.com/item?id=43166362">辩论)</a> <sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup></p>
+<p>然后有看热闹不嫌事大的播主，把两人邀请到直播上，让他们直接面对面再来了一次对线</p>
+<p>对应的Youtube视频: <a href="https://www.youtube.com/watch?v=3Vlk6hCWBw0">https://www.youtube.com/watch?v=3Vlk6hCWBw0</a></p>
+<p>两位的书我都看过，我个人的感觉是《代码整洁之道》更适合入门的工程师，它可以教你如何写出好的「代码片段」；
+而《软件设计的哲学》更适合需要做系统设计的工程师，它指导你如何设计好的「软件」。</p>
+<p>考虑到两位作者的背景和作品，我可以说两位的差别可以说是 <strong><strong>以编程为生的人与以写编程相关的东西为生的人</strong></strong></p>
+<h2 id="总结"><span class="section-num">8</span> 总结</h2>
+<p>全书读完，我觉得《软件设计的哲学》绝对是配得上最好的技术书籍之一的赞誉。</p>
+<p>但是不同的人读起来可能会有不同的感觉，其中的许多原则真的是做过设计，踩过坑才会有所共鸣, 否则会觉得其泛泛其谈。</p>
+<p>当然，我也不是完全同意书中的所有观点的。</p>
+<p>比如书中提到的会导致代码意图不「明显」的其中一种做法是声明的类型与初始化的类型不一致的情况:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span><span class="w"> </span><span class="n">incomingMessageList</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">incomingMessageList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span><span class="p">();</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>上面声明的是 <code>List&lt;Message&gt;</code>, 实际使用的 <code>ArrayList&lt;Message&gt;</code>, 这可能会误导用户，因为意图不清晰，阅读代码的人可能不确定是否需要使用 <code>List</code> 或者 <code>ArrayList</code>, 最好是声明和初始化都换成相同的类型。</p>
+<p>但是 <code>List</code> 是接口, <code>ArrayList</code> 是接口的具体实现，这个就是非常标准的面向对象编程中的多态，这并不什么问题。</p>
+<p>但瑕不掩瑜，全书读完，把书盖上后，我有种齿颊留香, 余音绕梁的感觉，书里有很多「熟悉的味道」，总是让我想起经手过的项目中种种的好代码和「坏」代码.</p>
+<div class="qr-container" center>
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" class="qr-container" width="160px" height="160px" center="t" />
+公号同步更新，欢迎关注👻
+</div>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://news.ycombinator.com/item?id=31713756">https://news.ycombinator.com/item?id=31713756</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://book.douban.com/subject/30329536/">https://book.douban.com/subject/30329536/</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://book.douban.com/subject/30218046/">https://book.douban.com/subject/30218046/</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="https://book.douban.com/subject/34986245/">https://book.douban.com/subject/34986245/</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5">
+<p><a href="https://news.ycombinator.com/item?id=43166362">https://news.ycombinator.com/item?id=43166362</a>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+]]></content:encoded>
+    </item>
     <item>
       <title>《过河卒》: 比特币雏形之父之父的故事</title>
       <link>https://ramsayleung.github.io/zh/post/2025/%E8%BF%87%E6%B2%B3%E5%8D%92/</link>
@@ -1338,122 +1653,6 @@
 <p>汉尼拨乘船返回迦太基，船队离开克罗托内港，向迦太基驶去。</p>
 <p>很长一段时间，可以从船上清楚地看到矗立在海角前端的白色大神殿渐渐远去，直到消失在遥远的地平线。=没有史料记载快满45岁的汉尼拔是怀着怎样的心情遥望这座神殿的。也许他根本就没有看=</p>
 <p>而漩涡中心的另一人，名为西庇阿，即是那位年轻的执政官。</p>
-<div center class="qr-container">
-<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
-公号同步更新，欢迎关注👻
-</div>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>罗马人的故事（一）：希腊文明</title>
-      <link>https://ramsayleung.github.io/zh/post/2022/%E5%B8%8C%E8%85%8A%E6%96%87%E6%98%8E/</link>
-      <pubDate>Sat, 08 Jan 2022 23:02:35 +0000</pubDate>
-      <guid>https://ramsayleung.github.io/zh/post/2022/%E5%B8%8C%E8%85%8A%E6%96%87%E6%98%8E/</guid>
-      <description>&lt;p&gt;来自《罗马人的故事》第一册，介绍罗马的时候，总离不开希腊文明。&lt;/p&gt;
-&lt;p&gt;希腊文明起源于公元前2000年前后的克里特岛。因为特里克岛比希腊本土更靠近当时的先进文明之国埃及。新的文明往往出自自身的周边&lt;/p&gt;</description>
-      <content:encoded><![CDATA[<p>来自《罗马人的故事》第一册，介绍罗马的时候，总离不开希腊文明。</p>
-<p>希腊文明起源于公元前2000年前后的克里特岛。因为特里克岛比希腊本土更靠近当时的先进文明之国埃及。新的文明往往出自自身的周边</p>
-<h2 id="克里特文明"><span class="section-num">1</span> 克里特文明</h2>
-<p>克里特文明的鼎盛时期据说是在公元前1700年到前1500年前后（要用据说一词，大概是因为太久远，没有相应的史料）。</p>
-<p>以公元前1350年前后为界，爱琴海的主人克里特文明急速衰退，不清楚是大地震的缘故，还是因为来自希腊本土的进犯。</p>
-<p>总之，到了公元前1350年前后，首都克诺索斯遭到破坏，优雅而华丽的克里特文明敲响了晚钟。</p>
-<h2 id="迈锡尼文明"><span class="section-num">2</span> 迈锡尼文明</h2>
-<p>曾经的周边变成了中心，在它周围又形成了新的周边。位于希腊本土南部伯罗奔尼撒半岛的迈锡尼一带成了希腊文明新的中坚力量-历史上称为迈锡尼文明。
-当时好像还是军人统治的国体，这些军人因荷马史诗《伊利亚特》和《奥德赛》而为后世的我们所熟知（的确令人惊讶，这样的世界名著，竟然成书于3000多年前）</p>
-<p>然而，以公元前1200年为界，迈锡尼文明也消失了，作为迈锡尼中坚力量的人或被杀，或被逼为奴，从而被彻底挤出历史的舞台，被北方南下的多利亚民族所消灭。在此以后，整个希腊沉寂了整整400年，公元前1200年至前800年长达400年的沉寂时期，在希腊史上称作“希腊的中世”，意思是一切归于沉寂，夹在以活跃为特点的两个时代的时期。</p>
-<h2 id="城邦国家时代"><span class="section-num">3</span> 城邦国家时代</h2>
-<p>公元前800年前后，希腊人走出他们的“中世”，进入统称为城邦国家的时代。
-由多利亚人建起来的斯巴达和因多利亚人入侵而出逃的阿卡亚人建立的国家雅典成为城邦国家的代表。随着城邦国家的诞生，希腊人开始了向海外的殖民运动。</p>
-<p>希腊人的殖民运动分两个时期进行，第一次是殖民运动是在公元前9世纪末到前8世纪初，殖民对象主要集中在小亚细亚西岸。爱琴海的意思是多岛海。</p>
-<p>第二次殖民运动是在第一次殖民运动之后，即过去了约半个世纪的公元前8世纪中叶前后。这一时期的殖民范围从爱琴海扩展到整个地中海。</p>
-<p>希腊本土的希腊人去得最多的地方是意大利南部，在海上可以与他们抗衡的，在当时只有由腓尼基人殖民而建起来的迦太基</p>
-<p>对于希腊人来说，公元前8世纪是向海外发展的时期，也是充实国内的时期。正是在这个时期，形成了最能有效发挥希腊人活力的城邦国家，而希腊人发明的国体&ndash;城邦&ndash;的代表就是雅典和斯巴达</p>
-<h3 id="雅典"><span class="section-num">3.1</span> 雅典</h3>
-<h4 id="贵族政体"><span class="section-num">3.1.1</span> 贵族政体</h4>
-<p>传说中雅典的创立者是推翻了克里特暴君米诺斯王的忒修斯，雅典初斯的政体是王政，并于公元前8世纪改为贵族政体。</p>
-<p>在该政体下，9们贵族出身的执政官在一年的任期内，分管内政，军事和宗教，由其他贵族组成的长老会辅佐，自由市民组成的市民大会没有发言权，形同虚设.</p>
-<h4 id="梭伦改革"><span class="section-num">3.1.2</span> 梭伦改革</h4>
-<p>进入公元前7世纪，这种贵族政体渐渐地暴露出与雅典现状的不相适应，相对于经济基础建立在土地所有制上的贵族阶级，依靠工商业强大起来的新兴阶段开始抬头，但是却空有经济实力却无法参与国政。开始了反抗贵族之路。</p>
-<p>这些自由市民取得的第一个胜利是公元前620年的法律条文化，贵族阶级也因此失去了司法权，无法像在法律不成文的时代那样随心所欲。</p>
-<p>但是这并不能消除“自由市民”的一不满，于是，梭伦登场了，公元前594年，开始了历史著名的“梭伦改革”。</p>
-<p>梭伦自己既不属于新兴的工商业阶级，也不是出身重债缠身的自耕农阶级，而是拥有大片土地，在雅典举足轻重的名门望族之后。</p>
-<p>梭伦首先制定了拯救被重债缠身的自耕农的政策并使之法制化。为此，农民的债务被大幅度地削减。</p>
-<p>同时，他还废除了因无法偿还政务而被迫为奴的旧制度，彻底废除了在古代被认为理所当然地以人身偿还债务的制度，这是古代社会第一个尊重人权的例子</p>
-<p>梭伦自身似乎是个温和的自由主义者，他拒绝了激进派市民的提案，即没收私有土地为国有，然后将土地重新进行平等分配的提案，对此梭伦写道：</p>
-<blockquote>
-<p>我们给了市民们适当的名誉。我们不剥夺他们已有的权利，但也不再新加任何权利。</p></blockquote>
-<p>梭伦改革的最大着眼点是政治改革：他首先开展了人口改革，并以调查结果为依据，制定了个人权利与其所拥有的不动产成正比的政策。如此一来，参与国政的权利不再受出身左右。</p>
-<p>梭伦根据财产的多少，将雅典市民分成四个等级，根据收入，从高到低依次为第一等级，第二等级，第三等级及无产市民构成的第四等级。</p>
-<p>各等级业务：</p>
-<ul>
-<li>第一等级，第二等级：义务服骑兵兵役，自备军备，军装与马匹</li>
-<li>第三等级：义务服重装步兵兵役，自备军备，军装</li>
-<li>第四等级：义务提供轻装步兵或舰队成员</li>
-</ul>
-<p>各等级义务：</p>
-<ul>
-<li>政府要职由第一，第二等级的市民担任</li>
-<li>行政官僚由第三等级担任</li>
-<li>第四等级只有选举权</li>
-</ul>
-<h4 id="克利斯梯尼改革"><span class="section-num">3.1.3</span> 克利斯梯尼改革</h4>
-<p>开始投资动产的雅典市民，迟早会对以不动产为基础的政体心怀不满，只是没人敢于正面挑战梭伦的权威。在梭伦死后，庇西特拉图作为独裁者登上了历史的舞台。
-政体的变迁可以从教科书上学到，但是判断一种政体的好坏，有时和教科书不一样，在庇西特拉图独裁的20年间，不仅给雅典带来和平与秩序，还带来了经济上空前繁荣。</p>
-<p>公元前510年，庇西特拉斯的儿子的独裁统治被克利斯梯尼推翻，面对矛盾重重的雅典，克里斯梯尼开始了他的改革。借用亚里士多德的话，他“将体制改革得更加民主”</p>
-<ul>
-<li>行政改革：将雅典的领地分成三大区，每个大区划分20个小区，各小区根据人口再分若干“居民区”。而后, 这种“居民区”成为雅典的行政基础。此项改革被认为是历史上第一个因单纯行政上的目的而将国土进行分割的例子</li>
-<li>政治体制改革：克利斯梯尼的改革出现的政体叫民主政体
-<ul>
-<li>强化市民大会权力：20岁以上的所有雅典市民有权参加市民大会，实行一人一票（直接民主）。成为国家最高权力机构，决定与外国缔结和约等外交及政府首脑选举等内政事务</li>
-<li>保留梭伦改革的四个等级，但划分标准从原来的农业收入，变成无行业区别的收入</li>
-<li>五百人会议：由30岁以上的雅典市民组成，负责处理日常政务。（即官僚或政府公职人员）</li>
-<li>国家战略官：由任期一年的10人组成政府官员，重新命名为“内阁”</li>
-<li>陶片放逐法：市民可以将自己希望放逐的人名字写在陶片上，在市民大会上投票，每年只要过半数，就有权把市民认为权威和权力将会威胁雅典的市民逐出国外10年。放逐不会损害该市民的名誉，即使遭到放逐，当事人也不会觉得羞愧，他不会失去市民权，财产不会被没收，只是被逐出雅典。显然是为了防止某人独裁（但是也会被用来对付政敌）</li>
-</ul>
-</li>
-</ul>
-<p>由此，诞生了世界史上第一个由普通市民直接参与国政的政体。在雅典，无论多么无知，只要是市民，他的权利都受到绝对的尊重。但是不具备市民权这一形式的国籍的人则完全没有参政权。关于成为市民的条件，可以参考<a href="/zh/post/2022/%E7%BD%97%E9%A9%AC%E4%B8%8D%E6%98%AF%E4%B8%80%E5%A4%A9%E5%BB%BA%E6%88%90%E7%9A%84/#条件">罗马人的故事第一册提到的市民条件</a></p>
-<p>苏格拉底说过，祖国的法律即使不好也要遵守，为此他拒绝了逃亡国外的劝告，而被处以死刑。同时哲学家的亚里士多德则不愿殉法，早早溜之大吉。对于雅典市民来说，雅典是他的祖国，对于出生地不在雅典的亚里士多德，他没有义务为雅典的法律牺牲自己。</p>
-<p>但是，和市民缴纳同样的税金，非但没有被选举权，甚至连选举权也得不到承认的国家，在当今世界也不少见（比说要求人民感恩政府的某国）</p>
-<h4 id="伯利克里时代"><span class="section-num">3.1.4</span> 伯利克里时代</h4>
-<p>伯里克利从进入雅典政界的那一年起，在长达30年的时间里，几乎年年当选“国宝战略官”，并且大部分时间被选为议长。
-同时代的历史学家修昔底德告诉我们，伯里克利曾经说过这样一段话：</p>
-<blockquote>
-<p>我们雅典人无须羡慕任何其他国家的政体。我们的政体不是模仿他国得来的。我们的制度要成为别人的模范。
-我们的政体之所以称为民主政体，是因为政权在多数公民手中，而非少数人手中。</p>
-<p>在这一政体下，每个人在法律上都是平等的；担负公职的人能够得到的荣誉，不是因其出身，而在于他的努力和贡献。
-任何人，只要他能够对国家有所贡献，绝对不会因贫穷而默默无闻。</p>
-<p>我们的日常生活和政治生活一样，享有充分的自由。雅典市民享有的自由程度之高，甚至连怀疑、妒忌都是自由的。……
-尽管如此，我们可以享受各种娱乐，丰富我们的精神世界，忘却日间劳作的辛苦。每年在规定的日子里，举行各种比赛和祭祀，不忘让我们的居所变得更加舒适。……</p>
-<p>在教育制度上，我们的竞争对手（隐指斯巴达人）从孩提时代起，即加以最严格的训练，使其成为勇敢的人，而在我们的国家里，对孩子的教育没有他们那样严酷。
-但是，当危机来临时，我们表现出来的勇气不在他们之下。</p>
-<p>我们不学习他们通过非人的残酷训练来应对考验，我们用每个人所具备的能力，即决断力，来应对考验。
-我们的勇气不是产生于法律的要求，而是源于每个雅典市民在日常生活中各自的行为准则。……</p>
-<p>我们爱美，但我们有度；我们尊重智慧，但绝不迷恋于此；我们追求财富，但我们只会尽可能地利用它，而不以此炫耀。</p>
-<p><code>在雅典，贫穷不可耻，可耻的是不为脱离贫穷而努力。</code></p>
-<p>我们尊重个人利益，却是为了更加关心公共利益。这是因为在追求个人利益为目的的事业中表现出的能力，同样可以服务于公共事业。</p>
-<p><code>在雅典，一个不关心政治的人，我们不会认为他爱好和平，我们认为他不具有市民的资格。</code></p></blockquote>
-<p>时隔2500年后，作为一句x国人，读起这段话，不免心生感慨: <code>2500年前雅典人的权利与追求，我们到现在都还没有实现，甚至越走越远</code></p>
-<p>与伯里克利同时代，留下《伯罗奔尼撒战争史》的历史学家修昔底德对伯里克利的雅典所作的评价是：</p>
-<blockquote>
-<p>表面上看实行的是民主政体，实际上是一个人统治的国家</p></blockquote>
-<h3 id="斯巴达"><span class="section-num">3.2</span> 斯巴达</h3>
-<p>公元前1200年前后，多利亚民族挥军南下，征服了土著居民后，建立了城邦国家&ndash;斯巴达。</p>
-<p>征服者的子孙，构成现有统治阶级的斯巴达人，他们是自由市民及其家人，共约1万人。服兵役是这些血统纯正的斯巴达人的唯一工作，参与国政的权利也只有这些人享有</p>
-<p>有市民权的斯巴达人并非一成年便有权出席市民大会，行使自己的一票权。他们必须等到30岁才能享有这些权利。市民大会由30岁以上的斯巴达人组成，险些之外，还有长老会议。</p>
-<ul>
-<li>长老会议：共有议会28人，年龄都在60岁以上，由市民大会选出，任期为终身制</li>
-<li>国王：人数为2位，由两家名门望族世袭，同时执政。即二头政治</li>
-</ul>
-<p>公元前7世纪后半中，来库古进行的改革进一步稳固了这一体制，使得斯巴达的风格更加激进，与梭伦的改革决定了雅典的风格一样，来库古决定了斯巴达的风格</p>
-<h4 id="来库古改革"><span class="section-num">3.2.1</span> 来库古改革</h4>
-<p>来库古的改革使斯巴达更加彻底成为一个军事大国，斯巴达人的日常生活更是以军务为至高目的。</p>
-<p>孩子一出生，就要经过长老们的检查。经过检查，判断一个孩子是否能健康、平安地长大，被认为不够健壮的孩子当即会被抛弃或沦为奴隶。</p>
-<p>被认为有希望成为强壮战士的婴儿由父母抚养到6岁，一到7岁，便要离开父母开始集体生活。他们与同龄人一同生活，按照以培养合格战士为目的的严密计划接受教育。</p>
-<p>到了20岁，斯巴达人就开始服兵役，一直到60岁退役。30岁之前有义务过集体生活，即使结了婚，晚上也必须回到兵营。无论是少年的宿舍还是战士的兵营，都没有相应的建筑物，他们都要生活在帐篷里。这样做的目的是为了使斯巴达人可以忍受恶劣的环境。</p>
-<p>在过了30岁才被认为是独立市民的斯巴达人，可以和妻儿一起在有墙有屋顶的室内生活，也只有独立市民才能享有这种权利。</p>
-<p>由于斯巴达人一切都服从于军事目的，所以其军事力量之强大令人惊畏。尽管军队数量很少，但是其威名甚至远震波斯。在希腊，一提起精锐部队，指的就是斯巴达的步兵军团。</p>
-<p>但是，斯巴达除了战士什么都不产。哲学、科学、文学、历史、建筑和雕刻，没有留下任何一样东西。非要说留下了什么东西，那就是一个词——“斯巴达式的”。</p>
 <div center class="qr-container">
 <img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
 公号同步更新，欢迎关注👻
