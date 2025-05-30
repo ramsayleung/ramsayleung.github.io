@@ -1,7 +1,7 @@
 +++
 title = "杂谈AI取代程序员"
 date = 2025-02-14T21:15:00-08:00
-lastmod = 2025-03-01T13:56:35-08:00
+lastmod = 2025-05-30T00:55:47-07:00
 tags = ["ai", "programmer"]
 draft = false
 toc = true
@@ -14,7 +14,7 @@ showQuote = true
 
 {{< figure src="/ox-hugo/v2ex_ai_replace_programmer.jpg" >}}
 
-以至于我的一位非程序员朋友都来关心我，问我是否有被取代的担忧。
+以至于我的一位非程序员朋友都来关心我，问我是否有被取代的担忧（甚至我的父亲也来询问）。
 
 在感谢朋友的关心之后，我也开始静下心来思考这个问题，以及形成这种想法背后可能的原因，然后就有了这篇文章。
 
@@ -526,9 +526,9 @@ AI无法取代持续精进者, 傲慢自满方为淘汰之源
     -   [测试技能进阶(二): Parameterized Tests](https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/)
     -   [测试技能进阶(三): Property Based Testing](https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%89_property_based_testing/)
 
-<div center class="qr-container">
+<div class="qr-container" center>
 
-<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" class="qr-container" width="160px" height="160px" center="t" />
 公号同步更新，欢迎关注👻
 
 </div>
