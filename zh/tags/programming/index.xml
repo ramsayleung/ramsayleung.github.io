@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Fri, 30 May 2025 01:04:13 -0700</lastBuildDate>
+    <lastBuildDate>Fri, 30 May 2025 01:13:12 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/programming/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>软件设计的哲学</title>
@@ -52,7 +52,7 @@
 <h2 id="抽象"><span class="section-num">2</span> 抽象</h2>
 <p>所谓的抽象，用我自己的话来说的就是把复杂的东西简单地呈现出来。</p>
 <h3 id="模块深度"><span class="section-num">2.1</span> 模块深度</h3>
-<p>为了直观地感受一个模块设计到是否抽象得多，作者提出一个模块深度的概念:</p>
+<p>为了直观地感受一个模块设计是否足够抽象，作者提出一个模块深度的概念:</p>
 
 <figure>
     
