@@ -1,7 +1,7 @@
 +++
 title = "软件设计的哲学"
 date = 2025-05-30T00:39:00-07:00
-lastmod = 2025-05-30T01:04:13-07:00
+lastmod = 2025-05-30T01:13:12-07:00
 tags = ["book", "design", "programming"]
 categories = ["读书感悟"]
 draft = false
@@ -62,7 +62,7 @@ showQuote = true
 
 ### <span class="section-num">2.1</span> 模块深度 {#模块深度}
 
-为了直观地感受一个模块设计到是否抽象得多，作者提出一个模块深度的概念:
+为了直观地感受一个模块设计是否足够抽象，作者提出一个模块深度的概念:
 
 {{< figure src="/ox-hugo/deep_module.jpg" >}}
 
