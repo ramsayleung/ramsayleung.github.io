@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sat, 31 May 2025 14:33:11 -0700</lastBuildDate>
+    <lastBuildDate>Sat, 31 May 2025 16:58:08 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>从在加拿大退货失败的一件小事思考系统设计</title>
@@ -34,8 +34,8 @@
 <p>我们的路由器之前是舍友设置的，还不是常见的一体路由器，而是分体式路由器，有三个不同的组件。</p>
 <p>而舍友在搬完家后就回国休假了，我还真不知道怎么搞这路由器，各个接口尝试了小半个小时也没反应，师傅也没见识过，自然也不晓得弄。</p>
 <p>这个又是一个非常经典的软件开发问题：</p>
-<p>「在我的机器上能跑阿，换个环境就挂了」</p>
-<p>但是一直没网也不是办法阿，然后师傅建议我可以把他随身带的 Telus 路由器买下来，等我舍友回来后把网络设置好，再把路由器还回来，Telus支持30天无理由退货。</p>
+<p>「在我的机器上能跑，换个环境就挂了」</p>
+<p>但是一直没网也不是办法，然后师傅建议我可以把他随身带的 Telus 路由器买下来，等我舍友回来后把网络设置好，再把路由器还回来，Telus支持30天无理由退货。</p>
 <p>听起来也只能这么搞了。</p>
 <p>舍友休了几周假回来之后，几分钟不到，很快就把这个路由器就设置起来了:</p>
 
