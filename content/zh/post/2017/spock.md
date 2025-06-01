@@ -1,9 +1,9 @@
 +++
 title = "Spock 一个优雅的Groovy/Java测试框架"
 description = "an introduction about spock"
-date = 2017-04-11T00:00:00+08:00
-lastmod = 2022-02-23T17:51:48+08:00
-tags = ["spock", "groovy", "test", "java"]
+date = 2017-04-11T00:00:00-07:00
+lastmod = 2025-05-31T17:26:31-07:00
+tags = ["groovy", "testing", "java"]
 categories = ["java"]
 draft = false
 toc = true
@@ -81,10 +81,10 @@ Junit 的测试用例, 你会发现 Spock 的测试用例, 只需函数名, 就�
 
 ```java
 class MyFirstSpecification extend Specification{
-    //fields
-    //fixture methods
-    //feature methods
-    //helper methods
+//fields
+//fixture methods
+//feature methods
+//helper methods
 }
 ```
 
@@ -108,7 +108,7 @@ Feature Methods 指具体的测试用例方法
 
 ```groovy
 def "pushing an element on the stack"() {
-    // blocks go here
+// blocks go here
 }
 ```
 
@@ -190,23 +190,23 @@ Spock 使用的是 assertion, 笔者个人理解成这是一种隐式的断言�
 
 ```java
 public class Product{
-    private String name;
-    private int price;
-    private int weight;
+private String name;
+private int price;
+private int weight;
 }
 public class Basket{
-    public void addProduct(Product product){
-	addProduct(product,1)
-	    }
-    public void addProduct(Product product,int times){
-	//some code about business
+public void addProduct(Product product){
+    addProduct(product,1)
     }
-    public int getCurrentWeight(){
-	//
-    }
-    public int getProductTypesCount(){
-	//
-    }
+public void addProduct(Product product,int times){
+    //some code about business
+}
+public int getCurrentWeight(){
+    //
+}
+public int getProductTypesCount(){
+    //
+}
 }
 ```
 
@@ -215,15 +215,15 @@ public class Basket{
 ```groovy
 def "A basket with one product has equal weight"(){
 
-    given: "an empty basket and a Tv"
-    Product tv=new Product(name:"bravia",price:1200,weight:18)
-    Basket basket=new Basket()
+given: "an empty basket and a Tv"
+Product tv=new Product(name:"bravia",price:1200,weight:18)
+Basket basket=new Basket()
 
-    when:"user wants to buy the TV"
-    basket.addProduct(tv)
+when:"user wants to buy the TV"
+basket.addProduct(tv)
 
-    then:"basket weight is equal to the TV"
-    basket.currentWeight==tv.weight
+then:"basket weight is equal to the TV"
+basket.currentWeight==tv.weight
 }
 ```
 
@@ -239,21 +239,21 @@ def "A basket with one product has equal weight"(){
 ```groovy
 def "A basket with one product has equal weight"(){
 
-    given: "an empty basket "
-    Basket basket=new Basket()
+given: "an empty basket "
+Basket basket=new Basket()
 
-    and: "several products"
-    Product tv=new Product(name:"bravia",price:1200,weight:18)
-    Product camera=new Product(name:"panasonic",price:350,weight:2)
-    Product hifi=new Product(name:"jvc",price:600,weight:5)
+and: "several products"
+Product tv=new Product(name:"bravia",price:1200,weight:18)
+Product camera=new Product(name:"panasonic",price:350,weight:2)
+Product hifi=new Product(name:"jvc",price:600,weight:5)
 
-    when:"user wants to buy the TV abd the camera and the hifi"
-    basket.addProduct(tv)
-    basket.addProduct(camera)
-    basket.addProduct(hifi)
+when:"user wants to buy the TV abd the camera and the hifi"
+basket.addProduct(tv)
+basket.addProduct(camera)
+basket.addProduct(hifi)
 
-    then:"basket weight is equal to all product weight"
-    basket.currentWeight==(tv.weight+camera.weight+hifi.weight）
+then:"basket weight is equal to all product weight"
+basket.currentWeight==(tv.weight+camera.weight+hifi.weight）
 }
 ```
 
@@ -274,8 +274,8 @@ given-when-then 都结合起来
 ```groovy
 def "An empty basket has no weight"(){
 
-    expect:"zero weight when nothing is added"
-    new Basket().currentWeight==0
+expect:"zero weight when nothing is added"
+new Basket().currentWeight==0
 }
 ```
 
@@ -284,11 +284,11 @@ def "An empty basket has no weight"(){
 ```groovy
 def "An empty basket has no weight(alternative)"(){
 
-    given:"an empty basket"
-    Basket basket=new Basket()
+given:"an empty basket"
+Basket basket=new Basket()
 
-    expect:"that the weight is 0"
-    basket.currentWeight==0
+expect:"that the weight is 0"
+basket.currentWeight==0
 }
 ```
 
@@ -297,26 +297,26 @@ def "An empty basket has no weight(alternative)"(){
 ```groovy
 def "A basket with two products weights as their sum (precondition)"() {
 
-    given: "an empty basket, a TV and a camera"
-    Product tv = new Product(name:"bravia",price:1200,weight:18)
-    Product camera = new Product(name:"panasonic",price:350,weight:2)
-    Basket basket = new Basket()
+given: "an empty basket, a TV and a camera"
+Product tv = new Product(name:"bravia",price:1200,weight:18)
+Product camera = new Product(name:"panasonic",price:350,weight:2)
+Basket basket = new Basket()
 
-    expect:"that nothing should be inside"
-    basket.currentWeight == 0
-    basket.productTypesCount == 0
+expect:"that nothing should be inside"
+basket.currentWeight == 0
+basket.productTypesCount == 0
 
-    /* expect: block performs
-     intermediate assertions*/
+/* expect: block performs
+ intermediate assertions*/
 
-    when: "user wants to buy the TV and the camera"
-    basket.addProduct tv
-    basket.addProduct camera
+when: "user wants to buy the TV and the camera"
+basket.addProduct tv
+basket.addProduct camera
 
-    then: "basket weight is equal to both camera and tv"
-    basket.currentWeight == (tv.weight + camera.weight)
-    /* then: block examines
-     the final result*/
+then: "basket weight is equal to both camera and tv"
+basket.currentWeight == (tv.weight + camera.weight)
+/* then: block examines
+ the final result*/
 }
 ```
 
@@ -358,71 +358,71 @@ clean 就相当于在所有的测试结束以后执行的操作，例如，如�
 ```java
 @RunWith(Parameterized.class)
 public class NuclearReactorTest {
-    private final int triggeredFireSensors;
-    private final List<Float> radiationDataReadings;
-    private final int pressure;
+private final int triggeredFireSensors;
+private final List<Float> radiationDataReadings;
+private final int pressure;
 
-    private final boolean expectedAlarmStatus;
-    private final boolean expectedShutdownCommand;
-    private final int expectedMinutesToEvacuate;
+private final boolean expectedAlarmStatus;
+private final boolean expectedShutdownCommand;
+private final int expectedMinutesToEvacuate;
 
-    public NuclearReactorTest(int pressure, int triggeredFireSensors,
-			      List<Float> radiationDataReadings, boolean expectedAlarmStatus,
-			      boolean expectedShutdownCommand, int expectedMinutesToEvacuate) {
+public NuclearReactorTest(int pressure, int triggeredFireSensors,
+           List<Float> radiationDataReadings, boolean expectedAlarmStatus,
+           boolean expectedShutdownCommand, int expectedMinutesToEvacuate) {
 
-	this.triggeredFireSensors = triggeredFireSensors;
-	this.radiationDataReadings = radiationDataReadings;
-	this.pressure = pressure;
-	this.expectedAlarmStatus = expectedAlarmStatus;
-	this.expectedShutdownCommand = expectedShutdownCommand;
-	this.expectedMinutesToEvacuate = expectedMinutesToEvacuate;
+    this.triggeredFireSensors = triggeredFireSensors;
+    this.radiationDataReadings = radiationDataReadings;
+    this.pressure = pressure;
+    this.expectedAlarmStatus = expectedAlarmStatus;
+    this.expectedShutdownCommand = expectedShutdownCommand;
+    this.expectedMinutesToEvacuate = expectedMinutesToEvacuate;
 
-    }
+}
 
-    @Test
-    public void nuclearReactorScenario() {
-	NuclearReactorMonitor nuclearReactorMonitor = new NuclearReactorMonitor();
+@Test
+public void nuclearReactorScenario() {
+    NuclearReactorMonitor nuclearReactorMonitor = new NuclearReactorMonitor();
 
-	nuclearReactorMonitor.feedFireSensorData(triggeredFireSensors);
-	nuclearReactorMonitor.feedRadiationSensorData(radiationDataReadings);
-	nuclearReactorMonitor.feedPressureInBar(pressure);
-	NuclearReactorStatus status = nuclearReactorMonitor.getCurrentStatus();
+    nuclearReactorMonitor.feedFireSensorData(triggeredFireSensors);
+    nuclearReactorMonitor.feedRadiationSensorData(radiationDataReadings);
+    nuclearReactorMonitor.feedPressureInBar(pressure);
+    NuclearReactorStatus status = nuclearReactorMonitor.getCurrentStatus();
 
-	assertEquals("Expected no alarm", expectedAlarmStatus,
-		     status.isAlarmActive());
-	assertEquals("No notifications", expectedShutdownCommand,
-		     status.isShutDownNeeded());
-	assertEquals("No notifications", expectedMinutesToEvacuate,
-		     status.getEvacuationMinutes());
-    }
+    assertEquals("Expected no alarm", expectedAlarmStatus,
+      status.isAlarmActive());
+    assertEquals("No notifications", expectedShutdownCommand,
+      status.isShutDownNeeded());
+    assertEquals("No notifications", expectedMinutesToEvacuate,
+      status.getEvacuationMinutes());
+}
 
-    @Parameters
-    public static Collection<Object[]> data() {
-	return Arrays
-	    .asList(new Object[][] {
-		    { 150, 0, new ArrayList<Float>(), false, false, -1 },
-		    { 150, 1, new ArrayList<Float>(), true, false, -1 },
-		    { 150, 3, new ArrayList<Float>(), true, true, -1 },
-		    { 150, 0, Arrays.asList(110.4f, 0.3f, 0.0f), true,
-		      true, 1 },
-		    { 150, 0, Arrays.asList(45.3f, 10.3f, 47.7f), false,
-		      false, -1 },
-		    { 155, 0, Arrays.asList(0.0f, 0.0f, 0.0f), true, false,
-		      -1 },
-		    { 170, 0, Arrays.asList(0.0f, 0.0f, 0.0f), true, true,
-		      3 },
-		    { 180, 0, Arrays.asList(110.4f, 0.3f, 0.0f), true,
-		      true, 1 },
-		    { 500, 0, Arrays.asList(110.4f, 300f, 0.0f), true,
-		      true, 1 },
-		    { 30, 0, Arrays.asList(110.4f, 1000f, 0.0f), true,
-		      true, 1 },
-		    { 155, 4, Arrays.asList(0.0f, 0.0f, 0.0f), true, true,
-		      -1 },
-		    { 170, 1, Arrays.asList(45.3f, 10.3f, 47.7f), true,
-		      true, 3 }, });
+@Parameters
+public static Collection<Object[]> data() {
+    return Arrays
+    .asList(new Object[][] {
+     { 150, 0, new ArrayList<Float>(), false, false, -1 },
+     { 150, 1, new ArrayList<Float>(), true, false, -1 },
+     { 150, 3, new ArrayList<Float>(), true, true, -1 },
+     { 150, 0, Arrays.asList(110.4f, 0.3f, 0.0f), true,
+       true, 1 },
+     { 150, 0, Arrays.asList(45.3f, 10.3f, 47.7f), false,
+       false, -1 },
+     { 155, 0, Arrays.asList(0.0f, 0.0f, 0.0f), true, false,
+       -1 },
+     { 170, 0, Arrays.asList(0.0f, 0.0f, 0.0f), true, true,
+       3 },
+     { 180, 0, Arrays.asList(110.4f, 0.3f, 0.0f), true,
+       true, 1 },
+     { 500, 0, Arrays.asList(110.4f, 300f, 0.0f), true,
+       true, 1 },
+     { 30, 0, Arrays.asList(110.4f, 1000f, 0.0f), true,
+       true, 1 },
+     { 155, 4, Arrays.asList(0.0f, 0.0f, 0.0f), true, true,
+       -1 },
+     { 170, 1, Arrays.asList(45.3f, 10.3f, 47.7f), true,
+       true, 3 }, });
 
-    }
+}
 ```
 
 各种输入输出数据以及 getter setter 耦合在一起，代码变得难读起来. 此外，除了可
@@ -432,37 +432,37 @@ public class NuclearReactorTest {
 ```groovy
 class NuclearReactorSpec extends spock.lang.Specification{
 
-    def "Complete test of all nuclear scenarios"() {
+def "Complete test of all nuclear scenarios"() {
 
-	given: "a nuclear reactor and sensor data"
-	NuclearReactorMonitor nuclearReactorMonitor =new NuclearReactorMonitor()
+    given: "a nuclear reactor and sensor data"
+    NuclearReactorMonitor nuclearReactorMonitor =new NuclearReactorMonitor()
 
-	when: "we examine the sensor data"
-	nuclearReactorMonitor.feedFireSensorData(fireSensors)
-	nuclearReactorMonitor.feedRadiationSensorData(radiation)
-	nuclearReactorMonitor.feedPressureInBar(pressure)
-	NuclearReactorStatus status = nuclearReactorMonitor.getCurrentStatus()
+    when: "we examine the sensor data"
+    nuclearReactorMonitor.feedFireSensorData(fireSensors)
+    nuclearReactorMonitor.feedRadiationSensorData(radiation)
+    nuclearReactorMonitor.feedPressureInBar(pressure)
+    NuclearReactorStatus status = nuclearReactorMonitor.getCurrentStatus()
 
-	then: "we act according to safety requirements"
-	status.alarmActive == alarm
-	status.shutDownNeeded == shutDown
-	status.evacuationMinutes == evacuation
+    then: "we act according to safety requirements"
+    status.alarmActive == alarm
+    status.shutDownNeeded == shutDown
+    status.evacuationMinutes == evacuation
 
-	where: "possible nuclear incidents are:"
-	pressure | fireSensors | radiation             || alarm | shutDown | evacuation
-	150      | 0           | []                    || false | false    | -1
-	150      | 1           | []                    || true  | false    | -1
-	150      | 3           | []                    || true  | true     | -1
-	150      | 0           | [110.4f ,0.3f, 0.0f]  || true  | true     | 1
-	150      | 0           | [45.3f ,10.3f, 47.7f] || false | false    | -1
-	155      | 0           | [0.0f ,0.0f, 0.0f]    || true  | false    | -1
-	170      | 0           | [0.0f ,0.0f, 0.0f]    || true  | true     | 3
-	180      | 0           | [110.4f ,0.3f, 0.0f]  || true  | true     | 1
-	500      | 0           | [110.4f ,300f, 0.0f]  || true  | true     | 1
-	30       | 0           | [110.4f ,1000f, 0.0f] || true  | true     | 1
-	155      | 4           | [0.0f ,0.0f, 0.0f]    || true  | true     | -1
-	170      | 1           | [45.3f ,10.3f, 47.7f] || true  | true     | 3
-    }
+    where: "possible nuclear incidents are:"
+    pressure | fireSensors | radiation             || alarm | shutDown | evacuation
+    150      | 0           | []                    || false | false    | -1
+    150      | 1           | []                    || true  | false    | -1
+    150      | 3           | []                    || true  | true     | -1
+    150      | 0           | [110.4f ,0.3f, 0.0f]  || true  | true     | 1
+    150      | 0           | [45.3f ,10.3f, 47.7f] || false | false    | -1
+    155      | 0           | [0.0f ,0.0f, 0.0f]    || true  | false    | -1
+    170      | 0           | [0.0f ,0.0f, 0.0f]    || true  | true     | 3
+    180      | 0           | [110.4f ,0.3f, 0.0f]  || true  | true     | 1
+    500      | 0           | [110.4f ,300f, 0.0f]  || true  | true     | 1
+    30       | 0           | [110.4f ,1000f, 0.0f] || true  | true     | 1
+    155      | 4           | [0.0f ,0.0f, 0.0f]    || true  | true     | -1
+    170      | 1           | [45.3f ,10.3f, 47.7f] || true  | true     | 3
+}
 
 }
 ```
@@ -485,14 +485,15 @@ class NuclearReactorSpec extends spock.lang.Specification{
 Mocking Stubbing (Junit 需要第三方库支持), 还有支持企业级应用，Spring, Spring
 boot, 和 Restful service 测试等。更多的用法，就要查阅官方文档了
 
+<div class="qr-container" center>
+
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" class="qr-container" width="160px" height="160px" center="t" />
+公号同步更新，欢迎关注👻
+
+</div>
+
 
 ## <span class="section-num">6</span> 参考 {#参考}
 
 -   [Java Testing with Spock](https://www.amazon.com/Java-Testing-Spock-Konstantinos-Kapelonis/dp/1617292532)
 -   [Spock Framework Reference Documentation](http://spockframework.org/spock/docs/1.1-rc-3/index.html)
-
-<div center class="qr-container">
-<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
-公号同步更新，欢迎关注👻
-</div>
-
