@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sat, 31 May 2025 16:58:08 -0700</lastBuildDate>
+    <lastBuildDate>Sat, 31 May 2025 17:17:02 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/design/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>从在加拿大退货失败的一件小事思考系统设计</title>
@@ -167,10 +167,10 @@
       <guid>https://ramsayleung.github.io/zh/post/2025/a_philosophy_of_software_design/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
 &lt;p&gt;知道这本书是因为在 Hacker News 上有人提问：&lt;a href=&#34;https://news.ycombinator.com/item?id=31713756&#34;&gt;你读过最好的技术书是什么&lt;/a&gt; &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;?&lt;/p&gt;
-&lt;p&gt;最高赞的书是 Design Data Intensive Application(DDIA, 即《&lt;a href=&#34;https://book.douban.com/subject/30329536/&#34;&gt;数据密集型应用系统设计&lt;/a&gt;》&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;), 我觉得 DDIA 也当得起这个赞誉，然后最高赞的回答顺势提到了 &lt;a href=&#34;https://book.douban.com/subject/30218046/&#34;&gt;A Philosophy Of Software Design&lt;/a&gt; &lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;, 想来能与 DDIA 齐名的书，肯定不会差得哪里去。&lt;/p&gt;</description>
+&lt;p&gt;最高赞的书是 Design Data Intensive Application(DDIA, 即《&lt;a href=&#34;https://book.douban.com/subject/30329536/&#34;&gt;数据密集型应用系统设计&lt;/a&gt;》&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;), 我觉得 DDIA 也担得起这个赞誉，然后最高赞的回答顺势提到了 &lt;a href=&#34;https://book.douban.com/subject/30218046/&#34;&gt;A Philosophy Of Software Design&lt;/a&gt; &lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;, 想来能与 DDIA 齐名的书，肯定不会差得哪里去。&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>知道这本书是因为在 Hacker News 上有人提问：<a href="https://news.ycombinator.com/item?id=31713756">你读过最好的技术书是什么</a> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>?</p>
-<p>最高赞的书是 Design Data Intensive Application(DDIA, 即《<a href="https://book.douban.com/subject/30329536/">数据密集型应用系统设计</a>》<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>), 我觉得 DDIA 也当得起这个赞誉，然后最高赞的回答顺势提到了 <a href="https://book.douban.com/subject/30218046/">A Philosophy Of Software Design</a> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>, 想来能与 DDIA 齐名的书，肯定不会差得哪里去。</p>
+<p>最高赞的书是 Design Data Intensive Application(DDIA, 即《<a href="https://book.douban.com/subject/30329536/">数据密集型应用系统设计</a>》<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>), 我觉得 DDIA 也担得起这个赞誉，然后最高赞的回答顺势提到了 <a href="https://book.douban.com/subject/30218046/">A Philosophy Of Software Design</a> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>, 想来能与 DDIA 齐名的书，肯定不会差得哪里去。</p>
 <p>作者是 John Ousterhout, 斯坦福大学的教授，TCL 编程语言的创造者(Redis 的初始化版本就是用 TCL 写的)，共识算法 Raft 的作者之一.</p>
 <p>这本书并不厚，全书只有200多页，读起来也并不费劲。</p>
 <p>而这本书的主旨，开篇就点出来了:</p>
@@ -213,7 +213,7 @@
     </label>
 </figure>
 
-<p>矩形的表层长度即是接口的复杂程度，而矩形的面积代表模块实现的功能，好的模块应该是深的(deep), 这意味着它有简单的接口，但是内部处理复杂的功能.</p>
+<p>矩形的表层长度即是接口的复杂程度，而矩形的面积代表模块实现的功能，好的模块应该是深的(deep), 这意味着它有简单的接口，但是内部有复杂且丰富的实现.</p>
 <p>例如 Unix 的文件读写接口:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -246,14 +246,14 @@
 <p>实现抽象的关键手段就是辨别出信息的重要程度，对于不重要的信息，就要对用户隐藏起来，关键的信息，就要暴露给用户, 实现「去粗存精，开箱即用」。</p>
 <p>一个典型的例子就是参数配置，把参数暴露给用户，除非用户非常熟悉这个系统，不然他也不知道怎么算，
 不需要用户关注的参数就提供默认值，能程序动态计算就由程序自己来算.</p>
-<p>我很厌恶的一种设计就是引入一个配置系统，系统的运行参数都要由工程师配置，美其名是提供灵活度。</p>
+<p>我很反感的一种设计就是引入一个配置系统，系统的运行参数都要由工程师配置，美其名是提供灵活度。</p>
 <p>但这不仅引入额外的系统依赖（须知复杂度的根源就来自依赖与不明确），还大大增加了的运维成本，
 更何况这样的配置还无法自适应，换种机型又要重新配置，导致配置越来越复杂。</p>
 <p>除非是业务的黑名单或者白名单，系统的运行参数能用默认的就用默认，能动态计算就动态计算。</p>
 <p>想想TCP/IP 的重试延迟时长如果不是动态计算，那么配置什么值比较合适，网络畅通和网络延迟又该是什么值，
-开始恢复时和开始堵塞时又应该是什么值的呢。</p>
+开始恢复时和开始堵塞时又应该是什么值的呢?</p>
 <h2 id="异常"><span class="section-num">3</span> 异常</h2>
-<p>异常处理是系统复杂度的关键来源之一，异常就是一种特殊的分支，系统为了处理特殊 case难免需要写很多的逻辑。</p>
+<p>异常处理是系统复杂度的关键来源之一，异常就是一种特殊的分支，系统为了处理特殊 case难免需要写很多额外的逻辑。</p>
 <p>而作者提出的降低异常处理来系统复杂度影响的方法，就是优化设计，减少必须处理异常的地方。</p>
 <p>解决一个问题最好的方法是避免其发生，听起来很空洞或者是很不可思议，作者举出来的例子就是 Java 的 <code>substring(int beginIndex, int endIndex)</code> 用于截取子字符串的接口, 如果 <code>endIndex</code> 超出字符长度，Java 就会抛出一个 <code>IndexOutOfBoundException</code>, 调用方就是需要考虑越界的问题。</p>
 <p>但是如果 Java 的 <code>substring</code> 接口本身可以像 Python 那样支持越界，返回一个空字符串，那么调用方就完全不需要考虑越界导致的异常</p>
@@ -279,33 +279,37 @@
 <p>但是 Unix 的处理方式就更优雅，它允许用户删除已经被其他进程打开的文件，它会对该文件做标记，让用户看来它已经被删除了，但是在打开它的进程结束前文件对应的数据都会一直存在。</p>
 <p>只有在进程结束后，文件数据才会被删除掉，这样用户在删除文件时就不需要担心文件是否被使用。</p>
 <p>通过优化以上的设计，减少需要用户处理的异常，这也是一个「去粗留精」的过程, 减少用户需要感知的内容。</p>
-<h2 id="文档"><span class="section-num">4</span> 文档</h2>
+<h2 id="注释"><span class="section-num">4</span> 注释</h2>
 <p>本书用了好几个章节来介绍文档与注释的重要性，命名的重要性，如何写好注释和起好名字。</p>
 <p>好的文档可以大幅改善一个系统的设计，因为文档的作用就是把「对用户重要的，但是无法直接从代码中得知的关键信息告知用户」, 相当于帮用户把一个系统的关键信息给找出来。</p>
 <p>不是有这么一句话： <strong><strong>程序员都讨厌写文档，但是更痛恨其他程序员不写文档。</strong></strong></p>
-<p>程序员不写代码的借口大概有这么几个（可惜它们都是不成立的）, 常见的借口与它们不成立的原因可见:</p>
+<p><strong><strong>而注释就是离源码最近的文档.</strong></strong></p>
+<p>程序员不写注释的借口大概有这么几个（可惜它们都是不成立的）, 常见的借口与它们不成立的原因可见:</p>
 <h3 id="好的代码是自解释的"><span class="section-num">4.1</span> 好的代码是自解释的</h3>
 <p>如果用户必须阅读方法源码才能使用它，那就没有抽象，你相当于把实现的所有复杂度都直接暴露给用户。</p>
 <p>若想通过抽象隐藏复杂性，注释必不可少</p>
-<h3 id="我没有时间写文档"><span class="section-num">4.2</span> 我没有时间写文档</h3>
-<p>如果你一直把写代码的优先级置于写文档之上，那么你会一直没有时间写代码，
+<h3 id="我没有时间写注释"><span class="section-num">4.2</span> 我没有时间写注释</h3>
+<p>如果你一直把写代码的优先级置于写注释之上，那么你会一直没有时间写注释，
 因为一个项目结束之后总会有新的项目到来，如果你一直把写注释的优先级放在代码之后，那么你永远都不会去写注释。</p>
-<p>写文档实际并不需要那么多的时间</p>
-<h3 id="文档都会过期的啦"><span class="section-num">4.3</span> 文档都会过期的啦</h3>
+<p>写注释实际并不需要那么多的时间</p>
+<h3 id="注释都会过期的啦"><span class="section-num">4.3</span> 注释都会过期的啦</h3>
 <p>注释虽然难免会过期，但是保持与代码一致也并不会花费太多时间。</p>
-<p>只有大幅需要修改代码时才需要更新文档，更何况，只有每次都不更新文档，文档才会难免过期</p>
-<h3 id="我见过的文档都很烂-我为啥还要写"><span class="section-num">4.4</span> 我见过的文档都很烂，我为啥还要写</h3>
+<p>只有大幅需要修改代码时才需要更新注释，更何况，只有每次都不更新注释，注释才会难免过期</p>
+<h3 id="我见过的注释都很烂-我为啥还要写"><span class="section-num">4.4</span> 我见过的注释都很烂，我为啥还要写</h3>
 <p>别人的注释写得不好，那不正说明你可以写出好的注释嘛。</p>
 <p>不能用别人的低标准来要求自己嘛。</p>
-<h3 id="文档的原则"><span class="section-num">4.5</span> 文档的原则</h3>
-<p><strong><strong>注释应当描述代码中不明显的内容</strong></strong>, 简单来说，就是要描述代码为什么要这么做，而不是描述代码是怎么做的，这相当于是把代码换成注释再写一次。</p>
-<p>作者推荐在定义完函数或者模块接口之后，不要马上动手写实现，
-而是在这个时候在接口上把注释文档写下来，
-这相当于是在脑海把模块的设计再过一次。</p>
+<h3 id="注释的原则"><span class="section-num">4.5</span> 注释的原则</h3>
 <p>说起接口注释和文档，我一直觉得我描述下接口功能和使用场景，已经比绝大多数的同行做得好了。</p>
 <p>在和现在的 L7 大佬一起工作之后，着实被他的文档所震撼。</p>
 <p>不知道是因为其对代码质量和文档都有非常高的要求，还是读博士时训练出来的写作能力，
 其对接口的功能，使用场景以及异常的描述都非常详尽，甚至包括代码使用示例，质量与 JDK 源码的注释不相上下, 原来真的有程序员花这么多精力写代码注释的。</p>
+<h4 id="注释应当描述代码中不明显的内容"><span class="section-num">4.5.1</span> 注释应当描述代码中不明显的内容</h4>
+<p><strong><strong>注释应当描述代码中不明显的内容</strong></strong>,</p>
+<p>简单来说，就是要描述代码为什么要这么做，而不是描述代码是怎么做的，这相当于是把代码换成注释再写一次。</p>
+<h4 id="注释先行"><span class="section-num">4.5.2</span> 注释先行</h4>
+<p>很多程序员都习惯在写完代码之后才写注释，作者反其道而行， 作者推荐在定义完函数或者模块接口之后，不要马上动手写实现，
+而是在这个时候在接口上把接口注释写下来，这相当于是在脑海把模块的设计再过一次。</p>
+<p>写完代码再写注释，设计思路已经记不大清了，脑中更多的是实现细节，既容易把实现写成注释，又容易陷入「写完代码就不写注释」的陷阱。</p>
 <h2 id="一致性"><span class="section-num">5</span> 一致性</h2>
 <p>前文提到，系统的复杂度来自于两个方面「依赖」与「不明确」，
 而「一致性」就是让系统的行为更加清晰明确。</p>

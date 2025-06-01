@@ -12,8 +12,154 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Fri, 30 May 2025 01:13:12 -0700</lastBuildDate>
+    <lastBuildDate>Sat, 31 May 2025 17:17:02 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/programming/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>从在加拿大退货失败的一件小事思考系统设计</title>
+      <link>https://ramsayleung.github.io/zh/post/2025/%E4%BB%8E%E5%9C%A8%E5%8A%A0%E6%8B%BF%E5%A4%A7%E9%80%80%E8%B4%A7%E5%A4%B1%E8%B4%A5%E7%9A%84%E4%B8%80%E4%BB%B6%E5%B0%8F%E4%BA%8B%E6%80%9D%E8%80%83%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/</link>
+      <pubDate>Sat, 31 May 2025 11:00:00 -0700</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2025/%E4%BB%8E%E5%9C%A8%E5%8A%A0%E6%8B%BF%E5%A4%A7%E9%80%80%E8%B4%A7%E5%A4%B1%E8%B4%A5%E7%9A%84%E4%B8%80%E4%BB%B6%E5%B0%8F%E4%BA%8B%E6%80%9D%E8%80%83%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;前天刚写完《&lt;a href=&#34;https://ramsayleung.github.io/zh/post/2025/a_philosophy_of_software_design/&#34;&gt;软件设计的哲学&lt;/a&gt;》，满脑子还萦绕着模块耦合和接口抽象，
+结果昨天就撞上一个现实中的“设计陷阱”——一次耗时数小时却无解的「退货」噩梦。&lt;/p&gt;
+&lt;p&gt;今天趁着周末，决定把这场荒诞遭遇拆解出来，既当吐槽，也当案例分析.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
+<p>前天刚写完《<a href="https://ramsayleung.github.io/zh/post/2025/a_philosophy_of_software_design/">软件设计的哲学</a>》，满脑子还萦绕着模块耦合和接口抽象，
+结果昨天就撞上一个现实中的“设计陷阱”——一次耗时数小时却无解的「退货」噩梦。</p>
+<p>今天趁着周末，决定把这场荒诞遭遇拆解出来，既当吐槽，也当案例分析.</p>
+<h2 id="来龙去脉"><span class="section-num">2</span> 来龙去脉</h2>
+<p>前段时间搬了家，自然就需要重新办理宽带，一直用的是 <a href="https://www.telus.com/">Telus</a> 家的家庭宽带服务，他们家的宽带服务也支持从一个住址迁移到另外一个住址, 就预约了 Telus 技术人员上门安装。</p>
+<p>技术人员上门安装完宽带之后，就需要测试一下 WI-FI 能否正常使用，就问我们的路由器在哪，他接上处理一下。</p>
+<p>问题就来了：</p>
+<p>我们的路由器之前是舍友设置的，还不是常见的一体路由器，而是分体式路由器，有三个不同的组件。</p>
+<p>而舍友在搬完家后就回国休假了，我还真不知道怎么搞这路由器，各个接口尝试了小半个小时也没反应，师傅也没见识过，自然也不晓得弄。</p>
+<p>这个又是一个非常经典的软件开发问题：</p>
+<p>「在我的机器上能跑，换个环境就挂了」</p>
+<p>但是一直没网也不是办法，然后师傅建议我可以把他随身带的 Telus 路由器买下来，等我舍友回来后把网络设置好，再把路由器还回来，Telus支持30天无理由退货。</p>
+<p>听起来也只能这么搞了。</p>
+<p>舍友休了几周假回来之后，几分钟不到，很快就把这个路由器就设置起来了:</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-1ade0" hidden>
+    <label for="zoomCheck-1ade0">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/mesh_router.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>剩下的就是把路由器还给 Telus, 已经过了几周，30天的免责退货时间所剩不多了。</p>
+<h2 id="退货流程"><span class="section-num">3</span> 退货流程</h2>
+<p>因为设备不是通过网购买的，没法直接在网上退单，也不是门店买的，无法直接拿去门店退，退货的流程是打电话给 Telus 的客服，问他们要退货指引。</p>
+<p>我就给 Telus 的客服打电话，解释清楚情况后，客服说给我账户对应的邮箱发个邮件，里面有指引和退货码，我需要去 Canada Post（加拿大邮政）把路由器寄回去。</p>
+<p>电话里客服说已经给我发邮件了，但是我说没有收到（此处为后面埋下伏笔），于是我提供另外一个邮箱，成功收到了。</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-77eeb" hidden>
+    <label for="zoomCheck-77eeb">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/telus_return_equipment_instruction.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>因为 Canada Post 最近在为涨薪闹罢工，客服提到我需要去另外一家快递公司 Purolator 寄快递。</p>
+<p>剩下要做就是把路由器打包，然后寄出来(这么容易就好了), 再把快递单号告知 Telus, 退货流程就算结束了。</p>
+<h2 id="坑来了"><span class="section-num">4</span> 坑来了</h2>
+<h3 id="邮政罢工"><span class="section-num">4.1</span> 邮政罢工</h3>
+<p>因为加拿大邮政罢工，所以只能去 Purolator 寄，但是去到 Purolator后，人家反馈:</p>
+<blockquote>
+<p>你这个退货码是给加拿大邮政的，我们不认哦，你要给个我们家的退货码。</p></blockquote>
+<p>我只能去再打电话给 Telus 客服要退货码，花费了15分钟，终于打通了，解释完一番之后，他们说给我的邮箱发了新的 Puralator 退货码，我等了一分钟，说没有收到，然后让给我另外的一个邮箱也发一次指引，还是没有收到，然后客服说邮件会在24-48小时内到达..</p>
+<p>但挂电话后再等了一个小时还是没有收到.</p>
+<h3 id="邮箱收不到email"><span class="section-num">4.2</span> 邮箱收不到email</h3>
+<p>只能再打电话给 Telus 的客服，又等了10几分钟终于接通了，这次换了个客服，这位客服说我们不支持 Purolator，你可以等加拿大邮政罢工结束之后再寄。</p>
+<p>我也很无语，怎么你们的回复还不一致的，就和客服说，我怎么知道罢工什么时候结束呢，30天马上就要到了嘛。</p>
+<p>客服说，的确很有道理，这样吧，你可以去尝试使用用加拿大邮政寄下，然后我把情况记录一下，到时超过30天也可以免责退款。</p>
+<p>然后我追问到，那罢工结束时退货也是用相同的退货码么？这个退货码有过期时间么？邮件没写哦。</p>
+<p>客服说，那以防万一，我再给你邮箱发个新的退货码吧。</p>
+<p>我着实是怕了，不知道为什么一直没有收到邮件，就让客服把我账号对应的邮箱地址读出来, 客服就把我邮箱的逐个地址读出来。</p>
+<p>前面部分听着没问题嘛，我还在寻思是什么问题，只是听着听着，怎么我邮箱还有我不认识的部分，就打开 Telus 的APP 修改, 然后被气得差点要吐血了:</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-53734" hidden>
+    <label for="zoomCheck-53734">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/telus_email_address.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>我的邮箱地址是 <code>ramsayleung@gmail.com</code>, 然后为了标记不同的公司，我用了<a href="https://ramsayleung.github.io/zh/post/2023/gmail%E5%9C%B0%E5%9D%80%E7%9A%84%E9%9A%90%E8%97%8F%E6%8A%80%E5%B7%A7/">《两个鲜为人知的Gmail地址技巧》</a> 提到的加号技巧来注册 Telus 账号:</p>
+<p><code>ramsayleung+telus@gmail.com</code></p>
+<p>之前用了一年多还是好好的，不然我也无法注册和验证邮箱成功。</p>
+<p>但是现在 Telus 作了变更，直接把邮箱地址中的加号去掉了，变成了 <code>ramsayleungtelus@gmail.com</code>, 变成一个完全不同的邮箱, 肯定是不可能收到邮件的。</p>
+<p>花费了近一下午，打了5-6次电话，和不同的客服沟通和练习口语，最后的结果就是隔天再去加拿大邮政试试，不行就等他们罢工结束再寄。</p>
+<h2 id="糟糕设计的代价"><span class="section-num">5</span> 糟糕设计的代价</h2>
+<p>这次经历虽然令人沮丧，但也印证了软件工程的一条铁律：</p>
+<p><strong><strong>糟糕的设计最终会让所有人付出代价——无论是用户还是开发者。</strong></strong></p>
+<p>讽刺的是，人们总希望通过「学习别人的错误」来避免踩坑，但现实中，我们往往被迫为别人的设计缺陷买单。</p>
+<h3 id="单点故障与-happy-path-陷阱"><span class="section-num">5.1</span> 单点故障与「Happy Path」陷阱</h3>
+<p>电话退货这个操作虽然看似落后，但是总体来说还是可以用的，在不出问题的前提下。</p>
+<p>Telus 的退货流程设计暴露了一个典型的系统脆弱性：</p>
+<p><strong><strong>强依赖单一服务提供商（Canada Post）</strong></strong> ，且未设计降级方案（如备用物流或线下门店退货）。</p>
+<p>这种「Happy Path Only」的思维，本质上是对分布式系统设计原则的违背：</p>
+<p><strong><strong>任何外部服务都可能失败，而系统必须对此容错。</strong></strong></p>
+<p>让快递直接成为业务系统的「单点」故障，只考虑 Happy Path, 没有考虑异常场景，甚至发过来的退货邮件指引，都可以看出他们是把 <strong><strong>Canada Post</strong></strong> 写死在邮件。</p>
+<h3 id="向后兼容性-一个被忽视的底线"><span class="section-num">5.2</span> 向后兼容性：一个被忽视的底线</h3>
+<p>退货强依赖加拿大邮政这个还可以说成是产品设计的问题，但是直接把我邮箱地址给改掉这个，就一定是程序员的锅了。</p>
+<p>此外，我的邮箱地址在 APP 中显示的是 <code>ramsayleung@gmail.com</code>, 只有在修改邮箱地址的时候，才会显示出 <code>ramsayleungtelus@gmail.com</code> 这也是我一直没有发现的原因。</p>
+<p>但最令人匪夷所思的是邮箱地址的非兼容性变更：系统直接静默移除了存量用户邮箱中的加号:</p>
+<p><code>ramsayleung+telus@gmail.com</code> -&gt; <code>ramsayleungtelus@gmail.com</code> ，导致邮件发送失败。</p>
+<p>这种粗暴的修改方式违反了最基本的向后兼容性原则，而问题的暴露方式（APP显示与修改界面不一致）进一步说明：</p>
+<p>其系统内部还存在的数据状态不一致性问题</p>
+<p>合理的变更方式应该是：</p>
+<ol>
+<li>增量控制：
+<ul>
+<li>禁止新用户注册或修改时使用特殊符号，但保留存量数据, 保证增量用户地址正确</li>
+<li>存量用户修改邮箱地址时，禁止使用带特殊符号的邮箱地址</li>
+</ul>
+</li>
+<li>存量迁移：
+<ul>
+<li>通过离线数仓，查询出所有带特殊符号的邮箱地址，通过异步任务批量通知受影响用户（避免阻塞主流程）</li>
+<li>提供自动清理特殊符号的“一键修复”功能（需用户确认）。</li>
+</ul>
+</li>
+<li>监控兜底：
+<ul>
+<li>建立异常邮箱地址的监控或者报表，直到存量问题归零。</li>
+</ul>
+</li>
+</ol>
+<p>虽然这做法非常繁琐，但是却可以保证系统升级绝对不影响用户。</p>
+<p>系统设计与维护就是如此：开始做的时候成本很低，越到后期成本越高。</p>
+<h2 id="个人感悟"><span class="section-num">6</span> 个人感悟</h2>
+<p>除去别人的设计错误之外，我还有些额外的个人感悟:</p>
+<p>虽然 Gmail 支持邮箱地址中增加一个 <code>+</code> 这样的功能，但是并不是所有的公司都支持这特性的，重要的邮件还是不能使用这个「奇技淫巧」。</p>
+<p>此外，我另外提供的邮箱也无法收到邮件，可能是我的邮箱太长了，导致客服没有拼对我的邮箱，所以最好还是准备一个短的，包含数字的备用邮箱地址，方便电话沟通时提供给对方。</p>
+<p>整个故事再次印证了《<a href="https://ramsayleung.github.io/zh/post/2025/a_philosophy_of_software_design/">软件设计的哲学</a>》中的道理：</p>
+<p><strong><strong>所有偷懒的设计，终将以更高的成本偿还</strong></strong></p>
+<p>当然, 谁来还就是后话了</p>
+<div class="qr-container" center>
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" class="qr-container" width="160px" height="160px" center="t" />
+公号同步更新，欢迎关注👻
+</div>
+]]></content:encoded>
+    </item>
     <item>
       <title>软件设计的哲学</title>
       <link>https://ramsayleung.github.io/zh/post/2025/a_philosophy_of_software_design/</link>
@@ -21,10 +167,10 @@
       <guid>https://ramsayleung.github.io/zh/post/2025/a_philosophy_of_software_design/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
 &lt;p&gt;知道这本书是因为在 Hacker News 上有人提问：&lt;a href=&#34;https://news.ycombinator.com/item?id=31713756&#34;&gt;你读过最好的技术书是什么&lt;/a&gt; &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;?&lt;/p&gt;
-&lt;p&gt;最高赞的书是 Design Data Intensive Application(DDIA, 即《&lt;a href=&#34;https://book.douban.com/subject/30329536/&#34;&gt;数据密集型应用系统设计&lt;/a&gt;》&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;), 我觉得 DDIA 也当得起这个赞誉，然后最高赞的回答顺势提到了 &lt;a href=&#34;https://book.douban.com/subject/30218046/&#34;&gt;A Philosophy Of Software Design&lt;/a&gt; &lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;, 想来能与 DDIA 齐名的书，肯定不会差得哪里去。&lt;/p&gt;</description>
+&lt;p&gt;最高赞的书是 Design Data Intensive Application(DDIA, 即《&lt;a href=&#34;https://book.douban.com/subject/30329536/&#34;&gt;数据密集型应用系统设计&lt;/a&gt;》&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;), 我觉得 DDIA 也担得起这个赞誉，然后最高赞的回答顺势提到了 &lt;a href=&#34;https://book.douban.com/subject/30218046/&#34;&gt;A Philosophy Of Software Design&lt;/a&gt; &lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;, 想来能与 DDIA 齐名的书，肯定不会差得哪里去。&lt;/p&gt;</description>
       <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
 <p>知道这本书是因为在 Hacker News 上有人提问：<a href="https://news.ycombinator.com/item?id=31713756">你读过最好的技术书是什么</a> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>?</p>
-<p>最高赞的书是 Design Data Intensive Application(DDIA, 即《<a href="https://book.douban.com/subject/30329536/">数据密集型应用系统设计</a>》<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>), 我觉得 DDIA 也当得起这个赞誉，然后最高赞的回答顺势提到了 <a href="https://book.douban.com/subject/30218046/">A Philosophy Of Software Design</a> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>, 想来能与 DDIA 齐名的书，肯定不会差得哪里去。</p>
+<p>最高赞的书是 Design Data Intensive Application(DDIA, 即《<a href="https://book.douban.com/subject/30329536/">数据密集型应用系统设计</a>》<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>), 我觉得 DDIA 也担得起这个赞誉，然后最高赞的回答顺势提到了 <a href="https://book.douban.com/subject/30218046/">A Philosophy Of Software Design</a> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>, 想来能与 DDIA 齐名的书，肯定不会差得哪里去。</p>
 <p>作者是 John Ousterhout, 斯坦福大学的教授，TCL 编程语言的创造者(Redis 的初始化版本就是用 TCL 写的)，共识算法 Raft 的作者之一.</p>
 <p>这本书并不厚，全书只有200多页，读起来也并不费劲。</p>
 <p>而这本书的主旨，开篇就点出来了:</p>
@@ -67,7 +213,7 @@
     </label>
 </figure>
 
-<p>矩形的表层长度即是接口的复杂程度，而矩形的面积代表模块实现的功能，好的模块应该是深的(deep), 这意味着它有简单的接口，但是内部处理复杂的功能.</p>
+<p>矩形的表层长度即是接口的复杂程度，而矩形的面积代表模块实现的功能，好的模块应该是深的(deep), 这意味着它有简单的接口，但是内部有复杂且丰富的实现.</p>
 <p>例如 Unix 的文件读写接口:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -100,14 +246,14 @@
 <p>实现抽象的关键手段就是辨别出信息的重要程度，对于不重要的信息，就要对用户隐藏起来，关键的信息，就要暴露给用户, 实现「去粗存精，开箱即用」。</p>
 <p>一个典型的例子就是参数配置，把参数暴露给用户，除非用户非常熟悉这个系统，不然他也不知道怎么算，
 不需要用户关注的参数就提供默认值，能程序动态计算就由程序自己来算.</p>
-<p>我很厌恶的一种设计就是引入一个配置系统，系统的运行参数都要由工程师配置，美其名是提供灵活度。</p>
+<p>我很反感的一种设计就是引入一个配置系统，系统的运行参数都要由工程师配置，美其名是提供灵活度。</p>
 <p>但这不仅引入额外的系统依赖（须知复杂度的根源就来自依赖与不明确），还大大增加了的运维成本，
 更何况这样的配置还无法自适应，换种机型又要重新配置，导致配置越来越复杂。</p>
 <p>除非是业务的黑名单或者白名单，系统的运行参数能用默认的就用默认，能动态计算就动态计算。</p>
 <p>想想TCP/IP 的重试延迟时长如果不是动态计算，那么配置什么值比较合适，网络畅通和网络延迟又该是什么值，
-开始恢复时和开始堵塞时又应该是什么值的呢。</p>
+开始恢复时和开始堵塞时又应该是什么值的呢?</p>
 <h2 id="异常"><span class="section-num">3</span> 异常</h2>
-<p>异常处理是系统复杂度的关键来源之一，异常就是一种特殊的分支，系统为了处理特殊 case难免需要写很多的逻辑。</p>
+<p>异常处理是系统复杂度的关键来源之一，异常就是一种特殊的分支，系统为了处理特殊 case难免需要写很多额外的逻辑。</p>
 <p>而作者提出的降低异常处理来系统复杂度影响的方法，就是优化设计，减少必须处理异常的地方。</p>
 <p>解决一个问题最好的方法是避免其发生，听起来很空洞或者是很不可思议，作者举出来的例子就是 Java 的 <code>substring(int beginIndex, int endIndex)</code> 用于截取子字符串的接口, 如果 <code>endIndex</code> 超出字符长度，Java 就会抛出一个 <code>IndexOutOfBoundException</code>, 调用方就是需要考虑越界的问题。</p>
 <p>但是如果 Java 的 <code>substring</code> 接口本身可以像 Python 那样支持越界，返回一个空字符串，那么调用方就完全不需要考虑越界导致的异常</p>
@@ -133,33 +279,37 @@
 <p>但是 Unix 的处理方式就更优雅，它允许用户删除已经被其他进程打开的文件，它会对该文件做标记，让用户看来它已经被删除了，但是在打开它的进程结束前文件对应的数据都会一直存在。</p>
 <p>只有在进程结束后，文件数据才会被删除掉，这样用户在删除文件时就不需要担心文件是否被使用。</p>
 <p>通过优化以上的设计，减少需要用户处理的异常，这也是一个「去粗留精」的过程, 减少用户需要感知的内容。</p>
-<h2 id="文档"><span class="section-num">4</span> 文档</h2>
+<h2 id="注释"><span class="section-num">4</span> 注释</h2>
 <p>本书用了好几个章节来介绍文档与注释的重要性，命名的重要性，如何写好注释和起好名字。</p>
 <p>好的文档可以大幅改善一个系统的设计，因为文档的作用就是把「对用户重要的，但是无法直接从代码中得知的关键信息告知用户」, 相当于帮用户把一个系统的关键信息给找出来。</p>
 <p>不是有这么一句话： <strong><strong>程序员都讨厌写文档，但是更痛恨其他程序员不写文档。</strong></strong></p>
-<p>程序员不写代码的借口大概有这么几个（可惜它们都是不成立的）, 常见的借口与它们不成立的原因可见:</p>
+<p><strong><strong>而注释就是离源码最近的文档.</strong></strong></p>
+<p>程序员不写注释的借口大概有这么几个（可惜它们都是不成立的）, 常见的借口与它们不成立的原因可见:</p>
 <h3 id="好的代码是自解释的"><span class="section-num">4.1</span> 好的代码是自解释的</h3>
 <p>如果用户必须阅读方法源码才能使用它，那就没有抽象，你相当于把实现的所有复杂度都直接暴露给用户。</p>
 <p>若想通过抽象隐藏复杂性，注释必不可少</p>
-<h3 id="我没有时间写文档"><span class="section-num">4.2</span> 我没有时间写文档</h3>
-<p>如果你一直把写代码的优先级置于写文档之上，那么你会一直没有时间写代码，
+<h3 id="我没有时间写注释"><span class="section-num">4.2</span> 我没有时间写注释</h3>
+<p>如果你一直把写代码的优先级置于写注释之上，那么你会一直没有时间写注释，
 因为一个项目结束之后总会有新的项目到来，如果你一直把写注释的优先级放在代码之后，那么你永远都不会去写注释。</p>
-<p>写文档实际并不需要那么多的时间</p>
-<h3 id="文档都会过期的啦"><span class="section-num">4.3</span> 文档都会过期的啦</h3>
+<p>写注释实际并不需要那么多的时间</p>
+<h3 id="注释都会过期的啦"><span class="section-num">4.3</span> 注释都会过期的啦</h3>
 <p>注释虽然难免会过期，但是保持与代码一致也并不会花费太多时间。</p>
-<p>只有大幅需要修改代码时才需要更新文档，更何况，只有每次都不更新文档，文档才会难免过期</p>
-<h3 id="我见过的文档都很烂-我为啥还要写"><span class="section-num">4.4</span> 我见过的文档都很烂，我为啥还要写</h3>
+<p>只有大幅需要修改代码时才需要更新注释，更何况，只有每次都不更新注释，注释才会难免过期</p>
+<h3 id="我见过的注释都很烂-我为啥还要写"><span class="section-num">4.4</span> 我见过的注释都很烂，我为啥还要写</h3>
 <p>别人的注释写得不好，那不正说明你可以写出好的注释嘛。</p>
 <p>不能用别人的低标准来要求自己嘛。</p>
-<h3 id="文档的原则"><span class="section-num">4.5</span> 文档的原则</h3>
-<p><strong><strong>注释应当描述代码中不明显的内容</strong></strong>, 简单来说，就是要描述代码为什么要这么做，而不是描述代码是怎么做的，这相当于是把代码换成注释再写一次。</p>
-<p>作者推荐在定义完函数或者模块接口之后，不要马上动手写实现，
-而是在这个时候在接口上把注释文档写下来，
-这相当于是在脑海把模块的设计再过一次。</p>
+<h3 id="注释的原则"><span class="section-num">4.5</span> 注释的原则</h3>
 <p>说起接口注释和文档，我一直觉得我描述下接口功能和使用场景，已经比绝大多数的同行做得好了。</p>
 <p>在和现在的 L7 大佬一起工作之后，着实被他的文档所震撼。</p>
 <p>不知道是因为其对代码质量和文档都有非常高的要求，还是读博士时训练出来的写作能力，
 其对接口的功能，使用场景以及异常的描述都非常详尽，甚至包括代码使用示例，质量与 JDK 源码的注释不相上下, 原来真的有程序员花这么多精力写代码注释的。</p>
+<h4 id="注释应当描述代码中不明显的内容"><span class="section-num">4.5.1</span> 注释应当描述代码中不明显的内容</h4>
+<p><strong><strong>注释应当描述代码中不明显的内容</strong></strong>,</p>
+<p>简单来说，就是要描述代码为什么要这么做，而不是描述代码是怎么做的，这相当于是把代码换成注释再写一次。</p>
+<h4 id="注释先行"><span class="section-num">4.5.2</span> 注释先行</h4>
+<p>很多程序员都习惯在写完代码之后才写注释，作者反其道而行， 作者推荐在定义完函数或者模块接口之后，不要马上动手写实现，
+而是在这个时候在接口上把接口注释写下来，这相当于是在脑海把模块的设计再过一次。</p>
+<p>写完代码再写注释，设计思路已经记不大清了，脑中更多的是实现细节，既容易把实现写成注释，又容易陷入「写完代码就不写注释」的陷阱。</p>
 <h2 id="一致性"><span class="section-num">5</span> 一致性</h2>
 <p>前文提到，系统的复杂度来自于两个方面「依赖」与「不明确」，
 而「一致性」就是让系统的行为更加清晰明确。</p>
