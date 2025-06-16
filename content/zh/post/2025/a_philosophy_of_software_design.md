@@ -1,12 +1,13 @@
 +++
 title = "软件设计的哲学"
 date = 2025-05-30T00:39:00-07:00
-lastmod = 2025-06-10T08:25:57-07:00
+lastmod = 2025-06-15T17:54:34-07:00
 tags = ["book", "design", "programming"]
 categories = ["读书感悟", "软件设计"]
 draft = false
 toc = true
 showQuote = true
+highlighted = true
 +++
 
 ## <span class="section-num">1</span> 前言 {#前言}
