@@ -28,10 +28,10 @@ function loadComment(darkMode=false) {
       console.log('Initial giscus load');
       const commentScript = document.createElement("script");
       commentScript.setAttribute("src", "https://giscus.app/client.js");
-      commentScript.setAttribute("data-repo", "ramsayleung/comment");
-      commentScript.setAttribute("data-repo-id", "MDEwOlJlcG9zaXRvcnkzMDk2NjQ1NDk=");
-      commentScript.setAttribute("data-category", "General");
-      commentScript.setAttribute("data-category-id", "DIC_kwDOEnUbJc4Cltnz");
+      commentScript.setAttribute("data-repo", "{{ .Site.Params.giscus.repo }}");
+      commentScript.setAttribute("data-repo-id", "{{ .Site.Params.giscus.repoId }}");
+      commentScript.setAttribute("data-category", "{{ .Site.Params.giscus.category }}");
+      commentScript.setAttribute("data-category-id", "{{ .Site.Params.giscus.categoryId }}");
       commentScript.setAttribute("data-mapping", "pathname");
       commentScript.setAttribute("data-strict", "0");
       commentScript.setAttribute("data-reactions-enabled", "1");

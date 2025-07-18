@@ -116,6 +116,12 @@ params:
     minMatchCharLength: 0
     keys: ["title", "permalink", "summary", "content"]
 
+  giscus:
+    repo: "ramsayleung/comment"
+    repoId: "MDEwOlJlcG9zaXRvcnkzMDk2NjQ1NDk="
+    category: "General"
+    categoryId: "DIC_kwDOEnUbJc4Cltnz"
+
   socialIcons:
     - name: github
       url: "https://github.com/ramsayleung"
