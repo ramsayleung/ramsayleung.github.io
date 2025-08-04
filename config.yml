@@ -29,6 +29,7 @@ params:
   # author: ["Me", "You"] # multiple authors
   images: ["<link or path of image for opengraph, twitter-cards>"]
   DateFormat: "January 2, 2006"
+  math: true
   defaultTheme: auto # dark, light
   disableThemeToggle: false
 
