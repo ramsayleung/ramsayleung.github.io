@@ -1,7 +1,7 @@
 +++
 title = "一本读了八年还没读完的书"
 date = 2025-08-04T10:00:00-07:00
-lastmod = 2025-08-04T13:36:12-07:00
+lastmod = 2025-08-04T14:06:30-07:00
 tags = ["book"]
 categories = ["programming", "design"]
 draft = false
@@ -11,13 +11,13 @@ showQuote = true
 
 ## <span class="section-num">1</span> 缘起 {#缘起}
 
-正如我在之前博客文章《[这些年走过的路：从广州到温哥华](https://ramsayleung.github.io/zh/post/2023/%E8%BF%99%E4%BA%9B%E5%B9%B4%E8%B5%B0%E8%BF%87%E7%9A%84%E8%B7%AF_%E4%BB%8E%E5%B9%BF%E5%B7%9E%E5%88%B0%E6%B8%A9%E5%93%A5%E5%8D%8E/)》提到的那样，我在大二暑假的时候因缘际会，获得了去一家在深圳的初创公司实习的 Offer。
+正如我在之前博客文章《[这些年走过的路：从广州到温哥华](https://ramsayleung.github.io/zh/post/2023/%E8%BF%99%E4%BA%9B%E5%B9%B4%E8%B5%B0%E8%BF%87%E7%9A%84%E8%B7%AF_%E4%BB%8E%E5%B9%BF%E5%B7%9E%E5%88%B0%E6%B8%A9%E5%93%A5%E5%8D%8E/)》[^fn:1]提到的那样，我在大二暑假的时候因缘际会，获得了去一家在深圳的初创公司实习的 Offer。
 
 实习的两个多月时间也快就过去了，我也顺利拿到了 Return Offer，公司也非常有人情味地给实习生办了个欢送典礼。
 
-当时实习的导师，也是这家公司的副总裁，加州州立大学的[刘颖](https://www.linkedin.com/in/yingliu37)教授，在欢送典礼上给我们几个实习生每人都赠送了一本书作为临别礼物。（可惜换了几次手机，已经找不回当初手捧着书的合照了）
+当时实习的导师，也是这家公司的副总裁，加州州立大学的[刘颖](https://www.linkedin.com/in/yingliu37)教授[^fn:2]，在欢送典礼上给我们几个实习生每人都赠送了一本书作为临别礼物。（可惜换了几次手机，已经找不回当初手捧着书的合照了）
 
-他说这是一本可以帮助我们了解程序本质，以及学习抽象的好书，这本书就叫《[计算机程序的构造和解释](https://book.douban.com/subject/1148282/)》（Structure and Interpretation of Computer Programs, 简称 SICP，下文使用 SICP 代称）
+他说这是一本可以帮助我们了解程序本质，以及学习抽象的好书，这本书就叫《[计算机程序的构造和解释](https://book.douban.com/subject/1148282/)》[^fn:3]（Structure and Interpretation of Computer Programs, 简称 SICP，下文使用 SICP 代称）
 
 收到这本书时，我并未料到它会成为一场长达八年的拉锯战。
 
@@ -133,7 +133,7 @@ Total                 219         9277         7147          412         1718
 如 3.3章里面，通过程序来建立数字电路的反门，与门，或门，再通过这样的电子元件建立起半加器，
 再通过多个半加器实现全加器，实现二进制的加法，从程序到模拟电路，再用模拟电路来构造计算机的处理器。
 
-不同学科的知识在一本书中融汇贯通，再配合这个 `eval-apply` 表达式的配图，总有一种太极的感觉，难免让我有种读计算机哲学书的感觉:
+不同学科的知识在一本书中融会贯通，再配合这个 `eval-apply` 表达式的配图，总有一种太极的感觉，难免让我有种读计算机哲学书的感觉:
 
 {{< figure src="/ox-hugo/apply_eval.jpg" >}}
 
@@ -259,7 +259,6 @@ SICP 不是一本教你「如何编程」的书，而是一把钥匙，是一座
     -   [这些年走过的路：从广州到温哥华](https://ramsayleung.github.io/zh/post/2023/%E8%BF%99%E4%BA%9B%E5%B9%B4%E8%B5%B0%E8%BF%87%E7%9A%84%E8%B7%AF_%E4%BB%8E%E5%B9%BF%E5%B7%9E%E5%88%B0%E6%B8%A9%E5%93%A5%E5%8D%8E/)
     -   [加拿大之初体验](https://ramsayleung.github.io/zh/post/2023/%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B9%8B%E5%88%9D%E4%BD%93%E9%AA%8C/)
     -   [登陆加拿大一年后的体会](https://ramsayleung.github.io/zh/post/2024/%E7%99%BB%E9%99%86%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B8%80%E5%B9%B4%E7%9A%84%E4%BD%93%E4%BC%9A/)
-    -   [夏日捕蟹记](https://ramsayleung.github.io/zh/post/2024/%E5%A4%8F%E6%97%A5%E6%8D%95%E8%9F%B9%E8%AE%B0/)
 -   历史思考
     -   [为什么梦想买不起，故乡回不去](https://ramsayleung.github.io/zh/post/2023/%E7%BD%AE%E8%BA%AB%E4%BA%8B%E5%86%85/)
     -   [闲聊写作的好处](https://ramsayleung.github.io/zh/post/2023/%E9%97%B2%E8%81%8A%E5%86%99%E4%BD%9C/)
@@ -286,3 +285,7 @@ SICP 不是一本教你「如何编程」的书，而是一把钥匙，是一座
 公号同步更新，欢迎关注👻
 
 </div>
+
+[^fn:1]: <https://ramsayleung.github.io/zh/post/2023/%E8%BF%99%E4%BA%9B%E5%B9%B4%E8%B5%B0%E8%BF%87%E7%9A%84%E8%B7%AF_%E4%BB%8E%E5%B9%BF%E5%B7%9E%E5%88%B0%E6%B8%A9%E5%93%A5%E5%8D%8E/>
+[^fn:2]: <https://www.linkedin.com/in/yingliu37>
+[^fn:3]: <https://book.douban.com/subject/1148282/>
