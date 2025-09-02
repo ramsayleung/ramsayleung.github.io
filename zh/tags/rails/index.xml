@@ -12,18 +12,20 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Mon, 01 Sep 2025 14:29:58 -0700</lastBuildDate>
+    <lastBuildDate>Mon, 01 Sep 2025 21:35:34 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/rails/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>一个自学习的Telegram广告拦截机器人</title>
       <link>https://ramsayleung.github.io/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/</link>
       <pubDate>Thu, 28 Aug 2025 23:45:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/</guid>
-      <description>&lt;h2 id=&#34;序言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 序言&lt;/h2&gt;
+      <description>&lt;p&gt;&lt;a href=&#34;https://ramsayleung.github.io/en/post/2025/a_telegram_spam_blocker_bot_based_on_bayesian/&#34;&gt;English Version&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;序言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 序言&lt;/h2&gt;
 &lt;p&gt;我花了一周末时间，写了一个自学习的 Telegram 广告拦截机器人 &lt;code&gt;@BayesSpamSniperBot&lt;/code&gt; (&lt;a href=&#34;https://t.me/BayesSpamSniperBot&#34;&gt;https://t.me/BayesSpamSniperBot&lt;/a&gt;)，项目开源在：&lt;a href=&#34;https://github.com/ramsayleung/bayes_spam_sniper&#34;&gt;https://github.com/ramsayleung/bayes_spam_sniper&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;telegram&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1.1&lt;/span&gt; Telegram&lt;/h3&gt;
 &lt;p&gt;Telegram 是一个流行的即时通讯软件，类似微信，Whatsapp，已有超过10亿用户，支持许多强大的功能，如聊天记录云存储，支持Linux, Mac, Windows, Android, IOS, Web 多个平台，客户端都是开源，类似微信公众号的频道功能(Channel)，还有我见过的最强大的机器人系统。&lt;/p&gt;</description>
-      <content:encoded><![CDATA[<h2 id="序言"><span class="section-num">1</span> 序言</h2>
+      <content:encoded><![CDATA[<p><a href="https://ramsayleung.github.io/en/post/2025/a_telegram_spam_blocker_bot_based_on_bayesian/">English Version</a></p>
+<h2 id="序言"><span class="section-num">1</span> 序言</h2>
 <p>我花了一周末时间，写了一个自学习的 Telegram 广告拦截机器人 <code>@BayesSpamSniperBot</code> (<a href="https://t.me/BayesSpamSniperBot">https://t.me/BayesSpamSniperBot</a>)，项目开源在：<a href="https://github.com/ramsayleung/bayes_spam_sniper">https://github.com/ramsayleung/bayes_spam_sniper</a></p>
 <h3 id="telegram"><span class="section-num">1.1</span> Telegram</h3>
 <p>Telegram 是一个流行的即时通讯软件，类似微信，Whatsapp，已有超过10亿用户，支持许多强大的功能，如聊天记录云存储，支持Linux, Mac, Windows, Android, IOS, Web 多个平台，客户端都是开源，类似微信公众号的频道功能(Channel)，还有我见过的最强大的机器人系统。</p>
@@ -83,7 +85,7 @@
 <p>对于 Telegram 的垃圾广告而言，这不是类似的问题嘛？</p>
 <p>那我岂不是可以用类似的解决方案来解决 Telegram 广告的问题嘛</p>
 <h3 id="贝叶斯定理"><span class="section-num">3.1</span> 贝叶斯定理</h3>
-<p>提起概率算法，最经典的例子莫过于「抛硬币」这一古典概型——每次抛掷都是独立事件，前一次的结果不会影响下一次的概率。</p>
+<p>提起概率算法，最经典的例子莫过于「抛硬币」这一古典概率——每次抛掷都是独立事件，前一次的结果不会影响下一次的概率。</p>
 <p>然而，现实中的很多场景并不能像抛硬币那样无限重复，事件之间也往往并非相互独立。</p>
 <p>这时候，贝叶斯定理就显示出其独特的价值。</p>
 <p>它是一种「由果溯因」的概率方法，用于在已知某些证据的条件下，更新我们对某一假设的置信程度。</p>
