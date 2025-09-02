@@ -1,16 +1,19 @@
 +++
 title = "A Telegram Spam Blocker Bot Based On Bayesian Algorithm"
 date = 2025-08-30T10:34:00-07:00
-lastmod = 2025-09-01T10:06:38-07:00
-tags = ["telegram", "bot", "design"]
+lastmod = 2025-09-01T21:36:06-07:00
+tags = ["telegram", "design", "programming", "rails", "rust"]
 categories = ["design"]
 draft = false
 toc = true
 +++
 
+[中文版本](https://ramsayleung.github.io/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/)
+
+
 ## <span class="section-num">1</span> Preface {#preface}
 
-I spent a weekend building a Telegram spam blocker bot based on Bayesian Algorithm. The project is open-sourced at: <https://github.com/ramsayleung/bayes_spam_sniper>
+I spent a weekend building a Telegram spam blocker bot based on Bayesian Algorithm `@BayesSpamSniperBot` (<https://t.me/BayesSpamSniperBot>). The project is open-sourced at: <https://github.com/ramsayleung/bayes_spam_sniper>
 
 
 ### <span class="section-num">1.1</span> Telegram {#telegram}
@@ -25,7 +28,7 @@ It supports many powerful features like cloud chat history storage, clients for 
 I usually listen to podcasts while running and cooking. 《[软件那些事儿(A podcast in Chinese about history and story behind software)](https://podcasts.apple.com/us/podcast/%E8%BD%AF%E4%BB%B6%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/id1147186605)》[^fn:1] is one of my favorites, hosted by [栋哥](https://liuyandong.com/sample-page)&nbsp;[^fn:2]. Because I enjoyed 栋哥's show, I took the chance to join his Telegram channel.
 
 栋哥's Telegram channel [汗牛充栋](https://t.me/huruanhuying)&nbsp;[^fn:3] is primarily used for releasing podcast information.
-He once opened the comment function, but it unexpectedly attracted a flood of crypto-related users posting spam, leading him to disable comments:
+He once enabled the comment for channel, but it unexpectedly attracted a flood of crypto-related users posting spam, leading him to disable comments:
 
 {{< figure src="/ox-hugo/spam_concert.jpg" >}}
 

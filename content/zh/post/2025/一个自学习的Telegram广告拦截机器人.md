@@ -1,7 +1,7 @@
 +++
 title = "一个自学习的Telegram广告拦截机器人"
 date = 2025-08-28T23:45:00-07:00
-lastmod = 2025-09-01T14:29:58-07:00
+lastmod = 2025-09-01T21:35:34-07:00
 tags = ["telegram", "design", "programming", "rails", "rust"]
 categories = ["telegram"]
 draft = false
@@ -9,6 +9,9 @@ toc = true
 showQuote = true
 highlighted = true
 +++
+
+[English Version](https://ramsayleung.github.io/en/post/2025/a_telegram_spam_blocker_bot_based_on_bayesian/)
+
 
 ## <span class="section-num">1</span> 序言 {#序言}
 
@@ -55,7 +58,7 @@ Telegram 是一个流行的即时通讯软件，类似微信，Whatsapp，已有
 
 ### <span class="section-num">3.1</span> 贝叶斯定理 {#贝叶斯定理}
 
-提起概率算法，最经典的例子莫过于「抛硬币」这一古典概型——每次抛掷都是独立事件，前一次的结果不会影响下一次的概率。
+提起概率算法，最经典的例子莫过于「抛硬币」这一古典概率——每次抛掷都是独立事件，前一次的结果不会影响下一次的概率。
 
 然而，现实中的很多场景并不能像抛硬币那样无限重复，事件之间也往往并非相互独立。
 
