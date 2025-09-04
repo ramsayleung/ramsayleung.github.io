@@ -1,7 +1,7 @@
 +++
 title = "一个自学习的Telegram广告拦截机器人"
 date = 2025-08-28T23:45:00-07:00
-lastmod = 2025-09-01T21:35:34-07:00
+lastmod = 2025-09-01T21:42:23-07:00
 tags = ["telegram", "design", "programming", "rails", "rust"]
 categories = ["telegram"]
 draft = false
