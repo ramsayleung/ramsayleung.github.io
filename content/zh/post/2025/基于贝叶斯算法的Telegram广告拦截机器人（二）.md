@@ -2,9 +2,9 @@
 title = "基于贝叶斯算法的Telegram广告拦截机器人（二）：上线半月的故障、挑战与优化之路"
 author = ["Ramsay Leung"]
 date = 2025-09-13T14:28:00-07:00
-lastmod = 2025-09-14T10:38:03-07:00
+lastmod = 2025-09-14T11:12:53-07:00
 tags = ["telegram", "design", "programming", "rails", "rust"]
-categories = ["telegram"]
+categories = ["telegram", "基于贝叶斯算法的Telegram广告拦截机器人"]
 draft = false
 toc = true
 showQuote = true
@@ -18,7 +18,7 @@ showQuote = true
 
 系列文章:
 
--   [基于贝叶斯算法的Telegram广告拦截机器人（一）：从问题到产品]({{< relref "一个自学习的Telegram广告拦截机器人" >}})
+-   [基于贝叶斯算法的Telegram广告拦截机器人（一）：从问题到产品](https://ramsayleung.github.io/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/)
 
 尽管项目代码开源，但我始终以产品思维运营它。上线半个月以来，经历了故障、用户反馈与持续优化，现将这段经历分享出来。
 
@@ -31,7 +31,7 @@ showQuote = true
 
 {{< figure src="/ox-hugo/delete_all_message_2.jpg" >}}
 
-故障的原因是因为我当时一直在收集垃圾广告的数据，太专注于垃圾广告数据，而忽略了收集的正常数据，
+故障的原因是我当时一直在收集垃圾广告的数据，太专注于垃圾广告数据，而忽略了收集的正常数据，
 导致垃圾广告数据过多，消息都被认为是垃圾广告，被误删了。
 
 通过补充大量正常消息数据，重新平衡训练集，模型逐渐恢复正常识别能力。
@@ -42,7 +42,7 @@ showQuote = true
 
 ### <span class="section-num">3.1</span> 邮件与即时消息的差异 {#邮件与即时消息的差异}
 
-我在[《基于贝叶斯算法的Telegram广告拦截机器人（一）：从问题到产品》]({{< relref "一个自学习的Telegram广告拦截机器人" >}})里面提到过：
+我在[《基于贝叶斯算法的Telegram广告拦截机器人（一）：从问题到产品》](https://ramsayleung.github.io/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/)里面提到过：
 
 > 常见的 Telegram 广告机器人是大多是基于关键字的，通过匹配关键字进行文本拦截，非常容易被发垃圾广告的人绕过。
 >
@@ -54,7 +54,7 @@ showQuote = true
 
 但产品上线之后，我发现聊天软件消息和Email虽然都是文字，还是有很大差别的:
 
-Email 大多时候都是长文的，内容较长，并且大多情况，一封邮件上下文本身也是完整，就有较多的内容，较高的准确度来判断是否是广告。
+Email 大多时候都是长文的，内容较长，并且大多情况，一封邮件上下文本身也很完整，就有较多的内容，较高的准确度来判断是否是广告。
 
 而 Telegram, 微信这类的即时聊天软件，聊天消息大多都不长，可能把内容分成多条消息来发，就没有完整的上下文，比如:
 
@@ -89,7 +89,7 @@ Email 大多时候都是长文的，内容较长，并且大多情况，一封�
 
 ### <span class="section-num">4.1</span> 自动删除消息 {#自动删除消息}
 
-产品上线之后，很快就有用户来试用了，然后有用户就提了一个非常好的优化建议。
+产品上线之后，很快就有用户来试用了，然后其中一个用户就提了一个非常好的优化建议。
 
 {{< figure src="/ox-hugo/detect_spam_and_ban_user.jpg" >}}
 
@@ -204,14 +204,14 @@ Telegram客户端不一定支持会跳转被恢复的旧消息，这意味着，
 
 我撰写了两篇双语博客文章，中文版本分享至：
 
--   V2EX: [我写一个基于贝叶斯算法的 Telegram 广告拦截机器人](https://www.v2ex.com/t/1156542)
--   Emacs China: [分享一下我用Emacs写的Telegram广告拦截机器人](https://emacs-china.org/t/emacs-telegram/30043)
+-   V2EX: <https://www.v2ex.com/t/1156542>]]
+-   Emacs China: [https://emacs-china.org/t/emacs-telegram/30043](https://emacs-china.org/t/emacs-telegram/30043)
 -   微信公众号「宫孙说」：<https://mp.weixin.qq.com/s/Sgq9vDqpHykwge11bwZJrw>
 -   项目被收录到[阮一峰的科技爱好者周刊（第 364 期）](https://www.ruanyifeng.com/blog/2025/09/weekly-issue-364.html)
 
 英文版本发布至：
 
--   Reddit: [Built my first Rails project: A Telegram spam blocker bot](https://old.reddit.com/r/rails/comments/1n6p791/built_my_first_rails_project_a_telegram_spam/) - 获得一些讨论
+-   Reddit: [Built my first Rails project: A Telegram spam blocker bot](https://old.reddit.com/r/rails/comments/1n6p791/built_my_first_rails_project_a_telegram_spam/)&nbsp;[^fn:4]- 获得一些讨论
 -   HackerNews：<https://news.ycombinator.com/item?id=45105908>
 -   Twitter: <https://x.com/foobar_ramsay/status/1967277792267247916>
 
@@ -251,6 +251,33 @@ Telegram客户端不一定支持会跳转被恢复的旧消息，这意味着，
 
 </div>
 
+
+### 推荐阅读 {#推荐阅读}
+
+-   旅加经历
+    -   [这些年走过的路：从广州到温哥华](https://ramsayleung.github.io/zh/post/2023/%E8%BF%99%E4%BA%9B%E5%B9%B4%E8%B5%B0%E8%BF%87%E7%9A%84%E8%B7%AF_%E4%BB%8E%E5%B9%BF%E5%B7%9E%E5%88%B0%E6%B8%A9%E5%93%A5%E5%8D%8E/)
+    -   [加拿大之初体验](https://ramsayleung.github.io/zh/post/2023/%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B9%8B%E5%88%9D%E4%BD%93%E9%AA%8C/)
+    -   [登陆加拿大一年后的体会](https://ramsayleung.github.io/zh/post/2024/%E7%99%BB%E9%99%86%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B8%80%E5%B9%B4%E7%9A%84%E4%BD%93%E4%BC%9A/)
+-   工具流分享
+    -   [简明写作指南](https://ramsayleung.github.io/zh/post/2024/%E7%AE%80%E6%98%8E%E5%86%99%E4%BD%9C%E6%8C%87%E5%8D%97/)
+    -   [我的写作流](https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E5%86%99%E4%BD%9C%E6%B5%81/)
+    -   [我的画图流：画图工具与技巧分享](https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E7%94%BB%E5%9B%BE%E6%B5%81/)
+    -   [我的搜索流：高效搜索经验分享](https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E6%90%9C%E7%B4%A2%E6%B5%81/)
+    -   [最好的学习方式：费曼学习法(Feynman Technique)](https://ramsayleung.github.io/zh/post/2022/feynman_technique/)
+    -   [系统思考：既见树木，又见森林](https://ramsayleung.github.io/zh/post/2021/%E7%B3%BB%E7%BB%9F%E6%80%9D%E8%80%83/)
+-   思考感悟
+    -   [编程十年的感悟](https://ramsayleung.github.io/zh/post/2024/%E7%BC%96%E7%A8%8B%E5%8D%81%E5%B9%B4%E7%9A%84%E6%84%9F%E6%82%9F/)
+    -   [那些年，我从微信支付学到的东西](https://ramsayleung.github.io/zh/post/2023/%E4%BB%8E%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E7%A6%BB%E7%BA%BF_%E6%88%91%E5%B8%A6%E8%B5%B0%E4%BA%86%E4%BB%80%E4%B9%88/)
+    -   [杂谈ai取代程序员](https://ramsayleung.github.io/zh/post/2025/%E6%9D%82%E8%B0%88ai%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98/)
+    -   [为什么梦想买不起，故乡回不去](https://ramsayleung.github.io/zh/post/2023/%E7%BD%AE%E8%BA%AB%E4%BA%8B%E5%86%85/)
+-   软件工程
+    -   [软件设计的哲学](https://ramsayleung.github.io/zh/post/2025/a_philosophy_of_software_design/)
+    -   [一本读了八年还没读完的书](https://ramsayleung.github.io/zh/post/2025/structure_and_interpretation_of_computer_programs/)
+    -   [测试技能进阶(一): 软件质量认知](https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%80_%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E8%AE%A4%E7%9F%A5/)
+    -   [测试技能进阶(二): Parameterized Tests](https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/)
+    -   [测试技能进阶(三): Property Based Testing](https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%89_property_based_testing/)
+
 [^fn:1]: <https://github.com/tdlib/td>
 [^fn:2]: <https://github.com/tdlib/telegram-bot-api>
 [^fn:3]: <https://github.com/levlam>
+[^fn:4]: <https://old.reddit.com/r/rails/comments/1n6p791/built_my_first_rails_project_a_telegram_spam/>

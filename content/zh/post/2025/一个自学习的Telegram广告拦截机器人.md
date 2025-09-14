@@ -1,9 +1,9 @@
 +++
 title = "基于贝叶斯算法的Telegram广告拦截机器人（一）：从问题到产品"
 date = 2025-08-28T23:45:00-07:00
-lastmod = 2025-09-14T10:39:32-07:00
+lastmod = 2025-09-14T11:08:44-07:00
 tags = ["telegram", "design", "programming", "rails", "rust"]
-categories = ["telegram"]
+categories = ["telegram", "基于贝叶斯算法的Telegram广告拦截机器人"]
 draft = false
 toc = true
 showQuote = true

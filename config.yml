@@ -215,8 +215,8 @@ languages:
           weight: 5
         - identifier: reinvent
           parent: series
-          name: "Reinvent-重新造轮子系列"
-          url: /zh/categories/reinvent-重新造轮子系列
+          name: "基于贝叶斯算法的Telegram广告拦截机器人"
+          url: /zh/categories/基于贝叶斯算法的telegram广告拦截机器人/
           weight: 6
 
 markup:
