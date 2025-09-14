@@ -1,7 +1,7 @@
 +++
-title = "一个自学习的Telegram广告拦截机器人"
+title = "基于贝叶斯算法的Telegram广告拦截机器人（一）：从问题到产品"
 date = 2025-08-28T23:45:00-07:00
-lastmod = 2025-09-01T21:42:23-07:00
+lastmod = 2025-09-14T10:39:32-07:00
 tags = ["telegram", "design", "programming", "rails", "rust"]
 categories = ["telegram"]
 draft = false
@@ -11,6 +11,10 @@ highlighted = true
 +++
 
 [English Version](https://ramsayleung.github.io/en/post/2025/a_telegram_spam_blocker_bot_based_on_bayesian/)
+
+系列文章：
+
+-   [基于贝叶斯算法的Telegram广告拦截机器人（二）：上线半月的故障、挑战与优化之路]({{< relref "基于贝叶斯算法的Telegram广告拦截机器人（二）" >}})
 
 
 ## <span class="section-num">1</span> 序言 {#序言}
