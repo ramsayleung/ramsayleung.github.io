@@ -12,19 +12,321 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Mon, 01 Sep 2025 21:42:23 -0700</lastBuildDate>
+    <lastBuildDate>Sun, 14 Sep 2025 10:39:32 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>一个自学习的Telegram广告拦截机器人</title>
+      <title>基于贝叶斯算法的Telegram广告拦截机器人（二）：上线半月的故障、挑战与优化之路</title>
+      <link>https://ramsayleung.github.io/zh/post/2025/%E5%9F%BA%E4%BA%8E%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BA%8C/</link>
+      <pubDate>Sat, 13 Sep 2025 14:28:00 -0700</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2025/%E5%9F%BA%E4%BA%8E%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BA%8C/</guid>
+      <description>&lt;h2 id=&#34;引言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 引言&lt;/h2&gt;
+&lt;p&gt;半个月前，我发布了一个基于贝叶斯算法的Telegram广告拦截机器人 &lt;code&gt;@BayesSpamSniperBot&lt;/code&gt; (&lt;a href=&#34;https://t.me/BayesSpamSniperBot&#34;&gt;https://t.me/BayesSpamSniperBot&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;项目地址：&lt;a href=&#34;https://github.com/ramsayleung/bayes_spam_sniper&#34;&gt;https://github.com/ramsayleung/bayes_spam_sniper&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;系列文章:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://ramsayleung.github.io/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/&#34;&gt;基于贝叶斯算法的Telegram广告拦截机器人（一）：从问题到产品&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;尽管项目代码开源，但我始终以产品思维运营它。上线半个月以来，经历了故障、用户反馈与持续优化，现将这段经历分享出来。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="引言"><span class="section-num">1</span> 引言</h2>
+<p>半个月前，我发布了一个基于贝叶斯算法的Telegram广告拦截机器人 <code>@BayesSpamSniperBot</code> (<a href="https://t.me/BayesSpamSniperBot">https://t.me/BayesSpamSniperBot</a>)</p>
+<p>项目地址：<a href="https://github.com/ramsayleung/bayes_spam_sniper">https://github.com/ramsayleung/bayes_spam_sniper</a></p>
+<p>系列文章:</p>
+<ul>
+<li><a href="/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/">基于贝叶斯算法的Telegram广告拦截机器人（一）：从问题到产品</a></li>
+</ul>
+<p>尽管项目代码开源，但我始终以产品思维运营它。上线半个月以来，经历了故障、用户反馈与持续优化，现将这段经历分享出来。</p>
+<h2 id="上线即故障"><span class="section-num">2</span> 上线即故障</h2>
+<p>没想到我的产品的第一个线上故障来得这么快，发布的时候直接不可用，把正常消息都给删了，用户在各种途径都向我反馈：</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-c7b58" hidden>
+    <label for="zoomCheck-c7b58">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/delete_all_message_1.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-80e7c" hidden>
+    <label for="zoomCheck-80e7c">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/delete_all_message_2.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>故障的原因是因为我当时一直在收集垃圾广告的数据，太专注于垃圾广告数据，而忽略了收集的正常数据，
+导致垃圾广告数据过多，消息都被认为是垃圾广告，被误删了。</p>
+<p>通过补充大量正常消息数据，重新平衡训练集，模型逐渐恢复正常识别能力。</p>
+<h2 id="挑战"><span class="section-num">3</span> 挑战</h2>
+<h3 id="邮件与即时消息的差异"><span class="section-num">3.1</span> 邮件与即时消息的差异</h3>
+<p>我在<a href="/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/">《基于贝叶斯算法的Telegram广告拦截机器人（一）：从问题到产品》</a>里面提到过：</p>
+<blockquote>
+<p>常见的 Telegram 广告机器人是大多是基于关键字的，通过匹配关键字进行文本拦截，非常容易被发垃圾广告的人绕过。</p>
+<p>这不禁让我想起了保罗.格雷厄姆在《黑客与画家》一书在2002年介绍的情况：</p>
+<p>当时电子邮件兴起，也有非常多的垃圾邮件，常见的垃圾广告拦截方式是关键字匹配+邮件地址黑名单，但是既低效也容易被绕过。</p>
+<p>保罗.格雷厄姆就创造性地使用贝叶斯算法(Bayes Theorem)实现了一个广告拦截器, 效果竟然出奇地好。</p></blockquote>
+<p>但产品上线之后，我发现聊天软件消息和Email虽然都是文字，还是有很大差别的:</p>
+<p>Email 大多时候都是长文的，内容较长，并且大多情况，一封邮件上下文本身也是完整，就有较多的内容，较高的准确度来判断是否是广告。</p>
+<p>而 Telegram, 微信这类的即时聊天软件，聊天消息大多都不长，可能把内容分成多条消息来发，就没有完整的上下文，比如:</p>
+<blockquote>
+<p>换U</p></blockquote>
+<!--quoteend-->
+<blockquote>
+<p>找我</p></blockquote>
+<p>单条消息很较难准确判断是否是广告，所以对即时消息做广告拦截本身就更难, 「短文本+无上下文」是NLP中的经典难题，也是本项目最大的技术挑战。</p>
+<h3 id="漏删与误删"><span class="section-num">3.2</span> 漏删与误删</h3>
+<p>漏删广告与误删消息是相互矛盾的结果</p>
+<p>因为如果想要提高拦截度，自然就需要把置信度降低，把疑似是广告的消息都拦截掉，但是因为拦截强度的上升，又会把正常消息误删。</p>
+<p>如果想要不误删消息，那么难免需要增加拦截的阈值，只有超过一定的置信阈值才拦截，这样准确度增加了，难免就会存在漏删广告的可能性。</p>
+<p>那么是否可以既准确拦截广告，又避免误删正常消息呢？</p>
+<p>在即时消息上下文不齐整，消息短而密集的特性下，可以基本是不可能的。</p>
+<p>而用户对消息被误删，以及垃圾广告被漏删的容忍度也是不同的，漏删广告，群成员可以举报或管理员删，但是误删就没法恢复.</p>
+<p>所以我只能是提高置信度，把阈值设置成95%, 也就是说只有模型认为超过95%的概率这个是广告，才能把这条消息删掉，虽然会增加漏删广告的概率，但是起码能保证不误删正常消息。</p>
+<h2 id="优化之路"><span class="section-num">4</span> 优化之路</h2>
+<h3 id="自动删除消息"><span class="section-num">4.1</span> 自动删除消息</h3>
+<p>产品上线之后，很快就有用户来试用了，然后有用户就提了一个非常好的优化建议。</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-28a2c" hidden>
+    <label for="zoomCheck-28a2c">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/detect_spam_and_ban_user.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>这个警告的消息不会自动删除，如果有很多人在群里发广告，那么群里就会有一堆这样的消息，也算是对群消息的污染。</p>
+<p>所以用户建议:</p>
+<blockquote>
+<p>可以发这个提醒，但在几分钟后也把这个提醒消息删除掉</p></blockquote>
+<p>我觉得这是个非常好的优化体验，因为就把这个功能给加上了，提醒消息本身会在5分钟后自动删除。</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-3c682" hidden>
+    <label for="zoomCheck-3c682">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/auto_delete_warning_message.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>倾听用户的声音是非常重要的，他们可能就会从他们的角度提出非常好的建议。</p>
+<p>但是不要盲目听从用户的建议，比如也有用户建议：</p>
+<blockquote>
+<p>我觉得还应该有以下功能.</p>
+<ol>
+<li>恢复消息, 恢复用户. (让管理员恢复误删的消息和用户)</li>
+<li>主动投喂正常消息. (让管理员主动投喂一些消息. 比如, 群里面昨天 的消息, 随便选一些正常的, 投喂给机器人)</li>
+</ol></blockquote>
+<p>恢复消息这个功能没有太大必要，并且也不实用，因为恢复消息这个功能本身就很微妙，是直接恢复被删除的消息呢，还是重新发一条新消息？</p>
+<p>如：</p>
+<blockquote>
+<ul>
+<li>2025-09-09 10:01:00 张三: 我今天吃了鸡翅</li>
+<li>2025-09-09 10:02:00 李四：鸡翅有啥好的（被误删消息）</li>
+<li>2025-09-09 10:03:00 王五：人家就喜欢吃，你管得着嘛</li>
+</ul></blockquote>
+<p>如果是直接恢复被删除的消息，当前时间是 <code>2025-09-09 11:00:00</code> ，把消息恢复之后，还有人会手动刷历史消息，查找旧消息么？</p>
+<p>Telegram客户端不一定支持会跳转被恢复的旧消息，这意味着，你恢复误删的消息，也没人看得到。</p>
+<p>假如是重新发一条新消息 <code>鸡翅有啥好的</code>, 因为缺失了上下文，群里的人反而会疑惑，你在说什么。</p>
+<p>解决误删问题本质是提高拦截的准确率，而非考虑如何恢复被误删消息，准确率提高了，误删就会减少，
+自然就不需要考虑如何恢复消息，用户体验还会更好.</p>
+<p>而主动投喂消息这个想法有点理所当然了。</p>
+<p>没有任何群管理员有意愿帮忙训练这个机器人，对用户而言，他们只想要一个好用的广告拦截机器人，至于怎么开发，训练出来的，用户并不在乎。</p>
+<p>所以用户不会有意愿和动力来优化这个机器人，不好用就再换一个好了，更何况，逐条消息收集的效率实在太慢太慢了，
+所以我后面想出了一个比手工收集数据提效至少100倍的主意。</p>
+<h3 id="过滤重复消息"><span class="section-num">4.2</span> 过滤重复消息</h3>
+<p>发现人难免会有误区，总会以为别人会和自己一样，之前看到发垃圾广告的人的时候，总会觉得他们是正常的用户手工发。</p>
+<p>但是最近几天发现了一些规律，有用户把同一条消息反复发，不同的群还是发同样的内容
+即使是复制粘贴也难免会多个或者少个空格，然后消息被删了还一直发同样的内容。</p>
+<p>此外，还有一些群，内容的聊天内容都是广告，我还很奇怪，大家都在发广告，正常用户不都跑了嘛?</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-fc97b" hidden>
+    <label for="zoomCheck-fc97b">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/spam_group.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>此时，我才意识到，发消息的都是机器人。</p>
+<p>所以我加了个优化，计算消息内容的 hash 值，保存到数据库，并为这个字段建立索引。</p>
+<p>后面检测消息的时候，先根据 hash 值查询，检查是否存在已有的消息，如果消息已经存在且已经被标记成广告或者正常消息，那么就无需再使用模型检测，可以直接返回之前的检测结果。</p>
+<p>这样既提高了准确度，也优化了性能，也减少了人工干预的成本。</p>
+<p>同一个用户如果在同一个群发了三条广告，那么就会自动被封禁掉，也就是相同的广告只要发三条，就会马上被自动封禁掉。</p>
+<h3 id="自动收集数据"><span class="section-num">4.3</span> 自动收集数据</h3>
+<p>使用机器学习算法来实现一个类似的垃圾广告过滤器并不难，困难的持续收集高质量的训练数据，训练数据是非常宝贵的，毕竟数据才是核心资产。</p>
+<p>而对于我这个产品来说，最难的是冷启动时的训练数据问题：</p>
+<p>因为没有训练数据，模型就不准确，模型不好用就不会有人使用，自然也无法通过用户来收集垃圾广告数据，就无法良性循环，
+存在一个鸡生蛋，还是蛋生鸡的问题。</p>
+<p>所以冷启动时，我是手动加了非常多的 Telegram大群，然后人工在里面收集垃圾广告.</p>
+<p>但是这个效率实在是太低了，我收集了快一周才只有几百条数据，
+一个是我无法一直盯着各个群，另外是这种20w的大群，一般都会有几个管理员，会手工删除广告，一会没有看垃圾广告数据就会被删掉了。</p>
+<p>这样手工收集数据实在在太痛苦了，我就在想有没有什么办法自动收集数据呢？</p>
+<p>我本来想的是直接把我的机器人拉到这些大群里面，即使没有管理员权限无法删除消息，也可以收集数据嘛，后面才意识到 Telegram 有个规定，只有群管理员才有权限加机器人，因为我不是管理员，所以自动没有权限添加机器人。</p>
+<p>但是 telegram 的客户端是开源的，他们提供了 <a href="https://github.com/tdlib/td">tdlib</a> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>这个跨平台的 C++ 库便于社区构建第三方的 Telegram 客户端，那么我自然可以使用这个库来登录我自己的账号，然后使用我的模型来过滤消息，然后把疑似广告的数据都收集起来，我再人工确认下。</p>
+<p>（顺便说一下，tdlib 和 <a href="https://github.com/tdlib/telegram-bot-api">telegram-bot-api</a> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>这两个库竟然都是同一个<a href="https://github.com/levlam">作者 Aliaksei Levin</a> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>在维护，实在是太强了。）</p>
+<p>我现在需要做的就是添加各种大群，然后程序就会自动监听并收集数据，我再人工批量确认下。</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-b4635" hidden>
+    <label for="zoomCheck-b4635">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/spam_group_list.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-153f7" hidden>
+    <label for="zoomCheck-153f7">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/telegram_data_collector.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-cbf5b" hidden>
+    <label for="zoomCheck-cbf5b">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/maybe_spam_list.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>实现起来也不复杂， 200行代码就实现了这个监听消息，分析，并且收集的功能。</p>
+<p>得益于这个自动化的数据收集程序，我1周不到就收集了近上万条的高质量训练数据了，效率实在高太多太多了。</p>
+<p>懒惰真的是程序员的美德, 这个经历再次证明：自动化工具往往能成倍提升效率，这正是工程师价值的体现.</p>
+<h2 id="推广"><span class="section-num">5</span> 推广</h2>
+<p>所谓酒香也怕巷子深，没有用户使用，代码写得再好也没有意义。从产品角度，运营推广至关重要。</p>
+<p>作为个人开发者，我没有大量粉丝关注，也没有营销预算，因此采用了传统的推广方式：撰写博客并在相关社区分享。</p>
+<p>我撰写了两篇双语博客文章，中文版本分享至：</p>
+<ul>
+<li>V2EX: <a href="https://www.v2ex.com/t/1156542">我写一个基于贝叶斯算法的 Telegram 广告拦截机器人</a></li>
+<li>Emacs China: <a href="https://emacs-china.org/t/emacs-telegram/30043">分享一下我用Emacs写的Telegram广告拦截机器人</a></li>
+<li>微信公众号「宫孙说」：<a href="https://mp.weixin.qq.com/s/Sgq9vDqpHykwge11bwZJrw">https://mp.weixin.qq.com/s/Sgq9vDqpHykwge11bwZJrw</a></li>
+<li>项目被收录到<a href="https://www.ruanyifeng.com/blog/2025/09/weekly-issue-364.html">阮一峰的科技爱好者周刊（第 364 期）</a></li>
+</ul>
+<p>英文版本发布至：</p>
+<ul>
+<li>Reddit: <a href="https://old.reddit.com/r/rails/comments/1n6p791/built_my_first_rails_project_a_telegram_spam/">Built my first Rails project: A Telegram spam blocker bot</a> - 获得一些讨论</li>
+<li>HackerNews：<a href="https://news.ycombinator.com/item?id=45105908">https://news.ycombinator.com/item?id=45105908</a></li>
+<li>Twitter: <a href="https://x.com/foobar_ramsay/status/1967277792267247916">https://x.com/foobar_ramsay/status/1967277792267247916</a></li>
+</ul>
+<p>虽然推广效果有限，但这些努力为项目带来了最初的用户关注。</p>
+<h2 id="成果与数据"><span class="section-num">6</span> 成果与数据</h2>
+<p>上线半个月，截止到目前为止, 已经有超过80个群使用过这个机器人，用户数已经比我预期要多了:</p>
+<table>
+  <thead>
+      <tr>
+          <th>指标</th>
+          <th>数值</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>GitHub Stars</td>
+          <td>106</td>
+      </tr>
+      <tr>
+          <td>使用群组数</td>
+          <td>83</td>
+      </tr>
+      <tr>
+          <td>训练数据量</td>
+          <td>10543</td>
+      </tr>
+  </tbody>
+</table>
+<p>最开心的是看到我自己的程序在这些群成功拦截垃圾广告，就很有成就感，证明我做的东西真的能用户解决问题。
+<img loading="lazy" src="/ox-hugo/detect_spam_success.jpg"></p>
+<h2 id="结语"><span class="section-num">7</span> 结语</h2>
+<p>这半个月的运营让我深刻体会到：产品不是代码写完就结束，而是从用户反馈中不断迭代的开始。</p>
+<p>产品是需要持续运营的，而写代码只是产品生命周期的其中一个环节，甚至不是最耗费时间的环节。</p>
+<p>下一步，我计划进一步优化模型准确率，并探索多语言支持，也欢迎关注我的频道或提交Issue一起讨论。</p>
+<ul>
+<li>开源地址：<a href="https://github.com/ramsayleung/bayes_spam_sniper">https://github.com/ramsayleung/bayes_spam_sniper</a></li>
+<li>立即体验：<a href="https://t.me/BayesSpamSniperBot">https://t.me/BayesSpamSniperBot</a></li>
+<li>我的频道（菠萝油与天光墟）: <a href="https://t.me/pipeapplebun">https://t.me/pipeapplebun</a></li>
+</ul>
+<div class="qr-container" center>
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" class="qr-container" width="160px" height="160px" center="t" />
+公号同步更新，欢迎关注👻
+</div>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://github.com/tdlib/td">https://github.com/tdlib/td</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://github.com/tdlib/telegram-bot-api">https://github.com/tdlib/telegram-bot-api</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://github.com/levlam">https://github.com/levlam</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>基于贝叶斯算法的Telegram广告拦截机器人（一）：从问题到产品</title>
       <link>https://ramsayleung.github.io/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/</link>
       <pubDate>Thu, 28 Aug 2025 23:45:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://ramsayleung.github.io/en/post/2025/a_telegram_spam_blocker_bot_based_on_bayesian/&#34;&gt;English Version&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;系列文章：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://ramsayleung.github.io/zh/post/2025/%E5%9F%BA%E4%BA%8E%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BA%8C/&#34;&gt;基于贝叶斯算法的Telegram广告拦截机器人（二）：上线半月的故障、挑战与优化之路&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&#34;序言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 序言&lt;/h2&gt;
 &lt;p&gt;我花了一周末时间，写了一个自学习的 Telegram 广告拦截机器人 &lt;code&gt;@BayesSpamSniperBot&lt;/code&gt; (&lt;a href=&#34;https://t.me/BayesSpamSniperBot&#34;&gt;https://t.me/BayesSpamSniperBot&lt;/a&gt;)，项目开源在：&lt;a href=&#34;https://github.com/ramsayleung/bayes_spam_sniper&#34;&gt;https://github.com/ramsayleung/bayes_spam_sniper&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;telegram&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1.1&lt;/span&gt; Telegram&lt;/h3&gt;
 &lt;p&gt;Telegram 是一个流行的即时通讯软件，类似微信，Whatsapp，已有超过10亿用户，支持许多强大的功能，如聊天记录云存储，支持Linux, Mac, Windows, Android, IOS, Web 多个平台，客户端都是开源，类似微信公众号的频道功能(Channel)，还有我见过的最强大的机器人系统。&lt;/p&gt;</description>
       <content:encoded><![CDATA[<p><a href="https://ramsayleung.github.io/en/post/2025/a_telegram_spam_blocker_bot_based_on_bayesian/">English Version</a></p>
+<p>系列文章：</p>
+<ul>
+<li><a href="/zh/post/2025/%E5%9F%BA%E4%BA%8E%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BA%8C/">基于贝叶斯算法的Telegram广告拦截机器人（二）：上线半月的故障、挑战与优化之路</a></li>
+</ul>
 <h2 id="序言"><span class="section-num">1</span> 序言</h2>
 <p>我花了一周末时间，写了一个自学习的 Telegram 广告拦截机器人 <code>@BayesSpamSniperBot</code> (<a href="https://t.me/BayesSpamSniperBot">https://t.me/BayesSpamSniperBot</a>)，项目开源在：<a href="https://github.com/ramsayleung/bayes_spam_sniper">https://github.com/ramsayleung/bayes_spam_sniper</a></p>
 <h3 id="telegram"><span class="section-num">1.1</span> Telegram</h3>
@@ -4826,336 +5128,6 @@
 </li>
 </ol>
 </div>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>重新造轮子系列(二)：文件备份</title>
-      <link>https://ramsayleung.github.io/zh/post/2025/reinvent_file_backup/</link>
-      <pubDate>Sun, 02 Mar 2025 11:57:00 -0800</pubDate>
-      <guid>https://ramsayleung.github.io/zh/post/2025/reinvent_file_backup/</guid>
-      <description>&lt;p&gt;项目 GitHub 地址: &lt;a href=&#34;https://github.com/ramsayleung/reinvent/tree/master/file_backup&#34;&gt;File Backup&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
-&lt;p&gt;既然我们已经有&lt;a href=&#34;https://ramsayleung.github.io/zh/post/2025/reinvent_unit_test/&#34;&gt;单元测试&lt;/a&gt;框架来测试软件了，我们肯定不想已经写好的代码丢失掉。&lt;/p&gt;
-&lt;p&gt;对于重要的文件，一个必不可少的功能肯定是备份, 这样在丢失文件之后可以重新恢复。&lt;/p&gt;
-&lt;p&gt;今天我们就来写个简单的文件备份软件，类似 Git 这样的版本系统可以当作是高级版本的文件系统，因为它还支持切换到不同版本，对比版本间的差异等等功能，而我们不打算实现一个版本管理系统，只实现基础的文件备份功能。&lt;/p&gt;</description>
-      <content:encoded><![CDATA[<p>项目 GitHub 地址: <a href="https://github.com/ramsayleung/reinvent/tree/master/file_backup">File Backup</a></p>
-<h2 id="前言"><span class="section-num">1</span> 前言</h2>
-<p>既然我们已经有<a href="/zh/post/2025/reinvent_unit_test/">单元测试</a>框架来测试软件了，我们肯定不想已经写好的代码丢失掉。</p>
-<p>对于重要的文件，一个必不可少的功能肯定是备份, 这样在丢失文件之后可以重新恢复。</p>
-<p>今天我们就来写个简单的文件备份软件，类似 Git 这样的版本系统可以当作是高级版本的文件系统，因为它还支持切换到不同版本，对比版本间的差异等等功能，而我们不打算实现一个版本管理系统，只实现基础的文件备份功能。</p>
-<h2 id="实现思路"><span class="section-num">2</span> 实现思路</h2>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-05fa5" hidden>
-    <label for="zoomCheck-05fa5">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_file_backup_design.png"/> 
-    
-    
-    </label>
-</figure>
-
-<h3 id="校验文件是否变更"><span class="section-num">2.1</span> 校验文件是否变更</h3>
-<p>我们不可能备份都将所有的文件备份一次，这样做效率太低了，我们应该只备份发生变更的文件，那么如何高效地判断文件是否发生变更呢？</p>
-<p>最简单粗暴的方式是把文件读取出来，然后与以备份的文件作对比，但是这样的效率太低，并且算法复杂度是: O(N), 即运行时间是随着文件内容增长而增长的，文件越长，对比越慢。</p>
-<p>最优算法的复杂度是 <code>O(1)</code>, 我们希望可以通过常数时间内比较完文件内容。</p>
-<p>我们可以使用 <a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">密码哈希算法(Cryptographic hash algorithms)</a>, 来实现判断文件是否发生变更，它有两个显著的特征:</p>
-<ol>
-<li>hash 函数的结果是定长，不会因输入变化而增加或减少</li>
-<li>只要输入的任意bit生成变更， hash 函数生成的结果都会不一样</li>
-</ol>
-<p>因此我们可以将文件的内容使用密码哈希函数如 <code>sha1</code> 来hash, 通过比较两次的哈希结果是否一致来判断文件是否发生变更。</p>
-<h3 id="判断文件是否被备份"><span class="section-num">2.2</span> 判断文件是否被备份</h3>
-<p>判断文件是否被备份就很直接了，只需要看下当前文件是否在目标路径存在。</p>
-<p>再结合上文提到的，只备份内容发生变更的文件，那么我们可以使用哈希函数的结果作为目标路径的备份文件名。</p>
-<p>假设有文件 <code>src/a.txt</code>, 它的文件内容的哈希结果是 <code>86f7e437faa5a7fce15d1ddcb9eaeaea377667b8</code>, 那么我们使用哈希值作为文件名备份到 <code>dst</code>, 即 <code>dst/86f7e437faa5a7fce15d1ddcb9eaeaea377667b8</code>.</p>
-<p>对于文件 <code>a.txt</code>, 只需要判断 <code>dst</code> 是否存在 <code>86f7e437faa5a7fce15d1ddcb9eaeaea377667b8</code>, 就知道 <code>a.txt</code> 是否被备份;</p>
-<p>更巧妙的是，如果的 <code>a.txt</code> 文件内容发生变化，那么它的哈希值就一定不再会是 <code>86f7e437faa5a7fce15d1ddcb9eaeaea377667b8</code> 那么查找文件不存在，也可以当作是未备份，直接重新备份。</p>
-<p>下面的序列图就是low level design:</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-5040e" hidden>
-    <label for="zoomCheck-5040e">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_file_backup_lowlevel_design.png"/> 
-    
-    
-    </label>
-</figure>
-
-<h3 id="性能优化"><span class="section-num">2.3</span> 性能优化</h3>
-<p>备份涉及到非常多的文件IO操作，而IO恰恰就是 Nodejs 最擅长的领域, 毕竟曾经的 NodeJS 还有个项目叫做 <code>io.js</code>.</p>
-<p>NodeJS 的异步IO是基于 <a href="https://github.com/libuv/libuv">libuv</a>, 但是我们不需要支持使用 <code>libuv</code> 的API, 只需要把文件相关的操作封装在 <code>Promise</code> 里面，NodeJS就会帮我们在处理底层的 IO 调度, 尽可能地并发处理IO, 避免阻塞.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">hashExisting</span> <span class="o">=</span> <span class="p">(</span><span class="nx">rootDir</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">PathHashPair</span><span class="p">[]</span><span class="o">&gt;</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">pattern</span> <span class="o">=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">rootDir</span><span class="si">}</span><span class="sb">/**/*`</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">glob</span><span class="p">(</span><span class="nx">pattern</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">matches</span> <span class="p">=&gt;</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">                <span class="nx">matches</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">path</span> <span class="p">=&gt;</span> <span class="nx">statPath</span><span class="p">(</span><span class="nx">path</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">            <span class="p">))</span>
-</span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">pairs</span><span class="o">:</span> <span class="nx">PathStatPair</span><span class="p">[])</span> <span class="p">=&gt;</span> <span class="nx">pairs</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">                <span class="p">([</span><span class="nx">path</span><span class="p">,</span> <span class="nx">stat</span><span class="p">])</span> <span class="p">=&gt;</span> <span class="nx">stat</span><span class="p">.</span><span class="nx">isFile</span><span class="p">()))</span>
-</span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">pairs</span><span class="o">:</span> <span class="nx">PathStatPair</span><span class="p">[])</span> <span class="p">=&gt;</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">                <span class="nx">pairs</span><span class="p">.</span><span class="nx">map</span><span class="p">(([</span><span class="nx">path</span><span class="p">,</span> <span class="nx">stat</span><span class="p">])</span> <span class="p">=&gt;</span> <span class="nx">readPath</span><span class="p">(</span><span class="nx">path</span><span class="p">))))</span>
-</span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">pairs</span><span class="o">:</span> <span class="nx">PathContentPair</span><span class="p">[])</span> <span class="p">=&gt;</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">                <span class="nx">pairs</span><span class="p">.</span><span class="nx">map</span><span class="p">(([</span><span class="nx">path</span><span class="p">,</span> <span class="nx">content</span><span class="p">])</span> <span class="p">=&gt;</span> <span class="nx">hashPath</span><span class="p">(</span><span class="nx">path</span><span class="p">,</span> <span class="nx">content</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">            <span class="p">))</span>
-</span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">pairs</span><span class="o">:</span> <span class="nx">PathHashPair</span><span class="p">[])</span> <span class="p">=&gt;</span> <span class="nx">resolve</span><span class="p">(</span><span class="nx">pairs</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="p">=&gt;</span> <span class="nx">reject</span><span class="p">(</span><span class="nx">err</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">    <span class="p">})</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>更多关于 <code>Promise</code> 的内容，可以查看<a href="https://javascript.info/async">这本书</a>，它的解释非常到位.</p>
-<h3 id="测试文件系统"><span class="section-num">2.4</span> 测试文件系统</h3>
-<p>备份文件的设计我们已经分析和实现完了，接下来肯定是需要编写单元测试来测试我们的函数的，我们的文件备份涉及到非常多的文件操作，免不了要和文件系统打交道，包括创建文件，查找文件等等。</p>
-<p>单元测试的其中一个原则就是要尽量屏蔽掉外部系统的依赖，以保证我们只聚焦在测试功能本身，文件系统的读写更像是集成测试需要做的事情, 各种操作也很容易把文件目录结构给搞乱，导致单元测试失败。</p>
-<p>所以我们希望可以使用一个 mock object 来把文件系统 mock 掉，<a href="https://github.com/tschaub/mock-fs"><code>mock-fs</code></a> 这个库做的就是这样的事情, 它可以把程序中的文件操作都 mock 掉，实际操作的是内存对象而非文件系统.</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-28fbb" hidden>
-    <label for="zoomCheck-28fbb">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reivent_file_backup_mock_fs.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>我们就可以在每个单元测试运行时，任意构造任何想要的文件目录，并且保证文件操作都是在操纵内存对象，
-而不会直接作用到文件系统，保证单元测试的相互隔离。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">mock</span> <span class="nx">from</span> <span class="s1">&#39;mock-fs&#39;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;checks for pre-existing hashes using mock filesystem&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">beforeEach</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">mock</span><span class="p">({</span>
-</span></span><span class="line"><span class="cl">            <span class="s1">&#39;bck-0-csv-0&#39;</span><span class="o">:</span> <span class="p">{},</span>
-</span></span><span class="line"><span class="cl">            <span class="s1">&#39;bck-1-csv-1&#39;</span><span class="o">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="s1">&#39;0001.csv&#39;</span><span class="o">:</span> <span class="s1">&#39;alpha.js,abcd1234&#39;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                <span class="s1">&#39;abcd1234.bck&#39;</span><span class="o">:</span> <span class="s1">&#39;alpha.js content&#39;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">},</span>
-</span></span><span class="line"><span class="cl">            <span class="s1">&#39;bck-4-csv-2&#39;</span><span class="o">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="s1">&#39;0001.csv&#39;</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;alpha.js,abcd1234&#39;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                             <span class="s1">&#39;beta.txt,bcde2345&#39;</span><span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;\n&#39;</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">                <span class="s1">&#39;3024.csv&#39;</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;alpha.js,abcd1234&#39;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                             <span class="s1">&#39;gamma.png,3456cdef&#39;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                             <span class="s1">&#39;subdir/renamed.txt,bcde2345&#39;</span><span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;\n&#39;</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">                <span class="s1">&#39;3456cdef.bck&#39;</span><span class="o">:</span> <span class="s1">&#39;gamma.png content&#39;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                <span class="s1">&#39;abcd1234.bck&#39;</span><span class="o">:</span> <span class="s1">&#39;alpha content&#39;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                <span class="s1">&#39;bcde2345.bck&#39;</span><span class="o">:</span> <span class="s1">&#39;beta.txt became subdir/renamed.txt&#39;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">})</span>
-</span></span><span class="line"><span class="cl">    <span class="p">})</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="nx">afterEach</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">mock</span><span class="p">.</span><span class="nx">restore</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="p">})</span>
-</span></span><span class="line"><span class="cl"><span class="p">})</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>上面的代码就构造出下如下的文件目录：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">├── bck-0-csv-0
-</span></span><span class="line"><span class="cl">├── bck-1-csv-1
-</span></span><span class="line"><span class="cl">│   ├── 0001.csv
-</span></span><span class="line"><span class="cl">│   └── abcd1234.bck
-</span></span><span class="line"><span class="cl">└── bck-4-csv-2
-</span></span><span class="line"><span class="cl">├── 0001.csv
-</span></span><span class="line"><span class="cl">├── 3028.csv
-</span></span><span class="line"><span class="cl">├── 3456cdef.bck
-</span></span><span class="line"><span class="cl">├── abcd1234.bck
-</span></span><span class="line"><span class="cl">└── bcde2345.bck
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="使用示例"><span class="section-num">3</span> 使用示例</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">&gt; tree .
-</span></span><span class="line"><span class="cl">.
-</span></span><span class="line"><span class="cl">├── backup.ts
-</span></span><span class="line"><span class="cl">├── check-existing-files.ts
-</span></span><span class="line"><span class="cl">├── hash-existing-promise.ts
-</span></span><span class="line"><span class="cl">├── main.ts
-</span></span><span class="line"><span class="cl">├── manifest.ts
-</span></span><span class="line"><span class="cl">├── reinvent_file_backup.org
-</span></span><span class="line"><span class="cl">├── run-hash-existing-promise.ts
-</span></span><span class="line"><span class="cl">├── stream-copy.ts
-</span></span><span class="line"><span class="cl">└── <span class="nb">test</span>
-</span></span><span class="line"><span class="cl">    ├── bck-0-csv-0
-</span></span><span class="line"><span class="cl">    ├── bck-1-csv-1
-</span></span><span class="line"><span class="cl">    │   ├── 0001.csv
-</span></span><span class="line"><span class="cl">    │   └── abcd1234.bck
-</span></span><span class="line"><span class="cl">    ├── bck-4-csv-2
-</span></span><span class="line"><span class="cl">    │   ├── 0001.csv
-</span></span><span class="line"><span class="cl">    │   ├── 3028.csv
-</span></span><span class="line"><span class="cl">    │   ├── 3456cdef.bck
-</span></span><span class="line"><span class="cl">    │   ├── abcd1234.bck
-</span></span><span class="line"><span class="cl">    │   └── bcde2345.bck
-</span></span><span class="line"><span class="cl">    ├── test-backup.js
-</span></span><span class="line"><span class="cl">    ├── test-find-mock.js
-</span></span><span class="line"><span class="cl">    └── test-find.js
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="m">5</span> directories, <span class="m">18</span> files
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">&gt; npx tsx main.ts -s . -d /tmp/backup -f json -v
-</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO<span class="o">]</span> Destination directory ensured: /tmp/backup
-</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO<span class="o">]</span> Starting backup from <span class="s1">&#39;.&#39;</span> to <span class="s1">&#39;/tmp/backup&#39;</span>
-</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO<span class="o">]</span> Copied <span class="m">8</span> files from /Users/ramsayleung/code/javascript/reinvent/file_backup to /tmp/backup
-</span></span><span class="line"><span class="cl">Backup completed in: 15.96ms
-</span></span><span class="line"><span class="cl">Backup completed successfully!
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">&gt; ls -alrt /tmp/backup
-</span></span><span class="line"><span class="cl">total <span class="m">88</span>
-</span></span><span class="line"><span class="cl">drwxrwxrwt  <span class="m">23</span> root         wheel   <span class="m">736</span>  <span class="m">2</span> Mar 17:06 ..
-</span></span><span class="line"><span class="cl">-rw-r--r--@  <span class="m">1</span> ramsayleung  wheel  <span class="m">1056</span>  <span class="m">2</span> Mar 21:02 6bd385393bd0e4a4f9a3b68eea500b88165033b1.bck
-</span></span><span class="line"><span class="cl">-rw-r--r--@  <span class="m">1</span> ramsayleung  wheel  <span class="m">1649</span>  <span class="m">2</span> Mar 21:02 8b0bc65c42ca2ae9095bb1c340844080f2f054da.bck
-</span></span><span class="line"><span class="cl">-rw-r--r--@  <span class="m">1</span> ramsayleung  wheel  <span class="m">9795</span>  <span class="m">2</span> Mar 21:02 464240b6ef1f03652fefc56152039c0f8d105cfe.bck
-</span></span><span class="line"><span class="cl">-rw-r--r--@  <span class="m">1</span> ramsayleung  wheel   <span class="m">636</span>  <span class="m">2</span> Mar 21:02 d0f548d134e99f1fcc2d1c81e1371f48d9f3ca0c.bck
-</span></span><span class="line"><span class="cl">-rw-r--r--@  <span class="m">1</span> ramsayleung  wheel   <span class="m">182</span>  <span class="m">2</span> Mar 21:02 7fa1b33f68d734b406ddb58e3f85f199851393db.bck
-</span></span><span class="line"><span class="cl">-rw-r--r--@  <span class="m">1</span> ramsayleung  wheel   <span class="m">666</span>  <span class="m">2</span> Mar 21:02 369034de6e5b7ee0e867c6cfca66eab59f834447.bck
-</span></span><span class="line"><span class="cl">-rw-r--r--@  <span class="m">1</span> ramsayleung  wheel  <span class="m">2533</span>  <span class="m">2</span> Mar 21:02 02d5c238d29f9e49d2a1f525e7db5f420a654a3f.bck
-</span></span><span class="line"><span class="cl">-rw-r--r--@  <span class="m">1</span> ramsayleung  wheel  <span class="m">3512</span>  <span class="m">2</span> Mar 21:02 964c0245a5d8cb217d64d794952c80ddf2aecca8.bck
-</span></span><span class="line"><span class="cl">drwxr-xr-x@ <span class="m">11</span> ramsayleung  wheel   <span class="m">352</span>  <span class="m">2</span> Mar 21:02 .
-</span></span><span class="line"><span class="cl">-rw-r--r--@  <span class="m">1</span> ramsayleung  wheel  <span class="m">1030</span>  <span class="m">2</span> Mar 21:02 0000000000.json
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>为什么 <code>file_backup</code> 目录里面有 18 个文件，只备份了8个文件呢？因为 <code>test</code> 目录里面所有的文件都是空的，所以备份时就跳过了。</p>
-<h2 id="总结"><span class="section-num">4</span> 总结</h2>
-<p>我们就完成了一个文件备份软件的开发，功能当然还非常简单，还有非常多优化的空间，比如现在 <code>src</code> 目录的所有文件都会被平铺到 <code>dst</code> 目录，如果我们可以保存目录结构，那么就更好用了。</p>
-<p>另外，使用哈希函数值作为文件名的确很巧妙，但是对于用户而已，如果不逐个打开文件，根本不知道哪个文件是对应哪个源文件等等。</p>
-<p>如果想要实现一个更健壮易用的备份文件，可以参考下关于这 <a href="https://michael.stapelberg.ch/posts/2022-06-18-rsync-overview/">rsync 系列的文章</a> , <code>rsync</code> 是Linux 上非常流行的增量备份的文件，不仅可以备份本地文件，更可以把文件备份把远程服务器，非常强大。</p>
-<p><a href="/zh/post/2025/reinvent_project/">回到本系列的目录</a></p>
-<h2 id="参考"><span class="section-num">5</span> 参考</h2>
-<ul>
-<li><a href="https://third-bit.com/sdxjs/file-backup/">https://third-bit.com/sdxjs/file-backup/</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">https://en.wikipedia.org/wiki/Cryptographic_hash_function</a></li>
-<li><a href="https://michael.stapelberg.ch/posts/2022-06-18-rsync-overview/">https://michael.stapelberg.ch/posts/2022-06-18-rsync-overview/</a></li>
-<li><a href="https://javascript.info/async">https://javascript.info/async</a></li>
-</ul>
 ]]></content:encoded>
     </item>
   </channel>
