@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sun, 14 Sep 2025 11:12:53 -0700</lastBuildDate>
+    <lastBuildDate>Sun, 14 Sep 2025 11:22:03 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/programming/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>基于贝叶斯算法的Telegram广告拦截机器人（二）：上线半月的故障、挑战与优化之路</title>
@@ -86,13 +86,14 @@
 <p>找我</p></blockquote>
 <p>单条消息很较难准确判断是否是广告，所以对即时消息做广告拦截本身就更难, 「短文本+无上下文」是NLP中的经典难题，也是本项目最大的技术挑战。</p>
 <h3 id="漏删与误删"><span class="section-num">3.2</span> 漏删与误删</h3>
-<p>漏删广告与误删消息是相互矛盾的结果</p>
-<p>因为如果想要提高拦截度，自然就需要把置信度降低，把疑似是广告的消息都拦截掉，但是因为拦截强度的上升，又会把正常消息误删。</p>
-<p>如果想要不误删消息，那么难免需要增加拦截的阈值，只有超过一定的置信阈值才拦截，这样准确度增加了，难免就会存在漏删广告的可能性。</p>
-<p>那么是否可以既准确拦截广告，又避免误删正常消息呢？</p>
-<p>在即时消息上下文不齐整，消息短而密集的特性下，可以基本是不可能的。</p>
-<p>而用户对消息被误删，以及垃圾广告被漏删的容忍度也是不同的，漏删广告，群成员可以举报或管理员删，但是误删就没法恢复.</p>
-<p>所以我只能是提高置信度，把阈值设置成95%, 也就是说只有模型认为超过95%的概率这个是广告，才能把这条消息删掉，虽然会增加漏删广告的概率，但是起码能保证不误删正常消息。</p>
+<p>漏删与误删是广告拦截中不可避免的矛盾权衡。</p>
+<p>若想提高拦截率（召回率），就需降低置信度阈值，将更多疑似广告的消息拦截，但这也会增加误删正常消息的风险。</p>
+<p>反之，若想避免误删（提高精确率），则必须提高置信度阈值，但这又会导致更多广告被漏掉。</p>
+<p>在即时消息短小、上下文缺失的特性下，想同时实现零误删和零漏删几乎是不可能的。</p>
+<p>权衡之下，我选择优先保证用户体验： <strong><strong>宁可漏删，不可误删</strong></strong></p>
+<p>因为漏掉的广告，群友可以举报或由管理员手动删除；但误删的正常消息却无法恢复，对用户的伤害更大。</p>
+<p>因此，我将拦截阈值设置为95%，即仅当模型有极高把握（&gt;95%概率）判定为广告时才会删除。</p>
+<p>这虽然会放过一些疑似广告，但最大程度地保障了正常聊天不被误删。</p>
 <h2 id="优化之路"><span class="section-num">4</span> 优化之路</h2>
 <h3 id="自动删除消息"><span class="section-num">4.1</span> 自动删除消息</h3>
 <p>产品上线之后，很快就有用户来试用了，然后其中一个用户就提了一个非常好的优化建议。</p>
@@ -277,8 +278,21 @@
       </tr>
   </tbody>
 </table>
-<p>最开心的是看到我自己的程序在这些群成功拦截垃圾广告，就很有成就感，证明我做的东西真的能用户解决问题。
-<img loading="lazy" src="/ox-hugo/detect_spam_success.jpg"></p>
+<p>最开心的是看到我自己的程序在这些群成功拦截垃圾广告，就很有成就感，证明我做的东西真的能用户解决问题。</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-1fd72" hidden>
+    <label for="zoomCheck-1fd72">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/detect_spam_success.jpg"/> 
+    
+    
+    </label>
+</figure>
+
 <h2 id="结语"><span class="section-num">7</span> 结语</h2>
 <p>这半个月的运营让我深刻体会到：产品不是代码写完就结束，而是从用户反馈中不断迭代的开始。</p>
 <p>产品是需要持续运营的，而写代码只是产品生命周期的其中一个环节，甚至不是最耗费时间的环节。</p>
