@@ -12,356 +12,8 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sun, 14 Sep 2025 11:22:03 -0700</lastBuildDate>
+    <lastBuildDate>Sun, 14 Sep 2025 11:08:44 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/rust/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>基于贝叶斯算法的Telegram广告拦截机器人（二）：上线半月的故障、挑战与优化之路</title>
-      <link>https://ramsayleung.github.io/zh/post/2025/%E5%9F%BA%E4%BA%8E%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BA%8C/</link>
-      <pubDate>Sat, 13 Sep 2025 14:28:00 -0700</pubDate>
-      <guid>https://ramsayleung.github.io/zh/post/2025/%E5%9F%BA%E4%BA%8E%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BA%8C/</guid>
-      <description>&lt;h2 id=&#34;引言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 引言&lt;/h2&gt;
-&lt;p&gt;半个月前，我发布了一个基于贝叶斯算法的Telegram广告拦截机器人 &lt;code&gt;@BayesSpamSniperBot&lt;/code&gt; (&lt;a href=&#34;https://t.me/BayesSpamSniperBot&#34;&gt;https://t.me/BayesSpamSniperBot&lt;/a&gt;)&lt;/p&gt;
-&lt;p&gt;项目地址：&lt;a href=&#34;https://github.com/ramsayleung/bayes_spam_sniper&#34;&gt;https://github.com/ramsayleung/bayes_spam_sniper&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;系列文章:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://ramsayleung.github.io/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/&#34;&gt;基于贝叶斯算法的Telegram广告拦截机器人（一）：从问题到产品&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;尽管项目代码开源，但我始终以产品思维运营它。上线半个月以来，经历了故障、用户反馈与持续优化，现将这段经历分享出来。&lt;/p&gt;</description>
-      <content:encoded><![CDATA[<h2 id="引言"><span class="section-num">1</span> 引言</h2>
-<p>半个月前，我发布了一个基于贝叶斯算法的Telegram广告拦截机器人 <code>@BayesSpamSniperBot</code> (<a href="https://t.me/BayesSpamSniperBot">https://t.me/BayesSpamSniperBot</a>)</p>
-<p>项目地址：<a href="https://github.com/ramsayleung/bayes_spam_sniper">https://github.com/ramsayleung/bayes_spam_sniper</a></p>
-<p>系列文章:</p>
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/">基于贝叶斯算法的Telegram广告拦截机器人（一）：从问题到产品</a></li>
-</ul>
-<p>尽管项目代码开源，但我始终以产品思维运营它。上线半个月以来，经历了故障、用户反馈与持续优化，现将这段经历分享出来。</p>
-<h2 id="上线即故障"><span class="section-num">2</span> 上线即故障</h2>
-<p>没想到我的产品的第一个线上故障来得这么快，发布的时候直接不可用，把正常消息都给删了，用户在各种途径都向我反馈：</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-c7b58" hidden>
-    <label for="zoomCheck-c7b58">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/delete_all_message_1.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-80e7c" hidden>
-    <label for="zoomCheck-80e7c">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/delete_all_message_2.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>故障的原因是我当时一直在收集垃圾广告的数据，太专注于垃圾广告数据，而忽略了收集的正常数据，
-导致垃圾广告数据过多，消息都被认为是垃圾广告，被误删了。</p>
-<p>通过补充大量正常消息数据，重新平衡训练集，模型逐渐恢复正常识别能力。</p>
-<h2 id="挑战"><span class="section-num">3</span> 挑战</h2>
-<h3 id="邮件与即时消息的差异"><span class="section-num">3.1</span> 邮件与即时消息的差异</h3>
-<p>我在<a href="https://ramsayleung.github.io/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/">《基于贝叶斯算法的Telegram广告拦截机器人（一）：从问题到产品》</a>里面提到过：</p>
-<blockquote>
-<p>常见的 Telegram 广告机器人是大多是基于关键字的，通过匹配关键字进行文本拦截，非常容易被发垃圾广告的人绕过。</p>
-<p>这不禁让我想起了保罗.格雷厄姆在《黑客与画家》一书在2002年介绍的情况：</p>
-<p>当时电子邮件兴起，也有非常多的垃圾邮件，常见的垃圾广告拦截方式是关键字匹配+邮件地址黑名单，但是既低效也容易被绕过。</p>
-<p>保罗.格雷厄姆就创造性地使用贝叶斯算法(Bayes Theorem)实现了一个广告拦截器, 效果竟然出奇地好。</p></blockquote>
-<p>但产品上线之后，我发现聊天软件消息和Email虽然都是文字，还是有很大差别的:</p>
-<p>Email 大多时候都是长文的，内容较长，并且大多情况，一封邮件上下文本身也很完整，就有较多的内容，较高的准确度来判断是否是广告。</p>
-<p>而 Telegram, 微信这类的即时聊天软件，聊天消息大多都不长，可能把内容分成多条消息来发，就没有完整的上下文，比如:</p>
-<blockquote>
-<p>换U</p></blockquote>
-<!--quoteend-->
-<blockquote>
-<p>找我</p></blockquote>
-<p>单条消息很较难准确判断是否是广告，所以对即时消息做广告拦截本身就更难, 「短文本+无上下文」是NLP中的经典难题，也是本项目最大的技术挑战。</p>
-<h3 id="漏删与误删"><span class="section-num">3.2</span> 漏删与误删</h3>
-<p>漏删与误删是广告拦截中不可避免的矛盾权衡。</p>
-<p>若想提高拦截率（召回率），就需降低置信度阈值，将更多疑似广告的消息拦截，但这也会增加误删正常消息的风险。</p>
-<p>反之，若想避免误删（提高精确率），则必须提高置信度阈值，但这又会导致更多广告被漏掉。</p>
-<p>在即时消息短小、上下文缺失的特性下，想同时实现零误删和零漏删几乎是不可能的。</p>
-<p>权衡之下，我选择优先保证用户体验： <strong><strong>宁可漏删，不可误删</strong></strong></p>
-<p>因为漏掉的广告，群友可以举报或由管理员手动删除；但误删的正常消息却无法恢复，对用户的伤害更大。</p>
-<p>因此，我将拦截阈值设置为95%，即仅当模型有极高把握（&gt;95%概率）判定为广告时才会删除。</p>
-<p>这虽然会放过一些疑似广告，但最大程度地保障了正常聊天不被误删。</p>
-<h2 id="优化之路"><span class="section-num">4</span> 优化之路</h2>
-<h3 id="自动删除消息"><span class="section-num">4.1</span> 自动删除消息</h3>
-<p>产品上线之后，很快就有用户来试用了，然后其中一个用户就提了一个非常好的优化建议。</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-28a2c" hidden>
-    <label for="zoomCheck-28a2c">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/detect_spam_and_ban_user.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>这个警告的消息不会自动删除，如果有很多人在群里发广告，那么群里就会有一堆这样的消息，也算是对群消息的污染。</p>
-<p>所以用户建议:</p>
-<blockquote>
-<p>可以发这个提醒，但在几分钟后也把这个提醒消息删除掉</p></blockquote>
-<p>我觉得这是个非常好的优化体验，因为就把这个功能给加上了，提醒消息本身会在5分钟后自动删除。</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-3c682" hidden>
-    <label for="zoomCheck-3c682">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/auto_delete_warning_message.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>倾听用户的声音是非常重要的，他们可能就会从他们的角度提出非常好的建议。</p>
-<p>但是不要盲目听从用户的建议，比如也有用户建议：</p>
-<blockquote>
-<p>我觉得还应该有以下功能.</p>
-<ol>
-<li>恢复消息, 恢复用户. (让管理员恢复误删的消息和用户)</li>
-<li>主动投喂正常消息. (让管理员主动投喂一些消息. 比如, 群里面昨天 的消息, 随便选一些正常的, 投喂给机器人)</li>
-</ol></blockquote>
-<p>恢复消息这个功能没有太大必要，并且也不实用，因为恢复消息这个功能本身就很微妙，是直接恢复被删除的消息呢，还是重新发一条新消息？</p>
-<p>如：</p>
-<blockquote>
-<ul>
-<li>2025-09-09 10:01:00 张三: 我今天吃了鸡翅</li>
-<li>2025-09-09 10:02:00 李四：鸡翅有啥好的（被误删消息）</li>
-<li>2025-09-09 10:03:00 王五：人家就喜欢吃，你管得着嘛</li>
-</ul></blockquote>
-<p>如果是直接恢复被删除的消息，当前时间是 <code>2025-09-09 11:00:00</code> ，把消息恢复之后，还有人会手动刷历史消息，查找旧消息么？</p>
-<p>Telegram客户端不一定支持会跳转被恢复的旧消息，这意味着，你恢复误删的消息，也没人看得到。</p>
-<p>假如是重新发一条新消息 <code>鸡翅有啥好的</code>, 因为缺失了上下文，群里的人反而会疑惑，你在说什么。</p>
-<p>解决误删问题本质是提高拦截的准确率，而非考虑如何恢复被误删消息，准确率提高了，误删就会减少，
-自然就不需要考虑如何恢复消息，用户体验还会更好.</p>
-<p>而主动投喂消息这个想法有点理所当然了。</p>
-<p>没有任何群管理员有意愿帮忙训练这个机器人，对用户而言，他们只想要一个好用的广告拦截机器人，至于怎么开发，训练出来的，用户并不在乎。</p>
-<p>所以用户不会有意愿和动力来优化这个机器人，不好用就再换一个好了，更何况，逐条消息收集的效率实在太慢太慢了，
-所以我后面想出了一个比手工收集数据提效至少100倍的主意。</p>
-<h3 id="过滤重复消息"><span class="section-num">4.2</span> 过滤重复消息</h3>
-<p>发现人难免会有误区，总会以为别人会和自己一样，之前看到发垃圾广告的人的时候，总会觉得他们是正常的用户手工发。</p>
-<p>但是最近几天发现了一些规律，有用户把同一条消息反复发，不同的群还是发同样的内容
-即使是复制粘贴也难免会多个或者少个空格，然后消息被删了还一直发同样的内容。</p>
-<p>此外，还有一些群，内容的聊天内容都是广告，我还很奇怪，大家都在发广告，正常用户不都跑了嘛?</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-fc97b" hidden>
-    <label for="zoomCheck-fc97b">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/spam_group.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>此时，我才意识到，发消息的都是机器人。</p>
-<p>所以我加了个优化，计算消息内容的 hash 值，保存到数据库，并为这个字段建立索引。</p>
-<p>后面检测消息的时候，先根据 hash 值查询，检查是否存在已有的消息，如果消息已经存在且已经被标记成广告或者正常消息，那么就无需再使用模型检测，可以直接返回之前的检测结果。</p>
-<p>这样既提高了准确度，也优化了性能，也减少了人工干预的成本。</p>
-<p>同一个用户如果在同一个群发了三条广告，那么就会自动被封禁掉，也就是相同的广告只要发三条，就会马上被自动封禁掉。</p>
-<h3 id="自动收集数据"><span class="section-num">4.3</span> 自动收集数据</h3>
-<p>使用机器学习算法来实现一个类似的垃圾广告过滤器并不难，困难的持续收集高质量的训练数据，训练数据是非常宝贵的，毕竟数据才是核心资产。</p>
-<p>而对于我这个产品来说，最难的是冷启动时的训练数据问题：</p>
-<p>因为没有训练数据，模型就不准确，模型不好用就不会有人使用，自然也无法通过用户来收集垃圾广告数据，就无法良性循环，
-存在一个鸡生蛋，还是蛋生鸡的问题。</p>
-<p>所以冷启动时，我是手动加了非常多的 Telegram大群，然后人工在里面收集垃圾广告.</p>
-<p>但是这个效率实在是太低了，我收集了快一周才只有几百条数据，
-一个是我无法一直盯着各个群，另外是这种20w的大群，一般都会有几个管理员，会手工删除广告，一会没有看垃圾广告数据就会被删掉了。</p>
-<p>这样手工收集数据实在在太痛苦了，我就在想有没有什么办法自动收集数据呢？</p>
-<p>我本来想的是直接把我的机器人拉到这些大群里面，即使没有管理员权限无法删除消息，也可以收集数据嘛，后面才意识到 Telegram 有个规定，只有群管理员才有权限加机器人，因为我不是管理员，所以自动没有权限添加机器人。</p>
-<p>但是 telegram 的客户端是开源的，他们提供了 <a href="https://github.com/tdlib/td">tdlib</a> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>这个跨平台的 C++ 库便于社区构建第三方的 Telegram 客户端，那么我自然可以使用这个库来登录我自己的账号，然后使用我的模型来过滤消息，然后把疑似广告的数据都收集起来，我再人工确认下。</p>
-<p>（顺便说一下，tdlib 和 <a href="https://github.com/tdlib/telegram-bot-api">telegram-bot-api</a> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>这两个库竟然都是同一个<a href="https://github.com/levlam">作者 Aliaksei Levin</a> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>在维护，实在是太强了。）</p>
-<p>我现在需要做的就是添加各种大群，然后程序就会自动监听并收集数据，我再人工批量确认下。</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-b4635" hidden>
-    <label for="zoomCheck-b4635">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/spam_group_list.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-153f7" hidden>
-    <label for="zoomCheck-153f7">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/telegram_data_collector.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-cbf5b" hidden>
-    <label for="zoomCheck-cbf5b">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/maybe_spam_list.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>实现起来也不复杂， 200行代码就实现了这个监听消息，分析，并且收集的功能。</p>
-<p>得益于这个自动化的数据收集程序，我1周不到就收集了近上万条的高质量训练数据了，效率实在高太多太多了。</p>
-<p>懒惰真的是程序员的美德, 这个经历再次证明：自动化工具往往能成倍提升效率，这正是工程师价值的体现.</p>
-<h2 id="推广"><span class="section-num">5</span> 推广</h2>
-<p>所谓酒香也怕巷子深，没有用户使用，代码写得再好也没有意义。从产品角度，运营推广至关重要。</p>
-<p>作为个人开发者，我没有大量粉丝关注，也没有营销预算，因此采用了传统的推广方式：撰写博客并在相关社区分享。</p>
-<p>我撰写了两篇双语博客文章，中文版本分享至：</p>
-<ul>
-<li>V2EX: <a href="https://www.v2ex.com/t/1156542">https://www.v2ex.com/t/1156542</a>]]</li>
-<li>Emacs China: <a href="https://emacs-china.org/t/emacs-telegram/30043">https://emacs-china.org/t/emacs-telegram/30043</a></li>
-<li>微信公众号「宫孙说」：<a href="https://mp.weixin.qq.com/s/Sgq9vDqpHykwge11bwZJrw">https://mp.weixin.qq.com/s/Sgq9vDqpHykwge11bwZJrw</a></li>
-<li>项目被收录到<a href="https://www.ruanyifeng.com/blog/2025/09/weekly-issue-364.html">阮一峰的科技爱好者周刊（第 364 期）</a></li>
-</ul>
-<p>英文版本发布至：</p>
-<ul>
-<li>Reddit: <a href="https://old.reddit.com/r/rails/comments/1n6p791/built_my_first_rails_project_a_telegram_spam/">Built my first Rails project: A Telegram spam blocker bot</a> <sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>- 获得一些讨论</li>
-<li>HackerNews：<a href="https://news.ycombinator.com/item?id=45105908">https://news.ycombinator.com/item?id=45105908</a></li>
-<li>Twitter: <a href="https://x.com/foobar_ramsay/status/1967277792267247916">https://x.com/foobar_ramsay/status/1967277792267247916</a></li>
-</ul>
-<p>虽然推广效果有限，但这些努力为项目带来了最初的用户关注。</p>
-<h2 id="成果与数据"><span class="section-num">6</span> 成果与数据</h2>
-<p>上线半个月，截止到目前为止, 已经有超过80个群使用过这个机器人，用户数已经比我预期要多了:</p>
-<table>
-  <thead>
-      <tr>
-          <th>指标</th>
-          <th>数值</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>GitHub Stars</td>
-          <td>106</td>
-      </tr>
-      <tr>
-          <td>使用群组数</td>
-          <td>83</td>
-      </tr>
-      <tr>
-          <td>训练数据量</td>
-          <td>10543</td>
-      </tr>
-  </tbody>
-</table>
-<p>最开心的是看到我自己的程序在这些群成功拦截垃圾广告，就很有成就感，证明我做的东西真的能用户解决问题。</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-1fd72" hidden>
-    <label for="zoomCheck-1fd72">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/detect_spam_success.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<h2 id="结语"><span class="section-num">7</span> 结语</h2>
-<p>这半个月的运营让我深刻体会到：产品不是代码写完就结束，而是从用户反馈中不断迭代的开始。</p>
-<p>产品是需要持续运营的，而写代码只是产品生命周期的其中一个环节，甚至不是最耗费时间的环节。</p>
-<p>下一步，我计划进一步优化模型准确率，并探索多语言支持，也欢迎关注我的频道或提交Issue一起讨论。</p>
-<ul>
-<li>开源地址：<a href="https://github.com/ramsayleung/bayes_spam_sniper">https://github.com/ramsayleung/bayes_spam_sniper</a></li>
-<li>立即体验：<a href="https://t.me/BayesSpamSniperBot">https://t.me/BayesSpamSniperBot</a></li>
-<li>我的频道（菠萝油与天光墟）: <a href="https://t.me/pipeapplebun">https://t.me/pipeapplebun</a></li>
-</ul>
-<div class="qr-container" center>
-<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" class="qr-container" width="160px" height="160px" center="t" />
-公号同步更新，欢迎关注👻
-</div>
-<h3 id="推荐阅读">推荐阅读</h3>
-<ul>
-<li>旅加经历
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E8%BF%99%E4%BA%9B%E5%B9%B4%E8%B5%B0%E8%BF%87%E7%9A%84%E8%B7%AF_%E4%BB%8E%E5%B9%BF%E5%B7%9E%E5%88%B0%E6%B8%A9%E5%93%A5%E5%8D%8E/">这些年走过的路：从广州到温哥华</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B9%8B%E5%88%9D%E4%BD%93%E9%AA%8C/">加拿大之初体验</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%99%BB%E9%99%86%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B8%80%E5%B9%B4%E7%9A%84%E4%BD%93%E4%BC%9A/">登陆加拿大一年后的体会</a></li>
-</ul>
-</li>
-<li>工具流分享
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%AE%80%E6%98%8E%E5%86%99%E4%BD%9C%E6%8C%87%E5%8D%97/">简明写作指南</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E5%86%99%E4%BD%9C%E6%B5%81/">我的写作流</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E7%94%BB%E5%9B%BE%E6%B5%81/">我的画图流：画图工具与技巧分享</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E6%90%9C%E7%B4%A2%E6%B5%81/">我的搜索流：高效搜索经验分享</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2022/feynman_technique/">最好的学习方式：费曼学习法(Feynman Technique)</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2021/%E7%B3%BB%E7%BB%9F%E6%80%9D%E8%80%83/">系统思考：既见树木，又见森林</a></li>
-</ul>
-</li>
-<li>思考感悟
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%BC%96%E7%A8%8B%E5%8D%81%E5%B9%B4%E7%9A%84%E6%84%9F%E6%82%9F/">编程十年的感悟</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E4%BB%8E%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E7%A6%BB%E7%BA%BF_%E6%88%91%E5%B8%A6%E8%B5%B0%E4%BA%86%E4%BB%80%E4%B9%88/">那些年，我从微信支付学到的东西</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2025/%E6%9D%82%E8%B0%88ai%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98/">杂谈ai取代程序员</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E7%BD%AE%E8%BA%AB%E4%BA%8B%E5%86%85/">为什么梦想买不起，故乡回不去</a></li>
-</ul>
-</li>
-<li>软件工程
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2025/a_philosophy_of_software_design/">软件设计的哲学</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2025/structure_and_interpretation_of_computer_programs/">一本读了八年还没读完的书</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%80_%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E8%AE%A4%E7%9F%A5/">测试技能进阶(一): 软件质量认知</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/">测试技能进阶(二): Parameterized Tests</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%89_property_based_testing/">测试技能进阶(三): Property Based Testing</a></li>
-</ul>
-</li>
-</ul>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p><a href="https://github.com/tdlib/td">https://github.com/tdlib/td</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p><a href="https://github.com/tdlib/telegram-bot-api">https://github.com/tdlib/telegram-bot-api</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:3">
-<p><a href="https://github.com/levlam">https://github.com/levlam</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:4">
-<p><a href="https://old.reddit.com/r/rails/comments/1n6p791/built_my_first_rails_project_a_telegram_spam/">https://old.reddit.com/r/rails/comments/1n6p791/built_my_first_rails_project_a_telegram_spam/</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>
-]]></content:encoded>
-    </item>
     <item>
       <title>基于贝叶斯算法的Telegram广告拦截机器人（一）：从问题到产品</title>
       <link>https://ramsayleung.github.io/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/</link>
@@ -4524,6 +4176,145 @@ construction. And it turns out that there is a way to construct <code>DateTime</
 <li><a href="https://github.com/ramsayleung/rspotify/pull/145">PR: Refactor model</a></li>
 <li><a href="https://github.com/ramsayleung/rspotify/pull/177">PR: Deserialize enum from number</a></li>
 </ul>
+<div center class="qr-container">
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+公号同步更新，欢迎关注👻
+</div>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>rspotify has come to async/await</title>
+      <link>https://ramsayleung.github.io/zh/post/2020/async_await_for_rspotify/</link>
+      <pubDate>Fri, 28 Feb 2020 01:27:00 +0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2020/async_await_for_rspotify/</guid>
+      <description>&lt;h2 id=&#34;preface&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; Preface&lt;/h2&gt;
+&lt;p&gt;Today, I am exited to introduce you the &lt;a href=&#34;https://github.com/ramsayleung/rspotify/releases/tag/v0.9&#34;&gt;v0.9&lt;/a&gt; release I have been continued to work on it for the past few weeks that
+adds &lt;code&gt;async/await&lt;/code&gt; support now!&lt;/p&gt;
+&lt;h2 id=&#34;the-road-to-async-await&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;2&lt;/span&gt; The road to async/await&lt;/h2&gt;
+&lt;p&gt;What is rspotify: &amp;gt; For those who has never heared about rspotify
+before, &lt;a href=&#34;https://github.com/ramsayleung/rspotify&#34;&gt;rspotify&lt;/a&gt; is a
+Spotify web Api wrapper implemented in Rust.&lt;/p&gt;
+&lt;p&gt;With async/await&amp;rsquo;s forthcoming stabilization and reqwest adds
+&lt;code&gt;async/await&lt;/code&gt; support now, I think it&amp;rsquo;s time to let rspotify leverage
+power from &lt;code&gt;async/await&lt;/code&gt;. To be honest, I was not familiar with
+&lt;code&gt;async/await&lt;/code&gt; before, because of my Java background from where I just
+get used to multiple thread and sync stuff(Yes, I know Java has &lt;code&gt;future&lt;/code&gt;
+either).&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="preface"><span class="section-num">1</span> Preface</h2>
+<p>Today, I am exited to introduce you the <a href="https://github.com/ramsayleung/rspotify/releases/tag/v0.9">v0.9</a> release I have been continued to work on it for the past few weeks that
+adds <code>async/await</code> support now!</p>
+<h2 id="the-road-to-async-await"><span class="section-num">2</span> The road to async/await</h2>
+<p>What is rspotify: &gt; For those who has never heared about rspotify
+before, <a href="https://github.com/ramsayleung/rspotify">rspotify</a> is a
+Spotify web Api wrapper implemented in Rust.</p>
+<p>With async/await&rsquo;s forthcoming stabilization and reqwest adds
+<code>async/await</code> support now, I think it&rsquo;s time to let rspotify leverage
+power from <code>async/await</code>. To be honest, I was not familiar with
+<code>async/await</code> before, because of my Java background from where I just
+get used to multiple thread and sync stuff(Yes, I know Java has <code>future</code>
+either).</p>
+<p>After reading some good learning resources, such as <a href="https://rust-lang.github.io/async-book/">Async book</a>, <a href="https://www.youtube.com/watch?v=skos4B5x7qE">Zero-cost Async IO</a>, I
+started to step into the world of <code>async/await</code>. <code>async/await</code> is a way
+to write functions that can &ldquo;pause&rdquo;, return control to the runtime, ant
+then pick up from where they left off.</p>
+<p>I think perhaps the most important part of <code>async/await</code> is runtime, which defines how to
+schedule the functions.</p>
+<p>Now, by leveraging the <code>async/await</code> power of <code>reqwest</code>, rspotify could
+send HTTP request and handle response asynchronously.</p>
+<p>Futhermore, not only do I refactor the old blocking endpoint functions to <code>async/await</code>
+version, but also keep the old blocking endpoint functions with a new
+additional feature <code>blocking</code>, then other developers could choose API to
+their taste.</p>
+<h2 id="overview"><span class="section-num">3</span> Overview</h2>
+<p><code>album</code> example:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">rspotify</span>::<span class="n">client</span>::<span class="n">Spotify</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">rspotify</span>::<span class="n">oauth2</span>::<span class="n">SpotifyClientCredentials</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cp">#[tokio::main]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Set client_id and client_secret in .env file or
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="c1">// export CLIENT_ID=&#34;your client_id&#34;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="c1">// export CLIENT_SECRET=&#34;secret&#34;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">client_credential</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SpotifyClientCredentials</span>::<span class="n">default</span><span class="p">().</span><span class="n">build</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Or set client_id and client_secret explictly
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="c1">// let client_credential = SpotifyClientCredentials::default()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="c1">//     .client_id(&#34;this-is-my-client-id&#34;)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="c1">//     .client_secret(&#34;this-is-my-client-secret&#34;)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="c1">//     .build();
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">spotify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Spotify</span>::<span class="n">default</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="n">client_credentials_manager</span><span class="p">(</span><span class="n">client_credential</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">.</span><span class="n">build</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">birdy_uri</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;spotify:album:0sNOF9WDwhWunNAHPD3Baj&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">albums</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spotify</span><span class="p">.</span><span class="n">album</span><span class="p">(</span><span class="n">birdy_uri</span><span class="p">).</span><span class="k">await</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">albums</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Just change the default API to async, and moving the previous
+synchronous API to <code>blocking</code> module.</p>
+<p>Notes that I think the v0.9 release of rspotify is going to be a huge
+break change because of the support for <code>async/await</code>, which definitely
+breaks backward compatibility.</p>
+<p>So I decide to make an other break change
+into the next release, just refactoring the project structure to shorten
+the import path:</p>
+<p>before:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">rspotify</span>::<span class="n">spotify</span>::<span class="n">client</span>::<span class="n">Spotify</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">rspotify</span>::<span class="n">spotify</span>::<span class="n">oauth2</span>::<span class="n">SpotifyClientCredentials</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>after:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">rspotify</span>::<span class="n">client</span>::<span class="n">Spotify</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">rspotify</span>::<span class="n">oauth2</span>::<span class="n">SpotifyClientCredentials</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>the <code>spotify</code> module is unnecessary and inelegant, so I just remove it.</p>
+<h2 id="conclusion"><span class="section-num">4</span> Conclusion</h2>
+<p><a href="https://github.com/ramsayleung/rspotify/releases/tag/v0.9">rspotify v0.9</a> is now available! There is <a href="https://docs.rs/crate/rspotify/">documentation</a>, <a href="https://github.com/ramsayleung/rspotify/tree/master/examples">examples</a> and an <a href="https://github.com/ramsayleung/rspotify/issues/new">issue</a>
+tracker!</p>
+<p>Please provide any feedback, as I would love to improve this library any way I can! Thanks <a href="https://github.com/Rigellute">@Alexander</a> so much for actively participate in the refactor work for support
+<code>async/await</code>.</p>
 <div center class="qr-container">
 <img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
 公号同步更新，欢迎关注👻
