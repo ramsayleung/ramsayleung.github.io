@@ -2,8 +2,8 @@
 title = "基于贝叶斯算法的Telegram广告拦截机器人（二）：上线半月的故障、挑战与优化之路"
 author = ["Ramsay Leung"]
 date = 2025-09-13T14:28:00-07:00
-lastmod = 2025-09-14T11:22:03-07:00
-tags = ["telegram", "design", "programming", "rails", "rust"]
+lastmod = 2025-09-14T22:35:50-07:00
+tags = ["telegram", "design", "programming", "rails"]
 categories = ["telegram", "基于贝叶斯算法的Telegram广告拦截机器人"]
 draft = false
 toc = true
@@ -18,7 +18,7 @@ showQuote = true
 
 系列文章:
 
--   [基于贝叶斯算法的Telegram广告拦截机器人（一）：从问题到产品](https://ramsayleung.github.io/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/)
+-   [基于贝叶斯算法的Telegram广告拦截机器人（一）：从问题到产品]({{< relref "一个自学习的Telegram广告拦截机器人" >}})
 
 尽管项目代码开源，但我始终以产品思维运营它。上线半个月以来，经历了故障、用户反馈与持续优化，现将这段经历分享出来。
 
@@ -42,7 +42,7 @@ showQuote = true
 
 ### <span class="section-num">3.1</span> 邮件与即时消息的差异 {#邮件与即时消息的差异}
 
-我在[《基于贝叶斯算法的Telegram广告拦截机器人（一）：从问题到产品》](https://ramsayleung.github.io/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/)里面提到过：
+我在[《基于贝叶斯算法的Telegram广告拦截机器人（一）：从问题到产品》]({{< relref "一个自学习的Telegram广告拦截机器人" >}})里面提到过：
 
 > 常见的 Telegram 广告机器人是大多是基于关键字的，通过匹配关键字进行文本拦截，非常容易被发垃圾广告的人绕过。
 >
@@ -159,6 +159,14 @@ Telegram客户端不一定支持会跳转被恢复的旧消息，这意味着，
 这样既提高了准确度，也优化了性能，也减少了人工干预的成本。
 
 同一个用户如果在同一个群发了三条广告，那么就会自动被封禁掉，也就是相同的广告只要发三条，就会马上被自动封禁掉。
+
+---
+
+为什么是计算 hash 值并为该Hash值建立索引而非对完整的文本消息建立索引？
+
+因为文本消息是变长的，并且聊天消息可能会很长，对这样的 `TEXT` 建立索引会产生非常大的索引结构，占用大量的磁盘空间，每次进入查找，插入和排序操作，速度都会较慢。
+
+而 hash 值是定长且非常短（相对原始消息而言），建立索引速度非常快，此外 hash 函数保证只有相同的输入一定会产生相同的输出，而即使一个字符不一致，其计算出来的 hash 值就会不一致，就能判断内容文本不一致。
 
 
 ### <span class="section-num">4.3</span> 自动收集数据 {#自动收集数据}
