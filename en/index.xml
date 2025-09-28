@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>en</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Wed, 03 Sep 2025 22:25:40 -0700</lastBuildDate>
+    <lastBuildDate>Sat, 27 Sep 2025 17:42:56 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/en/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>A Telegram Spam Blocker Bot Based On Bayesian Algorithm</title>
@@ -363,7 +363,7 @@ Therefore, this bot only offers the following three commands (supporting auto-co
 <p>Unlike common group management bots, this command not only deletes the spam and bans the user but also, because this message is marked as spam by an admin with very high confidence, uses this spam ad as training data to update the model in real-time.</p>
 <p>Similar messages will not only be identified next time, but all groups using this bot will benefit, as similar texts will also be marked as spam.</p>
 <h4 id="listspam"><span class="section-num">6.1.2</span> <code>/listspam</code></h4>
-<p>View the list of banned accounts. Requires admin permissions.</p>
+<p>View the list of spam messages. Requires admin permissions.</p>
 
 <figure>
     
@@ -378,8 +378,25 @@ Therefore, this bot only offers the following three commands (supporting auto-co
     </label>
 </figure>
 
+<p>View the list of spam messages and proactively mark false positive spam as normal.</p>
+<h4 id="listbanuser"><span class="section-num">6.1.3</span> <code>/listbanuser</code></h4>
+<p>View the list of banned accounts. Requires admin permissions.</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-7751e" hidden>
+    <label for="zoomCheck-7751e">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/listbanuser.jpg"/> 
+    
+    
+    </label>
+</figure>
+
 <p>View the list of banned users and proactively unban them.</p>
-<h4 id="feedspam"><span class="section-num">6.1.3</span> <code>/feedspam</code></h4>
+<h4 id="feedspam"><span class="section-num">6.1.4</span> <code>/feedspam</code></h4>
 <p>Feed spam messages for training. No permissions required. Can be used in private chat or in-group.</p>
 <p>Feeding in private chat:</p>
 

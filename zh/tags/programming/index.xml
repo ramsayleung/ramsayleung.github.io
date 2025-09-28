@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sun, 14 Sep 2025 22:35:50 -0700</lastBuildDate>
+    <lastBuildDate>Sat, 27 Sep 2025 17:44:09 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/programming/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>基于贝叶斯算法的Telegram广告拦截机器人（二）：上线半月的故障、挑战与优化之路</title>
@@ -718,8 +718,25 @@
 <img loading="lazy" src="/ox-hugo/markspam.jpg"></p>
 <p>与常见的群管理机器人不同，这条命令不仅会删除垃圾消息并封禁用户, 因为这条消息还被管理员标记成垃圾广告，有非常高的置信度，所以系统就会以这条垃圾广告为训练数据，对模型进行实时更新。</p>
 <p>下次类似的发言不仅会被识别，所有使用本机器人的群组都会受益，也会把类似的文本标记成垃圾广告</p>
-<h4 id="listspam"><span class="section-num">6.1.2</span> <code>/listspam</code></h4>
+<h4 id="listbanuser"><span class="section-num">6.1.2</span> <code>/listbanuser</code></h4>
 <p>查看封禁账户列表, 需要管理员权限。</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-7751e" hidden>
+    <label for="zoomCheck-7751e">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/listbanuser.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>查看已封禁的用户列表，并主动解封。</p>
+<h4 id="listspam"><span class="section-num">6.1.3</span> <code>/listspam</code></h4>
+<p>查看广告消息列表, 需要管理员权限。</p>
 
 <figure>
     
@@ -734,10 +751,9 @@
     </label>
 </figure>
 
-<p>查看已封禁的用户列表，并主动解封。</p>
-<h4 id="feedspam"><span class="section-num">6.1.3</span> <code>/feedspam</code></h4>
+<p>查看被标记为广告的消息列表，并可标记为正常。</p>
+<h4 id="feedspam"><span class="section-num">6.1.4</span> <code>/feedspam</code></h4>
 <p>投喂垃圾信息来训练，无任何权限要求，可私聊投喂或在群组内投喂.</p>
-<p>私聊投喂:</p>
 
 <figure>
     
@@ -752,7 +768,6 @@
     </label>
 </figure>
 
-<p>群组内投喂:</p>
 
 <figure>
     
