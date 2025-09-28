@@ -1,7 +1,7 @@
 +++
 title = "A Telegram Spam Blocker Bot Based On Bayesian Algorithm"
 date = 2025-08-30T10:34:00-07:00
-lastmod = 2025-09-01T21:36:06-07:00
+lastmod = 2025-09-27T17:42:56-07:00
 tags = ["telegram", "design", "programming", "rails", "rust"]
 categories = ["design"]
 draft = false
@@ -262,14 +262,23 @@ Similar messages will not only be identified next time, but all groups using thi
 
 #### <span class="section-num">6.1.2</span> `/listspam` {#listspam}
 
-View the list of banned accounts. Requires admin permissions.
+View the list of spam messages. Requires admin permissions.
 
 {{< figure src="/ox-hugo/listspam.jpg" >}}
+
+View the list of spam messages and proactively mark false positive spam as normal.
+
+
+#### <span class="section-num">6.1.3</span> `/listbanuser` {#listbanuser}
+
+View the list of banned accounts. Requires admin permissions.
+
+{{< figure src="/ox-hugo/listbanuser.jpg" >}}
 
 View the list of banned users and proactively unban them.
 
 
-#### <span class="section-num">6.1.3</span> `/feedspam` {#feedspam}
+#### <span class="section-num">6.1.4</span> `/feedspam` {#feedspam}
 
 Feed spam messages for training. No permissions required. Can be used in private chat or in-group.
 

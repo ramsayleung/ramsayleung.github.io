@@ -1,7 +1,7 @@
 +++
 title = "基于贝叶斯算法的Telegram广告拦截机器人（一）：从问题到产品"
 date = 2025-08-28T23:45:00-07:00
-lastmod = 2025-09-14T11:08:44-07:00
+lastmod = 2025-09-27T17:44:09-07:00
 tags = ["telegram", "design", "programming", "rails", "rust"]
 categories = ["telegram", "基于贝叶斯算法的Telegram广告拦截机器人"]
 draft = false
@@ -257,24 +257,29 @@ Vibe Coding等AI编程概念可谓是铺天盖地，甚嚣尘上，难免会有�
 下次类似的发言不仅会被识别，所有使用本机器人的群组都会受益，也会把类似的文本标记成垃圾广告
 
 
-#### <span class="section-num">6.1.2</span> `/listspam` {#listspam}
+#### <span class="section-num">6.1.2</span> `/listbanuser` {#listbanuser}
 
 查看封禁账户列表, 需要管理员权限。
 
-{{< figure src="/ox-hugo/listspam.jpg" >}}
+{{< figure src="/ox-hugo/listbanuser.jpg" >}}
 
 查看已封禁的用户列表，并主动解封。
 
 
-#### <span class="section-num">6.1.3</span> `/feedspam` {#feedspam}
+#### <span class="section-num">6.1.3</span> `/listspam` {#listspam}
+
+查看广告消息列表, 需要管理员权限。
+
+{{< figure src="/ox-hugo/listspam.jpg" >}}
+
+查看被标记为广告的消息列表，并可标记为正常。
+
+
+#### <span class="section-num">6.1.4</span> `/feedspam` {#feedspam}
 
 投喂垃圾信息来训练，无任何权限要求，可私聊投喂或在群组内投喂.
 
-私聊投喂:
-
 {{< figure src="/ox-hugo/feedspam.jpg" >}}
-
-群组内投喂:
 
 {{< figure src="/ox-hugo/feedspam2.jpg" >}}
 
