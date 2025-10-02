@@ -2,6 +2,74 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://ramsayleung.github.io/zh/post/</loc>
+    <lastmod>2025-10-01T23:07:17-07:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://ramsayleung.github.io/en/post/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://ramsayleung.github.io/zh/post/"
+                />
+  </url><url>
+    <loc>https://ramsayleung.github.io/zh/tags/rust/</loc>
+    <lastmod>2025-10-01T23:07:17-07:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://ramsayleung.github.io/en/tags/rust/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://ramsayleung.github.io/zh/tags/rust/"
+                />
+  </url><url>
+    <loc>https://ramsayleung.github.io/zh/tags/</loc>
+    <lastmod>2025-10-01T23:07:17-07:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://ramsayleung.github.io/en/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://ramsayleung.github.io/zh/tags/"
+                />
+  </url><url>
+    <loc>https://ramsayleung.github.io/zh/tags/telegram/</loc>
+    <lastmod>2025-10-01T23:07:17-07:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://ramsayleung.github.io/en/tags/telegram/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://ramsayleung.github.io/zh/tags/telegram/"
+                />
+  </url><url>
+    <loc>https://ramsayleung.github.io/zh/post/2025/telegram%E9%A2%91%E9%81%93%E6%A3%80%E7%B4%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/</loc>
+    <lastmod>2025-10-01T23:07:17-07:00</lastmod>
+  </url><url>
+    <loc>https://ramsayleung.github.io/zh/</loc>
+    <lastmod>2025-10-01T23:07:17-07:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://ramsayleung.github.io/en/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://ramsayleung.github.io/zh/"
+                />
+  </url><url>
     <loc>https://ramsayleung.github.io/zh/categories/</loc>
     <lastmod>2025-09-27T17:44:09-07:00</lastmod>
     <xhtml:link
@@ -26,19 +94,6 @@
                 rel="alternate"
                 hreflang="zh"
                 href="https://ramsayleung.github.io/zh/tags/design/"
-                />
-  </url><url>
-    <loc>https://ramsayleung.github.io/zh/post/</loc>
-    <lastmod>2025-09-27T17:44:09-07:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://ramsayleung.github.io/en/post/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="https://ramsayleung.github.io/zh/post/"
                 />
   </url><url>
     <loc>https://ramsayleung.github.io/zh/tags/programming/</loc>
@@ -67,66 +122,14 @@
                 href="https://ramsayleung.github.io/zh/tags/rails/"
                 />
   </url><url>
-    <loc>https://ramsayleung.github.io/zh/tags/</loc>
-    <lastmod>2025-09-27T17:44:09-07:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://ramsayleung.github.io/en/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="https://ramsayleung.github.io/zh/tags/"
-                />
-  </url><url>
     <loc>https://ramsayleung.github.io/zh/categories/telegram/</loc>
     <lastmod>2025-09-27T17:44:09-07:00</lastmod>
-  </url><url>
-    <loc>https://ramsayleung.github.io/zh/tags/telegram/</loc>
-    <lastmod>2025-09-27T17:44:09-07:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://ramsayleung.github.io/en/tags/telegram/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="https://ramsayleung.github.io/zh/tags/telegram/"
-                />
-  </url><url>
-    <loc>https://ramsayleung.github.io/zh/</loc>
-    <lastmod>2025-09-27T17:44:09-07:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://ramsayleung.github.io/en/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="https://ramsayleung.github.io/zh/"
-                />
   </url><url>
     <loc>https://ramsayleung.github.io/zh/categories/%E5%9F%BA%E4%BA%8E%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/</loc>
     <lastmod>2025-09-27T17:44:09-07:00</lastmod>
   </url><url>
     <loc>https://ramsayleung.github.io/zh/post/2025/%E5%9F%BA%E4%BA%8E%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BA%8C/</loc>
     <lastmod>2025-09-14T22:35:50-07:00</lastmod>
-  </url><url>
-    <loc>https://ramsayleung.github.io/zh/tags/rust/</loc>
-    <lastmod>2025-09-27T17:44:09-07:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://ramsayleung.github.io/en/tags/rust/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="https://ramsayleung.github.io/zh/tags/rust/"
-                />
   </url><url>
     <loc>https://ramsayleung.github.io/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/</loc>
     <lastmod>2025-09-27T17:44:09-07:00</lastmod>

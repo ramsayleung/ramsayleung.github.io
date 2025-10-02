@@ -12,8 +12,173 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sat, 27 Sep 2025 17:44:09 -0700</lastBuildDate>
+    <lastBuildDate>Wed, 01 Oct 2025 23:07:17 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Telegram频道检索机器人</title>
+      <link>https://ramsayleung.github.io/zh/post/2025/telegram%E9%A2%91%E9%81%93%E6%A3%80%E7%B4%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/</link>
+      <pubDate>Wed, 01 Oct 2025 21:55:00 -0700</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2025/telegram%E9%A2%91%E9%81%93%E6%A3%80%E7%B4%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/</guid>
+      <description>&lt;h2 id=&#34;引言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 引言&lt;/h2&gt;
+&lt;p&gt;我有时总会觉得自己是个「奇葩」：
+在现在各种算法推荐大行其道的当下，我却偏偏不喜欢算法推荐，因为这种「千人千面」的模式，总让我担心自己会陷入「信息茧房」的焦虑之中，此外我也希望可以看到一些我兴趣之外的内容。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="引言"><span class="section-num">1</span> 引言</h2>
+<p>我有时总会觉得自己是个「奇葩」：
+在现在各种算法推荐大行其道的当下，我却偏偏不喜欢算法推荐，因为这种「千人千面」的模式，总让我担心自己会陷入「信息茧房」的焦虑之中，此外我也希望可以看到一些我兴趣之外的内容。</p>
+<p>我算是很多年的 Twitter 老用户了，使用 Twitter 已经超过十年了，只是在马斯克收购 Twitter,新增了一个 &ldquo;For You&rdquo; 的推荐流之后，越来越没有兴趣看，不是吵架就是借极端观点/话题引流。</p>
+<p>于是，我转向了Telegram频道，并为此打造了一个专属的「挖掘好帖」工具。</p>
+<p>在最近的一年时间，我订阅了越来越多的 Telegram 频道，频道主可以向所有的订阅者广播内容，因为 Telegram 频道都是由频道主发布的，这给了我一种主动发现、主动阅读，而非被动接受算法推荐的感觉。</p>
+<p>有频道主分享 twitter 上的内容时，也可以算是某种意义的「编辑精选」了。</p>
+<p>当我订阅越来越多的频道之后，发现有些频道主太能聊了，一天能发几十个帖子，有些只是碎碎念，有些却是思考和精华。</p>
+<p>所以我就在想，是否有个好用的挖宝藏（挖坟）工具，可以把频道的热贴，精华帖都列出来呢？</p>
+<h2 id="灵感"><span class="section-num">2</span> 灵感</h2>
+<p>另外一个我高频使用的网站就是 <a href="https://old.reddit.com">Reddit</a>, 不了解的 Reddit 的朋友可以理解成它是网站的百度贴吧，可以有不同的子版（subreddit），相当于不同的吧, 然后每个子版都有一个 <code>top</code> 的功能，可以按照过去一小时，过去24小时，过去一周，过去一年，历史全时段按帖子的顶贴数进行排序。</p>
+<p>类似 <code>rust</code> 这个子版的历史精华帖：<a href="https://old.reddit.com/r/rust/top/">https://old.reddit.com/r/rust/top/</a></p>
+<p>那么，我是否也可以对 Telegram 频道也实现类似的功能呢？</p>
+<p>我可以把某个频道所有的帖子都爬下来，然后按点赞数，转发数，点击数按不同的时间段进行排序，</p>
+<p>支持不同的时间段：包括一周内，一个月内，一年内，和历史所有帖子</p>
+<p>相当于根据频道的订阅者的用手投票，挑选出不同时段最精华的帖子</p>
+<h2 id="技术挑战"><span class="section-num">3</span> 技术挑战</h2>
+<p>仔细分析之后，我发现检索频道并构建热榜是个相当有趣的技术问题，也与频道帖子本身的产品属性有关。</p>
+<p>在我爬取某个频道的所有帖子后，如何与频道的最新动态保持同步更新呢？</p>
+<p>毕竟像阅读数，转发数这些数据也是一直会更新的。</p>
+<p>但是大部分历史的帖子的阅读数据都是不怎么会变化的，比如半年前的帖子可能就不会有人去翻看，订阅者大多只会关注最新的帖子。</p>
+<p>每次都所有帖子都重新爬取一次固然可行，但是效率太低，毕竟绝大部分的帖子的数据都是不怎么变动的，怎么平衡性能与数据的及时性呢？</p>
+<p>有点像超简化版本的搜索引擎问题了。</p>
+<p>查询的时候要支持不同的时间段，按不同的指标进行排序，如何保证查询的性能呢？</p>
+<p>总不能每次查询都重新计算一次吧，这样在帖子非常多的热点频道，就会出现查询的性能瓶颈。</p>
+<h2 id="解决方案"><span class="section-num">4</span> 解决方案</h2>
+<p>在仔细考量，权衡利弊之后，我取了个折衷的方案：</p>
+<ol>
+<li>第一次爬取某个频道时，全量爬取并索引</li>
+<li>每天定时重新爬取最近30天的帖子数据，作增量更新</li>
+<li>每周再爬取和索引一次全量数据</li>
+</ol>
+<p>就这样兼顾性能，成本以及数据及时性，又不会造成过多的重复爬取。</p>
+<p>而对于查询性能，我选择了建立物化视图(material view)的策略, 每次爬取成功之后就重新计算，更新一下 material view, 耗时可能比较长，每个频道更新视图大概需要个十几秒。</p>
+<p>但此后所有的查询都直接指向这个预计算好的视图，数据库还可以利用缓存优化，以空间换时间，查询性能因此得到保障</p>
+<h2 id="使用示例"><span class="section-num">5</span> 使用示例</h2>
+<p>使用方法非常简单：</p>
+<ol>
+<li>点击链接打开机器人：<a href="https://t.me/tele_ranker_bot">https://t.me/tele_ranker_bot</a></li>
+<li>在对话框中输入 <code>/rank &lt;频道链接&gt;=，例如 =/rank https://t.me/pipeapplebun</code></li>
+<li>首次检索一个频道时，机器人需要一些时间来建立索引（如下图所示），完成后会通知用户：</li>
+</ol>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-ec038" hidden>
+    <label for="zoomCheck-ec038">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/first_index.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>完成之后就会发消息通知用户</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-c3d87" hidden>
+    <label for="zoomCheck-c3d87">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/index_finish.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>然后用户就可以按照点赞数，转发数，点击数查看帖子</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-8afdf" hidden>
+    <label for="zoomCheck-8afdf">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/rank1.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-d526d" hidden>
+    <label for="zoomCheck-d526d">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/rank2.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>通过这个工具，我甚至发现了一些有趣的现象：</p>
+<p>某些频道看似有十几万订阅者，但近期帖子的点击数仅有一千多，还不到百分之一，数据真实性令人存疑。</p>
+<h2 id="结语"><span class="section-num">6</span> 结语</h2>
+<p>有了这个频道检索工具，我终于能在一个频道里高效「挖坟」了，再也不用担心错过沉淀在时间线里的精华。</p>
+<p>不管是想回顾精华，还是挖掘隐藏好帖，甚至是做简单的数据挖掘，这个机器人都能搞定，举个例子：</p>
+<ul>
+<li>找最近一个月点赞最多的帖子</li>
+<li>看看历史上点击最高的内容有哪些</li>
+</ul>
+<p>这次，我总算为自己、也为可能有同样需求的你们，打造了一个称手的工具。</p>
+<ul>
+<li>立即体验：<a href="https://t.me/tele_ranker_bot">https://t.me/tele_ranker_bot</a></li>
+<li>我的频道（菠萝油与天光墟）: <a href="https://t.me/pipeapplebun">https://t.me/pipeapplebun</a></li>
+</ul>
+<h3 id="推荐阅读">推荐阅读</h3>
+<ul>
+<li>旅加经历
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E8%BF%99%E4%BA%9B%E5%B9%B4%E8%B5%B0%E8%BF%87%E7%9A%84%E8%B7%AF_%E4%BB%8E%E5%B9%BF%E5%B7%9E%E5%88%B0%E6%B8%A9%E5%93%A5%E5%8D%8E/">这些年走过的路：从广州到温哥华</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B9%8B%E5%88%9D%E4%BD%93%E9%AA%8C/">加拿大之初体验</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%99%BB%E9%99%86%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B8%80%E5%B9%B4%E7%9A%84%E4%BD%93%E4%BC%9A/">登陆加拿大一年后的体会</a></li>
+</ul>
+</li>
+<li>工具流分享
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%AE%80%E6%98%8E%E5%86%99%E4%BD%9C%E6%8C%87%E5%8D%97/">简明写作指南</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E5%86%99%E4%BD%9C%E6%B5%81/">我的写作流</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E7%94%BB%E5%9B%BE%E6%B5%81/">我的画图流：画图工具与技巧分享</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E6%90%9C%E7%B4%A2%E6%B5%81/">我的搜索流：高效搜索经验分享</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2022/feynman_technique/">最好的学习方式：费曼学习法(Feynman Technique)</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2021/%E7%B3%BB%E7%BB%9F%E6%80%9D%E8%80%83/">系统思考：既见树木，又见森林</a></li>
+</ul>
+</li>
+<li>思考感悟
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%BC%96%E7%A8%8B%E5%8D%81%E5%B9%B4%E7%9A%84%E6%84%9F%E6%82%9F/">编程十年的感悟</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E4%BB%8E%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E7%A6%BB%E7%BA%BF_%E6%88%91%E5%B8%A6%E8%B5%B0%E4%BA%86%E4%BB%80%E4%B9%88/">那些年，我从微信支付学到的东西</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2025/%E6%9D%82%E8%B0%88ai%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98/">杂谈ai取代程序员</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E7%BD%AE%E8%BA%AB%E4%BA%8B%E5%86%85/">为什么梦想买不起，故乡回不去</a></li>
+</ul>
+</li>
+<li>软件工程
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2025/a_philosophy_of_software_design/">软件设计的哲学</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2025/structure_and_interpretation_of_computer_programs/">一本读了八年还没读完的书</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%80_%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E8%AE%A4%E7%9F%A5/">测试技能进阶(一): 软件质量认知</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/">测试技能进阶(二): Parameterized Tests</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%89_property_based_testing/">测试技能进阶(三): Property Based Testing</a></li>
+</ul>
+</li>
+</ul>
+<div class="qr-container" center>
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" class="qr-container" width="160px" height="160px" center="t" />
+公号同步更新，欢迎关注👻
+</div>
+]]></content:encoded>
+    </item>
     <item>
       <title>基于贝叶斯算法的Telegram广告拦截机器人（二）：上线半月的故障、挑战与优化之路</title>
       <link>https://ramsayleung.github.io/zh/post/2025/%E5%9F%BA%E4%BA%8E%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BA%8C/</link>
@@ -4860,347 +5025,6 @@
 <li><a href="https://third-bit.com/sdxjs/regex-parser/">https://third-bit.com/sdxjs/regex-parser/</a></li>
 <li><a href="https://third-bit.com/sdxjs/pattern-matching/">https://third-bit.com/sdxjs/pattern-matching/</a></li>
 </ul>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>重新造轮子系列(三): HTML Selector</title>
-      <link>https://ramsayleung.github.io/zh/post/2025/reinvent_selector/</link>
-      <pubDate>Sat, 15 Mar 2025 10:53:00 -0700</pubDate>
-      <guid>https://ramsayleung.github.io/zh/post/2025/reinvent_selector/</guid>
-      <description>&lt;p&gt;项目 GitHub 地址: &lt;a href=&#34;https://github.com/ramsayleung/reinvent/tree/master/html_selector&#34;&gt;Selector&lt;/a&gt; &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
-&lt;p&gt;以前写爬虫的时候，必不可少的一个工具就是 HTML selector, 就是用于匹配指定的 HTML 标签。&lt;/p&gt;
-&lt;p&gt;毕竟爬虫的本质就是找出需要的标签里面的内容，然后解析出来。&lt;/p&gt;</description>
-      <content:encoded><![CDATA[<p>项目 GitHub 地址: <a href="https://github.com/ramsayleung/reinvent/tree/master/html_selector">Selector</a> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
-<h2 id="前言"><span class="section-num">1</span> 前言</h2>
-<p>以前写爬虫的时候，必不可少的一个工具就是 HTML selector, 就是用于匹配指定的 HTML 标签。</p>
-<p>毕竟爬虫的本质就是找出需要的标签里面的内容，然后解析出来。</p>
-<p>而 selector 主要有两个流派，一个是 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors">CSS selector</a> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>, 另外一个是 <a href="https://developer.mozilla.org/en-US/docs/Web/XML/XPath/Guides">XPath selector</a> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup> ,本质都是通过某种语法来匹配指定的标签，区别只是一个用的是 CSS 的语法，另外一个是 XML 语法.</p>
-<p>这次我们就来写个基于 CSS 语法的 Selector, 来深入理解下 HTML 的 DOM 模型</p>
-<h2 id="dom"><span class="section-num">2</span> DOM</h2>
-<p>写过前端的朋友应该都知道，前端代码主要是由所谓的三剑客组成的：HTML + CSS + JavaScript, 其中的三剑客各司其职，相互配合。</p>
-<p>HTML 负责内容展示, CSS 负责布局和样式，而 JavaScript 是负责用户与页面之间的动态交互。</p>
-<p>而对于如下的 HTML 代码：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Example<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Title<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">blockquote</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;important&#34;</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Opening<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Explanation<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;highlight&#34;</span><span class="p">&gt;</span>Warning<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">blockquote</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Closing<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>浏览器会将其进行解析，并生成名为 <a href="//developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model">Document Object Model</a>(DOM) 的数据结构，听着好像很玄乎，但本质就是一棵多叉树 (Multiway Tree):</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-6910d" hidden>
-    <label for="zoomCheck-6910d">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_dom_tree.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>知道 <code>DOM</code> 是多叉树, 我们就可以写出简化版本 <code>DOM</code> 的数据结构了：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">interface</span> <span class="nx">DomNode</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">type</span><span class="o">:</span> <span class="nx">string</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">name</span><span class="o">?:</span> <span class="nx">string</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">attribs</span><span class="o">?:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">id</span><span class="o">?:</span> <span class="nx">string</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="kr">class</span><span class="o">?:</span> <span class="nx">string</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="nx">key</span><span class="o">:</span> <span class="nx">string</span><span class="p">]</span><span class="o">:</span> <span class="nx">string</span> <span class="o">|</span> <span class="kc">undefined</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">};</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">children</span><span class="o">?:</span> <span class="nx">DomNode</span><span class="p">[];</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">data</span><span class="o">?:</span> <span class="nx">string</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">parent</span><span class="o">?:</span> <span class="nx">DomNode</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>一个节点可能有多个子节点 <code>(children?)</code> 或者一个父节点 <code>(parent?)</code>, 也可能都没有，所以标记成 <code>?(optional)</code>;</p>
-<p>一个节点可能有多个属性 <code>attribs</code>.</p>
-<p>而节点的=type= 可能是 <code>tag</code>, <code>text</code>, <code>comment</code>, <code>script</code>, <code>style</code>, 而对于 <code>text</code> 和 <code>comment</code> 类型的节点， <code>name</code> 也是为空的.</p>
-<p>这个 <code>DOM</code> 结构只是我们的简化版本，完整的 DOM 还有很多的属性和回调函数，详情可以查看文档： <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model">Document Object Model (DOM)</a></p>
-<h2 id="bfs-vs-dfs"><span class="section-num">3</span> BFS vs DFS</h2>
-<p>理解到 <code>DOM</code> 的本质是个多叉树之后，我们很快就能意识到， <code>selector</code> 本质也就是遍历多叉树，找到符合要求的所有节点, 比如按 <code>tag</code> 名来匹配，按 <code>id</code> 来匹配，按 <code>class</code> 来匹配等等。</p>
-<p>而用于遍历多叉树的常用算法就是广度优先搜索(Breadth First Search, BFS)和深度优先搜索(Depth First Search, DFS)</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-93592" hidden>
-    <label for="zoomCheck-93592">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_dfs_vs_bfs.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>通常来说，BFS 和 DFS 都能完成多叉树遍历，时间复杂度也是相同的，BFS通常使用一个 <code>queue</code> 来记录遍历待节点，所以会使用更多的内存，但是能找到最短路径；而 DFS 通常使用递归，如果遇到个循环图，就会 StackOverflow，无法找到结果。</p>
-<p>因为我们明确知道 DOM 是个多叉树（有向无环图），所以我们就使用 DFS 来遍历查找。</p>
-<h2 id="strategy-设计模式"><span class="section-num">4</span> Strategy 设计模式</h2>
-<p>分析好问题之后，我们的实现也差不多能出来了, 按 tag 名来匹配，无非是 <code>domNode.name === tagName</code>; 按 <code>class</code> 来匹配, 即 <code>domNode.attribs.class=== class</code>.</p>
-<p>为了解耦和易于扩展，我们可以使用个策略设计模式(<a href="https://refactoring.guru/design-patterns/strategy">Strategy Design Pattern</a> <sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>).</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">interface</span> <span class="nx">Selector</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">match</span><span class="p">(</span><span class="nx">node</span><span class="o">:</span> <span class="nx">DomNode</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">findByTagName</span> <span class="o">=</span> <span class="p">(</span><span class="nx">tag</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="nx">Selector</span> <span class="p">=&gt;</span> <span class="p">({</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">match</span><span class="o">:</span> <span class="p">(</span><span class="nx">node</span><span class="o">:</span> <span class="nx">DomNode</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">node</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">===</span> <span class="nx">tag</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">});</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">findById</span> <span class="o">=</span> <span class="p">(</span><span class="nx">id</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="nx">Selector</span> <span class="p">=&gt;</span> <span class="p">({</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">match</span><span class="o">:</span> <span class="p">(</span><span class="nx">node</span><span class="o">:</span> <span class="nx">DomNode</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">node</span><span class="p">.</span><span class="nx">attribs</span><span class="p">.</span><span class="nx">id</span> <span class="o">===</span> <span class="nx">id</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">})</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">findByClass</span> <span class="o">=</span> <span class="p">(</span><span class="nx">clazz</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="nx">Selector</span> <span class="p">=&gt;</span> <span class="p">({</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">match</span><span class="o">:</span> <span class="p">(</span><span class="nx">node</span><span class="o">:</span> <span class="nx">DomNode</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">node</span><span class="p">.</span><span class="nx">attribs</span><span class="p">.</span><span class="kr">class</span> <span class="o">===</span> <span class="nx">clazz</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">});</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>然后遍历节点的时候，只需要判断 <code>Selector</code> 是否符合要求，而具体的匹配条件则由 <code>selector</code> 决定:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">isMatch</span> <span class="o">=</span> <span class="p">(</span><span class="nx">node</span><span class="o">:</span> <span class="nx">DomNode</span><span class="p">,</span> <span class="nx">selectors</span><span class="o">:</span> <span class="nx">Selector</span><span class="p">[])</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">selectors</span><span class="p">.</span><span class="nx">every</span><span class="p">(</span><span class="nx">selector</span> <span class="p">=&gt;</span> <span class="nx">selector</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">node</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>这样的话，要增加一个根据属性keyValue值的匹配条件也是非常容易的, 如 <code>div[align=center]</code>, 即匹配属性 <code>align</code> 和value 为 <code>center</code>:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">findByAttributes</span> <span class="o">=</span> <span class="p">(</span><span class="nx">key</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="nx">Selector</span> <span class="p">=&gt;</span> <span class="p">({</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">match</span><span class="o">:</span> <span class="p">(</span><span class="nx">node</span><span class="o">:</span> <span class="nx">DomNode</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">node</span><span class="p">.</span><span class="nx">attribs</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">===</span> <span class="nx">value</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">})</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="测试验证"><span class="section-num">5</span> 测试验证</h2>
-<p>DFS + Strategy design pattern 就实现了一个基础的 CSS Selector, 我们自然需要测试验证下是否正确:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;HTML selector testsuite&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">HTML</span> <span class="o">=</span> <span class="sb">`&lt;main&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">  &lt;p&gt;text of first p&lt;/p&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">  &lt;p id=&#34;id-01&#34;&gt;text of p#id-01&lt;/p&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">  &lt;p id=&#34;id-02&#34;&gt;text of p#id-02&lt;/p&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">  &lt;p class=&#34;class-03&#34;&gt;text of p.class-03&lt;/p&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">  &lt;div&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">    &lt;p&gt;text of div / p&lt;/p&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">    &lt;p id=&#34;id-04&#34;&gt;text of div / p#id-04&lt;/p&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">    &lt;p class=&#34;class-05&#34;&gt;text of div / p.class-05&lt;/p&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">    &lt;p class=&#34;class-06&#34;&gt;should not be found&lt;/p&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">  &lt;/div&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">  &lt;div id=&#34;id-07&#34;&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">    &lt;p&gt;text of div#id-07 / p&lt;/p&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">    &lt;p class=&#34;class-06&#34;&gt;text of div#id-07 / p.class-06&lt;/p&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">  &lt;/div&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">&lt;/main&gt;`</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="nx">it</span><span class="p">.</span><span class="nx">each</span><span class="p">([</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="s1">&#39;text of first p&#39;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;p#id-01&#39;</span><span class="p">,</span> <span class="s1">&#39;text of p#id-01&#39;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;p#id-02&#39;</span><span class="p">,</span> <span class="s1">&#39;text of p#id-02&#39;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;p.class-03&#39;</span><span class="p">,</span> <span class="s1">&#39;text of p.class-03&#39;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;div p&#39;</span><span class="p">,</span> <span class="s1">&#39;text of div / p&#39;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;div p#id-04&#39;</span><span class="p">,</span> <span class="s1">&#39;text of div / p#id-04&#39;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;div p.class-05&#39;</span><span class="p">,</span> <span class="s1">&#39;text of div / p.class-05&#39;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;div#id-07 p&#39;</span><span class="p">,</span> <span class="s1">&#39;text of div#id-07 / p&#39;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;div#id-07 p.class-06&#39;</span><span class="p">,</span> <span class="s1">&#39;text of div#id-07 / p.class-06&#39;</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">    <span class="p">])(</span><span class="s1">&#39;test select %s %s&#39;</span><span class="p">,</span> <span class="kr">async</span> <span class="p">(</span><span class="nx">selector</span><span class="p">,</span> <span class="nx">expected</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kr">const</span> <span class="nx">doc</span> <span class="o">=</span> <span class="nx">htmlparser2</span><span class="p">.</span><span class="nx">parseDOM</span><span class="p">(</span><span class="nx">HTML</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">        <span class="kr">const</span> <span class="nx">node</span> <span class="o">=</span> <span class="nx">select</span><span class="p">(</span><span class="nx">doc</span><span class="p">,</span> <span class="nx">selector</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="kr">const</span> <span class="nx">actual</span> <span class="o">=</span> <span class="nx">getText</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">expect</span><span class="p">(</span><span class="nx">actual</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="nx">expected</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">})</span>
-</span></span><span class="line"><span class="cl"><span class="p">})</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>使用 Jest 框架编写了如上的单元测试用例， unit test 都通过了，完工.</p>
-<p>顺便一提的是，这种相同的验证逻辑, 但是输入多个不同的参数以验证不同case的做法，叫做 <code>Parameterized Test</code></p>
-<p>我在《<a href="https://ramsayleung.github.io/zh/categories/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6/">测试技能进阶系列</a>》的第二篇也曾经介绍过： <a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/">Parameterized Tests</a></p>
-<h2 id="总结"><span class="section-num">6</span> 总结</h2>
-<p>这个简单的 CSS Selector 全部代码仅有 <strong>103</strong> 行, 但麻雀虽小，五脏俱全，功能还是齐备的:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">&gt; tokei simple-selectors.ts
-</span></span><span class="line"><span class="cl"><span class="o">===============================================================================</span>
-</span></span><span class="line"><span class="cl">Language            Files        Lines         Code     Comments       <span class="nv">Blanks</span>
-</span></span><span class="line"><span class="cl"><span class="o">===============================================================================</span>
-</span></span><span class="line"><span class="cl">TypeScript              <span class="m">1</span>          <span class="m">131</span>          <span class="m">103</span>            <span class="m">9</span>           <span class="nv">19</span>
-</span></span><span class="line"><span class="cl"><span class="o">===============================================================================</span>
-</span></span><span class="line"><span class="cl">Total                   <span class="m">1</span>          <span class="m">131</span>          <span class="m">103</span>            <span class="m">9</span>           <span class="nv">19</span>
-</span></span><span class="line"><span class="cl"><span class="o">===============================================================================</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>所以标题也可以修改成 100 行代码实现一个简单的 CSS Selector :)</p>
-<p>如果细看实现，还是有不少的优化之处的，比如 <code>parseSelector</code> 函数可以实现得更优雅些，以便进一步扩展支持其他的语法。</p>
-<p>另外就是目前支持的都是所有 selector 完全匹配的情况，即 <code>and</code>, 但是目前不支持 <code>or</code> 的功能，即类如: <code>h1,h2,h3</code>, 可以匹配 <code>h1</code>, <code>h2</code>, 或者 <code>h3</code>.</p>
-<hr>
-<p>如果想要看下较完整版本的 CSS Selector, 可以看下我六年多前我用 C++ 实现的<a href="https://github.com/ramsayleung/crawler">版本</a>, 实现从字符串解析并生成 <code>DOM</code>, 再实现 CSS 解析器，纯正的 OOP 风味。</p>
-<p>当时初学 C++, 这个算是我早期写得比较大的 C++17 项目，核心代码大概1000行，还有几百行的单元测试。</p>
-<p>现在再翻看自己的代码，会惊讶于当时自己代码写的工整，可谓是有板有眼，像极了书法初学者写的楷书。</p>
-<blockquote>
-<p><span class="org-target" id="org-target--Unix----"></span>这本砖头书读过, 其他的C++书籍, 如<span class="org-target" id="org-target--C---Primer"></span>, <span class="org-target" id="org-target--Effective-C--"></span>, <span class="org-target" id="org-target--Modern-C--"></span>也读过, 感觉不把书中的内容实践下, 很容易遗忘。</p>
-<p>但是日常的工作内容并不会涉及底层网络服务, 一切底层细节内容都被框架给包掉了, 开发的主力语言是Java, 也不会使用到C++.</p>
-<p>因此决定创造个机会实践下这些知识，最终决定只用C/C++内置函数库实现。</p></blockquote>
-<p>的确所有工具都是用C/C++内置函数库实现的，甚至测试框架还是自己用宏实现的.</p>
-<p>只是我未曾想到的是，写了这段话后不足一年，C++就成为了我下一家公司干活的主力语言; 而现在，我又在重新写 Java, 着实是「白衣苍狗」。</p>
-<p><a href="/zh/post/2025/reinvent_project/">回到本系列的目录</a></p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p><a href="https://github.com/ramsayleung/reinvent/tree/master/html_selector">https://github.com/ramsayleung/reinvent/tree/master/html_selector</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors">https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:3">
-<p><a href="https://developer.mozilla.org/en-US/docs/Web/XML/XPath/Guides">https://developer.mozilla.org/en-US/docs/Web/XML/XPath/Guides</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:4">
-<p><a href="https://refactoring.guru/design-patterns/strategy">https://refactoring.guru/design-patterns/strategy</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>
 ]]></content:encoded>
     </item>
   </channel>
