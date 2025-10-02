@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Wed, 01 Oct 2025 23:15:35 -0700</lastBuildDate>
+    <lastBuildDate>Wed, 01 Oct 2025 23:17:02 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Telegram频道精华贴检索机器人</title>
@@ -61,7 +61,7 @@
 <p>使用方法非常简单：</p>
 <ol>
 <li>点击链接打开机器人：<a href="https://t.me/tele_ranker_bot">https://t.me/tele_ranker_bot</a></li>
-<li>在对话框中输入 <code>/rank &lt;频道链接&gt;=，例如 =/rank https://t.me/pipeapplebun</code></li>
+<li>在对话框中输入 <code>/rank &lt;频道链接&gt;</code> ，例如 <code>/rank https://t.me/pipeapplebun</code></li>
 <li>首次检索一个频道时，机器人需要一些时间来建立索引（如下图所示），完成后会通知用户：</li>
 </ol>
 
