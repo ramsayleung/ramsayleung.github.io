@@ -1,7 +1,7 @@
 +++
-title = "Telegram频道检索机器人"
+title = "Telegram频道精华贴检索机器人"
 date = 2025-10-01T21:55:00-07:00
-lastmod = 2025-10-01T23:07:17-07:00
+lastmod = 2025-10-01T23:15:35-07:00
 tags = ["telegram", "rust"]
 draft = false
 toc = true
