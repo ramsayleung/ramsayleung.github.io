@@ -1,7 +1,7 @@
 +++
 title = "Telegram频道精华贴检索机器人"
 date = 2025-10-01T21:55:00-07:00
-lastmod = 2025-10-01T23:15:35-07:00
+lastmod = 2025-10-01T23:17:02-07:00
 tags = ["telegram", "rust"]
 draft = false
 toc = true
@@ -80,7 +80,7 @@ showQuote = true
 使用方法非常简单：
 
 1.  点击链接打开机器人：<https://t.me/tele_ranker_bot>
-2.  在对话框中输入 `/rank <频道链接>=，例如 =/rank https://t.me/pipeapplebun`
+2.  在对话框中输入 `/rank <频道链接>` ，例如 `/rank https://t.me/pipeapplebun`
 3.  首次检索一个频道时，机器人需要一些时间来建立索引（如下图所示），完成后会通知用户：
 
 {{< figure src="/ox-hugo/first_index.jpg" >}}
