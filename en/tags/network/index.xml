@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>en</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Fri, 10 Oct 2025 15:36:43 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 10 Oct 2025 15:46:05 +0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/en/tags/network/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>A Story About Bypassing Air Canada&#39;s In-flight Network Restrictions</title>
@@ -584,18 +584,15 @@ But if the gateway were stricter and inspected the content of DNS request packet
 <h2 id="conclusion"><span class="section-num">6</span> Conclusion</h2>
 <p>With the long journey ahead, my roommate and I spent about 4 hours remotely breaking through the network restrictions, having great fun in the process, proving that our problem-solving approach was indeed feasible.</p>
 <p>The successful implementation of the solution was mainly thanks to my roommate, the networking expert, who provided remote technical and conceptual support.</p>
-<p>The only downside was that although we broke through the network restrictions and could access any website, the plane&rsquo;s bandwidth was extremely limited, making web browsing quite painful. So I didn&rsquo;t spend much time surfing the web.</p>
-<p>For the remaining hours, I rewatched the classic 80s time-travel sci-fi movie trilogy: <code>&quot;Back to the Future&quot;</code> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>, which was absolutely fantastic.</p>
-<p>Finally, I hereby solemnly declare:</p>
-<p>This technical exploration is for learning and research purposes only. We strictly adhere to relevant regulations and service terms.</p>
+<p>The only downside was that although we broke through the network restrictions and could access any website, the plane&rsquo;s bandwidth was extremely limited, making web browsing quite painful. So I didn&rsquo;t spend much time browsing the web.</p>
+<p>For the remaining hours, I rewatched the classic 80s time-travel movie: <code>&quot;Back to the Future&quot;</code> , which was absolutely fantastic.</p>
+<p>Last and not least, it&rsquo;s the disclaimer:</p>
+<p>This technical exploration is intended solely for educational and research purposes. We affirm our strict adherence to all relevant regulations and service terms throughout this project.</p>
 <div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn:1">
 <p><a href="https://github.com/XTLS/Xray-core">https://github.com/XTLS/Xray-core</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p><a href="https://movie.douban.com/subject/1300555/">https://movie.douban.com/subject/1300555/</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
