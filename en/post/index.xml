@@ -12,8 +12,595 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>en</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sat, 27 Sep 2025 17:42:56 -0700</lastBuildDate>
+    <lastBuildDate>Fri, 10 Oct 2025 15:36:43 +0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/en/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A Story About Bypassing Air Canada&#39;s In-flight Network Restrictions</title>
+      <link>https://ramsayleung.github.io/en/post/2025/a_story_about_bypassing_air_canadas_in-flight_network_restrictions/</link>
+      <pubDate>Fri, 10 Oct 2025 15:29:00 +0800</pubDate>
+      <guid>https://ramsayleung.github.io/en/post/2025/a_story_about_bypassing_air_canadas_in-flight_network_restrictions/</guid>
+      <description>&lt;h2 id=&#34;prologue&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; Prologue&lt;/h2&gt;
+&lt;p&gt;A while ago, I took a flight from Canada back to Hong Kong - about 12 hours in total with Air Canada.&lt;/p&gt;
+&lt;p&gt;Interestingly, the plane actually had WiFi:&lt;/p&gt;
+
+&lt;figure&gt;
+    
+    
+    &lt;input type=&#34;checkbox&#34; id=&#34;zoomCheck-a931d&#34; hidden&gt;
+    &lt;label for=&#34;zoomCheck-a931d&#34;&gt;
+    
+    
+    &lt;img class=&#34;zoomCheck&#34; loading=&#34;lazy&#34; src=&#34;https://ramsayleung.github.io/ox-hugo/acwifi-connect-2.png&#34;/&gt; 
+    
+    
+    &lt;/label&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;However, the WiFi had restrictions. For Aeroplan members who hadn&amp;rsquo;t paid, it only offered &lt;a href=&#34;https://www.aircanada.com/ca/en/aco/home/fly/onboard/in-flight-entertainment-and-connectivity.html#/&#34;&gt;Free Texting&lt;/a&gt;, meaning you could only use messaging apps like WhatsApp, Snapchat, and WeChat to send text messages, but couldn&amp;rsquo;t access other websites.&lt;/p&gt;
+&lt;p&gt;If you wanted unlimited access to other websites, it would cost CAD $30.75:&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="prologue"><span class="section-num">1</span> Prologue</h2>
+<p>A while ago, I took a flight from Canada back to Hong Kong - about 12 hours in total with Air Canada.</p>
+<p>Interestingly, the plane actually had WiFi:</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-a931d" hidden>
+    <label for="zoomCheck-a931d">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/acwifi-connect-2.png"/> 
+    
+    
+    </label>
+</figure>
+
+<p>However, the WiFi had restrictions. For Aeroplan members who hadn&rsquo;t paid, it only offered <a href="https://www.aircanada.com/ca/en/aco/home/fly/onboard/in-flight-entertainment-and-connectivity.html#/">Free Texting</a>, meaning you could only use messaging apps like WhatsApp, Snapchat, and WeChat to send text messages, but couldn&rsquo;t access other websites.</p>
+<p>If you wanted unlimited access to other websites, it would cost CAD $30.75:</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-1118f" hidden>
+    <label for="zoomCheck-1118f">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/acwifi.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>And if you wanted to watch videos on the plane, that would be CAD $39:</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-47db4" hidden>
+    <label for="zoomCheck-47db4">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/acwifi_plan.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>I started wondering: for the Free Texting service, could I bypass the messaging app restriction and access other websites freely?</p>
+<p>Essentially, could I enjoy the benefits of the $30.75 paid service without actually paying the fee? After all, with such a long journey ahead, I needed something interesting to pass the 12 hours.</p>
+<p>Since I could use WeChat in flight, I could also call for help from the sky.</p>
+<p>Coincidentally, my roommate happens to be a security and networking expert who was on vacation at home. When I mentioned this idea, he thought it sounded fun and immediately agreed to collaborate. So we started working on it together across the Pacific.</p>
+<h2 id="the-process"><span class="section-num">2</span> The Process</h2>
+<p>After selecting the only available WiFi network <code>acwifi.com</code> on the plane, just like other login-required WiFi networks, it popped up a webpage from <code>acwifi.com</code> asking me to verify my Aeroplan membership. Once verified, I could access the internet.</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-4b541" hidden>
+    <label for="zoomCheck-4b541">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/onboard_success.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>There&rsquo;s a classic software development interview question: what happens after you type a URL into the browser and press enter?</p>
+<p>For example, if you type <code>https://acwifi.com</code> and only focus on the network request part, the general process is: DNS query -&gt; TCP connection -&gt; TLS handshake -&gt; HTTP request and response.</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-9a5c6" hidden>
+    <label for="zoomCheck-9a5c6">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/network_request_sequence_en.png"/> 
+    
+    
+    </label>
+</figure>
+
+<p>Let&rsquo;s consider <code>github.com</code> as our target website we want to access. Now let&rsquo;s see how we can break through the network restrictions and successfully access <code>github.com</code>.</p>
+<h2 id="approach-1-domain-self-signing"><span class="section-num">3</span> Approach 1: Domain Self-Signing</h2>
+<p>Since <code>acwifi.com</code> is accessible but <code>github.com</code> is not, could I disguise my server as <code>acwifi.com</code> and route all request traffic through my server to access the target website (<code>github.com</code>)?</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-646db" hidden>
+    <label for="zoomCheck-646db">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/self-sign-certificate-en.png"/> 
+    
+    
+    </label>
+</figure>
+
+<p>The idea was roughly: I modify DNS records to bind our proxy server&rsquo;s IP <code>137.184.231.87</code> to <code>acwifi.com</code>, then use a self-signed certificate to tell the browser that this IP and this domain are bound together, and it should trust it.</p>
+<p>Let me first test this idea:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; ping 137.184.231.87
+</span></span><span class="line"><span class="cl">PING 137.184.231.87 <span class="o">(</span>137.184.231.87<span class="o">)</span>: <span class="m">56</span> data bytes
+</span></span><span class="line"><span class="cl">Request timeout <span class="k">for</span> icmp_seq <span class="m">0</span>
+</span></span><span class="line"><span class="cl">Request timeout <span class="k">for</span> icmp_seq <span class="m">1</span>
+</span></span><span class="line"><span class="cl">Request timeout <span class="k">for</span> icmp_seq <span class="m">2</span>
+</span></span><span class="line"><span class="cl">Request timeout <span class="k">for</span> icmp_seq <span class="m">3</span>
+</span></span><span class="line"><span class="cl">Request timeout <span class="k">for</span> icmp_seq <span class="m">4</span>
+</span></span><span class="line"><span class="cl">^C
+</span></span><span class="line"><span class="cl">--- 137.184.231.87 ping statistics ---
+</span></span><span class="line"><span class="cl"><span class="m">6</span> packets transmitted, <span class="m">0</span> packets received, 100.0% packet loss
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Unexpectedly, the IP was completely unreachable via <code>ping</code>, meaning the IP was likely blocked entirely.</p>
+<p>I tried other well-known IPs, like Cloudflare&rsquo;s CDN IP, and they were also unreachable:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; ping 172.67.133.121
+</span></span><span class="line"><span class="cl">PING 172.67.133.121 <span class="o">(</span>172.67.133.121<span class="o">)</span>: <span class="m">56</span> data bytes
+</span></span><span class="line"><span class="cl">Request timeout <span class="k">for</span> icmp_seq <span class="m">0</span>
+</span></span><span class="line"><span class="cl">Request timeout <span class="k">for</span> icmp_seq <span class="m">1</span>
+</span></span><span class="line"><span class="cl">Request timeout <span class="k">for</span> icmp_seq <span class="m">2</span>
+</span></span><span class="line"><span class="cl">Request timeout <span class="k">for</span> icmp_seq <span class="m">3</span>
+</span></span><span class="line"><span class="cl">Request timeout <span class="k">for</span> icmp_seq <span class="m">4</span>
+</span></span><span class="line"><span class="cl">^C
+</span></span><span class="line"><span class="cl">--- 172.67.133.121 ping statistics ---
+</span></span><span class="line"><span class="cl"><span class="m">6</span> packets transmitted, <span class="m">0</span> packets received, 100.0% packet loss
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>It seems this approach won&rsquo;t work. After all, if the IPs are directly blocked, no amount of disguise will help. This network likely maintains some IP whitelist (such as WhatsApp and WeChat&rsquo;s egress IPs), and only IPs on the whitelist can be accessed.</p>
+<h2 id="approach-2-dns-port-masquerading"><span class="section-num">4</span> Approach 2: DNS Port Masquerading</h2>
+<p>When the first approach failed, my roommate suggested a second approach: try using DNS service as a breakthrough:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; dig http418.org
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;</span> &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; http418.org
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> global options: +cmd
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> Got answer:
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> -&gt;&gt;HEADER<span class="s">&lt;&lt;- opco</span>de: QUERY, status: NOERROR, id: <span class="m">64160</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> flags: qr rd ra<span class="p">;</span> QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: <span class="m">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> OPT PSEUDOSECTION:
+</span></span><span class="line"><span class="cl"><span class="p">;</span> EDNS: version: 0, flags:<span class="p">;</span> udp: <span class="m">4096</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> QUESTION SECTION:
+</span></span><span class="line"><span class="cl"><span class="p">;</span>http418.org.			IN	A
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> ANSWER SECTION:
+</span></span><span class="line"><span class="cl">http418.org.		300	IN	A	172.67.133.121
+</span></span><span class="line"><span class="cl">http418.org.		300	IN	A	104.21.5.131
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> Query time: <span class="m">3288</span> msec
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> SERVER: 172.19.207.1#53<span class="o">(</span>172.19.207.1<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> WHEN: Sat Oct <span class="m">04</span> 14:18:24 PDT <span class="m">2025</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> MSG SIZE  rcvd: <span class="m">94</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>This is good news! It means there are still ways to reach external networks, and DNS is one of them.</p>
+<p>Looking at the record above, it shows our DNS query for <code>http418.org</code> was successful, meaning DNS requests work.</p>
+<h3 id="arbitrary-dns-servers"><span class="section-num">4.1</span> Arbitrary DNS Servers</h3>
+<p>My roommate then randomly picked another DNS server to see if the network had a whitelist for DNS servers:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; dig @40.115.144.198 http418.org
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;</span> &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; @40.115.144.198 http418.org
+</span></span><span class="line"><span class="cl"><span class="p">;</span> <span class="o">(</span><span class="m">1</span> server found<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> global options: +cmd
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> Got answer:
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> -&gt;&gt;HEADER<span class="s">&lt;&lt;- opco</span>de: QUERY, status: NOERROR, id: <span class="m">58958</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> flags: qr rd ra<span class="p">;</span> QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: <span class="m">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> OPT PSEUDOSECTION:
+</span></span><span class="line"><span class="cl"><span class="p">;</span> EDNS: version: 0, flags:<span class="p">;</span> udp: <span class="m">1224</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> QUESTION SECTION:
+</span></span><span class="line"><span class="cl"><span class="p">;</span>http418.org.			IN	A
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> ANSWER SECTION:
+</span></span><span class="line"><span class="cl">http418.org.		275	IN	A	104.21.5.131
+</span></span><span class="line"><span class="cl">http418.org.		275	IN	A	172.67.133.121
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> Query time: <span class="m">1169</span> msec
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> SERVER: 40.115.144.198#53<span class="o">(</span>40.115.144.198<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> WHEN: Sat Oct <span class="m">04</span> 14:24:25 PDT <span class="m">2025</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> MSG SIZE  rcvd: <span class="m">72</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>We can actually use arbitrary DNS servers - even better!</p>
+<h3 id="tcp-queries"><span class="section-num">4.2</span> TCP Queries</h3>
+<p>The fact that arbitrary DNS servers can be queried successfully is excellent news. DNS typically uses UDP protocol, but would TCP-based DNS requests be blocked?</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; dig @40.115.144.198 http418.org +tcp
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;</span> &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; @40.115.144.198 http418.org +tcp
+</span></span><span class="line"><span class="cl"><span class="p">;</span> <span class="o">(</span><span class="m">1</span> server found<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> global options: +cmd
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> Got answer:
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> -&gt;&gt;HEADER<span class="s">&lt;&lt;- opco</span>de: QUERY, status: NOERROR, id: <span class="m">30355</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> flags: qr rd ra<span class="p">;</span> QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: <span class="m">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> OPT PSEUDOSECTION:
+</span></span><span class="line"><span class="cl"><span class="p">;</span> EDNS: version: 0, flags:<span class="p">;</span> udp: <span class="m">1224</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> QUESTION SECTION:
+</span></span><span class="line"><span class="cl"><span class="p">;</span>http418.org.			IN	A
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> ANSWER SECTION:
+</span></span><span class="line"><span class="cl">http418.org.		36	IN	A	172.67.133.121
+</span></span><span class="line"><span class="cl">http418.org.		36	IN	A	104.21.5.131
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> Query time: <span class="m">4679</span> msec
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> SERVER: 40.115.144.198#53<span class="o">(</span>40.115.144.198<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> WHEN: Sat Oct <span class="m">04</span> 14:28:24 PDT <span class="m">2025</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> MSG SIZE  rcvd: <span class="m">72</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>DNS TCP queries also work! This indicates the plane network&rsquo;s filtering policy is relatively lenient, standing a chance of our subsequent DNS tunneling approach.</p>
+<h3 id="proxy-service-on-port-53"><span class="section-num">4.3</span> Proxy Service on Port 53</h3>
+<p>It seems the plane network restrictions aren&rsquo;t completely airtight - we&rsquo;ve found a &ldquo;backdoor&rdquo; in this wall.</p>
+<p>So we had a clever idea: since the plane gateway doesn&rsquo;t block DNS requests, theoretically we could disguise our proxy server as a DNS server, expose port 53 for DNS service, route all requests through the proxy server disguised as DNS requests, and thus bypass the restrictions.</p>
+<p>My roommate spent about an hour setting up a proxy server exposing port 53 using <a href="https://github.com/XTLS/Xray-core">xray</a> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, and sent me the configuration via WeChat:</p>
+<p>The proxy server configuration my roommate set up with Xray included the following sample configuration:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;outbounds&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;tag&#34;</span><span class="p">:</span> <span class="s2">&#34;proxy&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;vless&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;settings&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&#34;vnext&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">          <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;address&#34;</span><span class="p">:</span> <span class="s2">&#34;our-proxy-server-domain&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;port&#34;</span><span class="p">:</span> <span class="mi">53</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;users&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">              <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="s2">&#34;some-uuid&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&#34;flow&#34;</span><span class="p">:</span> <span class="s2">&#34;xtls-rprx-vision&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&#34;encryption&#34;</span><span class="p">:</span> <span class="s2">&#34;none&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&#34;level&#34;</span><span class="p">:</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">              <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">]</span>
+</span></span><span class="line"><span class="cl">          <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">]</span>
+</span></span><span class="line"><span class="cl">      <span class="p">},</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;streamSettings&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&#34;network&#34;</span><span class="p">:</span> <span class="s2">&#34;tcp&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&#34;security&#34;</span><span class="p">:</span> <span class="s2">&#34;tls&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&#34;tlsSettings&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="nt">&#34;allowInsecure&#34;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nt">&#34;allowInsecureCiphers&#34;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nt">&#34;alpn&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;h2&#34;</span>
+</span></span><span class="line"><span class="cl">          <span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;tag&#34;</span><span class="p">:</span> <span class="s2">&#34;direct&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;freedom&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;tag&#34;</span><span class="p">:</span> <span class="s2">&#34;block&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;blackhole&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>And I already had an xray client on my computer, so no additional software was needed to establish the connection.</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-60758" hidden>
+    <label for="zoomCheck-60758">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/dns-server-proxy-en.png"/> 
+    
+    
+    </label>
+</figure>
+
+<p>Everything was ready. The exciting moment arrived - pressing enter to access <code>github.com</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">/Users/ramsayleung <span class="o">[</span>ramsayleung@ramsayleungs-Laptop<span class="o">]</span> <span class="o">[</span>18:28<span class="o">]</span>
+</span></span><span class="line"><span class="cl">&gt; curl -v github.com -x socks5://127.0.0.1:10810
+</span></span><span class="line"><span class="cl">*   Trying 127.0.0.1:10810...
+</span></span><span class="line"><span class="cl">* Connected to 127.0.0.1 <span class="o">(</span>127.0.0.1<span class="o">)</span> port <span class="m">10810</span>
+</span></span><span class="line"><span class="cl">* SOCKS5 connect to 172.19.1.1:80 <span class="o">(</span>locally resolved<span class="o">)</span>
+</span></span><span class="line"><span class="cl">* SOCKS5 request granted.
+</span></span><span class="line"><span class="cl">* Connected to 127.0.0.1 <span class="o">(</span>127.0.0.1<span class="o">)</span> port <span class="m">10810</span>
+</span></span><span class="line"><span class="cl">&gt; GET / HTTP/1.1
+</span></span><span class="line"><span class="cl">&gt; Host: github.com
+</span></span><span class="line"><span class="cl">&gt; User-Agent: curl/8.4.0
+</span></span><span class="line"><span class="cl">&gt; Accept: */*
+</span></span><span class="line"><span class="cl">&gt;
+</span></span><span class="line"><span class="cl">&lt; HTTP/1.1 <span class="m">301</span> Moved Permanently
+</span></span><span class="line"><span class="cl">&lt; Content-Length: <span class="m">0</span>
+</span></span><span class="line"><span class="cl">&lt; Location: https://github.com/
+</span></span><span class="line"><span class="cl">&lt;
+</span></span><span class="line"><span class="cl">* Connection <span class="c1">#0 to host 127.0.0.1 left intact</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/Users/ramsayleung <span class="o">[</span>ramsayleung@ramsayleungs-Laptop<span class="o">]</span> <span class="o">[</span>18:28<span class="o">]</span>
+</span></span><span class="line"><span class="cl">&gt; curl -v github.com -x socks5://127.0.0.1:10810
+</span></span><span class="line"><span class="cl">*   Trying 127.0.0.1:10810...
+</span></span><span class="line"><span class="cl">* Connected to 127.0.0.1 <span class="o">(</span>127.0.0.1<span class="o">)</span> port <span class="m">10810</span>
+</span></span><span class="line"><span class="cl">* SOCKS5 connect to 172.19.1.1:80 <span class="o">(</span>locally resolved<span class="o">)</span>
+</span></span><span class="line"><span class="cl">* SOCKS5 request granted.
+</span></span><span class="line"><span class="cl">* Connected to 127.0.0.1 <span class="o">(</span>127.0.0.1<span class="o">)</span> port <span class="m">10810</span>
+</span></span><span class="line"><span class="cl">&gt; GET / HTTP/1.1
+</span></span><span class="line"><span class="cl">&gt; Host: github.com
+</span></span><span class="line"><span class="cl">&gt; User-Agent: curl/8.4.0
+</span></span><span class="line"><span class="cl">&gt; Accept: */*
+</span></span><span class="line"><span class="cl">&gt;
+</span></span><span class="line"><span class="cl">&lt; HTTP/1.1 <span class="m">301</span> Moved Permanently
+</span></span><span class="line"><span class="cl">&lt; Content-Length: <span class="m">0</span>
+</span></span><span class="line"><span class="cl">&lt; Location: https://github.com/
+</span></span><span class="line"><span class="cl">&lt;
+</span></span><span class="line"><span class="cl">* Connection <span class="c1">#0 to host 127.0.0.1 left intact</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The request actually succeeded! github.com returned a successful result!</p>
+<p>This means we&rsquo;ve truly broken through the network restrictions and can access any website!</p>
+<p>We hadn&rsquo;t realized before that xray could be used in this clever way :)</p>
+<p>Here we exploited a simple cognitive bias: not all services using port 53 are DNS query requests.</p>
+<h2 id="ultimate-approach-dns-tunnel"><span class="section-num">5</span> Ultimate Approach: DNS Tunnel</h2>
+<p>If Approach 2 still didn&rsquo;t work, we had one final trick up our sleeves.</p>
+<p>Currently, the gateway only checks whether the port is 53 to determine if it&rsquo;s a DNS request.
+But if the gateway were stricter and inspected the content of DNS request packets, it would discover that our requests are &ldquo;disguised&rdquo; as DNS queries rather than genuine DNS queries:</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-0b089" hidden>
+    <label for="zoomCheck-0b089">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/intercept-dns-request-en.png"/> 
+    
+    
+    </label>
+</figure>
+
+<p>Since disguised DNS requests would be blocked, we could embed all requests inside genuine DNS request packets, making them DNS TXT queries. We&rsquo;d genuinely be querying DNS, just with some extra content inside:</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-78ed8" hidden>
+    <label for="zoomCheck-78ed8">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/dns-tunnel-en.png"/> 
+    
+    
+    </label>
+</figure>
+
+<p>However, this ultimate approach requires a DNS Tunnel client to encapsulate all requests. I didn&rsquo;t have such software on my computer, so this remained a theoretical ultimate solution that couldn&rsquo;t be practically verified.</p>
+<h2 id="conclusion"><span class="section-num">6</span> Conclusion</h2>
+<p>With the long journey ahead, my roommate and I spent about 4 hours remotely breaking through the network restrictions, having great fun in the process, proving that our problem-solving approach was indeed feasible.</p>
+<p>The successful implementation of the solution was mainly thanks to my roommate, the networking expert, who provided remote technical and conceptual support.</p>
+<p>The only downside was that although we broke through the network restrictions and could access any website, the plane&rsquo;s bandwidth was extremely limited, making web browsing quite painful. So I didn&rsquo;t spend much time surfing the web.</p>
+<p>For the remaining hours, I rewatched the classic 80s time-travel sci-fi movie trilogy: <code>&quot;Back to the Future&quot;</code> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>, which was absolutely fantastic.</p>
+<p>Finally, I hereby solemnly declare:</p>
+<p>This technical exploration is for learning and research purposes only. We strictly adhere to relevant regulations and service terms.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://github.com/XTLS/Xray-core">https://github.com/XTLS/Xray-core</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://movie.douban.com/subject/1300555/">https://movie.douban.com/subject/1300555/</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+]]></content:encoded>
+    </item>
     <item>
       <title>A Telegram Spam Blocker Bot Based On Bayesian Algorithm</title>
       <link>https://ramsayleung.github.io/en/post/2025/a_telegram_spam_blocker_bot_based_on_bayesian/</link>
@@ -2353,821 +2940,6 @@ to the <code>Iterator</code> trait.</p>
 <p>Whew! It took more than I expected. Since iterators is the Rust features inspired by functional programming language ideas, which contributes to Rust&rsquo;s capability to clearly express high-level ideas at low-level performance.</p>
 <p>It&rsquo;s good to leverage iterators wherever possible, now we can be thrilled to say that all endpoints don&rsquo;t need to manuallly loop over anymore, they are all iterable and rusty.</p>
 <p>Thanks Mario and icewind1991 again for their works :)</p>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>Serde Tricks</title>
-      <link>https://ramsayleung.github.io/en/post/2020/serde_lesson/</link>
-      <pubDate>Sun, 13 Dec 2020 22:29:00 +0800</pubDate>
-      <guid>https://ramsayleung.github.io/en/post/2020/serde_lesson/</guid>
-      <description>&lt;p&gt;The lesson learned from refactoring rspotify&lt;/p&gt;
-&lt;h2 id=&#34;preface&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; Preface&lt;/h2&gt;
-&lt;p&gt;Recently, I and &lt;a href=&#34;https://github.com/marioortizmanero&#34;&gt;Mario&lt;/a&gt; are working on refactoring &lt;a href=&#34;https://github.com/ramsayleung/rspotify&#34;&gt;&lt;code&gt;rspotify&lt;/code&gt;&lt;/a&gt;, trying to improve performance, documentation, error-handling, data model and reduce compile time, to make it easier to use. (For those who has never heard about &lt;code&gt;rspotify&lt;/code&gt;, it is a Spotify HTTP SDK implemented in Rust).&lt;/p&gt;
-&lt;p&gt;I am partly focusing on polishing the data model, based on the &lt;a href=&#34;https://github.com/ramsayleung/rspotify/issues/127&#34;&gt;issue&lt;/a&gt; created by &lt;a href=&#34;https://github.com/Koxiaet&#34;&gt;Koxiaet&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Since &lt;code&gt;rspotify&lt;/code&gt; is API client for Spotify, it has to handle the request and response from Spotify HTTP API.&lt;/p&gt;</description>
-      <content:encoded><![CDATA[<p>The lesson learned from refactoring rspotify</p>
-<h2 id="preface"><span class="section-num">1</span> Preface</h2>
-<p>Recently, I and <a href="https://github.com/marioortizmanero">Mario</a> are working on refactoring <a href="https://github.com/ramsayleung/rspotify"><code>rspotify</code></a>, trying to improve performance, documentation, error-handling, data model and reduce compile time, to make it easier to use. (For those who has never heard about <code>rspotify</code>, it is a Spotify HTTP SDK implemented in Rust).</p>
-<p>I am partly focusing on polishing the data model, based on the <a href="https://github.com/ramsayleung/rspotify/issues/127">issue</a> created by <a href="https://github.com/Koxiaet">Koxiaet</a>.</p>
-<p>Since <code>rspotify</code> is API client for Spotify, it has to handle the request and response from Spotify HTTP API.</p>
-<p>Generally speaking, the data model is something about how to structure the response data, and used <a href="http://serde.rs/"><code>Serde</code></a> to parse JSON response from HTTP API to Rust <code>struct</code>, and I have learnt a lot Serde tricks from refactoring.</p>
-<h2 id="serde-lesson"><span class="section-num">2</span> Serde Lesson</h2>
-<h3 id="deserialize-json-map-to-vec-based-on-its-value-dot"><span class="section-num">2.1</span> Deserialize JSON map to Vec based on its value.</h3>
-<p>An actions object which contains a <code>disallows</code> object, allows to update the user interface based on which playback actions are available within the current context.</p>
-<p>The response JSON data from HTTP API:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="err">...</span>
-</span></span><span class="line"><span class="cl">	<span class="nt">&#34;disallows&#34;</span><span class="p">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	    <span class="nt">&#34;resuming&#34;</span><span class="p">:</span> <span class="kc">true</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="err">...</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>The original model representing actions was:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[derive(Clone, Debug, Serialize, PartialEq, Eq)]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">Actions</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">disallows</span>: <span class="nc">HashMap</span><span class="o">&lt;</span><span class="n">DisallowKey</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="o">&gt;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cp">#[derive(Clone, Serialize, Deserialize, Copy, PartialEq, Eq, Debug, Hash, ToString)]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cp">#[serde(rename_all = </span><span class="s">&#34;snake_case&#34;</span><span class="cp">)]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cp">#[strum(serialize_all = </span><span class="s">&#34;snake_case&#34;</span><span class="cp">)]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">enum</span> <span class="nc">DisallowKey</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">InterruptingPlayback</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Pausing</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Resuming</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">..</span><span class="p">.</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>And Koxiaet gave great advice about how to polish <code>Actions</code>:</p>
-<blockquote>
-<p><code>Actions::disallows</code> can be replaced with a <code>Vec&lt;DisallowKey&gt;</code> or <code>HashSet&lt;DisallowKey&gt;</code> by removing all entires whose value is false, which will result in a simpler API.</p></blockquote>
-<p>To be honest, I was not that familiar with <code>Serde</code> before, after digging in its official documentation for a while, it seems there is now a built-in way to convert JSON map to <code>Vec&lt;T&gt;</code> base on map&rsquo;s value.</p>
-<p>After reading the <a href="https://serde.rs/custom-serialization.html">Custom serialization</a> from documentation, there was a simple solution came to my mind, so I wrote my first customized deserialize function.</p>
-<p>I created a dumb <code>Actions</code> struct inside the <code>deserialize</code> function, and converted <code>HashMap</code> to <code>Vec</code> by filtering its value.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[derive(Clone, Debug, Serialize, PartialEq, Eq)]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">Actions</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">disallows</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="n">DisallowKey</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">impl</span><span class="o">&lt;</span><span class="na">&#39;de</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Deserialize</span><span class="o">&lt;</span><span class="na">&#39;de</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Actions</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">deserialize</span><span class="o">&lt;</span><span class="n">D</span><span class="o">&gt;</span><span class="p">(</span><span class="n">deserializer</span>: <span class="nc">D</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="bp">Self</span><span class="p">,</span><span class="w"> </span><span class="n">D</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">where</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">D</span>: <span class="nc">Deserializer</span><span class="o">&lt;</span><span class="na">&#39;de</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="cp">#[derive(Deserialize)]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">struct</span> <span class="nc">OriginalActions</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="k">pub</span><span class="w"> </span><span class="n">disallows</span>: <span class="nc">HashMap</span><span class="o">&lt;</span><span class="n">DisallowKey</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="kd">let</span><span class="w"> </span><span class="n">orignal_actions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OriginalActions</span>::<span class="n">deserialize</span><span class="p">(</span><span class="n">deserializer</span><span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nb">Ok</span><span class="p">(</span><span class="n">Actions</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="n">disallows</span>: <span class="nc">orignal_actions</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="p">.</span><span class="n">disallows</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="p">.</span><span class="n">into_iter</span><span class="p">()</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="p">.</span><span class="n">filter</span><span class="p">(</span><span class="o">|</span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="o">|</span><span class="w"> </span><span class="o">*</span><span class="n">value</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="p">)</span><span class="o">|</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="p">.</span><span class="n">collect</span><span class="p">(),</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">})</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>The types should be familiar if you&rsquo;ve used <code>Serde</code> before.</p>
-<p>If you&rsquo;re not used to Rust then the function signature will likely look a little strange. What it&rsquo;s trying to tell is that d will be something that implements <code>Serde</code>&rsquo;s <code>Deserializer</code> trait, and that any references to memory will live for the <code>'de</code> lifetime.</p>
-<h3 id="deserialize-unix-milliseconds-timestamp-to-datetime"><span class="section-num">2.2</span> Deserialize Unix milliseconds timestamp to Datetime</h3>
-<p>A currently playing object which contains information about currently playing item, and the <code>timestamp</code> field is an integer, representing the Unix millisecond timestamp when data was fetched.</p>
-<p>The response JSON data from HTTP API:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="err">...</span>
-</span></span><span class="line"><span class="cl">	<span class="nt">&#34;timestamp&#34;</span><span class="p">:</span> <span class="mi">1490252122574</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nt">&#34;progress_ms&#34;</span><span class="p">:</span> <span class="mi">44272</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nt">&#34;is_playing&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nt">&#34;currently_playing_type&#34;</span><span class="p">:</span> <span class="s2">&#34;track&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nt">&#34;actions&#34;</span><span class="p">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nt">&#34;disallows&#34;</span><span class="p">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	    <span class="nt">&#34;resuming&#34;</span><span class="p">:</span> <span class="kc">true</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="err">...</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>The original model was:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="sd">/// Currently playing object
-</span></span></span><span class="line"><span class="cl"><span class="sd">///
-</span></span></span><span class="line"><span class="cl"><span class="sd">/// [Reference](https://developer.spotify.com/documentation/web-api/reference/player/get-the-users-currently-playing-track/)
-</span></span></span><span class="line"><span class="cl"><span class="sd"></span><span class="cp">#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">CurrentlyPlayingContext</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">timestamp</span>: <span class="kt">u64</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">progress_ms</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="kt">u32</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">is_playing</span>: <span class="kt">bool</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">item</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="n">PlayingItem</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">currently_playing_type</span>: <span class="nc">CurrentlyPlayingType</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">actions</span>: <span class="nc">Actions</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>As before, Koxiaet made a great point about <code>timestamp</code> and =progress_ms=(I will talk about it later):</p>
-<blockquote>
-<p><code>CurrentlyPlayingContext::timestamp</code> should be a <code>chrono::DateTime&lt;Utc&gt;</code>, which could be easier to use.</p></blockquote>
-<p>The polished struct looks like:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">CurrentlyPlayingContext</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">context</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="n">Context</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[serde(
-</span></span></span><span class="line"><span class="cl"><span class="cp">	deserialize_with = </span><span class="s">&#34;from_millisecond_timestamp&#34;</span><span class="cp">,
-</span></span></span><span class="line"><span class="cl"><span class="cp">	serialize_with = </span><span class="s">&#34;to_millisecond_timestamp&#34;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">    )]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">timestamp</span>: <span class="nc">DateTime</span><span class="o">&lt;</span><span class="n">Utc</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">progress_ms</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="kt">u32</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">is_playing</span>: <span class="kt">bool</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">item</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="n">PlayingItem</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">currently_playing_type</span>: <span class="nc">CurrentlyPlayingType</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">actions</span>: <span class="nc">Actions</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>Using the <code>deserialize_with</code> attribute tells <code>Serde</code> to use custom deserialization code for the <code>timestamp</code> field. The
-<code>from_millisecond_timestamp</code> code is:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="sd">/// Deserialize Unix millisecond timestamp to `DateTime&lt;Utc&gt;`
-</span></span></span><span class="line"><span class="cl"><span class="sd"></span><span class="k">pub</span><span class="p">(</span><span class="k">in</span><span class="w"> </span><span class="k">crate</span><span class="p">)</span><span class="w"> </span><span class="k">fn</span> <span class="nf">from_millisecond_timestamp</span><span class="o">&lt;</span><span class="na">&#39;de</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="o">&gt;</span><span class="p">(</span><span class="n">d</span>: <span class="nc">D</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="n">DateTime</span><span class="o">&lt;</span><span class="n">Utc</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">D</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">D</span>: <span class="nc">de</span>::<span class="n">Deserializer</span><span class="o">&lt;</span><span class="na">&#39;de</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">d</span><span class="p">.</span><span class="n">deserialize_u64</span><span class="p">(</span><span class="n">DateTimeVisitor</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>The code calls <code>d.deserialize_u64</code> passing in a struct. The passed in struct implements <code>Serde</code>&rsquo;s <code>Visitor</code>, and look like:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="c1">// Vistor to help deserialize unix millisecond timestamp to `chrono::DateTime`
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">struct</span> <span class="nc">DateTimeVisitor</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">impl</span><span class="o">&lt;</span><span class="na">&#39;de</span><span class="o">&gt;</span><span class="w"> </span><span class="n">de</span>::<span class="n">Visitor</span><span class="o">&lt;</span><span class="na">&#39;de</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">DateTimeVisitor</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">type</span> <span class="nc">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DateTime</span><span class="o">&lt;</span><span class="n">Utc</span><span class="o">&gt;</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">expecting</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">formatter</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">fmt</span>::<span class="n">Formatter</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">fmt</span>::<span class="nb">Result</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="fm">write!</span><span class="p">(</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="n">formatter</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="s">&#34;an unix millisecond timestamp represents DataTime&lt;UTC&gt;&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">visit_u64</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">v</span>: <span class="kt">u64</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="bp">Self</span>::<span class="n">Value</span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="o">&gt;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">where</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">E</span>: <span class="nc">de</span>::<span class="n">Error</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="o">..</span><span class="p">.</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>The struct <code>DateTimeVisitor</code> doesn&rsquo;t have any fields, it just a type implemented the custom visitor which delegates to parse the <code>u64</code>.</p>
-<p>Since there is no way to construct <code>DataTime</code> directly from Unix millisecond timestamp, I have to figure out how to handle the
-construction. And it turns out that there is a way to construct <code>DateTime</code> from seconds and nanoseconds:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">chrono</span>::<span class="p">{</span><span class="n">DateTime</span><span class="p">,</span><span class="w"> </span><span class="n">TimeZone</span><span class="p">,</span><span class="w"> </span><span class="n">NaiveDateTime</span><span class="p">,</span><span class="w"> </span><span class="n">Utc</span><span class="p">};</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DateTime</span>::<span class="o">&lt;</span><span class="n">Utc</span><span class="o">&gt;</span>::<span class="n">from_utc</span><span class="p">(</span><span class="n">NaiveDateTime</span>::<span class="n">from_timestamp</span><span class="p">(</span><span class="mi">61</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="n">Utc</span><span class="p">);</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>Thus, what I need to do is just convert millisecond to second and nanosecond:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">visit_u64</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">v</span>: <span class="kt">u64</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="bp">Self</span>::<span class="n">Value</span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="o">&gt;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">E</span>: <span class="nc">de</span>::<span class="n">Error</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">second</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">1000</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">nanosecond</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">v</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">1000</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1000000</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">u32</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// The maximum value of i64 is large enough to hold millisecond, so it would be safe to convert it i64
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DateTime</span>::<span class="o">&lt;</span><span class="n">Utc</span><span class="o">&gt;</span>::<span class="n">from_utc</span><span class="p">(</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">NaiveDateTime</span>::<span class="n">from_timestamp</span><span class="p">(</span><span class="n">second</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">i64</span><span class="p">,</span><span class="w"> </span><span class="n">nanosecond</span><span class="p">),</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">Utc</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nb">Ok</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>The <code>to_millisecond_timestamp</code> function is similar to <code>from_millisecond_timestamp</code>, but it&rsquo;s eaiser to implement, check
-<a href="https://github.com/ramsayleung/rspotify/pull/157/files">this PR</a> for more detail.</p>
-<h3 id="deserialize-milliseconds-to-duration"><span class="section-num">2.3</span> Deserialize milliseconds to Duration</h3>
-<p>The simplified episode object contains the simplified episode information, and the <code>duration_ms</code> field is an integer, which represents the episode length in milliseconds.</p>
-<p>The response JSON data from HTTP API:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="err">...</span>
-</span></span><span class="line"><span class="cl">	<span class="nt">&#34;audio_preview_url&#34;</span> <span class="p">:</span> <span class="s2">&#34;https://p.scdn.co/mp3-preview/83bc7f2d40e850582a4ca118b33c256358de06ff&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nt">&#34;description&#34;</span> <span class="p">:</span> <span class="s2">&#34;Följ med Tobias Svanelid till Sveriges äldsta tegelkyrka&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;duration_ms&#34;</span> <span class="p">:</span> <span class="mi">2685023</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nt">&#34;explicit&#34;</span> <span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="err">...</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>The original model was</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">SimplifiedEpisode</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">audio_preview_url</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">description</span>: <span class="nb">String</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">duration_ms</span>: <span class="kt">u32</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">..</span><span class="p">.</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>As before without saying, Koxiaet pointed out that</p>
-<blockquote>
-<p><code>SimplifiedEpisode::duration_ms</code> should be replaced with a <code>duration</code> of type <code>Duration</code>, since a built-in <code>Duration</code> type works better than primitive type.</p></blockquote>
-<p>Since I have worked with <code>Serde</code>&rsquo;s custome deserialization, it&rsquo;s not a hard job for me any more. I easily figure out how to deserialize <code>u64</code> to <code>Duration</code>:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">SimplifiedEpisode</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">audio_preview_url</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">description</span>: <span class="nb">String</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[serde(
-</span></span></span><span class="line"><span class="cl"><span class="cp">	deserialize_with = </span><span class="s">&#34;from_duration_ms&#34;</span><span class="cp">,
-</span></span></span><span class="line"><span class="cl"><span class="cp">	serialize_with = </span><span class="s">&#34;to_duration_ms&#34;</span><span class="cp">,
-</span></span></span><span class="line"><span class="cl"><span class="cp">	rename = </span><span class="s">&#34;duration_ms&#34;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">    )]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">duration</span>: <span class="nc">Duration</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">..</span><span class="p">.</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sd">/// Vistor to help deserialize duration represented as millisecond to `std::time::Duration`
-</span></span></span><span class="line"><span class="cl"><span class="sd"></span><span class="k">struct</span> <span class="nc">DurationVisitor</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">impl</span><span class="o">&lt;</span><span class="na">&#39;de</span><span class="o">&gt;</span><span class="w"> </span><span class="n">de</span>::<span class="n">Visitor</span><span class="o">&lt;</span><span class="na">&#39;de</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">DurationVisitor</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">type</span> <span class="nc">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Duration</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">expecting</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">formatter</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">fmt</span>::<span class="n">Formatter</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">fmt</span>::<span class="nb">Result</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="fm">write!</span><span class="p">(</span><span class="n">formatter</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;a milliseconds represents std::time::Duration&#34;</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">visit_u64</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">v</span>: <span class="kt">u64</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="bp">Self</span>::<span class="n">Value</span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="o">&gt;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">where</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">E</span>: <span class="nc">de</span>::<span class="n">Error</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nb">Ok</span><span class="p">(</span><span class="n">Duration</span>::<span class="n">from_millis</span><span class="p">(</span><span class="n">v</span><span class="p">))</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sd">/// Deserialize `std::time::Duration` from millisecond(represented as u64)
-</span></span></span><span class="line"><span class="cl"><span class="sd"></span><span class="k">pub</span><span class="p">(</span><span class="k">in</span><span class="w"> </span><span class="k">crate</span><span class="p">)</span><span class="w"> </span><span class="k">fn</span> <span class="nf">from_duration_ms</span><span class="o">&lt;</span><span class="na">&#39;de</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="o">&gt;</span><span class="p">(</span><span class="n">d</span>: <span class="nc">D</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="n">Duration</span><span class="p">,</span><span class="w"> </span><span class="n">D</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">D</span>: <span class="nc">de</span>::<span class="n">Deserializer</span><span class="o">&lt;</span><span class="na">&#39;de</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">d</span><span class="p">.</span><span class="n">deserialize_u64</span><span class="p">(</span><span class="n">DurationVisitor</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>Now, the life is easier than before.</p>
-<h3 id="deserialize-milliseconds-to-option"><span class="section-num">2.4</span> Deserialize milliseconds to Option</h3>
-<p>Let&rsquo;s go back to <code>CurrentlyPlayingContext</code> model, since we have replaced millisecond (represents as <code>u32</code>) with <code>Duration</code>, it makes sense to replace all millisecond fields to <code>Duration</code>.</p>
-<p>But hold on, it seems <code>progress_ms</code> field is a bit different.</p>
-<p>The <code>progress_ms</code> field is either not present or a millisecond, the <code>u32</code> handles the milliseconds, as its value might not be present in the response, it&rsquo;s an <code>Option&lt;u32&gt;</code>, so it won&rsquo;t work with <code>from_duration_ms</code>.</p>
-<p>Thus, it&rsquo;s necessary to figure out how to handle the <code>Option</code> type, and the answer is in the documentation, the <code>deserialize_option</code> function:</p>
-<blockquote>
-<p>Hint that the <code>Deserialize</code> type is expecting an optional value.</p></blockquote>
-<!--quoteend-->
-<blockquote>
-<p>This allows deserializers that encode an optional value as a nullable value to convert the null value into <code>None</code> and a regular value into <code>Some(value)</code>.</p></blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">CurrentlyPlayingContext</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">context</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="n">Context</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[serde(
-</span></span></span><span class="line"><span class="cl"><span class="cp">	deserialize_with = </span><span class="s">&#34;from_millisecond_timestamp&#34;</span><span class="cp">,
-</span></span></span><span class="line"><span class="cl"><span class="cp">	serialize_with = </span><span class="s">&#34;to_millisecond_timestamp&#34;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">    )]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">timestamp</span>: <span class="nc">DateTime</span><span class="o">&lt;</span><span class="n">Utc</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[serde(default)]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[serde(
-</span></span></span><span class="line"><span class="cl"><span class="cp">	deserialize_with = </span><span class="s">&#34;from_option_duration_ms&#34;</span><span class="cp">,
-</span></span></span><span class="line"><span class="cl"><span class="cp">	serialize_with = </span><span class="s">&#34;to_option_duration_ms&#34;</span><span class="cp">,
-</span></span></span><span class="line"><span class="cl"><span class="cp">	rename = </span><span class="s">&#34;progress_ms&#34;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">    )]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">progress</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="n">Duration</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="sd">/// Deserialize `Option&lt;std::time::Duration&gt;` from millisecond(represented as u64)
-</span></span></span><span class="line"><span class="cl"><span class="sd"></span><span class="k">pub</span><span class="p">(</span><span class="k">in</span><span class="w"> </span><span class="k">crate</span><span class="p">)</span><span class="w"> </span><span class="k">fn</span> <span class="nf">from_option_duration_ms</span><span class="o">&lt;</span><span class="na">&#39;de</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="o">&gt;</span><span class="p">(</span><span class="n">d</span>: <span class="nc">D</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="nb">Option</span><span class="o">&lt;</span><span class="n">Duration</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">D</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">D</span>: <span class="nc">de</span>::<span class="n">Deserializer</span><span class="o">&lt;</span><span class="na">&#39;de</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">d</span><span class="p">.</span><span class="n">deserialize_option</span><span class="p">(</span><span class="n">OptionDurationVisitor</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>As before, the <code>OptionDurationVisitor</code> is an empty struct implemented <code>Visitor</code> trait, but key point is in order to work with
-<code>deserialize_option</code>, the <code>OptionDurationVisitor</code> has to implement the <code>visit_none</code> and <code>visit_some</code> method:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">impl</span><span class="o">&lt;</span><span class="na">&#39;de</span><span class="o">&gt;</span><span class="w"> </span><span class="n">de</span>::<span class="n">Visitor</span><span class="o">&lt;</span><span class="na">&#39;de</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">OptionDurationVisitor</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">type</span> <span class="nc">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Option</span><span class="o">&lt;</span><span class="n">Duration</span><span class="o">&gt;</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">expecting</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">formatter</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">fmt</span>::<span class="n">Formatter</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">fmt</span>::<span class="nb">Result</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="fm">write!</span><span class="p">(</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="n">formatter</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="s">&#34;a optional milliseconds represents std::time::Duration&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">visit_none</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="bp">Self</span>::<span class="n">Value</span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="o">&gt;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">where</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">E</span>: <span class="nc">de</span>::<span class="n">Error</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nb">Ok</span><span class="p">(</span><span class="nb">None</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="nf">visit_some</span><span class="o">&lt;</span><span class="n">D</span><span class="o">&gt;</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">deserializer</span>: <span class="nc">D</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="bp">Self</span>::<span class="n">Value</span><span class="p">,</span><span class="w"> </span><span class="n">D</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">where</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">D</span>: <span class="nc">de</span>::<span class="n">Deserializer</span><span class="o">&lt;</span><span class="na">&#39;de</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nb">Ok</span><span class="p">(</span><span class="nb">Some</span><span class="p">(</span><span class="n">deserializer</span><span class="p">.</span><span class="n">deserialize_u64</span><span class="p">(</span><span class="n">DurationVisitor</span><span class="p">)</span><span class="o">?</span><span class="p">))</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>The <code>visit_none</code> method return <code>Ok(None)</code> so the <code>progress</code> value in the struct will be None, and the <code>visit_some</code> delegates the parsing logic to <code>DurationVisitor</code> via the <code>deserialize_u64</code> call, so deserializing <code>Some(u64)</code> works like the <code>u64</code>.</p>
-<h3 id="deserialize-enum-from-number"><span class="section-num">2.5</span> Deserialize enum from number</h3>
-<p>An <code>AudioAnalysisSection</code> model contains a <code>mode</code> field, which indicates the modality(major or minor) of a track, the type of scle from which its melodic content is derived. This field will contain a 0 for <code>minor</code>, a 1 for <code>major</code>, or a -1 for no result.</p>
-<p>The response JSON data from HTTP API:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="err">...</span>
-</span></span><span class="line"><span class="cl">	<span class="nt">&#34;mode&#34;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nt">&#34;mode_confidence&#34;</span><span class="p">:</span> <span class="mf">0.414</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="err">...</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>The original struct representing <code>AudioAnalysisSection</code> was like this, since <code>mode</code> field was stored into a <code>f32=(=f8</code> was a better choice for this case):</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">AudioAnalysisSection</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">..</span><span class="p">.</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">pub</span><span class="w"> </span><span class="n">mode</span>: <span class="kt">f32</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">mode_confidence</span>: <span class="kt">f32</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">..</span><span class="p">.</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>Koxiaet made a great point about <code>mode</code> field:</p>
-<blockquote>
-<p><code>AudioAnalysisSection::mode</code> and <code>AudioFeatures::mode</code> are <code>f32=s but should be =Option&lt;Mode&gt;=s where =enum Mode { Major, Minor }</code> as it is more useful.</p></blockquote>
-<p>In this case, we don&rsquo;t need the <code>Opiton</code> type and in order to deserialize enum from number, we firstly need to define a C-like enum:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">enum</span> <span class="nc">Modality</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[serde(rename = </span><span class="s">&#34;0&#34;</span><span class="cp">)]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Minor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[serde(rename = </span><span class="s">&#34;1&#34;</span><span class="cp">)]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Major</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">#[serde(rename = </span><span class="s">&#34;1&#34;</span><span class="cp">)]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">NoResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">AudioAnalysisSection</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">..</span><span class="p">.</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">pub</span><span class="w"> </span><span class="n">mode</span>: <span class="nc">Modality</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">mode_confidence</span>: <span class="kt">f32</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">..</span><span class="p">.</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>And then, what&rsquo;s the next step? It seems serde doesn&rsquo;t allow C-like enums to be formatted as integers rather that strings in JSON natively:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="err">working</span> <span class="err">version:</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="err">...</span>
-</span></span><span class="line"><span class="cl">	<span class="nt">&#34;mode&#34;</span><span class="p">:</span> <span class="s2">&#34;0&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nt">&#34;mode_confidence&#34;</span><span class="p">:</span> <span class="mf">0.414</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="err">...</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="err">failed</span> <span class="err">version:</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="err">...</span>
-</span></span><span class="line"><span class="cl">	<span class="nt">&#34;mode&#34;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nt">&#34;mode_confidence&#34;</span><span class="p">:</span> <span class="mf">0.414</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="err">...</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Then the failed version is exactly what we want. I know that the serde&rsquo;s official documentation has a solution for this case, the <a href="https://github.com/dtolnay/serde-repr">serde_repr</a> crate provides alternative derive macros that derive the same Serialize and Deserialize traits but delegate to the underlying representation of a C-like enum.</p>
-<p>Since we are trying to reduce the compiled time of rspotify, so we are cautious about introducing new dependencies. So a custom-made serialize function would be a better choice, it just needs to <code>match</code> the number, and convert to a related enum value.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="sd">/// Deserialize/Serialize `Modality` to integer(0, 1, -1).
-</span></span></span><span class="line"><span class="cl"><span class="sd"></span><span class="k">pub</span><span class="p">(</span><span class="k">in</span><span class="w"> </span><span class="k">crate</span><span class="p">)</span><span class="w"> </span><span class="k">mod</span> <span class="nn">modality</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="k">super</span>::<span class="n">enums</span>::<span class="n">Modality</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="n">serde</span>::<span class="p">{</span><span class="n">de</span><span class="p">,</span><span class="w"> </span><span class="n">Deserialize</span><span class="p">,</span><span class="w"> </span><span class="n">Serializer</span><span class="p">};</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">deserialize</span><span class="o">&lt;</span><span class="na">&#39;de</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="o">&gt;</span><span class="p">(</span><span class="n">d</span>: <span class="nc">D</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="n">Modality</span><span class="p">,</span><span class="w"> </span><span class="n">D</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">where</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">D</span>: <span class="nc">de</span>::<span class="n">Deserializer</span><span class="o">&lt;</span><span class="na">&#39;de</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">i8</span>::<span class="n">deserialize</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">match</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="mi">0</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Ok</span><span class="p">(</span><span class="n">Modality</span>::<span class="n">Minor</span><span class="p">),</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="mi">1</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Ok</span><span class="p">(</span><span class="n">Modality</span>::<span class="n">Major</span><span class="p">),</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Ok</span><span class="p">(</span><span class="n">Modality</span>::<span class="n">NoResult</span><span class="p">),</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Err</span><span class="p">(</span><span class="n">de</span>::<span class="n">Error</span>::<span class="n">invalid_value</span><span class="p">(</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="n">de</span>::<span class="n">Unexpected</span>::<span class="n">Signed</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">into</span><span class="p">()),</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="o">&amp;</span><span class="s">&#34;valid value: 0, 1, -1&#34;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="p">)),</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">serialize</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span>: <span class="kp">&amp;</span><span class="nc">Modality</span><span class="p">,</span><span class="w"> </span><span class="n">s</span>: <span class="nc">S</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="n">S</span>::<span class="nb">Ok</span><span class="p">,</span><span class="w"> </span><span class="n">S</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">where</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="n">S</span>: <span class="nc">Serializer</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">match</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="n">Modality</span>::<span class="n">Minor</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">serialize_i8</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="n">Modality</span>::<span class="n">Major</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">serialize_i8</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	    </span><span class="n">Modality</span>::<span class="n">NoResult</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">serialize_i8</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="move-into-module"><span class="section-num">3</span> Move into module</h2>
-<p>Update:</p>
-<p>2021-01-15</p>
-<ul>
-<li><code>from(to)_millisecond_timestamp</code> have been moved into its module <code>millisecond_timestamp</code> and rename them to <code>deserialize</code> &amp; <code>serialize</code></li>
-<li><code>from(to)_duration_ms</code> have been moved into its module <code>duration_ms</code> and rename them to <code>deserialize</code> &amp; <code>serialize</code></li>
-<li><code>from(to)_option_duration_ms</code> have been moved into its module <code>option_duration_ms</code> and rename them to <code>deserialize</code> &amp; <code>serialize</code></li>
-</ul>
-<h2 id="summary"><span class="section-num">4</span> Summary</h2>
-<p>To be honest, it&rsquo;s the first time I have needed some customized works, which took me some time to understand how does <code>Serde</code> works. Finally, all investments paid off, it works great now.</p>
-<p>Serde is such an awesome deserialize/serialize framework which I have learnt a lot of from and still have a lot of to learn from.</p>
-<h2 id="reference"><span class="section-num">5</span> Reference</h2>
-<ul>
-<li><a href="https://chrismcg.com/2019/04/30/deserializing-optional-datetimes-with-serde/">Deserializing optional datetimes with serde</a></li>
-<li><a href="https://github.com/ramsayleung/rspotify/pull/157">PR: Keep polishing the models</a></li>
-<li><a href="https://github.com/ramsayleung/rspotify/pull/145">PR: Refactor model</a></li>
-<li><a href="https://github.com/ramsayleung/rspotify/pull/177">PR: Deserialize enum from number</a></li>
-</ul>
 ]]></content:encoded>
     </item>
   </channel>
