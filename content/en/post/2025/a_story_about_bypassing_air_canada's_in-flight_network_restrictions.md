@@ -1,7 +1,7 @@
 +++
 title = "A Story About Bypassing Air Canada's In-flight Network Restrictions"
 date = 2025-10-10T15:29:00+08:00
-lastmod = 2025-10-10T15:46:05+08:00
+lastmod = 2025-10-10T23:49:32+08:00
 tags = ["network", "hacking"]
 draft = false
 toc = true
@@ -49,13 +49,15 @@ For example, if you type `https://acwifi.com` and only focus on the network requ
 Let's consider `github.com` as our target website we want to access. Now let's see how we can break through the network restrictions and successfully access `github.com`.
 
 
-## <span class="section-num">3</span> Approach 1: Domain Self-Signing {#approach-1-domain-self-signing}
+## <span class="section-num">3</span> Approach 1: Disguise Domain {#approach-1-disguise-domain}
 
-Since `acwifi.com` is accessible but `github.com` is not, could I disguise my server as `acwifi.com` and route all request traffic through my server to access the target website (`github.com`)?
+Since `acwifi.com` is accessible but `github.com` is not, is it possible that the network has imposed restrictions on the DNS server, only resolving domain names within a whitelist (such as instant messaging domains)?
+
+If this is the case, can I modify `/etc/hosts` to disguise my server as `acwifi.com`, so that all request traffic passes through my server before reaching the target website (github.com)? For example:
 
 {{< figure src="/ox-hugo/self-sign-certificate-en.png" >}}
 
-The idea was roughly: I modify DNS records to bind our proxy server's IP `137.184.231.87` to `acwifi.com`, then use a self-signed certificate to tell the browser that this IP and this domain are bound together, and it should trust it.
+The general idea is that I modify the DNS record to bind our proxy server's IP `137.184.231.87` to `acwifi.com`. Since the local `/etc/hosts` file takes precedence over the DNS server, I can then use a self-signed certificate to tell the browser that this IP is bound to this domain and that it should trust it.
 
 Let me first test this idea:
 
@@ -89,7 +91,12 @@ Request timeout for icmp_seq 4
 6 packets transmitted, 0 packets received, 100.0% packet loss
 ```
 
-It seems this approach won't work. After all, if the IPs are directly blocked, no amount of disguise will help. This network likely maintains some IP whitelist (such as WhatsApp and WeChat's egress IPs), and only IPs on the whitelist can be accessed.
+It seems this approach won't work. This approach might only work if:
+
+-   The DNS server only answers queries for a specific list of domain names (e.g., WhatsApp, Snapchat, WeChat), which means the firewall's filtering mechanism was solely based on DNS resolution.
+-   The network allows connections to arbitrary IP addresses
+
+After all, if the IPs are directly blocked, no amount of disguise will help. This network likely maintains some IP whitelist (such as WhatsApp and WeChat's egress IPs), and only IPs on the whitelist can be accessed.
 
 
 ## <span class="section-num">4</span> Approach 2: DNS Port Masquerading {#approach-2-dns-port-masquerading}
