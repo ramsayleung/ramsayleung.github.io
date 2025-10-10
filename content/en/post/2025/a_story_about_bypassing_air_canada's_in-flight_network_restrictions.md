@@ -1,7 +1,7 @@
 +++
 title = "A Story About Bypassing Air Canada's In-flight Network Restrictions"
 date = 2025-10-10T15:29:00+08:00
-lastmod = 2025-10-10T15:36:43+08:00
+lastmod = 2025-10-10T15:46:05+08:00
 tags = ["network", "hacking"]
 draft = false
 toc = true
@@ -320,13 +320,12 @@ With the long journey ahead, my roommate and I spent about 4 hours remotely brea
 
 The successful implementation of the solution was mainly thanks to my roommate, the networking expert, who provided remote technical and conceptual support.
 
-The only downside was that although we broke through the network restrictions and could access any website, the plane's bandwidth was extremely limited, making web browsing quite painful. So I didn't spend much time surfing the web.
+The only downside was that although we broke through the network restrictions and could access any website, the plane's bandwidth was extremely limited, making web browsing quite painful. So I didn't spend much time browsing the web.
 
-For the remaining hours, I rewatched the classic 80s time-travel sci-fi movie trilogy: `"Back to the Future"`&nbsp;[^fn:2], which was absolutely fantastic.
+For the remaining hours, I rewatched the classic 80s time-travel movie: `"Back to the Future"` , which was absolutely fantastic.
 
-Finally, I hereby solemnly declare:
+Last and not least, it's the disclaimer:
 
-This technical exploration is for learning and research purposes only. We strictly adhere to relevant regulations and service terms.
+This technical exploration is intended solely for educational and research purposes. We affirm our strict adherence to all relevant regulations and service terms throughout this project.
 
 [^fn:1]: <https://github.com/XTLS/Xray-core>
-[^fn:2]: <https://movie.douban.com/subject/1300555/>
