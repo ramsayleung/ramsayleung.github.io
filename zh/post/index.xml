@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Fri, 10 Oct 2025 11:08:15 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 10 Oct 2025 23:51:00 +0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>关于破解加拿大航空飞机网络限制的一件小事</title>
@@ -122,8 +122,9 @@
 </figure>
 
 <p>我们把需要访问的目标网站当作是 github.com, 现在就来看下要怎么才能突破网络的限制，成功访问 github.com</p>
-<h2 id="思路1-域名自签名"><span class="section-num">3</span> 思路1: 域名自签名</h2>
-<p>既然 acwifi.com 可以访问，而 github.com 不可以访问，那么我是否可以把我的服务器伪装成 acwifi.com, 所有的请求流量都经过我的服务器，再去请求目标网站(github.com) 如：</p>
+<h2 id="思路1-伪装域名"><span class="section-num">3</span> 思路1: 伪装域名</h2>
+<p>既然 acwifi.com 可以访问，而 github.com 不可以访问，那么是否有可能是网络在DNS服务器做了限制，只解析白名单内的域名（即时通信的域名）</p>
+<p>如果是这种情况的话，那么我是否可以修改 =/etc/host=，把我的服务器伪装成 acwifi.com, 所有的请求流量都经过我的服务器，再去请求目标网站(github.com) 如：</p>
 
 <figure>
     
@@ -138,7 +139,7 @@
     </label>
 </figure>
 
-<p>想法大概是我修改DNS记录，把我们的代理服务器的IP <code>137.184.231.87</code> 绑定到 <code>acwifi.com</code> 上，然后再用证书进行自签名，告诉浏览器，这个IP 和这个域名是绑定的，你要相信它。</p>
+<p>想法大概是我修改DNS记录，把我们的代理服务器的IP <code>137.184.231.87</code> 绑定到 <code>acwifi.com</code> 上，因为本地的 <code>/etc/host</code> 的优先级是高于DNS服务器的，然后再用证书进行自签名，告诉浏览器，这个IP 和这个域名是绑定的，你要相信它。</p>
 <p>我先验证下一个想法:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -194,7 +195,13 @@
 </span></span><span class="line"><span class="cl"><span class="m">6</span> packets transmitted, <span class="m">0</span> packets received, 100.0% packet loss
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>看来这条路子是走不通的，毕竟IP都直接拦截了，怎么伪装都没有用了，这个网络大概率维护了某个IP白名单（比如WhatsApp，微信的出口IP），只有在白名单的IP才可以访问。</p>
+</div><p>看来这条路子是走不通的，这个思路只有满足两个条件才能走得通：</p>
+<ol>
+<li>texting only 的限制是在DNS 解析时做的，只有特定的域名（比如WhatsApp, 微信的域名）才会被解析 (这样的维护成本比较低)</li>
+<li>网关允许任意的IP发起网络请求</li>
+</ol>
+<p>但实际是IP都直接拦截了，怎么伪装都没有用了，这个网络大概率维护了某个IP白名单（比如WhatsApp，微信的出口IP），
+只有在白名单的IP才可以访问。</p>
 <h2 id="思路2-53端口伪装dns"><span class="section-num">4</span> 思路2: 53端口伪装DNS</h2>
 <p>在第一条路子走不通的时候，室友提供了第二条路子：尝试利用DNS服务作为突破口:</p>
 <div class="highlight"><div class="chroma">

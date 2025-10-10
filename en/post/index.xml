@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>en</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Fri, 10 Oct 2025 15:46:05 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 10 Oct 2025 23:49:32 +0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/en/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>A Story About Bypassing Air Canada&#39;s In-flight Network Restrictions</title>
@@ -123,8 +123,9 @@
 </figure>
 
 <p>Let&rsquo;s consider <code>github.com</code> as our target website we want to access. Now let&rsquo;s see how we can break through the network restrictions and successfully access <code>github.com</code>.</p>
-<h2 id="approach-1-domain-self-signing"><span class="section-num">3</span> Approach 1: Domain Self-Signing</h2>
-<p>Since <code>acwifi.com</code> is accessible but <code>github.com</code> is not, could I disguise my server as <code>acwifi.com</code> and route all request traffic through my server to access the target website (<code>github.com</code>)?</p>
+<h2 id="approach-1-disguise-domain"><span class="section-num">3</span> Approach 1: Disguise Domain</h2>
+<p>Since <code>acwifi.com</code> is accessible but <code>github.com</code> is not, is it possible that the network has imposed restrictions on the DNS server, only resolving domain names within a whitelist (such as instant messaging domains)?</p>
+<p>If this is the case, can I modify <code>/etc/hosts</code> to disguise my server as <code>acwifi.com</code>, so that all request traffic passes through my server before reaching the target website (github.com)? For example:</p>
 
 <figure>
     
@@ -139,7 +140,7 @@
     </label>
 </figure>
 
-<p>The idea was roughly: I modify DNS records to bind our proxy server&rsquo;s IP <code>137.184.231.87</code> to <code>acwifi.com</code>, then use a self-signed certificate to tell the browser that this IP and this domain are bound together, and it should trust it.</p>
+<p>The general idea is that I modify the DNS record to bind our proxy server&rsquo;s IP <code>137.184.231.87</code> to <code>acwifi.com</code>. Since the local <code>/etc/hosts</code> file takes precedence over the DNS server, I can then use a self-signed certificate to tell the browser that this IP is bound to this domain and that it should trust it.</p>
 <p>Let me first test this idea:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -195,7 +196,12 @@
 </span></span><span class="line"><span class="cl"><span class="m">6</span> packets transmitted, <span class="m">0</span> packets received, 100.0% packet loss
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>It seems this approach won&rsquo;t work. After all, if the IPs are directly blocked, no amount of disguise will help. This network likely maintains some IP whitelist (such as WhatsApp and WeChat&rsquo;s egress IPs), and only IPs on the whitelist can be accessed.</p>
+</div><p>It seems this approach won&rsquo;t work. This approach might only work if:</p>
+<ul>
+<li>The DNS server only answers queries for a specific list of domain names (e.g., WhatsApp, Snapchat, WeChat), which means the firewall&rsquo;s filtering mechanism was solely based on DNS resolution.</li>
+<li>The network allows connections to arbitrary IP addresses</li>
+</ul>
+<p>After all, if the IPs are directly blocked, no amount of disguise will help. This network likely maintains some IP whitelist (such as WhatsApp and WeChat&rsquo;s egress IPs), and only IPs on the whitelist can be accessed.</p>
 <h2 id="approach-2-dns-port-masquerading"><span class="section-num">4</span> Approach 2: DNS Port Masquerading</h2>
 <p>When the first approach failed, my roommate suggested a second approach: try using DNS service as a breakthrough:</p>
 <div class="highlight"><div class="chroma">
