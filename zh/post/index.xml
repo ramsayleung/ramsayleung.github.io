@@ -12,8 +12,637 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Wed, 01 Oct 2025 23:17:02 -0700</lastBuildDate>
+    <lastBuildDate>Fri, 10 Oct 2025 10:51:38 +0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>关于破解加拿大航空飞机网络限制的一件小事</title>
+      <link>https://ramsayleung.github.io/zh/post/2025/%E5%85%B3%E4%BA%8E%E7%A0%B4%E8%A7%A3%E5%8A%A0%E6%8B%BF%E5%A4%A7%E8%88%AA%E7%A9%BA%E9%A3%9E%E6%9C%BA%E7%BD%91%E7%BB%9C%E9%99%90%E5%88%B6%E7%9A%84%E4%B8%80%E4%BB%B6%E5%B0%8F%E4%BA%8B/</link>
+      <pubDate>Fri, 10 Oct 2025 06:53:00 +0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2025/%E5%85%B3%E4%BA%8E%E7%A0%B4%E8%A7%A3%E5%8A%A0%E6%8B%BF%E5%A4%A7%E8%88%AA%E7%A9%BA%E9%A3%9E%E6%9C%BA%E7%BD%91%E7%BB%9C%E9%99%90%E5%88%B6%E7%9A%84%E4%B8%80%E4%BB%B6%E5%B0%8F%E4%BA%8B/</guid>
+      <description>&lt;h2 id=&#34;序章&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 序章&lt;/h2&gt;
+&lt;p&gt;前段时间，坐飞机从加拿大飞回香港，全程大概12个小时，坐的是加拿大航空(Air Canada)的飞机。&lt;/p&gt;
+&lt;p&gt;有趣的是，飞机上竟然有 Wifi:&lt;/p&gt;
+
+&lt;figure&gt;
+    
+    
+    &lt;input type=&#34;checkbox&#34; id=&#34;zoomCheck-a931d&#34; hidden&gt;
+    &lt;label for=&#34;zoomCheck-a931d&#34;&gt;
+    
+    
+    &lt;img class=&#34;zoomCheck&#34; loading=&#34;lazy&#34; src=&#34;https://ramsayleung.github.io/ox-hugo/acwifi-connect-2.png&#34;/&gt; 
+    
+    
+    &lt;/label&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;但是 Wifi 做了限制，对于Aeroplan的会员，如果未付费，就只提供 &lt;a href=&#34;https://www.aircanada.com/ca/en/aco/home/fly/onboard/in-flight-entertainment-and-connectivity.html#/&#34;&gt;Free Texting&lt;/a&gt; 的功能，即只能使用即时通信软件，比如 Whatsapp, Snapchat，微信发送文本信息，但无法访问其他网站。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="序章"><span class="section-num">1</span> 序章</h2>
+<p>前段时间，坐飞机从加拿大飞回香港，全程大概12个小时，坐的是加拿大航空(Air Canada)的飞机。</p>
+<p>有趣的是，飞机上竟然有 Wifi:</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-a931d" hidden>
+    <label for="zoomCheck-a931d">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/acwifi-connect-2.png"/> 
+    
+    
+    </label>
+</figure>
+
+<p>但是 Wifi 做了限制，对于Aeroplan的会员，如果未付费，就只提供 <a href="https://www.aircanada.com/ca/en/aco/home/fly/onboard/in-flight-entertainment-and-connectivity.html#/">Free Texting</a> 的功能，即只能使用即时通信软件，比如 Whatsapp, Snapchat，微信发送文本信息，但无法访问其他网站。</p>
+<p>如果想要无限制地访问其他网站，那么就是付 30.75 加元；</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-1118f" hidden>
+    <label for="zoomCheck-1118f">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/acwifi.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>如果想要在飞机上看视频，那么就是付 39 加元；</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-47db4" hidden>
+    <label for="zoomCheck-47db4">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/acwifi_plan.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>我就在想，对于 Free Texting 服务，我是否可以绕过只能使用即时软件的限制，无限制地访问其他网站呢？</p>
+<p>即相当于还是免费会员，但是可以享受30.75加元付费用户的服务，反正长途漫漫，总要找点有趣的事情消磨一下12个小时的时间。</p>
+<p>又因为可以使用微信的文字聊天服务，那么我还可以在天上呼叫外援来帮忙一起处理，而我的室友恰好是个安全+网络专家，
+当时在家休假，我一提这个想法，他觉得好玩就一拍即合，我们就直接地空连线开搞。</p>
+<h2 id="流程"><span class="section-num">2</span> 流程</h2>
+<p>在飞机上选择完 acwifi.com 这个唯一的 wifi 后，就像其他需要登录的Wifi一样，会弹出一个 acwifi.com 的网页，要求验证我的 Aeroplan 会员的身份，验证通过之后即可上网。</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-4b541" hidden>
+    <label for="zoomCheck-4b541">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/onboard_success.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>有个非常经典的软件开发面试题：在浏览器输入一个网址之后，按下回车键之后，会发生什么事情。</p>
+<p>比如输入的是 <a href="https://acwifi.com">https://acwifi.com</a>, 如果只关注的网络请求部分，整个过程大概是：DNS查询 -&gt; TCP连接 -&gt; TLS握手 -&gt; HTTP请求与响应</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-c73ee" hidden>
+    <label for="zoomCheck-c73ee">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/network_request_sequence.png"/> 
+    
+    
+    </label>
+</figure>
+
+<p>我们把需要访问的目标网站当作是 github.com, 现在就来看下要怎么才能突破网络的限制，成功访问 github.com</p>
+<h2 id="思路1-域名自签名"><span class="section-num">3</span> 思路1: 域名自签名</h2>
+<p>既然 acwifi.com 可以访问，而 github.com 不可以访问，那么我是否可以把我的服务器伪装成 acwifi.com, 所有的请求流量都经过我的服务器，再去请求目标网站(github.com) 如：</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-88a46" hidden>
+    <label for="zoomCheck-88a46">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/self-sign-certificate.png"/> 
+    
+    
+    </label>
+</figure>
+
+<p>想法大概是我修改DNS记录，把我们的代理服务器的IP <code>137.184.231.87</code> 绑定到 <code>acwifi.com</code> 上，然后再用证书进行自签名，告诉浏览器，这个IP 和这个域名是绑定的，你要相信它。</p>
+<p>我先验证下一个想法:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; ping 137.184.231.87
+</span></span><span class="line"><span class="cl">PING 137.184.231.87 <span class="o">(</span>137.184.231.87<span class="o">)</span>: <span class="m">56</span> data bytes
+</span></span><span class="line"><span class="cl">Request timeout <span class="k">for</span> icmp_seq <span class="m">0</span>
+</span></span><span class="line"><span class="cl">Request timeout <span class="k">for</span> icmp_seq <span class="m">1</span>
+</span></span><span class="line"><span class="cl">Request timeout <span class="k">for</span> icmp_seq <span class="m">2</span>
+</span></span><span class="line"><span class="cl">Request timeout <span class="k">for</span> icmp_seq <span class="m">3</span>
+</span></span><span class="line"><span class="cl">Request timeout <span class="k">for</span> icmp_seq <span class="m">4</span>
+</span></span><span class="line"><span class="cl">^C
+</span></span><span class="line"><span class="cl">--- 137.184.231.87 ping statistics ---
+</span></span><span class="line"><span class="cl"><span class="m">6</span> packets transmitted, <span class="m">0</span> packets received, 100.0% packet loss
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>只是没想到，IP直接 <code>ping</code> 不通，相当于是IP大概率直接就连不上了。</p>
+<p>试了下其他的著名IP，比如 Cloudflare 的CDN IP, 也是连不通:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; ping 172.67.133.121
+</span></span><span class="line"><span class="cl">PING 172.67.133.121 <span class="o">(</span>172.67.133.121<span class="o">)</span>: <span class="m">56</span> data bytes
+</span></span><span class="line"><span class="cl">Request timeout <span class="k">for</span> icmp_seq <span class="m">0</span>
+</span></span><span class="line"><span class="cl">Request timeout <span class="k">for</span> icmp_seq <span class="m">1</span>
+</span></span><span class="line"><span class="cl">Request timeout <span class="k">for</span> icmp_seq <span class="m">2</span>
+</span></span><span class="line"><span class="cl">Request timeout <span class="k">for</span> icmp_seq <span class="m">3</span>
+</span></span><span class="line"><span class="cl">Request timeout <span class="k">for</span> icmp_seq <span class="m">4</span>
+</span></span><span class="line"><span class="cl">^C
+</span></span><span class="line"><span class="cl">--- 172.67.133.121 ping statistics ---
+</span></span><span class="line"><span class="cl"><span class="m">6</span> packets transmitted, <span class="m">0</span> packets received, 100.0% packet loss
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>看来这条路子是走不通的，毕竟IP都直接拦截了，怎么伪装都没有用了，这个网络大概率维护了某个IP白名单（比如WhatsApp，微信的出口IP），只有在白名单的IP才可以访问。</p>
+<h2 id="思路2-53端口伪装dns"><span class="section-num">4</span> 思路2: 53端口伪装DNS</h2>
+<p>在第一条路子走不通的时候，室友提供了第二条路子：尝试利用DNS服务作为突破口:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; dig http418.org
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;</span> &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; http418.org
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> global options: +cmd
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> Got answer:
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> -&gt;&gt;HEADER<span class="s">&lt;&lt;- opco</span>de: QUERY, status: NOERROR, id: <span class="m">64160</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> flags: qr rd ra<span class="p">;</span> QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: <span class="m">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> OPT PSEUDOSECTION:
+</span></span><span class="line"><span class="cl"><span class="p">;</span> EDNS: version: 0, flags:<span class="p">;</span> udp: <span class="m">4096</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> QUESTION SECTION:
+</span></span><span class="line"><span class="cl"><span class="p">;</span>http418.org.			IN	A
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> ANSWER SECTION:
+</span></span><span class="line"><span class="cl">http418.org.		300	IN	A	172.67.133.121
+</span></span><span class="line"><span class="cl">http418.org.		300	IN	A	104.21.5.131
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> Query time: <span class="m">3288</span> msec
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> SERVER: 172.19.207.1#53<span class="o">(</span>172.19.207.1<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> WHEN: Sat Oct <span class="m">04</span> 14:18:24 PDT <span class="m">2025</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> MSG SIZE  rcvd: <span class="m">94</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这是个好消息，说明还是有路子可以请求到外部网络的，DNS就是其中一个路子。</p>
+<p>看上面的记录，说明我们查询 <code>http418.org</code> 这个网站的DNS 纪录成功，也就意味着DNS请求是成功的。</p>
+<h3 id="任意dns服务器"><span class="section-num">4.1</span> 任意DNS服务器</h3>
+<p>室友再随意找了个 DNS 服务器，看下这个网络是否对DNS服务器有白名单:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; dig @40.115.144.198 http418.org
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;</span> &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; @40.115.144.198 http418.org
+</span></span><span class="line"><span class="cl"><span class="p">;</span> <span class="o">(</span><span class="m">1</span> server found<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> global options: +cmd
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> Got answer:
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> -&gt;&gt;HEADER<span class="s">&lt;&lt;- opco</span>de: QUERY, status: NOERROR, id: <span class="m">58958</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> flags: qr rd ra<span class="p">;</span> QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: <span class="m">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> OPT PSEUDOSECTION:
+</span></span><span class="line"><span class="cl"><span class="p">;</span> EDNS: version: 0, flags:<span class="p">;</span> udp: <span class="m">1224</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> QUESTION SECTION:
+</span></span><span class="line"><span class="cl"><span class="p">;</span>http418.org.			IN	A
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> ANSWER SECTION:
+</span></span><span class="line"><span class="cl">http418.org.		275	IN	A	104.21.5.131
+</span></span><span class="line"><span class="cl">http418.org.		275	IN	A	172.67.133.121
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> Query time: <span class="m">1169</span> msec
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> SERVER: 40.115.144.198#53<span class="o">(</span>40.115.144.198<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> WHEN: Sat Oct <span class="m">04</span> 14:24:25 PDT <span class="m">2025</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> MSG SIZE  rcvd: <span class="m">72</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>竟然可以使用任意的DNS服务器，机会又大了不少</p>
+<h3 id="tcp查询"><span class="section-num">4.2</span> TCP查询</h3>
+<p>任意的DNS服务器都能请求成功, 这就是个非常好的消息, DNS 默认是走的UDP 协议，那么走TCP 协议的DNS请求是否会被拦截呢?</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; dig @40.115.144.198 http418.org +tcp
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;</span> &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; @40.115.144.198 http418.org +tcp
+</span></span><span class="line"><span class="cl"><span class="p">;</span> <span class="o">(</span><span class="m">1</span> server found<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> global options: +cmd
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> Got answer:
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> -&gt;&gt;HEADER<span class="s">&lt;&lt;- opco</span>de: QUERY, status: NOERROR, id: <span class="m">30355</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> flags: qr rd ra<span class="p">;</span> QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: <span class="m">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> OPT PSEUDOSECTION:
+</span></span><span class="line"><span class="cl"><span class="p">;</span> EDNS: version: 0, flags:<span class="p">;</span> udp: <span class="m">1224</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> QUESTION SECTION:
+</span></span><span class="line"><span class="cl"><span class="p">;</span>http418.org.			IN	A
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> ANSWER SECTION:
+</span></span><span class="line"><span class="cl">http418.org.		36	IN	A	172.67.133.121
+</span></span><span class="line"><span class="cl">http418.org.		36	IN	A	104.21.5.131
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> Query time: <span class="m">4679</span> msec
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> SERVER: 40.115.144.198#53<span class="o">(</span>40.115.144.198<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> WHEN: Sat Oct <span class="m">04</span> 14:28:24 PDT <span class="m">2025</span>
+</span></span><span class="line"><span class="cl"><span class="p">;;</span> MSG SIZE  rcvd: <span class="m">72</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>DNS TCP查询也能通过！这说明飞机网络的过滤策略相对宽松，为我们后续的DNS隧道方案提供了可能性。</p>
+<h3 id="53端口的代理服务"><span class="section-num">4.3</span> 53端口的代理服务</h3>
+<p>说明飞机网络限制也不是完全密不透风的，我们发现这堵墙上有个「狗洞」。</p>
+<p>那么我们就有了个巧妙的想法：既然飞机网关对DNS请求没有拦截，那么理论上我们可以把代理服务器伪装成DNS服务器，
+暴露DNS服务的53端口，所有的请求都经过代理服务器，伪装成 DNS 请求，那么就可以绕过拦截了。</p>
+<p>舍友就用 <a href="https://github.com/XTLS/Xray-core">xray</a> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>服务花费了一个小时，架设了一个暴露 53 端口的代理服务器，把配置信息通过微信发给我:</p>
+<p>室友用Xray搭建的代理服务器配置包含了如下的示意配置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;outbounds&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;tag&#34;</span><span class="p">:</span> <span class="s2">&#34;proxy&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;vless&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;settings&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&#34;vnext&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">          <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;address&#34;</span><span class="p">:</span> <span class="s2">&#34;our-proxy-server-domain&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;port&#34;</span><span class="p">:</span> <span class="mi">53</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;users&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">              <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="s2">&#34;some-uuid&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&#34;flow&#34;</span><span class="p">:</span> <span class="s2">&#34;xtls-rprx-vision&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&#34;encryption&#34;</span><span class="p">:</span> <span class="s2">&#34;none&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&#34;level&#34;</span><span class="p">:</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">              <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">]</span>
+</span></span><span class="line"><span class="cl">          <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">]</span>
+</span></span><span class="line"><span class="cl">      <span class="p">},</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;streamSettings&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&#34;network&#34;</span><span class="p">:</span> <span class="s2">&#34;tcp&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&#34;security&#34;</span><span class="p">:</span> <span class="s2">&#34;tls&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&#34;tlsSettings&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="nt">&#34;allowInsecure&#34;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nt">&#34;allowInsecureCiphers&#34;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nt">&#34;alpn&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;h2&#34;</span>
+</span></span><span class="line"><span class="cl">          <span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;tag&#34;</span><span class="p">:</span> <span class="s2">&#34;direct&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;freedom&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;tag&#34;</span><span class="p">:</span> <span class="s2">&#34;block&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;blackhole&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>而我电脑上就有个 xray 的客户端，不需要额外的软件就能建立连接。</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-8537d" hidden>
+    <label for="zoomCheck-8537d">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/dns-server-proxy.png"/> 
+    
+    
+    </label>
+</figure>
+
+<p>万事具备，激动人力的时刻到了，按下回车，访问 <code>github.com</code> ：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">/Users/ramsayleung <span class="o">[</span>ramsayleung@ramsayleungs-Laptop<span class="o">]</span> <span class="o">[</span>18:28<span class="o">]</span>
+</span></span><span class="line"><span class="cl">&gt; curl -v github.com -x socks5://127.0.0.1:10810
+</span></span><span class="line"><span class="cl">*   Trying 127.0.0.1:10810...
+</span></span><span class="line"><span class="cl">* Connected to 127.0.0.1 <span class="o">(</span>127.0.0.1<span class="o">)</span> port <span class="m">10810</span>
+</span></span><span class="line"><span class="cl">* SOCKS5 connect to 172.19.1.1:80 <span class="o">(</span>locally resolved<span class="o">)</span>
+</span></span><span class="line"><span class="cl">* SOCKS5 request granted.
+</span></span><span class="line"><span class="cl">* Connected to 127.0.0.1 <span class="o">(</span>127.0.0.1<span class="o">)</span> port <span class="m">10810</span>
+</span></span><span class="line"><span class="cl">&gt; GET / HTTP/1.1
+</span></span><span class="line"><span class="cl">&gt; Host: github.com
+</span></span><span class="line"><span class="cl">&gt; User-Agent: curl/8.4.0
+</span></span><span class="line"><span class="cl">&gt; Accept: */*
+</span></span><span class="line"><span class="cl">&gt;
+</span></span><span class="line"><span class="cl">&lt; HTTP/1.1 <span class="m">301</span> Moved Permanently
+</span></span><span class="line"><span class="cl">&lt; Content-Length: <span class="m">0</span>
+</span></span><span class="line"><span class="cl">&lt; Location: https://github.com/
+</span></span><span class="line"><span class="cl">&lt;
+</span></span><span class="line"><span class="cl">* Connection <span class="c1">#0 to host 127.0.0.1 left intact</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/Users/ramsayleung <span class="o">[</span>ramsayleung@ramsayleungs-Laptop<span class="o">]</span> <span class="o">[</span>18:28<span class="o">]</span>
+</span></span><span class="line"><span class="cl">&gt; curl -v github.com -x socks5://127.0.0.1:10810
+</span></span><span class="line"><span class="cl">*   Trying 127.0.0.1:10810...
+</span></span><span class="line"><span class="cl">* Connected to 127.0.0.1 <span class="o">(</span>127.0.0.1<span class="o">)</span> port <span class="m">10810</span>
+</span></span><span class="line"><span class="cl">* SOCKS5 connect to 172.19.1.1:80 <span class="o">(</span>locally resolved<span class="o">)</span>
+</span></span><span class="line"><span class="cl">* SOCKS5 request granted.
+</span></span><span class="line"><span class="cl">* Connected to 127.0.0.1 <span class="o">(</span>127.0.0.1<span class="o">)</span> port <span class="m">10810</span>
+</span></span><span class="line"><span class="cl">&gt; GET / HTTP/1.1
+</span></span><span class="line"><span class="cl">&gt; Host: github.com
+</span></span><span class="line"><span class="cl">&gt; User-Agent: curl/8.4.0
+</span></span><span class="line"><span class="cl">&gt; Accept: */*
+</span></span><span class="line"><span class="cl">&gt;
+</span></span><span class="line"><span class="cl">&lt; HTTP/1.1 <span class="m">301</span> Moved Permanently
+</span></span><span class="line"><span class="cl">&lt; Content-Length: <span class="m">0</span>
+</span></span><span class="line"><span class="cl">&lt; Location: https://github.com/
+</span></span><span class="line"><span class="cl">&lt;
+</span></span><span class="line"><span class="cl">* Connection <span class="c1">#0 to host 127.0.0.1 left intact</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>竟然请求成功了，github.com返回成功结果啦!</p>
+<p>这意味着我们真的破解网络的限制，可以访问任意的网站啦！</p>
+<p>此次，我们之前并没有意识到 xray 还有此种妙用 :)</p>
+<p>这里我们就利用了一个简单的思维惯性：不是所有使用53端口的服务都是DNS查询请求。</p>
+<h2 id="终极思路-dns-tunnel"><span class="section-num">5</span> 终极思路: DNS Tunnel</h2>
+<p>如果思路2还是无法成功，我们还有一个终极大招可以用。</p>
+<p>现在网关是只通过端口是否是53来判断是否是DNS请求，
+但是如果网关更严格一些，比如检查DNS请求包的内容，就会发现我们的请求是「伪装」成DNS查询请求，而非真正的DNS查询请求：</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-48842" hidden>
+    <label for="zoomCheck-48842">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/intercept-dns-request.png"/> 
+    
+    
+    </label>
+</figure>
+
+<p>既然伪装的DNS请求会被拦截掉，那么我们就把所有请求都塞成DNS请求包里面，做成DNS TXT query，我真的是要查 DNS 了，只是还在里面加了些料：</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-43099" hidden>
+    <label for="zoomCheck-43099">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/dns-tunnel.png"/> 
+    
+    
+    </label>
+</figure>
+
+<p>但是这个终极方案需要有一个DNS Tunnel 的客户端来把所有的请求都封装起来，我电脑里面没有这样的软件，所以这个就变成理论上的终极方案，实际也无法验证。</p>
+<h2 id="结语"><span class="section-num">6</span> 结语</h2>
+<p>长途漫漫，我和室友花费了大概4个小时的时间远程把网络限制给破解了，玩得不亦乐乎，证明我们解决问题的思路着实是可行的。</p>
+<p>方案能最后实施成功，主要是归功于我室友这个网络专家，远程连线提供技术和思路支持。</p>
+<p>美中不足的是，虽然我们破解了网络限制，可以访问任意网站，但是飞机上的带宽实在是太小的，
+打开网页实在是费劲，所以我也没有花太多时间上网冲浪。</p>
+<p>剩下的几个小时时间，我是重温了一下八十年代的经典穿越科幻电影：《<a href="https://movie.douban.com/subject/1300555/">回到未来(Back to Future)</a>》<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>三部曲，相当好看.</p>
+<p>最后，我在此严正声明：</p>
+<p>这种技术探索仅限于学习和研究目的，我们严格遵守相关规定和服务条款。</p>
+<h3 id="推荐阅读">推荐阅读</h3>
+<ul>
+<li>旅加经历
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E8%BF%99%E4%BA%9B%E5%B9%B4%E8%B5%B0%E8%BF%87%E7%9A%84%E8%B7%AF_%E4%BB%8E%E5%B9%BF%E5%B7%9E%E5%88%B0%E6%B8%A9%E5%93%A5%E5%8D%8E/">这些年走过的路：从广州到温哥华</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B9%8B%E5%88%9D%E4%BD%93%E9%AA%8C/">加拿大之初体验</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%99%BB%E9%99%86%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B8%80%E5%B9%B4%E7%9A%84%E4%BD%93%E4%BC%9A/">登陆加拿大一年后的体会</a></li>
+</ul>
+</li>
+<li>工具流分享
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%AE%80%E6%98%8E%E5%86%99%E4%BD%9C%E6%8C%87%E5%8D%97/">简明写作指南</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E5%86%99%E4%BD%9C%E6%B5%81/">我的写作流</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E7%94%BB%E5%9B%BE%E6%B5%81/">我的画图流：画图工具与技巧分享</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E6%90%9C%E7%B4%A2%E6%B5%81/">我的搜索流：高效搜索经验分享</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2022/feynman_technique/">最好的学习方式：费曼学习法(Feynman Technique)</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2021/%E7%B3%BB%E7%BB%9F%E6%80%9D%E8%80%83/">系统思考：既见树木，又见森林</a></li>
+</ul>
+</li>
+<li>思考感悟
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%BC%96%E7%A8%8B%E5%8D%81%E5%B9%B4%E7%9A%84%E6%84%9F%E6%82%9F/">编程十年的感悟</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E4%BB%8E%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E7%A6%BB%E7%BA%BF_%E6%88%91%E5%B8%A6%E8%B5%B0%E4%BA%86%E4%BB%80%E4%B9%88/">那些年，我从微信支付学到的东西</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2025/%E6%9D%82%E8%B0%88ai%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98/">杂谈ai取代程序员</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E7%BD%AE%E8%BA%AB%E4%BA%8B%E5%86%85/">为什么梦想买不起，故乡回不去</a></li>
+</ul>
+</li>
+<li>软件工程
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2025/a_philosophy_of_software_design/">软件设计的哲学</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2025/structure_and_interpretation_of_computer_programs/">一本读了八年还没读完的书</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%80_%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E8%AE%A4%E7%9F%A5/">测试技能进阶(一): 软件质量认知</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/">测试技能进阶(二): Parameterized Tests</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%89_property_based_testing/">测试技能进阶(三): Property Based Testing</a></li>
+</ul>
+</li>
+</ul>
+<div class="qr-container" center>
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" class="qr-container" width="160px" height="160px" center="t" />
+公号同步更新，欢迎关注👻
+</div>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://github.com/XTLS/Xray-core">https://github.com/XTLS/Xray-core</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://movie.douban.com/subject/1300555/">https://movie.douban.com/subject/1300555/</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+]]></content:encoded>
+    </item>
     <item>
       <title>Telegram频道精华贴检索机器人</title>
       <link>https://ramsayleung.github.io/zh/post/2025/telegram%E9%A2%91%E9%81%93%E6%A3%80%E7%B4%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/</link>
@@ -3741,1290 +4370,6 @@
 </li>
 </ol>
 </div>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>重新造轮子系列(四)：正则表达式引擎</title>
-      <link>https://ramsayleung.github.io/zh/post/2025/reinvent_regex/</link>
-      <pubDate>Sat, 15 Mar 2025 11:01:00 -0700</pubDate>
-      <guid>https://ramsayleung.github.io/zh/post/2025/reinvent_regex/</guid>
-      <description>&lt;p&gt;项目 GitHub 地址: &lt;a href=&#34;https://github.com/ramsayleung/reinvent/tree/master/regular_expression&#34;&gt;Regex&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
-&lt;p&gt;所谓的正则表达式，指的是由一系列字符和特殊字符组成的模式，用于描述要匹配的文本。&lt;/p&gt;
-&lt;p&gt;最开始是一位叫 &lt;a href=&#34;https://en.wikipedia.org/wiki/Stephen_Cole_Kleene&#34;&gt;Stephen Cole Kleene&lt;/a&gt; 的数学家用被他称为 Regular Events 的数学表达式来描述这一模型，在 1968 年，由C语言之父 Ken Tompson 将这个表达式引入到行编辑器 &lt;a href=&#34;https://en.wikipedia.org/wiki/QED_%28text_editor%29&#34;&gt;QED&lt;/a&gt;, 随后是 Unix 上的编辑器 &lt;a href=&#34;https://en.wikipedia.org/wiki/Ed_%28software%29&#34;&gt;ed&lt;/a&gt; (vi 的前身) ，并最终引入到 &lt;a href=&#34;https://en.wikipedia.org/wiki/Grep&#34;&gt;grep&lt;/a&gt;.&lt;/p&gt;</description>
-      <content:encoded><![CDATA[<p>项目 GitHub 地址: <a href="https://github.com/ramsayleung/reinvent/tree/master/regular_expression">Regex</a></p>
-<h2 id="前言"><span class="section-num">1</span> 前言</h2>
-<p>所谓的正则表达式，指的是由一系列字符和特殊字符组成的模式，用于描述要匹配的文本。</p>
-<p>最开始是一位叫 <a href="https://en.wikipedia.org/wiki/Stephen_Cole_Kleene">Stephen Cole Kleene</a> 的数学家用被他称为 Regular Events 的数学表达式来描述这一模型，在 1968 年，由C语言之父 Ken Tompson 将这个表达式引入到行编辑器 <a href="https://en.wikipedia.org/wiki/QED_%28text_editor%29">QED</a>, 随后是 Unix 上的编辑器 <a href="https://en.wikipedia.org/wiki/Ed_%28software%29">ed</a> (vi 的前身) ，并最终引入到 <a href="https://en.wikipedia.org/wiki/Grep">grep</a>.</p>
-<p>我一直很好奇正则表达式 (regular expression, 即 <code>Regex</code> ) 是怎么实现的，自正则表达式被引入编程语言之后 之后，可谓说有字符串的地方就基本有正则表达式。</p>
-<p>想起个关于 <code>Regex</code> 的经典笑话:</p>
-<blockquote>
-<p>程序员A：我有个问题，想用正则表达式解决。</p>
-<p>程序员B：现在你有两个问题了。</p></blockquote>
-<h2 id="需求"><span class="section-num">2</span> 需求</h2>
-<p>完整版本的正则表达式非常复杂，我们的实现不会覆盖所有的规则，所以先来看下我们要支持的正则表达式规则：</p>
-<table>
-  <thead>
-      <tr>
-          <th>含义</th>
-          <th>字符</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>任意的字符 <code>c</code></td>
-          <td><code>c</code></td>
-      </tr>
-      <tr>
-          <td>任意的单个字符</td>
-          <td><code>.</code></td>
-      </tr>
-      <tr>
-          <td>匹配开头的字符</td>
-          <td><code>^</code></td>
-      </tr>
-      <tr>
-          <td>匹配结尾的字符</td>
-          <td><code>$</code></td>
-      </tr>
-      <tr>
-          <td>匹配零个或多个的字符</td>
-          <td><code>*</code></td>
-      </tr>
-  </tbody>
-</table>
-<p>虽然这五条原则看起来不是很多，但是已经覆盖日常开发绝大多数的场景了。</p>
-<p>比如 <code>^ab*c</code> 就意味着匹配以 <code>a</code> 开头，并且0到无数个的 <code>b</code>, 再接一个字符 <code>c</code>, 所以它能匹配:
-<code>ac</code>, <code>abc</code> 以及 <code>abbbbbc</code></p>
-<h2 id="初始版本"><span class="section-num">3</span> 初始版本</h2>
-<p>根据上面的需求，可以使用40行不到的代码就实现一个简单的递归版本的正则表达式引擎：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">match</span> <span class="o">=</span> <span class="p">(</span><span class="nx">pattern</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">// &#39;^&#39; at start of pattern matches start of next.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">if</span> <span class="p">(</span><span class="nx">pattern</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="s1">&#39;^&#39;</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">matchHere</span><span class="p">(</span><span class="nx">pattern</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">text</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1">// Try all possible starting points for pattern.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kd">let</span> <span class="nx">iText</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">do</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">matchHere</span><span class="p">(</span><span class="nx">pattern</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">text</span><span class="p">,</span> <span class="nx">iText</span><span class="p">))</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">iText</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="nx">iText</span> <span class="o">&lt;</span> <span class="nx">text</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1">// Nothing worked.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">matchHere</span> <span class="o">=</span> <span class="p">(</span><span class="nx">pattern</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">patternIndex</span><span class="o">:</span> <span class="nx">number</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">textIndex</span><span class="o">:</span> <span class="nx">number</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">// There is no more pattern to match.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">if</span> <span class="p">(</span><span class="nx">patternIndex</span> <span class="o">===</span> <span class="nx">pattern</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1">// &#39;$&#39; at end of pattern matches end of text.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">if</span> <span class="p">((</span><span class="nx">patternIndex</span> <span class="o">===</span> <span class="p">(</span><span class="nx">pattern</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">pattern</span><span class="p">[</span><span class="nx">patternIndex</span><span class="p">]</span> <span class="o">===</span> <span class="s1">&#39;$&#39;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">textIndex</span> <span class="o">===</span> <span class="nx">text</span><span class="p">.</span><span class="nx">length</span><span class="p">))</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1">// &#39;*&#39; following current character means zero or more.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">if</span> <span class="p">(((</span><span class="nx">pattern</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="nx">patternIndex</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">pattern</span><span class="p">[</span><span class="nx">patternIndex</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">===</span> <span class="s1">&#39;*&#39;</span><span class="p">))</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// Try matching zero occurences(skip the current char and the &#39;*&#39;)
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="nx">matchHere</span><span class="p">(</span><span class="nx">pattern</span><span class="p">,</span> <span class="nx">patternIndex</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">text</span><span class="p">,</span> <span class="nx">textIndex</span><span class="p">))</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// Try matching one or more occurences
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">while</span> <span class="p">((</span><span class="nx">textIndex</span> <span class="o">&lt;</span> <span class="nx">text</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">pattern</span><span class="p">[</span><span class="nx">patternIndex</span><span class="p">]</span> <span class="o">===</span> <span class="s1">&#39;.&#39;</span> <span class="o">||</span> <span class="nx">text</span><span class="p">[</span><span class="nx">textIndex</span><span class="p">]</span> <span class="o">===</span> <span class="nx">pattern</span><span class="p">[</span><span class="nx">patternIndex</span><span class="p">]))</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="c1">// Try to match the rest of pattern after consuming this
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="c1">// character
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="k">if</span> <span class="p">(</span><span class="nx">matchHere</span><span class="p">(</span><span class="nx">pattern</span><span class="p">,</span> <span class="nx">patternIndex</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">text</span><span class="p">,</span> <span class="nx">textIndex</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">      <span class="p">}</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">textIndex</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// if there is any match, it will return early in the while loop,
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// so when reach this statement, it means nothing found.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1">// Match a single chacater.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">if</span> <span class="p">(</span><span class="nx">textIndex</span> <span class="o">&lt;</span> <span class="nx">text</span><span class="p">.</span><span class="nx">length</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">pattern</span><span class="p">[</span><span class="nx">patternIndex</span><span class="p">]</span> <span class="o">===</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="nx">pattern</span><span class="p">[</span><span class="nx">patternIndex</span><span class="p">]</span> <span class="o">===</span> <span class="nx">text</span><span class="p">[</span><span class="nx">textIndex</span><span class="p">]))</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">matchHere</span><span class="p">(</span><span class="nx">pattern</span><span class="p">,</span> <span class="nx">patternIndex</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">text</span><span class="p">,</span> <span class="nx">textIndex</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1">// Nothing worked.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>实现思路如下图:</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-26048" hidden>
-    <label for="zoomCheck-26048">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_simple_regex_design.png"/> 
-    
-    
-    </label>
-</figure>
-
-<p>好的，我们的正则表达式引擎完工了，正则表达式看起来也没有那么难嘛。</p>
-<p>只是用是能用的，但是看起来不同含义的字符都耦合在 <code>matchHere</code> 函数了，想要支持新的字符匹配(例如 <code>+</code>, 或者 <code>|</code> )很难扩展。</p>
-<h2 id="面向对象版本"><span class="section-num">4</span> 面向对象版本</h2>
-<h3 id="接口"><span class="section-num">4.1</span> 接口</h3>
-<p>再来思考一下版本1的问题:</p>
-<p>我们把不同模式的符号都耦合在同一个函数中。</p>
-<p>在讨论解耦方式之前，先来观察下每个模式的共同点，以便我们抽象接口。</p>
-<p>以最简单的 <code>^c</code> 模式为例，我们需要将 <code>c</code> 与给定的文本 <code>abc</code> 和 <code>cde</code> 作比较，首先匹配第一个字符，如果匹配失败(如 <code>abc</code>)，则直接结束； 如果匹配第一个字符成功（=cde=）, 那么就匹配剩余的其他字符, 直到模式匹配结束.</p>
-<p>那么对于精确匹配字符的模式 <code>Literal</code> 而言，入参就是字符 <code>c</code> 和文本 <code>text</code>, 返回结果就是true/false, 用来表示是否匹配成功.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">literal_match</span> <span class="o">=</span> <span class="p">(</span><span class="nx">pattern</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">=&gt;</span> <span class="p">{}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>如果不同的模式匹配都使用这个函数签名的话，每次匹配之后，都需要把剩下需要匹配的文本给复制出来，频繁拷贝字符串可能会导致性能开销很大。</p>
-<p>我们可以做个小优化, 通过下标 <code>start</code> 来指定需要匹配的文本, 就可以在不同的模式中都只使用同一份的字符串，避免了多次拷贝的开销。</p>
-<p>而返回结果也不再是 boolean, 而是下一个模式需要匹配的下标。</p>
-<p>比如 <code>^c</code> 来匹配 <code>cde</code> ，匹配成功之后就返回 <code>1</code>, 就意味着下个模式从 <code>1</code>, 也就是 <code>d</code> 开始匹配.</p>
-<p>那匹配失败要怎么表示？这个也很简单，返回一个不合法的下标，比如 <code>-1</code> 即可，那么我们的模式的函数接口就变成:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">literal_match</span> <span class="o">=</span> <span class="p">(</span><span class="nx">pattern</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">index</span><span class="o">:</span> <span class="nx">number</span><span class="p">)</span><span class="o">:</span> <span class="nx">number</span> <span class="p">=&gt;</span> <span class="p">{}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="模板设计模式"><span class="section-num">4.2</span> 模板设计模式</h3>
-<p>既然版本一提到了 <code>matchHere</code> 实现耦合在一起，那么有什么方式可以实现解耦呢？</p>
-<p>其中的一个经典解决方式就是面向对象编程(Object Oriented Programming)，这也是面向对象编程的设计初衷。</p>
-<p>既然前面实现的缺点是不同的模式耦合在一起，那么我们可以把每种模式实现成一个函数或者一个类，然后再通过某种模式给组合起来。</p>
-<p>既然用到 OOP, 那么自然少不了设计模式了。如果使用一种模式表示成一个类，那么会是哪种设计模式呢？</p>
-<p>要不就是<a href="https://refactoring.guru/design-patterns/strategy">策略模式(strategy)</a>:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ConcreteAlgorithm</span> <span class="o">:</span> <span class="n">IAlgorithm</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">DoAlgorithm</span><span class="p">(</span><span class="kt">int</span> <span class="n">datum</span><span class="p">)</span> <span class="p">{...}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Strategy</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Strategy</span><span class="p">(</span><span class="n">IAlgorithm</span> <span class="n">algo</span><span class="p">)</span> <span class="p">{...}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">run</span><span class="p">(</span><span class="kt">int</span> <span class="n">datum</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">algo</span><span class="p">.</span><span class="n">DoAlgorithm</span><span class="p">(</span><span class="n">datum</span><span class="p">);</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>要么就是<a href="https://refactoring.guru/design-patterns/template-method">模板方法(template method)</a>:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ConcreteAlgorithm</span> <span class="o">:</span> <span class="n">AbstractTemplate</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">DoAlgorithm</span><span class="p">(</span><span class="kt">int</span> <span class="n">datum</span><span class="p">)</span> <span class="p">{...}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">AbstractTemplate</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">run</span><span class="p">(</span><span class="kt">int</span> <span class="n">datum</span><span class="p">)</span> <span class="p">{</span> <span class="n">DoAlgorithm</span><span class="p">(</span><span class="n">datum</span><span class="p">);</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">DoAlgorithm</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// abstract
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>看起来好像都可以，那不如就使用模板方式吧。</p>
-<h3 id="单向链表"><span class="section-num">4.3</span> 单向链表</h3>
-<p>那么就让我们来定义个基类 <code>RegexBase</code> :</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">INVALID_INDEX</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">abstract</span> <span class="kr">class</span> <span class="nx">RegexBase</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">// index to continue matching at or -1 indicating that matching failed
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kr">abstract</span> <span class="nx">_match</span><span class="p">(</span><span class="nx">text</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">start</span><span class="o">:</span> <span class="nx">number</span><span class="p">)</span><span class="o">:</span> <span class="nx">number</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">abstract</span> <span class="nx">rest</span><span class="o">:</span> <span class="nx">RegexBase</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="nx">match</span><span class="p">(</span><span class="nx">text</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// check if the pattern matches at the start of the string
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_match</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">!==</span> <span class="nx">INVALID_INDEX</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">text</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_match</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="o">!==</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">      <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>细看之下, 函数签名与我们上文讨论的有所不同，那是因为我们把模式 <code>pattern</code> 作为每个模式类的成员变量了，就不需要显式定义在 <code>_match</code> 函数中了。</p>
-<p>再来看下我们精确匹配字符的 <code>Lit</code> 模式类的实现:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">class</span> <span class="nx">RegexLit</span> <span class="kr">extends</span> <span class="nx">RegexBase</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">private</span> <span class="nx">chars</span><span class="o">:</span> <span class="nx">string</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">rest</span><span class="o">:</span> <span class="nx">RegexBase</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">constructor</span><span class="p">(</span><span class="nx">chars</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">rest</span><span class="o">:</span> <span class="nx">RegexBase</span> <span class="o">|</span> <span class="kc">null</span> <span class="o">=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">super</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">chars</span> <span class="o">=</span> <span class="nx">chars</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">rest</span> <span class="o">=</span> <span class="nx">rest</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="nx">_match</span><span class="p">(</span><span class="nx">text</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">start</span><span class="o">:</span> <span class="nx">number</span><span class="p">)</span><span class="o">:</span> <span class="nx">number</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">nextIndex</span> <span class="o">=</span> <span class="nx">start</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">chars</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">nextIndex</span> <span class="o">&gt;</span> <span class="nx">text</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">INVALID_INDEX</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">text</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">start</span><span class="p">,</span> <span class="nx">nextIndex</span><span class="p">)</span> <span class="o">!==</span> <span class="k">this</span><span class="p">.</span><span class="nx">chars</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">INVALID_INDEX</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">rest</span> <span class="o">===</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">nextIndex</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">rest</span><span class="p">.</span><span class="nx">_match</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">nextIndex</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>实现很简单, 但 <code>rest</code> 又是什么呢?</p>
-<p>还是以 <code>^c</code> 为例, 现在改复杂一点, 模式变成 <code>^cd</code> 来匹配 <code>cde</code> ，模式 <code>^c</code> 匹配完 <code>c</code> 之后, 就要使用剩下的模式(<code>rest</code>) <code>d</code> 来匹配剩下的文本 <code>de</code>, 剩下的模式可能也会再包含剩下的模式，用来匹配再被剩下的文本，依此类推.</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-2d2c9" hidden>
-    <label for="zoomCheck-2d2c9">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_regex_rest_pointer.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>相当于 <code>rest</code> 就是指向下一个模式类的单向指针，用来表示下一个模式需要匹配剩余的文本，直到所有的模式匹配完成，即 <code>rest</code> 指针指向 <code>null</code></p>
-<p>所以模式 <code>cde</code> 就可以表示成 <code>Lit('c', Lit('d', Lit('e')))</code></p>
-<p>而所有的模式组合在一起，本质就是一条单向链条，而正则表达式就是判断是否存在依次匹配链表中所有模式的文本。</p>
-<h3 id="any-模式"><span class="section-num">4.4</span> Any 模式</h3>
-<p>Any 模式即 <code>*</code> 匹配 0到任意个前一个字符，与其类似的还有 Plus 模式，即 <code>+</code> 匹配1到任意个前一个字符字符；以及 <code>?</code> 表示匹配0到1个前一个字符，Any算是最有代表性和最难实现的模式。</p>
-<p>即 <code>a*b</code> 表示可以匹配0到任意个 <code>a</code> ，再匹配一个 <code>b</code> , 所以 <code>b</code>, <code>ab</code>, <code>aaaaaab</code> 它都可以匹配上。</p>
-<p>那么问题就来了，既然它可以匹配0到任意个字符，那么匹配的时候我要匹配几个字符呢？</p>
-<p>理论上有 <code>N</code> 个的可能性, N = 待匹配文本 <code>text</code> 的长度。</p>
-<p>既然不知道要匹配几个字符，那不如我们把所有可能性都穷举一次呗，而这种穷举算法，则被称为是<a href="https://labuladong.online/algo/essential-technique/backtrack-framework/#%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98%E8%A7%A3%E6%9E%90">回溯算法</a>(<a href="https://en.wikipedia.org/wiki/Backtracking">backtracking</a>)</p>
-<p>我们知道穷举的上界是 N(<code>N=len(text)</code>), 下界是 0, 那么是从 0 穷举到 <code>N</code>, 还是从 <code>N</code> 穷举到 <code>0</code> 呢？</p>
-<p>两种方法都可以解决问题，计算机科学家们还给这两种做法起了个洋气的名字， <code>N</code> -&gt; <code>0</code>, 因为是先开始匹配所有的字符，所以就被称为贪婪匹配 greedy(eager) matching.</p>
-<p>而从 <code>0</code> -&gt; <code>N</code>, 因为是从0开始，所以又被称为是惰性匹配 lazy matching。</p>
-<p>从性能的角度来说，是 <code>lazy matching</code> 更优，因为它尽可能地去掉了不必要的匹配了。</p>
-<p>我们可以先来看下贪婪匹配的实现，再看下惰性匹配：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">class</span> <span class="nx">RegexAny</span> <span class="kr">extends</span> <span class="nx">RegexBase</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">private</span> <span class="nx">child</span><span class="o">:</span> <span class="nx">RegexBase</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">private</span> <span class="nx">rest</span><span class="o">:</span> <span class="nx">RegexBase</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="nx">constructor</span><span class="p">(</span><span class="nx">child</span><span class="o">:</span> <span class="nx">RegexBase</span><span class="p">,</span> <span class="nx">rest</span><span class="o">:</span> <span class="nx">RegexBase</span> <span class="o">|</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">super</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">child</span> <span class="o">=</span> <span class="nx">child</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">rest</span> <span class="o">=</span> <span class="nx">rest</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="nx">_match</span><span class="p">(</span><span class="nx">text</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">start</span><span class="o">:</span> <span class="nx">number</span><span class="p">)</span><span class="o">:</span> <span class="nx">number</span> <span class="o">|</span> <span class="kc">null</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">maxPossible</span> <span class="o">=</span> <span class="nx">text</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="nx">start</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">num</span> <span class="o">=</span> <span class="nx">maxPossible</span><span class="p">;</span> <span class="nx">num</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">num</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="nx">afterMany</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_matchMany</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">num</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="nx">afterMany</span> <span class="o">!==</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">afterMany</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">      <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">undefined</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="nx">_matchMany</span><span class="p">(</span><span class="nx">text</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">start</span><span class="o">:</span> <span class="nx">number</span><span class="p">,</span> <span class="nx">num</span><span class="o">:</span> <span class="nx">number</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">num</span><span class="p">;</span> <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">start</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">child</span><span class="p">.</span><span class="nx">_match</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">start</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="nx">start</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">undefined</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">      <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">rest</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">rest</span><span class="p">.</span><span class="nx">_match</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">start</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">start</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><code>a*b</code> 会被解析成, <code>Any(Lit('a'), Lit('b'))</code>, 因为 <code>*</code> 表示匹配0到任意个前一个字符，前一个字符还可能另外一种模式，所以我们可以把前一个字符也解析成模式，作为 <code>child</code> 传入到 <code>Any</code>.</p>
-<p><code>_matchMany</code> 是从 <code>start</code> 匹配到 <code>start+num</code> 位置，看是否匹配，而 <code>maxPossible</code> 表示当前剩余文本中可能的最大匹配次数.</p>
-<p>以 <code>text = &quot;aab&quot;</code>, <code>start = 0</code>, <code>pattern = a*b</code> 为例， <code>maxPossible = len(text) = 3</code>,</p>
-<ol>
-<li>
-<p>第一轮尝试(<code>num=3</code>):</p>
-<ul>
-<li>尝试匹配 3 个 <code>a</code> -&gt; 失败(只有 2 个 <code>a</code>)</li>
-</ul>
-</li>
-<li>
-<p>第二轮尝试(<code>num=2</code>):</p>
-<ul>
-<li>匹配 2 个 =a=(位置 <code>0-&gt;1-&gt;2</code>)</li>
-<li>然后匹配 rest(b 在位置 <code>2-&gt;3</code>): 成功！</li>
-<li>返回 3</li>
-</ul>
-
-    <figure>
-        
-        
-        <input type="checkbox" id="zoomCheck-c2c3c" hidden>
-        <label for="zoomCheck-c2c3c">
-        
-        
-        <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_regex_match_aab.png"/> 
-        
-        
-        </label>
-    </figure>
-
-</li>
-</ol>
-<p>以及使用模式 <code>a*ab</code> 来匹配文本 <code>ab</code> 的过程:
-<img loading="lazy" src="/ox-hugo/reinvent_regex_match_ab.jpg"></p>
-<h3 id="支持的模式"><span class="section-num">4.5</span> 支持的模式</h3>
-<p>每种模式对应一个单独的类之后，再通过 <code>rest</code> 指针进行关联，现在的实现就非常易于扩展了，我们可以很容易地支持其他的模式，具体列表如下：</p>
-<table>
-  <thead>
-      <tr>
-          <th>含义</th>
-          <th>字符</th>
-          <th>例子</th>
-          <th>对应实现</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>任意的字符 <code>c</code></td>
-          <td><code>c</code></td>
-          <td><code>c</code> 匹配字符c</td>
-          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-lit.ts">Lit</a></td>
-      </tr>
-      <tr>
-          <td>任意的单个字符</td>
-          <td><code>.</code></td>
-          <td><code>.</code> 匹配任意字符</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td>匹配开头的字符</td>
-          <td><code>^</code></td>
-          <td><code>^c</code> 匹配以 <code>c</code> 开头的字符串</td>
-          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-start.ts">Start</a></td>
-      </tr>
-      <tr>
-          <td>匹配结尾的字符</td>
-          <td><code>$</code></td>
-          <td><code>c$</code> 匹配以 <code>c</code> 结尾的字符串</td>
-          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-end.ts">End</a></td>
-      </tr>
-      <tr>
-          <td>匹配零个或多个的字符</td>
-          <td><code>*</code></td>
-          <td><code>a*</code> 匹配0-任意个a的字符串, 贪婪匹配</td>
-          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-any.ts">GreedyAny</a></td>
-      </tr>
-      <tr>
-          <td>匹配零个或多个的字符</td>
-          <td><code>*</code></td>
-          <td><code>a*</code> 匹配0-任意个a的字符串, 惰性匹配</td>
-          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-lazy-any.ts">LazyAny</a></td>
-      </tr>
-      <tr>
-          <td>匹配一个或多个的字符</td>
-          <td><code>+</code></td>
-          <td><code>a+</code> 匹配1-任意个a的字符串</td>
-          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-plus.ts">Plus</a></td>
-      </tr>
-      <tr>
-          <td>匹配零个或一个的字符</td>
-          <td><code>?</code></td>
-          <td><code>a?</code> 匹配0-1个a的字符串</td>
-          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-opt.ts">Opt</a></td>
-      </tr>
-      <tr>
-          <td>多选一匹配</td>
-          <td><code>❘</code></td>
-          <td><code>a❘b</code> 匹配a或b的字符串</td>
-          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-alt.ts">Alt</a></td>
-      </tr>
-      <tr>
-          <td>序列匹配</td>
-          <td><code>()</code></td>
-          <td><code>(ab)</code> 匹配 ab 的字符串</td>
-          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-group.ts">Group</a></td>
-      </tr>
-      <tr>
-          <td>匹配方括号内的任意单个字符</td>
-          <td><code>[]</code></td>
-          <td><code>[abcd]</code> 匹配a或b或c或d的字符串</td>
-          <td><a href="https://github.com/ramsayleung/reinvent/blob/master/regular_expression/regex-charclass.ts">CharClass</a></td>
-      </tr>
-  </tbody>
-</table>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;Regex testsuite&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">it</span><span class="p">.</span><span class="nx">each</span><span class="p">([</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">)],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="s1">&#39;ba&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;ab&#39;</span><span class="p">)],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;^a&#39;</span><span class="p">,</span> <span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Start</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">))],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;^b&#39;</span><span class="p">,</span> <span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">Start</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">))],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;a$&#39;</span><span class="p">,</span> <span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">End</span><span class="p">())],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;a$&#39;</span><span class="p">,</span> <span class="s1">&#39;ba&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">End</span><span class="p">())],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;a*&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Any</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">))],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;a*&#39;</span><span class="p">,</span> <span class="s1">&#39;baac&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Any</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">))],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;ab*c&#39;</span><span class="p">,</span> <span class="s1">&#39;ac&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">Any</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)))],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;ab*c&#39;</span><span class="p">,</span> <span class="s1">&#39;acc&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">Any</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)))],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;ab*c&#39;</span><span class="p">,</span> <span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">Any</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)))],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;ab*c&#39;</span><span class="p">,</span> <span class="s1">&#39;abbbc&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">Any</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)))],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;ab*c&#39;</span><span class="p">,</span> <span class="s1">&#39;abxc&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">Any</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)))],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;ab*c&#39;</span><span class="p">,</span> <span class="s1">&#39;ac&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">LazyAny</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)))],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;ab*c&#39;</span><span class="p">,</span> <span class="s1">&#39;acc&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">LazyAny</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)))],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;ab*&#39;</span><span class="p">,</span> <span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">LazyAny</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">)))],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;ab+c&#39;</span><span class="p">,</span> <span class="s1">&#39;ac&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">Plus</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)))],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;ab+c&#39;</span><span class="p">,</span> <span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">Plus</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)))],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;a(b|c)d&#39;</span><span class="p">,</span> <span class="s1">&#39;xabdy&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">Alt</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)))],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;a(b|c)d&#39;</span><span class="p">,</span> <span class="s1">&#39;xabady&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">Alt</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)))],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;ab?c&#39;</span><span class="p">,</span> <span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">Opt</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)))],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;ab?c&#39;</span><span class="p">,</span> <span class="s1">&#39;acc&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">Opt</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)))],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;ab?c&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">Opt</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)))],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s2">&#34;[abcd]&#34;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">CharClass</span><span class="p">([</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)])],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s2">&#34;[abcd]&#34;</span><span class="p">,</span> <span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">CharClass</span><span class="p">([</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)])],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s2">&#34;[abcd]&#34;</span><span class="p">,</span> <span class="s1">&#39;xhy&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">CharClass</span><span class="p">([</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)])],</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s2">&#34;c[abcd]&#34;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="nx">CharClass</span><span class="p">([</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)]))],</span>
-</span></span><span class="line"><span class="cl">    <span class="p">])(</span><span class="s1">&#39;Regex base test (&#34;%s&#34; &#34;%s&#34; &#34;%p&#34;)&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">_pattern</span><span class="p">,</span> <span class="nx">text</span><span class="p">,</span> <span class="nx">expected</span><span class="p">,</span> <span class="nx">matcher</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kr">const</span> <span class="nx">actual</span> <span class="o">=</span> <span class="nx">matcher</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">text</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">expect</span><span class="p">(</span><span class="nx">actual</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="nx">expected</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">})</span>
-</span></span><span class="line"><span class="cl"><span class="p">});</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>顺便一提的是，这种相同的验证逻辑, 但是输入多个不同的参数以验证不同case的做法，叫做 <code>Parameterized Test</code></p>
-<p>我在《<a href="https://ramsayleung.github.io/zh/categories/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6/">测试技能进阶系列</a>》的第二篇也曾经介绍过： <a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/">Parameterized Tests</a></p>
-<p>这样我们就完成了一个功能较完整的正则表达式引擎了。</p>
-<h2 id="表达式解析"><span class="section-num">5</span> 表达式解析</h2>
-<p>虽然我们已经完成了一个正则表达式引擎，只不过我们平时用表达式是 <code>a*bc</code> ，现在要写成 <code>Any(Lit('a'), Lib('b', Lib('c')))</code> 多个类的实例也太烦琐了。</p>
-<p>让我们再来分析下正则表达式，以 <code>^(a|b|$)*z$</code> 为例，以任意数量的 <code>a</code>, <code>b</code>, 或 <code>$</code> 开头, 再紧接一个 <code>z</code>, 然后结束。</p>
-<p>我们可以创建一个树来表达这个表达式:</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-4379e" hidden>
-    <label for="zoomCheck-4379e">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_regex_express_as_tree.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>在考虑如何把表达式变成上面那棵树之前，我们可以先从最简单的步骤开始：分割字符串</p>
-<p>正如物理学家给不可再分的元素称之为「原子」(atom), 计算机科学家也给不可再分割的文本起了一个名字，称之为 <strong>token</strong>, 类似 <code>a</code>, <code>b</code>, <code>$</code>, <code>*</code> 这些都是 token，而把文本切分成 token 的过程，即为 <em>tokenize</em> 。</p>
-<p>不同的token可能代表不同的含义，像 <code>a</code>, <code>b</code>, <code>c</code> 这类，所以它们的值不同，但是它们都可以被称为字面量(Literal), 而像 <code>*</code>, <code>+</code>, <code>|</code>, <code>(</code>, <code>)</code> 这样的字符又各种其代表的含义, 如:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">SYMBOL_TOKEN_TYPE_MAP</span> <span class="o">=</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="s1">&#39;*&#39;</span><span class="o">:</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">Any</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">  <span class="s1">&#39;|&#39;</span><span class="o">:</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">Alt</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">  <span class="s1">&#39;(&#39;</span><span class="o">:</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">GroupStart</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">  <span class="s1">&#39;)&#39;</span><span class="o">:</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">GroupEnd</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>定义好 token 类型之后， <code>tokenize</code> 跃然纸上了：</p>
-<p>直接按照字符作匹配，如果能匹配上的就是特殊类型的 <code>Token</code> ，不然就是字面量:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">interface</span> <span class="nx">Token</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">kind</span><span class="o">:</span> <span class="nx">TokenKind</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">location</span><span class="o">:</span> <span class="nx">number</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">value</span><span class="o">?:</span> <span class="nx">string</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">tokenize</span> <span class="o">=</span> <span class="p">(</span><span class="nx">text</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">result</span><span class="o">:</span> <span class="nx">Token</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
-</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">text</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">text</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">c</span> <span class="k">in</span> <span class="nx">SIMPLE</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span> <span class="nx">kind</span><span class="o">:</span> <span class="nx">SIMPLE</span><span class="p">[</span><span class="nx">c</span><span class="p">],</span> <span class="nx">location</span><span class="o">:</span> <span class="nx">i</span> <span class="p">});</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">((</span><span class="nx">c</span> <span class="o">===</span> <span class="s1">&#39;^&#39;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">i</span> <span class="o">===</span> <span class="mi">0</span><span class="p">))</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span> <span class="nx">kind</span><span class="o">:</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">Start</span><span class="p">,</span> <span class="nx">location</span><span class="o">:</span> <span class="nx">i</span> <span class="p">});</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">((</span><span class="nx">c</span> <span class="o">===</span> <span class="s1">&#39;$&#39;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">i</span> <span class="o">===</span> <span class="p">(</span><span class="nx">text</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span> <span class="nx">kind</span><span class="o">:</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">End</span><span class="p">,</span> <span class="nx">location</span><span class="o">:</span> <span class="nx">i</span> <span class="p">});</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span> <span class="nx">kind</span><span class="o">:</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">Lit</span><span class="p">,</span> <span class="nx">location</span><span class="o">:</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="nx">c</span> <span class="p">});</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><code>^(a|b|$)*z$</code> 就会被解析成如下的结果:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="p">[</span>
-</span></span><span class="line"><span class="cl">  <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;kind&#34;</span><span class="o">:</span> <span class="s2">&#34;Start&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;location&#34;</span><span class="o">:</span> <span class="mi">0</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;kind&#34;</span><span class="o">:</span> <span class="s2">&#34;GroupStart&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;location&#34;</span><span class="o">:</span> <span class="mi">1</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;kind&#34;</span><span class="o">:</span> <span class="s2">&#34;Lit&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;location&#34;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;value&#34;</span><span class="o">:</span> <span class="s2">&#34;a&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;kind&#34;</span><span class="o">:</span> <span class="s2">&#34;Alt&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;location&#34;</span><span class="o">:</span> <span class="mi">3</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;kind&#34;</span><span class="o">:</span> <span class="s2">&#34;Lit&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;location&#34;</span><span class="o">:</span> <span class="mi">4</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;value&#34;</span><span class="o">:</span> <span class="s2">&#34;b&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;kind&#34;</span><span class="o">:</span> <span class="s2">&#34;Alt&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;location&#34;</span><span class="o">:</span> <span class="mi">5</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;kind&#34;</span><span class="o">:</span> <span class="s2">&#34;Lit&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;location&#34;</span><span class="o">:</span> <span class="mi">6</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;value&#34;</span><span class="o">:</span> <span class="s2">&#34;$&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;kind&#34;</span><span class="o">:</span> <span class="s2">&#34;GroupEnd&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;location&#34;</span><span class="o">:</span> <span class="mi">7</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;kind&#34;</span><span class="o">:</span> <span class="s2">&#34;Any&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;location&#34;</span><span class="o">:</span> <span class="mi">8</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;kind&#34;</span><span class="o">:</span> <span class="s2">&#34;Lit&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;location&#34;</span><span class="o">:</span> <span class="mi">9</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;value&#34;</span><span class="o">:</span> <span class="s2">&#34;z&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;kind&#34;</span><span class="o">:</span> <span class="s2">&#34;End&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;location&#34;</span><span class="o">:</span> <span class="mi">10</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">]</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="组装抽象语法树"><span class="section-num">6</span> 组装抽象语法树</h2>
-<p><code>tokenize</code> 的结果是一个包含 Token 的列表，我们要如何组装成树状数据结构呢？</p>
-<p>顺带一提，这树状数据结构全称是抽象语法树(Abstract syntax tree, AST), 是一种用来表示程序结构的数据结构，如:</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-7b55c" hidden>
-    <label for="zoomCheck-7b55c">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/Abstract_syntax_tree_for_Euclidean_algorithm.svg.png"/> 
-    
-    
-    </label>
-</figure>
-
-<p>我们可以分情况来讨论，因为不同的模式有不同的组装方式，组装完之后的 AST 的输出是一个 <code>output</code>, 包含组装后的 <code>token</code> 列表:</p>
-<p>对于表达式 <code>a</code>, 我们可以创建一个 <code>Lit</code> 类型的 <code>token</code> (为了便于理解，「创建」指创建一个 <code>token</code>, 然后插入到 <code>output</code>.)</p>
-<p>对于表达式 <code>a*</code> 呢？我们可以先创建一个 <code>Lit('a')</code> 的 <code>token</code>, 当遇到 <code>*</code> 时，因为 <code>*</code> 表示匹配0至任意的前一个字符, 所以我们可以创建一个 <code>Any</code> 类型的 token, 然后把 <code>output</code> 最后一个元素 <code>pop</code> 出来，作为 <code>Any</code> 的 <code>child</code> 元素.</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-63031" hidden>
-    <label for="zoomCheck-63031">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_regex_construct_ast_any.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>对于表达式 <code>(ab)</code>, 情况就变得复杂一些:
-当遇到 <code>(</code> 括号的时候，我们可以创建一个 <code>Group</code> ，但是问题在于，我们不知道这个 <code>Group</code> 什么时候结束，即不知道什么时候才会遇上 <code>)</code>.</p>
-<p>所以我们需要换种解决思路：当遇到 <code>(</code>, 创建一个 <code>GroupStart</code> 类型的 <code>token</code>, 然后再继续处理 <code>a</code>, <code>b</code>, 当遇到 <code>)</code> 时，创建一个 <code>Group</code> 类型的 <code>token</code>, 然后一直调用 <code>pop</code> 函数直到把 <code>GroupStart</code> 也 <code>pop</code> 出来, 然后把过程中 <code>pop</code> 出来的 <code>token</code> 都当作是 <code>Group</code> 的 <code>children</code> 列表，而 <code>GroupStart</code> 相当于起到一个标记符的作用。</p>
-<p>这种思路就自动处理了 <code>(a*)</code> 和 <code>(a(b*)c)</code> 的差异:</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-49c57" hidden>
-    <label for="zoomCheck-49c57">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_regex_ast_group.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>对于表达式 <code>a|b</code>, 我们是否可以参考 <code>Any</code> 的做法呢?</p>
-<p>遇到 <code>a</code> 的时候先创建一个 <code>Lit('a')</code>, 遇到 <code>|</code> 时再创建一个 <code>Alt</code>, 然后把 <code>Lit('a')</code> 从 <code>output</code> pop 出来作为 <code>left</code> 节点， 再遇到下一个字符 <code>b</code> 的时候，再把 <code>Alt</code> 从 output pop 出来，把 <code>b</code> 作为 <code>right</code> 节点。</p>
-<p>听起来没问题，但是上面的算法无法正确解析 <code>a|b*</code>, 它表示匹配一个 <code>a</code> 或者是任意数量的 <code>b</code>, 但是我们的做法会把它解析成 <code>(a|b)*</code>, 即任意数量的 <code>a</code> 或 <code>b</code>.</p>
-<p>更合理的做法是先部分组装 Alt 的 <code>left</code> 节点，等解析完所有字符之后，再重新解析一次，把 <code>right</code> 节点给组装上。</p>
-<p>以 <code>a|b*</code> 为例子:</p>
-<ol>
-<li>创建一个 <code>Lit('a')</code> token</li>
-<li>当遇到 <code>|</code> 的时候，创建一个 <code>Alt</code>, 并将 <code>Lit('a')</code> pop 出来作为 <code>left</code> 节点</li>
-<li>创建一个 <code>Lit('b')</code> token</li>
-<li>创建一个 <code>Any</code> token, 并将 <code>Lit('b')</code> pop 出来作为 <code>child</code> 节点.</li>
-<li>当解析完所有字符后, 再遍历一次 <code>output</code>, 如果遇到 <code>Alt</code> token, 那么就把它的下一个 <code>token</code> (即 <code>Any</code>) 作为它的 <code>right</code> 节点.</li>
-</ol>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-11542" hidden>
-    <label for="zoomCheck-11542">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reinvent_regex_ast_alt.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>实现代码如下:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
-</span><span class="lnt">60
-</span><span class="lnt">61
-</span><span class="lnt">62
-</span><span class="lnt">63
-</span><span class="lnt">64
-</span><span class="lnt">65
-</span><span class="lnt">66
-</span><span class="lnt">67
-</span><span class="lnt">68
-</span><span class="lnt">69
-</span><span class="lnt">70
-</span><span class="lnt">71
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">parse</span> <span class="o">=</span> <span class="p">(</span><span class="nx">text</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">result</span><span class="o">:</span> <span class="nx">Token</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">allTokens</span> <span class="o">=</span> <span class="nx">tokenize</span><span class="p">(</span><span class="nx">text</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">allTokens</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">token</span> <span class="o">=</span> <span class="nx">allTokens</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">isLast</span> <span class="o">=</span> <span class="nx">i</span> <span class="o">===</span> <span class="nx">allTokens</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">handle</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">token</span><span class="p">,</span> <span class="nx">isLast</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">compress</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">handle</span> <span class="o">=</span> <span class="p">(</span><span class="nx">result</span><span class="o">:</span> <span class="nx">Token</span><span class="p">[],</span> <span class="nx">token</span><span class="o">:</span> <span class="nx">Token</span><span class="p">,</span> <span class="nx">isLast</span><span class="o">:</span> <span class="kr">boolean</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span> <span class="o">===</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">Lit</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">token</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span> <span class="o">===</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">Start</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">assert</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Should not have start token after other tokens&#39;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">token</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span> <span class="o">===</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">End</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">assert</span><span class="p">(</span><span class="nx">isLast</span><span class="p">,</span> <span class="sb">`Should not have end token before other tokens`</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">token</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span> <span class="o">===</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">GroupStart</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">token</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span> <span class="o">===</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">GroupEnd</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">groupEnd</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">token</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span> <span class="o">===</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">Any</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">assert</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="sb">`No Operand for &#39;*&#39; (location </span><span class="si">${</span><span class="nx">token</span><span class="p">.</span><span class="nx">location</span><span class="si">}</span><span class="sb">)`</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">token</span><span class="p">.</span><span class="nx">child</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">token</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span> <span class="o">===</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">Alt</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">assert</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="sb">`No Operand for &#39;|&#39; (location </span><span class="si">${</span><span class="nx">token</span><span class="p">.</span><span class="nx">location</span><span class="si">}</span><span class="sb">)`</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">token</span><span class="p">.</span><span class="nx">left</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">token</span><span class="p">.</span><span class="nx">right</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">token</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">assert</span><span class="p">(</span><span class="kc">false</span><span class="p">,</span> <span class="sb">`UNIMPLEMENTED`</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">groupEnd</span> <span class="o">=</span> <span class="p">(</span><span class="nx">result</span><span class="o">:</span> <span class="nx">Token</span><span class="p">[],</span> <span class="nx">token</span><span class="o">:</span> <span class="nx">Token</span><span class="p">)</span><span class="o">:</span> <span class="nx">Token</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">group</span><span class="o">:</span> <span class="nx">Token</span> <span class="o">=</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">kind</span><span class="o">:</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">Group</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">location</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">end</span><span class="o">:</span> <span class="nx">token</span><span class="p">.</span><span class="nx">location</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">children</span><span class="o">:</span> <span class="p">[]</span>
-</span></span><span class="line"><span class="cl">  <span class="p">};</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">assert</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="sb">`Unmatched end parenthesis (location </span><span class="si">${</span><span class="nx">token</span><span class="p">.</span><span class="nx">location</span><span class="si">}</span><span class="sb">)`</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">child</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">child</span><span class="p">.</span><span class="nx">kind</span> <span class="o">===</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">GroupStart</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">group</span><span class="p">.</span><span class="nx">location</span> <span class="o">=</span> <span class="nx">child</span><span class="p">.</span><span class="nx">location</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">      <span class="k">break</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">group</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">unshift</span><span class="p">(</span><span class="nx">child</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">group</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">// go through the output list to fill in the right side of Alts:
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">compress</span> <span class="o">=</span> <span class="p">(</span><span class="nx">raw</span><span class="o">:</span> <span class="nx">Token</span><span class="p">[])</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">cooked</span><span class="o">:</span> <span class="nx">Token</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
-</span></span><span class="line"><span class="cl">  <span class="k">while</span> <span class="p">(</span><span class="nx">raw</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">token</span> <span class="o">=</span> <span class="nx">raw</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span> <span class="o">===</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">Alt</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">assert</span><span class="p">(</span><span class="nx">cooked</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="sb">`No right operand for alt (location </span><span class="si">${</span><span class="nx">token</span><span class="p">.</span><span class="nx">location</span><span class="si">}</span><span class="sb">)`</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">token</span><span class="p">.</span><span class="nx">right</span> <span class="o">=</span> <span class="nx">cooked</span><span class="p">.</span><span class="nx">shift</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">cooked</span><span class="p">.</span><span class="nx">unshift</span><span class="p">(</span><span class="nx">token</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">cooked</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>对于表达式 <code>a|(bc)</code>, 输出的 AST 如下:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="p">[</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">kind</span><span class="o">:</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">Alt</span><span class="p">,</span> <span class="nx">location</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">left</span><span class="o">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="nx">kind</span><span class="o">:</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">Lit</span><span class="p">,</span> <span class="nx">location</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;a&#39;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">},</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">right</span><span class="o">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="nx">kind</span><span class="o">:</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">Group</span><span class="p">,</span> <span class="nx">location</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">end</span><span class="o">:</span> <span class="mi">5</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">            <span class="nx">children</span><span class="o">:</span> <span class="p">[</span>
-</span></span><span class="line"><span class="cl">                <span class="p">{</span> <span class="nx">kind</span><span class="o">:</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">Lit</span><span class="p">,</span> <span class="nx">location</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;b&#39;</span> <span class="p">},</span>
-</span></span><span class="line"><span class="cl">                <span class="p">{</span> <span class="nx">kind</span><span class="o">:</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">Lit</span><span class="p">,</span> <span class="nx">location</span><span class="o">:</span> <span class="mi">4</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;c&#39;</span> <span class="p">},</span>
-</span></span><span class="line"><span class="cl">            <span class="p">]</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">},</span>
-</span></span><span class="line"><span class="cl"><span class="p">]</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="实例化"><span class="section-num">7</span> 实例化</h2>
-<p>既然抽象语法树 AST 已经就绪了，我们就差最后一步了，把 AST 转变为我们的类实例.</p>
-<p>还记得上文提到过, 不同的模式对应不同的类，然后通过 <code>rest</code> 指针指向下一个模式类，以此串成一个链表。</p>
-<p>那么我们对于 <code>output</code> 这个包含多个 token 的列表，我们可以抽象成两个 token, 当前 token 和下一个 token:</p>
-<p>假如我们有函数 <code>f</code> 可以把当前 <code>token</code> 初始化对应的模式类，我们只需要再把剩下的 token 列表初始化成 <code>rest</code>, 那么 <code>rest</code> 要怎么初始化呢？</p>
-<p>只需要再调用 <code>f</code> 即可.</p>
-<p>这不就是递归嘛! 是的，通过递归就很简单地把实例化也实现出来了:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">compile</span> <span class="o">=</span> <span class="p">(</span><span class="nx">text</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="nx">RegexBase</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">tokens</span><span class="o">:</span> <span class="nx">Token</span><span class="p">[]</span> <span class="o">=</span> <span class="nx">parse</span><span class="p">(</span><span class="nx">text</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">createObjectByAST</span><span class="p">(</span><span class="nx">tokens</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">// return instances of classes derived from RegexBase by abstract syntax tree
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">createObjectByAST</span> <span class="o">=</span> <span class="p">(</span><span class="nx">tokens</span><span class="o">:</span> <span class="nx">Token</span><span class="p">[])</span><span class="o">:</span> <span class="nx">RegexBase</span> <span class="o">|</span> <span class="kc">null</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">tokens</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">token</span> <span class="o">=</span> <span class="nx">tokens</span><span class="p">.</span><span class="nx">shift</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span> <span class="o">===</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">Lit</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">Lit</span><span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">createObjectByAST</span><span class="p">(</span><span class="nx">tokens</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span> <span class="o">===</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">Start</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">Start</span><span class="p">(</span><span class="nx">createObjectByAST</span><span class="p">(</span><span class="nx">tokens</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span> <span class="o">===</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">End</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">assert</span><span class="p">(</span><span class="nx">tokens</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">,</span> <span class="sb">`Should not have end token before other tokens`</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">End</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span> <span class="o">===</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">Alt</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">Alt</span><span class="p">(</span><span class="nx">createObjectByAST</span><span class="p">([</span><span class="nx">token</span><span class="p">.</span><span class="nx">left</span><span class="p">]),</span> <span class="nx">createObjectByAST</span><span class="p">([</span><span class="nx">token</span><span class="p">.</span><span class="nx">right</span><span class="p">]),</span> <span class="nx">createObjectByAST</span><span class="p">(</span><span class="nx">tokens</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span> <span class="o">===</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">Group</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">Group</span><span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">childToken</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">createObjectByAST</span><span class="p">([</span><span class="nx">childToken</span><span class="p">])),</span> <span class="nx">createObjectByAST</span><span class="p">(</span><span class="nx">tokens</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span> <span class="o">===</span> <span class="nx">TokenKind</span><span class="p">.</span><span class="nx">Any</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">Any</span><span class="p">(</span><span class="nx">createObjectByAST</span><span class="p">([</span><span class="nx">token</span><span class="p">.</span><span class="nx">child</span><span class="p">]),</span> <span class="nx">createObjectByAST</span><span class="p">(</span><span class="nx">tokens</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">assert</span><span class="p">(</span><span class="kc">false</span><span class="p">,</span> <span class="sb">`UNKNOWN token type </span><span class="si">${</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="总结"><span class="section-num">8</span> 总结</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">it</span><span class="p">.</span><span class="nx">each</span><span class="p">([</span>
-</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)],</span>
-</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="s1">&#39;^a&#39;</span><span class="p">,</span> <span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Start</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">))],</span>
-</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="s1">&#39;a$&#39;</span><span class="p">,</span> <span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">End</span><span class="p">())],</span>
-</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="s1">&#39;a*&#39;</span><span class="p">,</span> <span class="s1">&#39;baac&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Any</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">))],</span>
-</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="s1">&#39;ab+c&#39;</span><span class="p">,</span> <span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">Plus</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)))],</span>
-</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="s1">&#39;ab+c&#39;</span><span class="p">,</span> <span class="s1">&#39;abxc&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">Plus</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)))],</span>
-</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="s1">&#39;(ab)|(cd)&#39;</span><span class="p">,</span> <span class="s1">&#39;xaby&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Alt</span><span class="p">(</span><span class="nx">Group</span><span class="p">([</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">)]),</span> <span class="nx">Group</span><span class="p">([</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)]))],</span>
-</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="s1">&#39;a(b|c)d&#39;</span><span class="p">,</span> <span class="s1">&#39;xabdy&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">Group</span><span class="p">([</span><span class="nx">Alt</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">))],</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)))],</span>
-</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="s1">&#39;ab?c&#39;</span><span class="p">,</span> <span class="s1">&#39;ac&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">Opt</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)))],</span>
-</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="s1">&#39;ab?c&#39;</span><span class="p">,</span> <span class="s1">&#39;acc&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">Opt</span><span class="p">(</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)))],</span>
-</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="s2">&#34;[abcd]c&#34;</span><span class="p">,</span> <span class="s1">&#39;ac&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">CharClass</span><span class="p">([</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)],</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">))],</span>
-</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="s2">&#34;c[abcd]&#34;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="nx">CharClass</span><span class="p">([</span><span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">),</span> <span class="nx">Lit</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">)]))],</span>
-</span></span><span class="line"><span class="cl"><span class="p">])(</span><span class="s1">&#39;parse, compile and matcher test (&#34;%s&#34; &#34;%s&#34; &#34;%p&#34;)&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">pattern</span><span class="p">,</span> <span class="nx">text</span><span class="p">,</span> <span class="nx">expected</span><span class="p">,</span> <span class="nx">expectedMatcher</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">actualMatcher</span> <span class="o">=</span> <span class="nx">compile</span><span class="p">(</span><span class="nx">pattern</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">expect</span><span class="p">(</span><span class="nx">actualMatcher</span><span class="p">).</span><span class="nx">toStrictEqual</span><span class="p">(</span><span class="nx">expectedMatcher</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">actual</span> <span class="o">=</span> <span class="nx">actualMatcher</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">text</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">expect</span><span class="p">(</span><span class="nx">actual</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="nx">expected</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">})</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>大功告成，终于将所有的功能都组装起来实现这个正则表达式引擎了, 除去前文提到的功能之外，还实现了 <code>\*</code> 转义特殊字符， <code>[xya]</code> 匹配 <code>x</code>, <code>y</code>, <code>z</code> 其中任意字符，以及 <code>*?</code> 实现惰性匹配的功能。</p>
-<p>完整功能集的测试 case 可见 <a href="https://github.com/ramsayleung/reinvent/blob/master/__tests__/regular_expression/parser-test.ts">parser_test.ts</a></p>
-<p>日常使用正则表达式的场景非常多，因为其强大的功能和表达能力，总会下意识觉得很难实现（当然，高性能的完整版本的确是非常有挑战性的）。</p>
-<p>但是当自己把正则表达式引擎这个轮子拆开，再重新造一个出来之后，才感悟到：</p>
-<p>「没有启程的路才会遥不可及」，很多时候，困难只是我们给自己设下的心理障碍。</p>
-<p><a href="/zh/post/2025/reinvent_project/">回到本系列的目录</a></p>
-<h2 id="参考"><span class="section-num">9</span> 参考</h2>
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Stephen_Cole_Kleene">https://en.wikipedia.org/wiki/Stephen_Cole_Kleene</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Ed_%28software%29">https://en.wikipedia.org/wiki/Ed_(software)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Grep">https://en.wikipedia.org/wiki/Grep</a></li>
-<li><a href="https://third-bit.com/sdxjs/regex-parser/">https://third-bit.com/sdxjs/regex-parser/</a></li>
-<li><a href="https://third-bit.com/sdxjs/pattern-matching/">https://third-bit.com/sdxjs/pattern-matching/</a></li>
-</ul>
 ]]></content:encoded>
     </item>
   </channel>
