@@ -1,7 +1,7 @@
 +++
 title = "A Story About Bypassing Air Canada's In-flight Network Restrictions"
 date = 2025-10-10T15:29:00+08:00
-lastmod = 2025-10-11T14:09:49+08:00
+lastmod = 2025-10-11T19:37:44+08:00
 tags = ["network", "hacking"]
 draft = false
 toc = true
@@ -356,6 +356,6 @@ Last and not least, it's the disclaimer:
 
 This technical exploration is intended solely for educational and research purposes. We affirm our strict adherence to all relevant regulations and service terms throughout this project.
 
-Discuss this post on [HackerNews](https://news.ycombinator.com/item?id=45536325)
+Discuss this post on [HackerNews](https://news.ycombinator.com/item?id=45536325), or [Reddit](https://old.reddit.com/r/netsec/comments/1o3l1fy/a_story_about_bypassing_air_canadas_inflight/)
 
 [^fn:1]: <https://github.com/XTLS/Xray-core>
