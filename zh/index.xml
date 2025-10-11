@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Fri, 10 Oct 2025 23:51:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 11 Oct 2025 19:37:29 +0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>关于破解加拿大航空飞机网络限制的一件小事</title>
@@ -202,6 +202,34 @@
 </ol>
 <p>但实际是IP都直接拦截了，怎么伪装都没有用了，这个网络大概率维护了某个IP白名单（比如WhatsApp，微信的出口IP），
 只有在白名单的IP才可以访问。</p>
+<p>此外，舍友还建议我做了个额外的测试：</p>
+<blockquote>
+<p>舍友：我想看看TLS有没有被拦截。万一只拦截了ICMP没拦截TLS, 那就是虚惊一场。
+我：想得有点美好😂
+舍友：做安全的就是要每个都试试</p></blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; curl -Lkv https://172.67.133.121
+</span></span><span class="line"><span class="cl">*   Trying 172.67.133.121:443...
+</span></span><span class="line"><span class="cl">* Connected to 172.67.133.121 <span class="o">(</span>172.67.133.121<span class="o">)</span> port <span class="m">443</span>
+</span></span><span class="line"><span class="cl">* ALPN: curl offers h2,http/1.1
+</span></span><span class="line"><span class="cl">* <span class="o">(</span>304<span class="o">)</span> <span class="o">(</span>OUT<span class="o">)</span>, TLS handshake, Client hello <span class="o">(</span>1<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">* LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to 172.67.133.121:443
+</span></span><span class="line"><span class="cl">* Closing connection
+</span></span><span class="line"><span class="cl">curl: <span class="o">(</span>35<span class="o">)</span> LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to 172.67.133.121:443
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>不出意外，IP都被封了，TLS也没法建立连接。</p>
 <h2 id="思路2-53端口伪装dns"><span class="section-num">4</span> 思路2: 53端口伪装DNS</h2>
 <p>在第一条路子走不通的时候，室友提供了第二条路子：尝试利用DNS服务作为突破口:</p>
 <div class="highlight"><div class="chroma">
