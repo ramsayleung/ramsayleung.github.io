@@ -1,7 +1,7 @@
 +++
 title = "A Story About Bypassing Air Canada's In-flight Network Restrictions"
 date = 2025-10-10T15:29:00+08:00
-lastmod = 2025-10-10T23:49:32+08:00
+lastmod = 2025-10-11T14:09:49+08:00
 tags = ["network", "hacking"]
 draft = false
 toc = true
@@ -97,6 +97,27 @@ It seems this approach won't work. This approach might only work if:
 -   The network allows connections to arbitrary IP addresses
 
 After all, if the IPs are directly blocked, no amount of disguise will help. This network likely maintains some IP whitelist (such as WhatsApp and WeChat's egress IPs), and only IPs on the whitelist can be accessed.
+
+---
+
+> If a ping to a specific IP times out, I wouldn't say the IP is blocked. It could be that ICMP specifically is blocked, following some network rules on the firewall. This is pretty common in entreprise networks to not allow endpoint discovery. I could be missing something and happy to be corrected here, but I was surprised to read that. -- HackerNews top comment
+
+<https://news.ycombinator.com/item?id=45536325>
+
+Actually, I did verified whether only ICMP was blocked, was it possible to create a connection through TLS:
+
+```bash
+> curl -Lkv https://172.67.133.121
+*   Trying 172.67.133.121:443...
+* Connected to 172.67.133.121 (172.67.133.121) port 443
+* ALPN: curl offers h2,http/1.1
+* (304) (OUT), TLS handshake, Client hello (1):
+* LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to 172.67.133.121:443
+* Closing connection
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to 172.67.133.121:443
+```
+
+However, it turned out that both ICMP and TLS were blocked
 
 
 ## <span class="section-num">4</span> Approach 2: DNS Port Masquerading {#approach-2-dns-port-masquerading}
@@ -334,5 +355,7 @@ For the remaining hours, I rewatched the classic 80s time-travel movie: `"Back t
 Last and not least, it's the disclaimer:
 
 This technical exploration is intended solely for educational and research purposes. We affirm our strict adherence to all relevant regulations and service terms throughout this project.
+
+Discuss this post on [HackerNews](https://news.ycombinator.com/item?id=45536325)
 
 [^fn:1]: <https://github.com/XTLS/Xray-core>
