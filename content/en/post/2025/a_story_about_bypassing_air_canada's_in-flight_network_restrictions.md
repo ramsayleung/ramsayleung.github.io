@@ -1,7 +1,7 @@
 +++
 title = "A Story About Bypassing Air Canada's In-flight Network Restrictions"
 date = 2025-10-10T15:29:00+08:00
-lastmod = 2025-10-11T19:37:44+08:00
+lastmod = 2025-10-13T08:21:17+08:00
 tags = ["network", "hacking"]
 draft = false
 toc = true
@@ -339,7 +339,7 @@ Since disguised DNS requests would be blocked, we could embed all requests insid
 
 {{< figure src="/ox-hugo/dns-tunnel-en.png" >}}
 
-However, this ultimate approach requires a DNS Tunnel client to encapsulate all requests. I didn't have such software on my computer, so this remained a theoretical ultimate solution that couldn't be practically verified.
+However, this ultimate approach requires a DNS Tunnel client to encapsulate all requests(for example: <https://github.com/yarrick/iodine>). Unfortunately, I didn't have such software on my computer while I was on board, so this remained a theoretical ultimate solution that couldn't be practically verified.
 
 
 ## <span class="section-num">6</span> Conclusion {#conclusion}
