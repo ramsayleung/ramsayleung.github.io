@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>en</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sat, 11 Oct 2025 19:37:44 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 13 Oct 2025 08:21:17 +0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/en/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>A Story About Bypassing Air Canada&#39;s In-flight Network Restrictions</title>
@@ -614,7 +614,7 @@ But if the gateway were stricter and inspected the content of DNS request packet
     </label>
 </figure>
 
-<p>However, this ultimate approach requires a DNS Tunnel client to encapsulate all requests. I didn&rsquo;t have such software on my computer, so this remained a theoretical ultimate solution that couldn&rsquo;t be practically verified.</p>
+<p>However, this ultimate approach requires a DNS Tunnel client to encapsulate all requests(for example: <a href="https://github.com/yarrick/iodine">https://github.com/yarrick/iodine</a>). Unfortunately, I didn&rsquo;t have such software on my computer while I was on board, so this remained a theoretical ultimate solution that couldn&rsquo;t be practically verified.</p>
 <h2 id="conclusion"><span class="section-num">6</span> Conclusion</h2>
 <p>With the long journey ahead, my roommate and I spent about 4 hours remotely breaking through the network restrictions, having great fun in the process, proving that our problem-solving approach was indeed feasible.</p>
 <p>The successful implementation of the solution was mainly thanks to my roommate, the networking expert, who provided remote technical and conceptual support.</p>

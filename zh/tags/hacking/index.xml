@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sat, 11 Oct 2025 19:37:29 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 13 Oct 2025 08:22:19 +0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/hacking/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>关于破解加拿大航空飞机网络限制的一件小事</title>
@@ -615,7 +615,7 @@
     </label>
 </figure>
 
-<p>但是这个终极方案需要有一个DNS Tunnel 的客户端来把所有的请求都封装起来，我电脑里面没有这样的软件，所以这个就变成理论上的终极方案，实际也无法验证。</p>
+<p>但是这个终极方案需要有一个DNS Tunnel 的客户端（比如 <a href="https://github.com/yarrick/iodine">https://github.com/yarrick/iodine</a>） 来把所有的请求都封装起来，我电脑里面没有这样的软件，所以这个就变成理论上的终极方案，实际也无法验证。</p>
 <h2 id="结语"><span class="section-num">6</span> 结语</h2>
 <p>长途漫漫，我和室友花费了大概4个小时的时间远程把网络限制给破解了，玩得不亦乐乎，证明我们解决问题的思路着实是可行的。</p>
 <p>方案能最后实施成功，主要是归功于我室友这个网络专家，远程连线提供技术和思路支持。</p>
