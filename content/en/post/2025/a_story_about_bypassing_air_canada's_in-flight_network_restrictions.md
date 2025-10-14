@@ -1,7 +1,7 @@
 +++
 title = "A Story About Bypassing Air Canada's In-flight Network Restrictions"
 date = 2025-10-10T15:29:00+08:00
-lastmod = 2025-10-13T08:21:17+08:00
+lastmod = 2025-10-14T08:59:56+08:00
 tags = ["network", "hacking"]
 draft = false
 toc = true
@@ -357,5 +357,40 @@ Last and not least, it's the disclaimer:
 This technical exploration is intended solely for educational and research purposes. We affirm our strict adherence to all relevant regulations and service terms throughout this project.
 
 Discuss this post on [HackerNews](https://news.ycombinator.com/item?id=45536325), or [Reddit](https://old.reddit.com/r/netsec/comments/1o3l1fy/a_story_about_bypassing_air_canadas_inflight/)
+
+
+## <span class="section-num">7</span> Follow up: Can we bypass the speed limit? {#follow-up-can-we-bypass-the-speed-limit}
+
+> There's a speed limit. No matter what you try, you can't break through it.
+>
+> The bandwidth for free texting is the ultimate bottleneck. Even if you bypass the restrictions, without solving the bandwidth issue, you can't use it like paid Wi-Fi 😭
+
+This is a comment from a reader. Is this true?
+
+Not exactly.
+
+There are actually ways to bypass it. During communication on the network, there is no business marker indicating "paid user" attached.
+So, if I were designing this paid system, after a user pays, I would add the unique identifier of the paid user's device, typically the MAC address, to the gateway's whitelist. Then, all traffic from that MAC address could use the higher-bandwidth line.
+
+Furthermore, because of this whitelist, even if free users bypass the free texting restrictions, they still cannot enjoy the higher bandwidth – killing two birds with one stone.
+
+Once we guess this principle, I can "pretend to be a paid user."
+
+Since the MAC address is essentially assigned by the computer itself and then communicated to the gateway using the ARP protocol.
+
+The ARP (Address Resolution Protocol) is used to resolve an IP address into its corresponding MAC address. The basic idea of the ARP protocol is to broadcast an ARP request within the network:
+
+> Gateway: Whose IP address is 192.168.1.100? Please tell me your MAC address.
+> Device with that IP: I am 192.168.1.100, my MAC address is XX:XX:XX:XX:XX:XX.
+
+The ARP protocol itself has no security verification mechanism – it unconditionally trusts the received ARP replies. I could also tell the gateway that my IP address corresponds to the MAC address of a user who has already paid. This way, all traffic coming from me would enjoy the benefits of the paid line. This is the so-called ARP Spoofing.
+
+The final question is, how do we know which MAC address belongs to a paid user?
+
+It's quite easy, just brute-force: try every known MAC address in the network. If there is a paid user's MAC address, requests from that MAC address should definitely be able to access sites like YouTube/Netflix. This can easily be automated and detected with a script.
+
+My previous solution of disguising the DNS server would not affect the aircraft's network in any way, nor would it intrude into any aircraft systems. It's essentially the same as running a VPN on your computer that uses port 53.
+
+However, this ARP Spoofing method is very "criminal" – as it constitutes unauthorized access to the plane's network system. I'll just share the idea here; I don't want FBI or RCMP waiting for me at the gate when the airplane lands
 
 [^fn:1]: <https://github.com/XTLS/Xray-core>
