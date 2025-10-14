@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Mon, 13 Oct 2025 08:22:19 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 14 Oct 2025 08:58:27 +0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>关于破解加拿大航空飞机网络限制的一件小事</title>
@@ -624,6 +624,26 @@
 <p>剩下的几个小时时间，我是重温了一下八十年代的经典穿越科幻电影：《<a href="https://movie.douban.com/subject/1300555/">回到未来(Back to Future)</a>》<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>三部曲，相当好看.</p>
 <p>最后，我在此严正声明：</p>
 <p>这种技术探索仅限于学习和研究目的，我们严格遵守相关规定和服务条款。</p>
+<h2 id="后话-可以突破限速么"><span class="section-num">7</span> 后话：可以突破限速么?</h2>
+<blockquote>
+<p>有限速 你再怎么折腾也不可能把限速破了</p>
+<p>free texting的带宽才是最大限制。再怎么bypass不解决带宽问题也没办法像付费Wi-Fi一样用😭</p></blockquote>
+<p>这是来自于读者的评论，这个是真的么？</p>
+<p>也不尽然。</p>
+<p>其实还是有法子可以Bypass的，对于网络链路，通信的时候并不会带有「已付费用户」的业务标记信息，
+所以换我来设计这套付费系统，我会在用户付费之后，把付费用户的设备唯一标记，一般是 Mac 地址加入到网关白名单中，那么所有来自该Mac 地址 的流量都可以走更高带宽的线路；</p>
+<p>此外，也因为白名单的存在，即使绕过free texting 的限制，这些免费用户也无法享受更高的带宽，一举两得。</p>
+<p>猜到这个原理之后，我就可以「伪装成付费用户」。</p>
+<p>因为Mac 地址算是电脑自行指定的，然后用ARP 协议告诉网关的.</p>
+<p>所谓的ARP（Address Resolution Protocol）协议，就是将一个IP地址解析成对应的MAC地址。而ARP协议的工作原理就是在网络内广播ARP请求:</p>
+<blockquote>
+<p>网关：谁的IP地址是192.168.1.100？请告诉你的MAC地址。
+拥有该IP的设备：我是192.168.1.100，我的MAC地址是XX:XX:XX:XX:XX:XX。</p></blockquote>
+<p>ARP协议本身没有安全验证机制——它无条件信任收到的ARP应答，我可以也告诉网关的，我的IP 地址对应的也是已经付费的Mac 地址，这样所有从我这里来的流量，都是可以享受到付费线路，这个即所谓的 ARP欺骗（ARP Spoofing）</p>
+<p>最后一个问题是，怎么知道哪个是付费用户的Mac地址呢？</p>
+<p>很粗暴，把网络中所有知道的Mac地址都尝试一次，如果有付费的Mac 地址，来自该Mac地址的请求绝对是能访问类似 Youtube/Netflex 这样的网站的，这样用脚本非常容易来自动化检测到。</p>
+<p>我此前的伪装DNS 服务端口的方案不会对飞机网络有任何影响，也不会入侵任何的飞机系统，本质和在电脑上开个端口是53的VPN 是一样的。</p>
+<p>但是ARP欺骗这个方案就很「刑」，已经入侵飞机的网络系统，我就把思路分享出来就够了，我可不想去吃免费的皇家饭 :)</p>
 <h3 id="推荐阅读">推荐阅读</h3>
 <ul>
 <li>旅加经历

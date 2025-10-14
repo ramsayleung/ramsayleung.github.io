@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>en</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Mon, 13 Oct 2025 08:21:17 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 14 Oct 2025 08:59:56 +0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/en/tags/hacking/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>A Story About Bypassing Air Canada&#39;s In-flight Network Restrictions</title>
@@ -623,6 +623,26 @@ But if the gateway were stricter and inspected the content of DNS request packet
 <p>Last and not least, it&rsquo;s the disclaimer:</p>
 <p>This technical exploration is intended solely for educational and research purposes. We affirm our strict adherence to all relevant regulations and service terms throughout this project.</p>
 <p>Discuss this post on <a href="https://news.ycombinator.com/item?id=45536325">HackerNews</a>, or <a href="https://old.reddit.com/r/netsec/comments/1o3l1fy/a_story_about_bypassing_air_canadas_inflight/">Reddit</a></p>
+<h2 id="follow-up-can-we-bypass-the-speed-limit"><span class="section-num">7</span> Follow up: Can we bypass the speed limit?</h2>
+<blockquote>
+<p>There&rsquo;s a speed limit. No matter what you try, you can&rsquo;t break through it.</p>
+<p>The bandwidth for free texting is the ultimate bottleneck. Even if you bypass the restrictions, without solving the bandwidth issue, you can&rsquo;t use it like paid Wi-Fi 😭</p></blockquote>
+<p>This is a comment from a reader. Is this true?</p>
+<p>Not exactly.</p>
+<p>There are actually ways to bypass it. During communication on the network, there is no business marker indicating &ldquo;paid user&rdquo; attached.
+So, if I were designing this paid system, after a user pays, I would add the unique identifier of the paid user&rsquo;s device, typically the MAC address, to the gateway&rsquo;s whitelist. Then, all traffic from that MAC address could use the higher-bandwidth line.</p>
+<p>Furthermore, because of this whitelist, even if free users bypass the free texting restrictions, they still cannot enjoy the higher bandwidth – killing two birds with one stone.</p>
+<p>Once we guess this principle, I can &ldquo;pretend to be a paid user.&rdquo;</p>
+<p>Since the MAC address is essentially assigned by the computer itself and then communicated to the gateway using the ARP protocol.</p>
+<p>The ARP (Address Resolution Protocol) is used to resolve an IP address into its corresponding MAC address. The basic idea of the ARP protocol is to broadcast an ARP request within the network:</p>
+<blockquote>
+<p>Gateway: Whose IP address is 192.168.1.100? Please tell me your MAC address.
+Device with that IP: I am 192.168.1.100, my MAC address is XX:XX:XX:XX:XX:XX.</p></blockquote>
+<p>The ARP protocol itself has no security verification mechanism – it unconditionally trusts the received ARP replies. I could also tell the gateway that my IP address corresponds to the MAC address of a user who has already paid. This way, all traffic coming from me would enjoy the benefits of the paid line. This is the so-called ARP Spoofing.</p>
+<p>The final question is, how do we know which MAC address belongs to a paid user?</p>
+<p>It&rsquo;s quite easy, just brute-force: try every known MAC address in the network. If there is a paid user&rsquo;s MAC address, requests from that MAC address should definitely be able to access sites like YouTube/Netflix. This can easily be automated and detected with a script.</p>
+<p>My previous solution of disguising the DNS server would not affect the aircraft&rsquo;s network in any way, nor would it intrude into any aircraft systems. It&rsquo;s essentially the same as running a VPN on your computer that uses port 53.</p>
+<p>However, this ARP Spoofing method is very &ldquo;criminal&rdquo; – as it constitutes unauthorized access to the plane&rsquo;s network system. I&rsquo;ll just share the idea here; I don&rsquo;t want FBI or RCMP waiting for me at the gate when the airplane lands</p>
 <div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
