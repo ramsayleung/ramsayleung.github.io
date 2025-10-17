@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Tue, 14 Oct 2025 08:58:27 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 17 Oct 2025 09:58:16 +0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>关于破解加拿大航空飞机网络限制的一件小事</title>
@@ -204,9 +204,11 @@
 只有在白名单的IP才可以访问。</p>
 <p>此外，舍友还建议我做了个额外的测试：</p>
 <blockquote>
-<p>舍友：我想看看TLS有没有被拦截。万一只拦截了ICMP没拦截TLS, 那就是虚惊一场。
-我：想得有点美好😂
-舍友：做安全的就是要每个都试试</p></blockquote>
+<ul>
+<li>舍友：我想看看TLS有没有被拦截。万一只拦截了ICMP没拦截TLS, 那就是虚惊一场。</li>
+<li>我：想得有点美好😂</li>
+<li>舍友：做安全的就是要每个都试试</li>
+</ul></blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
