@@ -1,7 +1,7 @@
 +++
 title = "The Essence of Prompt Engineering is the Art of Asking Questions"
 date = 2025-10-25T20:18:00+08:00
-lastmod = 2025-10-25T21:52:23+08:00
+lastmod = 2025-10-25T22:17:43+08:00
 tags = ["ai"]
 draft = false
 toc = true
@@ -22,6 +22,8 @@ has evolved into:
 > Code is cheap. Show me the prompts.
 
 {{< figure src="/ox-hugo/talk_is_cheap_show_me_the_prompt.jpg" >}}
+
+Original tweet: <https://x.com/tunguz/status/1856045530951917763?lang=en>
 
 But the core of effective AI interaction isn't about technical jargon—it's about ****how to ask questions effectively****.
 
@@ -164,6 +166,8 @@ This is the value of feedback.
 Additionally, saying "please" and "thank you" to AI might come in handy—just in case AI ever dominates human, it might spare you for having been polite:
 
 {{< figure src="/ox-hugo/be_polite_to_robot.jpg" >}}
+
+source: <https://old.reddit.com/r/comics/comments/x8bcu9/be_polite_to_robots/>
 
 
 ## <span class="section-num">8</span> Conclusion: Asking Questions is a Skill and an Attitude {#conclusion-asking-questions-is-a-skill-and-an-attitude}

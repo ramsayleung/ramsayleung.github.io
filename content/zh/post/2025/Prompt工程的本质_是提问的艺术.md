@@ -1,7 +1,7 @@
 +++
 title = "Prompt 工程的本质，是提问的艺术"
 date = 2025-10-25T20:18:00+08:00
-lastmod = 2025-10-25T21:51:09+08:00
+lastmod = 2025-10-25T22:17:51+08:00
 tags = ["ai"]
 draft = false
 toc = true
@@ -23,6 +23,8 @@ AI 爱好者热衷于分享 prompt、研究 token 控制、调试 temperature �
 > Code is cheap. Show me the prompts.
 
 {{< figure src="/ox-hugo/talk_is_cheap_show_me_the_prompt.jpg" >}}
+
+原推: <https://x.com/tunguz/status/1856045530951917763?lang=en>
 
 但其实， 高效与 AI 交互的核心，并不是技术黑话，而是「如何有效地提问」
 
@@ -152,6 +154,8 @@ AI 不是你的私人助理，更不是替你思考的替身。
 此外，给AI说「请」还有「谢谢」还能以防万一，如果 AI 以后统治人类，还有可能会因为你曾经对它有礼貌而放你一马：
 
 {{< figure src="/ox-hugo/be_polite_to_robot.jpg" >}}
+
+来源：<https://old.reddit.com/r/comics/comments/x8bcu9/be_polite_to_robots/>
 
 
 ## <span class="section-num">8</span> 结语：提问是一种能力，也是一种尊重 {#结语-提问是一种能力-也是一种尊重}
