@@ -12,8 +12,161 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sun, 10 Aug 2025 00:06:15 -0700</lastBuildDate>
+    <lastBuildDate>Sat, 25 Oct 2025 21:51:09 +0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Prompt 工程的本质，是提问的艺术</title>
+      <link>https://ramsayleung.github.io/zh/post/2025/prompt%E5%B7%A5%E7%A8%8B%E7%9A%84%E6%9C%AC%E8%B4%A8_%E6%98%AF%E6%8F%90%E9%97%AE%E7%9A%84%E8%89%BA%E6%9C%AF/</link>
+      <pubDate>Sat, 25 Oct 2025 20:18:00 +0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2025/prompt%E5%B7%A5%E7%A8%8B%E7%9A%84%E6%9C%AC%E8%B4%A8_%E6%98%AF%E6%8F%90%E9%97%AE%E7%9A%84%E8%89%BA%E6%9C%AF/</guid>
+      <description>&lt;h2 id=&#34;引言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 引言&lt;/h2&gt;
+&lt;p&gt;在 AI 浪潮席卷全球的今天，&amp;ldquo;Prompt Engineer&amp;rdquo;（提示词工程师）成了热门词汇。&lt;/p&gt;
+&lt;p&gt;AI 爱好者热衷于分享 prompt、研究 token 控制、调试 temperature 参数。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="引言"><span class="section-num">1</span> 引言</h2>
+<p>在 AI 浪潮席卷全球的今天，&ldquo;Prompt Engineer&rdquo;（提示词工程师）成了热门词汇。</p>
+<p>AI 爱好者热衷于分享 prompt、研究 token 控制、调试 temperature 参数。</p>
+<p>各种梗图也从 Linux 之父 Linus Torvalds 的</p>
+<blockquote>
+<p>Talk is cheap. Show me the code.</p></blockquote>
+<p>演变成：</p>
+<blockquote>
+<p>Code is cheap. Show me the prompts.</p></blockquote>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-f61ab" hidden>
+    <label for="zoomCheck-f61ab">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/talk_is_cheap_show_me_the_prompt.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>但其实， 高效与 AI 交互的核心，并不是技术黑话，而是「如何有效地提问」</p>
+<p>早在 2001 年，Eric S. Raymond 和 Rick Moen 就写下了经典指南《<a href="http://www.catb.org/~esr/faqs/smart-questions.html">How To Ask Questions The Smart Way</a>》。</p>
+<p>它原本是在黑客文化兴起时，为开源社区中的技术求助者而写，但其原则出奇地适用于今天的 AI 交互 ——
+因为 <strong><strong>无论是求助专家还是大模型，本质上都是提供尽量多的有效信息，以期待尽快得到能解决问题的答案</strong></strong> 。</p>
+<p>在我的日常工作中，无论是向同事还是其他领域的专家提问，我仍能从中汲取智慧，快速获得所需答案。</p>
+<p>在 AI 新时代，我尝试把这瓶关于「提问的智慧」的旧酒，装到「Prompt Engineer」的新瓶里。</p>
+<h2 id="先做功课-别做伸手党"><span class="section-num">2</span> 先做功课，别做伸手党</h2>
+<blockquote>
+<p>在提问前，请先搜索、阅读文档、尝试自己解决。</p></blockquote>
+<p>AI 不是你的私人助理，更不是替你思考的替身。</p>
+<p>如果你连问题都没搞清楚就丢一句「帮我写个程序」，模型只能瞎猜。</p>
+<p>好的 Prompt 应体现你已做的努力 ：</p>
+<blockquote>
+<p>&ldquo;我尝试用 Python 的 requests 库抓取某网站，但返回 403 错误。我检查了网络连接，也添加了 User-Agent 请求头，但问题依旧。请问是否需要处理 Cookies 或考虑 JS 渲染？&rdquo;</p>
+<p>下面是我的报错日志:
+&hellip;</p></blockquote>
+<p>这不仅能让 AI 更精准地定位问题，也减少了它进行无效尝试的可能 。</p>
+<h2 id="描述现象-而非猜测原因"><span class="section-num">3</span> 描述现象，而非猜测原因</h2>
+<blockquote>
+<p>说‘鼠标光标变形了’，别说‘显卡驱动坏了’。</p></blockquote>
+<p>很多人喜欢在 Prompt 里预设结论：&ldquo;我的代码有内存泄漏&quot;&ldquo;这个 API 肯定有 bug&rdquo;。</p>
+<p>但 AI 没有上下文，无法验证你的假设。</p>
+<p>请提供可观察的事实 ：</p>
+<blockquote>
+<p>&ldquo;程序运行 10 分钟后，内存占用从 100MB 升至 2GB 且未见释放。这是我的核心代码片段和资源监控数据。&rdquo;</p></blockquote>
+<p>最常见的可观察事实就是日志和运行数据； 对于 UI 问题（如 CSS 渲染不符合预期），提供截图会非常有用。</p>
+<p>核心在于：你提供症状，让 AI 做分析推理。</p>
+<h2 id="目标导向-而非步骤导向"><span class="section-num">4</span> 目标导向，而非步骤导向</h2>
+<blockquote>
+<p>你想换轮胎，别只问「怎么用千斤顶」。</p></blockquote>
+<p>用户常陷入「路径依赖」：执着于某个工具或方法，却忘了最终目标。</p>
+<p>先说目标，再说卡点。</p>
+<p>不好的提问：</p>
+<ul>
+<li>步骤导向：「怎么在 Excel 里用 <code>VLOOKUP</code> 匹配两列数据？」</li>
+</ul>
+<p>好的提问：</p>
+<ul>
+<li>目标导向：「我想合并两个表格，根据 ID 列匹配信息。我试了 <code>VLOOKUP</code> 但返回 <code>#N/A</code> ，已确认两列数据格式均为文本。」</li>
+</ul>
+<p>这样，AI 才有可能建议你改用 <code>XLOOKUP</code>, <code>Power Query</code> ，甚至直接推荐使用 Python —— 给你更好的解决方案，而非仅仅完成你指定的步骤。</p>
+<h2 id="简洁-具体-结构化"><span class="section-num">5</span> 简洁、具体、结构化</h2>
+<blockquote>
+<p>文本长度 ≠ 信息量。</p>
+<p>一段 500 行的代码，其信息密度往往不如一个精心提炼的、10 行代码的最小复现案例。</p></blockquote>
+<p>大模型虽能处理长上下文，但 <strong><strong>噪声越多，有效信号越弱</strong></strong></p>
+<ul>
+<li>提供最小可复现示例</li>
+<li>明确输入、期望输出、实际输出</li>
+<li>用清晰的格式（如代码块、列表）组织信息</li>
+</ul>
+<p>例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">输入：[1, 2, &#39;3&#39;, 4]
+</span></span><span class="line"><span class="cl">期望：全部转为整数 → [1, 2, 3, 4]
+</span></span><span class="line"><span class="cl">实际：直接使用 int() 转换时报错
+</span></span><span class="line"><span class="cl">问题：如何安全地转换这种混合类型的列表？
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="别先求-完整答案-要-关键指引"><span class="section-num">6</span> 别先求「完整答案」，要「关键指引」</h2>
+<p>虽然 AI 的能力远超传统问答场景，但高效协作的关键并非「全盘托出」，而是「分步引导」。</p>
+<blockquote>
+<p>传统建议：问「哪里可以学？」比「教我全部」更高效。</p></blockquote>
+<p>在 AI 时代，虽然 AI 能直接输出完整答案，但「 先给思路、再选方案、后生成代码 」的分阶段交互模式，往往更高效、更可控，也能减少&quot;幻觉&rdquo;。</p>
+<p>这本质上是把 AI 当作「 协作者 」而非「答题机 」。</p>
+<p>更高效的协作模式：</p>
+<ol>
+<li>先让 AI 阐述解决思路</li>
+<li>提供2–3 个可行方案</li>
+<li>对比各方案的优劣（性能、可维护性、复杂度等）</li>
+<li>在人类确认方向后，再展开具体实现</li>
+</ol>
+<p>这种「分阶段协作」能显著减少幻觉、提升可控性，并让人类保持对关键决策的主导权。</p>
+<h2 id="礼貌-plus-闭环-长期共赢"><span class="section-num">7</span> 礼貌 + 闭环 = 长期共赢</h2>
+<blockquote>
+<p>一句「谢谢」不费事，但能让专家更愿意帮你。</p></blockquote>
+<p>虽然 AI 没有情感，但结构化的礼貌与反馈能塑造更高质量的交互 ：</p>
+<ul>
+<li>开头清晰说明背景，结尾表达感谢</li>
+<li>如果得到帮助，可追加反馈：「按你的建议修改后，问题解决了，谢谢！」</li>
+</ul>
+<p>这种反馈闭环对当前的静态 AI 模型虽不直接触发在线学习，但告知模型它的解决方案有效，相当于在模拟 <a href="https://en.wikipedia.org/wiki/Reinforcement_learning_from_human_feedback">RLHF（人类强化学习）</a> 的过程 。</p>
+<p>你越会提问、越会验证、越会修正，AI 在你手中就&quot;越像&quot;一个懂你的协作者。</p>
+<p>这就是闭环反馈的价值。</p>
+<hr>
+<p>此外，给AI说「请」还有「谢谢」还能以防万一，如果 AI 以后统治人类，还有可能会因为你曾经对它有礼貌而放你一马：</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-7f85c" hidden>
+    <label for="zoomCheck-7f85c">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/be_polite_to_robot.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<h2 id="结语-提问是一种能力-也是一种尊重"><span class="section-num">8</span> 结语：提问是一种能力，也是一种尊重</h2>
+<p>《提问的智慧》的核心不是「技巧」，而是态度 ：尊重他人的时间，尊重知识的边界，尊重问题本身的复杂性。</p>
+<p>在 AI 时代，我们拥有了前所未有的「全能即时专家」，但懒惰的提问只会得到平庸的回答 。</p>
+<p>真正高效的 Prompt Engineer，不是会背 prompt 的人，而是懂得如何与 AI 共建理解的人。
+（尽管当前的 AI 本质上仍是一个概率模型。）</p>
+<p>正如书中所言：</p>
+<blockquote>
+<p>Good questions are a stimulus and a gift. (好问题，本身就是一份礼物。)</p></blockquote>
+<h2 id="延伸阅读"><span class="section-num">9</span> 延伸阅读</h2>
+<ul>
+<li><a href="http://www.catb.org/~esr/faqs/smart-questions.html">How To Ask Questions The Smart Way (英文原文)</a></li>
+<li><a href="https://www.chiark.greenend.org.uk/~sgtatham/bugs.html">How to Report Bugs Effectively – Simon Tatham</a></li>
+</ul>
+]]></content:encoded>
+    </item>
     <item>
       <title>杂谈AI取代程序员</title>
       <link>https://ramsayleung.github.io/zh/post/2025/%E6%9D%82%E8%B0%88ai%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98/</link>

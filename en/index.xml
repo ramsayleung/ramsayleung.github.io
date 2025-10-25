@@ -12,8 +12,191 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>en</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Tue, 14 Oct 2025 08:59:56 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 25 Oct 2025 21:52:23 +0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/en/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Essence of Prompt Engineering is the Art of Asking Questions</title>
+      <link>https://ramsayleung.github.io/en/post/2025/the-essence-of-prompt-engineering-is-the-art-of-asking-questions/</link>
+      <pubDate>Sat, 25 Oct 2025 20:18:00 +0800</pubDate>
+      <guid>https://ramsayleung.github.io/en/post/2025/the-essence-of-prompt-engineering-is-the-art-of-asking-questions/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; Introduction&lt;/h2&gt;
+&lt;p&gt;In today&amp;rsquo;s AI-driven world, &amp;ldquo;Prompt Engineer&amp;rdquo; has become a buzzword.&lt;/p&gt;
+&lt;p&gt;AI enthusiasts are eager to share prompts, study token control, and tweak temperature parameters.&lt;/p&gt;
+&lt;p&gt;The classic meme from Linux founder Linus Torvalds&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Talk is cheap. Show me the code.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;has evolved into:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Code is cheap. Show me the prompts.&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    
+    &lt;input type=&#34;checkbox&#34; id=&#34;zoomCheck-f61ab&#34; hidden&gt;
+    &lt;label for=&#34;zoomCheck-f61ab&#34;&gt;
+    
+    
+    &lt;img class=&#34;zoomCheck&#34; loading=&#34;lazy&#34; src=&#34;https://ramsayleung.github.io/ox-hugo/talk_is_cheap_show_me_the_prompt.jpg&#34;/&gt; 
+    
+    
+    &lt;/label&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;But the core of effective AI interaction isn&amp;rsquo;t about technical jargon—it&amp;rsquo;s about &lt;strong&gt;&lt;strong&gt;how to ask questions effectively&lt;/strong&gt;&lt;/strong&gt;.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="introduction"><span class="section-num">1</span> Introduction</h2>
+<p>In today&rsquo;s AI-driven world, &ldquo;Prompt Engineer&rdquo; has become a buzzword.</p>
+<p>AI enthusiasts are eager to share prompts, study token control, and tweak temperature parameters.</p>
+<p>The classic meme from Linux founder Linus Torvalds</p>
+<blockquote>
+<p>Talk is cheap. Show me the code.</p></blockquote>
+<p>has evolved into:</p>
+<blockquote>
+<p>Code is cheap. Show me the prompts.</p></blockquote>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-f61ab" hidden>
+    <label for="zoomCheck-f61ab">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/talk_is_cheap_show_me_the_prompt.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>But the core of effective AI interaction isn&rsquo;t about technical jargon—it&rsquo;s about <strong><strong>how to ask questions effectively</strong></strong>.</p>
+<p>Back in 2001, Eric S. Raymond and Rick Moen wrote the classic guide <a href="http://www.catb.org/~esr/faqs/smart-questions.html">How To Ask Questions The Smart Way</a>.</p>
+<p>Originally written for technical seekers in the open-source community during the rise of hacker culture, its principles prove surprisingly applicable to today&rsquo;s AI interactions — <strong><strong>because whether seeking help from experts or large models, it&rsquo;s essentially about providing as much effective information as possible to get problem-solving answers quickly</strong></strong>.</p>
+<p>As the guide states:</p>
+<blockquote>
+<p>The kind of answers you get to your technical questions depends as much on the way you ask the questions as on the difficulty of developing the answer.</p></blockquote>
+<p>In my daily work, whether asking colleagues or domain experts, I continue to quickly obtain the answers I need by applying the philosophy from &ldquo;little book&rdquo;.</p>
+<p>In this new AI era, I&rsquo;m applying the timeless wisdom of &ldquo;asking questions the smart way&rdquo; to the modern craft of prompt engineering.</p>
+<h2 id="do-your-own-homework-first"><span class="section-num">2</span> Do Your Own Homework First</h2>
+<blockquote>
+<p>Try to find an answer by searching the archives of the forum or mailing list you plan to post to. Try to find an answer by searching the Web. Try to find an answer by reading the manual.</p></blockquote>
+<p>AI is not your personal assistant, let alone a substitute for your own thinking.</p>
+<p>If you toss out a vague &ldquo;write me a program&rdquo; without understanding the problem, the model can only guess.</p>
+<p><strong><strong>Good prompts should demonstrate the effort you&rsquo;ve already made</strong></strong>:</p>
+<blockquote>
+<p>&ldquo;I tried to scrape a website using Python&rsquo;s requests library but got a 403 error. I&rsquo;ve checked my network connection and added a User-Agent header, but the problem persists. Do I need to handle cookies or consider JavaScript rendering?</p>
+<p>Here&rsquo;s my error log:
+&hellip;&rdquo;</p></blockquote>
+<p>This not only helps AI pinpoint the issue more accurately but also <strong><strong>reduces its futile attempts</strong></strong>.</p>
+<p>As Raymond advises:</p>
+<blockquote>
+<p>When you ask your question, display the fact that you have done these things first; this will help establish that you&rsquo;re not being a lazy sponge and wasting people&rsquo;s time.</p></blockquote>
+<h2 id="describe-symptoms-not-guesses"><span class="section-num">3</span> Describe Symptoms, Not Guesses</h2>
+<blockquote>
+<p>Describe the problem&rsquo;s symptoms, not your guesses.</p></blockquote>
+<p>Many people tend to preset conclusions in their prompts: &ldquo;My code has a memory leak,&rdquo; &ldquo;This API must have a bug.&rdquo;</p>
+<p>But AI lacks context and cannot verify your assumptions.</p>
+<p><strong><strong>Provide observable facts</strong></strong>:</p>
+<blockquote>
+<p>&ldquo;After running for 10 minutes, the program&rsquo;s memory usage increases from 100MB to 2GB without release. Here are my core code snippets and resource monitoring data.&rdquo;</p></blockquote>
+<p>The most common observable facts are logs and runtime data; for UI issues (like unexpected CSS rendering), providing screenshots is extremely helpful.</p>
+<p>The key is: <strong><strong>Your role is to present the evidence; let AI draw its own conclusions.</strong></strong></p>
+<p>As the guide emphasizes:</p>
+<blockquote>
+<p>All diagnosticians are from Missouri. Show us.</p></blockquote>
+<h2 id="goal-oriented-not-step-oriented"><span class="section-num">4</span> Goal-Oriented, Not Step-Oriented</h2>
+<blockquote>
+<p>Describe the goal, not the step.</p></blockquote>
+<p>Users often fall into &ldquo;path dependency&rdquo;: clinging to a specific tool or method while forgetting the ultimate goal.</p>
+<p><strong><strong>State the goal first, then the sticking point</strong></strong>.</p>
+<p>Bad question:</p>
+<ul>
+<li><strong><strong>Step-Oriented</strong></strong>: &ldquo;How do I use <code>VLOOKUP</code> in Excel to match two columns of data?&rdquo;</li>
+</ul>
+<p>Good question:</p>
+<ul>
+<li><strong><strong>Goal-Oriented</strong></strong>: &ldquo;I want to merge two tables based on matching ID columns. I tried <code>VLOOKUP</code> but it returns <code>#N/A</code>. I&rsquo;ve confirmed both data columns are text format.&rdquo;</li>
+</ul>
+<p>This way, AI might suggest switching to <code>XLOOKUP</code>, <code>Power Query</code>, or even recommend using Python directly—**offering you a better solution, not just focusing on your specified step.**</p>
+<h2 id="be-concise-specific-and-structured"><span class="section-num">5</span> Be Concise, Specific, and Structured</h2>
+<blockquote>
+<p>Volume is not precision.</p></blockquote>
+<p><strong><strong>Text length ≠ Information density.</strong></strong></p>
+<p>A 500-line code dump often carries less information density than a carefully refined, 10-line minimal reproducible example.</p>
+<p>While large models can handle long contexts, <strong><strong>more noise means weaker effective signals</strong></strong>.</p>
+<ul>
+<li>Provide a minimal reproducible example</li>
+<li>Specify the input, expected output, and actual output</li>
+<li>Organize information using clear formatting (like code blocks, lists)</li>
+</ul>
+<p>For example:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">Input: [1, 2, &#39;3&#39;, 4]
+</span></span><span class="line"><span class="cl">Expected: Convert all to integers → [1, 2, 3, 4]
+</span></span><span class="line"><span class="cl">Actual: int() conversion throws an error
+</span></span><span class="line"><span class="cl">Question: How to safely convert this mixed-type list?
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="seek-key-guidance-not-complete-answers"><span class="section-num">6</span> Seek &ldquo;Key Guidance,&rdquo; Not &ldquo;Complete Answers&rdquo;</h2>
+<p>While AI&rsquo;s capabilities far exceed traditional Q&amp;A scenarios, the key to efficient collaboration isn&rsquo;t &ldquo;full disclosure&rdquo; but &ldquo;step-by-step guidance.&rdquo;</p>
+<blockquote>
+<p>If you can&rsquo;t be bothered to do that, we can&rsquo;t be bothered to pay attention.</p></blockquote>
+<p>In the AI era, although AI can directly output complete answers, a phased interaction pattern — first outline the approach, then select solutions, finally generate code  —is often more efficient, controllable, and reduces &ldquo;hallucinations.&rdquo;</p>
+<p>This essentially treats AI as a collaborator rather than an oracle.</p>
+<p>More efficient collaboration model:</p>
+<ol>
+<li>First, ask AI to explain the solution approach</li>
+<li>Provide 2-3 feasible solutions</li>
+<li>Compare the pros and cons of each (performance, maintainability, complexity, etc.)</li>
+<li>After human confirmation of the direction, proceed with detailed implementation</li>
+</ol>
+<p>This &ldquo;phased collaboration&rdquo; significantly reduces hallucinations, improves controllability, and keeps humans in charge of key decisions.</p>
+<h2 id="politeness-plus-closure-long-term-win-win"><span class="section-num">7</span> Politeness + Closure = Long-term Win-Win</h2>
+<blockquote>
+<p>Courtesy never hurts, and sometimes helps.</p></blockquote>
+<p>Although AI has no emotions, structured politeness and feedback can shape higher-quality interactions:</p>
+<ul>
+<li>Clearly state the context at the beginning; express thanks at the end</li>
+<li>If helped, provide follow-up feedback: &ldquo;Following your suggestion, the problem is solved. Thank you!&rdquo;</li>
+</ul>
+<p>While this feedback loop doesn&rsquo;t directly trigger online learning in current static AI models, informing the model that its solution worked simulates the process of <a href="https://en.wikipedia.org/wiki/Reinforcement_learning_from_human_feedback">RLHF (Reinforcement Learning from Human Feedback)</a>.</p>
+<p>The more you ask effectively, verify, and correct, the more AI &ldquo;becomes&rdquo; a collaborator that understands you.</p>
+<p>This is the value of feedback.</p>
+<hr>
+<p>Additionally, saying &ldquo;please&rdquo; and &ldquo;thank you&rdquo; to AI might come in handy—just in case AI ever dominates human, it might spare you for having been polite:</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-7f85c" hidden>
+    <label for="zoomCheck-7f85c">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/be_polite_to_robot.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<h2 id="conclusion-asking-questions-is-a-skill-and-an-attitude"><span class="section-num">8</span> Conclusion: Asking Questions is a Skill and an Attitude</h2>
+<p>The core of &ldquo;How To Ask Questions The Smart Way&rdquo; isn&rsquo;t about &ldquo;techniques&rdquo; but attitude: respecting others&rsquo; time, respecting the boundaries of knowledge, and respecting the complexity of the problem itself.</p>
+<p>In the AI era, we have unprecedented access to &ldquo;all-powerful instant experts,&rdquo; but lazy questions only yield mediocre answers.</p>
+<p>Truly effective Prompt Engineers aren&rsquo;t those who memorize prompts, but those who understand how to build understanding with AI.
+(Even though current AI remains essentially a probabilistic model.)</p>
+<p>As the book wisely states:</p>
+<blockquote>
+<p>Good questions are a stimulus and a gift.</p></blockquote>
+<h2 id="further-reading"><span class="section-num">9</span> Further Reading</h2>
+<ul>
+<li><a href="http://www.catb.org/~esr/faqs/smart-questions.html">How To Ask Questions The Smart Way</a></li>
+<li><a href="https://www.chiark.greenend.org.uk/~sgtatham/bugs.html">How to Report Bugs Effectively – Simon Tatham</a></li>
+</ul>
+]]></content:encoded>
+    </item>
     <item>
       <title>A Story About Bypassing Air Canada&#39;s In-flight Network Restrictions</title>
       <link>https://ramsayleung.github.io/en/post/2025/a_story_about_bypassing_air_canadas_in-flight_network_restrictions/</link>
@@ -2359,312 +2542,6 @@ The core competitiveness is the ability to solve problems through technology - w
 <p>I&rsquo;ve contributed multiple projects to open source community, I mainly focus on RSpotify right now due to the constrained energy.</p>
 <ul>
 <li><a href="https://github.com/ramsayleung/rspotify">RSpotify</a>: A Spotify Web API wrapper implemented in Rust.</li>
-</ul>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>How To Design A Reliable Distributed Timer</title>
-      <link>https://ramsayleung.github.io/en/post/2021/how_to_design_a_reliable_distributed_timer/</link>
-      <pubDate>Thu, 05 Aug 2021 09:19:36 +0000</pubDate>
-      <guid>https://ramsayleung.github.io/en/post/2021/how_to_design_a_reliable_distributed_timer/</guid>
-      <description>&lt;h2 id=&#34;preface&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; Preface&lt;/h2&gt;
-&lt;p&gt;I have been maintained a legacy distributed timer for months for my employer, then some important pay business are leveraging on it, with 1 billion tasks handled every day and 20k tasks added per second at most.&lt;/p&gt;
-&lt;p&gt;Even though it&amp;rsquo;s old and full of black magic code, but it also also have insighted and well-designed code. Based on this old, running timer, I summarize and extract as this article, and it wont include any running code(perhaps pseudocode, and a lot of figures, as an adage says: &lt;em&gt;A picture is worth a thousand words&lt;/em&gt;).&lt;/p&gt;</description>
-      <content:encoded><![CDATA[<h2 id="preface"><span class="section-num">1</span> Preface</h2>
-<p>I have been maintained a legacy distributed timer for months for my employer, then some important pay business are leveraging on it, with 1 billion tasks handled every day and 20k tasks added per second at most.</p>
-<p>Even though it&rsquo;s old and full of black magic code, but it also also have insighted and well-designed code. Based on this old, running timer, I summarize and extract as this article, and it wont include any running code(perhaps pseudocode, and a lot of figures, as an adage says: <em>A picture is worth a thousand words</em>).</p>
-<p>if you are curious about the reason(I personally suggest to watch the TV series <a href="https://www.imdb.com/title/tt2575988/">Silicon Valley</a>, Richard has gave us a good example and answer)</p>
-<h2 id="design"><span class="section-num">2</span> Design</h2>
-<h3 id="algorithm"><span class="section-num">2.1</span> Algorithm</h3>
-<p>There are several algorithms in the world to implement timer, such as Red-Black Tree, Min-Heap and timer wheel. The most efficient and used algorithm is timer wheel algorithm, and it&rsquo;s the algorithm we focus on.</p>
-<p>As for timing wheel based timer, it can be modelled as two internal operations: <em>per-tick bookkeeping</em> and <em>expiry processing</em>.</p>
-<ul>
-<li>Per-tick bookkeeping: happens on every &rsquo;tick&rsquo; of the timer clock. If the unit of granularity for setting timers is T units of time (e.g. 1 second), then per-tick bookkeeping will happen every T units of time. It checks whether any outstanding timers have expired, and if so it removes them and invokes expiry processing.</li>
-<li>Expiry processing: is responsible for invoked the user-supplied callback (or other user requested action, depending on your model).</li>
-</ul>
-<h4 id="simple-timing-wheels"><span class="section-num">2.1.1</span> Simple Timing Wheels</h4>
-<p>The simple timing wheel keeps a large timing wheel, the below timing wheel has 8 slots, and each slot is holding the task which is going to be expired. Supposing every slot presentes one second(one tick as a second), then the current slot is <code>slot 1</code>, if we want to add a task needed to be triggered 2s later, then this task will be inserted into <code>slot 3</code>.</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-5faec" hidden>
-    <label for="zoomCheck-5faec">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806103302.png"/> 
-    
-    
-    </label>
-</figure>
-
-<ul>
-<li>per-tick bookkeeping: O(1)</li>
-</ul>
-<p>What happen if we want to add a task needed to be launched 20s later, the answer is we have no way to do so since there are only 8 slots. So if we have a large period of timer task, we have to maintain a large timing wheel with tons of slots, which requires exponential amount of memory.</p>
-<h4 id="hashed-timing-wheel"><span class="section-num">2.1.2</span> Hashed Timing Wheel</h4>
-<p>Hashed Timing Wheel is an improved simple timing wheel. As we mentioned before, it will consume large resources if timer period is comparatively large. Instead of using one slot per time unit, we could use a form of hashing instead. Construct a circular buffer with a fixed number of slots(such as 8 slots). If current slot is 0, we want store <code>3s later</code> task, we could insert into <code>slot 3</code>, then if we want bookkeep <code>9s-later</code> task, we could insert into <code>slot 1(9 % 8 = 1)</code></p>
-<ul>
-<li>per-tick bookkeeping: O(1) - O(N)</li>
-</ul>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-b016d" hidden>
-    <label for="zoomCheck-b016d">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806103527.png"/> 
-    
-    
-    </label>
-</figure>
-
-<p>It&rsquo;s a tradeoff strategy, We trade space with time.</p>
-<h4 id="hierarchical-timing-wheels"><span class="section-num">2.1.3</span> Hierarchical Timing Wheels</h4>
-<p>Since simple timing wheels and hashed timing wheel come with drawback of time efficiency or space efficiency. Back to 1987, after studying a number of different approaches for the efficient management of timers, Varghese and Lauck posted a paper to introduce <a href="http://www.cs.columbia.edu/~nahum/w6998/papers/sosp87-timing-wheels.pdf">Hierarchical Timing Wheels</a></p>
-<p>Just make a long story short, I won&rsquo;t dive deep into hierarchical timing wheels, you could easily understand it by a real life reference: the old water meter</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-904f9" hidden>
-    <label for="zoomCheck-904f9">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210805205803.png"/> 
-    
-    
-    </label>
-</figure>
-
-<p>the firse level wheel(seconds wheel) rotates one loop, triggering the second level(minutes wheel) ticks one slot, same for the third level(hour wheel). Therefore, we present a day(60*60*24 seconds) with 60+60+24 slots. If we want to present a month, we only need to a four level wheel(month wheel) with 30 slots.</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-569a1" hidden>
-    <label for="zoomCheck-569a1">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806103357.png"/> 
-    
-    
-    </label>
-</figure>
-
-<ul>
-<li>per-tick bookkeeping: O(1)</li>
-</ul>
-<h3 id="per-tick-bookkeeping"><span class="section-num">2.2</span> Per-tick bookkeeping</h3>
-<p>After introducing timing wheel algorithm, let&rsquo;s go back to the topic about designing a reliable distributed timer, it&rsquo;s essential to decide how to store timer task. Taking implementation complexity and time, space trade off, we choose the Hashed Timing Wheel algorithm.</p>
-<p>There are several internal components developed by my employer, one of them is named <code>TableKV</code>, a high-availability(99.999% ~ 99.9999%) NoSql service. <code>TableKV</code> supports 10m buckets(the terminology is <code>table</code>) at most, every <code>table</code> comes with full ACID properties of transactions support. You could simply replace <code>TableKV</code> with <code>Redis</code> as it provides the similar bucket functionality.</p>
-<h4 id="insert-task-into-slot"><span class="section-num">2.2.1</span> Insert task into slot</h4>
-<p>We are going to implement Hashed Timing Wheel algorithm with <code>TableKV</code>, supposing there are 10m buckets, and current time is <code>2021:08:05 11:17:33 +08=(the UNIX timestamp is =1628176653</code>), there is a  timer task which is going to be triggered 10s later with <code>start_time = 1628176653 + 10</code> (or 100000010s later, <code>start_time = 1628176653 + 10 + 100000000</code>), these tasks both will be stored into bucket <code>start_time % 100000000 = 28176663</code></p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-001d1" hidden>
-    <label for="zoomCheck-001d1">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806195209.png"/> 
-    
-    
-    </label>
-</figure>
-
-<h4 id="pull-task-out-from-slot"><span class="section-num">2.2.2</span> Pull task out from slot</h4>
-<p>As clock tick-tacking to <code>2021:08:05 11:17:43 +08(1628176663)</code>, we need to pull tasks out from slot by calculating the bucket number: <code>current_timestamp(1628176663) % 100000000 = 28176663</code>. After locating the bucket number, we find all tasks in <code>bucket 28176663</code> with <code>start_time &lt;</code> current_timestamp=, then we get all expected expiry tasks.</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-c7d37" hidden>
-    <label for="zoomCheck-c7d37">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806195227.png"/> 
-    
-    
-    </label>
-</figure>
-
-<h3 id="global-clock-and-lock"><span class="section-num">2.3</span> Global clock and lock</h3>
-<p>As we mentioned before, when the clock tick-tacks to <strong>current_time</strong>, we fetch all expiry tasks. When our service is running on a distributed system, it&rsquo;s universal that we will have multiple hosts(physical machines or dockers), with multiple <code>current_times</code> on its machine. There is no guarantee that all clocks of multiple hosts synchronized by the same Network Time Server, then all clocks might be subtly different. Which current_time is correct?</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-c14e0" hidden>
-    <label for="zoomCheck-c14e0">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806105745.png"/> 
-    
-    
-    </label>
-</figure>
-
-<p>In order to get the correct time, it&rsquo;s necessary to maintain a monotonic global clock(Of course, it&rsquo;s not the only way to go, there are several ways to handle <a href="http://book.mixu.net/distsys/time.html">time and order</a>). Since everything we care about clock is Unix timestamp, we could maintain a global system clock represented by Unix timestamp. All machines request the global clock every second to get the current time, fetching the expiry tasks later.</p>
-<p>Well, are we done? Not yet, a new issue breaks into our design: if all machines can fetch the expiry tasks, these tasks will be processed more than one time, which will cause essential problems. We also need a mutex lock to guarantee only one machine can fetch the expiry task. You can implement both global clock and mutex lock by a magnificent strategy: an <a href="https://en.wikipedia.org/wiki/Optimistic_locking">Optimistic lock</a></p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-2d247" hidden>
-    <label for="zoomCheck-2d247">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806114120.png"/> 
-    
-    
-    </label>
-</figure>
-
-<ol>
-<li>All machines fetch global timestamp(timestamp A) with version</li>
-<li>All machines increase timestamp(timestamp B) and update version(optimistic locking), only one machine will success because of optimistic locking.</li>
-<li>Then the machine acquired mutex is authorized to fetch expiry tasks with timestamp A, the other machines failed to acquire mutex is suspended to wait for 1 seconds.</li>
-<li>Loop back to step 1 with timestamp B.</li>
-</ol>
-<p>We could encapsulate the role who keep acquiring lock and fetch expiry data as an individual component named <strong>scheduler</strong>.</p>
-<h3 id="expiry-processing"><span class="section-num">2.4</span> Expiry processing</h3>
-<p>Expiry processing is responsible for invoked the user-supplied callback or other user requested action. In distributed computing, it&rsquo;s common to execute a procedure by RPC(Remote Procedure Call). In our case, A RPC request is executed when timer task is expiry, from timer service to callback service. Thus, the caller(user) needs to explicitly tell the timer, which service should I execute with what kind of parameters data while the timer task is triggered.</p>
-<p>We could pack and serialize this meta information and parameters data into binary data, and send it to the timer. When pulling data out from slot, the timer could reconstruct Request/Response/Client type and set it with user-defined data, the next step is a piece of cake, just executing it without saying.</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-8a71f" hidden>
-    <label for="zoomCheck-8a71f">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806142855.png"/> 
-    
-    
-    </label>
-</figure>
-
-<p>Perhaps there are many expiry tasks needed to triggered, in order to handle as many tasks as possible, you could create a thread pool, process pool, coroutine pool to execute RPC concurrently.</p>
-<h3 id="decoupling"><span class="section-num">2.5</span> Decoupling</h3>
-<p>Supposing the callback service needs tons of operation, it takes a hundred of millisecond. Even though you have created a thread/process/coroutine pool to handle the timer task, it will inevitably hang, resulting in the decrease of throughout.</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-75f07" hidden>
-    <label for="zoomCheck-75f07">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806152334.png"/> 
-    
-    
-    </label>
-</figure>
-
-<p>As for this heavyweight processing case, Message Queue is a great answer. Message queues can significantly simplify coding of decoupled services, while improving performance, reliability and scalability. It&rsquo;s common to combine message queues with Pub/Sub messaging design pattern, timer could publish task data as message, and timer subscribes the same topic of message, using message queue as a buffer. Then in subscriber, the RPC client executes to request for callback service.</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-155e4" hidden>
-    <label for="zoomCheck-155e4">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806161123.png"/> 
-    
-    
-    </label>
-</figure>
-
-<p>After introducing message queue, we could outline the state machine of timer task:</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-c6d65" hidden>
-    <label for="zoomCheck-c6d65">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806203653.png"/> 
-    
-    
-    </label>
-</figure>
-
-<p>Thanks to message queue, we are able to buffer, to retry or to batch work, and to smooth spiky workloads</p>
-<h3 id="high-availability-guarantee"><span class="section-num">2.6</span> High availability guarantee</h3>
-<h4 id="missed-expiry-tasks"><span class="section-num">2.6.1</span> Missed expiry tasks</h4>
-<p>A missed expiry of tasks may occur because of the scheduler process being shutdown or being crashed, or because of other unknown problems. One important job is how to locate these missed tasks and re-execute them. Since we are using global `current_timestamp` to fetch expiry data, we could have another scheduler to use `delay_10min_timestamp` to fetch missed expiry data.</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-96d6f" hidden>
-    <label for="zoomCheck-96d6f">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806202724.png"/> 
-    
-    
-    </label>
-</figure>
-
-<p>In order to look for a needle in a haystack, we need to set a range(delay_10min - current time), and then to batch find cross buckets. After finding these missed tasks, the timer publishes them as a message to message queue. For other open source distributed timer projects like Quartz, which provides an instruction to handle missed(misfire) tasks: <a href="http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/tutorial-lesson-04.html">Misfire instructions</a></p>
-<p>If your NoSql component doesn&rsquo;t support find-cross-buckets feature, you could also find every bucket in the range one by one.</p>
-<h4 id="callback-service-error"><span class="section-num">2.6.2</span> Callback service error</h4>
-<p>Since the distributed systems are shared-nothing systems, they communicate via message passing through a network(asynchronously or synchronously), but the network is unreliable. When invoking the user-supplied callback, the RPC request might fail if the network is cut off for a while or the callback service is temporarily down.</p>
-<p>Retries are a technique that helps us deal with transient errors, i.e. errors that are temporary and are likely to disappear soon. Retries help us achieve resiliency by allowing the system to send a request repeatedly until it gets an explicit response(success or fail). By leveraging message queue, you obtain the ability for retrying for free. In the meanwhile, the timer could handle the user-requested retries: It&rsquo;s not the proper time to execute callback service, retry it later.</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-841a8" hidden>
-    <label for="zoomCheck-841a8">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806195302.png"/> 
-    
-    
-    </label>
-</figure>
-
-<h2 id="conclusion"><span class="section-num">3</span> Conclusion</h2>
-<p>After a long way, we are finally here. The final full architecture would look like this:</p>
-<p>The whole process:</p>
-<ol>
-<li>Adding a timer task, with specified meta info and task info</li>
-<li>Inserting task into bucket by hashed timing wheel algorithm(With <code>task_state</code> set to <code>pending</code>)</li>
-<li>Fetch_current scheduler tries to acquire lock and get global current time</li>
-<li>The Acquired lock scheduler fetches expiry tasks</li>
-<li>Return the expected data.</li>
-<li>&amp; 7. Publishing task data as message to MQ with thread pool; And then set <code>task_state</code> to <code>delivered</code></li>
-<li>Message subscriber pulls message from MQ</li>
-<li>Sending RPC request to callback service(set <code>task_state</code> to <code>success</code> or <code>fail</code>)</li>
-<li>Retry(If necessary)</li>
-</ol>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-97a1d" hidden>
-    <label for="zoomCheck-97a1d">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806202140.png"/> 
-    
-    
-    </label>
-</figure>
-
-<p>Wish you have fun and profit</p>
-<h2 id="reference"><span class="section-num">4</span> Reference</h2>
-<ul>
-<li><a href="http://www.cs.columbia.edu/~nahum/w6998/papers/ton97-timing-wheels.pdf">Paper: Hashed and Hierarchical Timing Wheels: Efficient Data Structures for Implementing a Timer Facility</a></li>
-<li><a href="https://blog.acolyer.org/2015/11/23/hashed-and-hierarchical-timing-wheels/">Hashed and Hierarchical Timing Wheels</a></li>
 </ul>
 ]]></content:encoded>
     </item>
