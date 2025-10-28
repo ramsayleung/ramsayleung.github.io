@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sun, 10 Aug 2025 00:06:15 -0700</lastBuildDate>
+    <lastBuildDate>Mon, 27 Oct 2025 17:17:26 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/programmer/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>杂谈AI取代程序员</title>
@@ -122,6 +122,11 @@
 管理层的无所作为，墨守成规，决策失误，无序扩张这些失误都不需要承诺后果了，反正背锅有AI。</p>
 <p>苦一苦员工，骂名AI来担。
 <img loading="lazy" src="/ox-hugo/ai_bear_the_infamy.jpg"></p>
+<hr>
+<p><span class="timestamp-wrapper"><span class="timestamp">&lt;2025-10-27 Mon&gt;</span></span></p>
+<p>在我写了这篇文章一年半之后，CNBC 最近的一篇文章也说目前还没有证据表明 AI 能显著提高生产力，然而今天企业大幅裁员时通常会把 AI 作为借口：
+<a href="https://www.cnbc.com/2025/10/19/firms-are-blaming-ai-for-job-cuts-critics-say-its-a-good-excuse.html">https://www.cnbc.com/2025/10/19/firms-are-blaming-ai-for-job-cuts-critics-say-its-a-good-excuse.html</a></p>
+<p>这和曹操借管粮官脑袋一用，以安军心的想法如出一辙，只是这次的「脑袋」变成了AI，总不能让企业高管自己承认战略判断有误，过度扩张嘛</p>
 <h2 id="ai一无用处"><span class="section-num">3</span> AI一无用处</h2>
 <p>当然凡事都有例外，有人觉得AI会取代程序员，也有人觉得AI一无用处，不值一提。</p>
 <p>我对此也是持反对态度了，虽然AI无法取代程序员，但是它的确在很多方面可以给我提升相当大的效率，其效率跃升堪比计算机连上互联网。</p>
@@ -252,7 +257,7 @@ Meaning:</p>
 <blockquote>
 <p>You are a professional and seasoned translator, correct me if I am wrong.</p></blockquote>
 <h3 id="代码审计"><span class="section-num">4.3</span> 代码审计</h3>
-<p>有时候我会查看一些智能合约的代码或者TG bot的代码，在实际交互前，我一般会把代码丢给AI，让它检查一下是否有可疑的代码片段，类如窃取用户的私钥，把资金转到可疑账户等等。</p>
+<p>有时候我会查看一些智能合约的代码或者 Telegram bot的代码，在实际交互前，我一般会把代码丢给AI，让它检查一下是否有可疑的代码片段，类如窃取用户的私钥，把资金转到可疑账户等等。</p>
 <p>或者把我自己写的代码丢给AI，让它看下是否有安全漏洞:</p>
 <blockquote>
 <p>Given the following code, help me spot if there is any vulnerability here:</p></blockquote>
