@@ -1,7 +1,7 @@
 +++
 title = "杂谈AI取代程序员"
 date = 2025-02-14T21:15:00-08:00
-lastmod = 2025-08-10T00:06:15-07:00
+lastmod = 2025-10-27T17:17:26-07:00
 tags = ["ai", "programmer"]
 draft = false
 toc = true
@@ -152,6 +152,15 @@ AI 也没法帮我们一键升级或维护, 而这些枯燥且繁琐的工作才
 苦一苦员工，骂名AI来担。
 ![](/ox-hugo/ai_bear_the_infamy.jpg)
 
+---
+
+<span class="timestamp-wrapper"><span class="timestamp">&lt;2025-10-27 Mon&gt;</span></span>
+
+在我写了这篇文章一年半之后，CNBC 最近的一篇文章也说目前还没有证据表明 AI 能显著提高生产力，然而今天企业大幅裁员时通常会把 AI 作为借口：
+<https://www.cnbc.com/2025/10/19/firms-are-blaming-ai-for-job-cuts-critics-say-its-a-good-excuse.html>
+
+这和曹操借管粮官脑袋一用，以安军心的想法如出一辙，只是这次的「脑袋」变成了AI，总不能让企业高管自己承认战略判断有误，过度扩张嘛
+
 
 ## <span class="section-num">3</span> AI一无用处 {#ai一无用处}
 
@@ -278,7 +287,7 @@ AI的多语言翻译功能对比其他传统基于单词的翻译软件简直是
 
 ### <span class="section-num">4.3</span> 代码审计 {#代码审计}
 
-有时候我会查看一些智能合约的代码或者TG bot的代码，在实际交互前，我一般会把代码丢给AI，让它检查一下是否有可疑的代码片段，类如窃取用户的私钥，把资金转到可疑账户等等。
+有时候我会查看一些智能合约的代码或者 Telegram bot的代码，在实际交互前，我一般会把代码丢给AI，让它检查一下是否有可疑的代码片段，类如窃取用户的私钥，把资金转到可疑账户等等。
 
 或者把我自己写的代码丢给AI，让它看下是否有安全漏洞:
 
