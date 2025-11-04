@@ -7,7 +7,7 @@ toc = true
 +++
 
 ## <span class="section-num">0x0</span> 自我认知 {#自我认知}
-一个努力但平凡的人，希望做个有趣的人, work hard and be nice to people. 
+希望成为个有趣的人, work hard and be nice to people. 
 
 ## <span class="section-num">0x1</span> 主业 {#主业}
 
@@ -15,7 +15,7 @@ Ramsay 是位软件工程师，以写程序为业, 曾经就职于蚂蚁金服�
 
 推崇开源与动手精神，使用 Emacs 与 Linux 多年，喜欢动手折腾。 <br/>
 
-写过 C++, Java, Javascript/Typescript, Rust这几种语言的生产代码，目前在[AWS S3](https://aws.amazon.com/s3/) 写Rust和Java养活自己，偶尔用[EmacsLisp](https://github.com/ramsayleung/emacs.d) 为自己的工作流写小工具，喜欢用 Python 做自动化，使用 Ruby on Rails 写 Web <br/>
+写过 C++, Java, Rust, Kotlin, Scala, Python, Javascript/Typescript这几种语言的生产代码，目前在[AWS S3](https://aws.amazon.com/s3/) 写Rust和Java养活自己，偶尔用[EmacsLisp](https://github.com/ramsayleung/emacs.d) 为自己的工作流写小工具，喜欢用 Python 做自动化，使用 Ruby on Rails 写 Web <br/>
 
 在职业生涯，作为核心开发深度参与开发&设计的产品:
 - [微信支付委托代扣](https://pay.weixin.qq.com/doc/v3/merchant/4012161105)
@@ -23,7 +23,7 @@ Ramsay 是位软件工程师，以写程序为业, 曾经就职于蚂蚁金服�
 
 ## <span class="section-num">0x2</span> 写作 {#写作}
 
-从16年开始在博客上写博文，期间经历过多次迁移，但大多时候，博客的读者都只有我自己。 <br/>
+从16年开始在博客上写博文，期间经历过多次迁移。 <br/>
 
 博客还有一个对应的英文版本，名为「In pursuit of Simplicity」，主要是记录一些英文写作与感悟的平台。 <br/>
 
@@ -36,7 +36,11 @@ Ramsay 是位软件工程师，以写程序为业, 曾经就职于蚂蚁金服�
 
 ## <span class="section-num">0x3</span> 开源 {#开源}
 
-在 [Github](<https://github.com/ramsayleung>) 上有若干个开源项目，但目前主要在维护 [RSpotify](<https://github.com/ramsayleung/rspotify>) 这个使用 Rust 语言编写的 Spotify SDK。 <br/>
+在 [Github](<https://github.com/ramsayleung>) 上有若干个开源项目，但目前主要在维护: 
+
+- [RSpotify](<https://github.com/ramsayleung/rspotify>): 使用 Rust 语言编写的 Spotify SDK，目前是使用最广泛的Spotify Rust SDK 
+- [bayes_spam_sniper](<github.com/ramsayleung/bayes_spam_sniper>): 自学习的Telegram智能广告拦截机器人 
+<br/>
 
 在[Stackoverflow](<https://stackoverflow.com/users/5738112/ramsay>) 上也会帮忙解答其他开发者的问题，刷刷存在感。 <br/>
 
