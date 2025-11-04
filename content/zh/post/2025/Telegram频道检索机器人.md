@@ -1,7 +1,7 @@
 +++
 title = "Telegram频道精华贴检索机器人"
 date = 2025-10-01T21:55:00-07:00
-lastmod = 2025-10-01T23:17:02-07:00
+lastmod = 2025-11-03T18:57:05-08:00
 tags = ["telegram", "rust"]
 draft = false
 toc = true
@@ -73,6 +73,14 @@ showQuote = true
 而对于查询性能，我选择了建立物化视图(material view)的策略, 每次爬取成功之后就重新计算，更新一下 material view, 耗时可能比较长，每个频道更新视图大概需要个十几秒。
 
 但此后所有的查询都直接指向这个预计算好的视图，数据库还可以利用缓存优化，以空间换时间，查询性能因此得到保障
+
+---
+
+<span class="timestamp-wrapper"><span class="timestamp">&lt;2025-11-03 Mon&gt;</span></span>
+
+当索引超过1千万条数据之后，发现每次全量更新 material view 的时间去到了分钟级，并且 material view 不支持针对某个频道进行更新，只能全量更新整个视图，随着索引数据的增多，效率越来越低了。
+
+因此将视图迁移回单独的表，就可以只更新指定频道的数据了。
 
 
 ## <span class="section-num">5</span> 使用示例 {#使用示例}
