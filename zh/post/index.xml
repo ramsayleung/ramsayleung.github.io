@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sat, 25 Oct 2025 23:05:22 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 03 Nov 2025 18:57:05 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Prompt 工程的本质，是提问的艺术</title>
@@ -940,6 +940,10 @@
 <p>就这样兼顾性能，成本以及数据及时性，又不会造成过多的重复爬取。</p>
 <p>而对于查询性能，我选择了建立物化视图(material view)的策略, 每次爬取成功之后就重新计算，更新一下 material view, 耗时可能比较长，每个频道更新视图大概需要个十几秒。</p>
 <p>但此后所有的查询都直接指向这个预计算好的视图，数据库还可以利用缓存优化，以空间换时间，查询性能因此得到保障</p>
+<hr>
+<p><span class="timestamp-wrapper"><span class="timestamp">&lt;2025-11-03 Mon&gt;</span></span></p>
+<p>当索引超过1千万条数据之后，发现每次全量更新 material view 的时间去到了分钟级，并且 material view 不支持针对某个频道进行更新，只能全量更新整个视图，随着索引数据的增多，效率越来越低了。</p>
+<p>因此将视图迁移回单独的表，就可以只更新指定频道的数据了。</p>
 <h2 id="使用示例"><span class="section-num">5</span> 使用示例</h2>
 <p>使用方法非常简单：</p>
 <ol>
