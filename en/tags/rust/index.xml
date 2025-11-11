@@ -12,21 +12,19 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>en</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sat, 27 Sep 2025 17:42:56 -0700</lastBuildDate>
+    <lastBuildDate>Mon, 10 Nov 2025 22:51:59 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/en/tags/rust/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>A Telegram Spam Blocker Bot Based On Bayesian Algorithm</title>
       <link>https://ramsayleung.github.io/en/post/2025/a_telegram_spam_blocker_bot_based_on_bayesian/</link>
       <pubDate>Sat, 30 Aug 2025 10:34:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/en/post/2025/a_telegram_spam_blocker_bot_based_on_bayesian/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://ramsayleung.github.io/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/&#34;&gt;中文版本&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;preface&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; Preface&lt;/h2&gt;
+      <description>&lt;h2 id=&#34;preface&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; Preface&lt;/h2&gt;
 &lt;p&gt;I spent a weekend building a Telegram spam blocker bot based on Bayesian Algorithm &lt;code&gt;@BayesSpamSniperBot&lt;/code&gt; (&lt;a href=&#34;https://t.me/BayesSpamSniperBot&#34;&gt;https://t.me/BayesSpamSniperBot&lt;/a&gt;). The project is open-sourced at: &lt;a href=&#34;https://github.com/ramsayleung/bayes_spam_sniper&#34;&gt;https://github.com/ramsayleung/bayes_spam_sniper&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;telegram&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1.1&lt;/span&gt; Telegram&lt;/h3&gt;
 &lt;p&gt;Telegram is a popular instant messaging application, similar to Snapchat and WhatsApp, with over 1 billion users.&lt;/p&gt;
 &lt;p&gt;It supports many powerful features like cloud chat history storage, clients for Linux, Mac, Windows, Android, IOS, and Web (all open-source), Channel, and arguably the most powerful bot system I&amp;rsquo;ve ever seen.&lt;/p&gt;</description>
-      <content:encoded><![CDATA[<p><a href="https://ramsayleung.github.io/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/">中文版本</a></p>
-<h2 id="preface"><span class="section-num">1</span> Preface</h2>
+      <content:encoded><![CDATA[<h2 id="preface"><span class="section-num">1</span> Preface</h2>
 <p>I spent a weekend building a Telegram spam blocker bot based on Bayesian Algorithm <code>@BayesSpamSniperBot</code> (<a href="https://t.me/BayesSpamSniperBot">https://t.me/BayesSpamSniperBot</a>). The project is open-sourced at: <a href="https://github.com/ramsayleung/bayes_spam_sniper">https://github.com/ramsayleung/bayes_spam_sniper</a></p>
 <h3 id="telegram"><span class="section-num">1.1</span> Telegram</h3>
 <p>Telegram is a popular instant messaging application, similar to Snapchat and WhatsApp, with over 1 billion users.</p>
