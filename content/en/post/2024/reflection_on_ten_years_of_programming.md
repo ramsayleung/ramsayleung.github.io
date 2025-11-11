@@ -1,15 +1,12 @@
 +++
 title = "Reflections on Ten Years of Programming"
 date = 2024-12-15T21:09:00-08:00
-lastmod = 2025-09-03T22:25:40-07:00
+lastmod = 2025-11-10T22:51:50-08:00
 tags = ["summary", "life", "programming"]
 categories = ["summary"]
 draft = false
 toc = true
 +++
-
-[中文版本](https://ramsayleung.github.io/zh/post/2024/%E7%BC%96%E7%A8%8B%E5%8D%81%E5%B9%B4%E7%9A%84%E6%84%9F%E6%82%9F/)
-
 
 ## <span class="section-num">1</span> Preface {#preface}
 

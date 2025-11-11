@@ -1,15 +1,12 @@
 +++
 title = "A Telegram Spam Blocker Bot Based On Bayesian Algorithm"
 date = 2025-08-30T10:34:00-07:00
-lastmod = 2025-09-27T17:42:56-07:00
+lastmod = 2025-11-10T22:51:59-08:00
 tags = ["telegram", "design", "programming", "rails", "rust"]
 categories = ["design"]
 draft = false
 toc = true
 +++
-
-[中文版本](https://ramsayleung.github.io/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/)
-
 
 ## <span class="section-num">1</span> Preface {#preface}
 
