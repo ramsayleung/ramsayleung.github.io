@@ -39,7 +39,7 @@ Ramsay 是位软件工程师，以写程序为业, 曾经就职于蚂蚁金服�
 在 [Github](<https://github.com/ramsayleung>) 上有若干个开源项目，但目前主要在维护: 
 
 - [RSpotify](<https://github.com/ramsayleung/rspotify>): 使用 Rust 语言编写的 Spotify SDK，目前是使用最广泛的Spotify Rust SDK 
-- [bayes_spam_sniper](<github.com/ramsayleung/bayes_spam_sniper>): 自学习的Telegram智能广告拦截机器人 
+- [bayes_spam_sniper](<https://github.com/ramsayleung/bayes_spam_sniper>): 自学习的Telegram智能广告拦截机器人 
 <br/>
 
 在[Stackoverflow](<https://stackoverflow.com/users/5738112/ramsay>) 上也会帮忙解答其他开发者的问题，刷刷存在感。 <br/>
