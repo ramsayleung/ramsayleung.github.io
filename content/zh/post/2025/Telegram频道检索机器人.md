@@ -1,8 +1,9 @@
 +++
 title = "Telegram频道精华贴检索机器人"
 date = 2025-10-01T21:55:00-07:00
-lastmod = 2025-11-03T18:57:05-08:00
+lastmod = 2025-11-16T14:26:39-08:00
 tags = ["telegram", "rust"]
+categories = ["telegram"]
 draft = false
 toc = true
 showQuote = true
