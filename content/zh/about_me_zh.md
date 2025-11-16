@@ -25,6 +25,10 @@ Ramsay 是位软件工程师，以写程序为业, 曾经就职于蚂蚁金服�
 
 从16年开始在博客上写博文，期间经历过多次迁移。 <br/>
 
+- 2016-2017: 基于 [org-page](https://github.com/emacsorphanage/org-page) 生成的 [github.io博客](https://github.com/ramsayleung/samrayleung.github.io)
+- 2017-2021: 基于 Rust 自建的[博客系统](https://github.com/ramsayleung/blog)
+- 2021-至今: 基于 [ox-hugo](https://ox-hugo.scripter.co/) 生成的 [github.io博客](https://github.com/ramsayleung/ramsayleung.github.io), 即[本博客](https://ramsayleung.github.io/zh/)
+
 博客还有一个对应的英文版本，名为「In pursuit of Simplicity」，主要是记录一些英文写作与感悟的平台。 <br/>
 
 > Simple is Beautiful <br/>
