@@ -22,6 +22,15 @@
         backdrop-filter: blur(5px);
         -webkit-backdrop-filter: blur(5px);
         z-index: 998;
+        opacity: 0;
+        animation: fadeIn 0.3s ease forwards;
+    }
+
+    /* Fade in animation for overlay */
+    @keyframes fadeIn {
+        to {
+            opacity: 1;
+        }
     }
 
     /* The zoomed state - make label take up full viewport */
@@ -36,9 +45,11 @@
         align-items: center;
         justify-content: center;
         z-index: 999;
+        opacity: 0;
+        animation: fadeIn 0.3s ease 0.1s forwards;
     }
 
-    /* Style for the zoomed image */
+    /* Animation for zoomed image */
     .post-content input[type="checkbox"]:checked ~ label > img.zoomCheck {
         max-height: 95vh;
         max-width: 95vw;
@@ -48,16 +59,30 @@
         cursor: zoom-out;
         z-index: 999;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        transform: scale(0.9);
+        animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s forwards;
+    }
+
+    /* Zoom in animation */
+    @keyframes zoomIn {
+        to {
+            transform: scale(1);
+        }
     }
 
     /* Normal image style */
     .post-content img.zoomCheck {
-        transition: transform 0.3s ease;
+        transition: transform 0.3s ease, opacity 0.3s ease;
         cursor: zoom-in;
         display: block;
         max-width: 100%;
         height: auto;
         transform-origin: center;
         z-index: 1;
+    }
+
+    /* Add zoom-in cursor effect */
+    .post-content img.zoomCheck:hover {
+        transform: scale(1.03);
     }
 }
