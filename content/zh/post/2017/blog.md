@@ -1,9 +1,9 @@
 +++
 title = "写博客的动机"
 date = 2017-09-17T10:36:00-07:00
-lastmod = 2025-11-16T09:42:24-08:00
+lastmod = 2025-11-16T10:19:13-08:00
 tags = ["summary"]
-categories = ["得失感悟"]
+categories = ["履迹与沉思"]
 draft = false
 toc = true
 highlighted = true

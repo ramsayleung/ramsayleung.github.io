@@ -190,8 +190,8 @@ languages:
           weight: 2
         - identifier: gain_and_loss
           parent: series
-          name: "得失感悟"
-          url: /zh/categories/得失感悟/
+          name: "履迹与沉思"
+          url: /zh/categories/履迹与沉思/
           weight: 1
         - identifier: adventure_in_canada
           parent: series
@@ -213,10 +213,10 @@ languages:
           name: "软件工程师的软技能指北"
           url: /zh/categories/软件工程师的软技能指北/
           weight: 5
-        - identifier: reinvent
+        - identifier: book_reading
           parent: series
-          name: "基于贝叶斯算法的Telegram广告拦截机器人"
-          url: /zh/categories/基于贝叶斯算法的telegram广告拦截机器人/
+          name: "读书感悟"
+          url: /zh/categories/读书感悟/
           weight: 6
 
 markup:

@@ -2,9 +2,9 @@
 title = "关于工具, 关于折腾"
 description = "An discussion about tool and tweak"
 date = 2017-03-24T00:00:00-07:00
-lastmod = 2025-01-09T20:52:24-08:00
+lastmod = 2025-11-16T10:27:18-08:00
 tags = ["linux", "tool", "tweak"]
-categories = ["得失感悟"]
+categories = ["履迹与沉思"]
 draft = false
 showQuote = true
 +++
@@ -194,8 +194,9 @@ i3wm, 在折腾过炫酷的 KDE, Gnome, xfce, 而我最后选择的是 i3这个�
 
 -   Enjoy tweaking;Enjoy Linux :)
 
-<div center class="qr-container">
-<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
-公号同步更新，欢迎关注👻
-</div>
+<div class="qr-container" center>
 
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" class="qr-container" width="160px" height="160px" center="t" />
+公号同步更新，欢迎关注👻
+
+</div>

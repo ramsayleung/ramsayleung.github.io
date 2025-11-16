@@ -1,9 +1,9 @@
 +++
 title = "一本读了八年还没读完的书"
 date = 2025-08-04T10:00:00-07:00
-lastmod = 2025-09-01T09:56:01-07:00
+lastmod = 2025-11-16T10:13:07-08:00
 tags = ["book"]
-categories = ["programming", "design"]
+categories = ["读书感悟", "软件设计"]
 draft = false
 toc = true
 showQuote = true
