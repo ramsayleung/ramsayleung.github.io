@@ -72,3 +72,34 @@ kbd {
 kbd + kbd {
     margin-left: 0.3em;
 }
+
+/* Custom font for chroma code blocks to ensure consistent formatting across browsers */
+.chroma {
+    font-family: 'Monaco', 'Consolas', 'Ubuntu Mono', 'DejaVu Sans Mono', 'Source Code Pro', 'Fira Code', 'Cascadia Code', monospace !important;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+/* Also target code blocks that may not have chroma class */
+pre code {
+    font-family: 'Monaco', 'Consolas', 'Ubuntu Mono', 'DejaVu Sans Mono', 'Source Code Pro', 'Fira Code', 'Cascadia Code', monospace !important;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+/* More specific selectors for PaperMod theme to ensure higher specificity */
+article .chroma,
+.post-content .chroma,
+.content .chroma {
+    font-family: 'Monaco', 'Consolas', 'Ubuntu Mono', 'DejaVu Sans Mono', 'Source Code Pro', 'Fira Code', 'Cascadia Code', monospace !important;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+article pre code,
+.post-content pre code,
+.content pre code {
+    font-family: 'Monaco', 'Consolas', 'Ubuntu Mono', 'DejaVu Sans Mono', 'Source Code Pro', 'Fira Code', 'Cascadia Code', monospace !important;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
