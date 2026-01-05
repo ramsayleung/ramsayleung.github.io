@@ -1,4 +1,5 @@
 {{ if or .Params.math .Site.Params.math }}
 {{ partial "math.html" . }}
 {{ end }}
-<link rel="stylesheet" href="{{ "css/extended/custom_font.css" | relURL }}" />
+<link rel="preload" href="{{ "css/extended/custom_font.css" | relURL }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ "css/extended/custom_font.css" | relURL }}"></noscript>
