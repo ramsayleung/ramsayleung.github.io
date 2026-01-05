@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Mon, 27 Oct 2025 17:17:26 -0700</lastBuildDate>
+    <lastBuildDate>Sun, 04 Jan 2026 20:25:11 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/ai/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Prompt 工程的本质，是提问的艺术</title>
@@ -282,6 +282,11 @@
 <p>但即使兼容能力优秀如Java，我也花费了近3周才把组里使用 JDK8/JDK11 的老服务切换到 JDK17，</p>
 <p>期间还出现了各种奇怪的问题，比如JVM参数名或者选项在升级之后被废弃了, 新版本JVM 无法识别，又或者是出于安全的考虑，部分JDK内部的 class 无法通过反射访问，会导致运行时异常，服务需要回滚.</p>
 <p>AI 也没法帮我们一键升级或维护, 而这些枯燥且繁琐的工作才是那未被人所见的「八分之七」.</p>
+<hr>
+<p><span class="timestamp-wrapper"><span class="timestamp">&lt;2026-01-04 Sun&gt;</span></span>
+对于这个「枯燥且繁琐」的任务，公司也出了一个AI工具来帮我们「一键升级」，可以升级代码库的 Java版本，只是不保证成功 :)</p>
+<p>我看了下这个升级工具的源码，原理类似是使用 Agent 来处理升级，提示词就是「保证兼容性的前提下，把本代码仓库的 Java 版本升级至 &lt;用户指定的version&gt;」</p>
+<p>只不过 Java 版本升级时运行时的问题仍然是没有被解决。</p>
 <h3 id="功能性与非功能性需求"><span class="section-num">2.3</span> 功能性与非功能性需求</h3>
 <p>在程序开发中，除了有功能性需求，还需要非功能性需求.</p>
 <p>而功能性需求恰恰是其中最简单直接的，是满足「又不是不能用」的最基本要求。</p>
@@ -294,6 +299,10 @@
 <p>而给已有的系统上增加功能，就需要考虑各种奇怪的兼容性，相当于带着锁链来跳舞，并不能像从无到有，什么都不用考虑的那般洒脱。</p>
 <p>而这样的限制，又是AI生成代码时未曾考虑的。</p>
 <p>所以从零开始的日抛型，不需要考虑维护成本的项目，很适合由AI来生成.</p>
+<hr>
+<p><span class="timestamp-wrapper"><span class="timestamp">&lt;2026-01-04 Sun&gt;</span></span></p>
+<p>对于这个问题，我个人的总结是，让AI动工之前先和我讨论解决方案，
+我用我的经验来给它提供指正，避免过于短视，方案提到我的认可之后才能开工。</p>
 <h4 id="已解问题"><span class="section-num">2.3.2</span> 已解问题</h4>
 <p>但即使功能性的需求，有时候AI也会做不好。</p>
 <p>我之前在工作中需要根据已有的Schema, 使用Rust 写入Parquet数据，Rust本来就新，加之操作Parquet的库就更少了, 所以ChatGPT, Claude或者Gemini 都没有给出我满意能跑的结果，最后还是靠自己去读 Parquet库的源码找出的解决办法。</p>
@@ -321,7 +330,7 @@
 <img loading="lazy" src="/ox-hugo/ai_bear_the_infamy.jpg"></p>
 <hr>
 <p><span class="timestamp-wrapper"><span class="timestamp">&lt;2025-10-27 Mon&gt;</span></span></p>
-<p>在我写了这篇文章一年半之后，CNBC 最近的一篇文章也说目前还没有证据表明 AI 能显著提高生产力，然而今天企业大幅裁员时通常会把 AI 作为借口：
+<p>在我写了这篇文章半年多之后，CNBC 最近的一篇文章也说目前还没有证据表明 AI 能显著提高生产力，然而今天企业大幅裁员时通常会把 AI 作为借口：
 <a href="https://www.cnbc.com/2025/10/19/firms-are-blaming-ai-for-job-cuts-critics-say-its-a-good-excuse.html">https://www.cnbc.com/2025/10/19/firms-are-blaming-ai-for-job-cuts-critics-say-its-a-good-excuse.html</a></p>
 <p>这和曹操借管粮官脑袋一用，以安军心的想法如出一辙，只是这次的「脑袋」变成了AI，总不能让企业高管自己承认战略判断有误，过度扩张嘛</p>
 <h2 id="ai一无用处"><span class="section-num">3</span> AI一无用处</h2>
@@ -332,6 +341,9 @@
 <p>我使用对AI的定位把它当作一位非常耐心，能力全面的助理，所以我给它分配的都是明确而繁琐的任务，并且我有能力对其输出进行评判的情景。
 (也就是让它干脏活累活)</p>
 <p>先声明一下我使用的AI 模型，日常事务我会使用ChatGPT, 响应速度快，量大够饱； 编码我会使用Claude 3.5 Sonnet，目前是我使用过效果最好的; 中文相关会使用DeepSeek, 但是经常服务器繁忙，体验不好。</p>
+<hr>
+<p><span class="timestamp-wrapper"><span class="timestamp">&lt;2026-01-04 Sun&gt;</span></span></p>
+<p>现在我现在工作中使用的是 Claude 4.5, 工作之余使用的是 Gemini 3 pro，与文章初写成时大多使用网页版或者 APP 不同，现在更多地使用 gemini-cli/claude-code 之类的Agent, 虽然用法有所变化，但是场景还是类似。</p>
 <h3 id="生成测试用例"><span class="section-num">4.1</span> 生成测试用例</h3>
 <p>测试用例太适合让AI来写了，毕竟任务是非常明确的，需要被测的函数也是非常明确的，你只需要使用把测试的场景说清楚。</p>
 <p>我觉得都可以把这个内容扩展写成 <a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%80_%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E8%AE%A4%E7%9F%A5/">测试技能进阶系列</a> 的第四篇了</p>
