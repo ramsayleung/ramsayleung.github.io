@@ -1,11 +1,12 @@
 +++
 title = "杂谈AI取代程序员"
 date = 2025-02-14T21:15:00-08:00
-lastmod = 2025-10-27T17:17:26-07:00
+lastmod = 2026-01-04T20:25:11-08:00
 tags = ["ai", "programmer"]
 draft = false
 toc = true
 showQuote = true
+highlighted = true
 +++
 
 ## <span class="section-num">1</span> 前言 {#前言}
@@ -81,6 +82,15 @@ showQuote = true
 
 AI 也没法帮我们一键升级或维护, 而这些枯燥且繁琐的工作才是那未被人所见的「八分之七」.
 
+---
+
+<span class="timestamp-wrapper"><span class="timestamp">&lt;2026-01-04 Sun&gt;</span></span>
+对于这个「枯燥且繁琐」的任务，公司也出了一个AI工具来帮我们「一键升级」，可以升级代码库的 Java版本，只是不保证成功 :)
+
+我看了下这个升级工具的源码，原理类似是使用 Agent 来处理升级，提示词就是「保证兼容性的前提下，把本代码仓库的 Java 版本升级至 &lt;用户指定的version&gt;」
+
+只不过 Java 版本升级时运行时的问题仍然是没有被解决。
+
 
 ### <span class="section-num">2.3</span> 功能性与非功能性需求 {#功能性与非功能性需求}
 
@@ -106,6 +116,13 @@ AI 也没法帮我们一键升级或维护, 而这些枯燥且繁琐的工作才
 而这样的限制，又是AI生成代码时未曾考虑的。
 
 所以从零开始的日抛型，不需要考虑维护成本的项目，很适合由AI来生成.
+
+---
+
+<span class="timestamp-wrapper"><span class="timestamp">&lt;2026-01-04 Sun&gt;</span></span>
+
+对于这个问题，我个人的总结是，让AI动工之前先和我讨论解决方案，
+我用我的经验来给它提供指正，避免过于短视，方案提到我的认可之后才能开工。
 
 
 #### <span class="section-num">2.3.2</span> 已解问题 {#已解问题}
@@ -156,7 +173,7 @@ AI 也没法帮我们一键升级或维护, 而这些枯燥且繁琐的工作才
 
 <span class="timestamp-wrapper"><span class="timestamp">&lt;2025-10-27 Mon&gt;</span></span>
 
-在我写了这篇文章一年半之后，CNBC 最近的一篇文章也说目前还没有证据表明 AI 能显著提高生产力，然而今天企业大幅裁员时通常会把 AI 作为借口：
+在我写了这篇文章半年多之后，CNBC 最近的一篇文章也说目前还没有证据表明 AI 能显著提高生产力，然而今天企业大幅裁员时通常会把 AI 作为借口：
 <https://www.cnbc.com/2025/10/19/firms-are-blaming-ai-for-job-cuts-critics-say-its-a-good-excuse.html>
 
 这和曹操借管粮官脑袋一用，以安军心的想法如出一辙，只是这次的「脑袋」变成了AI，总不能让企业高管自己承认战略判断有误，过度扩张嘛
@@ -177,6 +194,12 @@ AI 也没法帮我们一键升级或维护, 而这些枯燥且繁琐的工作才
 (也就是让它干脏活累活)
 
 先声明一下我使用的AI 模型，日常事务我会使用ChatGPT, 响应速度快，量大够饱； 编码我会使用Claude 3.5 Sonnet，目前是我使用过效果最好的; 中文相关会使用DeepSeek, 但是经常服务器繁忙，体验不好。
+
+---
+
+<span class="timestamp-wrapper"><span class="timestamp">&lt;2026-01-04 Sun&gt;</span></span>
+
+现在我现在工作中使用的是 Claude 4.5, 工作之余使用的是 Gemini 3 pro，与文章初写成时大多使用网页版或者 APP 不同，现在更多地使用 gemini-cli/claude-code 之类的Agent, 虽然用法有所变化，但是场景还是类似。
 
 
 ### <span class="section-num">4.1</span> 生成测试用例 {#生成测试用例}
