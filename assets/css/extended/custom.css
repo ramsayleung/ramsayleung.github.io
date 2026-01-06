@@ -1,3 +1,8 @@
+body {
+    font-family: "LXGW WenKai", sans-serif;
+    font-weight: normal;
+}
+
 /* Structure the entry for proper link handling */
 .archive-entry {
     position: relative;  /* Container for positioning */
