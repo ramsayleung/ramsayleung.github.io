@@ -12,8 +12,196 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sun, 04 Jan 2026 20:13:32 -0800</lastBuildDate>
+    <lastBuildDate>Mon, 05 Jan 2026 23:38:26 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>迄今所见最扎实的AI落地实践: Reddit的AI翻译</title>
+      <link>https://ramsayleung.github.io/zh/post/2026/%E8%BF%84%E4%BB%8A%E6%89%80%E8%A7%81%E6%9C%80%E6%89%8E%E5%AE%9E%E7%9A%84ai%E8%90%BD%E5%9C%B0%E5%AE%9E%E8%B7%B5_reddit%E7%9A%84ai%E7%BF%BB%E8%AF%91/</link>
+      <pubDate>Mon, 05 Jan 2026 22:18:00 -0800</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2026/%E8%BF%84%E4%BB%8A%E6%89%80%E8%A7%81%E6%9C%80%E6%89%8E%E5%AE%9E%E7%9A%84ai%E8%90%BD%E5%9C%B0%E5%AE%9E%E8%B7%B5_reddit%E7%9A%84ai%E7%BF%BB%E8%AF%91/</guid>
+      <description>&lt;h2 id=&#34;全民ai热潮&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 全民AI热潮&lt;/h2&gt;
+&lt;p&gt;自OpenAI 发布 ChatGPT 以来，国内外都掀起了大干快上AI的各种项目，这两年真的是各种网站/应用都追求落地AI.&lt;/p&gt;
+&lt;p&gt;音乐软件有AI, 比如QQ音乐 &lt;a href=&#34;https://y.qq.com/vemus/index.html&#34;&gt;搞AI编曲&lt;/a&gt; &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;, Spotify &lt;a href=&#34;https://newsroom.spotify.com/2024-04-07/spotify-premium-users-can-now-turn-any-idea-into-a-personalized-playlist-with-ai-playlist-in-beta/&#34;&gt;搞AI歌单&lt;/a&gt; &lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;； 编程问答网站 Stackoverflow搞 &lt;a href=&#34;https://stackoverflow.com/ai-assist&#34;&gt;AI 问答&lt;/a&gt; &lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;, 浏览器搞AI(Firefox, &lt;a href=&#34;https://www.google.com/chrome/ai-innovations/&#34;&gt;Chrome&lt;/a&gt; &lt;sup id=&#34;fnref:4&#34;&gt;&lt;a href=&#34;#fn:4&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;4&lt;/a&gt;&lt;/sup&gt;), 笔记软件如 Notion 搞 &lt;a href=&#34;https://www.notion.com/product/ai&#34;&gt;AI workflow&lt;/a&gt; &lt;sup id=&#34;fnref:5&#34;&gt;&lt;a href=&#34;#fn:5&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;5&lt;/a&gt;&lt;/sup&gt;; 代码托管网站 GitHub 搞AI 编程和代码Review, 甚至最离谱的是连电子书管理软件(Calibre)也搞AI, 增加了一个 &amp;ldquo;&lt;a href=&#34;https://calibre-ebook.com/whats-new&#34;&gt;Asking AI&lt;/a&gt;&amp;quot; &lt;sup id=&#34;fnref:6&#34;&gt;&lt;a href=&#34;#fn:6&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;6&lt;/a&gt;&lt;/sup&gt;的功能，真的是全民「炼」AI.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="全民ai热潮"><span class="section-num">1</span> 全民AI热潮</h2>
+<p>自OpenAI 发布 ChatGPT 以来，国内外都掀起了大干快上AI的各种项目，这两年真的是各种网站/应用都追求落地AI.</p>
+<p>音乐软件有AI, 比如QQ音乐 <a href="https://y.qq.com/vemus/index.html">搞AI编曲</a> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, Spotify <a href="https://newsroom.spotify.com/2024-04-07/spotify-premium-users-can-now-turn-any-idea-into-a-personalized-playlist-with-ai-playlist-in-beta/">搞AI歌单</a> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>； 编程问答网站 Stackoverflow搞 <a href="https://stackoverflow.com/ai-assist">AI 问答</a> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>, 浏览器搞AI(Firefox, <a href="https://www.google.com/chrome/ai-innovations/">Chrome</a> <sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>), 笔记软件如 Notion 搞 <a href="https://www.notion.com/product/ai">AI workflow</a> <sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>; 代码托管网站 GitHub 搞AI 编程和代码Review, 甚至最离谱的是连电子书管理软件(Calibre)也搞AI, 增加了一个 &ldquo;<a href="https://calibre-ebook.com/whats-new">Asking AI</a>&quot; <sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup>的功能，真的是全民「炼」AI.</p>
+<p>你做得好用就还好，但是一堆的网站或者应用就硬堆AI，所谓的AI功能无非是加个AI 对话框，让你可以打开聊天框和AI 对话，但是连当前网页的内容都没有当作上下文喂给AI, 体验非常差。</p>
+<h2 id="reddit-的ai翻译"><span class="section-num">2</span> Reddit 的AI翻译</h2>
+<p>今天看到一篇<a href="https://www.theguardian.com/technology/2026/jan/03/reddit-overtakes-tiktok-uk-search-algorithms-gen-z">文章</a> <sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup>, 说 Reddit 在英国超过 TikTok 成为访问量第四大的社媒平台，过去两年英国用户人数增长了 88%，三分之二的英国网民会访问 Reddit，而 2023 年仅是三分之一。而18-24 岁英国用户中 Reddit 是访问量第六大的网站，而一年前这一数字是第十。</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-dd7d6" hidden>
+    <label for="zoomCheck-dd7d6">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reddit_overtake_tiktok.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>不熟悉 Reddit 的朋友可以把 Reddit 理解成海外版本的「贴吧」.</p>
+<p>Reddit 的崛起背后的因素包括了 Google 调整了算法增加了论坛类内容的权重，而 Reddit 就是论坛形式的社媒。在 AI 时代，用户也越来越多的转向人工撰写的内容，Reddit 也受益于这一趋势。</p>
+<p>这篇文章让我想起最近Reddit 做的新功能，Reddit 利用大语言模型，为其海量帖子生成了多种语言的翻译版本，比如把英文帖子翻译成了中文, 韩文，日文等等。</p>
+<p>然后我用中文在Google 搜索的时候，Google 搜索结果中就会展示原帖子的翻译版本，当我点击搜索结果时，就会跳转到Reddit 翻译后的中文版本:</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-cba3f" hidden>
+    <label for="zoomCheck-cba3f">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/berserk_tv_in_chinese.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>我可以直接阅读翻译后的版本:</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-dcf9d" hidden>
+    <label for="zoomCheck-dcf9d">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/berserk_post_tl_zh_hans.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>又或者点击「Show Original」阅读原版。</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-8aca7" hidden>
+    <label for="zoomCheck-8aca7">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/berserk_post_show_original.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<h2 id="天才产品设计"><span class="section-num">3</span> 天才产品设计</h2>
+<p>初看之下似乎平平无奇，细品之下真的是拍案叫绝.</p>
+<p>这个看似简单的翻译功能，远不止是便利工具。它是一个精心设计、系统性思考的产物，我愿称之为「迄今所见最扎实的AI落地实践」</p>
+<h3 id="reddit-角度"><span class="section-num">3.1</span> Reddit 角度</h3>
+<p>首先这个功能让更多用户阅读不同语言的帖子，比如中文，日文用户可以阅读原文是英语，法语，西班牙语的帖子，大大增加了Reddit 帖子的普适性，语言不再是个障碍，可以为Reddit 在AI时代增加用户流量，为新用户引流。</p>
+<p>更多的用户就意味着更多的内容，更丰富的内容就能吸引来更多的用户，在AI时代，
+内容就是「炼」AI大模型的原材料，光有英伟达的显卡，没有原材料，肯定没法炼出AI。</p>
+<p>对比谷歌翻译这样的外置的翻译软件，这个是实时、无缝的页面级翻译，翻译质量相当高，其翻译质量之高、
+与页面整合之自然，初用时甚至令人难以察觉这是机器翻译的产物。</p>
+<p>用户体验非常好，其自然和实用的特点，完美解决了非母语用户访问高质量 UGC 的核心痛点。</p>
+<p>更关键的是，作为用户，我完全没有意识到「AI」的存在。</p>
+<p>我是在切换到工程师的视角之后，我才意识到 Reddit 使用大模型把帖子给翻译了，然后让谷歌的搜索引擎把不同语言的版本都索引, 直接把翻译结果在谷歌的搜索结果中展示了</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-cba3f" hidden>
+    <label for="zoomCheck-cba3f">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/berserk_tv_in_chinese.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>最好的AI特性就是让你根本意识不到AI的存在。</p>
+<h3 id="google-角度"><span class="section-num">3.2</span> Google 角度</h3>
+<p>对Google 来说，因为Reddit 绝大部分的帖子都是人发的(Reddit版主大多都非常讨厌机器人或者AI 发帖，有相当多的版规说明不能使用AI生成内容，否则非常容易被禁言或者在某个子版封号), 提高论坛类内容的权重, 即可以保证搜索质量.</p>
+<p>而索引不同语言版本的帖子又给谷歌提供了更多的高质量的搜索数据。</p>
+<p>所以谷歌既索引了大量新鲜、高质量、多语言的人类内容，又提升了搜索结果质量，正好契合其算法调整方向</p>
+<h3 id="数据-模型与生态的飞轮"><span class="section-num">3.3</span> 数据、模型与生态的飞轮</h3>
+<p>正是通过为用户打破语言壁垒，为谷歌丰富搜索结果，Reddit得以启动一个更宏大的正向循环</p>
+<p>在 2024年2月, Reddit 和 谷歌 达成深化合作的协议，Reddit 允许谷歌使用它的数据训练 AI 模型, 据报道，初始合同是每年六千万美元。</p>
+<p>在 2025年9月，传出了 Reddit 和谷歌以及 OpenAI 谈新的合同，因为他们相信他们的用户数据对于 AI 训练非常重要，所以他们想谈更好的合同。</p>
+<p>所以这个AI翻译的设计，就是一个强强联合, 打出 <code>1+1&gt;3</code> 的效果, 甚至能以此为助力和其他的大模型厂商聊合作，无论是OpenAI, 还是 Anthropic, 没有数据也练不出 AI来。</p>
+<p>形成了一个正向循环：更多用户 -&gt; 更多内容 -&gt; 更好AI数据 -&gt; 更好翻译/搜索/AI模型 -&gt; 更多用户</p>
+<p>这是一个对用户，对 Reddit, 对谷歌，甚至对整个AI领域都有益处的设计，甚至可以说是「四赢」</p>
+<h2 id="结语"><span class="section-num">4</span> 结语</h2>
+<p>成功的AI落地，是让技术隐形，让用户价值凸显.</p>
+<p>比对其他「强加AI」的产品，Reddit 的翻译功能是真正将AI融入产品，而非牵强附会，它甚至都没有告诉用户，这是用AI来实现的, 不强求AI叙事。</p>
+<p>写到这里，不禁让我想起国内最早 all in AI, 还手握搜索引擎和中国最大论坛贴吧的某公司，真的是一手王炸的牌打得稀烂。</p>
+<h3 id="推荐阅读">推荐阅读</h3>
+<ul>
+<li>旅加经历
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E8%BF%99%E4%BA%9B%E5%B9%B4%E8%B5%B0%E8%BF%87%E7%9A%84%E8%B7%AF_%E4%BB%8E%E5%B9%BF%E5%B7%9E%E5%88%B0%E6%B8%A9%E5%93%A5%E5%8D%8E/">这些年走过的路：从广州到温哥华</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B9%8B%E5%88%9D%E4%BD%93%E9%AA%8C/">加拿大之初体验</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%99%BB%E9%99%86%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B8%80%E5%B9%B4%E7%9A%84%E4%BD%93%E4%BC%9A/">登陆加拿大一年后的体会</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2025/%E5%8A%A0%E5%9B%BD%E6%97%85%E5%B1%85%E7%BA%AA--%E5%BC%80%E7%AF%87/">加国旅居纪–开篇</a></li>
+</ul>
+</li>
+<li>工具流分享
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%AE%80%E6%98%8E%E5%86%99%E4%BD%9C%E6%8C%87%E5%8D%97/">简明写作指南</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E5%86%99%E4%BD%9C%E6%B5%81/">我的写作流</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E7%94%BB%E5%9B%BE%E6%B5%81/">我的画图流：画图工具与技巧分享</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E6%90%9C%E7%B4%A2%E6%B5%81/">我的搜索流：高效搜索经验分享</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2022/feynman_technique/">最好的学习方式：费曼学习法(Feynman Technique)</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2021/%E7%B3%BB%E7%BB%9F%E6%80%9D%E8%80%83/">系统思考：既见树木，又见森林</a></li>
+</ul>
+</li>
+<li>思考感悟
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%BC%96%E7%A8%8B%E5%8D%81%E5%B9%B4%E7%9A%84%E6%84%9F%E6%82%9F/">编程十年的感悟</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E4%BB%8E%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E7%A6%BB%E7%BA%BF_%E6%88%91%E5%B8%A6%E8%B5%B0%E4%BA%86%E4%BB%80%E4%B9%88/">那些年，我从微信支付学到的东西</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2025/%E6%9D%82%E8%B0%88ai%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98/">杂谈ai取代程序员</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2023/%E7%BD%AE%E8%BA%AB%E4%BA%8B%E5%86%85/">为什么梦想买不起，故乡回不去</a></li>
+</ul>
+</li>
+<li>软件工程
+<ul>
+<li><a href="https://ramsayleung.github.io/zh/post/2025/a_philosophy_of_software_design/">软件设计的哲学</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2025/structure_and_interpretation_of_computer_programs/">一本读了八年还没读完的书</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%80_%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E8%AE%A4%E7%9F%A5/">测试技能进阶(一): 软件质量认知</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/">测试技能进阶(二): Parameterized Tests</a></li>
+<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%89_property_based_testing/">测试技能进阶(三): Property Based Testing</a></li>
+</ul>
+</li>
+</ul>
+<div class="qr-container" center>
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" class="qr-container" width="160px" height="160px" center="t" />
+公号同步更新，欢迎关注👻
+</div>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://y.qq.com/vemus/index.html">https://y.qq.com/vemus/index.html</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://newsroom.spotify.com/2024-04-07/spotify-premium-users-can-now-turn-any-idea-into-a-personalized-playlist-with-ai-playlist-in-beta/">https://newsroom.spotify.com/2024-04-07/spotify-premium-users-can-now-turn-any-idea-into-a-personalized-playlist-with-ai-playlist-in-beta/</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://stackoverflow.com/ai-assist">https://stackoverflow.com/ai-assist</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="https://www.google.com/chrome/ai-innovations/">https://www.google.com/chrome/ai-innovations/</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5">
+<p><a href="https://www.notion.com/product/ai">https://www.notion.com/product/ai</a>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:6">
+<p><a href="https://calibre-ebook.com/whats-new">https://calibre-ebook.com/whats-new</a>&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:7">
+<p><a href="https://www.theguardian.com/technology/2026/jan/03/reddit-overtakes-tiktok-uk-search-algorithms-gen-z">https://www.theguardian.com/technology/2026/jan/03/reddit-overtakes-tiktok-uk-search-algorithms-gen-z</a>&#160;<a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+]]></content:encoded>
+    </item>
     <item>
       <title>历史的迷雾</title>
       <link>https://ramsayleung.github.io/zh/post/2026/%E5%8E%86%E5%8F%B2%E7%9A%84%E8%BF%B7%E9%9B%BE/</link>
@@ -2256,724 +2444,6 @@ BC省明确规定，租金年涨幅不得超过通货膨胀率。例如，2025�
 </li>
 <li id="fn:4">
 <p><a href="https://old.reddit.com/r/rails/comments/1n6p791/built_my_first_rails_project_a_telegram_spam/">https://old.reddit.com/r/rails/comments/1n6p791/built_my_first_rails_project_a_telegram_spam/</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>基于贝叶斯算法的Telegram广告拦截机器人（一）：从问题到产品</title>
-      <link>https://ramsayleung.github.io/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/</link>
-      <pubDate>Thu, 28 Aug 2025 23:45:00 -0700</pubDate>
-      <guid>https://ramsayleung.github.io/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://ramsayleung.github.io/en/post/2025/a_telegram_spam_blocker_bot_based_on_bayesian/&#34;&gt;English Version&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;系列文章：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://ramsayleung.github.io/zh/post/2025/%E5%9F%BA%E4%BA%8E%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BA%8C/&#34;&gt;基于贝叶斯算法的Telegram广告拦截机器人（二）：上线半月的故障、挑战与优化之路&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;序言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 序言&lt;/h2&gt;
-&lt;p&gt;我花了一周末时间，写了一个自学习的 Telegram 广告拦截机器人 &lt;code&gt;@BayesSpamSniperBot&lt;/code&gt; (&lt;a href=&#34;https://t.me/BayesSpamSniperBot&#34;&gt;https://t.me/BayesSpamSniperBot&lt;/a&gt;)，项目开源在：&lt;a href=&#34;https://github.com/ramsayleung/bayes_spam_sniper&#34;&gt;https://github.com/ramsayleung/bayes_spam_sniper&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&#34;telegram&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1.1&lt;/span&gt; Telegram&lt;/h3&gt;
-&lt;p&gt;Telegram 是一个流行的即时通讯软件，类似微信，Whatsapp，已有超过10亿用户，支持许多强大的功能，如聊天记录云存储，支持Linux, Mac, Windows, Android, IOS, Web 多个平台，客户端都是开源，类似微信公众号的频道功能(Channel)，还有我见过的最强大的机器人系统。&lt;/p&gt;</description>
-      <content:encoded><![CDATA[<p><a href="https://ramsayleung.github.io/en/post/2025/a_telegram_spam_blocker_bot_based_on_bayesian/">English Version</a></p>
-<p>系列文章：</p>
-<ul>
-<li><a href="/zh/post/2025/%E5%9F%BA%E4%BA%8E%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BA%8C/">基于贝叶斯算法的Telegram广告拦截机器人（二）：上线半月的故障、挑战与优化之路</a></li>
-</ul>
-<h2 id="序言"><span class="section-num">1</span> 序言</h2>
-<p>我花了一周末时间，写了一个自学习的 Telegram 广告拦截机器人 <code>@BayesSpamSniperBot</code> (<a href="https://t.me/BayesSpamSniperBot">https://t.me/BayesSpamSniperBot</a>)，项目开源在：<a href="https://github.com/ramsayleung/bayes_spam_sniper">https://github.com/ramsayleung/bayes_spam_sniper</a></p>
-<h3 id="telegram"><span class="section-num">1.1</span> Telegram</h3>
-<p>Telegram 是一个流行的即时通讯软件，类似微信，Whatsapp，已有超过10亿用户，支持许多强大的功能，如聊天记录云存储，支持Linux, Mac, Windows, Android, IOS, Web 多个平台，客户端都是开源，类似微信公众号的频道功能(Channel)，还有我见过的最强大的机器人系统。</p>
-<h2 id="缘起"><span class="section-num">2</span> 缘起</h2>
-<p>平时我跑步和做饭都习惯会听播客，而《<a href="https://podcasts.apple.com/us/podcast/%E8%BD%AF%E4%BB%B6%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/id1147186605">软件那些事儿</a>》<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>是我最喜欢的播客之一，主持人是<a href="https://liuyandong.com/sample-page">栋哥</a> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>, 我也因为喜欢栋哥的节目，趁机加了栋哥的电报频道。</p>
-<p>栋哥的电报频道<a href="https://t.me/huruanhuying">汗牛充栋</a> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>主要是用来发布播客信息，
-之前打开过一段时间的留言功能，没有想到引来了一堆的币圈的用户来发广告，因此将评论功能就关了：</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-be4f5" hidden>
-    <label for="zoomCheck-be4f5">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/spam_concert.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>另外一个我关注的频道 <a href="https://t.me/kaedeharakazuha17">Ray Tracing</a> <sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>也在吐槽币圈的广告，不堪其忧:</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-d541b" hidden>
-    <label for="zoomCheck-d541b">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/ray_tracing_spam.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<h2 id="黑客与画家"><span class="section-num">3</span> 黑客与画家</h2>
-<p>常见的 Telegram 广告机器人是大多是基于关键字的，通过匹配关键字进行文本拦截，非常容易被发垃圾广告的人绕过。</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-1401f" hidden>
-    <label for="zoomCheck-1401f">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/keyword_based_blocker.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>被绕过的话主要是靠管理员人工删除。</p>
-<p>这不禁让我想起了保罗.格雷厄姆在《黑客与画家》一书在2002年介绍的情况：</p>
-<p>当时电子邮件兴起，也有非常多的垃圾邮件，常见的垃圾广告拦截方式是关键字匹配+邮件地址黑名单，但是既低效也容易被绕过。</p>
-<p>保罗.格雷厄姆就创造性地使用贝叶斯算法(Bayesian Theorem)实现了一个<a href="https://paulgraham.com/spam.html">广告拦截器</a> <sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>, 效果竟然出奇地好。</p>
-<p>对于 Telegram 的垃圾广告而言，这不是类似的问题嘛？</p>
-<p>那我岂不是可以用类似的解决方案来解决 Telegram 广告的问题嘛</p>
-<h3 id="贝叶斯定理"><span class="section-num">3.1</span> 贝叶斯定理</h3>
-<p>提起概率算法，最经典的例子莫过于「抛硬币」这一古典概率——每次抛掷都是独立事件，前一次的结果不会影响下一次的概率。</p>
-<p>然而，现实中的很多场景并不能像抛硬币那样无限重复，事件之间也往往并非相互独立。</p>
-<p>这时候，贝叶斯定理就显示出其独特的价值。</p>
-<p>它是一种「由果溯因」的概率方法，用于在已知某些证据的条件下，更新我们对某一假设的置信程度。</p>
-<p>换句话说，贝叶斯算法能够根据不断出现的新证据，动态调整对某个事件发生概率的估计。</p>
-<p>简单来说，就像人脑的学习过程：我们原本有一个初步认知，在获得新信息之后，会据此修正原有的看法，进而调整下一步的行动。</p>
-<p>保罗·格雷厄姆就是通过贝叶斯定理，不断地根据已被标记为垃圾广告或者非垃圾广告的邮件，对新出现的邮件进行分类，判断其是否为垃圾广告。</p>
-<p>如果想更直观地理解贝叶斯定理，推荐两个讲解清晰、生动易懂的视频：</p>
-<ul>
-<li>《<a href="https://www.youtube.com/watch?v=Pu675cHJ7bg">Bayes&rsquo; Theorem 贝叶斯定理</a>》<sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup>(中文)</li>
-<li>《<a href="https://www.youtube.com/watch?v=HZGCoVF3YvM">Bayes theorem, the geometry of changing beliefs</a>》<sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup>(英文)</li>
-</ul>
-<h2 id="架构设计"><span class="section-num">4</span> 架构设计</h2>
-<p>Telegram Bot 支持两种与 Telegram 服务器交互的模式，分别是：</p>
-<ol>
-<li>
-<p>Webhook: Telegram 服务器会在 Bot 收到新消息时主动回调此前 Bot 注册的地址，Bot Server 只需要处理回调的消息</p>
-</li>
-<li>
-<p>Long Polling: Bot Server 一直轮询 Telegram 服务器，看是否有新消息，有就处理，本机器人使用的是此模式</p>
-
-    <figure>
-        
-        
-        <input type="checkbox" id="zoomCheck-ca97a" hidden>
-        <label for="zoomCheck-ca97a">
-        
-        
-        <img class="zoomCheck" loading="lazy" src="/ox-hugo/webhook_vs_long_polling.jpg"/> 
-        
-        
-        </label>
-    </figure>
-
-</li>
-</ol>
-<h4 id="消息分析"><span class="section-num">4.0.1</span> 消息分析</h4>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-e2518" hidden>
-    <label for="zoomCheck-e2518">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/spam_analyze.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>Bot Server 收到消息之后，会派发到单独的 <code>telegram_bot_worker</code> 处理，然后根据预训练的模型判断是否是垃圾广告，如果是，调用 Bot API 删除消息。</p>
-<h4 id="封禁并训练"><span class="section-num">4.0.2</span> 封禁并训练</h4>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-04d7c" hidden>
-    <label for="zoomCheck-04d7c">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/mark_spam_and_ban_user.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>Bot Server 收到消息之后，会派发到单独的 <code>telegram_bot_worker</code> 处理， <code>telegram_bot_worker</code> 会调用 bot API 删除消息并封禁用户，并插入一条训练数据，标记为垃圾广告(spam)</p>
-<p>保存训练数据会触发 hook, 创建一个训练消息，投递到消息队列 <code>training</code>, 会有另外的 worker <code>classifier_trainer</code> 订阅 <code>training</code> 消息，并使用新消息重新训练和更新模型</p>
-<p>使用队列和后台进程 <code>classifier_trainer</code> 来训练任务而非直接使用 <code>telegram_bot_worker</code> 主要是为了返回 Bot请求与训练模型解耦，否则随着模型规模的增大，训练时间会越来越长，响应时间会越来越长。</p>
-<p>解耦后就易于水平扩展了，在设计上为后续性能优化和扩展预留空间。</p>
-<h2 id="why-rails"><span class="section-num">5</span> Why Rails</h2>
-<p>看了我项目源代码的朋友，难免会浮起疑问，为什么使用 Ruby on Rails 实现的?</p>
-<p>因为我工作中会有用到JVM系的编程语言(Java/Kotlin/Scala)和 Rust, 所以我对 Java/Rust 相当熟悉，又觉得模型训练可能对性能要求很高，所以最开始的<a href="https://gist.github.com/ramsayleung/5848af0177a70a01d41f624e361b1b5d">原型</a> <sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup>我是用 Rust 实现的，大概就花了半个多小时。</p>
-<p>但是当我想把原型扩展成 Telegram 机器人时，就发现需要处理相当多与机器人交互的逻辑，主要涉及到 API 与数据库操作，其中大部分都是和模型无关的，因此我又想到了 Ruby on Rails。</p>
-<p>论单个工程师做产品原型，就我个人而言，实在是没有比 <code>Ruby on Rails</code> 更高效的框架了，因此我就切换到 Ruby on Rails 去。</p>
-<p>Rails 8 的新特性，把 Rails 向所谓的「一人全栈框架」又推进了不少，通过关系型数据库内置对消息队列 <code>Solid Queue</code> 的支持，甚至不再需要类似 Redis 这样的存储来支持队列实现。</p>
-<p>架构设计中的队列和后台进程，只需要几行代码就实现了，甚至不需要额外的配置，如果队列不存在，框架会自动创建：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ClassifierTrainerJob</span> <span class="o">&lt;</span> <span class="no">ApplicationJob</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># Job to train classifier asynchronously</span>
-</span></span><span class="line"><span class="cl">  <span class="n">queue_as</span> <span class="ss">:training</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">perform</span><span class="p">(</span><span class="n">group_id</span><span class="p">,</span> <span class="n">group_name</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="no">SpamClassifierService</span><span class="o">.</span><span class="n">rebuild_for_group</span><span class="p">(</span><span class="n">group_id</span><span class="p">,</span> <span class="n">group_name</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="k">end</span>
-</span></span><span class="line"><span class="cl"><span class="k">end</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>得益于 Rails 强大的 ORM 框架，内置各种生命周期的 hook, 对新插入训练数据后触发后台进程重新训练模型的代码也只有寥寥几行：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TrainedMessage</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># Automatically train classifier after creating/updating a message</span>
-</span></span><span class="line"><span class="cl">  <span class="n">after_create</span> <span class="ss">:retrain_classifier</span>
-</span></span><span class="line"><span class="cl">  <span class="n">after_destroy</span> <span class="ss">:retrain_classifier</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">retrain_classifier</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># For efficiency, we could queue this as a background job</span>
-</span></span><span class="line"><span class="cl">    <span class="no">ClassifierTrainerJob</span><span class="o">.</span><span class="n">perform_later</span><span class="p">(</span><span class="n">group_id</span><span class="p">,</span> <span class="n">group_name</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="k">end</span>
-</span></span><span class="line"><span class="cl"><span class="k">end</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>在 Rails 各种内置强大工具的加持下，我只用了一天时间就把整个机器人的功能给实现出来了。</p>
-<p>看到这里，有朋友可能会担心性能，觉得 Ruby 性能不行，并且还是动态语言，不好维护。</p>
-<p>我持有的观点还是和之前的博文《<a href="https://ramsayleung.github.io/zh/post/2024/%E7%BC%96%E7%A8%8B%E5%8D%81%E5%B9%B4%E7%9A%84%E6%84%9F%E6%82%9F/">编程十年的感悟</a>》<sup id="fnref:9"><a href="#fn:9" class="footnote-ref" role="doc-noteref">9</a></sup>一样：</p>
-<p>先跑起来再说，先做个原型跑起来，有用户愿意用你的产品再说，
-当运行速度成为瓶颈时，你的业务肯定非常大了，肯定有足够的资源招一打程序员把项目优化成 Rust/C++, 甚至是汇编。</p>
-<p>没有用户，谈性能只是个伪命题。</p>
-<p>至于动态语言一时爽，代码维护火葬场，我也是相当认同的。</p>
-<p>因此我在为团队选型时我绝对不会考虑动态语言，只会上编译型的语言，
-甚至是Rust这种强类型，但是现在只有我一个人来做原型，我自己是什么顺手就用什么的。</p>
-<h3 id="vibe-coding"><span class="section-num">5.1</span> Vibe Coding?</h3>
-<p>Vibe Coding等AI编程概念可谓是铺天盖地，甚嚣尘上，难免会有朋友好奇我这个项目是否 Vibe Coding生成的。</p>
-<p>答案是，我尝试了几个小时之后，直接放弃了， Claude 4 和 Gemini 2.5 Pro 都试过了。</p>
-<p>开始是使用 Rust + Cloudflare Worker 的技术栈，Rust + Cloudflare Worker 是个相当小众的领域，训练语料少，Vibe Coding 出来的代码编译无法通过</p>
-<p>后面换成 Ruby on Rails, 问题还更严重了，Ruby 是弱类型的动态语言，语法写起来和英语一样，Rails 又还有很多黑魔法，所以到运行时才报错，代码生成省下来的开发时间，debug过程全补回来了。</p>
-<p>另外一个是 Vibe Coding 生成的代码很多都是没有设计的，比如把 <code>Classifier</code> 和 <code>TrainedMessage</code> 的类耦合在一起，在 <code>Classifier</code> 里面持久化 <code>TrainedMessage</code></p>
-<p>又直接在 <code>telegram_bot_worker</code> 进程里面，接收到训练信息马上同步训练新模型，训练完再返回调用命令的结果，完全没考虑解耦接收训练语料和模型训练。</p>
-<p>只能说 Vibe Coding 非常适合 Rust 这样的强类型编译型语言，生成的出来的代码起码要编译通过，保证质量的下限。</p>
-<p>而对于那些说「一行代码都不用写/改，就能做出一个APP」的言论，此时我脑海不禁升起疑问？</p>
-<p>究竟是代码好到一行都不用改？还是开发者看不出症结所在，所以一行都不改？</p>
-<h2 id="设计理念"><span class="section-num">6</span> 设计理念</h2>
-<p>开发完原型，在机器人整体功能可用之后，脑中又有不少的想法冒出来，当时就马不停蹄地给机器人加上，
-因此机器人就支持快十个命令，还支持私聊和群聊的不同模式。</p>
-<p>加着加着，连我自己都疑惑起来：这么多的功能，有点像国内的各种大而全的App了，我不禁对此产生疑问：</p>
-<p>真的会有用户用这么多功能么？真的有用户会用这些功能嘛？太多功能不是也会有额外的心智负担嘛?</p>
-<p>我最喜欢的广告拦截器 <a href="https://ublockorigin.com/">Ublock Origin</a> <sup id="fnref:10"><a href="#fn:10" class="footnote-ref" role="doc-noteref">10</a></sup>拦截效果非常好，但是使用起来却非常简单，易上手。</p>
-<p>想起《<a href="https://ramsayleung.github.io/zh/post/2025/a_philosophy_of_software_design/">软件设计的哲学</a>》<sup id="fnref:11"><a href="#fn:11" class="footnote-ref" role="doc-noteref">11</a></sup>里面提到的设计理念，接口应该是简单易用的，但是功能可以是复杂丰富的。</p>
-<p>因此我只能忍痛把此前新增的，但与核心功能无关的命令都删掉；</p>
-<p>此外考虑到可能绝大多数的用户都没有技术背景，也可能不知道命令怎么用，因此将命令尽可能地优化成按钮，用户可以直接点击，改善易用性:</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-e207f" hidden>
-    <label for="zoomCheck-e207f">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/start_zh.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-ca4b6" hidden>
-    <label for="zoomCheck-ca4b6">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/help_page_zh.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>我还希望可以支持多语言，比如根据用户的系统语言，自动切换到中文或者英文，这个就需要不同语言的文案。</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-5f8d5" hidden>
-    <label for="zoomCheck-5f8d5">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/start_en.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-bc48d" hidden>
-    <label for="zoomCheck-bc48d">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/help_en.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p><a href="https://github.com/ramsayleung/bayes_spam_sniper/blob/master/app/services/telegram_botter.rb">telegram_botter.rb</a> 这个核心服务类里面有超过60%的代码都是为了此类易用性改进而引入的。</p>
-<p>简单留给用户，复杂留给开发</p>
-<h3 id="如何使用"><span class="section-num">6.1</span> 如何使用</h3>
-<p>只需两步，机器人就可以自动工作。</p>
-<ul>
-<li>将机器人（@BayesSpamSniperBot）<a href="https://t.me/BayesSpamSniperBot?startgroup=true">添加到您的群组</a></li>
-<li>给予机器人管理员权限（删除消息(delete message )，封禁用户权限(ban user )）</li>
-</ul>
-<p>完成这两步后，机器人不仅会自动开始工作，自动识别群内广告，然后删除文本消息，如果发送垃圾广告超过3次，将会被封禁；</p>
-<p>还会随着社区的使用（通过 <code>/markspam</code> 和 <code>/feedspam</code> ），变得越来越智能</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-28a2c" hidden>
-    <label for="zoomCheck-28a2c">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/detect_spam_and_ban_user.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>此机器人的设计理念就是最小化打扰管理员与用户，提供简单的操作命令，并最大可能地自动化，
-所以本机器人只提供以下三个命令（支持&quot;/&ldquo;开头自动补全）:</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-ecf1f" hidden>
-    <label for="zoomCheck-ecf1f">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/command_auto_completion.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<h4 id="markspam"><span class="section-num">6.1.1</span> <code>/markspam</code></h4>
-<p>删除垃圾消息并封禁用户, 需要管理员权限。</p>
-<p>在某条你想封禁的信息下回复 <code>/markspam</code>, 机器人就会自动把该条消息删除被封禁用户.</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-14d59" hidden>
-    <label for="zoomCheck-14d59">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/markspam_2.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>(消息也被删除)
-<img loading="lazy" src="/ox-hugo/markspam.jpg"></p>
-<p>与常见的群管理机器人不同，这条命令不仅会删除垃圾消息并封禁用户, 因为这条消息还被管理员标记成垃圾广告，有非常高的置信度，所以系统就会以这条垃圾广告为训练数据，对模型进行实时更新。</p>
-<p>下次类似的发言不仅会被识别，所有使用本机器人的群组都会受益，也会把类似的文本标记成垃圾广告</p>
-<h4 id="listbanuser"><span class="section-num">6.1.2</span> <code>/listbanuser</code></h4>
-<p>查看封禁账户列表, 需要管理员权限。</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-7751e" hidden>
-    <label for="zoomCheck-7751e">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/listbanuser.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>查看已封禁的用户列表，并主动解封。</p>
-<h4 id="listspam"><span class="section-num">6.1.3</span> <code>/listspam</code></h4>
-<p>查看广告消息列表, 需要管理员权限。</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-d0038" hidden>
-    <label for="zoomCheck-d0038">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/listspam.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>查看被标记为广告的消息列表，并可标记为正常。</p>
-<h4 id="feedspam"><span class="section-num">6.1.4</span> <code>/feedspam</code></h4>
-<p>投喂垃圾信息来训练，无任何权限要求，可私聊投喂或在群组内投喂.</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-2a139" hidden>
-    <label for="zoomCheck-2a139">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/feedspam.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-1fc12" hidden>
-    <label for="zoomCheck-1fc12">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/feedspam2.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<h2 id="eating-your-own-dog-food"><span class="section-num">7</span> Eating your own dog food</h2>
-<p>在软件开发领域，有这么一句俗话，Eating your own dog food(吃你自己的狗粮)，大意是你自己的开发的东西，要自己先用起来。</p>
-<p>因此我建了一个自己的频道：<a href="https://t.me/pipeapplebun">菠萝油与天光墟</a> <sup id="fnref:12"><a href="#fn:12" class="footnote-ref" role="doc-noteref">12</a></sup>用于测试，可惜订阅者寥寥，
-就吸引不来太多的发垃圾广告的用户，所以欢迎大家订阅或者进来发广告，以吸引更多的发垃圾广告的用户。</p>
-<p>在我这个频道，每个人都有自由发言的权利(美中不足只是次数受限)</p>
-<p>既然没有人来我的频道发广告，苦于没有训练数据，我只能主动出击，赤膊上阵，割肉喂鹰去加了各种币圈群，黄色群，主动去看各种广告了：</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-3779e" hidden>
-    <label for="zoomCheck-3779e">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/telegram_group1.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-35262" hidden>
-    <label for="zoomCheck-35262">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/telegram_group2.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-b0b9b" hidden>
-    <label for="zoomCheck-b0b9b">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/spam_sample.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>自从开发了这个机器人之后，我对广告的看法就变了，以前在别的群看到广告就烦，现在在别的群看到广告就很开心，
-这都是宝贵的训练数据，要趁着还没被删，赶紧记录下来。</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-511dc" hidden>
-    <label for="zoomCheck-511dc">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/feedspam3.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<h3 id="八仙过海的垃圾广告"><span class="section-num">7.1</span> 八仙过海的垃圾广告</h3>
-<p>别人故事里的算法效果总是出奇的好，到自己实际运行的时候，总是发现会有这样那样的 case 没有覆盖，总有各种意外惊喜</p>
-<p>许多在 Telegram 发广告的用户都是久经考验的反拦截器斗士了。</p>
-<p>虽然关键词封禁效率不高，但是那些能让我们见到的广告说明已经是绕过关键词拦截的。</p>
-<p>比如:</p>
-<blockquote>
-<p>在 币圈 想 赚 钱，那 你 不关 注 这 个 王 牌 社 区，真的太可惜了，真 心 推 荐，每 天 都 有 免 费 策 略</p></blockquote>
-<p>又或者</p>
-<blockquote>
-<p>这人简-介挂的 合-约-报单群组挺牛的ETH500点，大饼5200点！ + @BTCETHl6666</p></blockquote>
-<p>前者通过空格分隔来绕过关键词，后者通过添加标点符号来绕过关键词。</p>
-<p>与英文等基于拉丁字母的语言天然通过空格分词不同，中文使用贝叶斯算法进行统计时，需要先进行分词</p>
-<blockquote>
-<p>the fox jumped over the lazy dog</p>
-<p>我们的中文就不一样了</p></blockquote>
-<p>「我们的中文就不一样了」就会被分词成「我们 | 的 | 中文 | 就 | 不 | 一样 | 了」, 然后才能对词频进行统计。</p>
-<p>但是像广告 <code>在 币圈 想 赚 钱，那 你 不关 注 这 个 王 牌 社 区，真的太可惜了，真 心 推 荐，每 天 都 有 免 费 策 略</code> , 空格除了会影响关键字匹配，也会影响分词，这句话的分词结果就会变成:</p>
-<p><code>在 | | 币圈 | | 想 | | 赚 | | 钱 | ， | 那 | | 你 | | 不 | 关 | | 注 | | 这 | | 个 | | 王 | | 牌 | | 社 | | 区 | ， | 真的 | 太 | 可惜 | 了 | ， | 真 | | 心 | | 推 | | 荐 | ， | 每 | | 天 | | 都 | | 有 | | 免 | | 费 | | 策 | | 略</code></p>
-<p><code>这人简-介挂的 合-约-报单群组挺牛的ETH500点，大饼5200点！ + @BTCETHl6666</code> 也会被分词成：</p>
-<p><code>这人简 | - | 介挂 | 的 | | 合 | - | 约 | - | 报单 | 群组 | 挺 | 牛 | 的 | ETH500 | 点 | ， | 大饼 | 5200 | 点 | ！ | | + | | @ | BTCETHl6666</code></p>
-<p>未经处理的训练数据就会影响模型的结果，可见训练数据的质量也非常重要，因此我就对训练语料做了相应的预处理：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="c1"># Step 1: 处理 anti-spam 分隔符</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># 把中英文之间的非中英文及数字去掉，即 &#34;合-约&#34; -&gt; &#34;合约&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="n">previous</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="n">previous</span> <span class="o">!=</span> <span class="n">cleaned</span>
-</span></span><span class="line"><span class="cl">  <span class="n">previous</span> <span class="o">=</span> <span class="n">cleaned</span><span class="o">.</span><span class="n">dup</span>
-</span></span><span class="line"><span class="cl">  <span class="n">cleaned</span> <span class="o">=</span> <span class="n">cleaned</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/([一-龯A-Za-z0-9])[^一-龯A-Za-z0-9\s]+([一-龯A-Za-z0-9])/</span><span class="p">,</span> <span class="s1">&#39;\1\2&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="k">end</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Step 2: 处理中文字符 anti-spam 空格</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># 处理 &#34;想 赚 钱&#34; -&gt; &#34;想赚钱&#34; case</span>
-</span></span><span class="line"><span class="cl"><span class="n">previous</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="n">previous</span> <span class="o">!=</span> <span class="n">cleaned</span>
-</span></span><span class="line"><span class="cl">  <span class="n">previous</span> <span class="o">=</span> <span class="n">cleaned</span><span class="o">.</span><span class="n">dup</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># 匹配中文汉字之间的一个或多个空格，然后删除掉</span>
-</span></span><span class="line"><span class="cl">  <span class="n">cleaned</span> <span class="o">=</span> <span class="n">cleaned</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/([一-龯])(\s+)([一-龯])/</span><span class="p">,</span> <span class="s1">&#39;\1\3&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="k">end</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Step 3: 增加汉字与英文之间的空格</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># 以及帮助分词算法如(jieba)更好地分词, e.g., &#34;社区ETH&#34; -&gt; &#34;社区 ETH&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="n">cleaned</span> <span class="o">=</span> <span class="n">cleaned</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/([一-龯])([A-Za-z0-9])/</span><span class="p">,</span> <span class="s1">&#39;\1 \2&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">cleaned</span> <span class="o">=</span> <span class="n">cleaned</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/([A-Za-z0-9])([一-龯])/</span><span class="p">,</span> <span class="s1">&#39;\1 \2&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Step 4: 删除多余的空格(多个空格缩减个一个)</span>
-</span></span><span class="line"><span class="cl"><span class="n">cleaned</span> <span class="o">=</span> <span class="n">cleaned</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/\s+/</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>预处理之后， <code>在 币圈 想 赚 钱，那 你 不关 注 这 个 王 牌 社 区，真的太可惜了，真 心 推 荐，每 天 都 有 免 费 策 略</code> 就会变成 <code>在币圈想赚钱那你不关注这个王牌社区真的太可惜了真心推荐每天都有免费策略</code> (这里把合法的逗号也去掉了，我觉得相较过多标点符号对分词的影响，把标点去掉分词结果反而是能接受的), 分词结果是:</p>
-<p><code>在 | 币圈 | 想 | 赚钱 | 那 | 你 | 不 | 关注 | 这个 | 王牌 | 社区 | 真的 | 太 | 可惜 | 了 | 真心 | 推荐 | 每天 | 都 | 有 | 免费 | 策略</code></p>
-<p><code>这人简-介挂的 合-约-报单群组挺牛的ETH500点，大饼5200点！ + @BTCETHl6666</code> 就会变成 <code>这人简介挂的合约报单群组挺牛的 ETH500 点大饼 5200 点！ + @BTCETHl6666</code> ,分词结果是：</p>
-<p><code>这 | 人 | 简介 | 挂 | 的 | 合约 | 报单 | 群组 | 挺 | 牛 | 的 | | ETH500 | | 点 | 大饼 | | 5200 | | 点 | ！ | | + | | @ | BTCETHl6666</code></p>
-<h4 id="广告新花样"><span class="section-num">7.1.1</span> 广告新花样</h4>
-<p>广告看多了，不得不感慨发广告的人的创造力。</p>
-<p>因为在消息发垃圾广告会被广告拦截器拦截，他们创新性地玩出了新花样：</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-fe0e1" hidden>
-    <label for="zoomCheck-fe0e1">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/spam_by_username.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>消息发的都是正常的文本，但是头像和用户名都是广告，这样广告拦截器就无法工作了，真的是太有创意了。</p>
-<p>对手这么有创意，我也因地制宜地建立对用户名的训练模型，检测的时候消息文本的模型和用户名的模型都过一次，
-只要有任何一个认为是垃圾广告，那就禁掉。</p>
-<p>更进一步的可以对头像做OCR提取文本，再增加一个对头像的训练模型，不过OCR成本挺高的，就先不搞了。</p>
-<h3 id="优化"><span class="section-num">7.2</span> 优化</h3>
-<p>没有用户的话，做啥优化也没有必要，毕竟过早的优化是万恶之源，
-因此我就把想法先做成原型，搞出来再说，但这不意味着这个原型没有优化的空间。</p>
-<p>脑海中还是有不少优化的点的：</p>
-<ol>
-<li>jieba 分词的效果可能不是最好的，后续可以使用效果更好的分词器进行优化；或者是添加自己的词库。</li>
-<li>每次有训练消息都进行重新训练，效率稍低，可以增加 batching 机制：有新消息时，等待5分钟或者等到100条消息再处理</li>
-<li>现在整个模型都是在内存中计算，计算完就持久化成 DB, 可以在内存和数据库之间增加一层缓存来优化性能</li>
-<li>贝叶斯算法可能效果不够好，换个复杂的机器学习模型</li>
-</ol>
-<p>但是这些优化点都算是 Good to have, 不是 Must have, 后面遇到实际问题再进行优化好了。</p>
-<h2 id="实战效果"><span class="section-num">8</span> 实战效果</h2>
-<p>使用变换之后的垃圾广告词进行发送:</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-cdd9f" hidden>
-    <label for="zoomCheck-cdd9f">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/spam_messge_2.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>成功被检测出来，自动删除了:</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-78c5f" hidden>
-    <label for="zoomCheck-78c5f">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/deleted_spam.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>有朋友可能会说，这只是卖家秀，为什么别人在我群里发的广告还是没有被识别？</p>
-<p>因为贝叶斯算法本质是个概率算法，如果它没有见过类似的广告，那么它就没法判断是否垃圾广告 :(</p>
-<p>稍安勿躁，你需要做只是使用 <code>/markspam</code> 删除消息并封禁用户，就可以帮助训练这个bot, 所有使用这个 bot 的用户都会因此受益</p>
-<h2 id="结语"><span class="section-num">9</span> 结语</h2>
-<p>我相当享受这种从发现问题、灵光一现，到构建原型，再到最终打磨出一个完整项目的创造过程。</p>
-<p>虽然这完全是「用爱发电」——代码开源，还得自掏腰包租服务器，物质上毫无回报。</p>
-<p>但每当看到机器人成功拦截广告的那一刻，那种创造的喜悦，就足以令我回味无穷。</p>
-<ul>
-<li>开源地址：<a href="https://github.com/ramsayleung/bayes_spam_sniper">https://github.com/ramsayleung/bayes_spam_sniper</a></li>
-<li>立即体验：<a href="https://t.me/BayesSpamSniperBot">https://t.me/BayesSpamSniperBot</a></li>
-<li>我的频道（菠萝油与天光墟）: <a href="https://t.me/pipeapplebun">https://t.me/pipeapplebun</a></li>
-</ul>
-<h3 id="推荐阅读">推荐阅读</h3>
-<ul>
-<li>旅加经历
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E8%BF%99%E4%BA%9B%E5%B9%B4%E8%B5%B0%E8%BF%87%E7%9A%84%E8%B7%AF_%E4%BB%8E%E5%B9%BF%E5%B7%9E%E5%88%B0%E6%B8%A9%E5%93%A5%E5%8D%8E/">这些年走过的路：从广州到温哥华</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B9%8B%E5%88%9D%E4%BD%93%E9%AA%8C/">加拿大之初体验</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%99%BB%E9%99%86%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B8%80%E5%B9%B4%E7%9A%84%E4%BD%93%E4%BC%9A/">登陆加拿大一年后的体会</a></li>
-</ul>
-</li>
-<li>工具流分享
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%AE%80%E6%98%8E%E5%86%99%E4%BD%9C%E6%8C%87%E5%8D%97/">简明写作指南</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E5%86%99%E4%BD%9C%E6%B5%81/">我的写作流</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E7%94%BB%E5%9B%BE%E6%B5%81/">我的画图流：画图工具与技巧分享</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E6%90%9C%E7%B4%A2%E6%B5%81/">我的搜索流：高效搜索经验分享</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2022/feynman_technique/">最好的学习方式：费曼学习法(Feynman Technique)</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2021/%E7%B3%BB%E7%BB%9F%E6%80%9D%E8%80%83/">系统思考：既见树木，又见森林</a></li>
-</ul>
-</li>
-<li>思考感悟
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%BC%96%E7%A8%8B%E5%8D%81%E5%B9%B4%E7%9A%84%E6%84%9F%E6%82%9F/">编程十年的感悟</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E4%BB%8E%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E7%A6%BB%E7%BA%BF_%E6%88%91%E5%B8%A6%E8%B5%B0%E4%BA%86%E4%BB%80%E4%B9%88/">那些年，我从微信支付学到的东西</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2025/%E6%9D%82%E8%B0%88ai%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98/">杂谈ai取代程序员</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E7%BD%AE%E8%BA%AB%E4%BA%8B%E5%86%85/">为什么梦想买不起，故乡回不去</a></li>
-</ul>
-</li>
-<li>软件工程
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2025/a_philosophy_of_software_design/">软件设计的哲学</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2025/structure_and_interpretation_of_computer_programs/">一本读了八年还没读完的书</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%80_%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E8%AE%A4%E7%9F%A5/">测试技能进阶(一): 软件质量认知</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/">测试技能进阶(二): Parameterized Tests</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%89_property_based_testing/">测试技能进阶(三): Property Based Testing</a></li>
-</ul>
-</li>
-</ul>
-<div class="qr-container" center>
-<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" class="qr-container" width="160px" height="160px" center="t" />
-公号同步更新，欢迎关注👻
-</div>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p><a href="https://podcasts.apple.com/us/podcast/%E8%BD%AF%E4%BB%B6%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/id1147186605">https://podcasts.apple.com/us/podcast/%E8%BD%AF%E4%BB%B6%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/id1147186605</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p><a href="https://liuyandong.com/sample-page">https://liuyandong.com/sample-page</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:3">
-<p><a href="https://t.me/huruanhuying">https://t.me/huruanhuying</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:4">
-<p><a href="https://t.me/kaedeharakazuha17">https://t.me/kaedeharakazuha17</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:5">
-<p><a href="https://paulgraham.com/spam.html">https://paulgraham.com/spam.html</a>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:6">
-<p><a href="https://www.youtube.com/watch?v=Pu675cHJ7bg">https://www.youtube.com/watch?v=Pu675cHJ7bg</a>&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:7">
-<p><a href="https://www.youtube.com/watch?v=HZGCoVF3YvM">https://www.youtube.com/watch?v=HZGCoVF3YvM</a>&#160;<a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:8">
-<p><a href="https://gist.github.com/ramsayleung/5848af0177a70a01d41f624e361b1b5d">https://gist.github.com/ramsayleung/5848af0177a70a01d41f624e361b1b5d</a>&#160;<a href="#fnref:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:9">
-<p><a href="https://ramsayleung.github.io/zh/post/2024/%E7%BC%96%E7%A8%8B%E5%8D%81%E5%B9%B4%E7%9A%84%E6%84%9F%E6%82%9F/">https://ramsayleung.github.io/zh/post/2024/%E7%BC%96%E7%A8%8B%E5%8D%81%E5%B9%B4%E7%9A%84%E6%84%9F%E6%82%9F/</a>&#160;<a href="#fnref:9" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:10">
-<p><a href="https://ublockorigin.com/">https://ublockorigin.com/</a>&#160;<a href="#fnref:10" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:11">
-<p><a href="https://ramsayleung.github.io/zh/post/2025/a_philosophy_of_software_design/">https://ramsayleung.github.io/zh/post/2025/a_philosophy_of_software_design/</a>&#160;<a href="#fnref:11" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:12">
-<p><a href="https://t.me/pipeapplebun">https://t.me/pipeapplebun</a>&#160;<a href="#fnref:12" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
