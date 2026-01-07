@@ -1,7 +1,7 @@
 +++
 title = "迄今所见最扎实的AI落地实践: Reddit的AI翻译"
 date = 2026-01-05T22:18:00-08:00
-lastmod = 2026-01-06T20:15:09-08:00
+lastmod = 2026-01-06T20:27:06-08:00
 tags = ["ai", "design"]
 draft = false
 toc = true
@@ -14,12 +14,16 @@ showQuote = true
 
 音乐软件有AI, 比如QQ音乐 [搞AI编曲](https://y.qq.com/vemus/index.html)&nbsp;[^fn:1], Spotify [搞AI歌单](https://newsroom.spotify.com/2024-04-07/spotify-premium-users-can-now-turn-any-idea-into-a-personalized-playlist-with-ai-playlist-in-beta/)&nbsp;[^fn:2]； 编程问答网站 Stackoverflow搞 [AI 问答](https://stackoverflow.com/ai-assist)&nbsp;[^fn:3], 浏览器搞AI(Firefox, [Chrome](https://www.google.com/chrome/ai-innovations/)&nbsp;[^fn:4]), 笔记软件如 Notion 搞 [AI workflow](https://www.notion.com/product/ai)&nbsp;[^fn:5]; 代码托管网站 GitHub 搞AI 编程和代码Review, 甚至最离谱的是连电子书管理软件(Calibre)也搞AI, 增加了一个 "[Asking AI](https://calibre-ebook.com/whats-new)"&nbsp;[^fn:6]的功能，真的是全民「炼」AI.
 
+---
+
+原来还有更离谱的，雷蛇发布了[桌面全息AI助手](https://www.razer.com/ca-en/concepts/project-ava)&nbsp;[^fn:7]，承诺只帮助，不BB。
+
 你做得好用就还好，但是一堆的网站或者应用就硬堆AI，所谓的AI功能无非是加个AI 对话框，让你可以打开聊天框和AI 对话，但是连当前网页的内容都没有当作上下文喂给AI, 体验非常差。
 
 
 ## <span class="section-num">2</span> Reddit 的AI翻译 {#reddit-的ai翻译}
 
-今天看到一篇[文章](https://www.theguardian.com/technology/2026/jan/03/reddit-overtakes-tiktok-uk-search-algorithms-gen-z)&nbsp;[^fn:7], 说 Reddit 在英国超过 TikTok 成为访问量第四大的社媒平台，过去两年英国用户人数增长了 88%，三分之二的英国网民会访问 Reddit，而 2023 年仅是三分之一。而18-24 岁英国用户中 Reddit 是访问量第六大的网站，而一年前这一数字是第十。
+今天看到一篇[文章](https://www.theguardian.com/technology/2026/jan/03/reddit-overtakes-tiktok-uk-search-algorithms-gen-z)&nbsp;[^fn:8], 说 Reddit 在英国超过 TikTok 成为访问量第四大的社媒平台，过去两年英国用户人数增长了 88%，三分之二的英国网民会访问 Reddit，而 2023 年仅是三分之一。而18-24 岁英国用户中 Reddit 是访问量第六大的网站，而一年前这一数字是第十。
 
 {{< figure src="/ox-hugo/reddit_overtake_tiktok.jpg" >}}
 
@@ -140,4 +144,5 @@ Reddit 的崛起背后的因素包括了 Google 调整了算法增加了论坛�
 [^fn:4]: <https://www.google.com/chrome/ai-innovations/>
 [^fn:5]: <https://www.notion.com/product/ai>
 [^fn:6]: <https://calibre-ebook.com/whats-new>
-[^fn:7]: <https://www.theguardian.com/technology/2026/jan/03/reddit-overtakes-tiktok-uk-search-algorithms-gen-z>
+[^fn:7]: <https://www.razer.com/ca-en/concepts/project-ava>
+[^fn:8]: <https://www.theguardian.com/technology/2026/jan/03/reddit-overtakes-tiktok-uk-search-algorithms-gen-z>

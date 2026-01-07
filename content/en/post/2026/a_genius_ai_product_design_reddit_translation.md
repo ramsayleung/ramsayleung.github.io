@@ -1,7 +1,7 @@
 +++
 title = "A Genius AI Product design: Reddit translation"
 date = 2026-01-06T19:46:00-08:00
-lastmod = 2026-01-06T20:11:38-08:00
+lastmod = 2026-01-06T20:26:33-08:00
 tags = ["ai", "design"]
 draft = false
 toc = true
@@ -11,14 +11,16 @@ toc = true
 
 Since OpenAI released ChatGPT, there has been a massive rush to jump on the AI bandwagon. Over the past two years, it seems every website and application has been desperate to embrace AI.
 
-Music apps have AI, for example Spotify [launched AI playlists](https://newsroom.spotify.com/2024-04-07/spotify-premium-users-can-now-turn-any-idea-into-a-personalized-playlist-with-ai-playlist-in-beta/)&nbsp;[^fn:1]; the programming Q&amp;A site Stack Overflow introduced [AI Assist](https://stackoverflow.com/ai-assist)&nbsp;[^fn:2]; browsers are integrating AI (Firefox, [Chrome](https://www.google.com/chrome/ai-innovations/)&nbsp;[^fn:3]); note-taking apps like Notion have built [AI workflows](https://www.notion.com/product/ai)&nbsp;[^fn:4]; code hosting platform like GitHub is focusing on AI agent like copilot. Perhaps the most absurd example is the ebook management software Calibre adding an "[Asking AI](https://calibre-ebook.com/whats-new)"&nbsp;[^fn:5] feature. Everyone truly want to be "AI-native".
+Music apps have AI, for example Spotify [launched AI playlists](https://newsroom.spotify.com/2024-04-07/spotify-premium-users-can-now-turn-any-idea-into-a-personalized-playlist-with-ai-playlist-in-beta/)&nbsp;[^fn:1]; the programming Q&amp;A site Stack Overflow introduced [AI Assist](https://stackoverflow.com/ai-assist)&nbsp;[^fn:2]; browsers are integrating AI (Firefox, [Chrome](https://www.google.com/chrome/ai-innovations/)&nbsp;[^fn:3]); note-taking apps like Notion have built [AI workflows](https://www.notion.com/product/ai)&nbsp;[^fn:4]; code hosting platform like GitHub is focusing on AI agent like copilot; The ebook management software Calibre adding an "[Asking AI](https://calibre-ebook.com/whats-new)"&nbsp;[^fn:5] feature; Perhaps the most absurd example is Razer, the company that makes computer electronics, also releases [Project AVA](https://www.razer.com/ca-en/concepts/project-ava)&nbsp;[^fn:6], a 24/7 AI companion, designed to live right alongside you.
+
+Everyone truly want to be "AI-native".
 
 It would be good if these implementations were useful, but a pile of websites and apps are just shoehorning AI into their products. These so-called AI features are often nothing more than a generic chatbox that lets you talk to an AI, often without even feeding the current page content as context. The user experience is terrible.
 
 
 ## <span class="section-num">2</span> Reddit's AI Translation {#reddit-s-ai-translation}
 
-Today I saw an [article](https://www.theguardian.com/technology/2026/jan/03/reddit-overtakes-tiktok-uk-search-algorithms-gen-z)&nbsp;[^fn:6] stating that Reddit overtaks TikTok to become the fourth most visited social media platform in UK. The platform has undergone huge growth over the last two years, with an 88% increase in the proportion of UK internet users it reaches.
+Today I saw an [article](https://www.theguardian.com/technology/2026/jan/03/reddit-overtakes-tiktok-uk-search-algorithms-gen-z)&nbsp;[^fn:7] stating that Reddit overtaks TikTok to become the fourth most visited social media platform in UK. The platform has undergone huge growth over the last two years, with an 88% increase in the proportion of UK internet users it reaches.
 
 {{< figure src="/ox-hugo/reddit_overtake_tiktok.jpg" >}}
 
@@ -78,7 +80,7 @@ So, Google gets to index a massive amount of fresh, high-quality, multilingual h
 By breaking down language barriers for users and enriching search results for Google, Reddit has kickstarted a grander positive feedback loop.
 
 In February 2024,
-Reddit and Google announced an [expanded partnership](https://blog.google/inside-google/company-announcements/expanded-reddit-partnership/)&nbsp;[^fn:7]that includes a multi-million dollar data licensing agreement allowing Google to use Reddit's content for training its artificial intelligence (AI) models.
+Reddit and Google announced an [expanded partnership](https://blog.google/inside-google/company-announcements/expanded-reddit-partnership/)&nbsp;[^fn:8]that includes a multi-million dollar data licensing agreement allowing Google to use Reddit's content for training its artificial intelligence (AI) models.
 This deal is reportedly worth about $60 million per year.
 
 In September 2025, reports indicated that Reddit is in talks with Google and OpenAI. They may negotiate new deals.
@@ -94,12 +96,13 @@ This is a design that benefits the users, Reddit, Google, and even the entire AI
 
 Successful AI implementation makes the technology invisible while making the user value prominent.
 
-Compared to other Apps/websites that shoehorn AI into their products, Reddit's translation integrates AI seamlessly into the product experience. It doesn't even tell the user that this is achieved via AI; it doesn't push the AI narrative.
+Compared to other websites that shoehorns AI into their products, Reddit's translation integrates AI seamlessly into the core product experience. It doesn't even tell the user that this is achieved via AI; it doesn't push the AI narrative.
 
 [^fn:1]: <https://newsroom.spotify.com/2024-04-07/spotify-premium-users-can-now-turn-any-idea-into-a-personalized-playlist-with-ai-playlist-in-beta/>
 [^fn:2]: <https://stackoverflow.com/ai-assist>
 [^fn:3]: <https://www.google.com/chrome/ai-innovations/>
 [^fn:4]: <https://www.notion.com/product/ai>
 [^fn:5]: <https://calibre-ebook.com/whats-new>
-[^fn:6]: <https://www.theguardian.com/technology/2026/jan/03/reddit-overtakes-tiktok-uk-search-algorithms-gen-z>
-[^fn:7]: <https://blog.google/inside-google/company-announcements/expanded-reddit-partnership/>
+[^fn:6]: <https://www.razer.com/ca-en/concepts/project-ava>
+[^fn:7]: <https://www.theguardian.com/technology/2026/jan/03/reddit-overtakes-tiktok-uk-search-algorithms-gen-z>
+[^fn:8]: <https://blog.google/inside-google/company-announcements/expanded-reddit-partnership/>
