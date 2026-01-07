@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Tue, 06 Jan 2026 20:15:09 -0800</lastBuildDate>
+    <lastBuildDate>Tue, 06 Jan 2026 20:27:06 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>迄今所见最扎实的AI落地实践: Reddit的AI翻译</title>
@@ -25,9 +25,11 @@
       <content:encoded><![CDATA[<h2 id="全民ai热潮"><span class="section-num">1</span> 全民AI热潮</h2>
 <p>自OpenAI 发布 ChatGPT 以来，国内外都掀起了大干快上AI的各种项目，这两年真的是各种网站/应用都追求落地AI.</p>
 <p>音乐软件有AI, 比如QQ音乐 <a href="https://y.qq.com/vemus/index.html">搞AI编曲</a> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, Spotify <a href="https://newsroom.spotify.com/2024-04-07/spotify-premium-users-can-now-turn-any-idea-into-a-personalized-playlist-with-ai-playlist-in-beta/">搞AI歌单</a> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>； 编程问答网站 Stackoverflow搞 <a href="https://stackoverflow.com/ai-assist">AI 问答</a> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>, 浏览器搞AI(Firefox, <a href="https://www.google.com/chrome/ai-innovations/">Chrome</a> <sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>), 笔记软件如 Notion 搞 <a href="https://www.notion.com/product/ai">AI workflow</a> <sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>; 代码托管网站 GitHub 搞AI 编程和代码Review, 甚至最离谱的是连电子书管理软件(Calibre)也搞AI, 增加了一个 &ldquo;<a href="https://calibre-ebook.com/whats-new">Asking AI</a>&quot; <sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup>的功能，真的是全民「炼」AI.</p>
+<hr>
+<p>原来还有更离谱的，雷蛇发布了<a href="https://www.razer.com/ca-en/concepts/project-ava">桌面全息AI助手</a> <sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup>，承诺只帮助，不BB。</p>
 <p>你做得好用就还好，但是一堆的网站或者应用就硬堆AI，所谓的AI功能无非是加个AI 对话框，让你可以打开聊天框和AI 对话，但是连当前网页的内容都没有当作上下文喂给AI, 体验非常差。</p>
 <h2 id="reddit-的ai翻译"><span class="section-num">2</span> Reddit 的AI翻译</h2>
-<p>今天看到一篇<a href="https://www.theguardian.com/technology/2026/jan/03/reddit-overtakes-tiktok-uk-search-algorithms-gen-z">文章</a> <sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup>, 说 Reddit 在英国超过 TikTok 成为访问量第四大的社媒平台，过去两年英国用户人数增长了 88%，三分之二的英国网民会访问 Reddit，而 2023 年仅是三分之一。而18-24 岁英国用户中 Reddit 是访问量第六大的网站，而一年前这一数字是第十。</p>
+<p>今天看到一篇<a href="https://www.theguardian.com/technology/2026/jan/03/reddit-overtakes-tiktok-uk-search-algorithms-gen-z">文章</a> <sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup>, 说 Reddit 在英国超过 TikTok 成为访问量第四大的社媒平台，过去两年英国用户人数增长了 88%，三分之二的英国网民会访问 Reddit，而 2023 年仅是三分之一。而18-24 岁英国用户中 Reddit 是访问量第六大的网站，而一年前这一数字是第十。</p>
 
 <figure>
     
@@ -195,7 +197,10 @@
 <p><a href="https://calibre-ebook.com/whats-new">https://calibre-ebook.com/whats-new</a>&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:7">
-<p><a href="https://www.theguardian.com/technology/2026/jan/03/reddit-overtakes-tiktok-uk-search-algorithms-gen-z">https://www.theguardian.com/technology/2026/jan/03/reddit-overtakes-tiktok-uk-search-algorithms-gen-z</a>&#160;<a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://www.razer.com/ca-en/concepts/project-ava">https://www.razer.com/ca-en/concepts/project-ava</a>&#160;<a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:8">
+<p><a href="https://www.theguardian.com/technology/2026/jan/03/reddit-overtakes-tiktok-uk-search-algorithms-gen-z">https://www.theguardian.com/technology/2026/jan/03/reddit-overtakes-tiktok-uk-search-algorithms-gen-z</a>&#160;<a href="#fnref:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
