@@ -12,8 +12,152 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>en</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Mon, 10 Nov 2025 22:51:59 -0800</lastBuildDate>
+    <lastBuildDate>Tue, 06 Jan 2026 20:11:38 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/en/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A Genius AI Product design: Reddit translation</title>
+      <link>https://ramsayleung.github.io/en/post/2026/a_genius_ai_product_design_reddit_translation/</link>
+      <pubDate>Tue, 06 Jan 2026 19:46:00 -0800</pubDate>
+      <guid>https://ramsayleung.github.io/en/post/2026/a_genius_ai_product_design_reddit_translation/</guid>
+      <description>&lt;h2 id=&#34;the-universal-ai-craze&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; The Universal AI Craze&lt;/h2&gt;
+&lt;p&gt;Since OpenAI released ChatGPT, there has been a massive rush to jump on the AI bandwagon. Over the past two years, it seems every website and application has been desperate to embrace AI.&lt;/p&gt;
+&lt;p&gt;Music apps have AI, for example Spotify &lt;a href=&#34;https://newsroom.spotify.com/2024-04-07/spotify-premium-users-can-now-turn-any-idea-into-a-personalized-playlist-with-ai-playlist-in-beta/&#34;&gt;launched AI playlists&lt;/a&gt; &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;; the programming Q&amp;amp;A site Stack Overflow introduced &lt;a href=&#34;https://stackoverflow.com/ai-assist&#34;&gt;AI Assist&lt;/a&gt; &lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;; browsers are integrating AI (Firefox, &lt;a href=&#34;https://www.google.com/chrome/ai-innovations/&#34;&gt;Chrome&lt;/a&gt; &lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;); note-taking apps like Notion have built &lt;a href=&#34;https://www.notion.com/product/ai&#34;&gt;AI workflows&lt;/a&gt; &lt;sup id=&#34;fnref:4&#34;&gt;&lt;a href=&#34;#fn:4&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;4&lt;/a&gt;&lt;/sup&gt;; code hosting platform like GitHub is focusing on AI agent like copilot. Perhaps the most absurd example is the ebook management software Calibre adding an &amp;ldquo;&lt;a href=&#34;https://calibre-ebook.com/whats-new&#34;&gt;Asking AI&lt;/a&gt;&amp;quot; &lt;sup id=&#34;fnref:5&#34;&gt;&lt;a href=&#34;#fn:5&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;5&lt;/a&gt;&lt;/sup&gt; feature. Everyone truly want to be &amp;ldquo;AI-native&amp;rdquo;.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="the-universal-ai-craze"><span class="section-num">1</span> The Universal AI Craze</h2>
+<p>Since OpenAI released ChatGPT, there has been a massive rush to jump on the AI bandwagon. Over the past two years, it seems every website and application has been desperate to embrace AI.</p>
+<p>Music apps have AI, for example Spotify <a href="https://newsroom.spotify.com/2024-04-07/spotify-premium-users-can-now-turn-any-idea-into-a-personalized-playlist-with-ai-playlist-in-beta/">launched AI playlists</a> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>; the programming Q&amp;A site Stack Overflow introduced <a href="https://stackoverflow.com/ai-assist">AI Assist</a> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>; browsers are integrating AI (Firefox, <a href="https://www.google.com/chrome/ai-innovations/">Chrome</a> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>); note-taking apps like Notion have built <a href="https://www.notion.com/product/ai">AI workflows</a> <sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>; code hosting platform like GitHub is focusing on AI agent like copilot. Perhaps the most absurd example is the ebook management software Calibre adding an &ldquo;<a href="https://calibre-ebook.com/whats-new">Asking AI</a>&quot; <sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup> feature. Everyone truly want to be &ldquo;AI-native&rdquo;.</p>
+<p>It would be good if these implementations were useful, but a pile of websites and apps are just shoehorning AI into their products. These so-called AI features are often nothing more than a generic chatbox that lets you talk to an AI, often without even feeding the current page content as context. The user experience is terrible.</p>
+<h2 id="reddit-s-ai-translation"><span class="section-num">2</span> Reddit&rsquo;s AI Translation</h2>
+<p>Today I saw an <a href="https://www.theguardian.com/technology/2026/jan/03/reddit-overtakes-tiktok-uk-search-algorithms-gen-z">article</a> <sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup> stating that Reddit overtaks TikTok to become the fourth most visited social media platform in UK. The platform has undergone huge growth over the last two years, with an 88% increase in the proportion of UK internet users it reaches.</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-dd7d6" hidden>
+    <label for="zoomCheck-dd7d6">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/reddit_overtake_tiktok.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>A series of factors are behind its rise. However, a change in Google&rsquo;s search algorithms last year to prioritise helpful content from discussion forums appears to have been a significant driver.
+In the AI era, users are increasingly turning towards human-written content, and Reddit is benefiting from this trend.</p>
+<p>This article reminded me of a new feature Reddit recently launched. Reddit is utilizing Large Language Models (LLMs) to generate translated versions of its massive archive of posts into multiple languages, such as translating English posts into Chinese, Korean, Japanese, etc.</p>
+<p>Now, when I search in Chinese on Google(I was searching &ldquo;Berserk TV&rdquo;), the search results display the translated versions of original Reddit posts. When I click on a result, it jumps directly to the translated Chinese version on Reddit:</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-cba3f" hidden>
+    <label for="zoomCheck-cba3f">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/berserk_tv_in_chinese.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>I can read the translated version directly:</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-dcf9d" hidden>
+    <label for="zoomCheck-dcf9d">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/berserk_post_tl_zh_hans.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>Or click &ldquo;Show Original&rdquo; to read the source text.</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-8aca7" hidden>
+    <label for="zoomCheck-8aca7">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/berserk_post_show_original.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<h2 id="genius-product-design"><span class="section-num">3</span> Genius Product Design</h2>
+<p>At first glance, it seems unremarkable, but upon closer inspection, it is absolutely brilliant. It might be the most solid AI implementation I&rsquo;ve seen to date</p>
+<h3 id="the-reddit-perspective"><span class="section-num">3.1</span> The Reddit Perspective</h3>
+<p>First, this feature allows more users to read posts in different languages. For example, Chinese or Japanese users can read posts originally written in English, French, or Spanish. This significantly increases the universality of Reddit posts. Language is no longer a barrier, which helps Reddit capture user traffic in the AI era and attract new users.</p>
+<p>More users mean more content, and richer content attracts even more users. In the AI era, content is the raw material for &ldquo;training&rdquo; AI models. You can&rsquo;t train an AI with just NVIDIA GPUs; you need data.</p>
+<p>Compared to external translation tools like Google Translate, this is a seamless, page-level translation indexed by search engine. The quality is incredibly high. It is so natural and well-integrated that, at first use, it&rsquo;s hard to even detect that it&rsquo;s an output of machine translation.</p>
+<p>The user experience is excellent. Its natural and practical nature perfectly solves the core pain point for non-native speakers accessing high-quality posts.</p>
+<p>Crucially, as a user, I was completely unaware of the existence of &ldquo;AI.&rdquo;</p>
+<p>It wasn&rsquo;t until I switched to an engineer&rsquo;s perspective that I realized Reddit used an LLM to translate the posts, and then had Google&rsquo;s search engine index the different language versions, displaying the translated results directly in Google Search.</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-cba3f" hidden>
+    <label for="zoomCheck-cba3f">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/berserk_tv_in_chinese.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>The best AI features are the ones where you don&rsquo;t even realize AI is there.</p>
+<h3 id="the-google-perspective"><span class="section-num">3.2</span> The Google Perspective</h3>
+<p>For Google, since the vast majority of Reddit posts are written by humans (Reddit mods generally hate bots or AI posting, and many subreddit rules explicitly ban AI-generated content under threat of mutes or bans), increasing the ranking weight of forum content ensures search quality.</p>
+<p>Indexing posts in different languages provides Google with more high-quality search data.</p>
+<p>So, Google gets to index a massive amount of fresh, high-quality, multilingual human content while improving search result quality, which aligns perfectly with their algorithm adjustment direction.</p>
+<h3 id="the-flywheel-of-data-models-and-ecosystem"><span class="section-num">3.3</span> The Flywheel of Data, Models, and Ecosystem</h3>
+<p>By breaking down language barriers for users and enriching search results for Google, Reddit has kickstarted a grander positive feedback loop.</p>
+<p>In February 2024,
+Reddit and Google announced an <a href="https://blog.google/inside-google/company-announcements/expanded-reddit-partnership/">expanded partnership</a> <sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup>that includes a multi-million dollar data licensing agreement allowing Google to use Reddit&rsquo;s content for training its artificial intelligence (AI) models.
+This deal is reportedly worth about $60 million per year.</p>
+<p>In September 2025, reports indicated that Reddit is in talks with Google and OpenAI. They may negotiate new deals.</p>
+<p>Therefore, this AI translation design is a powerful tool, achieving a &ldquo;1+1&gt;3&rdquo; effect. It even serves as leverage to negotiate with other large model vendors like OpenAI and Anthropic, because you can&rsquo;t train AI without data.</p>
+<p>It forms a flywheel: More Users -&gt; More Content -&gt; Better AI Data -&gt; Better Translation/Search/AI Models -&gt; More Users.</p>
+<p>This is a design that benefits the users, Reddit, Google, and even the entire AI field. It can truly be called a &ldquo;quadruple win.&rdquo;</p>
+<h2 id="conclusion"><span class="section-num">4</span> Conclusion</h2>
+<p>Successful AI implementation makes the technology invisible while making the user value prominent.</p>
+<p>Compared to other Apps/websites that shoehorn AI into their products, Reddit&rsquo;s translation integrates AI seamlessly into the product experience. It doesn&rsquo;t even tell the user that this is achieved via AI; it doesn&rsquo;t push the AI narrative.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://newsroom.spotify.com/2024-04-07/spotify-premium-users-can-now-turn-any-idea-into-a-personalized-playlist-with-ai-playlist-in-beta/">https://newsroom.spotify.com/2024-04-07/spotify-premium-users-can-now-turn-any-idea-into-a-personalized-playlist-with-ai-playlist-in-beta/</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://stackoverflow.com/ai-assist">https://stackoverflow.com/ai-assist</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://www.google.com/chrome/ai-innovations/">https://www.google.com/chrome/ai-innovations/</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="https://www.notion.com/product/ai">https://www.notion.com/product/ai</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5">
+<p><a href="https://calibre-ebook.com/whats-new">https://calibre-ebook.com/whats-new</a>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:6">
+<p><a href="https://www.theguardian.com/technology/2026/jan/03/reddit-overtakes-tiktok-uk-search-algorithms-gen-z">https://www.theguardian.com/technology/2026/jan/03/reddit-overtakes-tiktok-uk-search-algorithms-gen-z</a>&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:7">
+<p><a href="https://blog.google/inside-google/company-announcements/expanded-reddit-partnership/">https://blog.google/inside-google/company-announcements/expanded-reddit-partnership/</a>&#160;<a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+]]></content:encoded>
+    </item>
     <item>
       <title>The Essence of Prompt Engineering is the Art of Asking Questions</title>
       <link>https://ramsayleung.github.io/en/post/2025/the-essence-of-prompt-engineering-is-the-art-of-asking-questions/</link>
@@ -2518,312 +2662,6 @@ The core competitiveness is the ability to solve problems through technology - w
 <li><a href="https://docs.gitlab.com/ee/ci/directed_acyclic_graph/">Directed Acyclic Graph</a></li>
 <li><a href="https://gertjanvandenburg.com/files/talk/make.html">Hands-on Tutorial on Make</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Topological_sorting">Topological sorting</a></li>
-</ul>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>How To Design A Reliable Distributed Timer</title>
-      <link>https://ramsayleung.github.io/en/post/2021/how_to_design_a_reliable_distributed_timer/</link>
-      <pubDate>Thu, 05 Aug 2021 09:19:36 +0000</pubDate>
-      <guid>https://ramsayleung.github.io/en/post/2021/how_to_design_a_reliable_distributed_timer/</guid>
-      <description>&lt;h2 id=&#34;preface&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; Preface&lt;/h2&gt;
-&lt;p&gt;I have been maintained a legacy distributed timer for months for my employer, then some important pay business are leveraging on it, with 1 billion tasks handled every day and 20k tasks added per second at most.&lt;/p&gt;
-&lt;p&gt;Even though it&amp;rsquo;s old and full of black magic code, but it also also have insighted and well-designed code. Based on this old, running timer, I summarize and extract as this article, and it wont include any running code(perhaps pseudocode, and a lot of figures, as an adage says: &lt;em&gt;A picture is worth a thousand words&lt;/em&gt;).&lt;/p&gt;</description>
-      <content:encoded><![CDATA[<h2 id="preface"><span class="section-num">1</span> Preface</h2>
-<p>I have been maintained a legacy distributed timer for months for my employer, then some important pay business are leveraging on it, with 1 billion tasks handled every day and 20k tasks added per second at most.</p>
-<p>Even though it&rsquo;s old and full of black magic code, but it also also have insighted and well-designed code. Based on this old, running timer, I summarize and extract as this article, and it wont include any running code(perhaps pseudocode, and a lot of figures, as an adage says: <em>A picture is worth a thousand words</em>).</p>
-<p>if you are curious about the reason(I personally suggest to watch the TV series <a href="https://www.imdb.com/title/tt2575988/">Silicon Valley</a>, Richard has gave us a good example and answer)</p>
-<h2 id="design"><span class="section-num">2</span> Design</h2>
-<h3 id="algorithm"><span class="section-num">2.1</span> Algorithm</h3>
-<p>There are several algorithms in the world to implement timer, such as Red-Black Tree, Min-Heap and timer wheel. The most efficient and used algorithm is timer wheel algorithm, and it&rsquo;s the algorithm we focus on.</p>
-<p>As for timing wheel based timer, it can be modelled as two internal operations: <em>per-tick bookkeeping</em> and <em>expiry processing</em>.</p>
-<ul>
-<li>Per-tick bookkeeping: happens on every &rsquo;tick&rsquo; of the timer clock. If the unit of granularity for setting timers is T units of time (e.g. 1 second), then per-tick bookkeeping will happen every T units of time. It checks whether any outstanding timers have expired, and if so it removes them and invokes expiry processing.</li>
-<li>Expiry processing: is responsible for invoked the user-supplied callback (or other user requested action, depending on your model).</li>
-</ul>
-<h4 id="simple-timing-wheels"><span class="section-num">2.1.1</span> Simple Timing Wheels</h4>
-<p>The simple timing wheel keeps a large timing wheel, the below timing wheel has 8 slots, and each slot is holding the task which is going to be expired. Supposing every slot presentes one second(one tick as a second), then the current slot is <code>slot 1</code>, if we want to add a task needed to be triggered 2s later, then this task will be inserted into <code>slot 3</code>.</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-5faec" hidden>
-    <label for="zoomCheck-5faec">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806103302.png"/> 
-    
-    
-    </label>
-</figure>
-
-<ul>
-<li>per-tick bookkeeping: O(1)</li>
-</ul>
-<p>What happen if we want to add a task needed to be launched 20s later, the answer is we have no way to do so since there are only 8 slots. So if we have a large period of timer task, we have to maintain a large timing wheel with tons of slots, which requires exponential amount of memory.</p>
-<h4 id="hashed-timing-wheel"><span class="section-num">2.1.2</span> Hashed Timing Wheel</h4>
-<p>Hashed Timing Wheel is an improved simple timing wheel. As we mentioned before, it will consume large resources if timer period is comparatively large. Instead of using one slot per time unit, we could use a form of hashing instead. Construct a circular buffer with a fixed number of slots(such as 8 slots). If current slot is 0, we want store <code>3s later</code> task, we could insert into <code>slot 3</code>, then if we want bookkeep <code>9s-later</code> task, we could insert into <code>slot 1(9 % 8 = 1)</code></p>
-<ul>
-<li>per-tick bookkeeping: O(1) - O(N)</li>
-</ul>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-b016d" hidden>
-    <label for="zoomCheck-b016d">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806103527.png"/> 
-    
-    
-    </label>
-</figure>
-
-<p>It&rsquo;s a tradeoff strategy, We trade space with time.</p>
-<h4 id="hierarchical-timing-wheels"><span class="section-num">2.1.3</span> Hierarchical Timing Wheels</h4>
-<p>Since simple timing wheels and hashed timing wheel come with drawback of time efficiency or space efficiency. Back to 1987, after studying a number of different approaches for the efficient management of timers, Varghese and Lauck posted a paper to introduce <a href="http://www.cs.columbia.edu/~nahum/w6998/papers/sosp87-timing-wheels.pdf">Hierarchical Timing Wheels</a></p>
-<p>Just make a long story short, I won&rsquo;t dive deep into hierarchical timing wheels, you could easily understand it by a real life reference: the old water meter</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-904f9" hidden>
-    <label for="zoomCheck-904f9">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210805205803.png"/> 
-    
-    
-    </label>
-</figure>
-
-<p>the firse level wheel(seconds wheel) rotates one loop, triggering the second level(minutes wheel) ticks one slot, same for the third level(hour wheel). Therefore, we present a day(60*60*24 seconds) with 60+60+24 slots. If we want to present a month, we only need to a four level wheel(month wheel) with 30 slots.</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-569a1" hidden>
-    <label for="zoomCheck-569a1">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806103357.png"/> 
-    
-    
-    </label>
-</figure>
-
-<ul>
-<li>per-tick bookkeeping: O(1)</li>
-</ul>
-<h3 id="per-tick-bookkeeping"><span class="section-num">2.2</span> Per-tick bookkeeping</h3>
-<p>After introducing timing wheel algorithm, let&rsquo;s go back to the topic about designing a reliable distributed timer, it&rsquo;s essential to decide how to store timer task. Taking implementation complexity and time, space trade off, we choose the Hashed Timing Wheel algorithm.</p>
-<p>There are several internal components developed by my employer, one of them is named <code>TableKV</code>, a high-availability(99.999% ~ 99.9999%) NoSql service. <code>TableKV</code> supports 10m buckets(the terminology is <code>table</code>) at most, every <code>table</code> comes with full ACID properties of transactions support. You could simply replace <code>TableKV</code> with <code>Redis</code> as it provides the similar bucket functionality.</p>
-<h4 id="insert-task-into-slot"><span class="section-num">2.2.1</span> Insert task into slot</h4>
-<p>We are going to implement Hashed Timing Wheel algorithm with <code>TableKV</code>, supposing there are 10m buckets, and current time is <code>2021:08:05 11:17:33 +08=(the UNIX timestamp is =1628176653</code>), there is a  timer task which is going to be triggered 10s later with <code>start_time = 1628176653 + 10</code> (or 100000010s later, <code>start_time = 1628176653 + 10 + 100000000</code>), these tasks both will be stored into bucket <code>start_time % 100000000 = 28176663</code></p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-001d1" hidden>
-    <label for="zoomCheck-001d1">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806195209.png"/> 
-    
-    
-    </label>
-</figure>
-
-<h4 id="pull-task-out-from-slot"><span class="section-num">2.2.2</span> Pull task out from slot</h4>
-<p>As clock tick-tacking to <code>2021:08:05 11:17:43 +08(1628176663)</code>, we need to pull tasks out from slot by calculating the bucket number: <code>current_timestamp(1628176663) % 100000000 = 28176663</code>. After locating the bucket number, we find all tasks in <code>bucket 28176663</code> with <code>start_time &lt;</code> current_timestamp=, then we get all expected expiry tasks.</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-c7d37" hidden>
-    <label for="zoomCheck-c7d37">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806195227.png"/> 
-    
-    
-    </label>
-</figure>
-
-<h3 id="global-clock-and-lock"><span class="section-num">2.3</span> Global clock and lock</h3>
-<p>As we mentioned before, when the clock tick-tacks to <strong>current_time</strong>, we fetch all expiry tasks. When our service is running on a distributed system, it&rsquo;s universal that we will have multiple hosts(physical machines or dockers), with multiple <code>current_times</code> on its machine. There is no guarantee that all clocks of multiple hosts synchronized by the same Network Time Server, then all clocks might be subtly different. Which current_time is correct?</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-c14e0" hidden>
-    <label for="zoomCheck-c14e0">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806105745.png"/> 
-    
-    
-    </label>
-</figure>
-
-<p>In order to get the correct time, it&rsquo;s necessary to maintain a monotonic global clock(Of course, it&rsquo;s not the only way to go, there are several ways to handle <a href="http://book.mixu.net/distsys/time.html">time and order</a>). Since everything we care about clock is Unix timestamp, we could maintain a global system clock represented by Unix timestamp. All machines request the global clock every second to get the current time, fetching the expiry tasks later.</p>
-<p>Well, are we done? Not yet, a new issue breaks into our design: if all machines can fetch the expiry tasks, these tasks will be processed more than one time, which will cause essential problems. We also need a mutex lock to guarantee only one machine can fetch the expiry task. You can implement both global clock and mutex lock by a magnificent strategy: an <a href="https://en.wikipedia.org/wiki/Optimistic_locking">Optimistic lock</a></p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-2d247" hidden>
-    <label for="zoomCheck-2d247">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806114120.png"/> 
-    
-    
-    </label>
-</figure>
-
-<ol>
-<li>All machines fetch global timestamp(timestamp A) with version</li>
-<li>All machines increase timestamp(timestamp B) and update version(optimistic locking), only one machine will success because of optimistic locking.</li>
-<li>Then the machine acquired mutex is authorized to fetch expiry tasks with timestamp A, the other machines failed to acquire mutex is suspended to wait for 1 seconds.</li>
-<li>Loop back to step 1 with timestamp B.</li>
-</ol>
-<p>We could encapsulate the role who keep acquiring lock and fetch expiry data as an individual component named <strong>scheduler</strong>.</p>
-<h3 id="expiry-processing"><span class="section-num">2.4</span> Expiry processing</h3>
-<p>Expiry processing is responsible for invoked the user-supplied callback or other user requested action. In distributed computing, it&rsquo;s common to execute a procedure by RPC(Remote Procedure Call). In our case, A RPC request is executed when timer task is expiry, from timer service to callback service. Thus, the caller(user) needs to explicitly tell the timer, which service should I execute with what kind of parameters data while the timer task is triggered.</p>
-<p>We could pack and serialize this meta information and parameters data into binary data, and send it to the timer. When pulling data out from slot, the timer could reconstruct Request/Response/Client type and set it with user-defined data, the next step is a piece of cake, just executing it without saying.</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-8a71f" hidden>
-    <label for="zoomCheck-8a71f">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806142855.png"/> 
-    
-    
-    </label>
-</figure>
-
-<p>Perhaps there are many expiry tasks needed to triggered, in order to handle as many tasks as possible, you could create a thread pool, process pool, coroutine pool to execute RPC concurrently.</p>
-<h3 id="decoupling"><span class="section-num">2.5</span> Decoupling</h3>
-<p>Supposing the callback service needs tons of operation, it takes a hundred of millisecond. Even though you have created a thread/process/coroutine pool to handle the timer task, it will inevitably hang, resulting in the decrease of throughout.</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-75f07" hidden>
-    <label for="zoomCheck-75f07">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806152334.png"/> 
-    
-    
-    </label>
-</figure>
-
-<p>As for this heavyweight processing case, Message Queue is a great answer. Message queues can significantly simplify coding of decoupled services, while improving performance, reliability and scalability. It&rsquo;s common to combine message queues with Pub/Sub messaging design pattern, timer could publish task data as message, and timer subscribes the same topic of message, using message queue as a buffer. Then in subscriber, the RPC client executes to request for callback service.</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-155e4" hidden>
-    <label for="zoomCheck-155e4">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806161123.png"/> 
-    
-    
-    </label>
-</figure>
-
-<p>After introducing message queue, we could outline the state machine of timer task:</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-c6d65" hidden>
-    <label for="zoomCheck-c6d65">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806203653.png"/> 
-    
-    
-    </label>
-</figure>
-
-<p>Thanks to message queue, we are able to buffer, to retry or to batch work, and to smooth spiky workloads</p>
-<h3 id="high-availability-guarantee"><span class="section-num">2.6</span> High availability guarantee</h3>
-<h4 id="missed-expiry-tasks"><span class="section-num">2.6.1</span> Missed expiry tasks</h4>
-<p>A missed expiry of tasks may occur because of the scheduler process being shutdown or being crashed, or because of other unknown problems. One important job is how to locate these missed tasks and re-execute them. Since we are using global `current_timestamp` to fetch expiry data, we could have another scheduler to use `delay_10min_timestamp` to fetch missed expiry data.</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-96d6f" hidden>
-    <label for="zoomCheck-96d6f">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806202724.png"/> 
-    
-    
-    </label>
-</figure>
-
-<p>In order to look for a needle in a haystack, we need to set a range(delay_10min - current time), and then to batch find cross buckets. After finding these missed tasks, the timer publishes them as a message to message queue. For other open source distributed timer projects like Quartz, which provides an instruction to handle missed(misfire) tasks: <a href="http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/tutorial-lesson-04.html">Misfire instructions</a></p>
-<p>If your NoSql component doesn&rsquo;t support find-cross-buckets feature, you could also find every bucket in the range one by one.</p>
-<h4 id="callback-service-error"><span class="section-num">2.6.2</span> Callback service error</h4>
-<p>Since the distributed systems are shared-nothing systems, they communicate via message passing through a network(asynchronously or synchronously), but the network is unreliable. When invoking the user-supplied callback, the RPC request might fail if the network is cut off for a while or the callback service is temporarily down.</p>
-<p>Retries are a technique that helps us deal with transient errors, i.e. errors that are temporary and are likely to disappear soon. Retries help us achieve resiliency by allowing the system to send a request repeatedly until it gets an explicit response(success or fail). By leveraging message queue, you obtain the ability for retrying for free. In the meanwhile, the timer could handle the user-requested retries: It&rsquo;s not the proper time to execute callback service, retry it later.</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-841a8" hidden>
-    <label for="zoomCheck-841a8">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806195302.png"/> 
-    
-    
-    </label>
-</figure>
-
-<h2 id="conclusion"><span class="section-num">3</span> Conclusion</h2>
-<p>After a long way, we are finally here. The final full architecture would look like this:</p>
-<p>The whole process:</p>
-<ol>
-<li>Adding a timer task, with specified meta info and task info</li>
-<li>Inserting task into bucket by hashed timing wheel algorithm(With <code>task_state</code> set to <code>pending</code>)</li>
-<li>Fetch_current scheduler tries to acquire lock and get global current time</li>
-<li>The Acquired lock scheduler fetches expiry tasks</li>
-<li>Return the expected data.</li>
-<li>&amp; 7. Publishing task data as message to MQ with thread pool; And then set <code>task_state</code> to <code>delivered</code></li>
-<li>Message subscriber pulls message from MQ</li>
-<li>Sending RPC request to callback service(set <code>task_state</code> to <code>success</code> or <code>fail</code>)</li>
-<li>Retry(If necessary)</li>
-</ol>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-97a1d" hidden>
-    <label for="zoomCheck-97a1d">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="https://raw.githubusercontent.com/ramsayleung/images/master/20210806202140.png"/> 
-    
-    
-    </label>
-</figure>
-
-<p>Wish you have fun and profit</p>
-<h2 id="reference"><span class="section-num">4</span> Reference</h2>
-<ul>
-<li><a href="http://www.cs.columbia.edu/~nahum/w6998/papers/ton97-timing-wheels.pdf">Paper: Hashed and Hierarchical Timing Wheels: Efficient Data Structures for Implementing a Timer Facility</a></li>
-<li><a href="https://blog.acolyer.org/2015/11/23/hashed-and-hierarchical-timing-wheels/">Hashed and Hierarchical Timing Wheels</a></li>
 </ul>
 ]]></content:encoded>
     </item>

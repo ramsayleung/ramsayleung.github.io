@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Mon, 05 Jan 2026 23:38:26 -0800</lastBuildDate>
+    <lastBuildDate>Tue, 06 Jan 2026 20:15:09 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>迄今所见最扎实的AI落地实践: Reddit的AI翻译</title>
@@ -91,8 +91,7 @@
 </figure>
 
 <h2 id="天才产品设计"><span class="section-num">3</span> 天才产品设计</h2>
-<p>初看之下似乎平平无奇，细品之下真的是拍案叫绝.</p>
-<p>这个看似简单的翻译功能，远不止是便利工具。它是一个精心设计、系统性思考的产物，我愿称之为「迄今所见最扎实的AI落地实践」</p>
+<p>初看之下似乎平平无奇，细品之下真的是拍案叫绝，我愿称之为「迄今所见最扎实的AI落地实践」</p>
 <h3 id="reddit-角度"><span class="section-num">3.1</span> Reddit 角度</h3>
 <p>首先这个功能让更多用户阅读不同语言的帖子，比如中文，日文用户可以阅读原文是英语，法语，西班牙语的帖子，大大增加了Reddit 帖子的普适性，语言不再是个障碍，可以为Reddit 在AI时代增加用户流量，为新用户引流。</p>
 <p>更多的用户就意味着更多的内容，更丰富的内容就能吸引来更多的用户，在AI时代，
