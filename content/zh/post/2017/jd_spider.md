@@ -1,13 +1,16 @@
 +++
-title = "从京东\"窃取\"150+万条数据"
+title = """
+  从京东"窃取"150+万条数据
+  """
 description = "An spider to crawl jindong item and comments"
-date = 2017-06-21T00:00:00+08:00
-lastmod = 2022-02-24T15:46:43+08:00
+date = 2017-06-21T00:00:00-07:00
+lastmod = 2026-01-06T21:33:25-08:00
 tags = ["python", "crawler"]
 categories = ["python"]
 draft = false
 toc = true
 showQuote = true
+highlighted = true
 +++
 
 我最近编写了两只京东商品和评论的分布式爬虫来进行数据分析，现在就来分享一下。
@@ -23,15 +26,15 @@ showQuote = true
 
 可以看出，京东不同的商品类别是对应不同的子域名的，例如 `book` 对应的是图书， `mvd` 对应的是音像， `shouji` 对应的是手机等。
 
-因为我使用的是获取 `<a href>` 标签里面的 url 值，然后迭代爬取的策略。所以要把爬取的 url 限定在域名为`jd.com` 范围内，不然就有可能会出现无限广度。
+因为我使用的是获取 `<a href>` 标签里面的 url 值，然后迭代爬取的策略。所以要把爬取的 url 限定在域名为~jd.com~ 范围内，不然就有可能会出现无限广度。
 
 此外，有相当多的页面是不会包含商品信息的；例如： `help.jd.com`, `doc.jd.com` 等，因此使用 `jd.com` 这个域名范围实在太大了，所以把所需的子域名都添加到一个 list :
 
 ```python
 jd_subdomain = ["jiadian", "shouji", "wt", "shuma", "diannao",
-		"bg", "channel", "jipiao", "hotel", "trip",
-		"ish", "book", "e", "health", "baby", "toy",
-		"nong", "jiu", "fresh", "china", "che", "list"]
+        "bg", "channel", "jipiao", "hotel", "trip",
+        "ish", "book", "e", "health", "baby", "toy",
+        "nong", "jiu", "fresh", "china", "che", "list"]
 ```
 
 
@@ -67,7 +70,11 @@ jd_subdomain = ["jiadian", "shouji", "wt", "shuma", "diannao",
 
 ## <span class="section-num">4</span> 反爬虫策略 {#反爬虫策略}
 
-商品的爬取策略以及提取策略都确定了，一只爬虫就基本成型了。但是一般比较大型的网站都有反爬虫措施的。所以道高一尺，魔高一丈，爬虫也要有对应的反反爬虫策略
+商品的爬取策略以及提取策略都确定了，一只爬虫就基本成型了。
+
+但是一般比较大型的网站都有反爬虫措施的。
+
+所以道高一尺，魔高一丈，爬虫也要有对应的反反爬虫策略
 
 
 ### <span class="section-num">4.1</span> 禁用 cookie {#禁用-cookie}
@@ -180,10 +187,11 @@ jd_subdomain = ["jiadian", "shouji", "wt", "shuma", "diannao",
 
 ## <span class="section-num">10</span> 项目源码 {#项目源码}
 
-<https://github.com/samrayleung/jd_spider>
+<https://github.com/ramsayleung/jd_spider>
 
-<div center class="qr-container">
-<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+<div class="qr-container" center>
+
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" class="qr-container" width="160px" height="160px" center="t" />
 公号同步更新，欢迎关注👻
-</div>
 
+</div>
