@@ -12,12 +12,13 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Thu, 24 Feb 2022 15:46:43 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 06 Jan 2026 21:33:25 -0800</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/crawler/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>从京东&#34;窃取&#34;150&#43;万条数据</title>
+      <title>  从京东&#34;窃取&#34;150&#43;万条数据
+  </title>
       <link>https://ramsayleung.github.io/zh/post/2017/jd_spider/</link>
-      <pubDate>Wed, 21 Jun 2017 00:00:00 +0800</pubDate>
+      <pubDate>Wed, 21 Jun 2017 00:00:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2017/jd_spider/</guid>
       <description>An spider to crawl jindong item and comments</description>
       <content:encoded><![CDATA[<p>我最近编写了两只京东商品和评论的分布式爬虫来进行数据分析，现在就来分享一下。</p>
@@ -39,7 +40,7 @@
 </figure>
 
 <p>可以看出，京东不同的商品类别是对应不同的子域名的，例如 <code>book</code> 对应的是图书， <code>mvd</code> 对应的是音像， <code>shouji</code> 对应的是手机等。</p>
-<p>因为我使用的是获取 <code>&lt;a href&gt;</code> 标签里面的 url 值，然后迭代爬取的策略。所以要把爬取的 url 限定在域名为<code>jd.com</code> 范围内，不然就有可能会出现无限广度。</p>
+<p>因为我使用的是获取 <code>&lt;a href&gt;</code> 标签里面的 url 值，然后迭代爬取的策略。所以要把爬取的 url 限定在域名为<del>jd.com</del> 范围内，不然就有可能会出现无限广度。</p>
 <p>此外，有相当多的页面是不会包含商品信息的；例如： <code>help.jd.com</code>, <code>doc.jd.com</code> 等，因此使用 <code>jd.com</code> 这个域名范围实在太大了，所以把所需的子域名都添加到一个 list :</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -50,9 +51,9 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">jd_subdomain</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;jiadian&#34;</span><span class="p">,</span> <span class="s2">&#34;shouji&#34;</span><span class="p">,</span> <span class="s2">&#34;wt&#34;</span><span class="p">,</span> <span class="s2">&#34;shuma&#34;</span><span class="p">,</span> <span class="s2">&#34;diannao&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">		<span class="s2">&#34;bg&#34;</span><span class="p">,</span> <span class="s2">&#34;channel&#34;</span><span class="p">,</span> <span class="s2">&#34;jipiao&#34;</span><span class="p">,</span> <span class="s2">&#34;hotel&#34;</span><span class="p">,</span> <span class="s2">&#34;trip&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">		<span class="s2">&#34;ish&#34;</span><span class="p">,</span> <span class="s2">&#34;book&#34;</span><span class="p">,</span> <span class="s2">&#34;e&#34;</span><span class="p">,</span> <span class="s2">&#34;health&#34;</span><span class="p">,</span> <span class="s2">&#34;baby&#34;</span><span class="p">,</span> <span class="s2">&#34;toy&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">		<span class="s2">&#34;nong&#34;</span><span class="p">,</span> <span class="s2">&#34;jiu&#34;</span><span class="p">,</span> <span class="s2">&#34;fresh&#34;</span><span class="p">,</span> <span class="s2">&#34;china&#34;</span><span class="p">,</span> <span class="s2">&#34;che&#34;</span><span class="p">,</span> <span class="s2">&#34;list&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;bg&#34;</span><span class="p">,</span> <span class="s2">&#34;channel&#34;</span><span class="p">,</span> <span class="s2">&#34;jipiao&#34;</span><span class="p">,</span> <span class="s2">&#34;hotel&#34;</span><span class="p">,</span> <span class="s2">&#34;trip&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;ish&#34;</span><span class="p">,</span> <span class="s2">&#34;book&#34;</span><span class="p">,</span> <span class="s2">&#34;e&#34;</span><span class="p">,</span> <span class="s2">&#34;health&#34;</span><span class="p">,</span> <span class="s2">&#34;baby&#34;</span><span class="p">,</span> <span class="s2">&#34;toy&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;nong&#34;</span><span class="p">,</span> <span class="s2">&#34;jiu&#34;</span><span class="p">,</span> <span class="s2">&#34;fresh&#34;</span><span class="p">,</span> <span class="s2">&#34;china&#34;</span><span class="p">,</span> <span class="s2">&#34;che&#34;</span><span class="p">,</span> <span class="s2">&#34;list&#34;</span><span class="p">]</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="提取数据"><span class="section-num">2</span> 提取数据</h2>
@@ -85,7 +86,9 @@
 <p>只是想要吐嘈一下的是，京东的评论是只能一页页向后翻的，不能跳转。还有一点就是，即使某样商品有 10+w 条评论，最多也只是返回 100页的数据。
 略坑</p>
 <h2 id="反爬虫策略"><span class="section-num">4</span> 反爬虫策略</h2>
-<p>商品的爬取策略以及提取策略都确定了，一只爬虫就基本成型了。但是一般比较大型的网站都有反爬虫措施的。所以道高一尺，魔高一丈，爬虫也要有对应的反反爬虫策略</p>
+<p>商品的爬取策略以及提取策略都确定了，一只爬虫就基本成型了。</p>
+<p>但是一般比较大型的网站都有反爬虫措施的。</p>
+<p>所以道高一尺，魔高一丈，爬虫也要有对应的反反爬虫策略</p>
 <h3 id="禁用-cookie"><span class="section-num">4.1</span> 禁用 cookie</h3>
 <p>通过禁用 cookie, 服务器就无法根据 cookie 判断出爬虫是否访问过网站</p>
 <h3 id="轮转-user-agent"><span class="section-num">4.2</span> 轮转 user-agent</h3>
@@ -217,9 +220,9 @@
 <li><a href="https://github.com/hopsoft/docker-graphite-statsd">https://github.com/hopsoft/docker-graphite-statsd</a></li>
 </ul>
 <h2 id="项目源码"><span class="section-num">10</span> 项目源码</h2>
-<p><a href="https://github.com/samrayleung/jd_spider">https://github.com/samrayleung/jd_spider</a></p>
-<div center class="qr-container">
-<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" width="160px" height="160px" center="t" class="qr-container" />
+<p><a href="https://github.com/ramsayleung/jd_spider">https://github.com/ramsayleung/jd_spider</a></p>
+<div class="qr-container" center>
+<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" class="qr-container" width="160px" height="160px" center="t" />
 公号同步更新，欢迎关注👻
 </div>
 ]]></content:encoded>
