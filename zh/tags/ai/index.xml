@@ -12,8 +12,68 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Tue, 06 Jan 2026 20:27:06 -0800</lastBuildDate>
+    <lastBuildDate>Mon, 04 May 2026 23:52:23 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI来了，人类更要多读书</title>
+      <link>https://ramsayleung.github.io/zh/post/2026/ai%E6%9D%A5%E4%BA%86%E4%BA%BA%E7%B1%BB%E6%9B%B4%E8%A6%81%E5%A4%9A%E8%AF%BB%E4%B9%A6/</link>
+      <pubDate>Mon, 04 May 2026 22:00:00 -0700</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2026/ai%E6%9D%A5%E4%BA%86%E4%BA%BA%E7%B1%BB%E6%9B%B4%E8%A6%81%E5%A4%9A%E8%AF%BB%E4%B9%A6/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;距离我写的《&lt;a href=&#34;https://ramsayleung.github.io/zh/post/2025/%E6%9D%82%E8%B0%88ai%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98/&#34;&gt;杂谈AI取代程序员&lt;/a&gt;》已经过去一年半, 再分享一下我对AI的个人感悟。&lt;/p&gt;
+&lt;p&gt;先说下我自己AI的使用和熟悉程度，我司的风格是做淘金热里卖铲子的人, 而我自己从2024年就在 S3 参与AI相关功能的开发，主要是做面向AI的海量训练数据存储，现在 Anthropic 也在用我们组的产品。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
+<p>距离我写的《<a href="https://ramsayleung.github.io/zh/post/2025/%E6%9D%82%E8%B0%88ai%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98/">杂谈AI取代程序员</a>》已经过去一年半, 再分享一下我对AI的个人感悟。</p>
+<p>先说下我自己AI的使用和熟悉程度，我司的风格是做淘金热里卖铲子的人, 而我自己从2024年就在 S3 参与AI相关功能的开发，主要是做面向AI的海量训练数据存储，现在 Anthropic 也在用我们组的产品。</p>
+<p>工作中，我们可以使用的是 Anthropic 部署在 AWS 上的最新模型(当前是 Opus 4.7)，量大且绝对管够; 而工作之外我也订阅了Google的 Gemini Pro 以及 ChatGPT 的 Business Plan, 可以说御三家的模型我都尝到饱。</p>
+<h2 id="思考快与慢"><span class="section-num">2</span> 思考快与慢</h2>
+<p>当我和朋友聊起AI的时候，他说他已经用了几个月的 Claude Code, 现在 Claude Code 写出来的代码他已经不想看了；不过好几次 Claude 搞不出来的功能，只能自己下手写 design 教它怎么搞；但是代码的确已经不想看了，更何况自己动手写代码。</p>
+<p>其实这种现象在日常生活中也很常见，短视频看多了之后就无法看长视频；电影解说看多了之后也没法完整看完一部电影；
+读书视频看多了之后，也不会真的去读一本书了，甚至一篇长文都看不下来。</p>
+<p>有一本著名的心理学的书叫《<a href="https://book.douban.com/subject/10785583/">思考，快与慢</a>》，作者就把人类的思维归纳为两个思考模式：</p>
+<p>系统一快速、直觉且情绪化，系统二较慢、较具计划性且更仰赖逻辑。</p>
+<p>但系统一也很容易上当，它固守「眼见即为事实」的原则，任由损失厌恶和乐观偏见之类的错觉引导我们作出错误的选择。
+有意识的系统二通过调动注意力来分析和解决问题，并作出决定，它比较慢，不容易出错，但它很懒惰，经常走捷径，
+直接采纳系统一的直觉型判断结果。</p>
+<p>用多了系统一，就很难激活系统二. 而这个是人类进化的结果，目的是为了节能，减少能量的摄入.</p>
+<p>AI编程工具正是典型的系统一放大器——它快速给出答案，让人跳过思考过程。久而久之，我发现自己也变得越来越懒得激活系统二了。</p>
+<p>这不禁又让我想起我用AI编程的心态转变。</p>
+<h2 id="心态几经反转"><span class="section-num">3</span> 心态几经反转</h2>
+<p>从网页版本的 ChatGPT 一路用过来，到现在的 Claude Code/Codex, 我对AI编程的心态可以说是几经反转。</p>
+<p>Claude Code 这样的 coding agent 可以在输入 prompt 之后，独立生成代码，编译，测试，基本提供一个需求就能独立完成，开头可以说是惊艳。</p>
+<p>但是后面我发现生成出来的代码会有过多的冗余，不必要的奇怪逻辑，此外它比较擅长从0生成代码，在已有代码上做修改就很麻烦。</p>
+<p>要让减少它生成屎山代码，就需要我来介入 review 把控。</p>
+<p>问题在于，让它来生成代码，我来review，我就需要理解它的思路，并且搞懂它的意图；
+而当我自己写代码时，思考过程都是在我脑子里面的，就省去了理解意图的步骤，自己写反而会比 review 它的代码来得更快。</p>
+<p>如果完全由它自己发挥，只要不到10个需求，我们的代码库就会面目全非，服务炸了还需要我来给它擦屁股，
+我也能理解为什么有人说，有了AI反而更累了。</p>
+<p>我不是说Agent不好用，有些地方用 Coding Agent 来完成非常顺手：</p>
+<ol>
+<li>Debug： 我提供日志，错误信息以及大概的思路，然后让AI顺着我的思路来搜索代码库。
+AI在搜索关键代码方面非常有帮助，毕竟它就擅长搜索，尤其是搜索我不熟悉的第三方库或者是其他团队的内部代码，一般几分钟就能把 bug 找出来；而 bugfix 只需要几行的代码；此外，搜索是个只读操作，AI并不会产生屎山代码。</li>
+<li>review 代码：我来review AI 生成的代码很费劲，但是反过来，让AI来review我的代码，就非常简单和有效；
+因为我对自己实现的代码心中有数，所以我一眼就能知道AI的评论是否有道理; 并且人写的代码，变更行数有限，上下文很小，便于发挥AI的特长.</li>
+<li>生成验证功能的代码片段：比如要验证某些想法是否可行时，我就会直接让AI来生成代码，反正对质量没有要求。</li>
+</ol>
+<h3 id="矛盾-不懂代码-又如何-vibe-coding"><span class="section-num">3.1</span> 矛盾：不懂代码，又如何&quot;vibe coding&quot;</h3>
+<p>这就有个矛盾的点，如果我不能比AI更懂编程，我又怎么能指导它，写出更贴切的提示词呢？说好的不懂编程也能 vibe coding呢？</p>
+<p>我能控制 coding agent 构建出我想象中的应用，但是我不能用它构建出我无法想象的东西，我的想象力和经验其实就是我手中 agent 的上限。</p>
+<p>那么，有了AI还要不要读书？</p>
+<p>我总会想起《冰与火之歌》： 一同前往绝境长城的路上，雪诺问小恶魔为什么总是在看书，小恶魔答道：</p>
+<blockquote>
+<p>“我的腿太短，头却太大，总算这脑袋对我还算合适，凭着它我很清楚自己能干什么、不能干什么，它就是我的武器。</p>
+<p>老哥有他的宝剑，劳勃国王有他的战锤，我则有我的脑袋瓜……</p>
+<p>不过人若要保持思路清晰锐利，就得多读书，就好像宝剑需要磨刀石一样。”</p>
+<p>提利昂轻敲书皮，“琼恩·雪诺，这就是为什么我读个不停啰。”</p></blockquote>
+<p>多读书才让自己静下心来学习新的知识，而不是固守在过往的知识，反而对 coding agent 产生越来越强的依赖。</p>
+<h2 id="后话"><span class="section-num">4</span> 后话</h2>
+<p>书读得足够多，脑子里面有相当的知识量之后，又要怎么去尽量调到系统二来分析和解决问题的呢？</p>
+<p>我的做法就是发现 coding agent 出错之后，就去骂它。</p>
+<p>因为我发现，在骂它的时候，我脑子就会自动搜索读过的书，寻找相应的论据，让我骂得有理有据，
+既趁机触发了系统二，也运用到我读来的知识，还在内心里强化了不能尽信AI的观点, &ldquo;trust but verify&rdquo;, 可谓是一箭三雕。</p>
+<p>当然，这纯属一种自我训练的小伎俩，和老板骂员工的管理逻辑不可同日而语(难怪老板喜欢骂员工), 不过，倒让我理解了为什么批评有时也能激发思考。</p>
+]]></content:encoded>
+    </item>
     <item>
       <title>迄今所见最扎实的AI落地实践: Reddit的AI翻译</title>
       <link>https://ramsayleung.github.io/zh/post/2026/%E8%BF%84%E4%BB%8A%E6%89%80%E8%A7%81%E6%9C%80%E6%89%8E%E5%AE%9E%E7%9A%84ai%E8%90%BD%E5%9C%B0%E5%AE%9E%E8%B7%B5_reddit%E7%9A%84ai%E7%BF%BB%E8%AF%91/</link>

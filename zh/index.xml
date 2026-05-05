@@ -12,8 +12,68 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sun, 03 May 2026 16:12:21 -0700</lastBuildDate>
+    <lastBuildDate>Mon, 04 May 2026 23:52:23 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI来了，人类更要多读书</title>
+      <link>https://ramsayleung.github.io/zh/post/2026/ai%E6%9D%A5%E4%BA%86%E4%BA%BA%E7%B1%BB%E6%9B%B4%E8%A6%81%E5%A4%9A%E8%AF%BB%E4%B9%A6/</link>
+      <pubDate>Mon, 04 May 2026 22:00:00 -0700</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2026/ai%E6%9D%A5%E4%BA%86%E4%BA%BA%E7%B1%BB%E6%9B%B4%E8%A6%81%E5%A4%9A%E8%AF%BB%E4%B9%A6/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 前言&lt;/h2&gt;
+&lt;p&gt;距离我写的《&lt;a href=&#34;https://ramsayleung.github.io/zh/post/2025/%E6%9D%82%E8%B0%88ai%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98/&#34;&gt;杂谈AI取代程序员&lt;/a&gt;》已经过去一年半, 再分享一下我对AI的个人感悟。&lt;/p&gt;
+&lt;p&gt;先说下我自己AI的使用和熟悉程度，我司的风格是做淘金热里卖铲子的人, 而我自己从2024年就在 S3 参与AI相关功能的开发，主要是做面向AI的海量训练数据存储，现在 Anthropic 也在用我们组的产品。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="前言"><span class="section-num">1</span> 前言</h2>
+<p>距离我写的《<a href="https://ramsayleung.github.io/zh/post/2025/%E6%9D%82%E8%B0%88ai%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98/">杂谈AI取代程序员</a>》已经过去一年半, 再分享一下我对AI的个人感悟。</p>
+<p>先说下我自己AI的使用和熟悉程度，我司的风格是做淘金热里卖铲子的人, 而我自己从2024年就在 S3 参与AI相关功能的开发，主要是做面向AI的海量训练数据存储，现在 Anthropic 也在用我们组的产品。</p>
+<p>工作中，我们可以使用的是 Anthropic 部署在 AWS 上的最新模型(当前是 Opus 4.7)，量大且绝对管够; 而工作之外我也订阅了Google的 Gemini Pro 以及 ChatGPT 的 Business Plan, 可以说御三家的模型我都尝到饱。</p>
+<h2 id="思考快与慢"><span class="section-num">2</span> 思考快与慢</h2>
+<p>当我和朋友聊起AI的时候，他说他已经用了几个月的 Claude Code, 现在 Claude Code 写出来的代码他已经不想看了；不过好几次 Claude 搞不出来的功能，只能自己下手写 design 教它怎么搞；但是代码的确已经不想看了，更何况自己动手写代码。</p>
+<p>其实这种现象在日常生活中也很常见，短视频看多了之后就无法看长视频；电影解说看多了之后也没法完整看完一部电影；
+读书视频看多了之后，也不会真的去读一本书了，甚至一篇长文都看不下来。</p>
+<p>有一本著名的心理学的书叫《<a href="https://book.douban.com/subject/10785583/">思考，快与慢</a>》，作者就把人类的思维归纳为两个思考模式：</p>
+<p>系统一快速、直觉且情绪化，系统二较慢、较具计划性且更仰赖逻辑。</p>
+<p>但系统一也很容易上当，它固守「眼见即为事实」的原则，任由损失厌恶和乐观偏见之类的错觉引导我们作出错误的选择。
+有意识的系统二通过调动注意力来分析和解决问题，并作出决定，它比较慢，不容易出错，但它很懒惰，经常走捷径，
+直接采纳系统一的直觉型判断结果。</p>
+<p>用多了系统一，就很难激活系统二. 而这个是人类进化的结果，目的是为了节能，减少能量的摄入.</p>
+<p>AI编程工具正是典型的系统一放大器——它快速给出答案，让人跳过思考过程。久而久之，我发现自己也变得越来越懒得激活系统二了。</p>
+<p>这不禁又让我想起我用AI编程的心态转变。</p>
+<h2 id="心态几经反转"><span class="section-num">3</span> 心态几经反转</h2>
+<p>从网页版本的 ChatGPT 一路用过来，到现在的 Claude Code/Codex, 我对AI编程的心态可以说是几经反转。</p>
+<p>Claude Code 这样的 coding agent 可以在输入 prompt 之后，独立生成代码，编译，测试，基本提供一个需求就能独立完成，开头可以说是惊艳。</p>
+<p>但是后面我发现生成出来的代码会有过多的冗余，不必要的奇怪逻辑，此外它比较擅长从0生成代码，在已有代码上做修改就很麻烦。</p>
+<p>要让减少它生成屎山代码，就需要我来介入 review 把控。</p>
+<p>问题在于，让它来生成代码，我来review，我就需要理解它的思路，并且搞懂它的意图；
+而当我自己写代码时，思考过程都是在我脑子里面的，就省去了理解意图的步骤，自己写反而会比 review 它的代码来得更快。</p>
+<p>如果完全由它自己发挥，只要不到10个需求，我们的代码库就会面目全非，服务炸了还需要我来给它擦屁股，
+我也能理解为什么有人说，有了AI反而更累了。</p>
+<p>我不是说Agent不好用，有些地方用 Coding Agent 来完成非常顺手：</p>
+<ol>
+<li>Debug： 我提供日志，错误信息以及大概的思路，然后让AI顺着我的思路来搜索代码库。
+AI在搜索关键代码方面非常有帮助，毕竟它就擅长搜索，尤其是搜索我不熟悉的第三方库或者是其他团队的内部代码，一般几分钟就能把 bug 找出来；而 bugfix 只需要几行的代码；此外，搜索是个只读操作，AI并不会产生屎山代码。</li>
+<li>review 代码：我来review AI 生成的代码很费劲，但是反过来，让AI来review我的代码，就非常简单和有效；
+因为我对自己实现的代码心中有数，所以我一眼就能知道AI的评论是否有道理; 并且人写的代码，变更行数有限，上下文很小，便于发挥AI的特长.</li>
+<li>生成验证功能的代码片段：比如要验证某些想法是否可行时，我就会直接让AI来生成代码，反正对质量没有要求。</li>
+</ol>
+<h3 id="矛盾-不懂代码-又如何-vibe-coding"><span class="section-num">3.1</span> 矛盾：不懂代码，又如何&quot;vibe coding&quot;</h3>
+<p>这就有个矛盾的点，如果我不能比AI更懂编程，我又怎么能指导它，写出更贴切的提示词呢？说好的不懂编程也能 vibe coding呢？</p>
+<p>我能控制 coding agent 构建出我想象中的应用，但是我不能用它构建出我无法想象的东西，我的想象力和经验其实就是我手中 agent 的上限。</p>
+<p>那么，有了AI还要不要读书？</p>
+<p>我总会想起《冰与火之歌》： 一同前往绝境长城的路上，雪诺问小恶魔为什么总是在看书，小恶魔答道：</p>
+<blockquote>
+<p>“我的腿太短，头却太大，总算这脑袋对我还算合适，凭着它我很清楚自己能干什么、不能干什么，它就是我的武器。</p>
+<p>老哥有他的宝剑，劳勃国王有他的战锤，我则有我的脑袋瓜……</p>
+<p>不过人若要保持思路清晰锐利，就得多读书，就好像宝剑需要磨刀石一样。”</p>
+<p>提利昂轻敲书皮，“琼恩·雪诺，这就是为什么我读个不停啰。”</p></blockquote>
+<p>多读书才让自己静下心来学习新的知识，而不是固守在过往的知识，反而对 coding agent 产生越来越强的依赖。</p>
+<h2 id="后话"><span class="section-num">4</span> 后话</h2>
+<p>书读得足够多，脑子里面有相当的知识量之后，又要怎么去尽量调到系统二来分析和解决问题的呢？</p>
+<p>我的做法就是发现 coding agent 出错之后，就去骂它。</p>
+<p>因为我发现，在骂它的时候，我脑子就会自动搜索读过的书，寻找相应的论据，让我骂得有理有据，
+既趁机触发了系统二，也运用到我读来的知识，还在内心里强化了不能尽信AI的观点, &ldquo;trust but verify&rdquo;, 可谓是一箭三雕。</p>
+<p>当然，这纯属一种自我训练的小伎俩，和老板骂员工的管理逻辑不可同日而语(难怪老板喜欢骂员工), 不过，倒让我理解了为什么批评有时也能激发思考。</p>
+]]></content:encoded>
+    </item>
     <item>
       <title>《切尔诺贝利的午夜》</title>
       <link>https://ramsayleung.github.io/zh/post/2026/%E5%88%87%E5%B0%94%E8%AF%BA%E8%B4%9D%E5%88%A9%E7%9A%84%E5%8D%88%E5%A4%9C/</link>
@@ -2016,175 +2076,6 @@ BC省明确规定，租金年涨幅不得超过通货膨胀率。例如，2025�
 <p><a href="https://movie.douban.com/subject/1300555/">https://movie.douban.com/subject/1300555/</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</div>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>Telegram频道精华贴检索机器人</title>
-      <link>https://ramsayleung.github.io/zh/post/2025/telegram%E9%A2%91%E9%81%93%E6%A3%80%E7%B4%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/</link>
-      <pubDate>Wed, 01 Oct 2025 21:55:00 -0700</pubDate>
-      <guid>https://ramsayleung.github.io/zh/post/2025/telegram%E9%A2%91%E9%81%93%E6%A3%80%E7%B4%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/</guid>
-      <description>&lt;h2 id=&#34;引言&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 引言&lt;/h2&gt;
-&lt;p&gt;我有时总会觉得自己是个「奇葩」：
-在现在各种算法推荐大行其道的当下，我却偏偏不喜欢算法推荐，因为这种「千人千面」的模式，总让我担心自己会陷入「信息茧房」的焦虑之中，此外我也希望可以看到一些我兴趣之外的内容。&lt;/p&gt;</description>
-      <content:encoded><![CDATA[<h2 id="引言"><span class="section-num">1</span> 引言</h2>
-<p>我有时总会觉得自己是个「奇葩」：
-在现在各种算法推荐大行其道的当下，我却偏偏不喜欢算法推荐，因为这种「千人千面」的模式，总让我担心自己会陷入「信息茧房」的焦虑之中，此外我也希望可以看到一些我兴趣之外的内容。</p>
-<p>我算是很多年的 Twitter 老用户了，使用 Twitter 已经超过十年了，只是在马斯克收购 Twitter,新增了一个 &ldquo;For You&rdquo; 的推荐流之后，越来越没有兴趣看，不是吵架就是借极端观点/话题引流。</p>
-<p>于是，我转向了Telegram频道，并为此打造了一个专属的「挖掘好帖」工具。</p>
-<p>在最近的一年时间，我订阅了越来越多的 Telegram 频道，频道主可以向所有的订阅者广播内容，因为 Telegram 频道都是由频道主发布的，这给了我一种主动发现、主动阅读，而非被动接受算法推荐的感觉。</p>
-<p>有频道主分享 twitter 上的内容时，也可以算是某种意义的「编辑精选」了。</p>
-<p>当我订阅越来越多的频道之后，发现有些频道主太能聊了，一天能发几十个帖子，有些只是碎碎念，有些却是思考和精华。</p>
-<p>所以我就在想，是否有个好用的挖宝藏（挖坟）工具，可以把频道的热贴，精华帖都列出来呢？</p>
-<h2 id="灵感"><span class="section-num">2</span> 灵感</h2>
-<p>另外一个我高频使用的网站就是 <a href="https://old.reddit.com">Reddit</a>, 不了解的 Reddit 的朋友可以理解成它是网站的百度贴吧，可以有不同的子版（subreddit），相当于不同的吧, 然后每个子版都有一个 <code>top</code> 的功能，可以按照过去一小时，过去24小时，过去一周，过去一年，历史全时段按帖子的顶贴数进行排序。</p>
-<p>类似 <code>rust</code> 这个子版的历史精华帖：<a href="https://old.reddit.com/r/rust/top/">https://old.reddit.com/r/rust/top/</a></p>
-<p>那么，我是否也可以对 Telegram 频道也实现类似的功能呢？</p>
-<p>我可以把某个频道所有的帖子都爬下来，然后按点赞数，转发数，点击数按不同的时间段进行排序，</p>
-<p>支持不同的时间段：包括一周内，一个月内，一年内，和历史所有帖子</p>
-<p>相当于根据频道的订阅者的用手投票，挑选出不同时段最精华的帖子</p>
-<h2 id="技术挑战"><span class="section-num">3</span> 技术挑战</h2>
-<p>仔细分析之后，我发现检索频道并构建热榜是个相当有趣的技术问题，也与频道帖子本身的产品属性有关。</p>
-<p>在我爬取某个频道的所有帖子后，如何与频道的最新动态保持同步更新呢？</p>
-<p>毕竟像阅读数，转发数这些数据也是一直会更新的。</p>
-<p>但是大部分历史的帖子的阅读数据都是不怎么会变化的，比如半年前的帖子可能就不会有人去翻看，订阅者大多只会关注最新的帖子。</p>
-<p>每次都所有帖子都重新爬取一次固然可行，但是效率太低，毕竟绝大部分的帖子的数据都是不怎么变动的，怎么平衡性能与数据的及时性呢？</p>
-<p>有点像超简化版本的搜索引擎问题了。</p>
-<p>查询的时候要支持不同的时间段，按不同的指标进行排序，如何保证查询的性能呢？</p>
-<p>总不能每次查询都重新计算一次吧，这样在帖子非常多的热点频道，就会出现查询的性能瓶颈。</p>
-<h2 id="解决方案"><span class="section-num">4</span> 解决方案</h2>
-<p>在仔细考量，权衡利弊之后，我取了个折衷的方案：</p>
-<ol>
-<li>第一次爬取某个频道时，全量爬取并索引</li>
-<li>每天定时重新爬取最近30天的帖子数据，作增量更新</li>
-<li>每周再爬取和索引一次全量数据</li>
-</ol>
-<p>就这样兼顾性能，成本以及数据及时性，又不会造成过多的重复爬取。</p>
-<p>而对于查询性能，我选择了建立物化视图(material view)的策略, 每次爬取成功之后就重新计算，更新一下 material view, 耗时可能比较长，每个频道更新视图大概需要个十几秒。</p>
-<p>但此后所有的查询都直接指向这个预计算好的视图，数据库还可以利用缓存优化，以空间换时间，查询性能因此得到保障</p>
-<hr>
-<p><span class="timestamp-wrapper"><span class="timestamp">&lt;2025-11-03 Mon&gt;</span></span></p>
-<p>当索引超过1千万条数据之后，发现每次全量更新 material view 的时间去到了分钟级，并且 material view 不支持针对某个频道进行更新，只能全量更新整个视图，随着索引数据的增多，效率越来越低了。</p>
-<p>因此将视图迁移回单独的表，就可以只更新指定频道的数据了。</p>
-<h2 id="使用示例"><span class="section-num">5</span> 使用示例</h2>
-<p>使用方法非常简单：</p>
-<ol>
-<li>点击链接打开机器人：<a href="https://t.me/tele_ranker_bot">https://t.me/tele_ranker_bot</a></li>
-<li>在对话框中输入 <code>/rank &lt;频道链接&gt;</code> ，例如 <code>/rank https://t.me/pipeapplebun</code></li>
-<li>首次检索一个频道时，机器人需要一些时间来建立索引（如下图所示），完成后会通知用户：</li>
-</ol>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-ec038" hidden>
-    <label for="zoomCheck-ec038">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/first_index.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>完成之后就会发消息通知用户</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-c3d87" hidden>
-    <label for="zoomCheck-c3d87">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/index_finish.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>然后用户就可以按照点赞数，转发数，点击数查看帖子</p>
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-8afdf" hidden>
-    <label for="zoomCheck-8afdf">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/rank1.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-d526d" hidden>
-    <label for="zoomCheck-d526d">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/rank2.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-<p>通过这个工具，我甚至发现了一些有趣的现象：</p>
-<p>某些频道看似有十几万订阅者，但近期帖子的点击数仅有一千多，还不到百分之一，数据真实性令人存疑。</p>
-<h2 id="结语"><span class="section-num">6</span> 结语</h2>
-<p>有了这个频道检索工具，我终于能在一个频道里高效「挖坟」了，再也不用担心错过沉淀在时间线里的精华。</p>
-<p>不管是想回顾精华，还是挖掘隐藏好帖，甚至是做简单的数据挖掘，这个机器人都能搞定，举个例子：</p>
-<ul>
-<li>找最近一个月点赞最多的帖子</li>
-<li>看看历史上点击最高的内容有哪些</li>
-</ul>
-<p>这次，我总算为自己、也为可能有同样需求的你们，打造了一个称手的工具。</p>
-<ul>
-<li>立即体验：<a href="https://t.me/tele_ranker_bot">https://t.me/tele_ranker_bot</a></li>
-<li>我的频道（菠萝油与天光墟）: <a href="https://t.me/pipeapplebun">https://t.me/pipeapplebun</a></li>
-</ul>
-<h3 id="推荐阅读">推荐阅读</h3>
-<ul>
-<li>旅加经历
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E8%BF%99%E4%BA%9B%E5%B9%B4%E8%B5%B0%E8%BF%87%E7%9A%84%E8%B7%AF_%E4%BB%8E%E5%B9%BF%E5%B7%9E%E5%88%B0%E6%B8%A9%E5%93%A5%E5%8D%8E/">这些年走过的路：从广州到温哥华</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B9%8B%E5%88%9D%E4%BD%93%E9%AA%8C/">加拿大之初体验</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%99%BB%E9%99%86%E5%8A%A0%E6%8B%BF%E5%A4%A7%E4%B8%80%E5%B9%B4%E7%9A%84%E4%BD%93%E4%BC%9A/">登陆加拿大一年后的体会</a></li>
-</ul>
-</li>
-<li>工具流分享
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%AE%80%E6%98%8E%E5%86%99%E4%BD%9C%E6%8C%87%E5%8D%97/">简明写作指南</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E5%86%99%E4%BD%9C%E6%B5%81/">我的写作流</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E7%94%BB%E5%9B%BE%E6%B5%81/">我的画图流：画图工具与技巧分享</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E6%88%91%E7%9A%84%E6%90%9C%E7%B4%A2%E6%B5%81/">我的搜索流：高效搜索经验分享</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2022/feynman_technique/">最好的学习方式：费曼学习法(Feynman Technique)</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2021/%E7%B3%BB%E7%BB%9F%E6%80%9D%E8%80%83/">系统思考：既见树木，又见森林</a></li>
-</ul>
-</li>
-<li>思考感悟
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E7%BC%96%E7%A8%8B%E5%8D%81%E5%B9%B4%E7%9A%84%E6%84%9F%E6%82%9F/">编程十年的感悟</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E4%BB%8E%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E7%A6%BB%E7%BA%BF_%E6%88%91%E5%B8%A6%E8%B5%B0%E4%BA%86%E4%BB%80%E4%B9%88/">那些年，我从微信支付学到的东西</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2025/%E6%9D%82%E8%B0%88ai%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98/">杂谈ai取代程序员</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2023/%E7%BD%AE%E8%BA%AB%E4%BA%8B%E5%86%85/">为什么梦想买不起，故乡回不去</a></li>
-</ul>
-</li>
-<li>软件工程
-<ul>
-<li><a href="https://ramsayleung.github.io/zh/post/2025/a_philosophy_of_software_design/">软件设计的哲学</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2025/structure_and_interpretation_of_computer_programs/">一本读了八年还没读完的书</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%80_%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E8%AE%A4%E7%9F%A5/">测试技能进阶(一): 软件质量认知</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%BA%8C_parameterized_tests/">测试技能进阶(二): Parameterized Tests</a></li>
-<li><a href="https://ramsayleung.github.io/zh/post/2024/%E6%B5%8B%E8%AF%95%E6%8A%80%E8%83%BD%E8%BF%9B%E9%98%B6%E4%B8%89_property_based_testing/">测试技能进阶(三): Property Based Testing</a></li>
-</ul>
-</li>
-</ul>
-<div class="qr-container" center>
-<img src="/ox-hugo/qrcode_gh_e06d750e626f_1.jpg" alt="qrcode_gh_e06d750e626f_1.jpg" class="qr-container" width="160px" height="160px" center="t" />
-公号同步更新，欢迎关注👻
 </div>
 ]]></content:encoded>
     </item>
