@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sat, 06 Jun 2026 16:08:03 -0700</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2026 21:26:54 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>理想主义者眼里的光</title>
@@ -107,7 +107,7 @@
 <h2 id="理想主义者"><span class="section-num">3</span> 理想主义者</h2>
 <p>为什么说 Andrew 是个理想主义者呢？</p>
 <p>因为他的目标太宏大了，他觉得现在的编程语言C, C++, Rust, Go 都不能满足他的诉求，所以他想写一个能满足自己的要求的编程语言，并且可以取代掉 C。</p>
-<p>这个事情实在是太难了，因为 C, C++ 都已经成为行业标准近40年了，而像这些10来年冒起的编程语言: Go, Swift, Rust, Go 背后的是巨头 Google, Swift 背后的是另外一个巨头 Apple, 也 Rust 背后也有 Mozilla 这个爹.</p>
+<p>这个事情实在是太难了，因为 C, C++ 都已经成为行业标准近40年了，而像这些10来年冒起的编程语言: Go, Swift, Rust, Go 背后的是巨头 Google, Swift 背后的是另外一个巨头 Apple, Rust 背后也有 Mozilla 这个爹.</p>
 <p>Zig 真的是开局什么都没有，连个能讨饭的碗都没有.</p>
 <p>目标非常宏大，吹牛，说大话谁不会呢，但是难的是像 Andrew 一样为了自己喜欢的东西持续做了超过十年。</p>
 <p>Zig 目前是由 Zig Software Foundation 这个非营利组织所托管，而这个非营利组织给 Andrew 开的年薪是15.4 万美金，这个薪水看起来不低，但就 Andrew 在编程语言和编译器方面的造诣，如果他愿意去大厂的话, 可以轻松翻2到3倍，甚至更多。</p>
