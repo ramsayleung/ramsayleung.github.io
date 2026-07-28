@@ -154,6 +154,9 @@ languages:
         - name: Tags
           url: /tags/
           weight: 30
+        - name: Sparks
+          url: /en/categories/sparks/
+          weight: 3
         - name: About
           url: /about_me
           weight: 40
@@ -168,6 +171,9 @@ languages:
     weight: 2
     menu:
       main:
+        - name: "随想"
+          url: /zh/categories/随想/
+          weight: 3
         - name: "归档"
           url: zh/archives/
           weight: 9
