@@ -1,7 +1,8 @@
 +++
 title = "龙咬下的苹果"
 date = 2026-07-28
-lastmod = 2026-07-28T21:47:53-07:00
+lastmod = 2026-07-28T21:56:38-07:00
+tags = ["book", "AppleInChina"]
 categories = ["随想", "读书感悟"]
 draft = false
 spark = true

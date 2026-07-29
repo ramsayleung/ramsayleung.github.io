@@ -1,7 +1,8 @@
 +++
 title = "郭台铭的棚屋办公室"
 date = 2026-07-28T20:32:00-07:00
-lastmod = 2026-07-28T21:27:58-07:00
+lastmod = 2026-07-28T21:56:46-07:00
+tags = ["book", "AppleInChina"]
 categories = ["随想", "读书感悟"]
 draft = false
 spark = true

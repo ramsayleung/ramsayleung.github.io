@@ -1,7 +1,8 @@
 +++
 title = "捷克每月消失的29名工人"
 date = 2026-07-28T21:09:00-07:00
-lastmod = 2026-07-28T21:24:22-07:00
+lastmod = 2026-07-28T21:56:52-07:00
+tags = ["book", "AppleInChina"]
 categories = ["随想", "读书感悟"]
 draft = false
 spark = true
