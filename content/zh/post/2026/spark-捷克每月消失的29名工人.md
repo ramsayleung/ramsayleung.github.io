@@ -1,12 +1,11 @@
 +++
 title = "捷克每月消失的29名工人"
 date = 2026-07-28T21:09:00-07:00
-lastmod = 2026-07-28T21:56:52-07:00
+lastmod = 2026-07-28T22:04:53-07:00
 tags = ["book", "AppleInChina"]
 categories = ["随想", "读书感悟"]
 draft = false
-spark = true
-hiddenInHomeList = true
+showQuote = true
 +++
 
 事实证明，中国的工人就是更便宜更好用，不但工资低，工作时间还长，一天能干12小时，而捷克的工人工作时间更短，还有工会；

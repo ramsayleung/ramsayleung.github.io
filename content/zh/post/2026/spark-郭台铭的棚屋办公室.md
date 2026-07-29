@@ -1,12 +1,11 @@
 +++
 title = "郭台铭的棚屋办公室"
 date = 2026-07-28T20:32:00-07:00
-lastmod = 2026-07-28T21:56:46-07:00
+lastmod = 2026-07-28T22:04:45-07:00
 tags = ["book", "AppleInChina"]
 categories = ["随想", "读书感悟"]
 draft = false
-spark = true
-hiddenInHomeList = true
+showQuote = true
 +++
 
 一位苹果高管回忆，当1999年，他造访富士康位于深圳龙华的工厂时，他被工厂里世界一流的机器与厂房周围「垃圾场」一样的环境的巨大反差所震惊，而老板郭台铭的办公室是一栋老旧的单层的，水泥地面，铁皮屋顶的建筑，里面摆着塑料桌案。

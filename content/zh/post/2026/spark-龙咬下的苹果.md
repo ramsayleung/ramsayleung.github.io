@@ -1,12 +1,11 @@
 +++
 title = "龙咬下的苹果"
 date = 2026-07-28
-lastmod = 2026-07-28T21:56:38-07:00
+lastmod = 2026-07-28T22:04:38-07:00
 tags = ["book", "AppleInChina"]
 categories = ["随想", "读书感悟"]
 draft = false
-spark = true
-hiddenInHomeList = true
+showQuote = true
 +++
 
 《Apple in China: The Capture of the World's Greatest Company》 是一本被《纽约时报》和《经济学人》同时评为2025年度迄今最佳书籍之一，作者特里克·麦基基基于对两百多位前高管和工程师的采访，并辅以乔布斯未公开的会议记录、高管间的往来邮件以及关于中国的内部备忘录，勾画出苹果的供应链与中国的紧密联系，远不止于世人所认为的「苹果仅仅是把代工」外包到中国而已。
