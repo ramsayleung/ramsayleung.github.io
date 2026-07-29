@@ -20,12 +20,9 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;  /* cover entire article */
-    z-index: 1;    /* above base content */
-}
-/* Ensure article containers are positioned for absolute children */
-.post-entry, .first-entry, .tag-entry, .spark-entry {
-    position: relative;
+    /* Cover title and metadata, but stop before tags */
+    bottom: 2rem;  /* Adjust this value based on your layout */
+    z-index: 1;    /* Above base content */
 }
 .archive-tags {
     margin-top: 0.2rem;
@@ -111,39 +108,3 @@ article pre code,
     font-size: 0.9em;
     line-height: 1.4;
 }
-
-/* Spark / Microblog card styling */
-.spark-entry {
-    border-left: 3px solid var(--primary);
-    padding: 1.2rem 1.5rem;
-    margin-bottom: 1.5rem;
-    background: var(--entry);
-    border-radius: 6px;
-}
-
-.spark-content {
-    font-size: 1.05rem;
-    line-height: 1.6;
-    margin-bottom: 0.8rem;
-}
-
-.spark-footer {
-    font-size: 0.85rem;
-    color: var(--secondary);
-    display: flex;
-    gap: 0.8rem;
-    align-items: center;
-    border-top: 1px dashed var(--border);
-    padding-top: 0.5rem;
-    margin-top: 0.5rem;
-}
-
-.spark-footer a {
-    color: var(--secondary);
-    text-decoration: underline;
-}
-
-.spark-footer a:hover {
-    color: var(--primary);
-}
-
