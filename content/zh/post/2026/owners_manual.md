@@ -1,7 +1,7 @@
 +++
 title = "巴菲特的股东手册"
 date = 2026-11-08T09:20:00-07:00
-lastmod = 2026-11-08T10:13:16-07:00
+lastmod = 2026-11-08T10:14:32-07:00
 tags = ["book"]
 categories = ["读书感悟"]
 draft = false
