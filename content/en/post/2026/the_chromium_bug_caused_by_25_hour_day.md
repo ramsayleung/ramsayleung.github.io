@@ -1,14 +1,14 @@
 +++
 title = "A Chromium Bug Caused by a 25-Hour Day"
 date = 2026-11-09T16:12:00-07:00
-lastmod = 2026-11-09T16:23:55-07:00
+lastmod = 2026-11-09T16:29:47-07:00
 tags = ["programming"]
 categories = ["Software", "Design"]
 draft = false
 toc = true
 +++
 
-## <span class="section-num">1</span> How Can a Day Have 25 Hours? {#how-can-a-day-have-25-hours}
+## <span class="section-num">1</span> 25 Hours a Day? {#25-hours-a-day}
 
 Seeing the title, readers will immediately find it strange—doesn't a day only have 24 hours? Isn't that common sense? How could 25 hours appear?
 

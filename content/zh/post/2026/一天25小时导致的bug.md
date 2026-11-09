@@ -1,14 +1,14 @@
 +++
 title = "一天25小时导致的Chromium bug"
 date = 2026-11-09T13:46:00-07:00
-lastmod = 2026-11-09T16:20:03-07:00
+lastmod = 2026-11-09T16:29:56-07:00
 tags = ["programming"]
 categories = ["软件设计"]
 draft = false
 toc = true
 +++
 
-## <span class="section-num">1</span> 1天怎么会有25小时？ {#1天怎么会有25小时}
+## <span class="section-num">1</span> 1天25小时？ {#1天25小时}
 
 看到标题，读者第一时间会很奇怪，一天不只有24个小时么？这不是常识嘛，怎么会出现25小时。
 
