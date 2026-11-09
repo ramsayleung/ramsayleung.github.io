@@ -2,11 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://ramsayleung.github.io/zh/tags/canada/</loc>
-    <lastmod>2026-11-08T16:05:48-07:00</lastmod>
-  </url><url>
     <loc>https://ramsayleung.github.io/zh/categories/</loc>
-    <lastmod>2026-11-08T16:05:48-07:00</lastmod>
+    <lastmod>2026-11-09T16:20:03-07:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -18,21 +15,8 @@
                 href="https://ramsayleung.github.io/zh/categories/"
                 />
   </url><url>
-    <loc>https://ramsayleung.github.io/zh/tags/life/</loc>
-    <lastmod>2026-11-08T16:05:48-07:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://ramsayleung.github.io/en/tags/life/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="https://ramsayleung.github.io/zh/tags/life/"
-                />
-  </url><url>
     <loc>https://ramsayleung.github.io/zh/post/</loc>
-    <lastmod>2026-11-08T16:05:48-07:00</lastmod>
+    <lastmod>2026-11-09T16:20:03-07:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -44,8 +28,21 @@
                 href="https://ramsayleung.github.io/zh/post/"
                 />
   </url><url>
+    <loc>https://ramsayleung.github.io/zh/tags/programming/</loc>
+    <lastmod>2026-11-09T16:20:03-07:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://ramsayleung.github.io/en/tags/programming/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://ramsayleung.github.io/zh/tags/programming/"
+                />
+  </url><url>
     <loc>https://ramsayleung.github.io/zh/tags/</loc>
-    <lastmod>2026-11-08T16:05:48-07:00</lastmod>
+    <lastmod>2026-11-09T16:20:03-07:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -58,7 +55,7 @@
                 />
   </url><url>
     <loc>https://ramsayleung.github.io/zh/</loc>
-    <lastmod>2026-11-08T16:05:48-07:00</lastmod>
+    <lastmod>2026-11-09T16:20:03-07:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -68,6 +65,28 @@
                 rel="alternate"
                 hreflang="zh"
                 href="https://ramsayleung.github.io/zh/"
+                />
+  </url><url>
+    <loc>https://ramsayleung.github.io/zh/categories/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/</loc>
+    <lastmod>2026-11-09T16:20:03-07:00</lastmod>
+  </url><url>
+    <loc>https://ramsayleung.github.io/zh/post/2026/%E4%B8%80%E5%A4%A925%E5%B0%8F%E6%97%B6%E5%AF%BC%E8%87%B4%E7%9A%84bug/</loc>
+    <lastmod>2026-11-09T16:20:03-07:00</lastmod>
+  </url><url>
+    <loc>https://ramsayleung.github.io/zh/tags/canada/</loc>
+    <lastmod>2026-11-08T16:05:48-07:00</lastmod>
+  </url><url>
+    <loc>https://ramsayleung.github.io/zh/tags/life/</loc>
+    <lastmod>2026-11-08T16:05:48-07:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://ramsayleung.github.io/en/tags/life/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://ramsayleung.github.io/zh/tags/life/"
                 />
   </url><url>
     <loc>https://ramsayleung.github.io/zh/post/2026/%E6%9E%AB%E5%8F%B6%E5%9B%BD%E7%9A%84%E7%A7%8B/</loc>
@@ -230,19 +249,6 @@
     <loc>https://ramsayleung.github.io/zh/post/2025/telegram%E9%A2%91%E9%81%93%E6%A3%80%E7%B4%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/</loc>
     <lastmod>2025-11-16T14:26:39-08:00</lastmod>
   </url><url>
-    <loc>https://ramsayleung.github.io/zh/tags/programming/</loc>
-    <lastmod>2026-01-04T20:13:32-08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://ramsayleung.github.io/en/tags/programming/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="https://ramsayleung.github.io/zh/tags/programming/"
-                />
-  </url><url>
     <loc>https://ramsayleung.github.io/zh/tags/rails/</loc>
     <lastmod>2026-01-04T20:13:32-08:00</lastmod>
     <xhtml:link
@@ -264,9 +270,6 @@
   </url><url>
     <loc>https://ramsayleung.github.io/zh/post/2025/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA/</loc>
     <lastmod>2026-01-04T20:13:32-08:00</lastmod>
-  </url><url>
-    <loc>https://ramsayleung.github.io/zh/categories/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/</loc>
-    <lastmod>2025-11-16T10:22:14-08:00</lastmod>
   </url><url>
     <loc>https://ramsayleung.github.io/zh/post/2025/structure_and_interpretation_of_computer_programs/</loc>
     <lastmod>2025-11-16T10:13:07-08:00</lastmod>

@@ -12,8 +12,207 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Sun, 04 Jan 2026 20:13:32 -0800</lastBuildDate>
+    <lastBuildDate>Mon, 09 Nov 2026 16:20:03 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/tags/programming/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>一天25小时导致的Chromium bug</title>
+      <link>https://ramsayleung.github.io/zh/post/2026/%E4%B8%80%E5%A4%A925%E5%B0%8F%E6%97%B6%E5%AF%BC%E8%87%B4%E7%9A%84bug/</link>
+      <pubDate>Mon, 09 Nov 2026 13:46:00 -0700</pubDate>
+      <guid>https://ramsayleung.github.io/zh/post/2026/%E4%B8%80%E5%A4%A925%E5%B0%8F%E6%97%B6%E5%AF%BC%E8%87%B4%E7%9A%84bug/</guid>
+      <description>&lt;h2 id=&#34;1天怎么会有25小时&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 1天怎么会有25小时？&lt;/h2&gt;
+&lt;p&gt;看到标题，读者第一时间会很奇怪，一天不只有24个小时么？这不是常识嘛，怎么会出现25小时。&lt;/p&gt;
+&lt;p&gt;但是某些国家，比如加拿大，一年中会有1天有25小时，那天之后的半年，也会出现一天只有23小时。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="1天怎么会有25小时"><span class="section-num">1</span> 1天怎么会有25小时？</h2>
+<p>看到标题，读者第一时间会很奇怪，一天不只有24个小时么？这不是常识嘛，怎么会出现25小时。</p>
+<p>但是某些国家，比如加拿大，一年中会有1天有25小时，那天之后的半年，也会出现一天只有23小时。</p>
+<p>要明白这个突然消失或者增加的一小时，就需要先了解一下夏令时和冬令时。</p>
+<h2 id="夏令时与冬令时"><span class="section-num">2</span> 夏令时与冬令时</h2>
+<p>正如孔夫子临河感慨那般：
+「逝者如斯夫，不舍昼夜」</p>
+<p>时间就这么静静地流淌着，我们使用时钟来衡量时间的流逝，有一个总钟表 UTC，它永远不快不慢、不跟着季节调整，它叫 Coordinated Universal Time, 协调世界时间。</p>
+<p>它就是时钟里的「基准」，不管你在哪个国家、是不是夏天，UTC 都一样。</p>
+<p>慢着，为什么叫 UTC 而不是 CUT?</p>
+<p>因为这个缩写不是英文词序的直译，而是英文 <code>CUT</code> 和法文 TUC（Temps Universel Coordonné）之间的折中缩写</p>
+<p>而某个国家的本地时间就是 <em>本地时间 = UTC + 时区偏移</em></p>
+<p>下图的加减标识就是时区的偏移</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-f6945" hidden>
+    <label for="zoomCheck-f6945">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/timezone_map.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>比如中国的北京时区, 东8区就是UTC+8, 而巴西圣保罗就是UTC-3, 假如当前 UTC 时间是 <code>2026-11-03 04:00:00</code>, 那么北京的时间就是
+<code>2026-11-03 12:00:00</code>, 巴西圣保罗的时间就是 <code>2026-11-03 01:00:00</code></p>
+<p>那什么是夏令时/冬令时呢?</p>
+<p>以加拿大的温哥华或者200公里之外的美国的西雅图为例，正常情况下，他们的时区(太平洋标准时间 Pacific Standard Time, PST)是 UTC-8, 也就是当 UTC 时间是 <code>2026-11-03 04:00:00</code>, 温哥华和西雅图的时间是 <code>2026-11-02 20:00:00</code></p>
+<p>为了让大家下班后还能多晒到太阳、少开灯，政府就出了个奇怪的规定：「春天某天凌晨，全城把钟表统一拨快一小时」</p>
+<p>因为 <em>本地时间 = UTC + 时区偏移</em> , 拨快一小时相当于把时区偏移加一，即从 <code>UTC-8</code> 变成 <code>UTC-7</code>, 这个 <code>UTC-7</code> 就被称为夏令时（Pacific Day Time PDT）；而 <code>UTC-8</code> 是标准时间，俗称冬令时(Pacific Standard Time PST).</p>
+<p>假如温哥华在3月8日凌晨2点从冬令时切换到夏令时，在11月1号凌晨2点从夏令时切换到冬令时。</p>
+<p>那么就会出现3月8日这一天只有23小时，11月1号这一天有25小时的神奇现象。</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-7d9a1" hidden>
+    <label for="zoomCheck-7d9a1">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/2025-03-08-pdt.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-23025" hidden>
+    <label for="zoomCheck-23025">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/2025-11-01-pst.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>看到这里，虽然明白了一年中的确可能会出现一天有23小时/25小时的情况，但是也被搞晕了，这个也太麻烦了。</p>
+<p>就不能只选定某个时区嘛？</p>
+<p>好消息是某些政府的确意识到这个问题了，所以把冬令时摒弃掉了。坏消息是，只有某些省/州的政府这么决定了，剩下的政府依旧我行我素，继续调回冬令时。</p>
+<p>比如温哥华所在的英属哥伦比亚省政府在2026年3月2号宣布： <a href="https://archive.news.gov.bc.ca/releases/news_releases_2024-2028/2026AG0013-000209.htm">永久使用夏令时</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>，摒弃了冬令时；</p>
+<p>而东边的多伦多所在的安大略省和南边的华盛顿州就继续在夏令时和冬令时之间切换，
+导致温哥华和西雅图只相差了200公里（大概广州和香港的距离），却有了一个小时的时差。</p>
+<p>时间在软件开发中是非常容易出错的，当我看到这个夏令时和冬令时切换导致的，一天可能出现23小时或者25小时的情况，
+我就断言只要假设了一天只会有24小时这个前提（开发者也会觉得很无辜，这明明是常识嘛），那么就一定会出现 bug。</p>
+<p>话音未落，这 bug 不就来了嘛.</p>
+<h2 id="chromium-的-bug"><span class="section-num">3</span> Chromium 的 bug</h2>
+<p>Chromium 是由 Google 主导开发的一个开源网页浏览器项目。</p>
+<p>它是 Google Chrome 浏览器以及微软 Edge、Opera、三星浏览器等众多主流浏览器的底层实现。</p>
+<p>它的代码里面就有一段假设一天只会有24小时引入的bug:</p>
+<p><a href="https://chromium.googlesource.com/chromium/src/&#43;/refs/branch-heads/8078/components/sync/service/device_statistics_scheduler.cc#87">https://chromium.googlesource.com/chromium/src/+/refs/branch-heads/8078/components/sync/service/device_statistics_scheduler.cc#87</a></p>
+<p>这段代码的核心逻辑等价于:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">base</span><span class="o">::</span><span class="n">Time</span> <span class="n">ComputeEarliestAllowedTimeToRun</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">last_recorded_at</span><span class="p">.</span><span class="n">is_null</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">now</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">(</span><span class="n">last_recorded_at</span> <span class="o">+</span> <span class="n">base</span><span class="o">::</span><span class="n">Days</span><span class="p">(</span><span class="mi">1</span><span class="p">)).</span><span class="n">LocalMidnight</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个函数的值会被 <code>ScheduleNextRun()</code> 用来启动定时器：定时器到 <code>earliest_allowed</code> 时才触发 <code>Run()</code>, <code>Run()</code> 里大概有这样的判断</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="n">earliest_allowed</span> <span class="o">&gt;</span> <span class="n">now</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ScheduleNextRun</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// otherwise execute
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>也就是说：</p>
+<p>如果「最早允许时间（=earliest_allowed=）」还在未来，就继续等；</p>
+<p>如果「最早允许时间（=earliest_allowed=）」已经过去，就执行任务，并更新 =last_recorded_at=，然后再安排下一次。</p>
+<p>这个 <code>ComputeEarliestAllowedTimeToRun</code> 函数的本意是：</p>
+<p>「有些不大重要的任务，比如数据上报，保证任务最多大约每天跑一次，并且尽量在本地午夜之后才允许下一次运行。」</p>
+<p>问题在于，它把「加一天」理解成了 <strong><strong>加 24 小时</strong></strong> ，但现实中的本地日历 「一天」 不总是 <strong><strong>24 小时</strong></strong>, 所以上面的函数使用了
+<code>base::Days(1)</code> 表示精确的 24 小时，也就是 86400 秒。</p>
+<p>但是这是物理时间，均匀流逝，并不代表本地的时钟时间.</p>
+<p>以我们上面的11月1号温哥华夏令时换冬令时为例，时钟回拨，就会出现一天有25小时的情况.</p>
+<p><code>last_recorded_at + base::Days(1)</code>, 在11月1号那天， <strong><strong>加24小时</strong></strong> 并不等于是「第二天的相同时间」，而是会落在同一天更晚的时间。</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-92277" hidden>
+    <label for="zoomCheck-92277">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/chromium_time_bug.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>假如 <code>last_recorded_at: 2025-11-01 00:30 PDT</code>, 因为回拨导致当天有25小时, 所以 <code>last_recorded_at + base::Day(1)</code> 就会变成 <code>2025-11-01 23:30 PST</code>, 当前时间 now 是 <code>2025-11-01 00:30 PDT</code>, 而 <code>earliest_allowed</code> <code>(last_recorded_at + base::Day(1)).LocalMidnight()</code> 就会变成 <code>2025-11-01 00:00 PST</code></p>
+<p>时间比较是没有带时区的，所以 <code>earliest_allowed &lt; now</code> 就会变成 <code>true</code>, 那么定时器就会被执行。</p>
+<p>执行完更新 <em>last_recorded_at = now</em> , 然后再次 <code>ScheduleNextRun()</code></p>
+<p>但此时 <code>now</code> 仍然在回拨日的 <code>00:00~01:00</code> 窗口内，新的 <code>last_recorded_at</code> 也还在这个窗口内。再次计算：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">last_recorded_at</span> <span class="o">+</span> <span class="mi">24</span><span class="n">h</span> <span class="o">-&gt;</span> <span class="err">仍然落在同一天</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="n">LocalMidnight</span><span class="p">()</span>       <span class="o">-&gt;</span> <span class="err">又得到当天</span> <span class="mo">00</span><span class="o">:</span><span class="mo">00</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>又早于 now，定时器又立即触发。</p>
+<p>了解完 bug 形成的前因后果之后，修复起来也很容易，思路是：</p>
+<p>使用本地日历计算「上次记录所在日期的下一天午夜」，而不是先加固定 24 小时再取午夜</p>
+<p>Chromium 已经在两周前把问题修复了, patch: <a href="https://chromium-review.googlesource.com/c/chromium/src/&#43;/8655919">https://chromium-review.googlesource.com/c/chromium/src/+/8655919</a></p>
+<p>但是思路却是相当「清奇」： 因为夏/冬令时的切换导致会有1个小时的偏差，那么我就再加4个小时的可容纳误差范围，总不能调出4个小时的差异吧:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// The metrics should be recorded once per calendar day, so the next possible
+</span></span></span><span class="line"><span class="cl"><span class="c1">// time is midnight on the following day. Add 4 hours before rounding down to
+</span></span></span><span class="line"><span class="cl"><span class="c1">// midnight to account for DST &#34;fall back&#34; days (which are 25 hours long).
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">base</span><span class="o">::</span><span class="n">Time</span> <span class="n">earliest_allowed</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">  <span class="n">last_recorded_at</span><span class="p">.</span><span class="n">is_null</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="o">?</span> <span class="nl">now</span>
+</span></span><span class="line"><span class="cl">  <span class="p">:</span> <span class="p">(</span><span class="n">last_recorded_at</span><span class="p">.</span><span class="n">LocalMidnight</span><span class="p">()</span> <span class="o">+</span> <span class="n">base</span><span class="o">::</span><span class="n">Days</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">base</span><span class="o">::</span><span class="n">Hours</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="p">.</span><span class="n">LocalMidnight</span><span class="p">();</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>well, 你就说我修没修复吧。</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://archive.news.gov.bc.ca/releases/news_releases_2024-2028/2026AG0013-000209.htm">https://archive.news.gov.bc.ca/releases/news_releases_2024-2028/2026AG0013-000209.htm</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+]]></content:encoded>
+    </item>
     <item>
       <title>基于贝叶斯算法的Telegram广告拦截机器人（二）：上线半月的故障、挑战与优化之路</title>
       <link>https://ramsayleung.github.io/zh/post/2025/%E5%9F%BA%E4%BA%8E%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95%E7%9A%84telegram%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BA%8C/</link>

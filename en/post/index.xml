@@ -12,8 +12,206 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>en</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Tue, 06 Jan 2026 20:26:33 -0800</lastBuildDate>
+    <lastBuildDate>Mon, 09 Nov 2026 16:20:33 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/en/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Chromium Bug Caused by a 25-Hour Day</title>
+      <link>https://ramsayleung.github.io/en/post/2026/the_chromium_bug_caused_by_25_hour_day/</link>
+      <pubDate>Mon, 09 Nov 2026 16:12:00 -0700</pubDate>
+      <guid>https://ramsayleung.github.io/en/post/2026/the_chromium_bug_caused_by_25_hour_day/</guid>
+      <description>&lt;h2 id=&#34;how-can-a-day-have-25-hours&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; How Can a Day Have 25 Hours?&lt;/h2&gt;
+&lt;p&gt;Seeing the title, readers will immediately find it strange—doesn&amp;rsquo;t a day only have 24 hours? Isn&amp;rsquo;t that common sense? How could 25 hours appear?&lt;/p&gt;
+&lt;p&gt;But in some countries, like Canada, there is one day a year with 25 hours, and in the half year following that day, there is also a day with only 23 hours.&lt;/p&gt;
+&lt;p&gt;To understand this hour that suddenly disappears or is added, we need to first learn about daylight saving time and standard time.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="how-can-a-day-have-25-hours"><span class="section-num">1</span> How Can a Day Have 25 Hours?</h2>
+<p>Seeing the title, readers will immediately find it strange—doesn&rsquo;t a day only have 24 hours? Isn&rsquo;t that common sense? How could 25 hours appear?</p>
+<p>But in some countries, like Canada, there is one day a year with 25 hours, and in the half year following that day, there is also a day with only 23 hours.</p>
+<p>To understand this hour that suddenly disappears or is added, we need to first learn about daylight saving time and standard time.</p>
+<h2 id="daylight-saving-time-and-standard-time"><span class="section-num">2</span> Daylight Saving Time and Standard Time</h2>
+<p>As Confucius said while standing by a river: &ldquo;It passes on just like this, not ceasing day or night!&rdquo;</p>
+<p>Time flows quietly like this. We use clocks to measure its passage. There is a &ldquo;master&rdquo; clock, UTC, which is never fast or slow and does not adjust with the seasons. It is called Coordinated Universal Time (UTC).</p>
+<p>It is the &ldquo;baseline&rdquo; among clocks. No matter which country you are in or whether it is summer, UTC is always the same.</p>
+<p>Wait—why is it called UTC and not CUT?</p>
+<p>Because this abbreviation is not a direct translation of the English word order, but a compromise abbreviation between English <code>CUT</code> and French TUC (Temps Universel Coordonné).</p>
+<p>And the local time of a country is <em>local time = UTC + time zone offset</em></p>
+<p>The plus and minus signs in the map below indicate time zone offsets.</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-f6945" hidden>
+    <label for="zoomCheck-f6945">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/timezone_map.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>For example, China&rsquo;s Beijing time zone, East 8, is UTC+8, while São Paulo, Brazil is UTC-3. If the current UTC time is <code>2026-11-03 04:00:00</code>, then Beijing&rsquo;s time is <code>2026-11-03 12:00:00</code>, and São Paulo&rsquo;s time is <code>2026-11-03 01:00:00</code>.</p>
+<p>So what are daylight saving time and standard time?</p>
+<p>Take Vancouver, Canada, or Seattle, USA, 200 kilometers away, as examples. Under normal circumstances, their time zone (Pacific Standard Time, PST) is UTC-8. That is, when the UTC time is <code>2026-11-03 04:00:00</code>, the time in Vancouver and Seattle is <code>2026-11-02 20:00:00</code>.</p>
+<p>To let people get more sun after work and use less lighting, the government came up with a strange rule: &ldquo;In the early morning of a certain day in spring, the whole city moves their clocks forward by one hour.&rdquo;</p>
+<p>Because <em>local time = UTC + time zone offset</em>, moving the clock forward by one hour is equivalent to adding one to the time zone offset, that is, from <code>UTC-8</code> to <code>UTC-7</code>. This <code>UTC-7</code> is called daylight saving time (Pacific Daylight Time, PDT); and <code>UTC-8</code> is standard time (Pacific Standard Time, PST).</p>
+<p>If Vancouver switches from standard time to daylight saving time at 2 AM on March 8, and switches from daylight saving time to standard time at 2 AM on November 1.</p>
+<p>Then the magical phenomenon occurs where March 8 has only 23 hours and November 1 has 25 hours.</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-7d9a1" hidden>
+    <label for="zoomCheck-7d9a1">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/2025-03-08-pdt.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-23025" hidden>
+    <label for="zoomCheck-23025">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/2025-11-01-pst.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>At this point, although I understand that a day with 23 or 25 hours can indeed occur once a year, I am also dizzy. This is too troublesome.</p>
+<p>Can&rsquo;t we just pick one time zone and stick with it?</p>
+<p>The good news is that some governments have indeed realized this problem and abandoned the return to standard time. The bad news is that only some provincial/state governments have made this decision, while the rest continue to do their own thing and keep switching back to standard time.</p>
+<p>For example, the government of British Columbia, where Vancouver is located, <a href="https://archive.news.gov.bc.ca/releases/news_releases_2024-2028/2026AG0013-000209.htm">permanently uses daylight saving time</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> and abandoned the return to standard time on March 2nd 2026;</p>
+<p>Meanwhile, Ontario, where Toronto is located to the east, and Washington State to the south continue to switch between daylight saving time and standard time,
+causing Vancouver and Seattle, only 200 kilometers apart, to have a one-hour time difference.</p>
+<p>Time is very error-prone in software development. When I saw that daylight saving time and standard time switching can cause a day to have 23 or 25 hours,
+I asserted that any assumption that a day only has 24 hours (developers would feel innocent—this is common sense, after all!) will definitely lead to bugs.</p>
+<p>No sooner said than done—here comes the bug.</p>
+<h2 id="the-chromium-bug"><span class="section-num">3</span> The Chromium Bug</h2>
+<p>Chromium is an open-source web browser project led by Google.</p>
+<p>It is the underlying implementation of Google Chrome, Microsoft Edge, Opera, Samsung Browser, and many other mainstream browsers.</p>
+<p>In its code, there is a bug introduced by the assumption that a day only has 24 hours:</p>
+<p><a href="https://chromium.googlesource.com/chromium/src/&#43;/refs/branch-heads/8078/components/sync/service/device_statistics_scheduler.cc#87">https://chromium.googlesource.com/chromium/src/+/refs/branch-heads/8078/components/sync/service/device_statistics_scheduler.cc#87</a></p>
+<p>The core logic of this code is equivalent to:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">base</span><span class="o">::</span><span class="n">Time</span> <span class="n">ComputeEarliestAllowedTimeToRun</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">last_recorded_at</span><span class="p">.</span><span class="n">is_null</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">now</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">(</span><span class="n">last_recorded_at</span> <span class="o">+</span> <span class="n">base</span><span class="o">::</span><span class="n">Days</span><span class="p">(</span><span class="mi">1</span><span class="p">)).</span><span class="n">LocalMidnight</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The value of this function is used by <code>ScheduleNextRun()</code> to start the timer: the timer triggers <code>Run()</code> when it reaches <code>earliest_allowed</code>. <code>Run()</code> has a check roughly like this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="n">earliest_allowed</span> <span class="o">&gt;</span> <span class="n">now</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ScheduleNextRun</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// otherwise execute
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>That is to say:</p>
+<p>If the &ldquo;earliest allowed time (<code>earliest_allowed</code>)&rdquo; is still in the future, keep waiting;</p>
+<p>If the &ldquo;earliest allowed time (<code>earliest_allowed</code>)&rdquo; has passed, execute the task, update <code>last_recorded_at</code>, and then schedule the next run.</p>
+<p>The original intent of the <code>ComputeEarliestAllowedTimeToRun</code> function is:</p>
+<p>&ldquo;For some less important tasks, such as data reporting, ensure the task runs at most about once per day, and allow the next run only after local midnight.&rdquo;</p>
+<p>The problem is that it interprets &ldquo;adding one day&rdquo; as <strong><strong>adding 24 hours</strong></strong>, but the &ldquo;day&rdquo; in the real local calendar is not always <strong><strong>24 hours</strong></strong>. So the above function uses
+<code>base::Days(1)</code> to represent exactly 24 hours, that is, 86400 seconds.</p>
+<p>But this is physical time, flowing uniformly, and does not represent local clock time.</p>
+<p>Take our example above of Vancouver switching from daylight saving time to standard time on November 1. The clock is moved back, resulting in a day with 25 hours.</p>
+<p><code>last_recorded_at + base::Days(1)</code>, on November 1, <strong><strong>adding 24 hours</strong></strong> does not equal &ldquo;the same time the next day&rdquo;, but rather falls on a later time on the same day.</p>
+
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-92277" hidden>
+    <label for="zoomCheck-92277">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/chromium_time_bug.jpg"/> 
+    
+    
+    </label>
+</figure>
+
+<p>Suppose <code>last_recorded_at: 2025-11-01 00:30 PDT</code>. Because the clock is moved back and the day has 25 hours, <code>last_recorded_at + base::Day(1)</code> becomes <code>2025-11-01 23:30 PST</code>. The current time now is <code>2025-11-01 00:30 PDT</code>, and <code>earliest_allowed</code> <code>(last_recorded_at + base::Day(1)).LocalMidnight()</code> becomes <code>2025-11-01 00:00 PST</code>.</p>
+<p>Time comparison does not carry a time zone, so <code>earliest_allowed &lt; now</code> becomes <code>true</code>, and the timer fires immediately.</p>
+<p>After execution, update <em>last_recorded_at = now</em>, and then call <code>ScheduleNextRun()</code> again.</p>
+<p>But at this point <code>now</code> is still within the <code>00:00~01:00</code> window of the fall-back day, and the new <code>last_recorded_at</code> is also still within this window. Calculate again:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">last_recorded_at</span> <span class="o">+</span> <span class="mi">24</span><span class="n">h</span> <span class="o">-&gt;</span> <span class="n">still</span> <span class="n">falls</span> <span class="n">on</span> <span class="n">the</span> <span class="n">same</span> <span class="n">day</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="n">LocalMidnight</span><span class="p">()</span>       <span class="o">-&gt;</span> <span class="n">again</span> <span class="n">gets</span> <span class="mo">00</span><span class="o">:</span><span class="mo">00</span> <span class="n">of</span> <span class="n">the</span> <span class="n">same</span> <span class="n">day</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Again earlier than now, and the timer fires immediately again.</p>
+<p>After understanding the cause and effect of the bug, the fix is also easy. The idea is:</p>
+<p>Use the local calendar to calculate &ldquo;midnight of the day after the date of the last record&rdquo;, instead of adding a fixed 24 hours first and then taking midnight.</p>
+<p>Chromium fixed the problem two weeks ago, patch: <a href="https://chromium-review.googlesource.com/c/chromium/src/&#43;/8655919">https://chromium-review.googlesource.com/c/chromium/src/+/8655919</a></p>
+<p>But the approach is quite &ldquo;unusual&rdquo;: since the daylight saving/standard time switch causes a one-hour deviation, I&rsquo;ll just add a 4-hour tolerance range—surely the difference won&rsquo;t exceed 4 hours:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// The metrics should be recorded once per calendar day, so the next possible
+</span></span></span><span class="line"><span class="cl"><span class="c1">// time is midnight on the following day. Add 4 hours before rounding down to
+</span></span></span><span class="line"><span class="cl"><span class="c1">// midnight to account for DST &#34;fall back&#34; days (which are 25 hours long).
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">base</span><span class="o">::</span><span class="n">Time</span> <span class="n">earliest_allowed</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">  <span class="n">last_recorded_at</span><span class="p">.</span><span class="n">is_null</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="o">?</span> <span class="nl">now</span>
+</span></span><span class="line"><span class="cl">  <span class="p">:</span> <span class="p">(</span><span class="n">last_recorded_at</span><span class="p">.</span><span class="n">LocalMidnight</span><span class="p">()</span> <span class="o">+</span> <span class="n">base</span><span class="o">::</span><span class="n">Days</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">base</span><span class="o">::</span><span class="n">Hours</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="p">.</span><span class="n">LocalMidnight</span><span class="p">();</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Well, just tell me—did I fix it or not?</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://archive.news.gov.bc.ca/releases/news_releases_2024-2028/2026AG0013-000209.htm">https://archive.news.gov.bc.ca/releases/news_releases_2024-2028/2026AG0013-000209.htm</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+]]></content:encoded>
+    </item>
     <item>
       <title>A Genius AI Product design: Reddit translation</title>
       <link>https://ramsayleung.github.io/en/post/2026/a_genius_ai_product_design_reddit_translation/</link>
@@ -2359,314 +2557,6 @@ The core competitiveness is the ability to solve problems through technology - w
 </li>
 </ol>
 </div>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>Topological Sort</title>
-      <link>https://ramsayleung.github.io/en/post/2022/topological_sorting/</link>
-      <pubDate>Sun, 22 May 2022 10:34:00 +0800</pubDate>
-      <guid>https://ramsayleung.github.io/en/post/2022/topological_sorting/</guid>
-      <description>&lt;h2 id=&#34;definition&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; Definition&lt;/h2&gt;
-&lt;p&gt;In computer science, a topological sort or topological ordering of a directed graph is a linear ordering of its vertices such that for every directed edge &lt;code&gt;uv&lt;/code&gt; from vertex &lt;code&gt;u&lt;/code&gt; to vertx &lt;code&gt;v&lt;/code&gt;, &lt;code&gt;u&lt;/code&gt; comes before &lt;code&gt;v&lt;/code&gt; in the ordering.&lt;/p&gt;
-&lt;p&gt;It sounds pretty academic, but I am sure you are using topological sort unconsciously every single day.&lt;/p&gt;
-&lt;h2 id=&#34;application&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;2&lt;/span&gt; Application&lt;/h2&gt;
-&lt;p&gt;Many real world situations can be modeled as a graph with directed edges where some events must occur before others. Then a topological sort gives an order in which to perform these events, for instance:&lt;/p&gt;</description>
-      <content:encoded><![CDATA[<h2 id="definition"><span class="section-num">1</span> Definition</h2>
-<p>In computer science, a topological sort or topological ordering of a directed graph is a linear ordering of its vertices such that for every directed edge <code>uv</code> from vertex <code>u</code> to vertx <code>v</code>, <code>u</code> comes before <code>v</code> in the ordering.</p>
-<p>It sounds pretty academic, but I am sure you are using topological sort unconsciously every single day.</p>
-<h2 id="application"><span class="section-num">2</span> Application</h2>
-<p>Many real world situations can be modeled as a graph with directed edges where some events must occur before others. Then a topological sort gives an order in which to perform these events, for instance:</p>
-<h3 id="college-class-prerequisites"><span class="section-num">2.1</span> College class prerequisites</h3>
-<p>You must take course <code>b</code> first if you want to take course <code>a</code>. For example, in your alma mater, the student must complete <code>PHYS:1511(College Physics)</code> or <code>PHYS:1611(Introductory Physics I)</code> before taking <code>College Physics II</code>.</p>
-<p>The courses can be represented by vertices, and there is an edge from <code>College Physics</code> to <code>College Physics II</code> since <code>PHYS:1511</code> must be finished before <code>College Physics II</code> can be enrolled.</p>
-
-<figure><a href="/ox-hugo/course_prerequsites.png">
-    
-    
-    <input type="checkbox" id="zoomCheck-1c4f5" hidden>
-    <label for="zoomCheck-1c4f5">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/course_prerequsites.png"/> 
-    
-    
-    </label></a>
-</figure>
-
-<h3 id="job-scheduling"><span class="section-num">2.2</span> Job scheduling</h3>
-<p>scheduling a sequence of jobs or tasks based on their dependencies. The jobs are represented by vertices, and there is an edge from <code>x</code> to <code>y</code> if job <code>x</code> must be completed before job <code>y</code> can be started.</p>
-
-<figure><a href="/ox-hugo/job_scheduling.png">
-    
-    
-    <input type="checkbox" id="zoomCheck-0797d" hidden>
-    <label for="zoomCheck-0797d">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/job_scheduling.png"/> 
-    
-    
-    </label></a>
-</figure>
-
-<p>In the context of a CI/CD pipeline, the relationships between jobs can be represented by directed graph(specifically speaking, by directed acyclic graph). For example, in a CI pipeline, <code>build</code> job should be finished before start <code>test</code> job and <code>lint</code> job.</p>
-<h3 id="program-build-dependencies"><span class="section-num">2.3</span> Program build dependencies</h3>
-<p>You want to figure out in which order you should compile all the program&rsquo;s dependencies so that you will never try and compile a dependency for which you haven&rsquo;t first built all of its dependencies.</p>
-<p>A typical example is <code>GNU Make</code>: you specific your targets in a <code>makefile</code>, <code>Make</code> will parse <code>makefile</code>, and figure out which target should be built firstly. Supposing you have a <code>makefile</code> like this:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="line"><span class="cl"><span class="c"># Makefile for analysis report
-</span></span></span><span class="line"><span class="cl"><span class="c"></span>
-</span></span><span class="line"><span class="cl"><span class="nf">output/figure_1.png</span><span class="o">:</span> <span class="n">data</span>/<span class="n">input_file_</span>1.<span class="n">csv</span> <span class="n">scripts</span>/<span class="n">generate_histogram</span>.<span class="n">py</span>
-</span></span><span class="line"><span class="cl"><span class="err">python</span> <span class="err">scripts/generate_histogram.py</span> <span class="err">-i</span> <span class="err">data/input_file_1.csv</span> <span class="err">-o</span> <span class="err">output/figure_1.png</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nf">output/figure_2.png</span><span class="o">:</span> <span class="n">data</span>/<span class="n">input_file_</span>2.<span class="n">csv</span> <span class="n">scripts</span>/<span class="n">generate_histogram</span>.<span class="n">py</span>
-</span></span><span class="line"><span class="cl"><span class="err">python</span> <span class="err">scripts/generate_histogram.py</span> <span class="err">-i</span> <span class="err">data/input_file_2.csv</span> <span class="err">-o</span> <span class="err">output/figure_2.png</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nf">output/report.pdf</span><span class="o">:</span> <span class="n">report</span>/<span class="n">report</span>.<span class="n">tex</span> <span class="n">output</span>/<span class="n">figure_</span>1.<span class="n">png</span> <span class="n">output</span>/<span class="n">figure_</span>2.<span class="n">png</span>
-</span></span><span class="line"><span class="cl"><span class="err">cd</span> <span class="err">report/</span> <span class="err">&amp;&amp;</span> <span class="err">pdflatex</span> <span class="err">report.tex</span> <span class="err">&amp;&amp;</span> <span class="err">mv</span> <span class="err">report.pdf</span> <span class="err">../output/report.pdf</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><code>Make</code> will generate a DAG internally to figure out which target should be executed firstly with typological sort:</p>
-
-<figure><a href="/ox-hugo/build_dependencies.png">
-    
-    
-    <input type="checkbox" id="zoomCheck-9b93b" hidden>
-    <label for="zoomCheck-9b93b">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/build_dependencies.png"/> 
-    
-    
-    </label></a>
-</figure>
-
-<h2 id="directed-acyclic-graph"><span class="section-num">3</span> Directed Acyclic Graph</h2>
-<p>Back to the definition, we say that a topological ordering of a directed graph is a linear ordering of its vertices, but not all directed graphs have a topological ordering.</p>
-<p>A topological ordering is possible if and only if the graph has no directed cycles, that is, if it&rsquo;s a directed acyclic graph(DAG).</p>
-<p>Let us see some examples:</p>
-
-<figure><a href="/ox-hugo/directed_acyclic_graph.png">
-    
-    
-    <input type="checkbox" id="zoomCheck-3b058" hidden>
-    <label for="zoomCheck-3b058">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/directed_acyclic_graph.png"/> 
-    
-    
-    </label></a>
-</figure>
-
-<p>The definition requires that only the directed acyclic graph has a topological ordering, but why? What happens if we are trying to find a topological ordering of a directed graph? Let&rsquo;s take the <code>figure 3</code> for an example.</p>
-
-<figure><a href="/ox-hugo/dag_issue.png">
-    
-    
-    <input type="checkbox" id="zoomCheck-a4346" hidden>
-    <label for="zoomCheck-a4346">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/dag_issue.png"/> 
-    
-    
-    </label></a>
-</figure>
-
-<p>The directed graph problem has no solution, this is the reason why directed cycle is forbidden</p>
-<h2 id="kahn-s-algorithm"><span class="section-num">4</span> Kahn&rsquo;s Algorithm</h2>
-<p>There are several <a href="https://en.wikipedia.org/wiki/Topological_sorting#Algorithms">algorithms</a> for topological sorting, Kahn&rsquo;s algorithm is one of them, based on breadth first search.</p>
-<p>The intuition behind Kahn&rsquo;s algorithm is pretty straightforward:</p>
-<p><strong><strong>To repeatedly remove nodes without any dependencies from the graph and add them to the topological ordering</strong></strong></p>
-<p>As nodes without dependencies are removed from the graph, the original nodes depend on the removed node should be free now.</p>
-<p>We keep removing nodes without dependencies from the graph until all nodes are processed, or a cycle is detected.</p>
-<p>The dependencies of one node are represented as in-degree of this node.</p>
-<p>Let&rsquo;s take a quick example of how to find out a topological ordering of a given graph with Kahn&rsquo;s algorithm.</p>
-
-<figure><a href="/ox-hugo/kahn%27s_algorithm_1.png">
-    
-    
-    <input type="checkbox" id="zoomCheck-c84fa" hidden>
-    <label for="zoomCheck-c84fa">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/kahn%27s_algorithm_1.png"/> 
-    
-    
-    </label></a>
-</figure>
-
-
-<figure><a href="/ox-hugo/kahn%27s_algorithm_2.png">
-    
-    
-    <input type="checkbox" id="zoomCheck-6a74a" hidden>
-    <label for="zoomCheck-6a74a">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/kahn%27s_algorithm_2.png"/> 
-    
-    
-    </label></a>
-</figure>
-
-
-<figure><a href="/ox-hugo/kahn%27s_algorithm_3.png">
-    
-    
-    <input type="checkbox" id="zoomCheck-a6975" hidden>
-    <label for="zoomCheck-a6975">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/kahn%27s_algorithm_3.png"/> 
-    
-    
-    </label></a>
-</figure>
-
-
-<figure><a href="/ox-hugo/kahn%27s_algorithm_4.png">
-    
-    
-    <input type="checkbox" id="zoomCheck-020a2" hidden>
-    <label for="zoomCheck-020a2">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/kahn%27s_algorithm_4.png"/> 
-    
-    
-    </label></a>
-</figure>
-
-<p>Now we should understand how Kahn&rsquo;s algorithm works. Let&rsquo;s have a look at a C++ implementation of Kahn&rsquo;s algorithm:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;deque&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1">// Kahn&#39;s algorithm
-</span></span></span><span class="line"><span class="cl"><span class="c1">// `adj` is a directed acyclic graph represented as an adjacency list.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="n">findTopologicalOrder</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="o">&amp;</span><span class="n">adj</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">adj</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">in_degree</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span><span class="nl">to_vertex</span> <span class="p">:</span> <span class="n">adj</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="n">in_degree</span><span class="p">[</span><span class="n">to_vertex</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1">// queue contains nodes with no incoming edges
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="n">std</span><span class="o">::</span><span class="n">deque</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">queue</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">in_degree</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="n">queue</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">order</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">while</span> <span class="p">(</span><span class="n">queue</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">    <span class="n">queue</span><span class="p">.</span><span class="n">pop_front</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">    <span class="n">order</span><span class="p">[</span><span class="n">index</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span><span class="nl">next</span> <span class="p">:</span> <span class="n">adj</span><span class="p">[</span><span class="n">cur</span><span class="p">])</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="o">--</span><span class="n">in_degree</span><span class="p">[</span><span class="n">next</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">queue</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">next</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">      <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1">// there is no cycle
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">order</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// return an empty list if there is a cycle
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">{};</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="bonus"><span class="section-num">5</span> Bonus</h2>
-<p>When a pregnant woman takes calcium pills, she must make sure also that her diet is rich in vitamin D, since this vitamin makes the absorption of calcium possible.</p>
-<p>After reading the demonstration of topological ordering, you (and I) too should take a certain vitamin, metaphorically speaking, to help you absorb. The vitamin D I pick for you (and myself) is two leetcode problems, which involve with the most typical use case of topological ordering &ndash; college class prerequisites:</p>
-<ul>
-<li><a href="https://leetcode.com/problems/course-schedule/">Course Schedule</a></li>
-<li><a href="https://leetcode.com/problems/course-schedule-ii/">Course Schedule II</a></li>
-</ul>
-<h2 id="reference"><span class="section-num">6</span> Reference</h2>
-<ul>
-<li><a href="https://www.youtube.com/watch?v=cIBFEhD77b4">Topological Sort | Kahn&rsquo;s Algorithm | Graph Theory</a></li>
-<li><a href="https://docs.gitlab.com/ee/ci/directed_acyclic_graph/">Directed Acyclic Graph</a></li>
-<li><a href="https://gertjanvandenburg.com/files/talk/make.html">Hands-on Tutorial on Make</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Topological_sorting">Topological sorting</a></li>
-</ul>
 ]]></content:encoded>
     </item>
   </channel>
