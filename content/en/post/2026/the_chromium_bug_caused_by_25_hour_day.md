@@ -1,7 +1,7 @@
 +++
-title = "The Chromium Bug Caused by a 25-Hour Day"
+title = "A Chromium Bug Caused by a 25-Hour Day"
 date = 2026-11-09T16:12:00-07:00
-lastmod = 2026-11-09T16:20:33-07:00
+lastmod = 2026-11-09T16:23:55-07:00
 tags = ["programming"]
 categories = ["Software", "Design"]
 draft = false
