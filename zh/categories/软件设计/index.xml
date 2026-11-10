@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Mon, 09 Nov 2026 16:29:56 -0700</lastBuildDate>
+    <lastBuildDate>Mon, 09 Nov 2026 22:42:00 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/categories/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>一天25小时导致的Chromium bug</title>
@@ -85,12 +85,10 @@
     </label>
 </figure>
 
-<p>看到这里，虽然明白了一年中的确可能会出现一天有23小时/25小时的情况，但是也被搞晕了，这个也太麻烦了。</p>
-<p>就不能只选定某个时区嘛？</p>
-<p>好消息是某些政府的确意识到这个问题了，所以把冬令时摒弃掉了。坏消息是，只有某些省/州的政府这么决定了，剩下的政府依旧我行我素，继续调回冬令时。</p>
-<p>比如温哥华所在的英属哥伦比亚省政府在2026年3月2号宣布： <a href="https://archive.news.gov.bc.ca/releases/news_releases_2024-2028/2026AG0013-000209.htm">永久使用夏令时</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>，摒弃了冬令时；</p>
-<p>而东边的多伦多所在的安大略省和南边的华盛顿州就继续在夏令时和冬令时之间切换，
-导致温哥华和西雅图只相差了200公里（大概广州和香港的距离），却有了一个小时的时差。</p>
+<p>看到这里，我虽然明白一年中确实可能有一天 23 小时、一天 25 小时，但还是被绕晕了：这也太麻烦了。就不能只选一个时区固定下来吗？</p>
+<p>好消息是，有些政府已经意识到这个问题，决定不再调回冬令时。坏消息是，只有部分省/州这么做，其他地方照旧切换。</p>
+<p>比如温哥华所在的不列颠哥伦比亚省在 2026 年 3 月 2 日宣布<a href="https://archive.news.gov.bc.ca/releases/news_releases_2024-2028/2026AG0013-000209.htm">永久使用夏令时</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>，不再调回冬令时；而东边的安大略省和南边的华盛顿州仍继续在夏令时和冬令时之间切换。</p>
+<p>结果温哥华和西雅图相距仅 200 公里（差不多广州到香港的距离），却差了一个小时。</p>
 <p>时间在软件开发中是非常容易出错的，当我看到这个夏令时和冬令时切换导致的，一天可能出现23小时或者25小时的情况，
 我就断言只要假设了一天只会有24小时这个前提（开发者也会觉得很无辜，这明明是常识嘛），那么就一定会出现 bug。</p>
 <p>话音未落，这 bug 不就来了嘛.</p>
