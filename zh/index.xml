@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Mon, 09 Nov 2026 22:42:00 -0700</lastBuildDate>
+    <lastBuildDate>Wed, 11 Nov 2026 17:49:11 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>一天25小时导致的Chromium bug</title>
@@ -216,10 +216,37 @@
       <link>https://ramsayleung.github.io/zh/post/2026/%E6%9E%AB%E5%8F%B6%E5%9B%BD%E7%9A%84%E7%A7%8B/</link>
       <pubDate>Sun, 08 Nov 2026 13:06:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2026/%E6%9E%AB%E5%8F%B6%E5%9B%BD%E7%9A%84%E7%A7%8B/</guid>
-      <description>&lt;h2 id=&#34;广东的秋&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 广东的秋&lt;/h2&gt;
+      <description>&lt;figure&gt;
+    
+    
+    &lt;input type=&#34;checkbox&#34; id=&#34;zoomCheck-cdfdc&#34; hidden&gt;
+    &lt;label for=&#34;zoomCheck-cdfdc&#34;&gt;
+    
+    
+    &lt;img class=&#34;zoomCheck&#34; loading=&#34;lazy&#34; src=&#34;https://ramsayleung.github.io/ox-hugo/written-by-humna-not-ai.png&#34;/&gt; 
+    
+    
+    &lt;/label&gt;
+&lt;/figure&gt;
+
+&lt;h2 id=&#34;广东的秋&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 广东的秋&lt;/h2&gt;
 &lt;p&gt;对于在广东长大的朋友来说，秋天是个熟悉又陌生的季节，在课本上读到非常多关于秋天的词句与诗篇。&lt;/p&gt;
 &lt;p&gt;比如「自古逢秋悲寂寥，我言秋日胜春朝」称颂秋天的壮美&lt;/p&gt;</description>
-      <content:encoded><![CDATA[<h2 id="广东的秋"><span class="section-num">1</span> 广东的秋</h2>
+      <content:encoded><![CDATA[
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-cdfdc" hidden>
+    <label for="zoomCheck-cdfdc">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/written-by-humna-not-ai.png"/> 
+    
+    
+    </label>
+</figure>
+
+<h2 id="广东的秋"><span class="section-num">1</span> 广东的秋</h2>
 <p>对于在广东长大的朋友来说，秋天是个熟悉又陌生的季节，在课本上读到非常多关于秋天的词句与诗篇。</p>
 <p>比如「自古逢秋悲寂寥，我言秋日胜春朝」称颂秋天的壮美</p>
 <p>又或者「停车坐爱枫林晚，霜叶红于二月花」描述秋叶的绚烂。</p>
@@ -266,20 +293,6 @@
 <figure>
     
     
-    <input type="checkbox" id="zoomCheck-4e5c2" hidden>
-    <label for="zoomCheck-4e5c2">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/canada_autumn3.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-
-<figure>
-    
-    
     <input type="checkbox" id="zoomCheck-cc594" hidden>
     <label for="zoomCheck-cc594">
     
@@ -304,8 +317,7 @@
     </label>
 </figure>
 
-<p>住的公寓附近住满了枫树，每天上下班，只需要抬头就能看到满眼红叶；而随着深秋的到来，红叶也逐渐被风刮到地上，踩上去就会有「沙沙」之响
-<img loading="lazy" src="/ox-hugo/canada_autumn6.jpg"></p>
+<p>住的公寓附近住满了枫树，每天上下班，只需要抬头就能看到满眼红叶；而随着深秋的到来，红叶也逐渐被风刮到地上，踩上去就会有「沙沙」之响</p>
 
 <figure>
     
@@ -343,20 +355,6 @@
     
     
     <img class="zoomCheck" loading="lazy" src="/ox-hugo/canada_autumn9.jpg"/> 
-    
-    
-    </label>
-</figure>
-
-
-<figure>
-    
-    
-    <input type="checkbox" id="zoomCheck-74005" hidden>
-    <label for="zoomCheck-74005">
-    
-    
-    <img class="zoomCheck" loading="lazy" src="/ox-hugo/canada_autumn10.jpg"/> 
     
     
     </label>
