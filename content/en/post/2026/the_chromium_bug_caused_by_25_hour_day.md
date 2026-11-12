@@ -1,7 +1,7 @@
 +++
 title = "A Chromium Bug Caused by a 25-Hour Day"
 date = 2026-11-09T16:12:00-07:00
-lastmod = 2026-11-11T17:46:57-07:00
+lastmod = 2026-11-11T17:52:58-07:00
 tags = ["programming"]
 categories = ["Software", "Design"]
 draft = false
@@ -79,11 +79,7 @@ No sooner said than done—here comes the bug.
 
 ## <span class="section-num">3</span> The Chromium Bug {#the-chromium-bug}
 
-Chromium is an open-source web browser project led by Google.
-
-It is the underlying implementation of Google Chrome, Microsoft Edge, Opera, Samsung Browser, and many other mainstream browsers.
-
-In its code, there is a bug introduced by the assumption that a day only has 24 hours:
+In Chromium's codebase, there is a bug introduced by the assumption that a day only has 24 hours:
 
 <https://chromium.googlesource.com/chromium/src/+/refs/branch-heads/8078/components/sync/service/device_statistics_scheduler.cc#87>
 

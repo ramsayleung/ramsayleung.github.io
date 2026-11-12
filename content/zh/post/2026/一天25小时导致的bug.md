@@ -1,12 +1,15 @@
 +++
 title = "一天25小时导致的Chromium bug"
 date = 2026-11-09T13:46:00-07:00
-lastmod = 2026-11-09T22:42:00-07:00
+lastmod = 2026-11-11T17:53:57-07:00
 tags = ["programming"]
 categories = ["软件设计"]
 draft = false
 toc = true
 +++
+
+{{< figure src="/ox-hugo/written-by-humna-not-ai.png" >}}
+
 
 ## <span class="section-num">1</span> 1天25小时？ {#1天25小时}
 
@@ -71,11 +74,7 @@ toc = true
 
 ## <span class="section-num">3</span> Chromium 的 bug {#chromium-的-bug}
 
-Chromium 是由 Google 主导开发的一个开源网页浏览器项目。
-
-它是 Google Chrome 浏览器以及微软 Edge、Opera、三星浏览器等众多主流浏览器的底层实现。
-
-它的代码里面就有一段假设一天只会有24小时引入的bug:
+Chromium的代码里面就有一段假设一天只会有24小时引入的bug:
 
 <https://chromium.googlesource.com/chromium/src/+/refs/branch-heads/8078/components/sync/service/device_statistics_scheduler.cc#87>
 
@@ -103,9 +102,9 @@ if (earliest_allowed > now) {
 
 也就是说：
 
-如果「最早允许时间（=earliest_allowed=）」还在未来，就继续等；
+如果「最早允许时间（ `earliest_allowed` ）」还在未来，就继续等；
 
-如果「最早允许时间（=earliest_allowed=）」已经过去，就执行任务，并更新 =last_recorded_at=，然后再安排下一次。
+如果「最早允许时间（ `earliest_allowed` ）」已经过去，就执行任务，并更新 `last_recorded_at` ，然后再安排下一次。
 
 这个 `ComputeEarliestAllowedTimeToRun` 函数的本意是：
 
