@@ -1,12 +1,15 @@
 +++
 title = "A Chromium Bug Caused by a 25-Hour Day"
 date = 2026-11-09T16:12:00-07:00
-lastmod = 2026-11-09T16:29:47-07:00
+lastmod = 2026-11-11T17:46:57-07:00
 tags = ["programming"]
 categories = ["Software", "Design"]
 draft = false
 toc = true
 +++
+
+{{< figure src="/ox-hugo/written-by-humna-not-ai.png" >}}
+
 
 ## <span class="section-num">1</span> 25 Hours a Day? {#25-hours-a-day}
 
@@ -18,6 +21,10 @@ To understand this hour that suddenly disappears or is added, we need to first l
 
 
 ## <span class="section-num">2</span> Daylight Saving Time and Standard Time {#daylight-saving-time-and-standard-time}
+
+For those who are familiar with DST and PST, you could skip this section
+
+----
 
 As Confucius said while standing by a river: "It passes on just like this, not ceasing day or night!"
 
