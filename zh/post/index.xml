@@ -12,17 +12,44 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Wed, 11 Nov 2026 17:49:11 -0700</lastBuildDate>
+    <lastBuildDate>Wed, 11 Nov 2026 17:53:57 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>一天25小时导致的Chromium bug</title>
       <link>https://ramsayleung.github.io/zh/post/2026/%E4%B8%80%E5%A4%A925%E5%B0%8F%E6%97%B6%E5%AF%BC%E8%87%B4%E7%9A%84bug/</link>
       <pubDate>Mon, 09 Nov 2026 13:46:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2026/%E4%B8%80%E5%A4%A925%E5%B0%8F%E6%97%B6%E5%AF%BC%E8%87%B4%E7%9A%84bug/</guid>
-      <description>&lt;h2 id=&#34;1天25小时&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 1天25小时？&lt;/h2&gt;
+      <description>&lt;figure&gt;
+    
+    
+    &lt;input type=&#34;checkbox&#34; id=&#34;zoomCheck-cdfdc&#34; hidden&gt;
+    &lt;label for=&#34;zoomCheck-cdfdc&#34;&gt;
+    
+    
+    &lt;img class=&#34;zoomCheck&#34; loading=&#34;lazy&#34; src=&#34;https://ramsayleung.github.io/ox-hugo/written-by-humna-not-ai.png&#34;/&gt; 
+    
+    
+    &lt;/label&gt;
+&lt;/figure&gt;
+
+&lt;h2 id=&#34;1天25小时&#34;&gt;&lt;span class=&#34;section-num&#34;&gt;1&lt;/span&gt; 1天25小时？&lt;/h2&gt;
 &lt;p&gt;看到标题，读者第一时间会很奇怪，一天不只有24个小时么？这不是常识嘛，怎么会出现25小时。&lt;/p&gt;
 &lt;p&gt;但是某些国家，比如加拿大，一年中会有1天有25小时，那天之后的半年，也会出现一天只有23小时。&lt;/p&gt;</description>
-      <content:encoded><![CDATA[<h2 id="1天25小时"><span class="section-num">1</span> 1天25小时？</h2>
+      <content:encoded><![CDATA[
+<figure>
+    
+    
+    <input type="checkbox" id="zoomCheck-cdfdc" hidden>
+    <label for="zoomCheck-cdfdc">
+    
+    
+    <img class="zoomCheck" loading="lazy" src="/ox-hugo/written-by-humna-not-ai.png"/> 
+    
+    
+    </label>
+</figure>
+
+<h2 id="1天25小时"><span class="section-num">1</span> 1天25小时？</h2>
 <p>看到标题，读者第一时间会很奇怪，一天不只有24个小时么？这不是常识嘛，怎么会出现25小时。</p>
 <p>但是某些国家，比如加拿大，一年中会有1天有25小时，那天之后的半年，也会出现一天只有23小时。</p>
 <p>要明白这个突然消失或者增加的一小时，就需要先了解一下夏令时和冬令时。</p>
@@ -93,9 +120,7 @@
 我就断言只要假设了一天只会有24小时这个前提（开发者也会觉得很无辜，这明明是常识嘛），那么就一定会出现 bug。</p>
 <p>话音未落，这 bug 不就来了嘛.</p>
 <h2 id="chromium-的-bug"><span class="section-num">3</span> Chromium 的 bug</h2>
-<p>Chromium 是由 Google 主导开发的一个开源网页浏览器项目。</p>
-<p>它是 Google Chrome 浏览器以及微软 Edge、Opera、三星浏览器等众多主流浏览器的底层实现。</p>
-<p>它的代码里面就有一段假设一天只会有24小时引入的bug:</p>
+<p>Chromium的代码里面就有一段假设一天只会有24小时引入的bug:</p>
 <p><a href="https://chromium.googlesource.com/chromium/src/&#43;/refs/branch-heads/8078/components/sync/service/device_statistics_scheduler.cc#87">https://chromium.googlesource.com/chromium/src/+/refs/branch-heads/8078/components/sync/service/device_statistics_scheduler.cc#87</a></p>
 <p>这段代码的核心逻辑等价于:</p>
 <div class="highlight"><div class="chroma">
@@ -136,8 +161,8 @@
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>也就是说：</p>
-<p>如果「最早允许时间（=earliest_allowed=）」还在未来，就继续等；</p>
-<p>如果「最早允许时间（=earliest_allowed=）」已经过去，就执行任务，并更新 =last_recorded_at=，然后再安排下一次。</p>
+<p>如果「最早允许时间（ <code>earliest_allowed</code> ）」还在未来，就继续等；</p>
+<p>如果「最早允许时间（ <code>earliest_allowed</code> ）」已经过去，就执行任务，并更新 <code>last_recorded_at</code> ，然后再安排下一次。</p>
 <p>这个 <code>ComputeEarliestAllowedTimeToRun</code> 函数的本意是：</p>
 <p>「有些不大重要的任务，比如数据上报，保证任务最多大约每天跑一次，并且尽量在本地午夜之后才允许下一次运行。」</p>
 <p>问题在于，它把「加一天」理解成了 <strong><strong>加 24 小时</strong></strong> ，但现实中的本地日历 「一天」 不总是 <strong><strong>24 小时</strong></strong>, 所以上面的函数使用了

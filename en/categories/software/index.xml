@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>en</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Wed, 11 Nov 2026 17:46:57 -0700</lastBuildDate>
+    <lastBuildDate>Wed, 11 Nov 2026 17:52:58 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/en/categories/software/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>A Chromium Bug Caused by a 25-Hour Day</title>
@@ -123,9 +123,7 @@ causing Vancouver and Seattle, only 200 kilometers apart, to have a one-hour tim
 I asserted that any assumption that a day only has 24 hours (developers would feel innocent—this is common sense, after all!) will definitely lead to bugs.</p>
 <p>No sooner said than done—here comes the bug.</p>
 <h2 id="the-chromium-bug"><span class="section-num">3</span> The Chromium Bug</h2>
-<p>Chromium is an open-source web browser project led by Google.</p>
-<p>It is the underlying implementation of Google Chrome, Microsoft Edge, Opera, Samsung Browser, and many other mainstream browsers.</p>
-<p>In its code, there is a bug introduced by the assumption that a day only has 24 hours:</p>
+<p>In Chromium&rsquo;s codebase, there is a bug introduced by the assumption that a day only has 24 hours:</p>
 <p><a href="https://chromium.googlesource.com/chromium/src/&#43;/refs/branch-heads/8078/components/sync/service/device_statistics_scheduler.cc#87">https://chromium.googlesource.com/chromium/src/+/refs/branch-heads/8078/components/sync/service/device_statistics_scheduler.cc#87</a></p>
 <p>The core logic of this code is equivalent to:</p>
 <div class="highlight"><div class="chroma">
