@@ -27,3 +27,5 @@ The slogan of this site is ****In pursuit of Simplicity****, because I prefer si
 I've contributed multiple projects to open source community, I mainly focus on RSpotify right now due to the constrained energy.
 
 -   [RSpotify](<https://github.com/ramsayleung/rspotify>): A Spotify Web API wrapper implemented in Rust.
+
+{{< figure src="/ox-hugo/written-by-humna-not-ai.png" >}} <br/>
