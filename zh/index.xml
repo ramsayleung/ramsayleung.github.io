@@ -12,7 +12,7 @@
     <generator>Hugo -- 0.146.7</generator>
     <language>zh</language>
     <copyright>See this site&amp;rsquo;s source code here, licensed under GPLv3 ·</copyright>
-    <lastBuildDate>Wed, 11 Nov 2026 17:53:57 -0700</lastBuildDate>
+    <lastBuildDate>Sun, 15 Nov 2026 22:39:52 -0700</lastBuildDate>
     <atom:link href="https://ramsayleung.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>一天25小时导致的Chromium bug</title>
@@ -963,7 +963,7 @@ Jony 就拍板说，我们就干这个尺寸的 Mac Mini。</p>
 ]]></content:encoded>
     </item>
     <item>
-      <title>AI来了，人类更要多读书</title>
+      <title>杂谈AI取代程序员V2</title>
       <link>https://ramsayleung.github.io/zh/post/2026/ai%E6%9D%A5%E4%BA%86%E4%BA%BA%E7%B1%BB%E6%9B%B4%E8%A6%81%E5%A4%9A%E8%AF%BB%E4%B9%A6/</link>
       <pubDate>Mon, 04 May 2026 22:00:00 -0700</pubDate>
       <guid>https://ramsayleung.github.io/zh/post/2026/ai%E6%9D%A5%E4%BA%86%E4%BA%BA%E7%B1%BB%E6%9B%B4%E8%A6%81%E5%A4%9A%E8%AF%BB%E4%B9%A6/</guid>
@@ -1020,6 +1020,65 @@ AI在搜索关键代码方面非常有帮助，毕竟它就擅长搜索，尤其
 <p>因为我发现，在骂它的时候，我脑子就会自动搜索读过的书，寻找相应的论据，让我骂得有理有据，
 既趁机触发了系统二，也运用到我读来的知识，还在内心里强化了不能尽信AI的观点, &ldquo;trust but verify&rdquo;, 可谓是一箭三雕。</p>
 <p>当然，这纯属一种自我训练的小伎俩，和老板骂员工的管理逻辑不可同日而语(难怪老板喜欢骂员工), 不过，倒让我理解了为什么批评有时也能激发思考。</p>
+<hr>
+<p><span class="timestamp-wrapper"><span class="timestamp">&lt;2026-11-15 Sun&gt;</span></span></p>
+<p>有读者在公众号向我提问：</p>
+<blockquote>
+<p>Hello博主，来到 2026 年 11 月，我想了解你对coding agent的看法有没有改变过？</p></blockquote>
+<h3 id="反思才能改善设计"><span class="section-num">4.1</span> 反思才能改善设计</h3>
+<p>每天上班能用着无限量claude 最新模型的我，对AI的看法也并没有本质性的改变。</p>
+<p>我主观感觉在opus 4.8 之后, 虽然模型一直在更新，但是并没有那种 Claude Code 刚出来时, AI乘上 Harness的惊艳.</p>
+<p>Agent 擅长做的还是很擅长, 比如搜索，调试，针对特定任务的代码生成等等.</p>
+<p>但是与许多视频博主, 写爆款文章的创作者「许愿式」生成的软件不同, 真的有客户使用的软件是有很多限制的。</p>
+<p>生成出来的代码, 有客户为之付费后是要维护的，不像这些UP主那样主业是做视频或者发推特，东西做完，有点击量就能丢一边去。</p>
+<p>软件维护的负担 AI 并不能帮忙避免, 如果没有经历过这种维护痛苦的人，自然也不会想到如何在设计时尽量减少这样的痛苦，也不会在向AI许愿时有这方面的考虑.</p>
+<p>把软件按功能需求实现出来，只是最基本的部分；而非功能性的需求，比如性能，可扩展性，可靠性，兼容性，可维护性，
+AI不会帮你考虑到这些痛点的。</p>
+<p>这些痛点也并不性感, 就好像童话故事里面，王子和公主在一起之后, 不会有人写婚后要考虑「柴米油盐」的生活.</p>
+<h3 id="软件公司的护城河不是代码"><span class="section-num">4.2</span> 软件公司的护城河不是代码</h3>
+<p>至于那些说用 <a href="https://github.com/morluto/rea">REA</a>(reverse engineering anything)来逆向付费软件，甚至SAAS 服务时，我只想说, 这和「写出好代码，就一定有人付费」的想法一样天真.</p>
+<p>以Windows 操作系统为例，如果有人用AI逆向出一个免费的 Windows操作系统，你会使用么？</p>
+<p>或者换种问法，有人能提供一个免费, 可靠，不差于Windows的操作系统（甚至更优的操作系统），你会使用么？</p>
+<p>在30年前就有人做出了这样的操作系统，并由一大群来自全世界的顶尖工程师维护着，
+这个操作系统叫Linux，但是它在桌面端的份额也只有3%.</p>
+<p>有人逆向出Photoshop，有人逆向出Word办公套件，你会使用么？</p>
+<p>甚至不需要逆向，有免费和开源版本的 GIMP 和 LibreOffice，也没有多少人使用嘛。</p>
+<p>软件公司的护城河，从来都不是代码；而是经年累月搭建起来的生态，口口相传的品牌，能直达用户的分发渠道等等。</p>
+<h3 id="ai改变了软件行业"><span class="section-num">4.3</span> AI改变了软件行业</h3>
+<p>但毫无疑问，AI彻底改变了软件编程行业，但现在我们所处的时期有点像是「软件工程」这个概念出现之前的软件开发洪荒时代，
+工程师们还没有总结出如何管理AI生成海量代码导致复杂度激增问题的方法论。</p>
+<p>相比「软件工程师相信AI是万能的」，更可怕的是「领导层相信AI是万能的」，
+觉得AI费用都激增这么多，为什么研发效率没有激增，软件销售收入没有激增？</p>
+<p>在AI能以人难以企及的速度来实现想法的当下，做「正确的事」的优先级就变成相当高，但问题在于 <strong><strong>AI并没有显著改善领导层/产品层做决策的正确率。</strong></strong></p>
+<p>「做这个需求，用户日活就会增加么？来增加订阅量么？」工程师也不知道，反正老板要求拥抱AI，那都试下吧。</p>
+<p>在提效的压力，不同的需求同步开发，需求多了，AI生成的代码也多了，代码也Review不过来，老板一直催着快速上线，那就上吧。</p>
+<p>用户的日活在各种新特性的堆彻之下，并没有什么新的波澜，但是激增的代码却逐渐失控，各种小故障频发，可靠性下降，客户投诉增多。</p>
+<p>面对老板的疑问，客户的投诉，工程师也不知道具体发生了什么问题，只好用AI去排查AI生成的代码，再把AI排查出来的结果告知老板。</p>
+<p>这样的场景我已经在工作中见得越来越多了。</p>
+<p>感触是由来以久，但仿佛是为了印证我的看法，在写下这段文字的2天前，微软的 Outlook 365以及其他Exchange服务 竟然挂了超过20个小时，如此重要的服务全球宕机如此长的时间，真的是难以置信。</p>
+<p>更难以置信的是，过了12个小时，他们发出来的公告表明，他们还不知道发生了什么问题，也不知道怎么处理：</p>
+<p><a href="https://x.com/MSFT365Status/status/2121087708940382422">https://x.com/MSFT365Status/status/2121087708940382422</a></p>
+<blockquote>
+<p>As part of our investigation into the sustained traffic management imbalances, we’re reviewing traffic flows and affected infrastructure to identify opportunities to optimize routing. This includes verifying the reasons for service failures so we can develop specific actions to improve stability. More info under EX1550543 and MO1550821 in the Microsoft 365 admin center, as well as <a href="http://status.cloud.microsoft">http://status.cloud.microsoft</a> if the admin center is not available to you.</p>
+<p>换成人话：我们也不知道发生了什么事</p></blockquote>
+<h3 id="人人都在fomo"><span class="section-num">4.4</span> 人人都在FOMO</h3>
+<p>此外，我觉得AI很大程度上剥夺了初级工程师成长的机会。</p>
+<p>我见到很多的毕业生使用AI生成代码非常熟练，
+但问及相关的设计，尤其是为什么要这么设计的时候，他们大多是把问题转述给AI，然后把AI的答案复述出来。</p>
+<p>AI的答案有时候似是而非，他们又没有足够的经验去分辨，就容易信以为真。</p>
+<p>他们失去了宝贵的犯错，改错再反思的机会。</p>
+<p>问题又来了, Who cares?</p>
+<p>从公司高层，到中层，再到底层，人人都在FOMO(fear of missing out)：</p>
+<p>高层担心错过AI这波浪潮，成为新时代的柯达；</p>
+<p>中层担心自己没有践行好高层拥抱AI的策略，执行不力；</p>
+<p>底层担心自己的饭碗，在一波「降本增效」中丢失，老板让我干啥就干啥，不就用AI写代码嘛，让我用AI直接push代码到生产环境我都无异议。</p>
+<h3 id="许愿也要知道自己要什么"><span class="section-num">4.5</span> 许愿也要知道自己要什么</h3>
+<p>对于使用AI, 我个人的观点始终都是，你要先明确知道要什么，才能创造出什么。</p>
+<p>你不能期待给AI一个 prompt：</p>
+<blockquote>
+<p>给我生成一个软件，能赚钱，不能有bug</p></blockquote>
+<p>它就能给你一台印钞机</p>
+<p>要知道自己要什么，就需要不断思考，学习与实践；那样的人，又怎么会被AI取代呢。</p>
 ]]></content:encoded>
     </item>
     <item>
